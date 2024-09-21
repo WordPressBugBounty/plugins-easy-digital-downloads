@@ -1,0 +1,43 @@
+@media screen and (min-width: $break-small) {
+	#edd-reports-charts-wrap {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(200px, 50%));
+		grid-gap: 2em;
+	}
+
+	.edd-reports-chart {
+		margin-bottom: 0;
+	}
+
+	.edd-reports-chart-line,
+	.edd-reports-chart-bar {
+		grid-column: 1 / span 2;
+	}
+}
+
+.edd-canvas__container {
+	margin: auto;
+	position: relative;
+	max-width: 100%;
+	max-height: 75vh;
+
+	&.edd-canvas__type-line,
+	&.edd-canvas__type-bar {
+		@media screen and (min-width: $break-mobile) {
+			height: 450px;
+		}
+
+		@media screen and (min-width: $break-medium) {
+			height: 500px;
+		}
+
+		@media screen and (min-width: $break-xlarge) {
+			height: 700px;
+		}
+	}
+}
+
+.chart-timezone {
+	font-size: .75rem;
+	color: $wp-gray-10;
+}
