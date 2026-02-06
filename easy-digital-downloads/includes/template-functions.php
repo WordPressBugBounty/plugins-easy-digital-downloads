@@ -304,13 +304,14 @@ function edd_purchase_variable_pricing( $download_id = 0, $args = array() ) {
 	// Sanitize those class names and form them into a string.
 	$css_classes_string = implode( ' ', array_map( 'sanitize_html_class', $css_classes_array ) );
 
+	$in_cart_display = '';
 	if ( edd_item_in_cart( $download_id ) && ! edd_single_price_option_mode( $download_id ) ) {
-		return;
+		$in_cart_display = 'style="display:none;"';
 	}
 
 	do_action( 'edd_before_price_options', $download_id );
 	?>
-	<div class="<?php echo esc_attr( rtrim( $css_classes_string ) ); ?>">
+	<div class="<?php echo esc_attr( rtrim( $css_classes_string ) ); ?>" <?php echo $in_cart_display; ?>>
 		<ul>
 			<?php
 			if ( $prices ) :
@@ -1115,27 +1116,30 @@ function edd_download_shortcode_excerpt_length() {
  * @param array  $query EDD's array of attributes used to construct the main WP_Query.
  */
 function edd_downloads_pagination( $atts, $downloads, $query ) {
-	if ( filter_var( $atts['pagination'], FILTER_VALIDATE_BOOLEAN ) ) {
-		$args = array(
-			'type'    => 'download',
-			'format'  => '?paged=%#%',
-			'current' => max( 1, $query['paged'] ),
-			'total'   => $downloads->max_num_pages,
-		);
-
-		if ( is_single() ) {
-			$args['base'] = get_permalink() . '%#%';
-		} else {
-			$big          = 999999;
-			$search_for   = array( $big, '#038;' );
-			$replace_with = array( '%#%', '&' );
-			$args['base'] = str_replace( $search_for, $replace_with, get_pagenum_link( $big ) );
-		}
-
-		$args = apply_filters( 'edd_download_pagination_args', $args, $atts, $downloads, $query );
-
-		echo edd_pagination( $args );
+	if ( ! filter_var( $atts['pagination'], FILTER_VALIDATE_BOOLEAN ) ) {
+		return;
 	}
+
+	$paged = $query['paged'] ?? 1;
+	$args  = array(
+		'type'    => 'download',
+		'format'  => '?paged=%#%',
+		'current' => max( 1, $paged ),
+		'total'   => $downloads->max_num_pages,
+	);
+
+	if ( is_single() ) {
+		$args['base'] = get_permalink() . '%#%';
+	} else {
+		$big          = 999999;
+		$search_for   = array( $big, '#038;' );
+		$replace_with = array( '%#%', '&' );
+		$args['base'] = str_replace( $search_for, $replace_with, get_pagenum_link( $big ) );
+	}
+
+	$args = apply_filters( 'edd_download_pagination_args', $args, $atts, $downloads, $query );
+
+	echo edd_pagination( $args );
 }
 add_action( 'edd_downloads_list_after', 'edd_downloads_pagination', 10, 3 );
 

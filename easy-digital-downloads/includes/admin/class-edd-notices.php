@@ -156,6 +156,8 @@ class EDD_Notices {
 			$this->add_user_action_notices( $_REQUEST['edd-message'] );
 		}
 
+		$this->add_transient_notices();
+
 		$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'edd-message' ), $_SERVER['REQUEST_URI'] );
 	}
 
@@ -263,6 +265,29 @@ class EDD_Notices {
 			}
 		}
 		$wp_filter['admin_notices']->callbacks = $all_hooks;
+	}
+
+	/**
+	 * Add a notice to the transient.
+	 *
+	 * @since 3.6.2
+	 * @param string $id The notice ID.
+	 * @param string $message The notice message.
+	 * @param string $type The notice type.
+	 * @return void
+	 */
+	public static function add_transient_notice( string $id, string $message, string $type = 'success' ) {
+		$notices = get_transient( 'edd_admin_notices' );
+		if ( ! $notices ) {
+			$notices = array();
+		}
+		$notices[] = array(
+			'id'      => $id,
+			'message' => $message,
+			'class'   => $type,
+		);
+
+		set_transient( 'edd_admin_notices', $notices, 60 );
 	}
 
 	/** Private Methods *******************************************************/
@@ -559,6 +584,40 @@ class EDD_Notices {
 					)
 				);
 			}
+		}
+
+		if ( 'edd-stripe' === filter_input( INPUT_GET, 'section', FILTER_SANITIZE_SPECIAL_CHARS ) ) {
+			$message = filter_input( INPUT_GET, 'edd-message', FILTER_SANITIZE_SPECIAL_CHARS );
+			if ( 'stripe-payment-methods-sync' === $message ) {
+				$this->add_notice(
+					array(
+						'id'      => 'stripe-payment-methods-sync',
+						'message' => __( 'Stripe payment methods synced successfully.', 'easy-digital-downloads' ),
+						'class'   => 'updated',
+					)
+				);
+			} elseif ( 'stripe-payment-methods-sync-failed' === $message ) {
+				$this->add_notice(
+					array(
+						'id'      => 'stripe-payment-methods-sync-failed',
+						'message' => __( 'Stripe payment methods could not be synced.', 'easy-digital-downloads' ),
+						'class'   => 'error',
+					)
+				);
+			}
+		}
+
+		if ( 'cart' === filter_input( INPUT_GET, 'section', FILTER_SANITIZE_SPECIAL_CHARS ) ) {
+			if ( get_option( 'edd_enable_cart_preview_rest_error' ) ) {
+				$this->add_notice(
+					array(
+						'message'        => __( 'The cart preview feature requires the REST API to be enabled.', 'easy-digital-downloads' ),
+						'class'          => 'error',
+						'is_dismissible' => false,
+					)
+				);
+			}
+			delete_option( 'edd_enable_cart_preview_rest_error' );
 		}
 	}
 
@@ -1050,6 +1109,23 @@ class EDD_Notices {
 						)
 					);
 					break;
+				case 'user-already-verified':
+					$this->add_notice(
+						array(
+							'id'          => 'edd-user-already-verified',
+							'message'     => __( 'This user is already verified.', 'easy-digital-downloads' ),
+							'dismissible' => true,
+						)
+					);
+					break;
+				case 'verification-email-sent':
+					$this->add_notice(
+						array(
+							'id'      => 'edd-verification-email-sent',
+							'message' => __( 'Verification email sent successfully.', 'easy-digital-downloads' ),
+						)
+					);
+					break;
 				case 'email-added':
 					$this->add_notice(
 						array(
@@ -1160,7 +1236,7 @@ class EDD_Notices {
 		 *
 		 * @since 3.0
 		 */
-		wp_enqueue_script( 'edd-admin-notices', EDD_PLUGIN_URL . 'assets/js/edd-admin-notices.js', array( 'jquery' ), EDD_VERSION, true );
+		wp_enqueue_script( 'edd-admin-notices', edd_get_assets_url( 'js' ) . 'edd-admin-notices.js', array( 'jquery' ), EDD_VERSION, true );
 		$view_url = add_query_arg(
 			array(
 				'post_type' => 'download',
@@ -1214,5 +1290,25 @@ class EDD_Notices {
 		$text = wp_kses( $message, $tags );
 
 		return $text;
+	}
+
+	/**
+	 * Add notices stored in transients.
+	 * This allows for a more flexible way to add notices without having to add them to the notices array.
+	 *
+	 * @since 3.6.2
+	 * @return void
+	 */
+	private function add_transient_notices() {
+		$notices = get_transient( 'edd_admin_notices' );
+		if ( ! $notices || ! is_array( $notices ) ) {
+			return;
+		}
+
+		foreach ( $notices as $notice ) {
+			$this->add_notice( $notice );
+		}
+
+		delete_transient( 'edd_admin_notices' );
 	}
 }

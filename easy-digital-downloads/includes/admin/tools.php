@@ -129,7 +129,18 @@ function edd_tools_clear_doing_upgrade_display() {
 			<p><?php esc_html_e( 'Sometimes a database upgrade notice may not be cleared after an upgrade is completed due to conflicts with other extensions or other minor issues.', 'easy-digital-downloads' ); ?></p>
 			<p><?php esc_html_e( 'If you\'re certain these upgrades have been completed, you can clear these upgrade notices by clicking the button below. If you have any questions about this, please contact the Easy Digital Downloads support team and we\'ll be happy to help.', 'easy-digital-downloads' ); ?></p>
 			<form method="post"
-				action="<?php echo esc_url( edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'general' ) ) ); ?>">
+				action="
+				<?php
+				echo esc_url(
+					edd_get_admin_url(
+						array(
+							'page' => 'edd-tools',
+							'tab'  => 'general',
+						)
+					)
+				);
+				?>
+						">
 				<p>
 					<input type="hidden" name="edd_action" value="clear_doing_upgrade"/>
 					<?php wp_nonce_field( 'edd_clear_upgrades_nonce', 'edd_clear_upgrades_nonce' ); ?>
@@ -177,7 +188,7 @@ function edd_tools_api_keys_display() {
 		)
 	);
 	?>
-    <p>
+	<p>
 		<?php
 		printf(
 			wp_kses_post(
@@ -196,132 +207,6 @@ function edd_tools_api_keys_display() {
 }
 
 add_action( 'edd_tools_tab_api_keys', 'edd_tools_api_keys_display' );
-
-
-/**
- * Display beta opt-ins
- *
- * @since 2.6.11
- */
-function edd_tools_betas_display() {
-	if ( ! current_user_can( 'manage_shop_settings' ) ) {
-		return;
-	}
-
-	$has_beta = edd_get_beta_enabled_extensions();
-
-	do_action( 'edd_tools_betas_before' );
-	?>
-
-	<div class="postbox edd-beta-support">
-		<h3><span><?php esc_html_e( 'Enable Beta Versions', 'easy-digital-downloads' ); ?></span></h3>
-		<div class="inside">
-			<p><?php esc_html_e( 'Checking any of the below checkboxes will opt you in to receive pre-release update notifications. You can opt-out at any time. Pre-release updates do not install automatically, you will still have the opportunity to ignore update notifications.', 'easy-digital-downloads' ); ?></p>
-			<form method="post"
-				action="<?php echo esc_url( edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'betas' ) ) ); ?>">
-				<table class="form-table edd-beta-support">
-					<tbody>
-					<?php foreach ( $has_beta as $slug => $product ) : ?>
-						<tr>
-							<?php $checked = edd_extension_has_beta_support( $slug ); ?>
-							<th scope="row"><?php echo esc_html( $product ); ?></th>
-							<td>
-								<input type="checkbox" name="enabled_betas[<?php echo esc_attr( $slug ); ?>]"
-										id="enabled_betas[<?php echo esc_attr( $slug ); ?>]"<?php echo checked( $checked, true, false ); ?>
-										value="1"/>
-								<label for="enabled_betas[<?php echo esc_attr( $slug ); ?>]">
-									<?php
-									/* translators: %s: Product name */
-									printf( esc_html__( 'Get updates for pre-release versions of %s', 'easy-digital-downloads' ), esc_html( $product ) );
-									?>
-								</label>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
-				<input type="hidden" name="edd_action" value="save_enabled_betas"/>
-				<?php wp_nonce_field( 'edd_save_betas_nonce', 'edd_save_betas_nonce' ); ?>
-				<?php submit_button( __( 'Save', 'easy-digital-downloads' ), 'secondary', 'submit', false ); ?>
-			</form>
-		</div>
-	</div>
-
-	<?php
-	do_action( 'edd_tools_betas_after' );
-}
-
-add_action( 'edd_tools_tab_betas', 'edd_tools_betas_display' );
-
-/**
- * Return an array of all extensions with beta support.
- *
- * Extensions should be added as 'extension-slug' => 'Extension Name'
- *
- * @since 2.6.11
- *
- * @return array $extensions The array of extensions
- */
-function edd_get_beta_enabled_extensions() {
-	return (array) apply_filters( 'edd_beta_enabled_extensions', array() );
-}
-
-/**
- * Check if a given extensions has beta support enabled
- *
- * @since 2.6.11
- *
- * @param string $slug The slug of the extension to check
- *
- * @return bool True if enabled, false otherwise
- */
-function edd_extension_has_beta_support( $slug ) {
-	$enabled_betas = edd_get_option( 'enabled_betas', array() );
-	$return        = false;
-
-	if ( array_key_exists( $slug, $enabled_betas ) ) {
-		$return = true;
-	}
-
-	return $return;
-}
-
-/**
- * Save enabled betas.
- *
- * @since 2.6.11
- */
-function edd_tools_enabled_betas_save() {
-	if ( ! wp_verify_nonce( $_POST['edd_save_betas_nonce'], 'edd_save_betas_nonce' ) ) {
-		return;
-	}
-
-	if ( ! current_user_can( 'manage_shop_settings' ) ) {
-		return;
-	}
-
-	if ( ! empty( $_POST['enabled_betas'] ) ) {
-		$enabled_betas = array_filter( array_map( 'edd_tools_enabled_betas_sanitize_value', $_POST['enabled_betas'] ) );
-		edd_update_option( 'enabled_betas', $enabled_betas );
-	} else {
-		edd_delete_option( 'enabled_betas' );
-	}
-}
-
-add_action( 'edd_save_enabled_betas', 'edd_tools_enabled_betas_save' );
-
-/**
- * Sanitize the supported beta values by making them booleans
- *
- * @since 2.6.11
- *
- * @param mixed $value The value being sent in, determining if beta support is enabled.
- *
- * @return bool
- */
-function edd_tools_enabled_betas_sanitize_value( $value ) {
-	return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
-}
 
 /**
  * Save banned emails.
@@ -939,8 +824,8 @@ function edd_tools_import_export_display() {
 					esc_url(
 						edd_get_admin_url(
 							array(
-							'page' => 'edd-reports',
-							'view' => 'export',
+								'page' => 'edd-reports',
+								'view' => 'export',
 							)
 						)
 					)
@@ -948,7 +833,18 @@ function edd_tools_import_export_display() {
 				?>
 			</p>
 			<form method="post"
-				action="<?php echo esc_url( edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'import_export' ) ) ); ?>">
+				action="
+				<?php
+				echo esc_url(
+					edd_get_admin_url(
+						array(
+							'page' => 'edd-tools',
+							'tab'  => 'import_export',
+						)
+					)
+				);
+				?>
+						">
 				<p><input type="hidden" name="edd_action" value="export_settings"/></p>
 				<p>
 					<?php wp_nonce_field( 'edd_export_nonce', 'edd_export_nonce' ); ?>
@@ -963,7 +859,18 @@ function edd_tools_import_export_display() {
 		<div class="inside">
 			<p><?php esc_html_e( 'Import the Easy Digital Downloads settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'easy-digital-downloads' ); ?></p>
 			<form method="post" enctype="multipart/form-data"
-				action="<?php echo esc_url( edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'import_export' ) ) ); ?>">
+				action="
+				<?php
+				echo esc_url(
+					edd_get_admin_url(
+						array(
+							'page' => 'edd-tools',
+							'tab'  => 'import_export',
+						)
+					)
+				);
+				?>
+						">
 				<p>
 					<input type="file" name="import_file" accept=".json" required/>
 				</p>
@@ -1020,10 +927,12 @@ function edd_tools_import_export_process_export() {
 	header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 	header( 'Expires: 0' );
 
-	wp_send_json( array(
-		'edd_settings'  => $edd_settings,
-		'edd_tax_rates' => $edd_tax_rates
-	) );
+	wp_send_json(
+		array(
+			'edd_settings'  => $edd_settings,
+			'edd_tax_rates' => $edd_tax_rates,
+		)
+	);
 }
 add_action( 'edd_export_settings', 'edd_tools_import_export_process_export' );
 
@@ -1073,7 +982,7 @@ function edd_tools_import_export_process_import() {
 
 		$edd_tax_rates = $settings['edd_tax_rates'];
 		if ( ! empty( $edd_tax_rates ) ) {
-			foreach( $edd_tax_rates as $rate ) {
+			foreach ( $edd_tax_rates as $rate ) {
 				$scope = 'country';
 				if ( ! empty( $rate['scope'] ) ) {
 					$scope = $rate['scope'];
@@ -1093,14 +1002,17 @@ function edd_tools_import_export_process_import() {
 				);
 			}
 		}
-
 	}
 
-	edd_redirect( edd_get_admin_url( array(
-		'page'        => 'edd-tools',
-		'edd-message' => 'settings-imported',
-		'tab'         => 'import_export',
-	) ) );
+	edd_redirect(
+		edd_get_admin_url(
+			array(
+				'page'        => 'edd-tools',
+				'edd-message' => 'settings-imported',
+				'tab'         => 'import_export',
+			)
+		)
+	);
 }
 add_action( 'edd_import_settings', 'edd_tools_import_export_process_import' );
 
@@ -1130,20 +1042,38 @@ function edd_tools_debug_log_display() {
 	<div class="postbox">
 		<h3><span><?php esc_html_e( 'Debug Log', 'easy-digital-downloads' ); ?></span></h3>
 		<div class="inside">
-			<form id="edd-debug-log" method="post">
-				<p>
+			<div class="edd-form-group">
+				<div class="edd-form-group__control">
 					<?php
-					printf(
-						wp_kses_post(
-							/* translators: 1: opening anchor tag, do not translate, 2: function name, do not translate, 3: closing anchor tag, do not translate */
-							__( 'When debug mode is enabled, specific information will be logged here. (%1$sLearn how to use %2$s in your own code.%3$s)', 'easy-digital-downloads' )
+					$args  = array(
+						'label'   => __( 'Record important information to the debug log while troubleshooting.', 'easy-digital-downloads' ),
+						'name'    => 'debug_mode',
+						'current' => edd_get_option( 'debug_mode' ),
+						'data'    => array(
+							'setting'         => 'debug_mode',
+							'edd-requirement' => 'debug_mode',
+							'nonce'           => wp_create_nonce( 'edd-toggle-nonce' ),
 						),
-						'<a href="https://easydigitaldownloads.com/docs/edd-debug-log">',
-						'<code>edd_debug_log</code>',
-						'</a>'
 					);
+					$input = new \EDD\HTML\CheckboxToggle( $args );
+					$input->output();
 					?>
-				</p>
+				</div>
+			</div>
+			<p>
+				<?php
+				printf(
+					wp_kses_post(
+						/* translators: 1: opening anchor tag, do not translate, 2: function name, do not translate, 3: closing anchor tag, do not translate */
+						__( 'When debug mode is enabled, specific information will be logged here. (%1$sLearn how to use %2$s in your own code.%3$s)', 'easy-digital-downloads' )
+					),
+					'<a href="https://easydigitaldownloads.com/docs/edd-debug-log">',
+					'<code>edd_debug_log</code>',
+					'</a>'
+				);
+				?>
+			</p>
+			<form id="edd-debug-log" method="post" class="edd-requires edd-requires_debug_mode">
 				<textarea
 					readonly="readonly"
 					class="edd-tools-textarea"
@@ -1155,7 +1085,7 @@ function edd_tools_debug_log_display() {
 					submit_button( __( 'Download Debug Log File', 'easy-digital-downloads' ), 'primary', 'edd-download-debug-log', false );
 					submit_button( __( 'Copy to Clipboard', 'easy-digital-downloads' ), 'secondary edd-inline-button', 'edd-copy-debug-log', false, array( 'onclick' => "this.form['edd-debug-log-contents'].focus();this.form['edd-debug-log-contents'].select();document.execCommand('copy');return false;" ) );
 
-					// Only show the "Clear Log" button if there is a log to clear
+					// Only show the "Clear Log" button if there is a log to clear.
 					if ( ! empty( $log ) ) {
 						submit_button( __( 'Clear Log', 'easy-digital-downloads' ), 'secondary edd-inline-button', 'edd-clear-debug-log', false );
 					}
@@ -1204,10 +1134,14 @@ function edd_handle_submit_debug_log() {
 		// Clear the debug log.
 		$edd_logs->clear_log_file();
 
-		edd_redirect( edd_get_admin_url( array(
-			'page' => 'edd-tools',
-			'tab'  => 'debug_log'
-		) ) );
+		edd_redirect(
+			edd_get_admin_url(
+				array(
+					'page' => 'edd-tools',
+					'tab'  => 'debug_log',
+				)
+			)
+		);
 	}
 }
 add_action( 'edd_submit_debug_log', 'edd_handle_submit_debug_log' );
@@ -1220,16 +1154,16 @@ add_action( 'edd_submit_debug_log', 'edd_handle_submit_debug_log' );
 function edd_redirect_sales_log() {
 	if ( edd_is_admin_page( 'tools', 'logs' ) && ! empty( $_GET['view'] ) && 'sales' === $_GET['view'] ) {
 		$query_args = array(
-			'page' => 'edd-payment-history'
+			'page' => 'edd-payment-history',
 		);
 
 		$args_to_remap = array(
 			'download'   => 'product-id',
 			'start-date' => 'start-date',
-			'end-date'   => 'end-date'
+			'end-date'   => 'end-date',
 		);
 
-		foreach( $args_to_remap as $old_arg => $new_arg ) {
+		foreach ( $args_to_remap as $old_arg => $new_arg ) {
 			if ( ! empty( $_GET[ $old_arg ] ) ) {
 				$query_args[ $new_arg ] = urlencode( $_GET[ $old_arg ] );
 			}
@@ -1253,21 +1187,48 @@ function edd_tools_tab_logs() {
 
 	require_once EDD_PLUGIN_DIR . 'includes/admin/tools/logs.php';
 
+	// Check if we're viewing settings
+	$view_settings = isset( $_GET['view'] ) && 'settings' === $_GET['view'];
+
+	// Determine the current view.
 	$current_view = 'file_downloads';
-	$log_views    = edd_log_default_views();
+	$log_views    = \EDD\Admin\Tools\Logs::get_default_views();
 
 	if ( isset( $_GET['view'] ) && array_key_exists( $_GET['view'], $log_views ) ) {
 		$current_view = sanitize_text_field( $_GET['view'] );
+	} elseif ( $view_settings ) {
+		$current_view = 'settings';
 	}
 
 	/**
-	 * Fires when a given logs view should be rendered.
+	 * Fires before any log view is rendered.
 	 *
-	 * The dynamic portion of the hook name, `$current_view`, represents the slug
-	 * of the logs view to render.
+	 * Used to render the secondary navigation for all log views,
+	 * including legacy views that don't fire their own top actions.
 	 *
-	 * @since 1.4
+	 * @since 3.6.4
+	 *
+	 * @param string $current_view The current log view being rendered.
 	 */
-	do_action( 'edd_logs_view_' . $current_view );
+	do_action( 'edd_logs_before_view', $current_view );
+
+	if ( $view_settings ) {
+		/**
+		 * Fires when the log pruning settings should be rendered.
+		 *
+		 * @since 3.6.4
+		 */
+		do_action( 'edd_logs_view_settings' );
+	} else {
+		/**
+		 * Fires when a given logs view should be rendered.
+		 *
+		 * The dynamic portion of the hook name, `$current_view`, represents the slug
+		 * of the logs view to render.
+		 *
+		 * @since 1.4
+		 */
+		do_action( 'edd_logs_view_' . $current_view );
+	}
 }
 add_action( 'edd_tools_tab_logs', 'edd_tools_tab_logs' );

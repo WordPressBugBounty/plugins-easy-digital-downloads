@@ -34,6 +34,8 @@ class PromoHandler extends \EDD\Admin\Promos\PromoHandler {
 	 */
 	protected $lite_notices = array(
 		'\\EDD\\Lite\\Admin\\Promos\\Notices\\FeaturedDownloads',
+		'\\EDD\\Lite\\Admin\\Promos\\Notices\\PreviewRecommendations',
+		'\\EDD\\Lite\\Admin\\Promos\\Notices\\CampaignTracker',
 	);
 
 	/**

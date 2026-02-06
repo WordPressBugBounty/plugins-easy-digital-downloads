@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "edd/checkout",
   "version": "2.0.0",
   "title": "EDD Checkout",
@@ -23,9 +23,17 @@
     "attributes": {}
   },
   "attributes": {
-    "username": {
+    "layout": {
+      "type": "string",
+      "default": ""
+    },
+    "show_discount_form": {
       "type": "boolean",
       "default": true
+    },
+    "thumbnail_width": {
+      "type": "number",
+      "default": 25
     }
   }
 }

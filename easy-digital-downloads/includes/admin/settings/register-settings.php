@@ -550,6 +550,7 @@ function edd_get_registered_settings_sections() {
 				array(
 					'main'       => __( 'General', 'easy-digital-downloads' ),
 					'checkout'   => __( 'Checkout', 'easy-digital-downloads' ),
+					'cart'       => __( 'Cart', 'easy-digital-downloads' ),
 					'refunds'    => __( 'Refunds', 'easy-digital-downloads' ),
 					'accounting' => __( 'Accounting', 'easy-digital-downloads' ),
 				)
@@ -602,6 +603,7 @@ function edd_get_registered_settings_sections() {
 					'main'           => __( 'General', 'easy-digital-downloads' ),
 					'button_text'    => __( 'Purchase Buttons', 'easy-digital-downloads' ),
 					'file_downloads' => __( 'File Downloads', 'easy-digital-downloads' ),
+					'captcha'        => __( 'CAPTCHA', 'easy-digital-downloads' ),
 				)
 			),
 		);
@@ -1248,7 +1250,7 @@ function edd_number_callback( $args ) {
  * Renders textarea fields.
  *
  * @since 1.0
- *
+ * @since 3.6.2 Updated to use EDD\HTML\Textarea.
  * @param array $args Arguments passed by the setting.
  * @return void
  */
@@ -1265,17 +1267,20 @@ function edd_textarea_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	$class       = edd_sanitize_html_class( $args['field_class'] );
-	$placeholder = ! empty( $args['placeholder'] )
-		? ' placeholder="' . esc_attr( $args['placeholder'] ) . '"'
-		: '';
+	$textarea = new EDD\HTML\Textarea(
+		array(
+			'value'       => $value,
+			'desc'        => $args['desc'],
+			'id'          => 'edd_settings[' . edd_sanitize_key( $args['id'] ) . ']',
+			'name'        => 'edd_settings[' . esc_attr( $args['id'] ) . ']',
+			'class'       => ! empty( $args['field_class'] ) ? edd_sanitize_html_class( $args['field_class'] ) : 'regular-text',
+			'placeholder' => ! empty( $args['placeholder'] ) ? $args['placeholder'] : '',
+			'readonly'    => ! empty( $args['readonly'] ),
+			'rows'        => ! empty( $args['rows'] ) ? (int) $args['rows'] : 5,
+		)
+	);
 
-	$readonly = true === $args['readonly'] ? ' readonly="readonly"' : '';
-
-	$html  = '<textarea class="' . $class . '" cols="50" rows="5" ' . $placeholder . ' id="edd_settings[' . edd_sanitize_key( $args['id'] ) . ']" name="edd_settings[' . esc_attr( $args['id'] ) . ']"' . $readonly . '>' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
-	$html .= '<p class="description"> ' . wp_kses_post( $args['desc'] ) . '</p>';
-
-	echo apply_filters( 'edd_after_setting_output', $html, $args );
+	echo apply_filters( 'edd_after_setting_output', $textarea->get(), $args );
 }
 
 /**
@@ -1828,39 +1833,45 @@ add_filter( 'option_page_capability_edd_settings', 'edd_set_settings_cap' );
  */
 function edd_add_setting_tooltip( $html = '', $args = array() ) {
 
-	// Tooltip has title & description.
-	if ( ! empty( $args['tooltip_title'] ) && ! empty( $args['tooltip_desc'] ) ) {
-		$args      = wp_parse_args(
-			$args,
-			array(
-				'tooltip_title'    => '',
-				'tooltip_desc'     => '',
-				'tooltip_dashicon' => '',
-			)
-		);
-		$tooltip   = new EDD\HTML\Tooltip(
-			array(
-				'title'    => $args['tooltip_title'],
-				'content'  => $args['tooltip_desc'],
-				'dashicon' => $args['tooltip_dashicon'],
-			)
-		);
-		$tooltip   = $tooltip->get();
-		$has_p_tag = strstr( $html, '</p>' );
-		$has_label = strstr( $html, '</label>' );
+	if ( empty( $args['tooltip_title'] ) || empty( $args['tooltip_desc'] ) ) {
+		return $html;
+	}
 
-		// Insert tooltip at end of paragraph.
-		if ( false !== $has_p_tag ) {
-			$html = str_replace( '</p>', $tooltip . '</p>', $html );
+	// If edd-help-tip class is already in the html, return the html.
+	if ( false !== strpos( $html, 'edd-help-tip' ) ) {
+		return $html;
+	}
 
-			// Insert tooltip at end of label.
-		} elseif ( false !== $has_label ) {
-			$html = str_replace( '</label>', '</label>' . $tooltip, $html );
+	$args      = wp_parse_args(
+		$args,
+		array(
+			'tooltip_title'    => '',
+			'tooltip_desc'     => '',
+			'tooltip_dashicon' => 'dashicons-editor-help',
+		)
+	);
+	$tooltip   = new EDD\HTML\Tooltip(
+		array(
+			'title'    => $args['tooltip_title'],
+			'content'  => $args['tooltip_desc'],
+			'dashicon' => $args['tooltip_dashicon'],
+		)
+	);
+	$tooltip   = $tooltip->get();
+	$has_p_tag = strstr( $html, '</p>' );
+	$has_label = strstr( $html, '</label>' );
 
-			// Append tooltip to end of HTML.
-		} else {
-			$html .= $tooltip;
-		}
+	// Insert tooltip at end of paragraph.
+	if ( false !== $has_p_tag ) {
+		$html = str_replace( '</p>', $tooltip . '</p>', $html );
+
+		// Insert tooltip at end of label.
+	} elseif ( false !== $has_label ) {
+		$html = str_replace( '</label>', '</label>' . $tooltip, $html );
+
+		// Append tooltip to end of HTML.
+	} else {
+		$html .= $tooltip;
 	}
 
 	return $html;

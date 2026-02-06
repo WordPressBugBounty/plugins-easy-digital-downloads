@@ -132,12 +132,42 @@ class EDD_Cart {
 	private $cart_session;
 
 	/**
+	 * Cart profiler for performance tracking
+	 *
+	 * @var EDD\Profiler\Cart
+	 * @since 3.6.0
+	 */
+	private $profiler;
+
+	/**
+	 * Cached calculation results
+	 *
+	 * @var array
+	 * @since 3.6.0
+	 */
+	private $calculation_cache = array();
+
+	/**
+	 * Cache validity flag
+	 *
+	 * @var bool
+	 * @since 3.6.0
+	 */
+	private $cache_is_valid = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.7
 	 */
 	public function __construct() {
 		$this->cart_session = new EDD\Sessions\Cart( $this );
+
+		// Initialize profiler if debugging is enabled.
+		if ( edd_get_option( 'cart_profiler', false ) ) {
+			$this->profiler = new EDD\Profiler\Cart();
+		}
+
 		add_action( 'init', array( $this, 'setup_cart' ), 1 );
 	}
 
@@ -202,6 +232,11 @@ class EDD_Cart {
 	 * @return array List of cart contents.
 	 */
 	public function get_contents() {
+		// Track profiling.
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_contents' );
+		}
+
 		// Check for the session contents if the cart contents haven't been loaded yet and the session is available.
 		if ( ! did_action( 'edd_cart_contents_loaded_from_session' ) && $this->cart_session ) {
 			$this->cart_session->get_contents();
@@ -239,10 +274,32 @@ class EDD_Cart {
 	 * @return array
 	 */
 	public function get_contents_details() {
+		// Track profiling.
+		$profiler_start = null;
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_contents_details' );
+			$profiler_start = $this->profiler->start_timer();
+		}
+
+		// Check cache first (if caching is enabled).
+		if ( $this->is_caching_enabled() && $this->cache_is_valid && isset( $this->calculation_cache['details'] ) ) {
+			// End profiling timer for cached call.
+			if ( $this->profiler && null !== $profiler_start ) {
+				$this->profiler->end_timer( 'get_contents_details', $profiler_start );
+			}
+			return $this->calculation_cache['details'];
+		}
+
 		global $edd_is_last_cart_item, $edd_flat_discount_total;
 
 		if ( empty( $this->contents ) ) {
-			return array();
+			// If the contents haven't been fetched yet, fetch them.
+			if ( ! did_action( 'edd_cart_contents_loaded' ) ) {
+				$this->get_contents();
+			}
+			if ( empty( $this->contents ) ) {
+				return array();
+			}
 		}
 
 		$details = array();
@@ -273,12 +330,18 @@ class EDD_Cart {
 			// Subtotal for tax calculation must exclude fees that are greater than 0. See $this->get_tax_on_fees().
 			$subtotal_for_tax = $subtotal;
 
-			foreach ( $fees as $fee ) {
+			foreach ( $fees as $id => $fee ) {
 
 				$fee_amount = (float) $fee['amount'];
 				$subtotal  += $fee_amount;
 
 				if ( $fee_amount > 0 ) {
+					// Calculate tax on positive item-specific fees.
+					if ( edd_use_taxes() && empty( $fee['no_tax'] ) ) {
+						add_filter( 'edd_prices_include_tax', '__return_false' );
+						$fees[ $id ]['tax'] = edd_calculate_tax( $fee_amount, '', '', true, $this->get_tax_rate() );
+						remove_filter( 'edd_prices_include_tax', '__return_false' );
+					}
 					continue;
 				}
 
@@ -318,6 +381,17 @@ class EDD_Cart {
 		}
 
 		$this->details = $details;
+
+		// Store in cache (if caching is enabled).
+		if ( $this->is_caching_enabled() ) {
+			$this->calculation_cache['details'] = $details;
+			$this->cache_is_valid               = true;
+		}
+
+		// End profiling timer.
+		if ( $this->profiler && null !== $profiler_start ) {
+			$this->profiler->end_timer( 'get_contents_details', $profiler_start );
+		}
 
 		return $this->details;
 	}
@@ -1089,6 +1163,11 @@ class EDD_Cart {
 	 * @return float|mixed|void Total discounted amount
 	 */
 	public function get_discounted_amount( $discounts = false ) {
+		// Track profiling.
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_discounted_amount' );
+		}
+
 		$amount = 0.00;
 		$items  = $this->get_contents_details();
 
@@ -1114,6 +1193,11 @@ class EDD_Cart {
 	 * @return float Total amount before taxes
 	 */
 	public function get_subtotal() {
+		// Track profiling.
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_subtotal' );
+		}
+
 		$items    = $this->get_contents_details();
 		$subtotal = $this->get_items_subtotal( $items );
 
@@ -1139,6 +1223,11 @@ class EDD_Cart {
 	 * @return float Cart amount
 	 */
 	public function get_total( $discounts = false ) {
+		// Track profiling.
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_total' );
+		}
+
 		$subtotal     = (float) $this->get_subtotal();
 		$discounts    = (float) $this->get_discounted_amount();
 		$fees         = (float) $this->get_total_fees();
@@ -1259,6 +1348,11 @@ class EDD_Cart {
 	 * @return float Total tax amount
 	 */
 	public function get_tax() {
+		// Track profiling.
+		if ( $this->profiler ) {
+			$this->profiler->track_call( 'get_tax' );
+		}
+
 		$cart_tax = 0;
 		$items    = $this->get_contents_details();
 
@@ -1522,6 +1616,51 @@ class EDD_Cart {
 	 */
 	private function format_amount( $amount ) {
 		return edd_format_amount( $amount, true, '', 'data' );
+	}
+
+	/**
+	 * Check if cart calculation caching is enabled.
+	 *
+	 * Caching can be disabled via constant for testing/comparison.
+	 *
+	 * @since 3.6.0
+	 * @return bool True if caching is enabled, false otherwise.
+	 */
+	private function is_caching_enabled() {
+		return edd_get_option( 'cart_caching', false );
+	}
+
+	/**
+	 * Invalidate the calculation cache.
+	 *
+	 * Forces cart calculations to be recalculated on the next request.
+	 *
+	 * @since 3.6.0
+	 * @return void
+	 */
+	public function invalidate_cache() {
+		$this->cache_is_valid    = false;
+		$this->calculation_cache = array();
+	}
+
+	/**
+	 * Get calculation cache statistics.
+	 *
+	 * Useful for debugging and performance monitoring.
+	 *
+	 * @since 3.6.0
+	 * @return array {
+	 *     Cache statistics.
+	 *
+	 *     @type bool $cached     Whether the cache is currently valid.
+	 *     @type int  $cache_size Number of items in the cache.
+	 * }
+	 */
+	public function get_calculation_stats() {
+		return array(
+			'cached'     => $this->cache_is_valid,
+			'cache_size' => count( $this->calculation_cache ),
+		);
 	}
 
 	/**

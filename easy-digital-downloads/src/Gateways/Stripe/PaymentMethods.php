@@ -158,11 +158,6 @@ class PaymentMethods {
 			return false;
 		}
 
-		$display = edd_get_option( 'stripe_billing_fields', 'full' );
-		if ( ! in_array( $display, array( 'full', 'zip_country' ), true ) ) {
-			return false;
-		}
-
 		if ( edd_get_cart_total() < 50 ) {
 			return false;
 		}
@@ -201,6 +196,7 @@ class PaymentMethods {
 			'google_pay',
 			'grabpay',
 			'ideal',
+			'klarna',
 			'link',
 			'p24',
 			'revolut_pay',

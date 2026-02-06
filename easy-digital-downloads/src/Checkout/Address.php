@@ -65,7 +65,14 @@ class Address {
 			$fields = array( 'country', 'address', 'address_2', 'city', 'state', 'zip' );
 		}
 
-		return array_intersect( $fields, Registry::get_allowed_fields() );
+		$fields = array_intersect( $fields, Registry::get_allowed_fields() );
+
+		// If Affirm is available, ensure all required address fields are present.
+		if ( \EDD\Gateways\Stripe\PaymentMethods::affirm_requires_support() ) {
+			$fields = array_unique( array_merge( array( 'country', 'address', 'address_2', 'city', 'state', 'zip' ), $fields ) );
+		}
+
+		return $fields;
 	}
 
 	/**
@@ -114,7 +121,7 @@ class Address {
 			$this->customer
 		);
 
-		$customer['address'] = array_map( 'sanitize_text_field', $customer['address'] );
+		$customer['address'] = array_map( 'sanitize_text_field', wp_parse_args( $customer['address'], $this->customer['address'] ) );
 
 		if ( ! is_user_logged_in() ) {
 			return $customer;
@@ -126,7 +133,7 @@ class Address {
 		}
 
 		foreach ( $customer['address'] as $key => $field ) {
-			if ( empty( $field ) && ! empty( $user_address[ $key ] ) ) {
+			if ( isset( $user_address[ $key ] ) ) {
 				$customer['address'][ $key ] = $user_address[ $key ];
 			}
 		}
