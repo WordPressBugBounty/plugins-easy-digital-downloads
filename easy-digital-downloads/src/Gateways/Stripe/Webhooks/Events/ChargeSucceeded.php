@@ -61,6 +61,7 @@ class ChargeSucceeded extends Event {
 
 		// If the order is pending and has no parent, mark it as complete. This catches slower payment methods like bank transfers.
 		if ( $this->should_mark_complete( $order ) ) {
+			\EDD\Gateways\Stripe\Checkout\Validation::charge_amount( $this->object, $order->total );
 			\EDD\Gateways\Stripe\Checkout\Complete::mark_complete_from_charge( $order, $this->object );
 		}
 	}

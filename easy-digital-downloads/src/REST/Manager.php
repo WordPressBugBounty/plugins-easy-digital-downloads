@@ -61,6 +61,7 @@ class Manager implements SubscriberInterface {
 			new Routes\Cart(),
 			new Routes\LogPruning(),
 			new Routes\BounceWebhook(),
+			new Routes\Notifications(),
 		);
 	}
 }

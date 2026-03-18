@@ -1,3 +1,5 @@
+@use "../../variables/colors" as colors;
+
 .edd-extension-manager__features {
 	ul {
 		display: grid;
@@ -6,7 +8,7 @@
 	}
 
 	.dashicons-yes {
-		color: #008a20;
+		color: colors.$wp-green-50;
 		margin-right: .25em;
 	}
 }

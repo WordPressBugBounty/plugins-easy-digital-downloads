@@ -162,17 +162,18 @@ class LogPruning extends Event {
 		// Create hook name for this log type.
 		$hook = "edd_prune_logs_{$type_id}";
 
+		// Get the scheduler and convert schedule to interval.
+		$scheduler = Handler::get_scheduler();
+
 		// Check if already scheduled.
-		if ( $this->next_scheduled( $hook, array() ) ) {
+		if ( $scheduler->has_scheduled( $hook ) ) {
 			return;
 		}
 
 		// Calculate this log type's run time with staggered offset.
 		$first_run = $base_time + $time_offset;
 
-		// Get the scheduler and convert schedule to interval.
-		$scheduler = Handler::get_scheduler();
-		$interval  = Handler::get_schedule_interval( $this->schedule );
+		$interval = Handler::get_schedule_interval( $this->schedule );
 
 		if ( false === $interval ) {
 			edd_debug_log(

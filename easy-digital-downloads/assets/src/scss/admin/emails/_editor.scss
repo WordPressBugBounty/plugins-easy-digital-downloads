@@ -32,12 +32,12 @@
 }
 
 .edd-email-action-reset {
-	border-color: colors.$edd-alert-red !important;
-	color: colors.$edd-alert-red !important;
+	border-color: var(--edd-alert-red) !important;
+	color: var(--edd-alert-red) !important;
 
 	&:hover {
-		border-color: colors.$edd-alert-red-hover !important;
-		color: colors.$edd-alert-red-hover !important;
+		border-color: var(--edd-alert-red-hover) !important;
+		color: var(--edd-alert-red-hover) !important;
 	}
 }
 

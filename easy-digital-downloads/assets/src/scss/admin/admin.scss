@@ -7,33 +7,24 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
+
 @use "../variables/colors" as colors;
 @use "../components/toggle-checkbox";
 @use "general/style" as general;
 @use "sections/style" as sections;
 @use "downloads/style" as downloads;
-
 @use "discounts/style" as discounts;
-
 @use "forms/style" as forms;
-
 @use "upgrades/v3" as upgrades;
-
 @use "reports/style" as reports;
-
 @use "orders/style" as orders;
-
 @use "promos/style" as promos;
-
 @use "gateways/style" as gateways;
-
 @use "settings/style" as settings;
-
 @use "dashboard/style" as dashboard;
-
-@import "customers/style";
-@import "tools/style";
-@import "modals/style";
+@use "customers/style" as customers;
+@use "tools/style" as tools;
+@use "modals/style" as modals;
 
 
 /**
@@ -71,157 +62,6 @@ body.post-type-download #screen-options-link-wrap {
 
 body.post-type-download #screen-meta {
 	margin: 0px 0px -1px -20px;
-}
-
-#edd-header {
-	border-top: 5px solid colors.$edd-light-blue;
-	border-bottom: 1px solid #c3c4c7;
-	padding: 20px 0px;
-	margin-left: -20px;
-	background: #fff;
-
-	#edd-header-wrapper {
-		display: flex;
-		justify-content: space-between;
-		padding: 0 20px;
-		align-items: center;
-
-		#edd-header-branding {
-			.edd-header-logo {
-				display: block;
-				max-width: 300px;
-				margin: 0;
-				padding-right: 16px;
-			}
-		}
-
-		.edd-header-page-title-wrap {
-			font-size: 1.75em;
-			margin-top: -5px;
-			margin-right: auto;
-			padding-left: 16px;
-			border-left: 1px solid colors.$wp-gray-200;
-
-			.button {
-				margin-left: 5px;
-			}
-		}
-
-		.edd-header-page-title {
-			font-weight: 400;
-			font-size: 1em;
-			line-height: 1.3em;
-			display: inline;
-		}
-	}
-
-	.edd-round {
-		position: relative;
-		background-color: #f3f4f5;
-		border-radius: 50%;
-		width: 40px;
-		height: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-left: 10px;
-		cursor: pointer;
-		transition: background-color .2s ease;
-
-		&.edd-hidden {
-			display: none;
-		}
-	}
-
-	button {
-		&.edd-round {
-			border: none;
-
-			&:hover {
-				background-color: #e5e5e5;
-			}
-
-			&:active, &:focus {
-				outline: 2px solid #01B7FF;
-			}
-
-			svg {
-				width: 20px;
-				height: 20px;
-			}
-		}
-	}
-
-	.edd-number {
-		position: absolute;
-		background-color: #df2a4a;
-		width: 16px;
-		height: 16px;
-		font-weight: 600;
-		font-size: 10px;
-		color: #fff;
-		top: -8px;
-		left: 50%;
-		transform: translateX(-50%);
-		margin: 0;
-		-webkit-animation: bounce 2s 5;
-		animation: bounce 2s 5;
-
-		&.edd-hidden {
-			display: none !important;
-		}
-	}
-}
-
-.no-js #edd-header-actions {
-	display: none;
-}
-
-@media screen and (max-width: 840px) {
-	#edd-header {
-		#edd-header-wrapper {
-			#edd-header-branding {
-				.edd-header-logo {
-					display: none;
-				}
-			}
-
-			.edd-header-page-title-wrap {
-				padding-left: 0;
-				border-left: none !important;
-			}
-		}
-	}
-}
-
-
-.edd_datepicker {
-	height: 29px;
-}
-
-.edd-from-to-wrapper input {
-	width: 105px;
-	margin: 0;
-	position: relative;
-	z-index: 1;
-}
-
-.edd-from-to-wrapper input[name*="start"],
-.edd-from-to-wrapper input[name="filter_from"] {
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.edd-from-to-wrapper input[name*="end"],
-.edd-from-to-wrapper input[name="filter_to"] {
-	margin-left: -1px;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-.edd-from-to-wrapper input:focus {
-	z-index: 2;
-	position: relative;
 }
 
 .download_page_edd-settings .edd-check-wrapper {
@@ -340,10 +180,6 @@ body.post-type-download #screen-meta {
 
 .wp-media-buttons .button.edd-thickbox {
 	padding-left: 0;
-}
-
-.wp-media-buttons .button.edd-email-tags-inserter .dashicons {
-	margin-top: -2px;
 }
 
 /* Add/View Order Styles
@@ -495,7 +331,7 @@ table.edd-order-overview-summary--refund {
 }
 
 .edd-order-overview-summary__items> :nth-child(odd) {
-	background-color: #f9f9f9;
+	background-color: colors.$wp-alternate;
 }
 
 @media screen and (min-width: 782px) {
@@ -523,7 +359,7 @@ table.edd-order-overview-summary--refund {
 }
 
 .edd-order-overview-summary .row-actions>*:not(:first-child):before {
-	color: #999;
+	color: colors.$wp-inactive;
 	content: " | ";
 }
 
@@ -867,18 +703,17 @@ textarea[name="edd-note"] {
 
 /* List Tables
 -------------------------------------------------------------- */
-.post-type-download .tablenav.top .edd-select  {
-	margin-right: 6px;
-}
+.ts-wrapper:has(+ input[type="submit"]) {
+	display: inline-block;
+	width: 200px;
+	vertical-align: middle;
 
-.wp-list-table.customers .column-primary strong,
-.wp-list-table.emails .column-primary strong,
-.wp-list-table.addresses .column-primary strong,
-.wp-list-table.discounts .column-primary strong,
-.wp-list-table.orders .column-primary strong,
-.wp-list-table.orderitems .column-primary strong,
-.wp-list-table.orderadjustments .column-primary strong {
-	font-size: 14px;
+	.ts-control {
+		.tablenav.top & {
+			min-height: 32px;
+			padding: 0 8px;
+		}
+	}
 }
 
 .wp-list-table.emails .column-customer .avatar,
@@ -891,7 +726,7 @@ textarea[name="edd-note"] {
 
 .wp-list-table.orders div.order-list-email {
 	font-size: .85em;
-	color: #888888;
+	color: #888;
 }
 
 .wp-list-table.orders th.column-amount {
@@ -920,7 +755,7 @@ textarea[name="edd-note"] {
 }
 
 .wp-list-table .type-download .row-actions {
-	color: #999;
+	color: colors.$wp-inactive;
 }
 
 /* Nav Tab Styles
@@ -948,11 +783,6 @@ textarea[name="edd-note"] {
 
 #edd-payments-filter ul.subsubsub {
 	margin-bottom: 8px;
-}
-
-tr.status-refunded td {
-	background: #cecece;
-	border-top-color: #ccc;
 }
 
 marquee {
@@ -1281,7 +1111,7 @@ input[class*="edd-price-field"] {
 }
 
 .edd-edit-purchase-element .row:nth-child(odd):not(.header) {
-	background-color: #f9f9f9;
+	background-color: colors.$wp-alternate;
 }
 
 .edd-edit-purchase-element .row.header {
@@ -1535,10 +1365,6 @@ body.download_page_edd-reports {
 #edd-dashboard-widgets-wrap .postbox h2,
 #edd-dashboard-widgets-wrap .postbox h3 {
 	cursor: default;
-}
-
-.edd-date-range-options .edd_datepicker {
-	width: 105px;
 }
 
 .edd-report-wrap {
@@ -1928,7 +1754,7 @@ h3 + .notice-wrap .notice {
 }
 
 .customer-note-wrapper {
-	border-bottom: 1px solid #f9f9f9;
+	border-bottom: 1px solid colors.$wp-alternate;
 	min-height: 38px;
 	padding: 7px 0 7px 7px;
 }
@@ -2043,179 +1869,4 @@ h3 + .notice-wrap .notice {
 
 #edd-debug-log .edd-inline-button {
 	margin-left: 5px;
-}
-
-/* Promotional element styles
--------------------------------------------------------------- */
-
-/* Settings sidebar */
-.edd-settings-sidebar {
-	padding-top: 27px;
-}
-
-.edd-settings-sidebar-content {
-	background-color: #fff;
-	text-align: center;
-	border: 1px solid #ddd;
-	box-sizing: border-box;
-	max-width: 300px;
-}
-
-.edd-settings-sidebar-content p {
-	font-size: 14px;
-	line-height: 1.5;
-	margin-top: 0;
-}
-
-/* Settings sidebar header section */
-.edd-sidebar-header-section {
-	background-color: #35495c;
-	line-height: 1;
-	padding: 26px 20px 24px;
-	border-bottom: 3px dashed #fafafa;
-}
-
-/* Settings sidebar description section */
-.edd-sidebar-description-section {
-	background-color: #fafafa;
-	padding: 16px 20px;
-	border-bottom: 1px solid #ddd;
-}
-
-.edd-sidebar-description-section .edd-sidebar-description {
-	margin: 0;
-}
-
-/* Settings sidebar coupon section */
-.edd-sidebar-coupon-section {
-	font-size: 14px;
-	padding: 16px 20px;
-}
-
-.edd-sidebar-coupon-section label {
-	display: block;
-	line-height: 1.4;
-	margin-bottom: 6px;
-}
-
-.edd-sidebar-coupon-section label strong {
-	color: #253b51;
-	font-weight: 700;
-}
-
-.edd-sidebar-coupon-section input {
-	background: #f4f7fa;
-	font-size: 22px;
-	font-weight: 600;
-	text-align: center;
-	padding: 10px;
-	border: 2px dashed #2794da;
-	border-radius: 4px;
-	margin-bottom: 16px;
-	box-shadow: none;
-	width: 100%;
-}
-
-.edd-sidebar-coupon-section input:focus {
-	border: 2px dashed #2794da;
-	box-shadow: none;
-}
-
-.edd-settings-sidebar-content .edd-coupon-note {
-	color: #6c7883;
-	font-size: 13px;
-	font-style: italic;
-	margin: 0;
-}
-
-.edd-settings-sidebar-content .edd-coupon-note a {
-	color: #253b51;
-}
-
-.edd-settings-sidebar-content .edd-coupon-note a:hover {
-	text-decoration: none;
-}
-
-/* Settings sidebar footer section */
-.edd-sidebar-footer-section {
-	background-color: #fafafa;
-	padding: 16px 20px;
-	border-top: 1px solid #ddd;
-}
-
-.edd-sidebar-footer-section .edd-cta-button {
-	display: block;
-	background-color: #2794da;
-	color: #fff;
-	text-decoration: none;
-	font-size: 20px;
-	font-weight: 700;
-	text-transform: uppercase;
-	padding: 17px 10px;
-	border: none;
-	border-radius: 4px;
-	width: 100%;
-	box-sizing: border-box;
-	box-shadow: none;
-	transition: background-color .2s;
-}
-
-.edd-sidebar-footer-section .edd-cta-button:hover {
-	background-color: #2386c5;
-}
-
-/* Settings sidebar responsive behavior */
-@media all and (min-width: 1080px) {
-
-	.edd-has-sidebar .edd-settings-content {
-		float: left;
-		width: 67%;
-	}
-
-	.edd-has-sidebar .edd-settings-sidebar {
-		float: right;
-		width: 31%;
-	}
-}
-
-@media all and (min-width: 1240px) {
-
-	.edd-has-sidebar .edd-settings-content {
-		width: 74%;
-	}
-
-	.edd-has-sidebar .edd-settings-sidebar {
-		width: 23%;
-	}
-}
-
-/* Settings - Move sidebar below content only on Taxes tab */
-.taxes-tab .edd-has-sidebar .edd-settings-content,
-.taxes-tab .edd-has-sidebar .edd-settings-sidebar {
-	float: none;
-	width: 100%;
-}
-
-/* Extensions (add-ons) page promotional element */
-.bfcm-promo-img-container {
-	background-color: #35495c;
-	width: 100%;
-	height: 160px;
-}
-
-.bfcm-code {
-	color: #2794da;
-	font-weight: 700;
-}
-
-.sale-ends {
-	position: absolute;
-	bottom: 9px;
-	right: 14px;
-	display: inline-block;
-	color: #6c7883;
-	font-size: 12px;
-	text-align: right;
-	font-style: italic;
-	width: 150px;
 }

@@ -31,7 +31,9 @@ class Styles {
 		$deps       = array( 'edd-admin' );
 
 		// Register vendor styles from assets/vendor/css.
-		wp_register_style( 'jquery-chosen', $vendor_dir . 'chosen' . $css_suffix, array(), $version );
+		// jquery-chosen: registered as a no-op for backward compatibility with extensions that enqueue it.
+		// Tom Select styles are handled entirely by edd-admin-chosen.
+		wp_register_style( 'jquery-chosen', false, array(), $version );
 		wp_register_style( 'jquery-ui-css', $vendor_dir . 'jquery-ui-fresh' . $css_suffix, array(), $version );
 
 		// Register compiled styles from assets/build/css.

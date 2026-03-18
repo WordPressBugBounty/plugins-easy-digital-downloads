@@ -822,26 +822,10 @@ function edds_create_payment() {
 
 		$intent = isset( $_REQUEST['intent'] ) ? $_REQUEST['intent'] : array();
 
-		if ( ! isset( $intent['id'] ) ) {
-			throw new \EDD_Stripe_Gateway_Exception(
-				esc_html__(
-					'An error occurred, but your payment may have gone through. Please contact the site administrator.',
-					'easy-digital-downloads'
-				),
-				'Unable to retrieve Intent data during payment creation.'
-			);
-		}
+		EDD\Gateways\Stripe\Checkout\Validation::intent_exists( $intent );
 
 		$purchase_data = EDD\Sessions\PurchaseData::get( false );
-		if ( empty( $purchase_data ) ) {
-			throw new \EDD_Stripe_Gateway_Exception(
-				esc_html__(
-					'An error occurred, but your payment may have gone through. Please contact the site administrator.',
-					'easy-digital-downloads'
-				),
-				'Unable to retrieve purchase data during payment creation.'
-			);
-		}
+		EDD\Gateways\Stripe\Checkout\Validation::purchase_data( $purchase_data );
 
 		// Ensure Intent has transitioned to the correct status.
 		if ( 'setup_intent' === $intent['object'] ) {
@@ -850,15 +834,10 @@ function edds_create_payment() {
 			$intent = edds_api_request( 'PaymentIntent', 'retrieve', $intent['id'] );
 		}
 
-		if ( ! in_array( $intent->status, array( 'succeeded', 'requires_capture' ), true ) ) {
-			throw new \EDD_Stripe_Gateway_Exception(
-				esc_html__(
-					'An error occurred, but your payment may have gone through. Please contact the site administrator.',
-					'easy-digital-downloads'
-				),
-				'Invalid Intent status ' . $intent->status . ' during payment creation.'
-			);
-		}
+		EDD\Gateways\Stripe\Checkout\Validation::intent_status( $intent );
+
+		// Validate intent amount matches purchase total.
+		EDD\Gateways\Stripe\Checkout\Validation::intent_amount( $intent, $purchase_data['price'] );
 
 		$payment_data = array(
 			'price'        => $purchase_data['price'],
@@ -1039,15 +1018,7 @@ function edds_complete_payment() {
 			);
 		}
 
-		if ( ! isset( $intent['id'] ) ) {
-			throw new \EDD_Stripe_Gateway_Exception(
-				esc_html__(
-					'An error occurred, but your payment may have gone through. Please contact the site administrator.',
-					'easy-digital-downloads'
-				),
-				'Unable to retrieve Intent during payment completion.'
-			);
-		}
+		EDD\Gateways\Stripe\Checkout\Validation::intent_exists( $intent );
 
 		// Retrieve the intent from Stripe again to verify linked payment.
 		if ( 'setup_intent' === $intent['object'] ) {
@@ -1056,7 +1027,12 @@ function edds_complete_payment() {
 			$intent = edds_api_request( 'PaymentIntent', 'retrieve', $intent['id'] );
 		}
 
+		// Validate intent amount matches the linked payment total.
 		$payment = edd_get_payment( $intent->metadata->edd_payment_id );
+
+		if ( $payment ) {
+			EDD\Gateways\Stripe\Checkout\Validation::intent_amount( $intent, $payment->total );
+		}
 
 		if ( ! $payment ) {
 			throw new \EDD_Stripe_Gateway_Exception(

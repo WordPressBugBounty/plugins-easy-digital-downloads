@@ -61,36 +61,13 @@ class Header implements SubscriberInterface {
 					<button
 						id="edd-notification-button"
 						class="edd-round edd-hidden"
-						x-data
-						x-init="function() {
-							if ( 'undefined' !== typeof $store.eddNotifications ) {
-								$el.classList.remove( 'edd-hidden' );
-								$store.eddNotifications.numberActiveNotifications = <?php echo esc_js( $number_notifications ); ?>
-							}
-						}"
-						@click="$store.eddNotifications.openPanel()"
+						onclick="if(window.eddNotifications){window.eddNotifications.openPanel();}"
 					>
 						<span
 							class="edd-round edd-number<?php echo 0 === $number_notifications ? ' edd-hidden' : ''; ?>"
-							x-show="$store.eddNotifications.numberActiveNotifications > 0"
 						>
-							<?php
-							echo wp_kses(
-								sprintf(
-								/* translators: %1$s number of notifications; %2$s opening span tag; %3$s closing span tag */
-									__( '%1$s %2$sunread notifications%3$s', 'easy-digital-downloads' ),
-									'<span x-text="$store.eddNotifications.numberActiveNotifications"></span>',
-									'<span class="screen-reader-text">',
-									'</span>'
-								),
-								array(
-									'span' => array(
-										'class'  => true,
-										'x-text' => true,
-									),
-								)
-							);
-							?>
+							<span id="edd-notification-count"><?php echo esc_html( $number_notifications ); ?></span>
+							<span class="screen-reader-text"><?php esc_html_e( 'unread notifications', 'easy-digital-downloads' ); ?></span>
 						</span>
 
 						<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="edd-notifications-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.8333 2.5H4.16667C3.25 2.5 2.5 3.25 2.5 4.16667V15.8333C2.5 16.75 3.24167 17.5 4.16667 17.5H15.8333C16.75 17.5 17.5 16.75 17.5 15.8333V4.16667C17.5 3.25 16.75 2.5 15.8333 2.5ZM15.8333 15.8333H4.16667V13.3333H7.13333C7.70833 14.325 8.775 15 10.0083 15C11.2417 15 12.3 14.325 12.8833 13.3333H15.8333V15.8333ZM11.675 11.6667H15.8333V4.16667H4.16667V11.6667H8.34167C8.34167 12.5833 9.09167 13.3333 10.0083 13.3333C10.925 13.3333 11.675 12.5833 11.675 11.6667Z" fill="currentColor"></path></svg>

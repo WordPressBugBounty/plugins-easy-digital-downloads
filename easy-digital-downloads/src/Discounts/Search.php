@@ -62,13 +62,26 @@ class Search implements SubscriberInterface {
 			return array();
 		}
 
+		$filter_invalid = ! empty( $_GET['filter_invalid'] );
+
 		$args = array(
 			'search'  => isset( $_GET['s'] ) ? sanitize_text_field( urldecode( $_GET['s'] ) ) : '',
 			'orderby' => 'code',
 			'order'   => 'ASC',
 		);
+		if ( $filter_invalid ) {
+			$args['status__not_in'] = array( 'expired', 'inactive', 'archived' );
+		}
 
 		$discounts = edd_get_discounts( $args );
+		if ( $filter_invalid ) {
+			$discounts = array_filter(
+				$discounts,
+				function ( $discount ) {
+					return edd_validate_discount( $discount->id );
+				}
+			);
+		}
 
 		return array_map(
 			function ( $discount ) {

@@ -24,6 +24,13 @@ class Notification {
 	public $remote_id = null;
 
 	/**
+	 * @var string Source of the notification, e.g. `api` or `local`.
+	 *
+	 * @since 3.6.6
+	 */
+	public $source = 'api';
+
+	/**
 	 * @var string Title of the notification.
 	 */
 	public $title;
@@ -183,8 +190,13 @@ class Notification {
 
 		$data['icon_name'] = $this->getIcon();
 
+		$date = $this->date_updated;
+		if ( 'api' === $this->source ) {
+			$date = $this->date_created;
+		}
+
 		/* translators: %s: a length of time (e.g. "1 second") */
-		$data['relative_date'] = sprintf( __( '%s ago', 'easy-digital-downloads' ), human_time_diff( strtotime( $this->date_updated ) ) );
+		$data['relative_date'] = sprintf( __( '%s ago', 'easy-digital-downloads' ), human_time_diff( strtotime( $date ) ) );
 
 		return $data;
 	}

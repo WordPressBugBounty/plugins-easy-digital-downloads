@@ -131,6 +131,9 @@ class Migrator {
 			);
 		}
 
+		// Clear the events registered transient so events are re-checked.
+		Loader::clear_events_transient();
+
 		/**
 		 * Fires after EDD cron events have been migrated to Action Scheduler.
 		 *
@@ -246,6 +249,9 @@ class Migrator {
 				)
 			);
 		}
+
+		// Clear the events registered transient so events are re-checked.
+		Loader::clear_events_transient();
 
 		/**
 		 * Fires after EDD cron events have been migrated to WP-Cron.

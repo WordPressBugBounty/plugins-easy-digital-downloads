@@ -28,7 +28,7 @@
 	.form-table {
 		tr {
 			margin: 0;
-			background: colors.$white;
+			background: #fff;
 			border: 1px solid colors.$wp-gray-5;
 			border-radius: 3px;
 			padding: 0;
@@ -160,7 +160,7 @@
 
 		&.license-expires-soon-notice a,
 		&.edd-license-expired a {
-			color: colors.$white;
+			color: #fff;
 
 			&:hover {
 				text-decoration: none;

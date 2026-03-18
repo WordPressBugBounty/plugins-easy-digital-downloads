@@ -17,10 +17,10 @@ body.edd-about {
 		flex-direction: column;
 
 		& .edd-admin-about-section {
-			box-shadow: 0 2px 5px colors.$edd-very-light-gray;
+			box-shadow: 0 2px 5px var(--edd-very-light-gray);
 			margin: 0 20px 20px;
 			padding: 30px;
-			background: colors.$white;
+			background: #fff;
 			border: 1px solid #dddddd;
 			line-height: 2;
 			display: flex;
@@ -68,12 +68,12 @@ body.edd-about {
 
 				& img.shadow {
 					width: 100%;
-					box-shadow: 0 2px 5px colors.$edd-very-light-gray;
+					box-shadow: 0 2px 5px var(--edd-very-light-gray);
 				}
 
 				& figcaption {
 					font-size: 14px;
-					color: #888888;
+					color: #888;
 					margin-top: 5px;
 					text-align: center;
 					line-height: initial;
@@ -260,10 +260,6 @@ body.edd-about {
 
 			& .button-secondary {
 				transition: all 0.1s ease-in-out;
-				&:hover, &:focus {
-					background-color: #2271B1;
-					color: colors.$white;
-				}
 			}
 		}
 
@@ -285,20 +281,20 @@ body.edd-about {
 						display: flex;
 						flex-direction: column;
 						border: 1px solid #dddddd;
-						box-shadow: 0 2px 5px colors.$edd-very-light-gray;
+						box-shadow: 0 2px 5px var(--edd-very-light-gray);
 
 						& .details {
 							padding: 20px;
 							display: flex;
 							flex-direction: row;
-							background-color: colors.$white;
+							background-color: #fff;
 							flex-grow: 1;
 
 							& .leftcol {
 								& img {
 									max-width: 100px;
 									padding: 10px;
-									box-shadow: 0 2px 3px colors.$edd-very-light-gray;
+									box-shadow: 0 2px 3px var(--edd-very-light-gray);
 								}
 							}
 

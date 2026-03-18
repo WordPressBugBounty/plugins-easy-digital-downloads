@@ -2,7 +2,7 @@
 @use "~@wordpress/base-styles/breakpoints" as wp-breakpoints;
 
 .edd-form {
-	background: colors.$white;
+	background: #fff;
 	border: 1px solid #e2e4e7;
 	padding: 2em;
 	max-width: wp-breakpoints.$break-huge;

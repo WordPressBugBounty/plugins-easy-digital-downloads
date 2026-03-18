@@ -1,12 +1,12 @@
-@use "../../variables/colors" as colors;
+@use '../../variables/colors' as colors;
 
 .edd-chartjs-tooltip {
 	position: absolute;
-	background: colors.$white !important;
+	background: #fff !important;
 	border-width: 0px;
 	border-radius: 12px !important;
-	box-shadow: colors.$edd-tool-tip-shadow !important;
-	color: colors.$edd-tooltip-text !important;
+	box-shadow: colors.$tooltip-shadow !important;
+	color: colors.$tooltip-text !important;
 	width: auto;
 	min-width: 180px;
 	max-width: 250px !important;

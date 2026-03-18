@@ -1,4 +1,5 @@
 @use "../../variables/animations";
+@use "../../variables/colors" as colors;
 
 /* PayPal Connect
 -------------------------------------------------------------- */
@@ -35,8 +36,8 @@
 	margin: .25em 0;
 }
 .edd-paypal-account-status .dashicons-yes {
-	color: #008a20;
+	color: colors.$wp-green-50;
 }
 .edd-paypal-account-status .dashicons-no {
-	color: #d63638;
+	color: colors.$wp-red-50;
 }

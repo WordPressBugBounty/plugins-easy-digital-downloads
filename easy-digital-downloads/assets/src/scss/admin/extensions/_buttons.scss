@@ -4,13 +4,13 @@
 @use "../../variables/mixins" as mixins;
 
 .button.edd-extension-manager__action-upgrade {
-	background-color: colors.$wp-green-50;
-	color: colors.$white;
+	background-color: var(--edd-notice-green);
+	color: #fff;
 
 	&:hover,
 	&:active {
-		background-color: darken(colors.$wp-green-50,10%);
-		color: colors.$white;
+		background-color: var(--edd-notice-green-hover);
+		color: #fff;
 	}
 }
 
@@ -72,7 +72,7 @@
 			width: 14px;
 			left: 3px;
 			bottom: 3px;
-			background-color: colors.$white;
+			background-color: #fff;
 			transition: 0.1s transform ease;
 			border-radius: 50%;
 
@@ -84,7 +84,7 @@
 		&:active,
 		&:focus {
 			outline: 0;
-			box-shadow: 0 0 0 1px colors.$white, 0 0 0 3px colors.$wp-input-border;
+			box-shadow: 0 0 0 1px #fff, 0 0 0 3px colors.$wp-input-border;
 		}
 
 		&:hover {
@@ -110,11 +110,11 @@
 		}
 
 		.edd-plugin__active & {
-			background-color: var(--wp-admin-theme-color);
+			background-color: var(--edd-wp-admin-theme-color);
 
 			:active,
 			:focus {
-				box-shadow: 0 0 0 1px colors.$white, 0 0 0 3px var(--wp-admin-theme-color);
+				box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--edd-wp-admin-theme-color);
 			}
 		}
 	}

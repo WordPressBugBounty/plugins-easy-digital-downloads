@@ -87,7 +87,7 @@ class Localization {
 			'one_price_min'           => __( 'You must have at least one price', 'easy-digital-downloads' ),
 			'one_field_min'           => __( 'You must have at least one field', 'easy-digital-downloads' ),
 			'one_download_min'        => __( 'Payments must contain at least one item', 'easy-digital-downloads' ),
-			'no_results_text'         => __( 'No match for:', 'easy-digital-downloads' ),
+			'no_results_text'         => __( 'No results found.', 'easy-digital-downloads' ),
 			'numeric_item_price'      => __( 'Item price must be numeric', 'easy-digital-downloads' ),
 			'numeric_item_tax'        => __( 'Item tax must be numeric', 'easy-digital-downloads' ),
 			'numeric_quantity'        => __( 'Quantity must be numeric', 'easy-digital-downloads' ),
@@ -117,7 +117,7 @@ class Localization {
 			'new_media_ui'            => edd_apply_filters_deprecated( 'edd_use_35_media_ui', array( 1 ), '3.1.1', false, __( 'The edd_use_35_media_ui filter is no longer supported.', 'easy-digital-downloads' ) ),
 
 			// REST based items.
-			'restBase'                => rest_url( \EDD\API\v3\Endpoint::$namespace ),
+			'restBase'                => rest_url( \EDD\REST\Routes\Route::NAMESPACE . '/' . \EDD\REST\Routes\Route::$version ),
 			'restNonce'               => wp_create_nonce( 'wp_rest' ),
 			'download_has_files'      => self::download_has_files(),
 

@@ -27,13 +27,13 @@
 
 .edd-admin-notice-overlay {
 	display: none;
-	background-color: colors.$white;
+	background-color: #fff;
 	padding: 2.5em;
 	text-align: center;
 	max-width: 650px;
 	position: relative;
 	flex-direction: column;
-	border-top: 5px solid colors.$edd-light-blue;
+	border-top: 5px solid var(--edd-light-blue);
 	border-radius: 12px;
 
 	.edd-promo-notice__overlay & {
@@ -80,7 +80,7 @@
 
 	.edd-promo-notice-dismiss.button-link {
 		position: absolute;
-		color: colors.$wp-text;
+		color: colors.$gray-text-min;
 		text-decoration: none;
 		font-size: 2em;
 		top: 0;

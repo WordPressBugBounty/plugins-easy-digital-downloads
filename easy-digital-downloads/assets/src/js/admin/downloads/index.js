@@ -98,9 +98,14 @@ var EDD_Download_Configuration = {
 			}
 		} );
 
-		// Remove Chosen elements
-		clone.find( '.search-choice' ).remove();
-		clone.find( '.chosen-container' ).remove();
+		// Destroy Tom Select instances on the clone and remove their wrappers.
+		clone.find( 'select.edd-select-chosen' ).each( function() {
+			if ( this.tomselect ) {
+				this.tomselect.destroy();
+			}
+		} );
+		clone.find( '.ts-wrapper, .chosen-container' ).remove();
+		clone.find( 'select.edd-select-chosen' ).removeClass( 'ts-hidden-accessible' );
 		edd_attach_tooltips( clone.find( '.edd-help-tip' ) );
 		EDD_Download_Configuration.triggerRowChange( clone );
 
@@ -370,7 +375,7 @@ var EDD_Download_Configuration = {
 
 	initChosen: function ( element ) {
 		element.find( 'select.edd-select-chosen' ).each( function () {
-			initChosen( $( this ) );
+			initChosen( this );
 		} );
 	},
 

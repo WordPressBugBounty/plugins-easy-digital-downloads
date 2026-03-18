@@ -40,6 +40,7 @@ class Environment {
 			'is_ssl'         => (int) (bool) is_ssl(),
 			'stripe_connect' => (int) (bool) edd_get_option( 'stripe_connect_account_id' ),
 			'rest_enabled'   => (int) (bool) $this->is_rest_enabled(),
+			'checkout_type'  => \EDD\Checkout\Validator::get_checkout_type(),
 		);
 
 		$server    = $this->parse_server();

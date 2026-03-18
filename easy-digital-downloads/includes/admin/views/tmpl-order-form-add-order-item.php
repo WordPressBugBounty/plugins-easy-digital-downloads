@@ -79,7 +79,9 @@ if ( ! empty( $recent_downloads ) ) {
 				class="edd-select edd-order-add-download-select variations variations-only edd-select-chosen"
 				data-placeholder="<?php esc_html_e( 'Search for a download', 'easy-digital-downloads' ); ?>"
 				data-search-placeholder="<?php esc_html_e( 'Search for a download', 'easy-digital-downloads' ); ?>"
-				data-search-type="download">
+				data-search-type="download"
+				data-search-variations="1"
+				data-search-variations-only="1">
 					<option value=""></option>
 					<# if ( 0 !== data.productId ) { #>
 						<option value="{{ data.productId }}<# if ( 0 !== data.priceId ) { #>_{{ data.priceId }}<# } #>" selected>{{ data.productName }}</option>

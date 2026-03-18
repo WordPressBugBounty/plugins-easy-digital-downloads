@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 use EDD\EventManagement\SubscriberInterface;
 use EDD\Cron\Schedulers;
 use EDD\Cron\Migrator;
+use EDD\Utils\Transient;
 
 /**
  * Loader Class
@@ -71,9 +72,22 @@ class Loader implements SubscriberInterface {
 	}
 
 	/**
+	 * The transient key used to track whether cron events have been registered.
+	 *
+	 * @since 3.6.6
+	 * @var string
+	 */
+	const EVENTS_REGISTERED_TRANSIENT = 'edd_cron_events_registered';
+
+	/**
 	 * Load any cron events we need to.
 	 *
 	 * Cron Events are the 'do_action' events that are fired by WordPress, on a defined schedule.
+	 *
+	 * Uses a transient to avoid checking schedule status on every page load.
+	 * When using Action Scheduler, each check requires database queries against
+	 * the actionscheduler_actions table. The transient ensures we only run these
+	 * checks periodically rather than on every request.
 	 *
 	 * @since 3.3.0
 	 *
@@ -81,6 +95,12 @@ class Loader implements SubscriberInterface {
 	 */
 	public function load_events() {
 		$this->maybe_migrate_to_action_scheduler();
+
+		$transient = new Transient( self::EVENTS_REGISTERED_TRANSIENT, '+1 hour' );
+		if ( false !== $transient->get() ) {
+			return;
+		}
+
 		foreach ( $this->get_registered_events() as $event ) {
 			// If this isn't a subclass of Event, skip it.
 			if ( ! is_subclass_of( $event, 'EDD\Cron\Events\Event' ) ) {
@@ -89,6 +109,23 @@ class Loader implements SubscriberInterface {
 
 			$event->schedule();
 		}
+
+		$transient->set( 1 );
+	}
+
+	/**
+	 * Clear the events registered transient.
+	 *
+	 * Call this when events need to be re-registered, such as after
+	 * plugin activation, deactivation, or upgrade.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @return void
+	 */
+	public static function clear_events_transient() {
+		$transient = new Transient( self::EVENTS_REGISTERED_TRANSIENT, '+1 hour' );
+		$transient->delete();
 	}
 
 	/**

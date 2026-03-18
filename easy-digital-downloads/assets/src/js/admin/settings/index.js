@@ -121,7 +121,11 @@ const EDD_Settings = {
 				option.prop( 'selected', false );
 			}
 
-			default_gateway.trigger( 'chosen:updated' );
+			const instance = default_gateway[0]?.tomselect;
+		if ( instance ) {
+			instance.sync();
+			instance.refreshOptions( false );
+		}
 		} );
 
 		// Empty Cart Behavior functionality

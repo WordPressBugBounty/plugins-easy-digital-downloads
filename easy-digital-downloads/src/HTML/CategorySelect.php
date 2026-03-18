@@ -75,6 +75,7 @@ class CategorySelect {
 					'search-type'        => 'download_category',
 					/* translators: %s: Download Category taxonomy name */
 					'search-placeholder' => sprintf( _x( 'Search %s', 'plural: Example: "Search Download Categories"', 'easy-digital-downloads' ), $category_labels['name'] ),
+					'search-value-type'  => 'id', // Override if querying by slug.
 				),
 				/* translators: %s: Download Category taxonomy name */
 				'placeholder'      => sprintf( _x( 'Choose %s', 'plural: Example: "Choose one or more Download Categories"', 'easy-digital-downloads' ), $category_labels['name'] ),

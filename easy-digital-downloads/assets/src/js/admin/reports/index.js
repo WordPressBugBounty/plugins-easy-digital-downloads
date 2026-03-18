@@ -36,7 +36,7 @@ const EDD_Reports = {
 		// Show hide extended date options
 		$( 'select.edd-graphs-date-options' ).on( 'change', function( event ) {
 			const	select = $( this ),
-				date_range_options = select.parent().siblings( '.edd-date-range-options' );
+				date_range_options = select.closest( '.edd-date-range-picker' ).siblings( '.edd-date-range-options' );
 
 			if ( 'other' === select.val() ) {
 				date_range_options.removeClass( 'screen-reader-text' );

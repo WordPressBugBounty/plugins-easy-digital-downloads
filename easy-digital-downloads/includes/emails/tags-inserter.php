@@ -91,11 +91,6 @@ function edd_email_tags_inserter_media_button_output() {
 		}
 	}
 	if ( $email ) {
-		?>
-		<button type="button" class="button button-secondary edd-email-action-reset edd-promo-notice__trigger" data-email="<?php echo esc_attr( $email_id ); ?>">
-			<?php esc_html_e( 'Restore Default', 'easy-digital-downloads' ); ?>
-		</button>
-		<?php
 		if ( ! $email->get_template()->supports_html() ) {
 			$content = __( 'This email will be sent as a plain text email and does not support images or HTML markup.', 'easy-digital-downloads' );
 			if ( 'text/html' === EDD()->emails->get_content_type() ) {

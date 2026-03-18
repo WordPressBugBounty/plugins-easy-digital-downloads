@@ -38,12 +38,25 @@ class ProductSelect extends Select {
 				}
 				$excluded_products[] = absint( $exclusion );
 			}
-			$this->args['data']['excluded-products'] = implode( ',', array_filter( $excluded_products ) );
+			$this->args['data']['search-exclusions'] = implode( ',', array_filter( $excluded_products ) );
 		}
 
 		$this->args['class']            = $this->get_classes();
 		$this->args['options']          = $options;
 		$this->args['show_option_none'] = false;
+
+		if ( ! $this->args['bundles'] ) {
+			$this->args['data']['search-no-bundles'] = 1;
+		}
+		if ( $this->args['variations'] ) {
+			$this->args['data']['search-variations'] = 1;
+		}
+		if ( $this->args['show_variations_only'] ) {
+			$this->args['data']['search-variations-only'] = 1;
+		}
+		if ( ! empty( $this->args['exclude_current'] ) ) {
+			$this->args['data']['search-current-id'] = get_the_ID();
+		}
 
 		// The product select must always show an empty option.
 		if ( empty( $this->args['show_option_empty'] ) ) {

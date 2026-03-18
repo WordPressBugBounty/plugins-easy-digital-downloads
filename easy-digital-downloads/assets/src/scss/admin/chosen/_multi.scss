@@ -1,63 +1,59 @@
-@use "../../variables/colors" as colors;
+@use '../../variables/colors';
 
-.chosen-container-multi {
-	.search-field {
+// Multi-select control.
+.ts-wrapper.multi .ts-control {
+	gap: 4px;
+
+	// Hide the dropdown arrow on multi-selects.
+	background-image: none !important;
+}
+
+// Active state with dropdown open.
+.ts-wrapper.multi.dropdown-active .ts-control {
+	border-bottom-color: transparent;
+}
+
+// Selected items (tags).
+.ts-wrapper.multi .ts-control > .item {
+	padding: 8px 6px;
+	line-height: 1;
+	border: 1px solid colors.$wp-input-border-2;
+	max-width: 100%;
+	border-radius: 2px;
+	background: colors.$wp-alternate;
+	box-shadow: none;
+	color: colors.$wp-input-text;
+	cursor: default;
+	position: relative;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	&.active {
+		background: var(--edd-wp-admin-theme-color);
+		color: #fff;
+	}
+
+	body[class*="branch-6"] & {
+		padding: 4px 6px;
+	}
+
+	// Remove button on selected items.
+	.remove {
+		display: flex;
+		align-items: center;
 		border: none;
-	}
-
-	&.chosen-with-drop .chosen-choices {
-		border-bottom-color: transparent;
-	}
-
-	.chosen-choices li.search-field {
-		min-width: 100px !important;
-		width: 100%;
-	}
-
-	.chosen-choices li.search-field input[type=text] {
+		border-left: 1px solid colors.$wp-alternate;
+		background: none;
 		color: colors.$wp-input-text;
-		font-family: unset;
-		height: unset;
-		margin: 0;
-		padding: 3px 24px 3px 10px;
-		width: 100% !important;
-	}
+		cursor: pointer;
+		font-size: 14px;
+		padding: 0 5px;
+		text-decoration: none;
+		margin-left: 4px;
 
-	.chosen-choices li.search-choice {
-		margin: 3px 5px 3px 0;
-		padding: 5px 22px 5px 5px;
-		border: 1px solid colors.$wp-input-border;
-		max-width: 100%;
-		border-radius: 4px;
-		background: #f4f4f4;
-		box-shadow: none;
-		color: colors.$wp-input-text;
-		cursor: default;
-	}
-
-	.chosen-choices li.search-choice .search-choice-close {
-		position: absolute;
-		top: 4px;
-		right: 3px;
-		display: block;
-		width: 15px;
-		height: 15px;
-	}
-
-	.chosen-choices li.search-choice .search-choice-close:before {
-		height: 15px;
-		width: 15px;
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: colors.$wp-input-text;
-		font-family: 'dashicons';
-		content: '\f158';
-		font-size: 15px;
-		line-height: 1;
-	}
-
-	.chosen-choices li.search-choice .search-choice-close:hover:before {
-		color: colors.$wp-text;
+		&:hover {
+			color: #50575e;
+		}
 	}
 }

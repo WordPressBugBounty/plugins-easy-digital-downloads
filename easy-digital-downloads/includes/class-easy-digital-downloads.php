@@ -364,7 +364,7 @@ if ( ! class_exists( 'Easy_Digital_Downloads' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'EDD_VERSION' ) ) {
-				define( 'EDD_VERSION', '3.6.5' );
+				define( 'EDD_VERSION', '3.6.6' );
 			}
 
 			// Make sure CAL_GREGORIAN is defined.
@@ -743,9 +743,7 @@ if ( ! class_exists( 'Easy_Digital_Downloads' ) ) :
 			add_action(
 				'rest_api_init',
 				function () {
-					$endpoints = array(
-						'\\EDD\\API\\v3\\Notifications',
-					);
+					$endpoints = array();
 
 					foreach ( $endpoints as $endpointClassName ) { // phpcs:ignore
 						$endpointNamePieces = explode( '\\', $endpointClassName ); // phpcs:ignore

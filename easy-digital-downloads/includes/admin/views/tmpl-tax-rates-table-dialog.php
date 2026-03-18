@@ -24,12 +24,14 @@
 						return array( '*' => __( 'All Countries', 'easy-digital-downloads' ) ) + $countries;
 					}
 				);
-				echo EDD()->html->country_select(
+				$country = new \EDD\HTML\CountrySelect(
 					array(
 						'id'                => 'tax_rate_country',
 						'show_option_empty' => __( 'Select a country', 'easy-digital-downloads' ),
+						'chosen'            => false,
 					)
 				);
+				$country->output();
 				?>
 			</div>
 		</div>

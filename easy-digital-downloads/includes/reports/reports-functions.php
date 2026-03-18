@@ -1373,26 +1373,28 @@ function display_dates_filter() {
 	// Output fields
 	?>
 	<div class="edd-date-range-picker graph-option-section" data-range="<?php echo esc_attr( $selected_range ); ?>">
-		<?php echo $range_select; ?>
-		<!-- DATE RANGES -->
-		<div class="edd-date-range-dates">
-			<span class="dashicons dashicons-calendar edd-date-main-icon"></span>
-			<div class="edd-date-range-selected-date">
-				<?php
-				foreach ( $range_options as $range_key => $range_name ) :
-					$range_dates          = \EDD\Reports\parse_dates_for_range( $range_key );
-					$selected_range_class = ( $selected_range !== $range_key ) ? 'hidden' : '';
-					$start_date           = edd_get_edd_timezone_equivalent_date_from_utc( $range_dates['start'] )->format( $date_format );
-					$end_date             = edd_get_edd_timezone_equivalent_date_from_utc( $range_dates['end'] )->format( $date_format );
-					$label                = $start_date;
-					if ( $start_date !== $end_date ) {
-						$label = $start_date . ' - ' . $end_date;
-					}
-					?>
-					<span class="<?php echo esc_attr( $selected_range_class ); ?>" data-range="<?php echo esc_attr( $range_key ); ?>" data-default-relative-range="<?php echo \EDD\Reports\get_default_relative_range( $range_key ); ?>"><?php echo esc_html( $label ); ?></span>
+		<div class="edd-date-range-picker-fields">
+			<?php echo $range_select; ?>
+			<!-- DATE RANGES -->
+			<div class="edd-date-range-dates">
+				<span class="dashicons dashicons-calendar edd-date-main-icon"></span>
+				<div class="edd-date-range-selected-date">
 					<?php
-				endforeach;
-				?>
+					foreach ( $range_options as $range_key => $range_name ) :
+						$range_dates          = \EDD\Reports\parse_dates_for_range( $range_key );
+						$selected_range_class = ( $selected_range !== $range_key ) ? 'hidden' : '';
+						$start_date           = edd_get_edd_timezone_equivalent_date_from_utc( $range_dates['start'] )->format( $date_format );
+						$end_date             = edd_get_edd_timezone_equivalent_date_from_utc( $range_dates['end'] )->format( $date_format );
+						$label                = $start_date;
+						if ( $start_date !== $end_date ) {
+							$label = $start_date . ' - ' . $end_date;
+						}
+						?>
+						<span class="<?php echo esc_attr( $selected_range_class ); ?>" data-range="<?php echo esc_attr( $range_key ); ?>" data-default-relative-range="<?php echo \EDD\Reports\get_default_relative_range( $range_key ); ?>"><?php echo esc_html( $label ); ?></span>
+						<?php
+					endforeach;
+					?>
+				</div>
 			</div>
 		</div>
 		<!-- RELATIVE DATE RANGES -->

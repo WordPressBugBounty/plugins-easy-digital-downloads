@@ -30,7 +30,8 @@ class Scripts {
 		$admin_deps = array( 'jquery', 'jquery-form', 'underscore' );
 
 		// Register vendor scripts from assets/vendor/js.
-		wp_register_script( 'jquery-chosen', $vendor_dir . 'chosen.jquery.min.js', array( 'jquery' ), $version, true );
+		wp_register_script( 'edd-tom-select', $vendor_dir . 'tom-select.complete.min.js', array(), $version, true );
+		wp_register_script( 'jquery-chosen', $js_dir . 'chosen-compat.js', array( 'jquery', 'edd-tom-select' ), $version, true );
 		wp_register_script( 'edd-jquery-flot', $vendor_dir . 'jquery.flot.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'edd-moment-js', $vendor_dir . 'moment.min.js', array(), $version, true );
 		wp_register_script( 'edd-moment-timezone-js', $vendor_dir . 'moment-timezone.min.js', array( 'edd-moment-js' ), $version, true );

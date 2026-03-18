@@ -98,6 +98,40 @@ class Validator {
 	}
 
 	/**
+	 * Gets the checkout type for the purchase page.
+	 *
+	 * @since 3.6.6
+	 * @return string The checkout type: 'elementor', 'block', 'shortcode', 'undetermined', or 'unknown'.
+	 */
+	public static function get_checkout_type( $post_id = null ): string {
+		if ( empty( $post_id ) ) {
+			$post_id = edd_get_option( 'purchase_page', false );
+		}
+
+		if ( empty( $post_id ) ) {
+			return 'unknown';
+		}
+
+		// Check for Elementor widget first.
+		if ( \EDD\Integrations\Elementor::checkout_is_elementor( $post_id ) ) {
+			return 'elementor';
+		}
+
+		// Check for checkout block.
+		if ( has_block( 'edd/checkout', absint( $post_id ) ) ) {
+			return 'block';
+		}
+
+		// Check for legacy shortcode.
+		$post = get_post( $post_id );
+		if ( $post && has_shortcode( $post->post_content, 'download_checkout' ) ) {
+			return 'shortcode';
+		}
+
+		return 'undetermined';
+	}
+
+	/**
 	 * Checks the query for the Validator class.
 	 *
 	 * @since 3.3.0

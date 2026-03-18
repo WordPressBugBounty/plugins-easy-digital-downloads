@@ -2,44 +2,39 @@
 
 /* Notifications
 -------------------------------------------------------------- */
-.edd-overlay {
-	position: fixed;
-	z-index: 1052;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 160px;
-	background-color: #141b38;
-	opacity: .5;
-	transition: .5s;
-}
-
-.edd-slide-in {
-	transform: translateX(100%) !important;
-	-webkit-transform: translateX(100%) !important;
-}
-
-#edd-notifications-panel {
+dialog#edd-notifications-panel {
 	background-color: white;
+	border: none;
+	padding: 0;
+	margin: 0;
 	height: 100%;
 	width: 100%;
+	max-height: none;
 	max-width: 570px;
 	position: fixed;
-	z-index: 1053;
 	top: 0;
 	right: 0;
 	bottom: 0;
+	left: auto;
 	overflow-x: hidden;
-	transition: .5s;
+	overflow-y: auto;
+	transition: transform .3s ease;
+	transform: translateX(100%);
 
-	transform: translateX(0%);
-	-webkit-transform: translateX(0%);
+	&.edd-panel--open {
+		transform: translateX(0%);
+	}
+
+	&::backdrop {
+		background-color: #141b38;
+		opacity: .5;
+	}
 }
-body.admin-bar #edd-notifications-panel {
+body.admin-bar dialog#edd-notifications-panel {
 	top: 32px;
 }
 @media screen and (max-width: 600px) {
-	body.admin-bar #edd-notifications-panel {
+	body.admin-bar dialog#edd-notifications-panel {
 		top: 46px;
 	}
 }
@@ -49,11 +44,27 @@ body.admin-bar #edd-notifications-panel {
 	align-items: center;
 	padding: 0 30px;
 	color: #fff;
-	background-color: #01B7FF;
+	background-color: var(--edd-light-blue);
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
 #edd-notifications-header h3 {
 	color: #fff;
 	flex: 1;
+}
+#edd-notifications-header .edd-notifications-view-toggle {
+	background: none;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	font-size: 13px;
+	padding: 5px 10px;
+	text-decoration: underline;
+	white-space: nowrap;
+}
+#edd-notifications-header .edd-notifications-view-toggle:hover {
+	text-decoration: none;
 }
 #edd-notifications-header .edd-close {
 	background: none;
@@ -85,6 +96,11 @@ body.admin-bar #edd-notifications-panel {
 }
 .edd-notification--body {
 	flex: 1;
+	min-width: 0;
+}
+.edd-notification--content img {
+	max-width: 100%;
+	height: auto;
 }
 .edd-notification--header {
 	align-items: center;
@@ -122,4 +138,18 @@ body.admin-bar #edd-notifications-panel {
 }
 .edd-notification--dismiss:hover {
 	text-decoration: none;
+}
+
+/* Hide the flyout when the notification panel is open. */
+.edd-notifications-open #edd-flyout {
+	display: none;
+}
+
+/* Dismissed notifications */
+.edd-notification--dismissed {
+	opacity: .65;
+
+	.edd-notification--dismiss {
+		display: none;
+	}
 }

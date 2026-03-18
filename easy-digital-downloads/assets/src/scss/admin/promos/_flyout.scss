@@ -20,7 +20,7 @@
 		transform: translateY(-50%);
 		-moz-transform: translateY(-50%);
 		-webkit-transform: translateY(-50%);
-		color: colors.$white;
+		color: #fff;
 		background-color: colors.$wp-gray-700;
 		font-size: 12px;
 		white-space: nowrap;
@@ -48,10 +48,10 @@
 			height: 54px;
 			display: block;
 			border-radius: 50%;
-			border: 3px solid colors.$edd-gray;
+			border: 3px solid var(--edd-blue-gray);
 			overflow: hidden;
 			transition: all 0.2s ease-in-out;
-			background: colors.$white;
+			background: #fff;
 		}
 
 		&:hover img {
@@ -62,7 +62,7 @@
 		& .edd-flyout-label {
 			opacity: 0;
 			transform: translateY(-50%) scale(0);
-			background-color: colors.$edd-gray;
+			background-color: var(--edd-blue-gray);
 		}
 
 		&:hover .edd-flyout-label {
@@ -75,7 +75,7 @@
 			opacity: 1;
 			font-family: "dashicons";
 			content: "\f534";
-			color: colors.$edd-alert-red;
+			color: var(--edd-alert-red);
 			font-size: 16px;
 			height: 16px;
 			width: 16px;
@@ -83,7 +83,7 @@
 			border-radius: 999999px;
 			line-height: 16px;
 			transition: all 0.2s ease-in-out;
-			background-color: colors.$white;
+			background-color: #fff;
 			position: absolute;
 			right: 3px;
 			bottom: 46px;
@@ -108,14 +108,14 @@
 
 			& a {
 				text-decoration: none;
-				color: colors.$white;
+				color: #fff;
 			}
 
 			& .edd-flyout-label, .edd-flyout-icon {
 				transition: all 0.2s ease-in-out;
 				transform: scale(0);
 				opacity: 0;
-				background-color: colors.$edd-gray;
+				background-color: var(--edd-blue-gray);
 			}
 
 			& .edd-flyout-label {
@@ -135,18 +135,18 @@
 				height: 40px;
 				border-radius: 50%;
 				box-shadow: 0 3px 12px 1px colors.$medium-gray-placeholder;
-				background: colors.$edd-gray 0 0 no-repeat padding-box;
+				background: var(--edd-blue-gray) 0 0 no-repeat padding-box;
 
 				&.red {
-					background: colors.$edd-alert-red 0 0 no-repeat padding-box;
+					background: var(--edd-alert-red) 0 0 no-repeat padding-box;
 				}
 
 				&.green {
-					background: colors.$edd-notice-green 0 0 no-repeat padding-box;
+					background: var(--edd-notice-green) 0 0 no-repeat padding-box;
 				}
 
 				& span.dashicons:before {
-					color: colors.$white;
+					color: #fff;
 					font-size: 20px;
 					line-height: 40px;
 					vertical-align: middle;
@@ -158,23 +158,23 @@
 
 				& .edd-flyout-icon, .edd-flyout-label {
 					box-shadow: 0 3px 12px 1px colors.$medium-gray-placeholder;
-					background-color: colors.$edd-light-blue;
+					background-color: var(--edd-light-blue);
 				}
 
 				& .edd-flyout-icon {
-					background: colors.$edd-light-blue 0 0 no-repeat padding-box;
+					background: var(--edd-light-blue) 0 0 no-repeat padding-box;
 
 					&.red {
-						background: colors.$edd-alert-red-hover 0 0 no-repeat padding-box;
+						background: var(--edd-alert-red-hover) 0 0 no-repeat padding-box;
 					}
 
 					&.green {
-						background: colors.$edd-notice-green-hover 0 0 no-repeat padding-box;
+						background: var(--edd-notice-green-hover) 0 0 no-repeat padding-box;
 					}
 				}
 
 				& .edd-flyout-label {
-					background-color: colors.$edd-light-blue;
+					background-color: var(--edd-light-blue);
 				}
 			}
 		}

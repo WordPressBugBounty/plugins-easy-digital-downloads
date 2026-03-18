@@ -140,7 +140,7 @@ abstract class Event {
 				$this->args = $this->build_args();
 			}
 
-			if ( $this->next_scheduled( $this->hook, $this->args ) ) {
+			if ( Handler::get_scheduler()->has_scheduled( $this->hook, $this->args ) ) {
 				/* translators: %s: hook name that would be run for this WP Cron event. */
 				throw new Exceptions\Invalid_Argument( sprintf( __( 'The event %s is already scheduled.', 'easy-digital-downloads' ), $this->hook ) );
 			}

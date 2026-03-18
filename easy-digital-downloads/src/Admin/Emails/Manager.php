@@ -30,6 +30,7 @@ class Manager implements SubscriberInterface {
 			'edd_email_editor_top'                => 'description',
 			'wp_ajax_edd_reset_email'             => 'reset',
 			'edd_render_settings_emails_sections' => 'remove_sections',
+			'edd_email_editor_top'                => 'add_reset_button',
 		);
 	}
 
@@ -209,6 +210,27 @@ class Manager implements SubscriberInterface {
 		}
 
 		wp_send_json_success( array( 'content' => wpautop( $email_template->get_default( 'content' ) ) ) );
+	}
+
+	/**
+	 * Adds the reset button to the email editor.
+	 * The priority is 100 to ensure it is added after other media buttons.
+	 *
+	 * @since 3.6.6
+	 * @param \EDD\Emails\Templates\EmailTemplate $email The email template.
+	 */
+	public function add_reset_button( $email ) {
+		add_action(
+			'media_buttons',
+			function () use ( $email ) {
+				?>
+				<button type="button" class="button button-secondary edd-email-action-reset edd-promo-notice__trigger" data-email="<?php echo esc_attr( $email->email_id ); ?>">
+					<?php esc_html_e( 'Restore Default', 'easy-digital-downloads' ); ?>
+				</button>
+				<?php
+			},
+			100
+		);
 	}
 
 	/**

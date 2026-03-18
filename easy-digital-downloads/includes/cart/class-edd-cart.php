@@ -408,11 +408,11 @@ class EDD_Cart {
 	 * Get Discounts.
 	 *
 	 * @since 2.7
+	 * @since 3.6.6 Uses get_discounts_from_session() for normalization.
 	 * @return array $discounts The active discount codes
 	 */
 	public function get_discounts() {
-		$this->cart_session->get_discounts();
-		$this->discounts = ! empty( $this->discounts ) ? explode( '|', $this->discounts ) : array();
+		$this->discounts = $this->get_discounts_from_session();
 
 		return $this->discounts;
 	}
@@ -586,11 +586,11 @@ class EDD_Cart {
 			$to_add = $item;
 
 			if ( ! is_array( $to_add ) ) {
-				return;
+				continue;
 			}
 
 			if ( ! isset( $to_add['id'] ) || empty( $to_add['id'] ) ) {
-				return;
+				continue;
 			}
 
 			if ( edd_item_in_cart( $to_add['id'], $to_add['options'] ) && edd_item_quantities_enabled() ) {
@@ -1686,14 +1686,21 @@ class EDD_Cart {
 	}
 
 	/**
-	 * Populate the discounts with the data stored in the session.
+	 * Gets the discounts from the session.
 	 *
 	 * @since  2.7
-	 * @deprecated 3.3.0
-	 * @return void
+	 * @since 3.6.6 Now returns an array of discounts.
+	 * @return array The active discount codes.
 	 */
 	public function get_discounts_from_session() {
 		$this->cart_session->get_discounts();
+
+		// If the discounts are a string, explode them into an array.
+		if ( is_string( $this->discounts ) && ! empty( $this->discounts ) ) {
+			$this->discounts = explode( '|', $this->discounts );
+		}
+
+		return ! empty( $this->discounts ) ? (array) $this->discounts : array();
 	}
 
 	/**

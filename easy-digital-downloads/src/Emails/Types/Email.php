@@ -305,6 +305,12 @@ abstract class Email {
 			remove_filter( 'edd_email_show_links', '__return_false' );
 		}
 
+		if ( empty( $this->heading ) ) {
+			$this->set_heading();
+		}
+
+		$this->processor()->__set( 'heading', $this->heading );
+
 		return $this->processor()->build_email( $this->message );
 	}
 

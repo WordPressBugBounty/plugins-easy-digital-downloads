@@ -2,18 +2,15 @@
 @use "~@wordpress/base-styles/colors.native" as wp-native;
 
 // Extract WordPress Core colors to our own variables
-$white: wp-native.$white;
-$black: wp-native.$black;
 $gray-text-min: wp-native.$gray-text-min;
 
 /**
  * WordPress Core colors current as of 5.5.1.
  */
-$wp-text: $gray-text-min;
 $wp-border: #c3c4c7;
 
 $wp-input-text: #32373c;
-$wp-input-border: #7e8993;
+$wp-input-border: #949494;
 $wp-input-border-2: #8c8f94;
 
 $wp-alternate: #f9f9f9;
@@ -43,11 +40,6 @@ $wp-blue-500: wp-native.$blue-500;
 
 $medium-gray-placeholder: wp.$medium-gray-placeholder;
 
-$buddypress-colors: (
-	'evergreen': #36533f,
-	'mint': #4f6d59,
-);
-
 $alert-yellow: wp.$alert-yellow;
 $alert-red: wp.$alert-red;
 $alert-green: wp.$alert-green;
@@ -55,66 +47,13 @@ $alert-green: wp.$alert-green;
 $dark-secondary: wp-native.$dark-secondary;
 
 /**
- * EDD Brand Colors
- */
-$edd-gray: #444444;
-$edd-blue-gray: #35495c; // Found on our brand assets page.
-$edd-light-blue: #01B7FF; // Found on our brand assets page.
-$edd-light-gray: #F4F7FA; // Found on our brand assets page.
-
-/**
- * EDD Admin Colors
- */
-
-/**
- * Used in:
- * Admin bar thin line.
- * Persistent dismissables.
- * Flyout item backgrounds.
- */
-$edd-notice-blue: #01B7FF;
-$edd-notice-blue-hover: $edd-blue-gray;
-
-/**
- * Used in:
- * Persistent dismissables - Alerts
- * Flyout item backgrounds - Activate License key
- * Flyout bubble - Alert Icon.
- */
-$edd-alert-red: #d63638; // The red used in our notice bars and the flyout items.
-$edd-alert-red-hover: #b60012; // The hover color for the alert red.
-
-/**
- * Used in:
- * Flyout item backgrounds - Upgrade to Pro/Get a License
- * Upgrade to Pro links
- */
-$edd-notice-green: #1da867;
-$edd-notice-green-hover: #199155;
-
-$edd-very-light-gray: #E8E8E8; // A light gray used for box shadows in some section content that overlays the WP core background.
-
-/**
- * Used In:
- * Social Links in our footer.
- */
-$edd-footer-social-link: #A7AAAD;
-$edd-footer-social-link-hover: #50575e;
-
-/**
  * Supplemental colors that WP Core Is Missing:
  */
 $gray-800: #494949;
 
 /**
- * Upgrade to Pro Colors
+ * Tooltip colors:
  */
-$edd-pro-upgrade: #1da867;
-
-/**
- * EDD Tooltips
- */
-$edd-tool-tip-icon-color: rgba(126, 137, 147, 1);
-$edd-tooltip-background: $white;
-$edd-tooltip-text: #23282d;
-$edd-tool-tip-shadow: 0px 8px 36px 0px rgba(29, 36, 40, 0.15);
+$tooltip-text: #23282d;
+$tooltip-shadow: 0px 8px 36px 0px rgba(29, 36, 40, 0.15);
+$tooltip-icon: #7e8993;

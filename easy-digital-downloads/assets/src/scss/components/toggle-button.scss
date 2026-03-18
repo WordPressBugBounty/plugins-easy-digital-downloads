@@ -21,7 +21,7 @@ button.edd-button__toggle {
 		width: 14px;
 		left: 3px;
 		bottom: 3px;
-		background-color: colors.$white;
+		background-color: #fff;
 		transition: 0.1s transform ease;
 		border-radius: 50%;
 	}
@@ -33,7 +33,7 @@ button.edd-button__toggle {
 	&:active,
 	&:focus {
 		outline: 0;
-		box-shadow: 0 0 0 1px colors.$white, 0 0 0 3px colors.$wp-input-border;
+		box-shadow: 0 0 0 1px #fff, 0 0 0 3px colors.$wp-input-border;
 	}
 
 	&:hover {
@@ -63,11 +63,11 @@ button.edd-button__toggle {
 	}
 
 	&.edd-button-toggle--active {
-		background-color: var(--wp-admin-theme-color) !important; // remove important when enabling buttons
+		background-color: var(--edd-wp-admin-theme-color) !important; // remove important when enabling buttons
 
 		:active,
 		:focus {
-			box-shadow: 0 0 0 1px colors.$white, 0 0 0 3px var(--wp-admin-theme-color);
+			box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--edd-wp-admin-theme-color);
 		}
 	}
 }

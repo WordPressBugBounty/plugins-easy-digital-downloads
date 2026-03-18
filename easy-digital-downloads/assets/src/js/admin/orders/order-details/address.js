@@ -4,7 +4,7 @@
  * Internal dependencies
  */
 import OrderOverview from './../order-overview';
-import { getChosenVars } from 'utils/chosen.js';
+import { initChosen } from 'utils/chosen.js';
 import { jQueryReady } from 'utils/jquery.js';
 
 // Store customer search results to help prefill address data.
@@ -105,10 +105,7 @@ jQueryReady( () => {
 		}
 
 		// Update rate on Address change.
-		//
-		// Wait for Region field to be replaced when Country changes.
-		// Wait for typing when Regino field changes.
-		// jQuery listeners for Chosen compatibility.
+		// jQuery delegation handles the Region field being replaced dynamically.
 		$( '#edd_order_address_country' ).on( 'change', _.debounce( getTaxRate, 250 ) );
 
 		$( '#edd-order-address' ).on( 'change', '#edd_order_address_region', getTaxRate );
@@ -186,16 +183,19 @@ jQueryReady( () => {
 	function replaceRegionField( regions ) {
 		const state_wrapper = $( '#edd_order_address_region' );
 
-		$( '#edd_order_address_region_chosen' ).remove();
+		// Destroy Tom Select before replacing the element.
+		if ( state_wrapper.is( 'select' ) ) {
+			state_wrapper[0]?.tomselect?.destroy();
+		}
 
 		if ( 'nostates' === regions ) {
-			state_wrapper
+			$( '#edd_order_address_region' )
 				.replaceWith( '<input type="text" name="edd_order_address[region]" id="edd_order_address_region" value="" class="wide-fat" style="max-width: none; width: 100%;" />' );
 		} else {
-			state_wrapper
+			$( '#edd_order_address_region' )
 				.replaceWith( regions );
 
-			$( '#edd_order_address_region' ).chosen( getChosenVars( $( '#edd_order_address_region' ) ) );
+			initChosen( document.getElementById( 'edd_order_address_region' ) );
 		}
 	}
 
@@ -227,11 +227,14 @@ jQueryReady( () => {
 		// Remove global `change` event handling to prevent loop.
 		$( '#edd_order_address_country' ).off( 'change', updateRegionFieldOnChange );
 
-		// Set Country.
-		$( '#edd_order_address_country' )
-			.val( address.country )
-			.trigger( 'change' )
-			.trigger( 'chosen:updated' );
+		// Set Country — silent so the change event doesn't re-trigger updateRegionFieldOnChange
+		// (it was removed above). getStates is called explicitly below.
+		const countryInstance = document.getElementById( 'edd_order_address_country' )?.tomselect;
+		if ( countryInstance ) {
+			countryInstance.setValue( address.country, true );
+		} else {
+			$( '#edd_order_address_country' ).val( address.country );
+		}
 
 		// Set Region.
 		getStates(
@@ -240,11 +243,15 @@ jQueryReady( () => {
 			'edd_order_address_region'
 		)
 			.done( replaceRegionField )
-			.done( ( response ) => {
-				$( '#edd_order_address_region' )
-					.val( address.region )
-					.trigger( 'change' )
-					.trigger( 'chosen:updated' );
+			.done( () => {
+				// setValue fires a native change event, which triggers getTaxRate.
+				const regionEl       = document.getElementById( 'edd_order_address_region' );
+				const regionInstance = regionEl?.tomselect;
+				if ( regionInstance ) {
+					regionInstance.setValue( address.region );
+				} else if ( regionEl ) {
+					regionEl.value = address.region;
+				}
 			} );
 
 		// Add back global `change` event handling.

@@ -51,9 +51,16 @@ class Cart {
 	 * Gets the cart discounts.
 	 *
 	 * @since 3.3.0
+	 * @since 3.6.6 Normalizes the discounts to an array.
 	 */
 	public function get_discounts() {
-		$this->cart->discounts = EDD()->session->get( 'cart_discounts' );
+		$discounts = EDD()->session->get( 'cart_discounts' );
+
+		if ( is_string( $discounts ) && ! empty( $discounts ) ) {
+			$discounts = explode( '|', $discounts );
+		}
+
+		$this->cart->discounts = ! empty( $discounts ) ? (array) $discounts : array();
 
 		do_action( 'edd_cart_discounts_loaded_from_session', $this->cart );
 	}

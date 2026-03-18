@@ -701,8 +701,10 @@ add_action( 'wp_ajax_edd_customer_search', 'edd_ajax_customer_search' );
  * @return void
  */
 function edd_ajax_download_category_search() {
-	$search  = esc_sql( sanitize_text_field( $_GET['s'] ) );
-	$results = array();
+	$search     = esc_sql( sanitize_text_field( $_GET['s'] ) );
+	$value_type = isset( $_GET['value_type'] ) && 'id' === $_GET['value_type'] ? 'id' : 'slug';
+	$show_count = ! empty( $_GET['count'] );
+	$results    = array();
 
 	$category_args = array(
 		'taxonomy'   => array( 'download_category' ),
@@ -717,9 +719,13 @@ function edd_ajax_download_category_search() {
 
 	if ( ! empty( $categories_found ) ) {
 		foreach ( $categories_found as $category ) {
+			$name = $category->name;
+			if ( $show_count ) {
+				$name .= ' (' . $category->count . ')';
+			}
 			$results[] = array(
-				'id'   => $category->slug,
-				'name' => $category->name . ' (' . $category->count . ')',
+				'id'   => 'id' === $value_type ? $category->term_id : $category->slug,
+				'name' => $name,
 			);
 		}
 	} else {

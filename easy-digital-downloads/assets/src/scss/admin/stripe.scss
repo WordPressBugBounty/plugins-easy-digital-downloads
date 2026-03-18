@@ -158,7 +158,7 @@
 }
 
 .edds-stripe-connect-account-info span.edd-pro-upgrade a {
-	color: colors.$edd-pro-upgrade;
+	color: var(--edd-notice-green);
 	font-weight: 600;
 	text-decoration: none;
 }
@@ -195,7 +195,7 @@
 	margin-right: 12px;
 
 	&--enabled {
-		background: var(--wp-admin-theme-color);
+		background: var(--edd-wp-admin-theme-color);
 
 		&::after {
 			transform: translateX(16px);
@@ -210,7 +210,7 @@
 	width: 14px;
 	left: 3px;
 	bottom: 3px;
-	background-color: colors.$white;
+	background-color: #fff;
 	transition: 0.1s transform ease;
 	border-radius: 50%;
 }
@@ -229,7 +229,7 @@
 	gap: 1em;
 
 	.edd-form-group__control--wrap {
-		background-color: colors.$white;
+		background-color: #fff;
 		border: 1px solid colors.$wp-gray-10;
 		border-radius: 4px;
 		padding: 20px;

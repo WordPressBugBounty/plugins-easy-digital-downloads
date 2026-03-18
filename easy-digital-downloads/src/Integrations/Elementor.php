@@ -27,7 +27,7 @@ class Elementor implements Integration {
 	 * @return bool
 	 */
 	public function can_load(): bool {
-		return defined( 'ELEMENTOR_VERSION' ) && class_exists( '\Elementor\Plugin' );
+		return did_action( 'elementor/loaded' );
 	}
 
 	/**
@@ -52,5 +52,32 @@ class Elementor implements Integration {
 		}
 		$loader = new \EDD\Elementor\Loader();
 		$loader->add_events();
+	}
+
+	/**
+	 * Check if Elementor is available.
+	 *
+	 * @since 3.6.6
+	 * @return bool
+	 */
+	public static function checkout_is_elementor( $post_id = null ): bool {
+		if ( empty( $post_id ) ) {
+			$post_id = edd_get_option( 'purchase_page', false );
+		}
+
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return false;
+		}
+
+		$elements = \EDD\Elementor\Utils\Page::get_page_data( $post_id );
+		if ( empty( $elements ) ) {
+			return false;
+		}
+
+		return \EDD\Elementor\Utils\Page::has_widget( 'edd-checkout', $elements );
 	}
 }

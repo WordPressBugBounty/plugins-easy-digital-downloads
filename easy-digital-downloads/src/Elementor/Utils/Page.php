@@ -37,7 +37,11 @@ class Page {
 		}
 
 		$post = get_post( $current_page );
-		if ( ! $post ) {
+		if ( ! $post instanceof \WP_Post ) {
+			return false;
+		}
+
+		if ( is_null( \Elementor\Plugin::$instance ) ) {
 			return false;
 		}
 

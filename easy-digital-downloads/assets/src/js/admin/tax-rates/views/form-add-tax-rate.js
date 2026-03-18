@@ -1,6 +1,6 @@
 import { Dialog } from '../../../packages/edd-backbone/src/dialog.js';
 import RegionField from './region-field.js';
-import { getChosenVars } from 'utils/chosen.js';
+import { initChosen } from 'utils/chosen.js';
 import TaxRate from '../models/tax-rate.js';
 
 const FormAddTaxRate = Dialog.extend( {
@@ -30,8 +30,7 @@ const FormAddTaxRate = Dialog.extend( {
 			open: () => {
 				// Initialize chosen after dialog is fully rendered
 				this.$el.find( 'select' ).each( function () {
-					const el = $( this );
-					el.chosen( getChosenVars( el ) );
+					initChosen( this );
 				} );
 
 				// Make dialog content overflow visible after a short delay to ensure elements are rendered

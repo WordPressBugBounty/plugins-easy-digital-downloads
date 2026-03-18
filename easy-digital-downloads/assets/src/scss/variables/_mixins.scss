@@ -1,18 +1,6 @@
 @use "colors";
-@use "~@wordpress/base-styles/mixins" as wp-mixins;
 
-@mixin edd-admin-colors() {
-	@include wp-mixins.admin-scheme(#007cba);
-	@include wp-mixins.wordpress-admin-schemes();
-
-	@each $slug, $color in colors.$buddypress-colors {
-		body.admin-color-#{$slug} {
-			@include wp-mixins.admin-scheme($color);
-		}
-	}
-}
-
-@mixin edd-spinner( $size: 1em, $border-background: colors.$white, $border-color: colors.$black, $border-width: 2px ) {
+@mixin edd-spinner( $size: 1em, $border-background: #fff, $border-color: #000, $border-width: 2px ) {
 	animation: 1.5s linear infinite edd-spinning;
 	animation-play-state: inherit;
 	border: $border-width solid $border-background;
@@ -54,7 +42,7 @@
 		transform: rotate(45deg);
 		z-index: -1;
 		border-style: solid;
-		border-color: #8c8f94;
+		border-color: colors.$wp-input-border-2;
 
 		$pointer-offset: calc( -1 * ( ( $pointer-size / 2 ) + 1px ) );
 

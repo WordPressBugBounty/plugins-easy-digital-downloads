@@ -234,5 +234,8 @@ function edd_do_automatic_upgrades() {
 
 	edd_delete_option( 'enabled_betas' );
 
+	// Clear the cron events transient so events are re-registered after upgrade.
+	\EDD\Cron\Loader::clear_events_transient();
+
 	edd_update_db_version();
 }

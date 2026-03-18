@@ -71,6 +71,7 @@ class Core extends \EDD\Core {
 		return array(
 			new Admin\Menu(),
 			new Admin\PassHandler\Pointer(),
+			new Admin\Emails\Handler(),
 		);
 	}
 }

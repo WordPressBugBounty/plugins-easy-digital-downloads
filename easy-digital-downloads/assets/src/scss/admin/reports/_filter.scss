@@ -1,4 +1,4 @@
-@use "../../variables/colors" as colors;
+@use "../../variables/colors";
 
 #edd-filters {
 	padding: 10px;
@@ -8,12 +8,22 @@
 	flex-wrap: wrap;
 	gap: 8px;
 
+	input[type="text"],
+	input[type="number"] {
+		min-height: 32px;
+		line-height: 30px;
+		padding: 0 8px;
+	}
+
+	.ts-wrapper {
+		min-width: 200px;
+	}
+
 	.filter-items {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 6px;
-		float: none;
 		flex-grow: 1;
 
 		.graph-option-section {
@@ -21,37 +31,65 @@
 			align-items: center;
 		}
 
-		.edd-date-range-picker[data-range='other'] {
-			.edd-graphs-date-options {
-				border-top-right-radius: 4px;
-				border-bottom-right-radius: 4px;
-			}
+		// The fields wrapper provides a single unified border around the select
+		// and the date display. The relative-dates section sits outside this
+		// wrapper, so overflow: visible is not needed here. Border-radius on
+		// the individual child elements (select left corners, date display
+		// right corners) provides the rounded appearance at the container
+		// edges without requiring overflow: hidden.
+		.edd-date-range-picker-fields {
+			display: flex;
+			align-items: center;
+			border: 1px solid colors.$wp-input-border-2;
+			border-radius: 4px;
 
+			body[class*="branch-7"] & {
+				border-radius: 2px;
+			}
+		}
+
+		.edd-date-range-picker[data-range='other'] {
 			.edd-date-range-dates, .edd-date-range-relative-dates {
 				display: none;
 			}
 		}
 
-		.edd-date-range-options {
-			display: inline-block;
-			margin: 10px 0;
+		.edd-date-range-options .edd_datepicker {
+			width: 105px;
 		}
 
+		// Remove the browser-default border and appearance so the parent
+		// container's border becomes the sole visual boundary. appearance: none
+		// is required to make border-radius work on the select element, which
+		// allows us to round only the left corners to match the container's
+		// inner radius (4px outer - 1px border = 3px). A custom SVG arrow
+		// replaces the native dropdown indicator removed by appearance: none.
+		// Negative margins on three sides bleed the select flush against the
+		// parent border without a gap or double-border artifact.
 		.edd-graphs-date-options {
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
+			appearance: none;
+			-webkit-appearance: none;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%238c8f94' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+			background-repeat: no-repeat;
+			background-position: right 6px center;
+			padding-right: 28px;
+			margin: -1px 0 -1px -1px;
+			height: calc( 100% + 2px );
+			cursor: pointer;
 		}
 
 		.edd-date-range-dates {
 			display: flex;
 			align-items: center;
-			border: 1px solid #8c8f94;
-			border-left: none;
-			color: #2c3338;
+			// The outer border is on the parent. A left-only divider separates
+			// the date display from the select without adding extra box borders.
+			// Right-side border-radius matches the inner radius of the container.
+			border-left: 1px solid colors.$wp-input-border-2;
+			color: colors.$wp-input-text;
 			padding: 4px 10px;
-			margin-left: -5px;
-			border-top-right-radius: 4px;
-			border-bottom-right-radius: 4px;
 			cursor: pointer;
 			gap: 4px;
 			&.hidden {
@@ -76,13 +114,19 @@
 			position: relative;
 			display: flex;
 			align-items: center;
-			border: 1px solid #8c8f94;
+			border: 1px solid colors.$wp-input-border-2;
 			padding: 4px 2px 4px 6px;
-			color: #2c3338;
+			color: colors.$wp-input-text;
 			margin-left: 10px;
 			margin-right: 10px;
 			border-radius: 4px;
 			cursor: pointer;
+
+			body[class*="branch-7"] & {
+				border-radius: 2px;
+				padding: 6px 4px 6px 6px;
+			}
+
 			.arrow-down {
 				width: 16px;
 				height: auto;
@@ -106,7 +150,7 @@
 			margin-top: 10px;
 			transform: translateX( -50% );
 			background-color: #fff;
-			border: 1px solid #8c8f94;
+			border: 1px solid colors.$wp-input-border-2;
 			border-radius: 4px;
 			box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.25);
 			display: none;
@@ -116,7 +160,7 @@
 				position: absolute;
 				content: '';
 				background: white;
-				border: 1px solid #8c8f94;
+				border: 1px solid colors.$wp-input-border-2;
 				border-top-width: 0px;
 				border-left-width: 0px;
 				transform: rotate(-135deg);
@@ -149,7 +193,7 @@
 				gap: 20px;
 				&:hover, &.active {
 					cursor: pointer;
-					color: var( --wp-admin-theme-color );
+					color: var( --edd-wp-admin-theme-color );
 					opacity: 1;
 				}
 				.date-range-name {
@@ -162,27 +206,35 @@
 			.graph-option-section {
 				margin-top: 8px;
 				width: 100%;
-			}
-
-			.edd-date-range-picker {
 				flex-wrap: wrap;
 			}
 
+			.edd-date-range-picker-fields {
+				flex-wrap: wrap;
+			}
+
+			// At mobile widths the select stacks above the date display and
+			// should span the full container width. The top corners are rounded
+			// (matching the parent container) while the bottom corners are
+			// square so the select and date display meet flush with no gap.
 			.edd-graphs-date-options {
-				width: 100%;
-				max-width: 100%;
+				width: calc( 100% + 2px );
+				max-width: calc( 100% + 2px );
 				min-height: 40px;
 				font-size: 14px;
-				border-top-right-radius: 4px;
-				border-bottom-right-radius: 4px;
+				border-top-right-radius: 3px;
+				border-bottom-left-radius: 0;
 			}
 
 			.edd-date-range-dates {
 				width: 100%;
-				margin-top: 10px;
-				border: 1px solid #8c8f94;
-				margin-left: unset;
-				border-radius: 4px;
+				// When stacked, the divider becomes a top border rather than
+				// a left border. The bottom corners are rounded to match the
+				// parent container; the top corners are square.
+				border-left: none;
+				border-top: 1px solid colors.$wp-input-border-2;
+				border-top-right-radius: 0;
+				border-bottom-left-radius: 3px;
 				font-size: 14px;
 				padding: 8px 6px 8px 8px;
 			}
@@ -275,7 +327,7 @@
 		right: 0;
 		border: 1px solid colors.$wp-gray-200;
 		padding: 0;
-		background: colors.$white;
+		background: #fff;
 		box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 		min-width: 285px;
 		opacity: 0;
@@ -283,16 +335,18 @@
 	}
 
 	fieldset {
-		display: block;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
 		padding: 10px 15px 15px;
-		margin: 10px 0;
+
+		legend {
+			flex-basis: 100%;
+			padding-top: 10px;
+		}
 
 		&:not(:last-of-type) {
 			border-bottom: 1px solid colors.$wp-gray-200;
-		}
-
-		&:last-of-type {
-			padding-bottom: 5px;
 		}
 
 		&.edd-add-on-filters {
@@ -344,4 +398,33 @@
 .edd-old-log-filters {
 	margin-top: -30px;
 	margin-left: 2px;
+}
+
+.edd-from-to-wrapper {
+	display: flex;
+
+	input {
+		width: 105px;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	input[name*="start"],
+	input[name="filter_from"] {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	input[name*="end"],
+	input[name="filter_to"] {
+		margin-left: -1px;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	input:focus {
+		z-index: 2;
+		position: relative;
+	}
 }

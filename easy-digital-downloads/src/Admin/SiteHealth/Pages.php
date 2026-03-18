@@ -45,6 +45,10 @@ class Pages {
 				'label' => 'Checkout Page',
 				'value' => ! empty( $purchase_page ) ? get_permalink( $purchase_page ) : '',
 			),
+			'checkout_type'      => array(
+				'label' => 'Checkout Type',
+				'value' => \EDD\Checkout\Validator::get_checkout_type( $purchase_page ),
+			),
 			'confirmation_uri'   => array(
 				'label' => 'Confirmation Page',
 				'value' => get_permalink( edd_get_option( 'confirmation_page', '' ) ),

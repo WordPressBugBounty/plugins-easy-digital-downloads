@@ -267,7 +267,7 @@ function edd_add_download_filters() {
 			$options[ $category->slug ] = $category->name . ' (' . $category->count . ')';
 		}
 
-		echo EDD()->html->select(
+		$select = new \EDD\HTML\Select(
 			array(
 				'name'             => 'download_category',
 				'id'               => 'download_category',
@@ -283,9 +283,11 @@ function edd_add_download_filters() {
 					'search-type'        => 'download_category',
 					/* translators: %s: Download Category taxonomy name */
 					'search-placeholder' => sprintf( _x( 'Search %s', 'plural: Example: "Search Download Categories"', 'easy-digital-downloads' ), $category_labels['name'] ),
+					'search-count'       => true,
 				),
 			)
 		);
+		$select->output();
 	}
 
 	if ( isset( $_REQUEST['all_posts'] ) && '1' === $_REQUEST['all_posts'] ) {

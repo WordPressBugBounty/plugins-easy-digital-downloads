@@ -22,11 +22,18 @@ use EDD\Utils\EnvironmentChecker;
 class NotificationsDB {
 
 	/**
+	 * Date format used for UTC date comparisons.
+	 *
+	 * @since 3.6.6
+	 * @var string
+	 */
+	const DATETIME_FORMAT = 'Y-m-d H:i:s';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_filter( 'script_loader_tag', array( $this, 'defer_alpine' ) );
 	}
 
 	/**
@@ -47,23 +54,26 @@ class NotificationsDB {
 		$version    = edd_admin_get_script_version();
 		$css_suffix = is_rtl() ? '-rtl.min.css' : '.min.css';
 
-		wp_register_script( 'alpinejs', edd_get_assets_url( 'vendor/js' ) . 'alpine.min.js', array(), '3.4.2', true );
-		wp_enqueue_script( 'edd-admin-notifications', edd_get_assets_url( 'js/admin' ) . 'notifications.js', array( 'alpinejs' ), $version, true );
+		wp_enqueue_script( 'edd-admin-notifications', edd_get_assets_url( 'js/admin' ) . 'notifications.js', array( 'wp-element', 'edd-admin-scripts' ), $version, true );
+		wp_localize_script(
+			'edd-admin-notifications',
+			'eddNotificationStrings',
+			array(
+				/* translators: %s: number of new notifications. */
+				'newNotifications'    => __( '(%s) New Notifications', 'easy-digital-downloads' ),
+				/* translators: %s: number of new notifications. */
+				'singleNotification' => __( '(%s) New Notification', 'easy-digital-downloads' ),
+				'dismissedTitle'   => __( 'Dismissed Notifications', 'easy-digital-downloads' ),
+				'closePanel'       => __( 'Close panel', 'easy-digital-downloads' ),
+				'dismiss'          => __( 'Dismiss', 'easy-digital-downloads' ),
+				'noNotifications'  => __( 'You have no new notifications.', 'easy-digital-downloads' ),
+				'noDismissed'      => __( 'You have no dismissed notifications.', 'easy-digital-downloads' ),
+				'loading'          => __( 'Loading notifications...', 'easy-digital-downloads' ),
+				'viewDismissed'    => __( 'View Dismissed', 'easy-digital-downloads' ),
+				'viewActive'       => __( 'View Active', 'easy-digital-downloads' ),
+			)
+		);
 		wp_enqueue_style( 'edd-admin-notifications', edd_get_assets_url( 'css/admin' ) . 'notifications' . $css_suffix, array(), $version );
-	}
-
-	/**
-	 * Add `defer` to the AlpineJS script tag.
-	 *
-	 * @since 3.2.4
-	 */
-	public function defer_alpine( $url ) {
-		$alpine = wp_make_link_relative( edd_get_assets_url( 'vendor/js' ) . 'alpine.min.js' );
-		if ( false !== strpos( $url, $alpine ) ) {
-			$url = str_replace( ' src', ' defer src', $url );
-		}
-
-		return $url;
 	}
 
 	/**
@@ -76,8 +86,8 @@ class NotificationsDB {
 	 */
 	public function get_column_defaults() {
 		return array(
-			'date_created' => gmdate( 'Y-m-d H:i:s' ),
-			'date_updated' => gmdate( 'Y-m-d H:i:s' ),
+			'date_created' => gmdate( self::DATETIME_FORMAT ),
+			'date_updated' => gmdate( self::DATETIME_FORMAT ),
 		);
 	}
 
@@ -257,9 +267,103 @@ class NotificationsDB {
 			AND (start <= %s OR start IS NULL)
 			AND (end >= %s OR end IS NULL)
 			ORDER BY start DESC, id DESC",
-			gmdate( 'Y-m-d H:i:s' ),
-			gmdate( 'Y-m-d H:i:s' )
+			gmdate( self::DATETIME_FORMAT ),
+			gmdate( self::DATETIME_FORMAT )
 		);
+	}
+
+	/**
+	 * Returns notifications filtered by the provided arguments.
+	 *
+	 * When dismissed=0 (default), applies date range checks and EnvironmentChecker conditions.
+	 * When dismissed=1, returns dismissed notifications without date/condition filtering.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param array $args {
+	 *     Optional. Arguments to filter notifications.
+	 *
+	 *     @type int    $dismissed Whether to return dismissed (1) or active (0) notifications. Default 0.
+	 *     @type string $source    Filter by notification source.
+	 *     @type string $type      Filter by notification type.
+	 * }
+	 * @return Notification[]
+	 */
+	public function getNotifications( $args = array() ) {
+		global $wpdb;
+
+		$defaults = array(
+			'dismissed' => 0,
+		);
+
+		$args      = wp_parse_args( $args, $defaults );
+		$dismissed = absint( $args['dismissed'] );
+
+		$where   = array();
+		$where[] = $wpdb->prepare( 'dismissed = %d', $dismissed );
+
+		// For active notifications, apply date range filters.
+		if ( 0 === $dismissed ) {
+			$now     = gmdate( self::DATETIME_FORMAT );
+			$where[] = $wpdb->prepare( '(start <= %s OR start IS NULL)', $now );
+			$where[] = $wpdb->prepare( '(end >= %s OR end IS NULL)', $now );
+		}
+
+		if ( ! empty( $args['source'] ) ) {
+			$where[] = $wpdb->prepare( 'source = %s', sanitize_key( $args['source'] ) );
+		}
+
+		if ( ! empty( $args['type'] ) ) {
+			$where[] = $wpdb->prepare( 'type = %s', sanitize_key( $args['type'] ) );
+		}
+
+		$where_clause = implode( ' AND ', $where );
+		$order_by     = 0 === $dismissed ? 'start DESC, id DESC' : 'date_updated DESC';
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$notifications = $wpdb->get_results( "SELECT * FROM {$wpdb->edd_notifications} WHERE {$where_clause} ORDER BY {$order_by}" );
+
+		$models = array();
+		if ( is_array( $notifications ) ) {
+			// Only apply environment checks for active notifications.
+			$environmentChecker = 0 === $dismissed ? new EnvironmentChecker() : null;
+
+			foreach ( $notifications as $notification ) {
+				$model = new Notification( (array) $notification );
+
+				if ( 0 === $dismissed ) {
+					try {
+						if (
+							! $model->conditions ||
+							( is_array( $model->conditions ) && $environmentChecker->meetsConditions( $model->conditions ) )
+						) {
+							$models[] = $model;
+						}
+					} catch ( \Exception $e ) {
+						// Skip notifications with invalid conditions.
+					}
+				} else {
+					$models[] = $model;
+				}
+			}
+		}
+
+		unset( $notifications );
+
+		return $models;
+	}
+
+	/**
+	 * Returns dismissed notifications.
+	 *
+	 * Convenience wrapper around getNotifications() for dismissed notifications.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @return Notification[]
+	 */
+	public function getDismissedNotifications() {
+		return $this->getNotifications( array( 'dismissed' => 1 ) );
 	}
 
 	/**

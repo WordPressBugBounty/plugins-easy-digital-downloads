@@ -100,6 +100,21 @@ interface Scheduler {
 	public function get_scheduled_hooks( string $hook_prefix = '', int $limit = 1000, string $group = '' ): array;
 
 	/**
+	 * Check if an action is scheduled.
+	 *
+	 * More efficient than next_scheduled() when you only need to know
+	 * if an event exists, not when it will run.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param string $hook  The hook name to check.
+	 * @param array  $args  Optional arguments to match.
+	 * @param string $group Optional group identifier.
+	 * @return bool True if a matching action is pending or in-progress, false otherwise.
+	 */
+	public function has_scheduled( string $hook, array $args = array(), string $group = '' ): bool;
+
+	/**
 	 * Search for scheduled actions.
 	 *
 	 * @since 3.6.5

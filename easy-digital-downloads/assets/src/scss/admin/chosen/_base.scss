@@ -1,52 +1,205 @@
-@use "../../variables/colors" as colors;
+@use '../../variables/colors';
+@use '../../variables/mixins' as mixins;
+@use '../../variables/animations';
 
-.chosen-container {
-	font-size: 14px;
+// Hide the original <select> element (Tom Select adds this class).
+.ts-hidden-accessible {
+	@include mixins.screen-reader-text;
+}
 
-	.chosen-drop {
-		position: absolute;
-		top: 100%;
-		z-index: 1010;
-		width: 100%;
-		border-radius: 0 0 4px 4px;
-		border-width: 0 1px 0 1px;
-		border-color: transparent;
-		background: colors.$white;
-		outline: 2px solid transparent;
-	}
+// Tom Select wrapper.
+.ts-wrapper {
+	position: relative;
+	box-sizing: border-box;
 
-	.spinner {
-		margin: 0;
-		position: absolute;
-		top: 4px;
-		right: 30px;
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
 	}
 }
 
-.chosen-container-multi .search-field,
-.chosen-container-single .chosen-single,
-.chosen-container-active.chosen-with-drop .chosen-single {
-	background: colors.$white url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat right 5px top 55%;
+// Tom Select control — styled to match WP admin select elements.
+// Default values: WordPress 6.x (wp-admin/css/forms.css).
+.ts-wrapper .ts-control {
+	background: #fff url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat right 8px top 55%;
 	background-size: 16px 16px;
-	border: 1px solid colors.$wp-input-border;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
 	box-shadow: 0 0 0 transparent;
 	color: colors.$wp-input-text;
+	cursor: pointer;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	font-family: inherit;
+	font-size: 14px;
+	min-height: 30px;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	z-index: 1;
+
+	// Control input — reset all inherited styles so WP doesn't interfere.
+	> input {
+		flex: 1 1 auto;
+		min-width: 7rem;
+		display: inline-block !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		text-indent: 0 !important;
+		border: 0 none !important;
+		background: none !important;
+		line-height: inherit !important;
+		user-select: auto !important;
+		box-shadow: none !important;
+		color: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		padding: 4px 24px 4px 8px;
+
+		&:focus {
+			outline: none !important;
+		}
+	}
+
+	> .item {
+		display: inline-flex;
+		align-items: center;
+	}
 }
 
-.chosen-container-multi .chosen-choices,
-.chosen-container-single .chosen-single {
-	border-radius: 4px;
-	border-color: colors.$wp-input-border;
+.ts-wrapper.has-items .ts-control {
+	padding-left: 8px;
+	padding-right: 24px;
 }
 
-.chosen-container-multi.chosen-with-drop .chosen-choices,
-.chosen-container-active.chosen-with-drop .chosen-single {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+// Hide the search input when an item is selected and the dropdown is closed.
+// Tom Select adds .dropdown-active while the dropdown is open, so the input
+// reappears for searching as soon as the user opens the control again.
+.ts-wrapper.has-items:not(.dropdown-active) .ts-control > input {
+	display: none !important;
 }
 
-.chosen-container-single.chosen-container-active.chosen-with-drop.chosen-dropup .chosen-single,
-.chosen-container-multi.chosen-container-active.chosen-dropup .chosen-choices {
-	border-radius: 0 0 4px 4px;
-	border-width: 0 1px 0 1px;
-	z-index: 1011;
+// Hover — match WP select:hover.
+.ts-wrapper .ts-control:hover {
+	color: var(--edd-wp-admin-theme-color);
+}
+
+// When input is hidden (e.g., max items reached).
+.ts-wrapper.input-hidden .ts-control > input {
+	opacity: 0;
+	position: absolute;
+	left: -10000px;
+}
+
+// Disabled state — match WP select:disabled.
+.ts-wrapper.disabled .ts-control,
+.ts-wrapper.disabled .ts-control * {
+	cursor: default !important;
+}
+
+.ts-wrapper.disabled .ts-control {
+	background-color: #f6f7f7;
+	border-color: #dcdcde;
+	color: #a7aaad;
+	box-shadow: none;
+}
+
+// Loading indicator shown during AJAX searches (Tom Select adds .loading to the wrapper).
+.ts-wrapper.loading .ts-control {
+	&::after {
+		background: none;
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: calc( 100% - 36px );
+		z-index: 2;
+		@include mixins.edd-spinner( 14px, colors.$wp-gray-5, #2271b1, 2px );
+	}
+}
+
+// Tom Select dropdown.
+.ts-wrapper .ts-dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1010;
+	width: 100%;
+	border: 1px solid #2271b1;
+	border-top: 0;
+	border-radius: 0 0 3px 3px;
+	background: #fff;
+	box-shadow: 0 0 0 1px #2271b1;
+	box-sizing: border-box;
+
+	[data-selectable] {
+		cursor: pointer;
+		overflow: hidden;
+	}
+
+	[data-selectable] .highlight {
+		background: rgba(125, 168, 208, 0.2);
+		border-radius: 1px;
+	}
+}
+
+// Dropdown content scroll container.
+.ts-wrapper .ts-dropdown .ts-dropdown-content {
+	max-height: 240px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	padding: 0;
+}
+
+// -----------------------------------------------------------------------------
+// WordPress 7.0+ overrides.
+// WP adds body.branch-7-0 (and version-7-0-x) classes to the admin body.
+// These values come from the WP 7.0 redesigned forms.css.
+// -----------------------------------------------------------------------------
+body[class*="branch-7"] {
+
+	.ts-wrapper .ts-control {
+		border-color: #949494;
+		border-radius: 2px;
+		color: #1e1e1e;
+		min-height: 40px;
+		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%231e1e1e%22%2F%3E%3C%2Fsvg%3E');
+	}
+
+	.ts-wrapper .ts-control:hover {
+		color: #1e1e1e;
+		border-color: #1e1e1e;
+	}
+
+	.ts-wrapper.disabled .ts-control {
+		background-color: #f0f0f0;
+		border-color: #ccc;
+		color: #949494;
+	}
+
+	.ts-wrapper.loading .ts-control::after {
+		border-bottom-color: var( --edd-wp-admin-theme-color );
+	}
+
+	.ts-wrapper .ts-dropdown {
+		border-color: var(--edd-wp-admin-theme-color);
+		border-radius: 0 0 2px 2px;
+		box-shadow: 0 0 0 var(--wp-admin-border-width-focus, 1.5px) var(--edd-wp-admin-theme-color);
+	}
+
+	.wp-filter .ts-wrapper .ts-control,
+	.wp-filter .button-secondary {
+		min-height: 32px;
+		line-height: 30px;
+	}
+}
+
+// Hide the Chosen-compatibility <span> injected for legacy script support.
+// The span keeps `.chosen-single span` selectors working but must not be visible.
+.chosen-legacy {
+	display: none !important;
 }

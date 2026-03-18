@@ -1,25 +1,16 @@
-@use "../../variables/mixins" as mixins;
-
-/* WordPress Color Schemes */
-
-:root {
-	@include mixins.edd-admin-colors();
+// Focus state — match WP admin input/select :focus.
+// WP 6.x: hardcoded #2271b1 color.
+.ts-wrapper.focus .ts-control {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: 2px solid transparent;
 }
 
-.chosen-container.chosen-container-active .chosen-single,
-.chosen-container.chosen-container-active .chosen-choices,
-.chosen-with-drop.chosen-dropup .chosen-drop {
-	border-color: var(--wp-admin-theme-color);
-	box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
-}
+// WordPress 7.0+ uses CSS custom properties for the focus color.
+body[class*="branch-7"] {
 
-.chosen-with-drop.chosen-dropup .chosen-single,
-.chosen-container-active.chosen-dropup .chosen-choices,
-.chosen-container .chosen-drop {
-	border-color: var(--wp-admin-theme-color);
-	box-shadow: 0 1px 0 1px var(--wp-admin-theme-color);
-}
-
-.chosen-container .chosen-results li.highlighted {
-	background-color: var(--wp-admin-theme-color);
+	.ts-wrapper.focus .ts-control {
+		border-color: var(--edd-wp-admin-theme-color);
+		box-shadow: 0 0 0 var(--wp-admin-border-width-focus, 1.5px) var(--edd-wp-admin-theme-color);
+	}
 }

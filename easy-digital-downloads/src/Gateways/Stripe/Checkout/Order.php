@@ -41,6 +41,9 @@ class Order {
 	 * @throws \EDD_Stripe_Gateway_Exception If an error occurs.
 	 */
 	public function create( $intent ) {
+		// Validate intent amount matches purchase total before creating the order.
+		Validation::intent_amount( $intent, $this->purchase_data['price'] );
+
 		// Ensure $_COOKIE is available without a new HTTP request.
 		if ( \EDD\Checkout\AutoRegister::is_enabled() ) {
 			add_action( 'set_logged_in_cookie', 'edd_set_logged_in_cookie' );

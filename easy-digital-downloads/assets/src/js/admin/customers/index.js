@@ -105,12 +105,17 @@ var EDD_Customer = {
 					field_name: 'customerinfo[region]',
 				};
 
-			$.post( ajaxurl, data, function( response ) {
-				console.log( response );
+		$.post( ajaxurl, data, function( response ) {
+			// Destroy Tom Select before replacing the element.
+			if ( state_input.is( 'select' ) ) {
+				state_input[0]?.tomselect?.destroy();
+			}
+
+				const currentInput = $( ':input[name="customerinfo[region]"]' );
 				if ( 'nostates' === response ) {
-					state_input.replaceWith( '<input type="text" name="' + data.field_name + '" value="" class="edd-edit-toggles medium-text"/>' );
+					currentInput.replaceWith( '<input type="text" name="' + data.field_name + '" value="" class="edd-edit-toggles medium-text"/>' );
 				} else {
-					state_input.replaceWith( response );
+					currentInput.replaceWith( response );
 				}
 			} );
 

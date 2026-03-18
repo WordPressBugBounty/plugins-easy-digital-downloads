@@ -67,8 +67,8 @@ $fixed-column-width: 80px;
 			}
 
 			&:focus {
-				border-bottom: 1px solid var(--wp-admin-theme-color-darker-10);
-				box-shadow: 0 1px 0 var(--wp-admin-theme-color-darker-10);
+				border-bottom: 1px solid var(--edd-wp-admin-theme-color-darker-10);
+				box-shadow: 0 1px 0 var(--edd-wp-admin-theme-color-darker-10);
 			}
 		}
 
@@ -83,7 +83,7 @@ $fixed-column-width: 80px;
 	}
 
 	.edd-refund-submit-line-total {
-		background-color: colors.$white !important;
+		background-color: #fff !important;
 
 		td {
 			text-align: right;

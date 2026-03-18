@@ -73,6 +73,11 @@ table.email_templates {
 
 	.edd-emails__actions {
 		margin-left: auto;
+		padding: 0;
+	}
+
+	select {
+		float: none;
 	}
 }
 
@@ -90,7 +95,7 @@ table.email_templates {
 
 	& a {
 		text-decoration: none;
-		color: colors.$wp-text;
+		color: colors.$gray-text-min;
 	}
 
 	img {

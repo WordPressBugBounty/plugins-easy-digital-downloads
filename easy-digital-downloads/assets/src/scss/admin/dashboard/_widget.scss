@@ -62,7 +62,7 @@
 	}
 
 	.edd_price_label {
-		background: var(--wp-admin-theme-color);
+		background: var(--edd-wp-admin-theme-color);
 		border-radius: 3px;
 		color: white;
 		font-size: 10px;
@@ -103,10 +103,10 @@ only screen and (max-width: 1000px) {
 
 	&--error {
 		background: colors.$wp-red-50;
-		color: colors.$white;
+		color: #fff;
 
 		a {
-			color: colors.$white;
+			color: #fff;
 		}
 	}
 }

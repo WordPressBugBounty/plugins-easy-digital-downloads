@@ -57,6 +57,9 @@ class Complete {
 
 			$intent = $this->get_intent();
 
+			Validation::intent_status( $intent );
+			Validation::intent_amount( $intent, $this->get_expected_price( $intent ) );
+
 			// Get the existing order if one was created.
 			if ( ! empty( $intent->metadata->edd_payment_id ) ) {
 				$order_id = $intent->metadata->edd_payment_id;
@@ -231,6 +234,33 @@ class Complete {
 		 * @param string            $intent_id Stripe Payment Intent ID.
 		 */
 		do_action( 'edds_order_complete', $order, $charge->payment_intent );
+	}
+
+	/**
+	 * Get the expected price for validation.
+	 *
+	 * If an order already exists (via intent metadata), returns the order total.
+	 * Otherwise returns the session purchase data price.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param \Stripe\PaymentIntent|\Stripe\SetupIntent $intent The Stripe Intent object.
+	 * @return float The expected price.
+	 */
+	private function get_expected_price( $intent ) {
+		if ( ! empty( $intent->metadata->edd_payment_id ) ) {
+			$order = edd_get_order( $intent->metadata->edd_payment_id );
+			if ( $order ) {
+				return $order->total;
+			}
+		}
+
+		$purchase_data = \EDD\Sessions\PurchaseData::get( false );
+		if ( ! empty( $purchase_data['price'] ) ) {
+			return $purchase_data['price'];
+		}
+
+		return 0;
 	}
 
 	/**

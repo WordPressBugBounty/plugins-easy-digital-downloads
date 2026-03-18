@@ -37,6 +37,10 @@ class DiscountSelect extends Select {
 			);
 		}
 
+		if ( ! empty( $this->args['filter_invalid'] ) ) {
+			$this->args['data']['search-filter-invalid'] = true;
+		}
+
 		return parent::get();
 	}
 

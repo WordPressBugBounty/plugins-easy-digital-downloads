@@ -47,10 +47,13 @@ class RegionSelect extends Select {
 				'chosen'            => true,
 				'selected'          => '',
 				'show_option_none'  => false,
-				'placeholder'       => __( 'Choose a Region', 'easy-digital-downloads' ),
+				'placeholder'       => __( 'Select a region', 'easy-digital-downloads' ),
 				'show_option_empty' => __( 'All Regions', 'easy-digital-downloads' ),
 				'show_option_all'   => false,
 				'country'           => edd_get_shop_country(),
+				'data'              => array(
+					'placeholder' => __( 'Select a region', 'easy-digital-downloads' ),
+				),
 			),
 			parent::defaults()
 		);

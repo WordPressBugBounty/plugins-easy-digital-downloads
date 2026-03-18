@@ -3,7 +3,6 @@
 @use "subnav";
 @use "gateways";
 @use "../../variables/icons" as icons;
-@use "../../variables/colors" as colors;
 
 .edd-settings-content {
 	max-width: wp-breakpoints.$break-huge;
@@ -44,7 +43,7 @@
 	display: inline-block;
 	width: 1.25em;
 	height: 1.25em;
-	background-color: colors.$edd-light-blue;
+	background-color: var(--edd-light-blue);
 	mask-image: icons.$icon-ai;
 	mask-size: 100% 100%;
 	mask-repeat: no-repeat;
@@ -55,8 +54,8 @@
 
 // Warning state for conditionally shown settings (like delete options)
 tr.edd-setting--warning {
-	border-left: 4px solid colors.$alert-red;
-	background-color: rgba(colors.$alert-red, 0.03);
+	border-left: 4px solid var(--edd-alert-red);
+	background-color: color-mix(in srgb, var(--edd-alert-red) 10%, transparent);
 
 	// Smooth transition when revealed
 	&:not(.edd-hidden) {
@@ -71,7 +70,7 @@ tr.edd-setting--warning {
 		label:before {
 			content: "\f534"; // dashicon-warning
 			font-family: dashicons;
-			color: colors.$alert-red;
+			color: var(--edd-alert-red);
 			margin-right: 6px;
 			vertical-align: middle;
 		}

@@ -1,8 +1,10 @@
+@use "../../variables/colors" as colors;
+
 /* System Info page styles
 -------------------------------------------------------------- */
 
 .inside .edd-tools-textarea {
-	background: #32373c;
+	background: colors.$wp-input-text;
 	color: rgba(240, 245, 250, 0.7);
 	font-size: 12px;
 	font-family: Menlo, Monaco, monospace;

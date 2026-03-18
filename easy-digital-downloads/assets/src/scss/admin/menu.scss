@@ -102,17 +102,17 @@ ul#adminmenu #menu-posts-download ul.wp-submenu li.current a:before {
 /* Onboarding Submenu Item */
 a.edd-onboarding__menu-item {
 	background: #dd823b !important;
-	color: colors.$white !important;
+	color: #fff !important;
 	font-weight: 600;
 	&:hover {
-		color: colors.$black !important;
+		color: #000 !important;
 	}
 }
 
 a.edd-sidebar__upgrade-pro,
 a.edd-sidebar__upgrade-pro:hover {
-	background-color: colors.$edd-pro-upgrade !important;
-	color: colors.$white !important;
+	background-color: var(--edd-notice-green) !important;
+	color: #fff !important;
 	font-weight: 600;
 }
 
@@ -124,8 +124,8 @@ a.edd-sidebar__upgrade-pro:hover {
 }
 
 .edd-admin-menu__pro {
-	background-color: colors.$edd-pro-upgrade;
-	color: colors.$white;
+	background-color: var(--edd-notice-green);
+	color: #fff;
 	padding: 2px 4px;
 	border-radius: 4px;
 	font-size: 9px;

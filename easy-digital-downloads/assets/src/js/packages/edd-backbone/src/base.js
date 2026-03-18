@@ -1,4 +1,4 @@
-/* global _, $ */
+/* global _ */
 
 /**
  * WordPress dependencies
@@ -8,7 +8,7 @@ import { focus } from '@wordpress/dom';
 /**
  * Internal dependencies
  */
-import { getChosenVars } from 'utils/chosen.js';
+import { initChosen } from 'utils/chosen.js';
 
 /**
  * Base
@@ -124,6 +124,12 @@ export const Base = wp.Backbone.View.extend( {
 	 * @param {Object} e Change event.
 	 */
 	onFocus( e ) {
+		// Skip Tom Select internals — the control_input and hidden native select
+		// live inside .ts-wrapper. Tracking them would cause setFocus() to reopen
+		// the dropdown after render() rebuilds and reinitializes the widget.
+		if ( e.target.closest( '.ts-wrapper' ) ) {
+			return;
+		}
 		this.focusedEl = e.target;
 	},
 
@@ -192,12 +198,11 @@ export const Base = wp.Backbone.View.extend( {
 	initializeSelects() {
 		const selects = this.el.querySelectorAll( '.edd-select-chosen' );
 
-		// Reinialize Chosen.js
 		_.each( selects, ( el ) => {
-			$( el ).chosen( {
-				...getChosenVars( $( el ) ),
-				width: '100%',
-			} );
+			if ( el.tagName === 'SELECT' && el.tomselect ) {
+				el.tomselect.destroy();
+			}
+			initChosen( el );
 		} );
 	},
 
@@ -236,6 +241,12 @@ export const Base = wp.Backbone.View.extend( {
 		const elToFocus = el.querySelector( selector );
 
 		if ( ! elToFocus ) {
+			return;
+		}
+
+		// Don't focus elements inside a Tom Select wrapper — doing so would
+		// reopen the dropdown via openOnFocus after render() reinitializes it.
+		if ( elToFocus.closest( '.ts-wrapper' ) ) {
 			return;
 		}
 

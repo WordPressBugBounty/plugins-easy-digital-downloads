@@ -1,14 +1,14 @@
-import { getChosenVars } from 'utils/chosen.js';
+import { initChosen } from 'utils/chosen.js';
 
 jQuery( document ).ready( function ( $ ) {
-	$( '.edd_countries_filter' ).on( 'change', function () {
+	$( 'select.edd_countries_filter' ).on( 'change', function () {
 
 		if ( ! $( this ).val() ) {
 			return;
 		}
 
 		const select = $( this ),
-			state_field = $( '.edd_regions_filter' ),
+			state_field = $( 'select.edd_regions_filter, input.edd_regions_filter' ),
 			data = {
 				action: 'edd_get_shop_states',
 				country: select.val(),
@@ -19,33 +19,32 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 		$.post( ajaxurl, data, function ( response ) {
+			const isSettingsPage = $( 'body' ).hasClass( 'download_page_edd-settings' ) || $( 'body' ).hasClass( 'download_page_edd-onboarding-wizard' );
 
-			// hot fix for settings page
-			if ( $( 'body' ).hasClass( 'download_page_edd-settings' ) || $( 'body' ).hasClass( 'download_page_edd-onboarding-wizard' ) ) {
-				// only on these 2 scenarios we have to setup the field
-				if ( ( 'nostates' === response && state_field.is( 'select' ) ) || ( 'nostates' !== response && state_field.is( 'input' ) ) ) {
-					let attributes = {};
-					$.each(
-						state_field.get(0)?.attributes || [],
-						( i, attr ) => {
-							if ( ! [ 'style', 'type'].includes( attr.name ) ) {
-								attributes[ attr.name ] = attr.value;
-							}
-						}
-					)
-
-					let newStateField = '';
-
-					if ( state_field.is( 'select' ) ) {
-						state_field.chosen( 'destroy' );
-						newStateField = $( '<input />' ).attr( { ...attributes, ...{ type: 'text', placeholder: edd_vars.enter_region } } );
-					} else {
-						newStateField = $( response ).attr( { ...attributes, ...{ 'data-placeholder': edd_vars.select_region } } ).addClass( 'edd-select-chosen' );
-					}
-					state_field.replaceWith( newStateField );
-					$( 'select.edd_regions_filter' ).chosen( { ...getChosenVars( newStateField ) } );
-					return;
+			if ( isSettingsPage ) {
+				// Destroy Tom Select on the current field if it is a select.
+				if ( state_field.is( 'select' ) ) {
+					state_field[0]?.tomselect?.destroy();
 				}
+
+				// Re-query after destroy so we have a live reference.
+				const current_field = $( 'select.edd_regions_filter, input.edd_regions_filter' );
+
+				if ( 'nostates' === response ) {
+					current_field.replaceWith(
+						$( '<input type="text" />' ).attr( {
+							name: data.field_name,
+							id: data.field_id,
+							class: 'edd_regions_filter regular-text',
+							placeholder: edd_vars.enter_region,
+						} )
+					);
+				} else {
+					current_field.replaceWith( response );
+					initChosen( document.querySelector( 'select.edd_regions_filter' ) );
+				}
+
+				return;
 			}
 
 			$( 'select.edd_regions_filter' ).find( 'option:gt(0)' ).remove();
@@ -54,7 +53,11 @@ jQuery( document ).ready( function ( $ ) {
 				$( response ).find( 'option:gt(0)' ).appendTo( 'select.edd_regions_filter' );
 			}
 
-			$( 'select.edd_regions_filter' ).trigger( 'chosen:updated' );
+			const instance = document.querySelector( 'select.edd_regions_filter' )?.tomselect;
+			if ( instance ) {
+				instance.sync();
+				instance.refreshOptions( false );
+			}
 		} );
 
 		return false;

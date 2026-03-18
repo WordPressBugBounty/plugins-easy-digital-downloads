@@ -1,3 +1,5 @@
+@use "../variables/colors" as colors;
+
 /* Date Picker Default Styles */
 .edd-datepicker {
     padding: 0;
@@ -178,7 +180,7 @@
 }
 
 .edd-datepicker thead {
-    background: #32373c;
+    background: colors.$wp-input-text;
 }
 
 .edd-datepicker td .ui-state-hover {
@@ -195,7 +197,7 @@
 }
 
 .admin-color-fresh .edd-datepicker thead {
-    background: #32373c;
+    background: colors.$wp-input-text;
 }
 
 .admin-color-fresh .edd-datepicker td .ui-state-hover {
