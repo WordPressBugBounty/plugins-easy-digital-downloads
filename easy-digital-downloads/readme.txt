@@ -6,7 +6,7 @@ Tags: digital downloads, ecommerce, sell digital products, digital store, stripe
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable Tag: 3.6.6
+Stable Tag: 3.6.6.1
 License: GPLv2 or later
 
 The best WordPress ecommerce plugin to sell digital products & downloads. Accept payments with Stripe & PayPal. Sell ebooks, software & more.

@@ -1,8 +1,8 @@
 # Copyright (C) 2026 Easy Digital Downloads
-# This file is distributed under the same license as the Easy Digital Downloads (Pro) plugin.
+# This file is distributed under the same license as the Easy Digital Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads (Pro) 3.6.6\n"
+"Project-Id-Version: Easy Digital Downloads 3.6.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-digital-downloads-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: easy-digital-downloads.php
 #: src/Gateways/Stripe/Admin/LicenseManager.php:248
-msgid "Easy Digital Downloads (Pro)"
+msgid "Easy Digital Downloads"
 msgstr ""
 
 #. Plugin URI of the plugin
