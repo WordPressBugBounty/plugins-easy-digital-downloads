@@ -256,9 +256,12 @@ class EDD_API_Keys_Table extends WP_List_Table {
 		">
 			<input type="hidden" name="edd_action" value="process_api_key" />
 			<input type="hidden" name="edd_api_process" value="generate" />
-			<?php wp_nonce_field( 'edd-api-nonce' ); ?>
-			<?php echo EDD()->html->ajax_user_search(); ?>
-			<?php submit_button( __( 'Generate New API Keys', 'easy-digital-downloads' ), 'secondary', 'submit', false ); ?>
+			<?php
+			wp_nonce_field( 'edd-api-nonce' );
+			$select = new \EDD\HTML\UserSelect();
+			$select->output();
+			submit_button( __( 'Generate New API Keys', 'easy-digital-downloads' ), 'secondary', 'submit', false );
+			?>
 		</form>
 
 		<?php

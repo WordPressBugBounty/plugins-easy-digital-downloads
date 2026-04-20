@@ -48,7 +48,7 @@
 
 	<div id="edd_payment_mode_submit" class="edd-no-js">
 		<input type="hidden" name="edd_action" value="gateway_select" />
-		<input type="hidden" name="page_id" value="<?php echo absint( edd_get_current_page_url() ); ?>"/>
+		<input type="hidden" name="page_id" value="<?php echo esc_attr( absint( get_queried_object_id() ) ); ?>"/>
 		<input type="submit" name="gateway_submit" id="edd_next_button" class="edd-submit" value="<?php esc_html_e( 'Next', 'easy-digital-downloads' ); ?>"/>
 	</div>
 

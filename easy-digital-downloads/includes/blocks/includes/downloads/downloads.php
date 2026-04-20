@@ -171,6 +171,10 @@ function buy_button( $block_attributes = array() ) {
 		$args['text']   = edd_get_option( 'buy_now_text', __( 'Buy Now', 'easy-digital-downloads' ) );
 	}
 
+	if ( ! empty( $block_attributes['discount'] ) ) {
+		$args['discount'] = sanitize_text_field( $block_attributes['discount'] );
+	}
+
 	$output  = sprintf( '<div class="%s">', esc_attr( implode( ' ', $classes ) ) );
 	$output .= edd_get_purchase_link( $args );
 	$output .= '</div>';

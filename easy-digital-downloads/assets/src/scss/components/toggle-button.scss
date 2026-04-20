@@ -44,24 +44,6 @@ button.edd-button__toggle {
 		opacity: .5;
 	}
 
-	&.edd-updating {
-		background-color: colors.$wp-input-border !important; // remove important when enabling buttons
-
-		&:before {
-			position: absolute;
-			top: 3px;
-			@include mixins.edd-spinner(
-				10px,
-				colors.$wp-input-border,
-				colors.$wp-alternate
-			);
-		}
-
-		&:after {
-			display: none;
-		}
-	}
-
 	&.edd-button-toggle--active {
 		background-color: var(--edd-wp-admin-theme-color) !important; // remove important when enabling buttons
 

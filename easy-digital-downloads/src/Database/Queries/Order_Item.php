@@ -219,7 +219,7 @@ class Order_Item extends Query {
 		$order_table       = new Order();
 		$order_table_alias = $order_table->table_alias;
 
-		$clauses['join'] .= " INNER JOIN {$order_table->table_name} {$order_table_alias}
+		$clauses['join'] .= " INNER JOIN {$wpdb->edd_orders} {$order_table_alias}
 			ON( {$this->table_alias}.order_id = {$order_table_alias}.{$order_table->primary_column_name} )";
 
 		$where_conditions = array();
@@ -254,7 +254,7 @@ class Order_Item extends Query {
 		// Handle date_query for the orders table.
 		if ( ! empty( $this->query_vars['order_query']['date_query'] ) && is_array( $this->query_vars['order_query']['date_query'] ) ) {
 			$date_query = new \EDD\Database\Queries\Date( $this->query_vars['order_query']['date_query'] );
-			$date_sql   = $date_query->get_sql( $order_table->table_name, $order_table_alias, $order_table->primary_column_name, $this );
+			$date_sql   = $date_query->get_sql( $wpdb->edd_orders, $order_table_alias, $order_table->primary_column_name, $this );
 
 			if ( ! empty( $date_sql['where'] ) ) {
 				// Remove leading " AND " from the date query where clause.

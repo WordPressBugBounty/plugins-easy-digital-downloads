@@ -2482,3 +2482,19 @@ function edd_recapture_remote_install_handler() {
 function maybe_add_recapture_notice_to_abandoned_payment( $payment_id ) {
 	_edd_deprecated_function( __FUNCTION__, '3.6.5' );
 }
+
+/**
+ * Search the users database via AJAX
+ *
+ * @since 2.6.9
+ * @deprecated 3.6.7 Handled by EDD\Users\Search
+ * @return void
+ */
+function edd_ajax_user_search() {
+	_edd_deprecated_function( __FUNCTION__, '3.6.7', 'EDD\Users\Search' );
+	wp_send_json_error(
+		array(
+			'error' => __( 'This feature is no longer available.', 'easy-digital-downloads' ),
+		)
+	);
+}

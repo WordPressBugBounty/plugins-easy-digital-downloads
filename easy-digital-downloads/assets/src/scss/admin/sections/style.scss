@@ -21,38 +21,6 @@
 			padding: 3px;
 		}
 
-		div.edit-item {
-			margin-left: -4px;
-			margin-top: -20px;
-		}
-
-		.customer-address.edit-item {
-			margin-top: 3px;
-		}
-
-		span.edit-item {
-			display: none;
-			flex-direction: column;
-			gap: 0;
-		}
-
-		.edit-item input {
-			font-size: 13px;
-		}
-
-		.customer-name.edit-item input {
-			margin-top: -5px;
-		}
-
-		.edd_user_search_results {
-			left: -2px;
-			top: 18px;
-		}
-
-		.edd_user_search_results ul {
-			width: 198px;
-		}
-
 		.customer-section:not(:last-child) {
 			border-bottom: 1px solid #eee;
 			padding-bottom: 20px;
@@ -77,6 +45,11 @@
 
 		.avatar-wrap {
 			text-align: center;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			align-items: center;
+			justify-content: center;
 		}
 
 		img.avatar {
@@ -137,11 +110,6 @@
 
 @media screen and (max-width: 656px) {
 	.edd-sections-wrap .section-wrap {
-		#edd-item-stats-wrapper {
-			padding-left: 0;
-			padding-right: 0;
-		}
-
 		.widefat td.no-items,
 		.widefat td.column-primary,
 		.widefat th.column-primary {

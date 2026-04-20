@@ -9,6 +9,7 @@ import { jQueryReady } from 'utils/jquery.js';
 
 // Store customer search results to help prefill address data.
 let CUSTOMER_SEARCH_RESULTS = {
+	company: '',
 	addresses: {
 		'0': {
 			address: '',
@@ -222,6 +223,7 @@ jQueryReady( () => {
 		$( '#edd-add-order-form input[name="edd_order_address[address2]"]' ).val( address.address2 );
 		$( '#edd-add-order-form input[name="edd_order_address[postal_code]"]' ).val( address.postal_code );
 		$( '#edd-add-order-form input[name="edd_order_address[city]"]' ).val( address.city );
+		$( '#edd-add-order-form input[name="edd_order_address[company]"]' ).val( CUSTOMER_SEARCH_RESULTS.company || '' );
 		$( '#edd-add-order-form input[name="edd_order_address[address_id]"]' ).val( val );
 
 		// Remove global `change` event handling to prevent loop.

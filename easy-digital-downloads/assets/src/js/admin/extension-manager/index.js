@@ -1,5 +1,7 @@
 /* global EDDExtensionManager, ajaxurl */
 
+import { postAdminAjax } from 'utilities/post-admin-ajax';
+
 ; ( function ( document, $ ) {
 	'use strict';
 
@@ -32,7 +34,7 @@
 
 			case 'install':
 				ajaxAction = 'edd_install_extension';
-				addClass = 'edd-plugin__active'
+				addClass = 'edd-plugin__active';
 				$btn.text( EDDExtensionManager.installing );
 				break;
 
@@ -49,12 +51,11 @@
 				return;
 		}
 
-		$btn.attr( 'disabled', true ).addClass( 'edd-updating' );
 		if ( $btn.hasClass( 'button-primary' ) ) {
 			$btn.removeClass( 'button-primary' ).addClass( 'updating-message' );
 		}
 
-		var data = {
+		const data = {
 			action: ajaxAction,
 			nonce: EDDExtensionManager.extension_manager_nonce,
 			plugin: plugin,
@@ -64,15 +65,34 @@
 			product: product,
 		};
 
-		$.post( ajaxurl, data )
-			.done( function ( res ) {
-				if ( EDDExtensionManager.debug ) {
-					console.log( res );
-				}
+		const thisStepBefore = $btn.closest( '.edd-extension-manager__step' );
+		const $card = $btn.closest( '.edd-extension-manager__card' );
+		const optimisticCard =
+			! $( '#edd-admin-about' ).length &&
+			! thisStepBefore.length &&
+			( action === 'activate' || action === 'deactivate' );
 
+		function revertExtensionCard() {
+			if ( optimisticCard ) {
+				$card.removeClass( addClass ).addClass( removeClass );
+			}
+		}
+
+		postAdminAjax( {
+			url: ajaxurl,
+			data,
+			$busy: $btn,
+			applyOptimistic() {
+				if ( optimisticCard ) {
+					$card.removeClass( removeClass ).addClass( addClass );
+				}
+			},
+			revert: revertExtensionCard,
+			debug: EDDExtensionManager.debug,
+			onResponse( res ) {
 				// We handle the 'about page' installer a little differently due to the conditions in at hand, so we'll adjust how we handle the response based on the context.
 				if ( $( '#edd-admin-about' ).length ) {
-					var actions_container = $btn.closest( '.actions' );
+					const actions_container = $btn.closest( '.actions' );
 					if ( res.success ) {
 						actions_container.addClass('has-response').empty().append( '<div class="status"><span class="status-label active">' + res.data.message + '</span></div>' );
 					} else {
@@ -80,31 +100,30 @@
 						 * The install class returns an array of error messages, and res.data.message will be undefined.
 						 * In that case, we'll use the standard failure messages.
 						 */
-						var message = res.data.message;
+						let message = res.data.message;
 						if ( !message ) {
-							message = EDDExtensionManager.plugin_install_failed
+							message = EDDExtensionManager.plugin_install_failed;
 						}
 						actions_container.addClass('has-response').empty().append( '<div class="status"><span class="status-label">' + message + '</span></div>' );
 					}
 				} else {
-					var thisStep = $btn.closest( '.edd-extension-manager__step' );
+					const thisStep = $btn.closest( '.edd-extension-manager__step' );
 					if ( res.success ) {
 						if ( thisStep.length ) {
-							var nextStep = thisStep.next();
+							const nextStep = thisStep.next();
 							if ( nextStep.length ) {
 								thisStep.fadeOut();
 								nextStep.prepend( '<div class="notice inline-notice notice-success"><p>' + res.data.message + '</p></div>' );
 								nextStep.fadeIn();
 							}
 						} else {
-							$btn.attr( 'disabled', false ).removeClass( 'edd-updating' );
 							$btn.closest( '.edd-extension-manager__card' ).removeClass( removeClass ).addClass( addClass );
 							if ( res.data.button.length ) {
 								$btn.closest( '.edd-extension-manager__control' ).empty().append( res.data.button );
 							}
 						}
 					} else {
-						var message = res.data.message;
+						let message = res.data.message;
 						/**
 						 * The install class returns an array of error messages, and res.data.message will be undefined.
 						 * In that case, we'll use the standard failure messages.
@@ -120,11 +139,14 @@
 							thisStep.fadeOut();
 							thisStep.after( '<div class="notice inline-notice notice-warning"><p>' + message + '</p></div>' );
 						} else {
-							$btn.closest( '.edd-extension-manager__actions' ).empty().append( '<div class="notice inline-notice notice-warning"><p>' + message + '</p></div>' );
+							const $actions = $btn.closest( '.edd-extension-manager__actions' );
+							$actions.find( '.notice' ).remove();
+							$actions.append( '<div class="notice inline-notice notice-warning"><p>' + message + '</p></div>' );
 						}
 					}
 				}
-			} );
+			},
+		} );
 	} );
 
 	let typingTimer,

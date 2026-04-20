@@ -45,7 +45,7 @@ class Multicheck extends Base {
 			<?php endif; ?>
 			<?php
 			foreach ( $this->args['options'] as $key => $data ) {
-				$label   = ! empty( $data['label'] ) ? $data['label'] : $data;
+				$label   = $this->get_label( $data );
 				$checked = (int) (bool) ! empty( $data['checked'] );
 				$classes = array(
 					'edd-form-group__control--wrap',
@@ -161,6 +161,24 @@ class Multicheck extends Base {
 		}
 		$tooltip = new Tooltip( $data['tooltip'] );
 		$tooltip->output();
+	}
+
+	/**
+	 * Gets the label for a multicheck option.
+	 *
+	 * Ensures the label is always a string to avoid fatal errors when passing
+	 * to wp_kses_post(). Falls back to legacy string-option support, then empty string.
+	 *
+	 * @since 3.6.7
+	 * @param mixed $data The option data.
+	 * @return string
+	 */
+	private function get_label( $data ): string {
+		if ( is_array( $data ) && is_string( $data['label'] ?? null ) ) {
+			return $data['label'];
+		}
+
+		return is_string( $data ) ? $data : '';
 	}
 
 	/**

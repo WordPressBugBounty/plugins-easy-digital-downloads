@@ -58,6 +58,7 @@ class Registry {
 				'user_verification'          => UserVerification::class,
 				'password_reset'             => PasswordReset::class,
 				'stripe_early_fraud_warning' => StripeEarlyFraudWarning::class,
+				'login_link'                 => LoginLink::class,
 			);
 
 			$this->emails = apply_filters( 'edd_email_registered_templates', $emails );

@@ -42,7 +42,7 @@ export function paymentForm() {
 async function onSubmitDelay() {
 	try {
 		// Form data to send to intent requests.
-		let formData = $( '#edd_purchase_form' ).serialize(),
+		let formData = new FormData( document.getElementById( 'edd_purchase_form' ) ),
 			tokenInput = $( '#edd-process-stripe-token' );
 
 		// Retrieve or create a PaymentMethod.
@@ -62,7 +62,7 @@ async function onSubmitDelay() {
 		const handledIntent = await handleIntent(
 			initialIntent,
 			{
-				form_data: formData += `&edd-process-checkout-nonce=${ refreshedNonce }`,
+				form_data: ( formData.set( 'edd-process-checkout-nonce', refreshedNonce ), formData ),
 				timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
 				token: tokenInput.length ? tokenInput.data( 'token' ) : '',
 			}
@@ -112,7 +112,7 @@ export function processForm( paymentMethodId, paymentMethodExists ) {
 
 	return apiRequest( 'edds_process_purchase_form', {
 		// Send available form data.
-		form_data: $( '#edd_purchase_form' ).serialize(),
+		form_data: new FormData( document.getElementById( 'edd_purchase_form' ) ),
 		payment_method_id: paymentMethodId,
 		payment_method_exists: paymentMethodExists,
 		timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
@@ -127,14 +127,16 @@ export function processForm( paymentMethodId, paymentMethodExists ) {
  * @return {Promise} jQuery Promise.
  */
 export function createPayment( intent ) {
-	const paymentForm = $( '#edd_purchase_form' ),
+	const formEl = document.getElementById( 'edd_purchase_form' ),
 		tokenInput = $( '#edd-process-stripe-token' );
-	let formData = paymentForm.serialize();
+	let formData;
 
-	// Attempt to find the Checkout nonce directly.
-	if ( paymentForm.length === 0 ) {
-		const nonce = $( '#edd-process-checkout-nonce' ).val();
-		formData = `edd-process-checkout-nonce=${ nonce }`
+	if ( formEl ) {
+		formData = new FormData( formEl );
+	} else {
+		// Attempt to find the Checkout nonce directly.
+		formData = new FormData();
+		formData.append( 'edd-process-checkout-nonce', $( '#edd-process-checkout-nonce' ).val() );
 	}
 
 	return apiRequest( 'edds_create_payment', {
@@ -154,19 +156,21 @@ export function createPayment( intent ) {
  * @return {Promise} jQuery Promise.
  */
 export function completePayment( intent, refreshedNonce ) {
-	const paymentForm = $( '#edd_purchase_form' );
-	let formData = paymentForm.serialize(),
+	const formEl = document.getElementById( 'edd_purchase_form' );
+	let formData,
 		tokenInput = $( '#edd-process-stripe-token' );
 
-	// Attempt to find the Checkout nonce directly.
-	if ( paymentForm.length === 0 ) {
-		const nonce = $( '#edd-process-checkout-nonce' ).val();
-		formData = `edd-process-checkout-nonce=${ nonce }`;
+	if ( formEl ) {
+		formData = new FormData( formEl );
+	} else {
+		// Attempt to find the Checkout nonce directly.
+		formData = new FormData();
+		formData.append( 'edd-process-checkout-nonce', $( '#edd-process-checkout-nonce' ).val() );
 	}
 
 	// Add the refreshed nonce if available.
 	if ( refreshedNonce ) {
-		formData += `&edd-process-checkout-nonce=${ refreshedNonce }`;
+		formData.set( 'edd-process-checkout-nonce', refreshedNonce );
 	}
 
 	return apiRequest( 'edds_complete_payment', {
@@ -190,9 +194,14 @@ function watchInitialValidation( event, xhr, options ) {
 		return;
 	}
 
+	// options.data may be a URL-encoded string (core checkout) or a FormData object.
+	const dataContains = typeof options.data === 'string'
+		? ( needle ) => options.data.includes( needle )
+		: ( needle ) => false;
+
 	if (
-		options.data.includes( 'action=edd_process_checkout' ) &&
-		options.data.includes( 'edd-gateway=stripe' ) &&
+		dataContains( 'action=edd_process_checkout' ) &&
+		dataContains( 'edd-gateway=stripe' ) &&
 		( xhr.responseText && 'success' === xhr.responseText.trim() )
 	) {
 		return onSubmitDelay();

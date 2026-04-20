@@ -37,17 +37,6 @@
 			background-image: icons.$icon-install;
 			background-size: 1em;
 		}
-
-		&.edd-updating {
-			&:before {
-				background: none;
-				@include mixins.edd-spinner(
-					12px,
-					colors.$wp-alternate,
-					colors.$wp-input-border
-				);
-			}
-		}
 	}
 }
 
@@ -92,21 +81,7 @@
 		}
 
 		&:disabled {
-			background-color: colors.$wp-input-border !important;
-
-			&:before {
-				position: absolute;
-				top: 3px;
-				@include mixins.edd-spinner(
-					10px,
-					colors.$wp-input-border,
-					colors.$wp-alternate
-				);
-			}
-
-			&:after {
-				display: none;
-			}
+			background-color: colors.$wp-border !important;
 		}
 
 		.edd-plugin__active & {

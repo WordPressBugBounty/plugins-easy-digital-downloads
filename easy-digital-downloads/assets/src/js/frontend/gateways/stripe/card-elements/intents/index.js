@@ -21,7 +21,7 @@ export function retrieve( intentId, intentType = 'payment_intent' ) {
 		intent_type: intentType,
 		timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
 		token: tokenInput.length ? tokenInput.data( 'token' ) : '',
-		form_data: form.serialize(),
+		form_data: new FormData( form[0] ),
 		elements_mode: 'card-elements',
 	} )
 		// Returns just the PaymentIntent object.
@@ -45,7 +45,7 @@ export function confirm( intent ) {
 		intent_type: intent.object,
 		timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
 		token: tokenInput.length ? tokenInput.data( 'token' ) : '',
-		form_data: form.serialize(),
+		form_data: new FormData( form[0] ),
 		elements_mode: 'card-elements',
 	} )
 		// Returns just the PaymentIntent object for easier reprocessing.
@@ -70,12 +70,12 @@ export function capture( intent, data, refreshedNonce ) {
 		return Promise.resolve( intent );
 	}
 
-	let formData = form.serialize(),
+	let formData = new FormData( form[0] ),
 		tokenInput = $( '#edd-process-stripe-token' );
 
 	// Add the refreshed nonce if available.
 	if ( refreshedNonce ) {
-		formData += `&edd-process-checkout-nonce=${ refreshedNonce }`;
+		formData.set( 'edd-process-checkout-nonce', refreshedNonce );
 	}
 
 	return apiRequest( 'edds_capture_intent', {
@@ -109,7 +109,7 @@ export function update( intent, data ) {
 		intent_type: intent.object,
 		timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
 		token: tokenInput.length ? tokenInput.data( 'token' ) : '',
-		form_data: form.serialize(),
+		form_data: new FormData( form[0] ),
 		elements_mode: 'card-elements',
 		...data,
 	} )

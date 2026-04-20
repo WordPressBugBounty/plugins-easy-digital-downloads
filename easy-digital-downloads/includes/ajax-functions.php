@@ -237,6 +237,17 @@ function edd_ajax_add_to_cart() {
 		$items .= edd_get_cart_item_template( $key, $item, true );
 	}
 
+	if ( ! empty( $post_data['edd_discount'] ) ) {
+		$discount_code = preg_replace( '/[^a-zA-Z0-9\-_]+/', '', trim( $post_data['edd_discount'] ) );
+		if (
+			$discount_code &&
+			( edd_multiple_discounts_allowed() || ! edd_cart_has_discounts() ) &&
+			edd_is_discount_valid( $discount_code, '', false )
+		) {
+			edd_set_cart_discount( $discount_code );
+		}
+	}
+
 	$return = array(
 		'subtotal'      => html_entity_decode( edd_currency_filter( edd_format_amount( edd_get_cart_subtotal() ) ), ENT_COMPAT, 'UTF-8' ),
 		'total'         => html_entity_decode( edd_currency_filter( edd_format_amount( edd_get_cart_total() ) ), ENT_COMPAT, 'UTF-8' ),
@@ -609,7 +620,7 @@ function edd_ajax_get_states_field() {
 			'options' => $states,
 		);
 
-		if ( in_array( $field_name, array( 'card_state', 'edd_settings[base_state]' ), true ) ) {
+		if ( in_array( $field_name, array( 'card_state', 'customerinfo[region]', 'edd_settings[base_state]' ), true ) ) {
 			$args['show_option_empty'] = __( 'Select a State / Province', 'easy-digital-downloads' );
 			if ( 'edd_settings[base_state]' === $field_name ) {
 				$args['show_option_empty'] = __( 'Select a Region', 'easy-digital-downloads' );
@@ -738,57 +749,6 @@ function edd_ajax_download_category_search() {
 	echo wp_send_json( $results );
 }
 add_action( 'wp_ajax_edd_download_category_search', 'edd_ajax_download_category_search' );
-
-/**
- * Search the users database via AJAX
- *
- * @since 2.6.9
- * @return void
- */
-function edd_ajax_user_search() {
-
-	// Default results.
-	$results = array(
-		'id'   => 0,
-		'name' => __( 'No users found', 'easy-digital-downloads' ),
-	);
-
-	// Default user role.
-	$user_view_role = apply_filters( 'edd_view_users_role', 'view_shop_reports' );
-
-	// User can view users.
-	if ( current_user_can( $user_view_role ) ) {
-		$search = esc_sql( sanitize_text_field( $_GET['s'] ) );
-		$users  = array();
-
-		// Searching.
-		if ( ! empty( $search ) ) {
-			$users = get_users(
-				array(
-					'search' => '*' . $search . '*',
-					'number' => 50,
-				)
-			);
-		}
-
-		// Setup results based on users.
-		if ( ! empty( $users ) ) {
-			$results = array();
-
-			foreach ( $users as $user ) {
-				$results[] = array(
-					'id'   => $user->ID,
-					'name' => $user->display_name,
-				);
-			}
-		}
-	}
-
-	echo json_encode( $results );
-
-	edd_die();
-}
-add_action( 'wp_ajax_edd_user_search', 'edd_ajax_user_search' );
 
 /**
  * Check for Download Price Variations via AJAX (this function can only be used
@@ -1176,6 +1136,7 @@ function edd_ajax_customer_addresses() {
 	$customer = edd_get_customer( $customer_id );
 
 	if ( $customer ) {
+		$response['company'] = $customer->get_meta( 'company_name', true );
 
 		// Fetch customer addresses.
 		$addresses = $customer->get_addresses();

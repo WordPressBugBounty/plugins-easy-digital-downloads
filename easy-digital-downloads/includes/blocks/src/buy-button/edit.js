@@ -4,6 +4,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import './editor.scss';
 import { DownloadOptions } from '../utilities/downloads';
+import { DiscountCombobox } from '../utilities/discounts';
 import { newDownload } from '../utilities/download-new';
 
 /**
@@ -72,6 +73,12 @@ export default function Edit ( { attributes, setAttributes } ) {
 							checked={!!attributes.direct}
 							onChange={toggleAttribute( 'direct' )}
 							help={__( 'Enable Buy Now to process a download order without going through the full checkout.', 'easy-digital-downloads' )}
+						/>
+					)}
+					{!attributes.direct && EDDBlocks.manage_shop_discounts && (
+						<DiscountCombobox
+							value={attributes.discount}
+							onChange={toggleAttribute( 'discount' )}
 						/>
 					)}
 				</PanelBody>

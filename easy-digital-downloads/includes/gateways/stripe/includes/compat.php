@@ -25,7 +25,7 @@ class_alias( 'EDD\Gateways\Stripe\API', 'EDD_Stripe_API' );
  * @param array $post_data $_POST data containing serialized form data.
  */
 function _edds_map_form_data_to_request( $post_data ) {
-	if ( ! isset( $post_data['form_data'] ) ) {
+	if ( ! isset( $post_data['form_data'] ) || ! is_string( $post_data['form_data'] ) ) {
 		return;
 	}
 
@@ -105,9 +105,9 @@ function _edds_process_purchase_form() {
 		// in a serialized string to ensure all fields are available.
 		//
 		// Map and merge formData to $_POST so it's accessible in other functions.
-		parse_str( $_POST['form_data'], $form_data );
-		$_POST    = array_merge( $_POST, $form_data );
-		$_REQUEST = array_merge( $_REQUEST, $_POST );
+		// When form_data is sent as a serialized string (legacy behavior), parse it
+		// and merge into $_POST. With native FormData, fields are already in $_POST.
+		_edds_map_form_data_to_request( $_POST );
 
 		/*
 		 * Reset the tax rate so that it will be recalculated correctly.

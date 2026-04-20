@@ -606,6 +606,14 @@ class EDD_CLI extends WP_CLI_Command {
 	 * --status=<status>: The status to create purchases as
 	 * --id=<product_id>: A specific product to create purchase data for
 	 * --price_id=<price_id>: A price ID of the specified product
+	 * --gateway=<gateway>: The gateway to use for the purchase.
+	 * --currency=<currency>: The currency to use for the purchase.
+	 * --date=<date>: The date to use for the purchase.
+	 * --range=<range>: The range to use for the purchase.
+	 * --generate_users=<generate_users>: Whether to generate users for the purchase.
+	 * --email=<email>: The email to use for the purchase.
+	 * --fname=<fname>: The first name to use for the purchase.
+	 * --lname=<lname>: The last name to use for the purchase.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -649,7 +657,6 @@ class EDD_CLI extends WP_CLI_Command {
 		$date     = false;
 		$range    = 30;
 		$currency = edd_get_currency();
-		$gateway  = 'manual';
 
 		$generate_users = false;
 
@@ -799,12 +806,6 @@ class EDD_CLI extends WP_CLI_Command {
 				$currency   = $currencies[ array_rand( $currencies ) ];
 			}
 
-			// Allow random gateways.
-			if ( ! empty( $assoc_args['gateway'] ) && 'random' === $assoc_args['gateway'] ) {
-				$gateways = array_keys( edd_get_payment_gateways() );
-				$gateway  = $gateways[ array_rand( $gateways ) ];
-			}
-
 			// Build purchase data.
 			$purchase_data = array(
 				'price'        => edd_sanitize_amount( $total ),
@@ -816,7 +817,7 @@ class EDD_CLI extends WP_CLI_Command {
 				'downloads'    => $final_downloads,
 				'cart_details' => $cart_details,
 				'status'       => 'pending',
-				'gateway'      => $gateway,
+				'gateway'      => $this->get_gateway( $assoc_args ),
 			);
 
 			$timestring = $this->get_order_timestring( $date, $range );
@@ -2420,6 +2421,32 @@ class EDD_CLI extends WP_CLI_Command {
 		}
 
 		return date( 'Y-m-d H:i:s', strtotime( $date ) );
+	}
+
+	/**
+	 * Get the gateway from the arguments:
+	 * - If no gateway is provided, return 'manual'.
+	 * - If 'random' is provided, return a random gateway.
+	 * - If the gateway is not in the list of available gateways, return 'manual'.
+	 * The gateway does not have to be active.
+	 *
+	 * @since 3.6.7
+	 * @param array $args The arguments.
+	 * @return string The gateway.
+	 */
+	private function get_gateway( $args ) {
+		$gateway = 'manual';
+		if ( empty( $args['gateway'] ) ) {
+			return $gateway;
+		}
+
+		$gateways = array_keys( edd_get_payment_gateways() );
+
+		if ( 'random' === $args['gateway'] ) {
+			return $gateways[ array_rand( $gateways ) ];
+		}
+
+		return in_array( $args['gateway'], $gateways, true ) ? $args['gateway'] : $gateway;
 	}
 }
 

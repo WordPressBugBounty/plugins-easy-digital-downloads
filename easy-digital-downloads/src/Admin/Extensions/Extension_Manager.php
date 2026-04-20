@@ -73,13 +73,16 @@ class Extension_Manager implements SubscriberInterface {
 	 * Registers the extension manager script and style.
 	 *
 	 * @since 2.11.4
+	 * @param string $hook The current admin page hook.
 	 * @return void
 	 */
-	public function register_assets() {
+	public function register_assets( $hook = '' ) {
 		if ( wp_script_is( 'edd-extension-manager', 'registered' ) ) {
 			return;
 		}
-		$minify = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		if ( ! in_array( $hook, array( 'download_page_edd-addons', 'download_page_edd-about', 'download_page_edd-onboarding-wizard' ), true ) ) {
+			return;
+		}
 		wp_register_style( 'edd-extension-manager', edd_get_assets_url( 'css/admin' ) . 'extension-manager.min.css', array(), EDD_VERSION );
 		wp_register_script( 'edd-extension-manager', edd_get_assets_url( 'js/admin' ) . 'extension-manager.js', array( 'jquery' ), EDD_VERSION, true );
 		wp_localize_script(
@@ -102,6 +105,7 @@ class Extension_Manager implements SubscriberInterface {
 				'filter'                   => filter_input( INPUT_GET, 'filter', FILTER_SANITIZE_SPECIAL_CHARS ),
 			)
 		);
+		$this->enqueue();
 	}
 
 	/**
@@ -111,6 +115,9 @@ class Extension_Manager implements SubscriberInterface {
 	 * @return void
 	 */
 	public function enqueue() {
+		if ( ! wp_script_is( 'edd-extension-manager', 'registered' ) ) {
+			$this->register_assets( 'download_page_edd-addons' );
+		}
 		wp_enqueue_style( 'edd-extension-manager' );
 		wp_enqueue_script( 'edd-extension-manager' );
 	}
@@ -120,14 +127,13 @@ class Extension_Manager implements SubscriberInterface {
 	 *
 	 * @since 2.11.4
 	 * @param ProductData $product             The product data object.
-	 * @param array        $inactive_parameters The array of information to build the button for an inactive/not installed plugin.
-	 * @param array        $active_parameters   The array of information needed to build the link to configure an active plugin.
-	 * @param array        $configuration       The optional array of data to override the product data retrieved from the API.
+	 * @param array       $inactive_parameters The array of information to build the button for an inactive/not installed plugin.
+	 * @param array       $active_parameters   The array of information needed to build the link to configure an active plugin.
+	 * @param array       $configuration       The optional array of data to override the product data retrieved from the API.
 	 * @return void
 	 */
 	public function do_extension_card( ProductData $product, $inactive_parameters, $active_parameters, $configuration = array() ) {
 		$this->enqueue();
-
 		$parameters = array(
 			'inactive_parameters' => $inactive_parameters,
 			'active_parameters'   => $active_parameters,

@@ -252,7 +252,7 @@ class Order extends Query {
 		// Filter by the order address's region (state/province/etc)..
 		if ( ! empty( $this->query_vars['region'] ) && 'all' !== $this->query_vars['region'] ) {
 			$location_join = $wpdb->prepare(
-				" INNER JOIN {$order_addresses_query->table_name} {$join_alias} ON ({$primary_alias}.{$primary_column} = {$join_alias}.order_id AND {$join_alias}.country = %s AND {$join_alias}.region = %s)",
+				" INNER JOIN {$wpdb->edd_order_addresses} {$join_alias} ON ({$primary_alias}.{$primary_column} = {$join_alias}.order_id AND {$join_alias}.country = %s AND {$join_alias}.region = %s)",
 				$this->query_vars['country'],
 				$this->query_vars['region']
 			);
@@ -263,7 +263,7 @@ class Order extends Query {
 			// Filter only by the country, not by region.
 		} else {
 				$location_join = $wpdb->prepare(
-					" INNER JOIN {$order_addresses_query->table_name} {$join_alias} ON ({$primary_alias}.{$primary_column} = {$join_alias}.order_id AND {$join_alias}.country = %s)",
+					" INNER JOIN {$wpdb->edd_order_addresses} {$join_alias} ON ({$primary_alias}.{$primary_column} = {$join_alias}.order_id AND {$join_alias}.country = %s)",
 					$this->query_vars['country']
 				);
 
@@ -314,7 +314,7 @@ class Order extends Query {
 
 		$conditions = implode( ' ', $conditions );
 
-		$clauses['join'] .= " INNER JOIN {$order_items_query->table_name} {$order_items_query->table_alias} ON(
+		$clauses['join'] .= " INNER JOIN {$wpdb->edd_order_items} {$order_items_query->table_alias} ON(
 				{$this->table_alias}.{$primary_column} = {$order_items_query->table_alias}.order_id
 				{$conditions}
 			)";
@@ -340,7 +340,7 @@ class Order extends Query {
 		$order_transaction_query = new Order_Transaction();
 
 		$clauses['join'] .= $wpdb->prepare(
-			" INNER JOIN {$order_transaction_query->table_name} {$order_transaction_query->table_alias}
+			" INNER JOIN {$wpdb->edd_order_transactions} {$order_transaction_query->table_alias}
 			ON( {$this->table_alias}.{$primary_column} = {$order_transaction_query->table_alias}.object_id
 			AND {$order_transaction_query->table_alias}.transaction_id = %s )",
 			sanitize_text_field( $this->query_vars['txn'] )
@@ -367,7 +367,7 @@ class Order extends Query {
 		$order_adjustment_query = new Order_Adjustment();
 
 		$clauses['join'] .= $wpdb->prepare(
-			" INNER JOIN {$order_adjustment_query->table_name} {$order_adjustment_query->table_alias}
+			" INNER JOIN {$wpdb->edd_order_adjustments} {$order_adjustment_query->table_alias}
 			ON( {$this->table_alias}.{$primary_column} = {$order_adjustment_query->table_alias}.object_id
 			AND {$order_adjustment_query->table_alias}.type_id = %d )",
 			absint( $this->query_vars['discount_id'] )

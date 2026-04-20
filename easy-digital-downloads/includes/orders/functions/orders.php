@@ -9,7 +9,7 @@
  * @since       3.0
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -66,7 +66,7 @@ function edd_add_order( $data = array() ) {
  *
  * @since 3.0
  *
- * @param $order_id
+ * @param int $order_id Order ID.
  *
  * @return bool      true if the order was trashed successfully, false if not
  */
@@ -146,7 +146,7 @@ function edd_trash_order( $order_id ) {
  *
  * @since 3.0
  *
- * @param $order_id
+ * @param int $order_id Order ID.
  *
  * @return bool      true if the order was trashed successfully, false if not
  */
@@ -261,7 +261,7 @@ function edd_destroy_order( $order_id = 0 ) {
 	 */
 	do_action( 'edd_pre_destroy_order', $order_id );
 
-	// Delete the order
+	// Delete the order.
 	$destroyed = edd_delete_order( $order_id );
 
 	if ( $destroyed ) {
@@ -464,7 +464,7 @@ function edd_get_order( $order_id = 0 ) {
 function edd_get_order_by( $field = '', $value = '' ) {
 	$orders = new EDD\Database\Queries\Order();
 
-	// Return order
+	// Return order.
 	return $orders->get_item_by( $field, $value );
 }
 
@@ -481,7 +481,7 @@ function edd_get_order_by( $field = '', $value = '' ) {
  */
 function edd_get_orders( $args = array() ) {
 
-	// Parse args
+	// Parse args.
 	$r = wp_parse_args(
 		$args,
 		array(
@@ -489,10 +489,10 @@ function edd_get_orders( $args = array() ) {
 		)
 	);
 
-	// Instantiate a query object
+	// Instantiate a query object.
 	$orders = new EDD\Database\Queries\Order();
 
-	// Return orders
+	// Return orders.
 	return $orders->query( $r );
 }
 
@@ -509,7 +509,7 @@ function edd_get_orders( $args = array() ) {
  */
 function edd_count_orders( $args = array() ) {
 
-	// Parse args
+	// Parse args.
 	$r = wp_parse_args(
 		$args,
 		array(
@@ -517,10 +517,10 @@ function edd_count_orders( $args = array() ) {
 		)
 	);
 
-	// Query for count(s)
+	// Query for count(s).
 	$orders = new EDD\Database\Queries\Order( $r );
 
-	// Return count(s)
+	// Return count(s).
 	return absint( $orders->found_items );
 }
 
@@ -537,7 +537,7 @@ function edd_count_orders( $args = array() ) {
  */
 function edd_get_order_counts( $args = array() ) {
 
-	// Parse args
+	// Parse args.
 	$r = wp_parse_args(
 		$args,
 		array(
@@ -547,10 +547,10 @@ function edd_get_order_counts( $args = array() ) {
 		)
 	);
 
-	// Query for count
+	// Query for count.
 	$counts = new EDD\Database\Queries\Order( $r );
 
-	// Format & return
+	// Format & return.
 	return edd_format_counts( $counts, $r['groupby'] );
 }
 
@@ -559,7 +559,7 @@ function edd_get_order_counts( $args = array() ) {
 /**
  * Determine if an order ID is able to be trashed.
  *
- * @param $order_id
+ * @param int $order_id Order ID.
  *
  * @return bool
  */
@@ -582,7 +582,7 @@ function edd_is_order_trashable( $order_id ) {
 /**
  * Determine if an order ID is able to be restored from the trash.
  *
- * @param $order_id
+ * @param int $order_id Order ID.
  *
  * @return bool
  */
@@ -639,15 +639,15 @@ function edd_is_order_recoverable( $order_id = 0 ) {
  */
 function edd_update_order_status( $order_id = 0, $new_status = '' ) {
 
-	// Bail if order and status are empty
+	// Bail if order and status are empty.
 	if ( empty( $order_id ) || empty( $new_status ) ) {
 		return false;
 	}
 
-	// Get the order
+	// Get the order.
 	$order = edd_get_order( $order_id );
 
-	// Bail if order not found
+	// Bail if order not found.
 	if ( empty( $order ) ) {
 		return false;
 	}
@@ -658,12 +658,12 @@ function edd_update_order_status( $order_id = 0, $new_status = '' ) {
 	 */
 	$payment = edd_get_payment( $order_id );
 
-	// Override to `publish`
+	// Override to `publish`.
 	if ( in_array( $new_status, array( 'completed', 'publish' ), true ) ) {
 		$new_status = 'complete';
 	}
 
-	// Get the old (current) status
+	// Get the old (current) status.
 	$old_status = $order->status;
 
 	// We do not allow status changes if the status is the same to that stored in the database.
@@ -672,7 +672,7 @@ function edd_update_order_status( $order_id = 0, $new_status = '' ) {
 		return false;
 	}
 
-	// Backwards compatibility
+	// Backwards compatibility.
 	$do_change = apply_filters( 'edd_should_update_payment_status', true, $order_id, $new_status, $old_status );
 	$do_change = apply_filters( 'edd_should_update_order_status', $do_change, $order_id, $new_status, $old_status );
 
@@ -950,6 +950,12 @@ function edd_build_order( $order_data = array() ) {
 
 	edd_maybe_add_customer_address( $customer->id, $customer_address_data );
 
+	if ( ! empty( $order_data['user_info']['address']['company'] ) ) {
+		$company = sanitize_text_field( $order_data['user_info']['address']['company'] );
+		edd_add_order_meta( $order_id, 'company_name', $company );
+		edd_update_customer_meta( $customer->id, 'company_name', $company );
+	}
+
 	if ( ! empty( $order_data['user_info']['address']['phone'] ) ) {
 		edd_add_order_meta( $order_id, '_edd_phone', sanitize_text_field( $order_data['user_info']['address']['phone'] ) );
 		edd_update_customer_meta( $customer->id, 'phone', sanitize_text_field( $order_data['user_info']['address']['phone'] ) );
@@ -1005,7 +1011,7 @@ function edd_build_order( $order_data = array() ) {
 				'discount'     => $item['discount'],
 				'tax'          => $item['tax'],
 				'total'        => $item['price'],
-				'item_price'   => $item['item_price'], // Added for backwards compatibility
+				'item_price'   => $item['item_price'], // Added for backwards compatibility.
 				'date_created' => ! empty( $order_data['date_created'] ) ? $order_data['date_created'] : '',
 			);
 
@@ -1073,7 +1079,7 @@ function edd_build_order( $order_data = array() ) {
 			$total = $order_item_args['subtotal'] - $order_item_args['discount'] + $order_item_args['tax'];
 
 			// Do not allow totals to go negative
-			// TODO: probably remove for handling returns
+			// TODO: probably remove for handling returns.
 			if ( $total < 0 ) {
 				$total = 0;
 			}
@@ -1147,7 +1153,6 @@ function edd_build_order( $order_data = array() ) {
 	// Process fees.
 	if ( ! empty( $fees ) ) {
 		foreach ( $fees as $fee_id => $fee ) {
-
 			/*
 			 * Skip if fee has a `download_id` assigned. If it does, it will have been added above when
 			 * inserting order items.
@@ -1278,7 +1283,7 @@ function edd_build_order( $order_data = array() ) {
 	 */
 	do_action( 'edd_built_order', $order_id, $order_data );
 
-	// Return order ID, or false
+	// Return order ID, or false.
 	return ! empty( $order_id )
 		? $order_id
 		: false;

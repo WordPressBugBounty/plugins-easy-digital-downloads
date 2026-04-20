@@ -9,7 +9,7 @@
  * @since       1.0
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -272,7 +272,7 @@ function edd_purchase_form_validate_gateway() {
 
 	$gateway = edd_get_default_gateway();
 
-	// Check if a gateway value is present
+	// Check if a gateway value is present.
 	if ( ! empty( $_REQUEST['edd-gateway'] ) ) {
 
 		$gateway = sanitize_text_field( $_REQUEST['edd-gateway'] );
@@ -296,7 +296,7 @@ function edd_purchase_form_validate_gateway() {
  * @return      string
  */
 function edd_purchase_form_validate_discounts() {
-	// Retrieve the discount stored in cookies
+	// Retrieve the discount stored in cookies.
 	$discounts = edd_get_cart_discounts();
 
 	$user = '';
@@ -310,29 +310,29 @@ function edd_purchase_form_validate_discounts() {
 
 	$error = false;
 
-	// Check for valid discount(s) is present
+	// Check for valid discount(s) is present.
 	if ( ! empty( $_POST['edd-discount'] ) && __( 'Enter discount', 'easy-digital-downloads' ) != $_POST['edd-discount'] ) {
-		// Check for a posted discount
+		// Check for a posted discount.
 		$posted_discount = isset( $_POST['edd-discount'] ) ? trim( $_POST['edd-discount'] ) : false;
 
-		// Add the posted discount to the discounts
+		// Add the posted discount to the discounts.
 		if ( $posted_discount && ( empty( $discounts ) || edd_multiple_discounts_allowed() ) && edd_is_discount_valid( $posted_discount, $user ) ) {
 			edd_set_cart_discount( $posted_discount );
 		}
 	}
 
-	// If we have discounts, loop through them
+	// If we have discounts, loop through them.
 	if ( ! empty( $discounts ) ) {
 
 		foreach ( $discounts as $discount ) {
-			// Check if valid
+			// Check if valid.
 			if ( ! edd_is_discount_valid( $discount, $user ) ) {
-				// Discount is not valid
+				// Discount is not valid.
 				$error = true;
 			}
 		}
 	} else {
-		// No discounts
+		// No discounts.
 		return 'none';
 	}
 
@@ -352,7 +352,7 @@ function edd_purchase_form_validate_discounts() {
  */
 function edd_purchase_form_validate_agree_to_terms() {
 
-	// User did not agree
+	// User did not agree.
 	if ( ! isset( $_POST['edd_agree_to_terms'] ) || $_POST['edd_agree_to_terms'] != 1 ) {
 		edd_set_error( 'agree_to_terms', apply_filters( 'edd_agree_to_terms_text', __( 'You must agree to the terms of use', 'easy-digital-downloads' ) ) );
 	}
@@ -366,7 +366,7 @@ function edd_purchase_form_validate_agree_to_terms() {
  */
 function edd_purchase_form_validate_agree_to_privacy_policy() {
 
-	// User did not agree
+	// User did not agree.
 	if ( ! isset( $_POST['edd_agree_to_privacy_policy'] ) || $_POST['edd_agree_to_privacy_policy'] != 1 ) {
 		edd_set_error( 'agree_to_privacy_policy', apply_filters( 'edd_agree_to_privacy_policy_text', __( 'You must agree to the privacy policy', 'easy-digital-downloads' ) ) );
 	}
@@ -392,28 +392,28 @@ function edd_purchase_form_required_fields() {
 function edd_purchase_form_validate_logged_in_user() {
 	global $user_ID;
 
-	// Start empty array to collect valid user data
+	// Start empty array to collect valid user data.
 	$valid_user_data = array(
 		'user_id' => -1,
 	);
 
-	// Verify there is a user_ID
+	// Verify there is a user_ID.
 	if ( $user_ID > 0 ) {
-		// Get the logged in user data
+		// Get the logged in user data.
 		$user_data = get_userdata( $user_ID );
 
 		$fields = edd_purchase_form_required_fields();
 
-		// Loop through required fields and show error messages
+		// Loop through required fields and show error messages.
 		foreach ( $fields as $field_name => $value ) {
 			if ( empty( $_POST[ $field_name ] ) && ! empty( $value['error_id'] ) && ! empty( $value['error_message'] ) ) {
 				edd_set_error( $value['error_id'], $value['error_message'] );
 			}
 		}
 
-		// Verify data
+		// Verify data.
 		if ( $user_data ) {
-			// Collected logged in user data
+			// Collected logged in user data.
 			$valid_user_data = array(
 				'user_id'    => $user_ID,
 				'user_email' => isset( $_POST['edd_email'] ) ? sanitize_email( $_POST['edd_email'] ) : $user_data->user_email,
@@ -425,12 +425,12 @@ function edd_purchase_form_validate_logged_in_user() {
 				edd_set_error( 'email_invalid', __( 'Invalid email', 'easy-digital-downloads' ) );
 			}
 		} else {
-			// Set invalid user error
+			// Set invalid user error.
 			edd_set_error( 'invalid_user', __( 'The user information is invalid', 'easy-digital-downloads' ) );
 		}
 	}
 
-	// Return user data
+	// Return user data.
 	return $valid_user_data;
 }
 
@@ -446,12 +446,12 @@ function edd_purchase_form_validate_new_user() {
 
 	/** Sanitize */
 
-	// Sanitize first name
+	// Sanitize first name.
 	$user_first = isset( $_POST['edd_first'] )
 		? sanitize_text_field( $_POST['edd_first'] )
 		: '';
 
-	// Sanitize last name
+	// Sanitize last name.
 	$user_last = isset( $_POST['edd_last'] )
 		? sanitize_text_field( $_POST['edd_last'] )
 		: '';
@@ -461,27 +461,27 @@ function edd_purchase_form_validate_new_user() {
 		? sanitize_user( $_POST['edd_user_login'] )
 		: false;
 
-	// Sanitize email address (allowed formatting only)
+	// Sanitize email address (allowed formatting only).
 	$user_email = isset( $_POST['edd_email'] )
 		? sanitize_email( $_POST['edd_email'] )
 		: false;
 
-	// Trim front/back whitespace from password (don't alter characters)
+	// Trim front/back whitespace from password (don't alter characters).
 	$user_pass = isset( $_POST['edd_user_pass'] )
 		? trim( $_POST['edd_user_pass'] )
 		: false;
 
-	// Trim front/back whitespace from password (don't alter characters)
+	// Trim front/back whitespace from password (don't alter characters).
 	$pass_confirm = isset( $_POST['edd_user_pass_confirm'] )
 		? trim( $_POST['edd_user_pass_confirm'] )
 		: false;
 
 	/** Required Fields */
 
-	// Get required fields to loop through
+	// Get required fields to loop through.
 	$fields = edd_purchase_form_required_fields();
 
-	// Loop through required fields and provide error messages if missing
+	// Loop through required fields and provide error messages if missing.
 	foreach ( $fields as $field_name => $value ) {
 		if ( empty( $_POST[ $field_name ] ) && ! empty( $value['error_id'] ) && ! empty( $value['error_message'] ) ) {
 			edd_set_error( $value['error_id'], $value['error_message'] );
@@ -499,7 +499,7 @@ function edd_purchase_form_validate_new_user() {
 
 	/** Check Login */
 
-	// Check if we have a username to register
+	// Check if we have a username to register.
 	if ( ! empty( $user_login ) && strlen( $user_login ) > 0 ) {
 		$registering_new_user = true;
 
@@ -507,33 +507,33 @@ function edd_purchase_form_validate_new_user() {
 		if ( username_exists( $user_login ) ) {
 			edd_set_error( 'username_unavailable', __( 'Username already exists', 'easy-digital-downloads' ) );
 
-			// Error if username is not valid
+			// Error if username is not valid.
 		} elseif ( ! edd_validate_username( $user_login ) ) {
 			is_multisite()
 				? edd_set_error( 'username_invalid', __( 'Invalid username. Only lowercase letters (a-z) and numbers are allowed', 'easy-digital-downloads' ) )
 				: edd_set_error( 'username_invalid', __( 'Invalid username', 'easy-digital-downloads' ) );
 
-			// Add login to valid user data
+			// Add login to valid user data.
 		} else {
 			// All the checks have run and it's good to go.
 			$valid_user_data['user_login'] = $user_login;
 		}
 
-		// Error if users are required to register and no login was provided
+		// Error if users are required to register and no login was provided.
 	} elseif ( edd_no_guest_checkout() ) {
 		edd_set_error( 'registration_required', __( 'You must register or login to complete your purchase', 'easy-digital-downloads' ) );
 	}
 
 	/** Check Email */
 
-	// Check if we have an email to verify
+	// Check if we have an email to verify.
 	if ( ! empty( $user_email ) && strlen( $user_email ) > 0 ) {
 
-		// Error if invalid email address
+		// Error if invalid email address.
 		if ( ! is_email( $user_email ) ) {
 			edd_set_error( 'email_invalid', __( 'Invalid email', 'easy-digital-downloads' ) );
 
-			// Email address is unsafe (multisite only)
+			// Email address is unsafe (multisite only).
 		} elseif ( is_multisite() && is_email_address_unsafe( $user_email ) ) {
 			edd_set_error( 'email_unsafe', __( 'You cannot use that email address to signup at this time.', 'easy-digital-downloads' ) );
 		} elseif ( true === $registering_new_user ) {
@@ -554,7 +554,7 @@ function edd_purchase_form_validate_new_user() {
 			$valid_user_data['user_email'] = $user_email;
 		}
 
-		// Error if no email address was provided
+		// Error if no email address was provided.
 	} else {
 		// No email.
 		edd_set_error( 'email_empty', __( 'Enter an email', 'easy-digital-downloads' ) );
@@ -562,20 +562,20 @@ function edd_purchase_form_validate_new_user() {
 
 	/** Check Password */
 
-	// Check password
+	// Check password.
 	if ( ! empty( $user_pass ) && ! empty( $pass_confirm ) ) {
 
-		// Error if passwords do not match
+		// Error if passwords do not match.
 		if ( 0 !== strcmp( $user_pass, $pass_confirm ) ) {
 			edd_set_error( 'password_mismatch', __( 'Passwords do not match', 'easy-digital-downloads' ) );
 
-			// Add password to valid user data
+			// Add password to valid user data.
 		} else {
 			// All is good to go.
 			$valid_user_data['user_pass'] = $user_pass;
 		}
 
-		// Error if no password when signing up
+		// Error if no password when signing up.
 	} elseif ( true === $registering_new_user ) {
 		if ( empty( $user_pass ) ) {
 			edd_set_error( 'password_empty', __( 'Enter a password', 'easy-digital-downloads' ) );
@@ -584,7 +584,7 @@ function edd_purchase_form_validate_new_user() {
 		}
 	}
 
-	// Cast as array and return
+	// Cast as array and return.
 	return (array) $valid_user_data;
 }
 
@@ -637,46 +637,46 @@ function edd_purchase_form_validate_user_login() {
  */
 function edd_purchase_form_validate_guest_user() {
 
-	// Start an array to collect valid user data
+	// Start an array to collect valid user data.
 	$valid_user_data = array(
 		'user_id' => 0,
 	);
 
-	// Show error message if user must be logged in
+	// Show error message if user must be logged in.
 	if ( edd_logged_in_only() ) {
 		edd_set_error( 'logged_in_only', __( 'You must be logged into an account to purchase', 'easy-digital-downloads' ) );
 	}
 
-	// Get the guest email
+	// Get the guest email.
 	$guest_email = isset( $_POST['edd_email'] )
 		? sanitize_email( $_POST['edd_email'] )
 		: false;
 
-	// Check email
+	// Check email.
 	if ( ! empty( $guest_email ) && strlen( $guest_email ) > 0 ) {
 
-		// Invalid email
+		// Invalid email.
 		if ( ! is_email( $guest_email ) ) {
 			edd_set_error( 'email_invalid', __( 'Invalid email', 'easy-digital-downloads' ) );
 
-			// Email address is unsafe (multisite only)
+			// Email address is unsafe (multisite only).
 		} elseif ( is_multisite() && is_email_address_unsafe( $guest_email ) ) {
 			edd_set_error( 'email_unsafe', __( 'You cannot use that email address at this time.', 'easy-digital-downloads' ) );
 
-			// All is good to go
+			// All is good to go.
 		} else {
 			$valid_user_data['user_email'] = $guest_email;
 		}
 
-		// No email
+		// No email.
 	} else {
 		edd_set_error( 'email_empty', __( 'Enter an email', 'easy-digital-downloads' ) );
 	}
 
-	// Get fields
+	// Get fields.
 	$fields = edd_purchase_form_required_fields();
 
-	// Loop through required fields and show error messages
+	// Loop through required fields and show error messages.
 	foreach ( $fields as $field_name => $value ) {
 		if ( empty( $_POST[ $field_name ] ) && ! empty( $value['error_id'] ) && ! empty( $value['error_message'] ) ) {
 			edd_set_error( $value['error_id'], $value['error_message'] );
@@ -694,41 +694,40 @@ function edd_purchase_form_validate_guest_user() {
  *            as it is done later on in the order flow where a customer ID
  *            is available.
  *
- * @param array $valid_data
  * @access  private
  * @since  1.0.8.1
  *
  * @param   array $valid_data The validated data from the checkout form validation.
- * @return  array
+ * @return  array The user data.
  */
 function edd_get_purchase_form_user( $valid_data = array(), $is_ajax = null ) {
 
-	// Default variables
+	// Default variables.
 	$user    = false;
 	$is_ajax = ( null === $is_ajax ) ? edd_doing_ajax() : $is_ajax;
 
-	// Bail if during the ajax submission (check for errors only)
+	// Bail if during the ajax submission (check for errors only).
 	if ( $is_ajax ) {
 		return true;
 
-		// Set the valid user as the logged in collected data
+		// Set the valid user as the logged in collected data.
 	} elseif ( is_user_logged_in() ) {
 		$user = $valid_data['logged_in_user'];
 
-		// New user registration
+		// New user registration.
 	} elseif ( true === $valid_data['need_new_user'] || true === $valid_data['need_user_login'] ) {
 		// This ensures $_COOKIE is available without a new HTTP request.
 		add_action( 'set_logged_in_cookie', 'edd_set_logged_in_cookie' );
 
 		if ( true === $valid_data['need_new_user'] ) {
 
-			// Set user
+			// Set user.
 			$user = $valid_data['new_user_data'];
 
 			// Register and login new user.
 			$user['user_id'] = edd_register_and_login_new_user( $user );
 
-			// User login
+			// User login.
 		} elseif ( true === $valid_data['need_user_login'] ) {
 			/*
 			 * The login form is now processed in the edd_process_purchase_login() function.
@@ -755,7 +754,7 @@ function edd_get_purchase_form_user( $valid_data = array(), $is_ajax = null ) {
 		remove_action( 'set_logged_in_cookie', 'edd_set_logged_in_cookie' );
 	}
 
-	// Check guest checkout
+	// Check guest checkout.
 	if ( empty( $user ) && ( false === edd_no_guest_checkout() ) ) {
 		$user = $valid_data['guest_user_data'];
 	}
@@ -787,6 +786,7 @@ function edd_get_purchase_form_user( $valid_data = array(), $is_ajax = null ) {
 		'state'   => ! empty( $_POST['card_state'] ) ? sanitize_text_field( $_POST['card_state'] ) : '',
 		'country' => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( $_POST['billing_country'] ) : '',
 		'zip'     => ! empty( $_POST['card_zip'] ) ? sanitize_text_field( $_POST['card_zip'] ) : '',
+		'company' => ! empty( $_POST['company'] ) ? sanitize_text_field( $_POST['company'] ) : '',
 		'phone'   => ! empty( $_POST['card_phone'] ) ? sanitize_text_field( $_POST['card_phone'] ) : '',
 	);
 
@@ -824,19 +824,19 @@ function edd_set_logged_in_cookie( $logged_in_cookie ) {
 function edd_purchase_form_validate_cc() {
 	$card_data = edd_get_purchase_cc_info();
 
-	// Validate the card zip
+	// Validate the card zip.
 	if ( ! empty( $card_data['card_zip'] ) && edd_get_cart_total() > 0.00 ) {
 		if ( ! edd_purchase_form_validate_cc_zip( $card_data['card_zip'], $card_data['card_country'] ) ) {
 			edd_set_error( 'invalid_cc_zip', __( 'The zip / postal code you entered for your billing address is invalid', 'easy-digital-downloads' ) );
 		}
 	}
 
-	// This should validate card numbers at some point too
+	// This should validate card numbers at some point too.
 	return $card_data;
 }
 
 /**
- * Get Credit Card Info
+ * Get Credit Card Info.
  *
  * @access  private
  * @since  1.4.4
@@ -856,17 +856,17 @@ function edd_get_purchase_cc_info() {
 	$cc_info['card_country']   = isset( $_POST['billing_country'] ) ? sanitize_text_field( $_POST['billing_country'] ) : '';
 	$cc_info['card_zip']       = isset( $_POST['card_zip'] ) ? sanitize_text_field( $_POST['card_zip'] ) : '';
 
-	// Return cc info
+	// Return cc info.
 	return $cc_info;
 }
 
 /**
- * Validate zip code based on country code
+ * Validate zip code based on country code.
  *
  * @since  1.4.4
  *
- * @param int    $zip
- * @param string $country_code
+ * @param int    $zip The zip code to validate.
+ * @param string $country_code The country code to validate against.
  *
  * @return bool|mixed|void
  */
@@ -948,7 +948,7 @@ function edd_purchase_form_validate_cc_zip( $zip = 0, $country_code = '' ) {
 		'ID' => '\d{5}',
 		'IE' => '((D|DUBLIN)?([1-9]|6[wW]|1[0-8]|2[024]))?',
 		'IL' => '\d{5}',
-		'IN' => '^[1-9][0-9][0-9][0-9][0-9][0-9]$', // india
+		'IN' => '^[1-9][0-9][0-9][0-9][0-9][0-9]$', // India.
 		'IO' => 'BBND 1ZZ',
 		'IQ' => '\d{5}',
 		'IS' => '\d{3}',
@@ -1051,7 +1051,7 @@ function edd_purchase_form_validate_cc_zip( $zip = 0, $country_code = '' ) {
 }
 
 /**
- * Check the purchase to ensure a banned email is not allowed through
+ * Check the purchase to ensure a banned email is not allowed through.
  *
  * @since       2.0
  * @return      void

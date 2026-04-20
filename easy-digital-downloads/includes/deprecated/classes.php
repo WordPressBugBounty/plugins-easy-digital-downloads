@@ -132,6 +132,13 @@ class_alias( \EDD\Admin\Exports\Legacy\Export::class, 'EDD_Export' );
 class_alias( \EDD\Admin\Exports\Legacy\BatchExport::class, 'EDD_Batch_Export' );
 
 /**
+ * Class Alias for the `EDD\Cache\Handler` class.
+ *
+ * @deprecated 3.6.7 Use EDD\Cache\Handler instead.
+ */
+class_alias( 'EDD\\Cache\\Handler', 'EDD_Cache_Helper' );
+
+/**
  * Fully Deprecated Classes
  *
  * These classes are fully deprecated and are no longer used internally. There are no aliases for them, and their original class

@@ -129,26 +129,19 @@ add_action( 'edd_refund_order', function( $order_id, $refund_id, $all_refunded )
  *
  * @link  https://developer.paypal.com/docs/api/payments/v2/#captures_refund
  *
- * @param \EDD_Payment|Order $payment_or_order
- * @param Order|null         $refund_object
+ * @param Order|\EDD_Payment $payment_or_order Order or payment object.
+ * @param Order|null         $refund_object   Refund object.
  *
  * @since 2.11
- * @throws Authentication_Exception
- * @throws API_Exception
- * @throws \Exception
+ * @throws API_Exception If the request fails.
+ * @throws \Exception    If the transaction ID is missing.
  */
-function refund_transaction( $payment_or_order, Order $refund_object = null ) {
-	/*
-	 * Internally we want to work with an Order object, but we also need
-	 * an EDD_Payment object for backwards compatibility in the hooks.
-	 */
-	$order = $payment = false;
+function refund_transaction( $payment_or_order, ?Order $refund_object = null ) {
+	$order = false;
 	if ( $payment_or_order instanceof Order ) {
 		$order = $payment_or_order;
-		$payment = edd_get_payment( $order->id );
 	} elseif ( $payment_or_order instanceof \EDD_Payment ) {
-		$payment = $payment_or_order;
-		$order   = edd_get_order( $payment->ID );
+		$order = edd_get_order( $payment_or_order->ID );
 	}
 
 	if ( empty( $order ) || ! $order instanceof Order ) {
@@ -248,7 +241,13 @@ function refund_transaction( $payment_or_order, Order $refund_object = null ) {
 	/**
 	 * Triggers after a successful refund.
 	 *
-	 * @param \EDD_Payment $payment
+	 * @param Order $order
+	 * @since 3.6.7
 	 */
-	do_action( 'edd_paypal_refund_purchase', $payment );
+	do_action( 'edd_paypal_commerce_refund_purchase', $order );
+
+	if ( has_action( 'edd_paypal_refund_purchase' ) ) {
+		_edd_deprecated_hook( 'edd_paypal_refund_purchase', '3.6.7', 'edd_paypal_commerce_refund_purchase' );
+		do_action( 'edd_paypal_refund_purchase', edd_get_payment( $order->id ) );
+	}
 }

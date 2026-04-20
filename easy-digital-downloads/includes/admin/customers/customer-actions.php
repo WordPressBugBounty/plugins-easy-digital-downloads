@@ -78,11 +78,13 @@ function edd_edit_customer( $args = array() ) {
 		}
 	}
 
-	// Record this for later.
-	$previous_user_id = $customer->user_id;
-
 	// Bail if errors exist.
 	if ( edd_get_errors() ) {
+		EDD()->notices::add_transient_notice(
+			'customer-edit-errors',
+			__( 'The customer could not be updated.', 'easy-digital-downloads' ),
+			'error'
+		);
 		return false;
 	}
 
@@ -165,6 +167,15 @@ function edd_edit_customer( $args = array() ) {
 		$customer->delete_meta( 'phone' );
 	}
 
+	$company = isset( $customer_info['company_name'] )
+		? sanitize_text_field( $customer_info['company_name'] )
+		: '';
+	if ( ! empty( $company ) ) {
+		$customer->update_meta( 'company_name', $company );
+	} else {
+		$customer->delete_meta( 'company_name' );
+	}
+
 	// Update customer.
 	if ( $customer->update( $customer_data ) ) {
 		$current_address        = $customer->get_address();
@@ -188,6 +199,19 @@ function edd_edit_customer( $args = array() ) {
 
 	if ( edd_doing_ajax() ) {
 		wp_send_json( $output );
+	}
+
+	if ( $output['success'] ) {
+		EDD()->notices::add_transient_notice(
+			'customer-edit-success',
+			__( 'The customer profile has been updated successfully.', 'easy-digital-downloads' ),
+		);
+	} else {
+		EDD()->notices::add_transient_notice(
+			'customer-edit-errors',
+			__( 'The customer profile could not be updated.', 'easy-digital-downloads' ),
+			'error'
+		);
 	}
 
 	return $output;
@@ -516,7 +540,7 @@ add_action( 'edd_register_batch_exporter', 'edd_register_batch_single_customer_r
  * Loads the tools batch processing class for recounting stats for a single customer
  *
  * @since  2.5
- * @param  string $class The class being requested to run for the batch export
+ * @param  string $class The class being requested to run for the batch export.
  * @return void
  */
 function edd_include_single_customer_recount_tool_batch_processer( $class ) {

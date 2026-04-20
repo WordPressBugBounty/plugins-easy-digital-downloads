@@ -27,10 +27,10 @@ class Manager implements SubscriberInterface {
 			'edd_save_email_settings'             => 'save',
 			'wp_ajax_edd_update_email_status'     => 'update_status',
 			'edd_flyout_docs_link'                => 'update_docs_link',
-			'edd_email_editor_top'                => 'description',
+			'edd_email_editor_top'                => 'modify_email_editor',
 			'wp_ajax_edd_reset_email'             => 'reset',
 			'edd_render_settings_emails_sections' => 'remove_sections',
-			'edd_email_editor_top'                => 'add_reset_button',
+			'admin_enqueue_scripts'               => 'enqueue',
 		);
 	}
 
@@ -452,6 +452,32 @@ class Manager implements SubscriberInterface {
 		unset( $sections['email_summaries'] );
 
 		return $sections;
+	}
+
+	/**
+	 * Modifies the email editor.
+	 *
+	 * @since 3.6.7
+	 * @param \EDD\Emails\Templates\EmailTemplate $email The email template.
+	 */
+	public function modify_email_editor( $email ) {
+		$this->description( $email );
+		$this->add_reset_button( $email );
+	}
+
+	/**
+	 * Enqueues the scripts and styles.
+	 *
+	 * @since 3.6.7
+	 * @param string $hook The current admin page hook.
+	 * @return void
+	 */
+	public function enqueue( $hook = '' ) {
+		if ( 'download_page_edd-emails' !== $hook ) {
+			return;
+		}
+
+		Screen::enqueue( $hook );
 	}
 
 	/**

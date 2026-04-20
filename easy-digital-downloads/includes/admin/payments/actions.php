@@ -197,6 +197,14 @@ function edd_update_payment_details( $data = array() ) {
 		edd_update_order_address( $order_address_id, $order_address_details );
 	}
 
+	// Company.
+	if ( ! empty( $address['company'] ) ) {
+		$company = sanitize_text_field( $address['company'] );
+		edd_update_order_meta( $order_id, 'company_name', $company );
+	} else {
+		edd_delete_order_meta( $order_id, 'company_name' );
+	}
+
 	// Unlimited downloads.
 	if ( 1 === (int) $unlimited ) {
 		edd_update_order_meta( $order_id, 'unlimited_downloads', $unlimited );

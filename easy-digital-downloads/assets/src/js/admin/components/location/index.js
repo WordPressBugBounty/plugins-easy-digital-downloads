@@ -19,9 +19,12 @@ jQuery( document ).ready( function ( $ ) {
 			};
 
 		$.post( ajaxurl, data, function ( response ) {
-			const isSettingsPage = $( 'body' ).hasClass( 'download_page_edd-settings' ) || $( 'body' ).hasClass( 'download_page_edd-onboarding-wizard' );
+			// Country selects enhanced with Tom Select include .edd-select-chosen (see EDD\HTML\Select).
+			// Replace the whole region field so we can swap between <select> and text input; legacy
+			// non-enhanced country dropdowns only update options on an existing region <select>.
+			const replaceStateField = select.hasClass( 'edd-select-chosen' );
 
-			if ( isSettingsPage ) {
+			if ( replaceStateField ) {
 				// Destroy Tom Select on the current field if it is a select.
 				if ( state_field.is( 'select' ) ) {
 					state_field[0]?.tomselect?.destroy();
@@ -29,6 +32,10 @@ jQuery( document ).ready( function ( $ ) {
 
 				// Re-query after destroy so we have a live reference.
 				const current_field = $( 'select.edd_regions_filter, input.edd_regions_filter' );
+
+				if ( ! current_field.length ) {
+					return;
+				}
 
 				if ( 'nostates' === response ) {
 					current_field.replaceWith(

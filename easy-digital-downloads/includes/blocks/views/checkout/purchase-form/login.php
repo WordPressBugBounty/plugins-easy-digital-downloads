@@ -15,6 +15,7 @@
 		<input type="submit" class="<?php echo esc_attr( implode( ' ', EDD\Blocks\Functions\get_button_classes() ) ); ?>" name="edd_login_submit" value="<?php esc_html_e( 'Log in', 'easy-digital-downloads' ); ?>"/>
 		<?php wp_nonce_field( 'edd-login-form', 'edd_login_nonce', false, true ); ?>
 	</div>
+	<?php do_action( 'edd_checkout_login_fields_after' ); ?>
 	<?php
 	$login_page = edd_get_login_page_uri();
 	if ( $login_page ) {

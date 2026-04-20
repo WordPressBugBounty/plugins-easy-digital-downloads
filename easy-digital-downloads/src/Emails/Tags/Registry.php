@@ -264,6 +264,13 @@ class Registry {
 				'function'    => array( $this->render, 'phone' ),
 				'contexts'    => array( 'order' ),
 			),
+			array(
+				'tag'         => 'company',
+				'label'       => __( 'Company', 'easy-digital-downloads' ),
+				'description' => __( 'The company or organization name for your order.', 'easy-digital-downloads' ),
+				'function'    => array( $this->render, 'company' ),
+				'contexts'    => array( 'order' ),
+			),
 		);
 
 		// Apply edd_email_tags filter.

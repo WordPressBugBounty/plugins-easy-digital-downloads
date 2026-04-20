@@ -37,11 +37,21 @@ function checkEmail ( emailField ) {
 		return response.json();
 	} ).then( function ( response ) {
 		let message = '';
+		let code = '';
 		if ( !response.success ) {
-			message = response.data.message;
+			message = response.data?.message ?? '';
+			code = response.data?.code ?? '';
 		}
 
 		emailField.setCustomValidity( message );
+
+		document.dispatchEvent( new CustomEvent( 'edd:checkout-email-check-complete', {
+			detail: {
+				emailField: emailField,
+				code: code
+			}
+		} ) );
+
 		emailField.reportValidity();
 	} );
 }

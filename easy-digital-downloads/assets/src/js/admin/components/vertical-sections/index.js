@@ -74,8 +74,5 @@ jQuery( document ).ready( function( $ ) {
 
 			// Find the section content that matches the section nav item and show it.
 			selectedContent.show();
-
-			// Ensure select wrappers are full width after tab switch.
-			selectedContent.find( '.ts-wrapper, .chosen-container' ).css( 'width', '100%' );
 	}
 } );

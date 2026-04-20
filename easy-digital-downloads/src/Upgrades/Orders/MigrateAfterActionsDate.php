@@ -81,11 +81,41 @@ class MigrateAfterActionsDate implements SubscriberInterface {
 			'edd_migrate_order_actions_date' => 'process_step',
 		);
 
-		if ( ! self::next_scheduled( 'edd_migrate_order_actions_date' ) ) {
-			$hooks['shutdown'] = array( 'maybe_schedule_background_update', 99 );
+		// When Action Scheduler is active, we cannot reliably call next_scheduled() here because
+		// this method runs during plugins_loaded — before Action Scheduler has initialized. Calling
+		// it at this stage logs a "called too early" debug notice on every page load.
+		//
+		// Instead, we hook onto action_scheduler_init (which fires once AS is fully ready) and do
+		// the check there, adding the shutdown hook only when no event is already pending.
+		if ( \EDD\Cron\Schedulers\ActionScheduler::is_available() ) {
+			$hooks['action_scheduler_init'] = 'maybe_add_shutdown_hook';
+		} else {
+			// WP-Cron fallback: wp_next_scheduled() is safe to call at plugins_loaded, so the
+			// original early check works fine and avoids an unnecessary shutdown callback.
+			if ( ! self::next_scheduled( 'edd_migrate_order_actions_date' ) ) {
+				$hooks['shutdown'] = array( 'maybe_schedule_background_update', 99 );
+			}
 		}
 
 		return $hooks;
+	}
+
+	/**
+	 * Conditionally registers the shutdown hook for the background update when Action Scheduler is active.
+	 *
+	 * This method is hooked onto action_scheduler_init, which fires after Action Scheduler has fully
+	 * initialized. At that point next_scheduled() is reliable, so we can safely skip adding the
+	 * shutdown callback when the cron event is already pending — avoiding unnecessary work on every
+	 * page's shutdown for the duration of the migration.
+	 *
+	 * @since 3.6.7
+	 *
+	 * @return void
+	 */
+	public function maybe_add_shutdown_hook() {
+		if ( ! self::next_scheduled( $this->cron_action ) ) {
+			add_action( 'shutdown', array( $this, 'maybe_schedule_background_update' ), 99 );
+		}
 	}
 
 	/**
@@ -160,7 +190,7 @@ class MigrateAfterActionsDate implements SubscriberInterface {
 	 */
 	public function process_step() {
 		// Since this hooks on an action, don't let it run if we're not in a cron.
-		if ( ! edd_doing_cron() ) {
+		if ( ! edd_doing_cron() && ! did_action( 'action_scheduler_before_execute' ) ) {
 			return;
 		}
 
@@ -183,8 +213,22 @@ class MigrateAfterActionsDate implements SubscriberInterface {
 		add_filter( 'edd_recalculate_bypass_cron', '__return_true' );
 
 		foreach ( $meta_rows as $row ) {
-			// Convert the timestamp to a DateTime object.
+			// Check that the order exists.
+			$order = edd_get_order( $row->edd_order_id );
+			if ( ! $order ) {
+				edd_debug_log( 'Order ' . $row->edd_order_id . ' no longer exists. Removing orphaned meta row.' );
+				$migrated_meta_ids[] = $row->meta_id;
+				continue;
+			}
 
+			// Validate that meta_value is numeric before using it as a timestamp.
+			if ( ! is_numeric( $row->meta_value ) ) {
+				edd_debug_log( 'Order ' . $row->edd_order_id . ' has corrupted timestamp. Removing invalid meta row.' );
+				$migrated_meta_ids[] = $row->meta_id;
+				continue;
+			}
+
+			// Convert the timestamp to a DateTime object.
 			$date = new Date();
 			$date->setTimestamp( $row->meta_value )->setTimezone( new \DateTimeZone( 'UTC' ) );
 
@@ -371,7 +415,7 @@ class MigrateAfterActionsDate implements SubscriberInterface {
 		// Format a % complete without decimals.
 		$percent_complete = number_format( ( ( $total_rows_start - $total_rows_remaining ) / $total_rows_start ) * 100, 0 );
 
-		// Just in case we end up over 100%, somehow...make it 100%;
+		// Just in case we end up over 100%, somehow...make it 100%.
 		if ( $percent_complete > 100 ) {
 			$percent_complete = 100;
 		}

@@ -9,8 +9,8 @@
  * @since       3.0
  */
 
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Get the HTML used to output all of the notes for a single object
@@ -55,25 +55,23 @@ function edd_admin_get_notes_html( $notes = array() ) {
  * Get the HTML used to output a single note, from an array of notes
  *
  * @since 3.0
- * @param int $note_id
+ * @param int $note_id Note ID.
  *
  * @return string
  */
 function edd_admin_get_note_html( $note_id = 0 ) {
 
-	/** @var $note EDD\Notes\Note For IDE type-hinting purposes. */
-
-	// Get the note
+	// Get the note.
 	$note = is_numeric( $note_id )
 		? edd_get_note( $note_id )
 		: $note_id;
 
-	// No note, so bail
+	// No note, so bail.
 	if ( empty( $note ) ) {
 		return;
 	}
 
-	// User
+	// User.
 	$user_id = $note->user_id;
 	$author  = edd_get_bot_name();
 	if ( ! empty( $user_id ) ) {
@@ -85,18 +83,61 @@ function edd_admin_get_note_html( $note_id = 0 ) {
 		}
 	}
 
-	// URL to delete note
-	$delete_note_url = wp_nonce_url( add_query_arg( array(
-		'edd-action' => 'delete_note',
-		'note_id'    => absint( $note->id ),
-	) ), 'edd_delete_note_' . absint( $note->id ) );
+	// Note type badge.
+	$type_badge = '';
+	if ( edd_is_admin_page( 'customers' ) ) {
+		if ( 'order' === $note->object_type ) {
+			$badge      = new EDD\Utils\StatusBadge(
+				array(
+					'status'   => 'order',
+					'label'    => sprintf(
+						/* translators: %d: order ID */
+						__( 'Order #%d', 'easy-digital-downloads' ),
+						absint( $note->object_id )
+					),
+					'color'    => 'blue',
+					'icon'     => 'cart',
+					'position' => 'before',
+				)
+			);
+			$order_url  = edd_get_admin_url(
+				array(
+					'page' => 'edd-payment-history',
+					'view' => 'view-order-details',
+					'id'   => absint( $note->object_id ),
+				)
+			);
+			$type_badge = sprintf( '<a href="%s">%s</a>', esc_url( $order_url ), $badge->get() );
+		} elseif ( 'customer' === $note->object_type ) {
+			$badge      = new EDD\Utils\StatusBadge(
+				array(
+					'status' => 'customer',
+					'label'  => __( 'Customer', 'easy-digital-downloads' ),
+					'color'  => 'default',
+				)
+			);
+			$type_badge = $badge->get();
+		}
+	}
 
-	// Start a buffer
+	// URL to delete note.
+	$delete_note_url = wp_nonce_url(
+		add_query_arg(
+			array(
+				'edd-action' => 'delete_note',
+				'note_id'    => absint( $note->id ),
+			)
+		),
+		'edd_delete_note_' . absint( $note->id )
+	);
+
+	// Start a buffer.
 	ob_start();
 	?>
 
 	<div class="edd-note" id="edd-note-<?php echo esc_attr( $note->id ); ?>">
 		<div class="edd-note__header">
+			<?php echo $type_badge; ?>
 			<strong class="edd-note-author"><?php echo esc_html( $author ); ?></strong>
 			<time datetime="<?php echo esc_attr( EDD()->utils->date( $note->date_created, null, true )->toDateTimeString() ); ?>"><?php echo edd_date_i18n( $note->date_created, 'datetime' ); ?></time>
 			<a href="<?php echo esc_url( $delete_note_url ); ?>#edd-notes" class="edd-delete-note" data-note-id="<?php echo esc_attr( $note->id ); ?>" data-object-id="<?php echo esc_attr( $note->object_id ); ?>" data-object-type="<?php echo esc_attr( $note->object_type ); ?>">
@@ -130,7 +171,8 @@ function edd_admin_get_new_note_form( $object_id = 0, $object_type = '' ) {
 	}
 
 	// Start a buffer
-	ob_start();?>
+	ob_start();
+	?>
 
 	<div class="edd-add-note">
 		<div class="edd-form-group">
@@ -189,15 +231,18 @@ function edd_get_note_delete_redirect_url() {
 function edd_admin_get_notes_pagination( $args = array() ) {
 
 	// Parse args
-	$r = wp_parse_args( $args, array(
-		'total'        => 0,
-		'pag_arg'      => 'paged',
-		'base'         => '%_%',
-		'show_all'     => true,
-		'prev_text'    => is_rtl() ? '&rarr;' : '&larr;',
-		'next_text'    => is_rtl() ? '&larr;' : '&rarr;',
-		'add_fragment' => ''
-	) );
+	$r = wp_parse_args(
+		$args,
+		array(
+			'total'        => 0,
+			'pag_arg'      => 'paged',
+			'base'         => '%_%',
+			'show_all'     => true,
+			'prev_text'    => is_rtl() ? '&rarr;' : '&larr;',
+			'next_text'    => is_rtl() ? '&larr;' : '&rarr;',
+			'add_fragment' => '',
+		)
+	);
 
 	// Maximum notes per page
 	$per_page    = apply_filters( 'edd_notes_per_page', 20 );
@@ -210,7 +255,8 @@ function edd_admin_get_notes_pagination( $args = array() ) {
 		: 1;
 
 	// Start a buffer
-	ob_start(); ?>
+	ob_start();
+	?>
 
 	<div class="edd-note-pagination">
 		<?php echo paginate_links( $r ); ?>

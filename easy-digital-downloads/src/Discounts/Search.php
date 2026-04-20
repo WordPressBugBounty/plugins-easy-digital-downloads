@@ -87,6 +87,7 @@ class Search implements SubscriberInterface {
 			function ( $discount ) {
 				return array(
 					'id'   => $discount->id,
+					'code' => $discount->code,
 					'name' => $discount->name,
 				);
 			},

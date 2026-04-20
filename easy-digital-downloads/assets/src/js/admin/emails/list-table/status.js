@@ -1,6 +1,8 @@
 /* global EDDAdminEmails */
 
-; ( function ( document, $ ) {
+import { postAdminAjax } from 'utilities/post-admin-ajax';
+
+jQuery( document ).ready( function ( $ ) {
 	'use strict';
 
 	$( '.edd-email-manager__action' ).on( 'click', function ( e ) {
@@ -35,8 +37,6 @@
 				return;
 		}
 
-		$btn.attr( 'disabled', true ).addClass( 'edd-updating' );
-
 		const data = {
 			action: 'edd_update_email_status',
 			nonce: EDDAdminEmails.nonce,
@@ -45,17 +45,29 @@
 			button: action,
 		};
 
-		$.post( EDDAdminEmails.ajaxurl, data )
-			.done( function ( res ) {
-				if ( EDDAdminEmails.debug ) {
-					console.log( res );
-				}
-				$btn.attr( 'disabled', false ).removeClass( 'edd-updating' );
-				if ( res.success ) {
-					$btn.removeClass( removeClass ).addClass( addClass );
-					$btn.attr( 'data-action', replaceAction );
-					$btn.attr( 'data-status', replaceStatus );
-				}
-			} );
+		const previous = {
+			hadActiveClass: $btn.hasClass( 'edd-button-toggle--active' ),
+			action: $btn.attr( 'data-action' ),
+			status: $btn.attr( 'data-status' ),
+		};
+
+		function revertEmailToggle() {
+			$btn.toggleClass( 'edd-button-toggle--active', previous.hadActiveClass );
+			$btn.attr( 'data-action', previous.action );
+			$btn.attr( 'data-status', previous.status );
+		}
+
+		postAdminAjax( {
+			url: EDDAdminEmails.ajaxurl,
+			data,
+			$busy: $btn,
+			applyOptimistic() {
+				$btn.removeClass( removeClass ).addClass( addClass );
+				$btn.attr( 'data-action', replaceAction );
+				$btn.attr( 'data-status', replaceStatus );
+			},
+			revert: revertEmailToggle,
+			debug: EDDAdminEmails.debug,
+		} );
 	} );
-} )( document, jQuery );
+} );

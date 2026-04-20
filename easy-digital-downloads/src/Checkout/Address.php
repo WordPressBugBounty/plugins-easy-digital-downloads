@@ -48,6 +48,7 @@ class Address {
 			'zip'     => '',
 			'state'   => '',
 			'country' => '',
+			'company' => '',
 			'phone'   => '',
 		),
 	);

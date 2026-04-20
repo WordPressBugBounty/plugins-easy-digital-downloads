@@ -84,7 +84,7 @@ function edd_create_protection_files( $force = false, $method = false ) {
 		$folders = edd_scan_folders( $upload_path );
 		foreach ( $folders as $folder ) {
 			// Continue if the folder is not writable.
-			if ( ! wp_is_writable( $folder ) || is_link( $folder ) ) {
+			if ( ! wp_is_writable( $folder ) || is_link( untrailingslashit( $folder ) ) ) {
 				continue;
 			}
 

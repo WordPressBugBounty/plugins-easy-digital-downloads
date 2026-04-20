@@ -124,6 +124,9 @@ class Localization {
 			// Region settings.
 			'enter_region'            => __( 'Enter a region', 'easy-digital-downloads' ),
 			'select_region'           => __( 'Select a region', 'easy-digital-downloads' ),
+
+			// Generic error.
+			'something_went_wrong'    => __( 'Something went wrong. Please try again.', 'easy-digital-downloads' ),
 		);
 	}
 

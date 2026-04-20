@@ -30,6 +30,10 @@
 		"direct": {
 			"type": "boolean",
 			"default": false
+		},
+		"discount": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"example": {

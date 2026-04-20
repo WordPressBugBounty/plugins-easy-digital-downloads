@@ -158,10 +158,10 @@ class Handler {
 		}
 
 		$args = array(
-			'version' => $this->version,
-			'license' => $this->license_key,
-			'item_id' => $this->item_id,
-			'beta'    => function_exists( 'edd_extension_has_beta_support' ) && edd_extension_has_beta_support( $this->item_shortname ),
+			'version'     => $this->version,
+			'license'     => $this->license_key,
+			'item_id'     => $this->item_id,
+			'wp_override' => true,
 		);
 
 		// Set up the updater.

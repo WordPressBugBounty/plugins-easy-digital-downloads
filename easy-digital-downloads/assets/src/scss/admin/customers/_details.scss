@@ -1,18 +1,5 @@
 @use "~@wordpress/base-styles/breakpoints" as wp-breakpoints;
-
-.edd-item-info.customer-info {
-	input[type="text"],
-	input[type="password"],
-	input[type="tel"],
-	select {
-		width: 200px;
-		box-shadow: none;
-		transition: none;
-		border: 1px solid #ddd;
-		font-size: 13px;
-		padding: 2px 4px;
-	}
-}
+@use "../../variables/mixins" as mixins;
 
 .customer-info {
 	display: flex;
@@ -23,20 +10,11 @@
 		font-weight: 600;
 	}
 
-	.customer-name.editable {
-		margin-bottom: 6px;
-	}
-
-	.customer-main-wrapper input[name="customerinfo[name]"] {
-			font-size: 24px;
-		}
-
 	.customer-address-wrapper {
 		margin-top: -3px;
 		margin-right: 50px;
 		width: 202px;
 		margin-left: auto;
-		order: 2;
 	}
 
 	.customer-address {
@@ -71,20 +49,6 @@
 	font-size: 20px;
 }
 
-#customer-edit-actions {
-	padding: 3px;
-	line-height: 28px;
-	text-align: center;
-
-	.button-secondary {
-		margin-right: 5px;
-	}
-
-	.cancel {
-		padding: 5px;
-	}
-}
-
 .customer-main-wrapper .info-item > .edd-toggle {
 	margin-top: 8px;
 }
@@ -94,5 +58,60 @@
 		.customer-id {
 			display: none;
 		}
+	}
+}
+
+// Edit profile dialog.
+.edd-modal.edd-modal--edit-customer {
+	.edd-edit-customer-address {
+		grid-column: 1 / -1;
+		padding: 20px;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+
+		legend {
+			font-weight: 600;
+			padding: 0 8px;
+		}
+	}
+
+	.edd-modal__content {
+		max-height: calc(100vh - 250px);
+		display: grid;
+		grid-template-columns: repeat(2, minmax(250px, 1fr));
+	}
+
+	select,
+	input[type="text"],
+	input[type="email"],
+	.edd-select-chosen {
+		width: 100%;
+	}
+}
+
+#edd-item-stats-wrapper {
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+
+	ul {
+		display: flex;
+		margin: 0;
+		gap: 20px;
+		justify-content: center;
+	}
+
+	li {
+		font-size: 14px;
+		margin-bottom: 0;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	.dashicons {
+		color: #888;
+		margin-top: -2px;
 	}
 }

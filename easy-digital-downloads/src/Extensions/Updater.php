@@ -140,6 +140,10 @@ class Updater {
 			} else {
 				// Populating the no_update information is required to support auto-updates in WordPress 5.5.
 				$_transient_data->no_update[ $this->name ] = $current;
+				// Core may have placed a WordPress.org update in response for this basename; replace it with our API result only.
+				if ( isset( $_transient_data->response[ $this->name ] ) ) {
+					unset( $_transient_data->response[ $this->name ] );
+				}
 			}
 		}
 		$_transient_data->last_checked           = time();

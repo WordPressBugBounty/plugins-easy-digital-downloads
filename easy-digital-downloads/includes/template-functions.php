@@ -246,6 +246,10 @@ function edd_get_purchase_link( $args = array() ) {
 			<input type="hidden" name="edd_redirect_to_checkout" value="1">
 		<?php endif; ?>
 
+		<?php if ( ! empty( $args['discount'] ) && empty( $args['direct'] ) ) : ?>
+			<input type="hidden" name="edd_discount" value="<?php echo esc_attr( $args['discount'] ); ?>">
+		<?php endif; ?>
+
 		<?php do_action( 'edd_purchase_link_end', $download->ID, $args ); ?>
 
 	</form><!--end #<?php echo esc_attr( $form_id ); ?>-->

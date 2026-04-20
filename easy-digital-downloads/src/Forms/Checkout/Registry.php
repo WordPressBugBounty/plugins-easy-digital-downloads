@@ -60,6 +60,10 @@ class Registry {
 				'label' => __( 'Postal Code', 'easy-digital-downloads' ),
 				'class' => PostalCode::class,
 			),
+			'company'   => array(
+				'label' => __( 'Company', 'easy-digital-downloads' ),
+				'class' => Company::class,
+			),
 			'phone'     => array(
 				'label' => __( 'Phone', 'easy-digital-downloads' ),
 				'class' => Phone::class,

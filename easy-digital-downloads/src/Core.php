@@ -38,6 +38,11 @@ class Core extends EventManagement\Subscribers {
 
 			// Users.
 			new Users\Verification(),
+			new Users\Search(),
+			new Users\LoginLink\Loader(),
+
+			// Cache.
+			new Cache\Handler(),
 
 			// Utils.
 			new Utils\Modal(),

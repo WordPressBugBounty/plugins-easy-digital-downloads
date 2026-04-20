@@ -1,8 +1,18 @@
 <?php
+/**
+ * Scripts for the EDD Blocks.
+ *
+ * @package EDD\Blocks\Admin\Scripts
+ * @copyright Copyright Easy Digital Downloads
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 2.0
+ */
 
 namespace EDD\Blocks\Admin\Scripts;
 
-add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\localize' );
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
+
 /**
  * Adds a custom variable to the JS to allow a user in the block editor
  * to preview sensitive data.
@@ -66,10 +76,12 @@ function localize() {
 			'download_label_plural'   => edd_get_label_plural(),
 			'checkout_registration'   => in_array( edd_get_option( 'show_register_form', 'none' ), array( 'both', 'registration' ), true ),
 			'button_colors'           => $button_colors,
-			'featured_promo'      => ! edd_is_pro() && class_exists( '\\EDD\\Lite\\Admin\\Promos\\Notices\\FeaturedDownloads' ),
+			'featured_promo'          => ! edd_is_pro() && class_exists( '\\EDD\\Lite\\Admin\\Promos\\Notices\\FeaturedDownloads' ),
+			'manage_shop_discounts'   => current_user_can( 'manage_shop_discounts' ),
 		)
 	);
 }
+add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\localize' );
 
 /**
  * Makes sure the payment icons show on the checkout block in the editor.
@@ -78,15 +90,20 @@ function localize() {
  */
 add_action( 'admin_print_footer_scripts', '\edd_print_payment_icons_on_checkout' );
 
-add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\add_edd_styles_block_editor' );
 /**
  * If the EDD styles are registered, load them for the block editor.
+ *
+ * WordPress 7.0 moved to a fully iframed editor (Block API v3), so
+ * enqueue_block_editor_assets no longer fires inside the iframe.
+ * enqueue_block_assets fires inside the iframe, on the frontend, and
+ * in the editor shell, so the style is always available where blocks render.
  *
  * @since 2.0
  * @return void
  */
 function add_edd_styles_block_editor() {
-	if ( wp_style_is( 'edd-styles', 'registered' ) ) {
+	if ( ! wp_style_is( 'edd-styles', 'enqueued' ) ) {
 		wp_enqueue_style( 'edd-styles' );
 	}
 }
+add_action( 'enqueue_block_assets', __NAMESPACE__ . '\add_edd_styles_block_editor' );

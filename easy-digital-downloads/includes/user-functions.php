@@ -405,7 +405,7 @@ function edd_count_file_downloads_of_customer( $customer_id_or_email = '' ) {
  */
 function edd_validate_username( $username ) {
 	$sanitized = sanitize_user( $username, false );
-	$valid     = ( $sanitized == $username );
+	$valid     = ( $sanitized === $username );
 
 	return (bool) apply_filters( 'edd_validate_username', $valid, $username );
 }
@@ -578,7 +578,8 @@ function edd_get_customer_address( $user_id = 0 ) {
 			);
 		}
 
-		$parsed_address['phone'] = $customer->get_meta( 'phone' );
+		$parsed_address['company'] = $customer->get_meta( 'company_name' );
+		$parsed_address['phone']   = $customer->get_meta( 'phone' );
 	}
 
 	return wp_parse_args(
@@ -590,6 +591,7 @@ function edd_get_customer_address( $user_id = 0 ) {
 			'zip'     => '',
 			'country' => '',
 			'state'   => '',
+			'company' => '',
 			'phone'   => '',
 		)
 	);

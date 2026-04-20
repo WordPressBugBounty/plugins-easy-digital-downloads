@@ -81,7 +81,12 @@ class Errors extends Subscriber {
 		}
 
 		if ( is_wp_error( $validate ) ) {
-			wp_send_json_error( array( 'message' => $validate->get_error_message() ) );
+			wp_send_json_error(
+				array(
+					'message' => $validate->get_error_message(),
+					'code'    => $validate->get_error_code(),
+				)
+			);
 		}
 
 		EDD()->session->set( 'email_validated', $email );

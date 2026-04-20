@@ -48,28 +48,29 @@ class Password extends Field {
 	 */
 	public function do_input(): void {
 		?>
-		<div class="edd-blocks-form__control wp-pwd">
-			<?php
-			$password = new \EDD\HTML\Text(
-				array(
-					'type'         => 'password',
-					'data'         => array(
-						'reveal' => 1,
-						'pw'     => wp_generate_password( 16 ),
-					),
-					'name'         => 'edd_user_pass',
-					'id'           => $this->get_id(),
-					'class'        => $this->get_field_classes(),
-					'required'     => true,
-					'include_span' => false,
-				)
-			);
-			$password->output();
-			?>
-
-			<button type="button" class="button button-secondary wp-hide-pw edd-has-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'easy-digital-downloads' ); ?>">
-				<span class="dashicons dashicons-hidden" aria-hidden="true"></span>
-			</button>
+		<div class="edd-blocks-form__control">
+			<div class="wp-pwd">
+				<?php
+				$password = new \EDD\HTML\Text(
+					array(
+						'type'         => 'password',
+						'data'         => array(
+							'reveal' => 1,
+							'pw'     => wp_generate_password( 16 ),
+						),
+						'name'         => 'edd_user_pass',
+						'id'           => $this->get_id(),
+						'class'        => $this->get_field_classes(),
+						'required'     => true,
+						'include_span' => false,
+					)
+				);
+				$password->output();
+				?>
+				<button type="button" class="button button-secondary wp-hide-pw edd-has-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'easy-digital-downloads' ); ?>">
+					<span class="dashicons dashicons-hidden" aria-hidden="true"></span>
+				</button>
+			</div>
 			<div id="pass-strength-result" class="edd-has-js" aria-live="polite"><?php esc_html_e( 'Strength indicator', 'easy-digital-downloads' ); ?></div>
 		</div>
 		<?php

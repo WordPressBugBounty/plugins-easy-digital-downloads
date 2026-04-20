@@ -1,144 +1,142 @@
 /**
  * Customer management screen JS
  */
-var EDD_Customer = {
 
-	vars: {
-		customer_card_wrap_editable: $( '#edit-customer-info .editable' ),
-		customer_card_wrap_edit_item: $( '#edit-customer-info .edit-item' ),
-		user_id: $( 'input[name="customerinfo[user_id]"]' ),
-	},
-	init: function() {
-		this.edit_customer();
-		this.add_email();
-		this.user_search();
-		this.remove_user();
-		this.cancel_edit();
-		this.change_country();
-		this.delete_checked();
-	},
-	edit_customer: function() {
-		$( document.body ).on( 'click', '#edit-customer', function( e ) {
-			e.preventDefault();
+import { setupEddModal } from '@easy-digital-downloads/modal';
 
-			EDD_Customer.vars.customer_card_wrap_editable.hide();
-			EDD_Customer.vars.customer_card_wrap_edit_item.show().css( 'display', 'flex' );
-		} );
-	},
-	add_email: function() {
-		$( document.body ).on( 'click', '#add-customer-email', function( e ) {
-			e.preventDefault();
-			const button = $( this ),
-				wrapper = button.parents( '.customer-section' ),
-				notice = wrapper.find( '.notice-wrap' ),
-				customer_id = wrapper.find( 'input[name="customer-id"]' ).val(),
-				email = wrapper.find( 'input[name="additional-email"]' ).val(),
-				primary = wrapper.find( 'input[name="make-additional-primary"]' ).is( ':checked' ),
-				nonce = wrapper.find( 'input[name="add_email_nonce"]' ).val(),
-				postData = {
-					edd_action: 'customer-add-email',
-					customer_id: customer_id,
-					email: email,
-					primary: primary,
-					_wpnonce: nonce,
-				};
+/**
+ * Post data to the admin AJAX endpoint.
+ *
+ * @param {Object} data Key/value pairs to POST.
+ * @return {Promise<Response>}
+ */
+function ajaxPost( data ) {
+	return fetch( globalThis.ajaxurl, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+		body: new URLSearchParams( data ),
+	} );
+}
 
-			notice.empty();
-			button.attr( 'disabled', true ).addClass( 'updating-message' );
+/**
+ * Set up the "Add Email" button in the customer emails section.
+ */
+function setupAddEmail() {
+	document.body.addEventListener( 'click', function( e ) {
+		const button = e.target.closest( '#add-customer-email' );
+		if ( ! button ) {
+			return;
+		}
+		e.preventDefault();
 
-			$.post( ajaxurl, postData, function( response ) {
+		const wrapper = button.closest( '.customer-section' );
+		const notice = wrapper?.querySelector( '.notice-wrap' );
+
+		if ( notice ) {
+			notice.innerHTML = '';
+		}
+		button.disabled = true;
+		button.classList.add( 'updating-message' );
+
+		ajaxPost( {
+			edd_action: 'customer-add-email',
+			customer_id: wrapper?.querySelector( 'input[name="customer-id"]' )?.value ?? '',
+			email: wrapper?.querySelector( 'input[name="additional-email"]' )?.value ?? '',
+			primary: wrapper?.querySelector( 'input[name="make-additional-primary"]' )?.checked ? '1' : '0',
+			_wpnonce: wrapper?.querySelector( 'input[name="add_email_nonce"]' )?.value ?? '',
+		} )
+			.then( ( r ) => r.json() )
+			.then( function( response ) {
 				setTimeout( function() {
 					if ( true === response.success ) {
 						window.location.href = response.redirect;
 					} else {
-						button.attr( 'disabled', false ).removeClass( 'updating-message' );
-						notice.append( '<div class="notice notice-error inline"><p>' + response.message + '</p></div>' );
+						button.disabled = false;
+						button.classList.remove( 'updating-message' );
+						if ( notice ) {
+							notice.insertAdjacentHTML( 'beforeend', '<div class="notice notice-error inline"><p>' + response.message + '</p></div>' );
+						}
 					}
 				}, 342 );
-			}, 'json' );
-		} );
-	},
-	user_search: function() {
-		// Upon selecting a user from the dropdown, we need to update the User ID
-		$( document.body ).on( 'click.eddSelectUser', '.edd_user_search_results a', function( e ) {
-			e.preventDefault();
-			const user_id = $( this ).data( 'userid' );
-			EDD_Customer.vars.user_id.val( user_id );
-		} );
-	},
-	remove_user: function() {
-		$( document.body ).on( 'click', '#disconnect-customer', function( e ) {
-			e.preventDefault();
-
-			if ( confirm( edd_vars.disconnect_customer ) ) {
-				const customer_id = $( 'input[name="customerinfo[id]"]' ).val(),
-					postData = {
-						edd_action: 'disconnect-userid',
-						customer_id: customer_id,
-						_wpnonce: $( '#edit-customer-info #_wpnonce' ).val(),
-					};
-
-				$.post( ajaxurl, postData, function( response ) {
-					// Weird
-					window.location.href = window.location.href;
-				}, 'json' );
-			}
-		} );
-	},
-	cancel_edit: function() {
-		$( document.body ).on( 'click', '#edd-edit-customer-cancel', function( e ) {
-			e.preventDefault();
-			EDD_Customer.vars.customer_card_wrap_edit_item.hide();
-			EDD_Customer.vars.customer_card_wrap_editable.show();
-
-			$( '.edd_user_search_results' ).html( '' );
-		} );
-	},
-	change_country: function() {
-		$( 'select[name="customerinfo[country]"]' ).on( 'change', function () {
-			const select = $( this ),
-				state_input = $( ':input[name="customerinfo[region]"]' ),
-				data = {
-					action: 'edd_get_shop_states',
-					country: select.val(),
-					nonce: select.data( 'nonce' ),
-					field_name: 'customerinfo[region]',
-				};
-
-		$.post( ajaxurl, data, function( response ) {
-			// Destroy Tom Select before replacing the element.
-			if ( state_input.is( 'select' ) ) {
-				state_input[0]?.tomselect?.destroy();
-			}
-
-				const currentInput = $( ':input[name="customerinfo[region]"]' );
-				if ( 'nostates' === response ) {
-					currentInput.replaceWith( '<input type="text" name="' + data.field_name + '" value="" class="edd-edit-toggles medium-text"/>' );
-				} else {
-					currentInput.replaceWith( response );
+			} )
+			.catch( function() {
+				button.disabled = false;
+				button.classList.remove( 'updating-message' );
+				if ( notice ) {
+					notice.insertAdjacentHTML( 'beforeend', '<div class="notice notice-error inline"><p>' + globalThis.edd_vars?.something_went_wrong + '</p></div>' );
 				}
 			} );
+	} );
+}
 
-			return false;
-		} );
-	},
-	delete_checked: function() {
-		$( '#edd-customer-delete-confirm' ).on( 'change', function () {
-			const records_input = $( '#edd-customer-delete-records' );
-			const submit_button = $( '#edd-delete-customer' );
+/**
+ * Set up the "Disconnect User" link.
+ */
+function setupRemoveUser() {
+	document.body.addEventListener( 'click', function( e ) {
+		const link = e.target.closest( '#disconnect-customer' );
+		if ( ! link ) {
+			return;
+		}
+		e.preventDefault();
 
-			if ( $( this ).prop( 'checked' ) ) {
-				records_input.attr( 'disabled', false );
-				submit_button.attr( 'disabled', false );
-			} else {
-				records_input.attr( 'disabled', true );
-				records_input.prop( 'checked', false );
-				submit_button.attr( 'disabled', true );
+		// eslint-disable-next-line no-alert
+		if ( ! globalThis.confirm( globalThis.edd_vars?.disconnect_customer ) ) {
+			return;
+		}
+
+		ajaxPost( {
+			edd_action: 'disconnect-userid',
+			customer_id: document.querySelector( 'input[name="customerinfo[id]"]' )?.value ?? '',
+			_wpnonce: document.querySelector( '#edit-customer-info #_wpnonce' )?.value ?? '',
+		} )
+			.then( function() {
+				// Reload to reflect the disconnected state.
+				window.location.reload();
+			} )
+			.catch( function() {
+				// eslint-disable-next-line no-alert
+				globalThis.alert( globalThis.edd_vars?.something_went_wrong );
+			} );
+	} );
+}
+
+/**
+ * Set up the delete-customer confirmation checkbox, which gates the submit
+ * button and the "delete records" secondary checkbox.
+ */
+function setupDeleteChecked() {
+	const confirmCheckbox = document.getElementById( 'edd-customer-delete-confirm' );
+	if ( ! confirmCheckbox ) {
+		return;
+	}
+
+	confirmCheckbox.addEventListener( 'change', function() {
+		const recordsInput = document.getElementById( 'edd-customer-delete-records' );
+		const submitButton = document.getElementById( 'edd-delete-customer' );
+		const checked = this.checked;
+
+		if ( recordsInput ) {
+			recordsInput.disabled = ! checked;
+			if ( ! checked ) {
+				recordsInput.checked = false;
 			}
-		} );
-	},
-};
+		}
+		if ( submitButton ) {
+			submitButton.disabled = ! checked;
+		}
+	} );
+}
 
-jQuery( document ).ready( function( $ ) {
-	EDD_Customer.init();
+/**
+ * DOM ready.
+ */
+document.addEventListener( 'DOMContentLoaded', function() {
+	setupEddModal( {
+		trigger: '#edit-customer',
+		dialogId: 'edd-edit-customer-dialog',
+	} );
+	setupAddEmail();
+	setupRemoveUser();
+	setupDeleteChecked();
 } );

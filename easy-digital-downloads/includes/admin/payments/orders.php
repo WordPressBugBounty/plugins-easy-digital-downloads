@@ -433,6 +433,10 @@ function edd_order_details_addresses( $order ) {
 			'country'     => '',
 		)
 		: $order->get_address();
+
+	$company = ! edd_is_add_order_page()
+		? edd_get_order_meta( $order->id, 'company_name', true )
+		: '';
 	?>
 
 	<div id="edd-order-address">
@@ -444,6 +448,13 @@ function edd_order_details_addresses( $order ) {
 			<div class="customer-address-select-wrap edd-form-group" style="display: none; padding: 16px 0; border-bottom: 1px solid #ccd0d4;">
 				<label for="edd_customer_existing_addresses" class="edd-form-group__label"><?php esc_html_e( 'Existing Address:', 'easy-digital-downloads' ); ?></label>
 				<div class="edd-form-group__control"></div>
+			</div>
+
+			<div class="edd-form-group">
+				<label for="edd_order_address_company" class="edd-form-group__label"><?php esc_html_e( 'Company:', 'easy-digital-downloads' ); ?></label>
+				<div class="edd-form-group__control">
+					<input type="text" name="edd_order_address[company]" id="edd_order_address_company" class="edd-form-group__input regular-text" value="<?php echo esc_attr( $company ); ?>" />
+				</div>
 			</div>
 
 			<div class="edd-form-group">

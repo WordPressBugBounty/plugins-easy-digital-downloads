@@ -163,7 +163,7 @@ export async function processForm( paymentMethod ) {
 
 	return apiRequest( 'edds_process_purchase_form', {
 		// Send available form data.
-		form_data: $( '#edd_purchase_form' ).serialize(),
+		form_data: new FormData( document.getElementById( 'edd_purchase_form' ) ),
 		timestamp: tokenInput.length ? tokenInput.data( 'timestamp' ) : '',
 		token: tokenInput.length ? tokenInput.data( 'token' ) : '',
 		intent_type: window.eddStripe.intentType,
@@ -180,15 +180,17 @@ export async function processForm( paymentMethod ) {
  * @return {Promise} jQuery Promise.
  */
 export function createAndCompleteOrder() {
-	let paymentForm = $( '#edd_purchase_form' ),
+	const formEl = document.getElementById( 'edd_purchase_form' ),
 		tokenInput = $( '#edd-process-stripe-token' );
 
-	let formData = paymentForm.serialize();
+	let formData;
 
-	// Attempt to find the Checkout nonce directly.
-	if ( paymentForm.length === 0 ) {
-		let nonce = $( '#edd-process-checkout-nonce' ).val();
-		formData = `edd-process-checkout-nonce=${ nonce }`
+	if ( formEl ) {
+		formData = new FormData( formEl );
+	} else {
+		// Attempt to find the Checkout nonce directly.
+		formData = new FormData();
+		formData.append( 'edd-process-checkout-nonce', $( '#edd-process-checkout-nonce' ).val() );
 	}
 
 	return apiRequest( 'edds_create_and_complete_order', {

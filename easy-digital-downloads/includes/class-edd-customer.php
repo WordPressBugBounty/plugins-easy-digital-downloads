@@ -918,21 +918,20 @@ class EDD_Customer extends \EDD\Database\Rows\Customer {
 	 */
 	public function get_notes( $length = 20, $paged = 1 ) {
 
-		// Number
+		// Number.
 		$length = is_numeric( $length )
 			? absint( $length )
 			: 20;
 
-		// Offset
+		// Offset.
 		$offset = is_numeric( $paged ) && ( 1 !== $paged )
 			? ( ( absint( $paged ) - 1 ) * $length )
 			: 0;
 
-		// Return the paginated notes for back-compat
+		// Return combined customer + manual order notes.
 		return edd_get_notes(
 			array(
-				'object_id'   => $this->id,
-				'object_type' => 'customer',
+				'customer_id' => $this->id,
 				'number'      => $length,
 				'offset'      => $offset,
 				'order'       => 'desc',
@@ -951,8 +950,7 @@ class EDD_Customer extends \EDD\Database\Rows\Customer {
 	public function get_notes_count() {
 		return edd_count_notes(
 			array(
-				'object_id'   => $this->id,
-				'object_type' => 'customer',
+				'customer_id' => $this->id,
 			)
 		);
 	}

@@ -39,6 +39,7 @@ final class Registry {
 			'user_verification'          => Types\UserVerification::class,
 			'admin_order_refund'         => Types\AdminOrderRefund::class,
 			'stripe_early_fraud_warning' => Types\StripeEarlyFraudWarning::class,
+			'login_link'                 => Types\LoginLink::class,
 		);
 
 		return apply_filters( 'edd_email_registered_types', $types );

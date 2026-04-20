@@ -75,7 +75,7 @@ class Gateways extends Tab {
 				),
 			),
 			'checkout'   => array(
-				'enforce_ssl'             => array(
+				'enforce_ssl'                 => array(
 					'id'      => 'enforce_ssl',
 					'name'    => __( 'Enforce SSL on Checkout', 'easy-digital-downloads' ),
 					'check'   => __( 'Redirect all customers to the secure checkout page. You must have an SSL certificate installed to use this option.', 'easy-digital-downloads' ),
@@ -84,7 +84,7 @@ class Gateways extends Tab {
 						'disabled' => is_ssl() ? false : true,
 					),
 				),
-				'logged_in_only'          => array(
+				'logged_in_only'              => array(
 					'id'      => 'logged_in_only',
 					'name'    => __( 'Customer Registration', 'easy-digital-downloads' ),
 					'type'    => 'select',
@@ -97,8 +97,17 @@ class Gateways extends Tab {
 						'auto'     => __( 'Automatically register new user accounts', 'easy-digital-downloads' ),
 					),
 				),
-				'show_register_form'      => $this->get_register_form(),
-				'checkout_address_fields' => array(
+				'show_register_form'          => $this->get_register_form(),
+				'login_link'                  => array(
+					'id'    => 'login_link',
+					'name'  => __( 'Enable One-Time Login Link', 'easy-digital-downloads' ),
+					'check' => __( 'Allow customers to receive a one-time login link to log in to their account during checkout.', 'easy-digital-downloads' ),
+					'type'  => 'checkbox_toggle',
+					'data'  => array(
+						'edd-requirement' => 'login_link',
+					),
+				),
+				'checkout_address_fields'     => array(
 					'id'       => 'checkout_address_fields',
 					'name'     => __( 'Checkout Address Fields', 'easy-digital-downloads' ),
 					'desc'     => $this->get_checkout_fields_description(),
@@ -108,7 +117,7 @@ class Gateways extends Tab {
 					'sortable' => true,
 					'options'  => $this->get_address_options(),
 				),
-				'geolocation'             => array(
+				'geolocation'                 => array(
 					'id'       => 'geolocation',
 					'name'     => __( 'Geolocation Detection', 'easy-digital-downloads' ),
 					'desc'     => $this->get_geolocation_description(),
@@ -126,7 +135,7 @@ class Gateways extends Tab {
 					'tooltip_title' => __( 'Required Fields Notice', 'easy-digital-downloads' ),
 					'tooltip_desc'  => __( 'When enabled, a notice will appear at the top of checkout, registration, login, and profile editor forms indicating that asterisk-marked fields are required. This improves accessibility for WCAG 3.3.2 compliance.', 'easy-digital-downloads' ),
 				),
-				'moderation_settings'     => array(
+				'moderation_settings'         => array(
 					'id'            => 'moderation_settings',
 					'name'          => '<h3>' . __( 'Moderation', 'easy-digital-downloads' ) . '</h3>',
 					'desc'          => '',
@@ -134,7 +143,7 @@ class Gateways extends Tab {
 					'tooltip_title' => __( 'Moderation', 'easy-digital-downloads' ),
 					'tooltip_desc'  => __( 'It is sometimes necessary to temporarily prevent certain potential customers from checking out. Use these settings to control who can make purchases.', 'easy-digital-downloads' ),
 				),
-				'banned_emails'           => array(
+				'banned_emails'               => array(
 					'id'          => 'banned_emails',
 					'name'        => __( 'Banned Emails', 'easy-digital-downloads' ),
 					'desc'        => __( 'Emails placed in the box above will not be allowed to make purchases.', 'easy-digital-downloads' ) . '<br>' . __( 'One per line, enter: email addresses, domains (<code>@example.com</code>), or TLDs (<code>.gov</code>).', 'easy-digital-downloads' ),

@@ -22,8 +22,6 @@ class Screen {
 	 * @since 3.3.0
 	 */
 	public static function render() {
-
-		self::enqueue();
 		if ( ! empty( $_GET['email'] ) ) {
 			self::render_email_editor();
 			return;
@@ -66,7 +64,11 @@ class Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	protected static function enqueue() {
+	public static function enqueue( $hook = '' ) {
+		if ( 'download_page_edd-emails' !== $hook ) {
+			return;
+		}
+
 		if ( empty( $_GET['email'] ) ) {
 			$script = 'edd-admin-emails-list-table';
 		} else {

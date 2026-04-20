@@ -2,10 +2,9 @@
 /**
  * Customer Reports Table Class
  *
- * @package     EDD
- * @subpackage  Reports
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package     EDD\Admin\Customers
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  */
 
@@ -39,7 +38,6 @@ class EDD_Customer_Reports_Table extends List_Table {
 		);
 
 		$this->process_bulk_action();
-		$this->get_counts();
 	}
 
 	/**
@@ -229,13 +227,80 @@ class EDD_Customer_Reports_Table extends List_Table {
 	}
 
 	/**
-	 * Retrieve the customer counts
+	 * Retrieve the customer counts.
 	 *
 	 * @since 3.0
+	 * @since 3.6.7 Updated to pass search/filter args to edd_get_customer_counts().
+	 *
 	 * @return void
 	 */
 	public function get_counts() {
-		$this->counts = edd_get_customer_counts();
+		$args = $this->parse_args( false );
+		unset( $args['status'] );
+
+		$this->counts = edd_get_customer_counts( $args );
+	}
+
+	/**
+	 * Parse the query arguments for the customer list table.
+	 *
+	 * @since 3.6.7
+	 *
+	 * @param bool $paginate Whether to include pagination arguments.
+	 * @return array
+	 */
+	private function parse_args( $paginate = true ) {
+		$search = $this->get_search();
+		$args   = array( 'status' => $this->get_status() );
+
+		// Account for search stripping the "+" from emails.
+		if ( strpos( $search, ' ' ) ) {
+			$original_query = $search;
+			$search         = str_replace( ' ', '+', $search );
+			if ( ! is_email( $search ) ) {
+				$search = $original_query;
+			}
+		}
+
+		// Email search.
+		if ( is_email( $search ) ) {
+			$customer_emails = new EDD\Database\Queries\Customer_Email_Address();
+			$customer_ids    = $customer_emails->query(
+				array(
+					'fields' => 'customer_id',
+					'email'  => $search,
+				)
+			);
+
+			if ( ! empty( $customer_ids ) ) {
+				$args['id__in'] = $customer_ids;
+			} else {
+				$args['id__in'] = array( null );
+			}
+
+			// Customer ID.
+		} elseif ( is_numeric( $search ) ) {
+			$args['id'] = $search;
+		} elseif ( strpos( $search, 'c:' ) !== false ) {
+			$args['id'] = trim( str_replace( 'c:', '', $search ) );
+
+			// User ID.
+		} elseif ( strpos( $search, 'user:' ) !== false ) {
+			$args['user_id'] = trim( str_replace( 'user:', '', $search ) );
+		} elseif ( strpos( $search, 'u:' ) !== false ) {
+			$args['user_id'] = trim( str_replace( 'u:', '', $search ) );
+
+			// Other...
+		} else {
+			$args['search']         = $search;
+			$args['search_columns'] = array( 'name', 'email' );
+		}
+
+		if ( $paginate ) {
+			$args = $this->parse_pagination_args( $args );
+		}
+
+		return $args;
 	}
 
 	/**
@@ -341,61 +406,10 @@ class EDD_Customer_Reports_Table extends List_Table {
 	 * @return array $data All the row data.
 	 */
 	public function get_data() {
-		$data   = array();
-		$search = $this->get_search();
-		$args   = array( 'status' => $this->get_status() );
+		$data = array();
 
-		// Account for search stripping the "+" from emails.
-		if ( strpos( $search, ' ' ) ) {
-			$original_query = $search;
-			$search         = str_replace( ' ', '+', $search );
-			if ( ! is_email( $search ) ) {
-				$search = $original_query;
-			}
-		}
-
-		// Email search.
-		if ( is_email( $search ) ) {
-			$args['email'] = $search;
-
-			// Customer ID.
-		} elseif ( is_numeric( $search ) ) {
-			$args['id'] = $search;
-		} elseif ( strpos( $search, 'c:' ) !== false ) {
-			$args['id'] = trim( str_replace( 'c:', '', $search ) );
-
-			// User ID.
-		} elseif ( strpos( $search, 'user:' ) !== false ) {
-			$args['user_id'] = trim( str_replace( 'u:', '', $search ) );
-		} elseif ( strpos( $search, 'u:' ) !== false ) {
-			$args['user_id'] = trim( str_replace( 'u:', '', $search ) );
-
-			// Other...
-		} else {
-			$args['search']         = $search;
-			$args['search_columns'] = array( 'name', 'email' );
-		}
-
-		// Parse pagination.
-		$this->args = $this->parse_pagination_args( $args );
-
-		if ( is_email( $search ) ) {
-			$customer_emails = new EDD\Database\Queries\Customer_Email_Address();
-			$customer_ids    = $customer_emails->query(
-				array(
-					'fields' => 'customer_id',
-					'email'  => $search,
-				)
-			);
-
-			$customers = edd_get_customers(
-				array(
-					'id__in' => $customer_ids,
-				)
-			);
-		} else {
-			$customers = edd_get_customers( $this->args );
-		}
+		$this->args = $this->parse_args();
+		$customers  = edd_get_customers( $this->args );
 
 		// Get the data.
 		if ( ! empty( $customers ) ) {
@@ -430,18 +444,20 @@ class EDD_Customer_Reports_Table extends List_Table {
 		);
 
 		$this->items = $this->get_data();
+		$this->get_counts();
 
-		$status = $this->get_status( 'total' );
+		$status      = $this->get_status( 'total' );
+		$total_items = $this->counts[ $status ] ?? 0;
 
 		// Add condition to be sure we don't divide by zero.
 		// If $this->per_page is 0, then set total pages to 1.
-		$total_pages = $this->per_page ? ceil( (int) $this->counts[ $status ] / (int) $this->per_page ) : 1;
+		$total_pages = $this->per_page ? ceil( (int) $total_items / (int) $this->per_page ) : 1;
 
 		// Setup pagination.
 		$this->set_pagination_args(
 			array(
 				'total_pages' => $total_pages,
-				'total_items' => $this->counts[ $status ],
+				'total_items' => $total_items,
 				'per_page'    => $this->per_page,
 			)
 		);

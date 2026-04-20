@@ -148,6 +148,9 @@ class EDD_Tools_Reset_Stats extends EDD_Batch_Export {
 				delete_option( 'edd_next_order_number' );
 			}
 
+			// Reset per-download sales and earnings meta.
+			$this->reset_download_stats();
+
 			$this->done    = true;
 			$this->message = __( 'Your store has been successfully reset.', 'easy-digital-downloads' );
 			return false;
@@ -311,6 +314,25 @@ class EDD_Tools_Reset_Stats extends EDD_Batch_Export {
 			'emails',
 			'emailmeta',
 			'tax_rates',
+		);
+	}
+
+	/**
+	 * Reset per-download sales and earnings post meta.
+	 *
+	 * @since 3.6.7
+	 */
+	private function reset_download_stats() {
+		global $wpdb;
+
+		$wpdb->query(
+			"DELETE FROM {$wpdb->postmeta}
+			 WHERE meta_key IN (
+				 '_edd_download_sales',
+				 '_edd_download_earnings',
+				 '_edd_download_gross_sales',
+				 '_edd_download_gross_earnings'
+			 )"
 		);
 	}
 }

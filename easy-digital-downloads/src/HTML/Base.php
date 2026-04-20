@@ -137,11 +137,24 @@ abstract class Base {
 	/**
 	 * Parses the arguments for the element.
 	 *
+	 * Performs a shallow merge via wp_parse_args, then recursively merges any
+	 * keys whose default value is an array so that partial overrides (e.g. a
+	 * subset of `data` attributes) don't silently discard the remaining defaults.
+	 *
 	 * @since 3.2.8
 	 * @param array $args The arguments for the element.
 	 * @return array
 	 */
 	private function parse_args( array $args ) {
-		return wp_parse_args( $args, $this->defaults() );
+		$defaults = $this->defaults();
+		$parsed   = wp_parse_args( $args, $defaults );
+
+		foreach ( $defaults as $key => $default ) {
+			if ( is_array( $default ) && isset( $args[ $key ] ) && is_array( $args[ $key ] ) ) {
+				$parsed[ $key ] = wp_parse_args( $args[ $key ], $default );
+			}
+		}
+
+		return $parsed;
 	}
 }

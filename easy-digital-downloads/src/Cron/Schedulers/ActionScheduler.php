@@ -167,7 +167,7 @@ class ActionScheduler implements Scheduler {
 		}
 
 		if ( ! \ActionScheduler::is_initialized( null ) ) {
-			edd_debug_log( 'Action Scheduler was called too early by: ' . print_r( debug_backtrace(), true ) );
+			edd_debug_log( 'Action Scheduler was called too early by: ' . wp_debug_backtrace_summary() );
 			return false;
 		}
 

@@ -137,9 +137,73 @@ class Note extends Query {
 	 *     @type string       $order                How to order results. Accepts 'ASC', 'DESC'. Default 'DESC'.
 	 *     @type string       $search               Search term(s) to retrieve matching notes for. Default empty.
 	 *     @type bool         $update_cache         Whether to prime the cache for found notes. Default false.
+	 *     @type int          $customer_id          A customer ID to return all notes for that customer, including
+	 *                                              manual order notes from their orders. Default empty.
 	 * }
 	 */
 	public function __construct( $query = array() ) {
 		parent::__construct( $query );
+	}
+
+	/**
+	 * Override the query method to support the customer_id parameter.
+	 *
+	 * When customer_id is passed, the WHERE clause is replaced with an OR condition
+	 * that returns both customer notes and manual order notes for that customer's orders.
+	 *
+	 * @since 3.6.7
+	 *
+	 * @param string|array $query Query arguments.
+	 * @return array|int Array of Note objects or count.
+	 */
+	public function query( $query = array() ) {
+		if ( ! empty( $query['customer_id'] ) ) {
+			add_filter( 'edd_notes_query_clauses', array( $this, 'query_by_customer' ) );
+		}
+
+		$result = parent::query( $query );
+
+		if ( ! empty( $query['customer_id'] ) ) {
+			remove_filter( 'edd_notes_query_clauses', array( $this, 'query_by_customer' ) );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Filter the query clauses to return all notes for a customer.
+	 *
+	 * Replaces the default WHERE clause with an OR condition that returns:
+	 * - Customer notes (object_type = 'customer' AND object_id = customer_id)
+	 * - Manual order notes (object_type = 'order' AND user_id != 0 AND object_id belongs to customer)
+	 *
+	 * @since 3.6.7
+	 *
+	 * @param array $clauses The query clauses.
+	 * @return array Modified query clauses.
+	 */
+	public function query_by_customer( $clauses ) {
+		$customer_id = absint( $this->query_vars['customer_id'] );
+		if ( empty( $customer_id ) ) {
+			return $clauses;
+		}
+
+		global $wpdb;
+
+		$orders_table = $wpdb->edd_orders;
+
+		$clauses['where'] .= ' ' . $wpdb->prepare(
+			"(
+				( {$this->table_alias}.object_type = 'customer' AND {$this->table_alias}.object_id = %d )
+				OR
+				( {$this->table_alias}.object_type = 'order' AND {$this->table_alias}.user_id != 0 AND {$this->table_alias}.object_id IN (
+					SELECT id FROM {$orders_table} WHERE customer_id = %d AND type = 'sale'
+				) )
+			)",
+			$customer_id,
+			$customer_id
+		);
+
+		return $clauses;
 	}
 }

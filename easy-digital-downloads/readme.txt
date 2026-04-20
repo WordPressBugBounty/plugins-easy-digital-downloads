@@ -1,15 +1,15 @@
-=== Easy Digital Downloads – Sell Digital Products, Subscriptions & Downloads ===
+=== Easy Digital Downloads – eCommerce Payments and Subscriptions made easy ===
 Author URI: https://easydigitaldownloads.com
 Plugin URI: https://easydigitaldownloads.com
 Contributors: easydigitaldownloads, am, cklosows, littlerchicken, alhoseany, misulicus, smub, chriscct7, sumobi, johnjamesjacoby
-Tags: digital downloads, ecommerce, sell digital products, digital store, stripe
+Tags: ecommerce, payments, sell digital products, digital store, stripe
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable Tag: 3.6.6.1
+Stable Tag: 3.6.7
 License: GPLv2 or later
 
-The best WordPress ecommerce plugin to sell digital products & downloads. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
+The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
 
 == Description ==
 
@@ -304,6 +304,35 @@ Chris Klosowski
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.6.7 =
+* NEW: Blocks - Introducing the Profile Editor Block.
+* NEW: Checkout - Added a Business Name field to checkout addresses.
+* NEW: Checkout - Returning customers can now log in via a secure email link at checkout.
+* NEW: Purchase Links - Discount codes can now be added to the buy button block.
+* Admin: Improved customer detail page markup and layout.
+* Admin: Customer counts are now accurate when searching the list table.
+* Admin: Updated the user search input field.
+* Blocks: Fixed the Checkout block setting an incorrect page ID.
+* Checkout: Fixed profile editor layout with multiple email addresses.
+* CLI: Added support for setting a specific gateway when generating orders.
+* Customers: Customer notes now include user created order notes.
+* Database: Fixed an issue where JOIN queries could cause an error in newer PHP versions.
+* Emails: Fixed the email description not displaying in the editor.
+* Emails: Fixed the toggle "updating" indicator positioning.
+* Migration: Fixed a potential loop when migrating orders that no longer exist.
+* PayPal: Fixed PHP compatibility in PayPal Commerce.
+* Stripe: Modernized checkout to use the FormData API.
+* Stripe: Fixed card elements not displaying on Firefox/Windows.
+* Dev: Fixed file protection symlink detection with trailing slashes.
+* Dev: Fixed multicheck field error when label is not set.
+* Dev: Fixed AJAX-backed select fields showing "No results found" incorrectly.
+* Dev: Improved compatibility with LSCache.
+* Dev: Improved nocache headers for important EDD pages.
+* Dev: Removed legacy jQuery UI CSS.
+* Dev: Reset Store now properly resets download sales and revenue data.
+
+View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
+
 = 3.6.6 =
 * Admin: Added compatibility with WordPress 7.0 admin changes.
 * Cart: Fixed cart validation when adding multiple items at the same time.
@@ -315,8 +344,6 @@ Chris Klosowski
 * Messaging: Removed dependency on Alpine library.
 * Stripe: Improved PaymentIntent handling.
 * Dev: Removed a number of unnecessary files from dependencies.
-
-View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
 
 = 3.6.5 =
 * NEW: Cron - Cron events are now more reliable and based on Action Scheduler.

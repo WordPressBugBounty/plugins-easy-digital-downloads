@@ -630,6 +630,8 @@ function edd_process_profile_editor_updates( $data ) {
 	$state        = isset( $data['edd_address_state'] ) ? sanitize_text_field( $data['edd_address_state'] ) : '';
 	$zip          = isset( $data['edd_address_zip'] ) ? sanitize_text_field( $data['edd_address_zip'] ) : '';
 	$country      = isset( $data['edd_address_country'] ) ? sanitize_text_field( $data['edd_address_country'] ) : '';
+	$company      = isset( $data['edd_company'] ) ? sanitize_text_field( $data['edd_company'] ) : '';
+	$phone        = isset( $data['edd_phone'] ) ? sanitize_text_field( $data['edd_phone'] ) : '';
 
 	$userdata = array(
 		'ID'           => $user_id,
@@ -693,11 +695,17 @@ function edd_process_profile_editor_updates( $data ) {
 		return false;
 	}
 
-	// Update user.
-	$updated = wp_update_user( $userdata );
+	// Only call wp_update_user if something actually changed.
+	$user_data_changed = isset( $userdata['user_pass'] )
+		|| isset( $userdata['user_email'] )
+		|| $first_name !== $old_user_data->first_name
+		|| $last_name !== $old_user_data->last_name
+		|| $display_name !== $old_user_data->display_name;
+
+	$updated = $user_data_changed ? wp_update_user( $userdata ) : $user_id;
 
 	// If the current user does not have an associated customer record, create one so that all of the customer's data is stored.
-	if ( ! $customer && $updated ) {
+	if ( ! $customer && $updated && ! is_wp_error( $updated ) ) {
 		$customer_id = edd_add_customer(
 			array(
 				'user_id' => $updated,
@@ -709,7 +717,7 @@ function edd_process_profile_editor_updates( $data ) {
 	}
 
 	// Try to update customer data.
-	if ( $customer ) {
+	if ( $customer && ! is_wp_error( $updated ) ) {
 
 		// Update the primary address.
 		$customer_address_id = edd_get_customer_addresses(
@@ -764,17 +772,22 @@ function edd_process_profile_editor_updates( $data ) {
 		}
 
 		$update_args = array(
-			'name'  => stripslashes( $first_name . ' ' . $last_name ),
+			'name' => stripslashes( $first_name . ' ' . $last_name ),
 		);
 
 		$customer->update( $update_args );
+		$customer->update_meta( 'company_name', $company );
+		$customer->update_meta( 'phone', $phone );
 	}
 
-	if ( $updated ) {
+	if ( ! is_wp_error( $updated ) ) {
 		do_action( 'edd_user_profile_updated', $user_id, $userdata );
-
-		edd_redirect( add_query_arg( 'updated', 'true', $data['edd_redirect'] ) );
+		edd_set_success( 'profile-updated', __( 'Your profile has been edited successfully.', 'easy-digital-downloads' ) );
+	} else {
+		edd_set_error( 'profile-update-failure', __( 'Error updating profile. Please try again later.', 'easy-digital-downloads' ) );
 	}
+
+	edd_redirect( esc_url_raw( $data['edd_redirect'] ) );
 }
 add_action( 'edd_edit_user_profile', 'edd_process_profile_editor_updates' );
 
@@ -809,7 +822,7 @@ function edd_process_profile_editor_remove_email( $data ) {
 
 	if ( intval( $customer->user_id ) === intval( $user_id ) && $customer->remove_email( $data['email'] ) ) {
 
-		$url = add_query_arg( 'updated', true, $data['redirect'] );
+		edd_set_success( 'profile-email-removed', __( 'Email address removed successfully.', 'easy-digital-downloads' ) );
 
 		$user       = wp_get_current_user();
 		$user_login = ! empty( $user->user_login ) ? $user->user_login : edd_get_bot_name();
@@ -819,9 +832,8 @@ function edd_process_profile_editor_remove_email( $data ) {
 
 	} else {
 		edd_set_error( 'profile-remove-email-failure', __( 'Error removing email address from profile. Please try again later.', 'easy-digital-downloads' ) );
-		$url = $data['redirect'];
 	}
 
-	edd_redirect( $url );
+	edd_redirect( esc_url_raw( $data['redirect'] ) );
 }
 add_action( 'edd_profile-remove-email', 'edd_process_profile_editor_remove_email' );

@@ -43,6 +43,9 @@ class Scripts {
 		wp_register_script( 'edd-admin-email-tags', $js_dir . 'email-tags.js', array( 'wp-util' ), $version, true );
 		wp_register_script( 'edd-admin-downloads-editor', $js_dir . 'downloads-editor.js', array( 'wp-dom-ready', 'wp-api-fetch', 'wp-data' ), $version, true );
 
+		// Customers script uses vanilla JS only — no jQuery/underscore dependency.
+		wp_register_script( 'edd-admin-customers', $js_dir . 'customers.js', array( 'edd-admin-tools-export' ), $version, true );
+
 		foreach ( self::get_admin_pages() as $page => $deps ) {
 			wp_register_script(
 				'edd-admin-' . $page,
@@ -120,9 +123,6 @@ class Scripts {
 	 */
 	private static function get_admin_pages() {
 		return array(
-			'customers'         => array(
-				'edd-admin-tools-export',
-			),
 			'dashboard'         => array(),
 			'discounts'         => array(),
 			'downloads'         => array(),

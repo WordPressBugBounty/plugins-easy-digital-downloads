@@ -169,77 +169,39 @@ class Elements {
 	 * Renders an HTML Dropdown of all the Users
 	 *
 	 * @since 2.6.9
-	 *
+	 * @since 3.6.7 This is now just a wrapper for UserSelect.
 	 * @param array $args Arguments for the dropdown.
-	 *
 	 * @return string $output User dropdown
 	 */
 	public function user_dropdown( $args = array() ) {
-		$defaults = array(
-			'name'        => 'users',
-			'id'          => 'users',
-			'class'       => '',
-			'multiple'    => false,
-			'selected'    => 0,
-			'chosen'      => true,
-			'placeholder' => __( 'Select a User', 'easy-digital-downloads' ),
-			'number'      => 30,
-			'data'        => array(
-				'search-type'        => 'user',
-				'search-placeholder' => __( 'Search Users', 'easy-digital-downloads' ),
-			),
-			'required'    => false,
+		$args = wp_parse_args(
+			$args,
+			array(
+				'name'        => 'users',
+				'id'          => 'users',
+				'chosen'      => true,
+				'placeholder' => __( 'Select a User', 'easy-digital-downloads' ),
+				'multiple'    => false,
+				'selected'    => 0,
+				'number'      => 30,
+			)
 		);
-
-		$args = wp_parse_args( $args, $defaults );
 
 		$user_args = array(
 			'number' => $args['number'],
 		);
-		$users     = get_users( $user_args );
-		$options   = array();
 
-		if ( $users ) {
-			foreach ( $users as $user ) {
-				$options[ $user->ID ] = esc_html( $user->display_name );
-			}
-		} else {
-			$options[0] = __( 'No users found', 'easy-digital-downloads' );
+		$users = get_users( $user_args );
+
+		$options = array();
+
+		foreach ( $users as $user ) {
+			$options[ $user->ID ] = esc_html( $user->display_name );
 		}
 
-		$selected = $args['selected'];
-		if ( ! is_array( $selected ) ) {
-			$selected = array( $selected );
-		}
-		// If a selected user has been specified, we need to ensure it's in the initial list of user displayed.
-		if ( ! empty( $selected ) ) {
-			foreach ( $selected as $selected_user ) {
-				if ( ! array_key_exists( $selected_user, $options ) ) {
-					$user = get_userdata( $selected_user );
+		$args['options'] = $options;
 
-					if ( $user ) {
-						$options[ absint( $user->ID ) ] = esc_html( $user->display_name );
-					}
-				}
-			}
-		}
-
-		return $this->select(
-			array(
-				'name'             => $args['name'],
-				'selected'         => $args['selected'],
-				'id'               => $args['id'],
-				'class'            => $args['class'] . ' edd-user-select',
-				'options'          => $options,
-				'multiple'         => $args['multiple'],
-				'placeholder'      => $args['placeholder'],
-				'chosen'           => $args['chosen'],
-				'show_option_all'  => false,
-				'show_option_none' => false,
-				'data'             => $args['data'],
-				'required'         => $args['required'],
-			)
-		);
+		return ( new UserSelect( $args ) )->get();
 	}
 
 	/**
@@ -502,40 +464,17 @@ class Elements {
 	 * Renders an ajax user search field
 	 *
 	 * @since 2.0
-	 *
+	 * @since 3.6.7 This is now just a wrapper for UserSelect.
 	 * @param array $args Arguments for the field.
-	 *
-	 * @return string text field with ajax search
+	 * @return string User select HTML.
 	 */
 	public function ajax_user_search( $args = array() ) {
+		if ( isset( $args['value'] ) ) {
+			$args['selected'] = $args['value'];
+			unset( $args['value'] );
+		}
 
-		$args = wp_parse_args(
-			$args,
-			array(
-				'id'           => 'user_id',
-				'name'         => 'user_id',
-				'value'        => null,
-				'placeholder'  => __( 'Enter Username', 'easy-digital-downloads' ),
-				'label'        => null,
-				'desc'         => null,
-				'class'        => 'edd-user-dropdown',
-				'disabled'     => false,
-				'autocomplete' => 'off',
-				'data'         => false,
-			)
-		);
-
-		// Setup the AJAX class.
-		$args['class'] = 'edd-ajax-user-search ' . sanitize_html_class( $args['class'] );
-
-		// Concatenate output.
-		$output  = '<span class="edd_user_search_wrap">';
-		$output .= $this->text( $args );
-		$output .= '<span class="edd_user_search_results hidden"><span></span></span>';
-		$output .= '<span class="spinner"></span>';
-		$output .= '</span>';
-
-		return $output;
+		return ( new UserSelect( $args ) )->get();
 	}
 
 	/**

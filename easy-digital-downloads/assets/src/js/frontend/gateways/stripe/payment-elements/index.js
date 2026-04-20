@@ -4,7 +4,7 @@
  * Internal dependencies.
  */
 import {
-	fieldValueOrNull, consoleOutput
+	fieldValueOrNull, consoleOutput, unescapeCSSValue,
 } from 'utils'; // eslint-disable-line @wordpress/dependency-group
 
 import { getGlobal } from 'utils/globals.js';
@@ -191,7 +191,7 @@ function generateElementStyles () {
 		'.Label': {
 			fontSize: inputLabelStyles.getPropertyValue( 'font-size' ),
 			fontWeight: inputLabelStyles.getPropertyValue( 'font-weight' ),
-			fontFamily: inputLabelStyles.getPropertyValue( 'font-family' ),
+			fontFamily: unescapeCSSValue( inputLabelStyles.getPropertyValue( 'font-family' ) ),
 			color: inputLabelStyles.getPropertyValue( 'color' ),
 		},
 		'.CheckboxInput': {

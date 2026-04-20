@@ -46,6 +46,13 @@ export const getChosenVars = ( el ) => {
 				}
 			}
 
+			// Track which option values were returned by the most recent AJAX
+			// response so the score function can always show them. The set is
+			// cleared when the search query changes, ensuring stale remote
+			// results don't persist across different searches.
+			const remoteValues = new Set();
+			let lastScoredQuery = null;
+
 			inputVars.shouldLoad = ( query ) => query.length >= minLength;
 			inputVars.loadThrottle = 521;
 			inputVars.load = function( query, callback ) {
@@ -56,12 +63,32 @@ export const getChosenVars = ( el ) => {
 						const options = [];
 						if ( data && typeof data === 'object' ) {
 							Object.values( data ).forEach( ( item ) => {
-								options.push( { value: String( item.id ), text: item.name } );
+								const value = String( item.id );
+								options.push( { value, text: item.name } );
+								remoteValues.add( value );
 							} );
 						}
 						callback( options );
 					} )
 					.catch( () => callback() );
+			};
+
+			// Server-returned results must always be visible even when the
+			// search query doesn't match the display text (e.g. searching by
+			// email when the option shows a display name). Pre-populated
+			// options use default local scoring so they filter as expected.
+			inputVars.score = function( query ) {
+				if ( query !== lastScoredQuery ) {
+					remoteValues.clear();
+					lastScoredQuery = query;
+				}
+				const defaultScoreFn = this.getScoreFunction( query );
+				return function( item ) {
+					if ( remoteValues.has( String( item.value ) ) ) {
+						return 1;
+					}
+					return defaultScoreFn( item );
+				};
 			};
 		}
 	}
@@ -113,6 +140,10 @@ export function buildTomSelectConfig( el, options ) {
 	if ( options.load ) {
 		config.load        = options.load;
 		config.loadThrottle = options.loadThrottle ?? 521;
+	}
+
+	if ( options.score ) {
+		config.score = options.score;
 	}
 
 	if ( options.shouldLoad ) {

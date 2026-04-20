@@ -6,6 +6,7 @@
 import {
 	generateNotice,
 	fieldValueOrNull,
+	unescapeCSSValue,
 } from 'utils'; // eslint-disable-line @wordpress/dependency-group
 
 const DEFAULT_ELEMENTS = {
@@ -117,7 +118,7 @@ function generateElementStyles() {
 	return {
 		base: {
 			color: inputStyles.getPropertyValue( 'color' ),
-			fontFamily: inputStyles.getPropertyValue( 'font-family' ),
+			fontFamily: unescapeCSSValue( inputStyles.getPropertyValue( 'font-family' ) ),
 			fontSize: inputStyles.getPropertyValue( 'font-size' ),
 			fontWeight: inputStyles.getPropertyValue( 'font-weight' ),
 			fontSmoothing: inputStyles.getPropertyValue( '-webkit-font-smoothing' ),

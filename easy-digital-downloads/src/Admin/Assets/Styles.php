@@ -25,16 +25,13 @@ class Styles {
 	 */
 	public static function register() {
 		$css_dir    = edd_get_assets_url( 'css/admin' );
-		$vendor_dir = edd_get_assets_url( 'vendor/css' );
 		$css_suffix = is_rtl() ? '-rtl.min.css' : '.min.css';
 		$version    = edd_admin_get_script_version();
 		$deps       = array( 'edd-admin' );
 
-		// Register vendor styles from assets/vendor/css.
 		// jquery-chosen: registered as a no-op for backward compatibility with extensions that enqueue it.
 		// Tom Select styles are handled entirely by edd-admin-chosen.
 		wp_register_style( 'jquery-chosen', false, array(), $version );
-		wp_register_style( 'jquery-ui-css', $vendor_dir . 'jquery-ui-fresh' . $css_suffix, array(), $version );
 
 		// Register compiled styles from assets/build/css.
 		wp_register_style( 'edd-admin', $css_dir . 'admin' . $css_suffix, array( 'forms' ), $version );

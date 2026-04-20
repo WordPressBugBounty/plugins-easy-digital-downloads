@@ -25,6 +25,7 @@
 @use "customers/style" as customers;
 @use "tools/style" as tools;
 @use "modals/style" as modals;
+@use "notes/style" as notes;
 
 
 /**
@@ -614,91 +615,6 @@ table.edd-order-overview-summary--refund {
 
 .edd-order-resend-email-chooser p {
 	margin: 4px 0;
-}
-
-/* Note Styles
--------------------------------------------------------------- */
-
-.edd-notes .edd-note {
-	padding: 10px;
-	background-color: #ffffee;
-	border: 1px solid #cccc00;
-	width: 100%;
-	position: relative;
-	margin-bottom: 10px;
-	box-sizing: border-box;
-	overflow: hidden;
-}
-
-.edd-notes .edd-note.deleting {
-	opacity: 0.5;
-}
-
-.edd-notes .edd-note__header {
-	display: flex;
-	align-items: center;
-}
-
-.edd-add-note .spinner {
-	float: none;
-	display: inline-block;
-	margin: 0;
-}
-
-.edd-notes .edd-note time {
-	font-size: 11px;
-	color: #aaa;
-}
-
-.edd-notes .edd-note .edd-note-author {
-	margin-right: 5px;
-}
-
-.edd-notes .edd-note .edd-delete-note {
-	color: #a00;
-	font-weight: bold;
-	text-decoration: none;
-	margin-left: auto;
-}
-
-.edd-notes .edd-note .edd-delete-note:hover {
-	color: #888;
-}
-
-.edd-notes .edd-note p:last-child {
-	margin-bottom: 0;
-}
-
-.edd-notes .edd-no-notes {
-	margin: 4px 0 10px 0;
-}
-
-textarea[name="edd-note"] {
-	width: 100%;
-	min-height: 70px;
-	margin-top: 0;
-}
-
-.edd-note-pagination {
-	float: right;
-	margin: -35px 5px 15px 5px;
-}
-
-.edd-note-pagination a,
-.edd-note-pagination span.page-numbers {
-	padding: 5px 8px;
-	margin: 2px;
-	text-decoration: none;
-}
-
-.edd-note-pagination a {
-	border: 1px solid #e5e5e5;
-	background: #fcfcfc;
-}
-
-.edd-note-pagination a:last-child,
-.edd-note-pagination span.page-numbers:last-child {
-	margin-right: 0;
 }
 
 /* List Tables
@@ -1561,70 +1477,6 @@ h3 + .notice-wrap .notice {
 	overflow: visible;
 }
 
-.edd_user_search_wrap {
-	position: relative;
-	overflow: visible;
-}
-
-.edd_user_search_wrap .spinner {
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	right: 4px;
-	top: -2px;
-}
-
-.edd_user_search_wrap.loading .spinner {
-	visibility: visible;
-}
-
-.edd_user_search_results {
-	position: absolute;
-	left: 0;
-	top: 20px;
-}
-
-.edd_user_search_results a.edd-ajax-user-cancel {
-	position: absolute;
-	right: 6px;
-	top: 2px;
-}
-
-.edd_user_search_results ul {
-	background: #fafafa;
-	border: 1px solid #dfdfdf;
-	overflow-y: scroll;
-	padding: 0;
-	margin: 0;
-	height: 150px;
-	width: 185px;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-}
-
-.edd_user_search_results li {
-	margin: 0;
-}
-
-.edd_user_search_results li a {
-	display: block;
-	text-decoration: none;
-	padding: 6px 10px;
-}
-
-.edd_user_search_results li a:hover {
-	background: #f5f5f5;
-}
-
-.edd_user_search_results li.no-users {
-	text-align: center;
-	vertical-align: middle;
-	display: block;
-	line-height: 150px;
-	color: #bbb;
-	text-transform: uppercase;
-	font-size: 11px;
-}
-
 @media screen and (max-width: 1100px) {
 
 	.edd-mix-chart {
@@ -1678,31 +1530,6 @@ h3 + .notice-wrap .notice {
 	.edd-sections-wrap {
 		border: none;
 	}
-}
-
-#edd-item-stats-wrapper {
-	margin: 0 auto;
-	text-align: center;
-}
-
-#edd-item-stats-wrapper ul {
-	display: flex;
-	margin: 0;
-}
-
-#edd-item-stats-wrapper li {
-	font-size: 14px;
-	margin-bottom: 0;
-	width: 50%;
-}
-
-#edd-item-stats-wrapper a {
-	text-decoration: none;
-}
-
-#edd-item-stats-wrapper .dashicons {
-	color: #888;
-	margin-top: -2px;
 }
 
 #edd-item-tables-wrapper table {
