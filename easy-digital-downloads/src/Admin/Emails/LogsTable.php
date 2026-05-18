@@ -162,7 +162,11 @@ class LogsTable extends \EDD_Base_Log_List_Table {
 	 * @return array
 	 */
 	protected function get_query_args( $paginate = true ) {
-		return array( 'search' => $this->get_search() );
+		$query_args = array_filter( array( 'search' => $this->get_search() ) );
+
+		return ( true === $paginate )
+			? $this->parse_pagination_args( $query_args )
+			: $query_args;
 	}
 
 	/**

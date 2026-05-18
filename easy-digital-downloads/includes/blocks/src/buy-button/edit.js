@@ -1,9 +1,9 @@
 import { sprintf, __ } from '@wordpress/i18n';
-import { Disabled, PanelBody, SelectControl, Placeholder, ToggleControl } from '@wordpress/components';
+import { Disabled, PanelBody, Placeholder, ToggleControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import './editor.scss';
-import { DownloadOptions } from '../utilities/downloads';
+import { DownloadCombobox } from '../utilities/downloads';
 import { DiscountCombobox } from '../utilities/discounts';
 import { newDownload } from '../utilities/download-new';
 
@@ -31,22 +31,16 @@ export default function Edit ( { attributes, setAttributes } ) {
 				/* translators: %s: Download label singular */
 				label={ sprintf( __( 'Select a %s:', 'easy-digital-downloads' ), EDDBlocks.download_label_singular ) }
 			>
-				<SelectControl
-					/* translators: %s: Download label plural */
-					label={ sprintf( __( 'Published %s', 'easy-digital-downloads' ), EDDBlocks.download_label_plural ) }
-					options={DownloadOptions( true )}
-					onChange={toggleAttribute( 'download_id' )}
+				<DownloadCombobox
+					value={ attributes.download_id ?? '' }
+					onChange={ toggleAttribute( 'download_id' ) }
 				/>
 			</Placeholder>
 		</div>
 	}
 
-	let currentPostID = false;
 	if ( !attributes.download_id && 'download' === postType ) {
-		currentPostID = wp.data.select( 'core/editor' ).getCurrentPostId();
-		attributes.download_id = currentPostID;
-	} else if ( !postType ) {
-		currentPostID = 'template';
+		attributes.download_id = wp.data.select( 'core/editor' ).getCurrentPostId();
 	}
 
 	return (
@@ -55,12 +49,9 @@ export default function Edit ( { attributes, setAttributes } ) {
 				<PanelBody
 					title={__( 'Settings', 'easy-digital-downloads' )}
 				>
-					<SelectControl
-						/* translators: %s: Download label singular */
-						label={sprintf( __( 'Select a %s', 'easy-digital-downloads' ), EDDBlocks.download_label_singular )}
-						value={attributes.download_id}
-						options={DownloadOptions( false, currentPostID )}
-						onChange={toggleAttribute( 'download_id' )}
+					<DownloadCombobox
+						value={ attributes.download_id ? String( attributes.download_id ) : '' }
+						onChange={ toggleAttribute( 'download_id' ) }
 					/>
 					<ToggleControl
 						label={__( 'Show Price', 'easy-digital-downloads' )}

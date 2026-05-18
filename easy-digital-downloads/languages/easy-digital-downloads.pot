@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Easy Digital Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads 3.6.7\n"
+"Project-Id-Version: Easy Digital Downloads 3.6.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-digital-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-17T01:58:47+00:00\n"
+"POT-Creation-Date: 2026-05-14T18:16:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
@@ -5889,7 +5889,7 @@ msgstr ""
 #: src/Admin/Promos/Notices/EmptyCartBehavior.php:115
 #: src/Admin/Promos/Notices/Lite.php:42
 #: src/Admin/Promos/Notices/VATHandling.php:113
-#: src/Admin/Settings/Tabs/Gateways.php:421
+#: src/Admin/Settings/Tabs/Gateways.php:423
 #: src/Lite/Admin/Menu.php:36
 #: src/Lite/Admin/Menu.php:37
 #: src/Lite/Admin/Promos/Notices/FeaturedDownloads.php:88
@@ -5903,7 +5903,7 @@ msgid "Development Domain %s"
 msgstr ""
 
 #: includes/admin/admin-deprecated-functions.php:30
-#: src/Admin/Settings/Tabs/Gateways.php:148
+#: src/Admin/Settings/Tabs/Gateways.php:150
 msgid "Banned Emails"
 msgstr ""
 
@@ -6034,6 +6034,7 @@ msgstr ""
 #: src/Admin/Upgrades/v3/Base.php:117
 #: src/Emails/Triggers.php:63
 #: src/Extensions/Updater.php:514
+#: src/Gateways/Square/Connection.php:64
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:293
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:302
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:312
@@ -6160,7 +6161,7 @@ msgid "Price ID: %s"
 msgstr ""
 
 #: includes/admin/admin-deprecated-functions.php:1555
-#: src/Admin/Assets/Localization.php:99
+#: src/Admin/Assets/Localization.php:96
 msgid "Show advanced settings"
 msgstr ""
 
@@ -6172,7 +6173,7 @@ msgstr ""
 #: includes/blocks/views/checkout/cart/cart-fees.php:15
 #: includes/blocks/views/checkout/cart/cart-item.php:61
 #: includes/blocks/views/forms/profile-editor.php:71
-#: src/Admin/Assets/Localization.php:94
+#: src/Admin/Assets/Localization.php:91
 #: src/Admin/Downloads/Editor/VariablePrices.php:350
 #: src/Cart/Preview/templates/dialog.php:182
 #: templates/checkout_cart.php:57
@@ -6810,7 +6811,7 @@ msgstr ""
 #: src/Admin/Exports/Exporters/TaxedOrders.php:71
 #: src/Forms/Checkout/Registry.php:40
 #: src/Forms/User/Country.php:42
-#: src/Pro/Admin/Exports/Exporters/EUVAT.php:97
+#: src/Pro/Admin/Exports/Exporters/EUVAT.php:114
 #: src/Pro/Admin/Settings/VAT.php:172
 #: templates/shortcode-profile-editor.php:177
 #: includes/blocks/build/profile-editor/index.js:1
@@ -6931,7 +6932,7 @@ msgstr ""
 #: includes/class-edd-cli.php:97
 #: includes/class-edd-cli.php:158
 #: includes/gateways/paypal-standard.php:94
-#: src/Admin/Settings/Tabs/Gateways.php:126
+#: src/Admin/Settings/Tabs/Gateways.php:128
 #: src/Pro/Admin/Settings/Handler.php:66
 msgid "Disabled"
 msgstr ""
@@ -7306,7 +7307,7 @@ msgstr ""
 
 #. translators: %s: plural downloads label
 #: includes/admin/customers/customers.php:863
-#: includes/blocks/build/buy-button/index.js:6
+#: includes/blocks/build/buy-button/index.js:4
 #: includes/blocks/build/downloads/index.js:2
 #: includes/blocks/src/utilities/download-new.js:14
 #, php-format,js-format
@@ -7927,7 +7928,7 @@ msgid "Default (%s)"
 msgstr ""
 
 #: includes/admin/downloads/metabox.php:577
-#: src/Admin/Settings/Tabs/Gateways.php:266
+#: src/Admin/Settings/Tabs/Gateways.php:268
 msgid "Refund Window"
 msgstr ""
 
@@ -8040,8 +8041,8 @@ msgstr ""
 #: includes/shortcodes.php:50
 #: includes/template-functions.php:95
 #: src/Admin/Settings/Tabs/Misc.php:279
-#: includes/blocks/build/buy-button/index.js:10
-#: includes/blocks/src/buy-button/edit.js:72
+#: includes/blocks/build/buy-button/index.js:6
+#: includes/blocks/src/buy-button/edit.js:63
 msgid "Buy Now"
 msgstr ""
 
@@ -8362,6 +8363,8 @@ msgstr ""
 #: includes/admin/payments/class-payments-table.php:357
 #: includes/admin/payments/contextual-help.php:105
 #: includes/admin/reporting/class-base-logs-list-table.php:578
+#: src/Admin/Assets/Localization.php:82
+#: src/Admin/Assets/Localization.php:83
 #: src/Admin/Emails/ListTable.php:286
 #: src/Pro/CartRecovery/Admin/Tables/Carts.php:810
 #: src/Pro/CartRecovery/Admin/Tables/Logs.php:621
@@ -8830,7 +8833,7 @@ msgstr ""
 #: includes/emails/tags-inserter.php:168
 #: includes/emails/tags-inserter.php:170
 #: includes/gateways/stripe/includes/utils/modal.php:69
-#: src/Admin/Assets/Localization.php:111
+#: src/Admin/Assets/Localization.php:108
 #: src/Admin/Emails/Styles.php:149
 #: src/Admin/Emails/Styles.php:151
 #: src/Admin/Pointers.php:42
@@ -9137,17 +9140,17 @@ msgstr ""
 #: src/Admin/Menu/Pages.php:83
 #: src/Admin/Tools/LogSettings.php:296
 #: src/Pro/CartRecovery/Admin/Screen.php:44
-#: includes/blocks/build/buy-button/index.js:9
+#: includes/blocks/build/buy-button/index.js:6
 #: includes/blocks/build/cart/index.js:1
-#: includes/blocks/build/checkout/index.js:6
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/build/confirmation/index.js:1
 #: includes/blocks/build/login/index.js:1
 #: includes/blocks/build/pro/currency-selector/index.js:1
 #: includes/blocks/build/receipt/index.js:1
 #: includes/blocks/build/register/index.js:1
-#: includes/blocks/src/buy-button/edit.js:56
+#: includes/blocks/src/buy-button/edit.js:50
 #: includes/blocks/src/cart/edit.js:27
-#: includes/blocks/src/checkout/edit.js:49
+#: includes/blocks/src/checkout/edit.js:46
 #: includes/blocks/src/confirmation/edit.js:26
 #: includes/blocks/src/login/edit.js:23
 #: includes/blocks/src/pro/currency-selector/edit.js:23
@@ -9385,7 +9388,7 @@ msgstr ""
 #: src/Admin/Exports/Exporters/TaxedOrders.php:84
 #: src/Admin/Settings/Tabs/General.php:178
 #: src/Admin/Settings/Tabs/General.php:186
-#: src/Pro/Admin/Exports/Exporters/EUVAT.php:98
+#: src/Pro/Admin/Exports/Exporters/EUVAT.php:115
 #: src/Pro/CartRecovery/Admin/Carts/Modal.php:173
 #: src/Pro/CartRecovery/Admin/Carts/Modal.php:522
 msgid "Currency"
@@ -9414,8 +9417,8 @@ msgstr ""
 #: src/Pro/CartRecovery/Admin/Carts/Timeline.php:339
 #: src/Pro/CartRecovery/Admin/Privacy.php:266
 #: src/Pro/CartRecovery/Emails/Editor.php:95
-#: includes/blocks/build/buy-button/index.js:5
-#: includes/blocks/src/utilities/discounts.js:59
+#: includes/blocks/build/buy-button/index.js:3
+#: includes/blocks/src/utilities/discounts.js:16
 msgid "Discount Code"
 msgstr ""
 
@@ -9666,8 +9669,8 @@ msgstr ""
 #: includes/admin/reporting/reports.php:404
 #: includes/admin/settings/register-settings.php:475
 #: includes/orders/functions/types.php:102
-#: src/Admin/Settings/Tabs/Gateways.php:250
-#: src/Admin/Settings/Tabs/Gateways.php:253
+#: src/Admin/Settings/Tabs/Gateways.php:252
+#: src/Admin/Settings/Tabs/Gateways.php:255
 #: src/Reports/Endpoints/Tiles/GatewayRefunds.php:42
 msgid "Refunds"
 msgstr ""
@@ -10058,7 +10061,7 @@ msgstr ""
 
 #: includes/admin/settings/register-settings.php:552
 #: includes/class-edd-discount.php:691
-#: src/Admin/Settings/Tabs/Gateways.php:497
+#: src/Admin/Settings/Tabs/Gateways.php:499
 #: src/Admin/Settings/Tabs/Misc.php:351
 #: src/Cart/Preview/Component.php:84
 #: includes/blocks/build/downloads/index.js:1
@@ -10103,7 +10106,7 @@ msgid "The callback function used for the %s setting is missing."
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:1457
-#: src/Admin/Assets/Localization.php:125
+#: src/Admin/Assets/Localization.php:122
 msgid "Enter a region"
 msgstr ""
 
@@ -10220,7 +10223,7 @@ msgstr ""
 #: includes/admin/views/tmpl-tax-rates-table-dialog.php:64
 #: includes/gateways/stripe/includes/template-functions.php:682
 #: includes/gateways/stripe/includes/template-functions.php:727
-#: src/Admin/Assets/Localization.php:109
+#: src/Admin/Assets/Localization.php:106
 #: src/Admin/Emails/Reset.php:52
 #: src/Admin/Promos/Notices/LogPruningConfirmModal.php:177
 #: src/Admin/Promos/Notices/SquareWebhooksModal.php:115
@@ -11640,7 +11643,7 @@ msgstr ""
 #: includes/gateways/stripe/includes/compat.php:126
 #: includes/process-purchase.php:30
 #: src/Admin/Settings/EmptyCartBehavior.php:135
-#: src/Admin/Settings/Tabs/Gateways.php:241
+#: src/Admin/Settings/Tabs/Gateways.php:243
 #: src/Cart/Preview/templates/dialog.php:46
 #: src/Gateways/Square/Checkout/Form.php:138
 msgid "Your cart is empty."
@@ -14459,6 +14462,7 @@ msgid "There was an error processing the connection to PayPal. Please attempt to
 msgstr ""
 
 #: includes/gateways/paypal/admin/connect.php:832
+#: src/Gateways/Square/Connection.php:67
 msgid "Return to settings"
 msgstr ""
 
@@ -17270,113 +17274,98 @@ msgstr ""
 msgid "Are you sure you want to delete this %s?"
 msgstr ""
 
-#. translators: %s: Downloads plural label
-#: src/Admin/Assets/Localization.php:82
-#, php-format
-msgid "Type to search %s"
+#: src/Admin/Assets/Localization.php:81
+msgid "Type to search"
 msgstr ""
 
-#. translators: %s: Download singular label
 #: src/Admin/Assets/Localization.php:84
-#: src/HTML/ProductSelect.php:93
-#, php-format
-msgid "Choose a %s"
-msgstr ""
-
-#. translators: %s: Downloads plural label
-#: src/Admin/Assets/Localization.php:86
-#, php-format
-msgid "Choose one or more %s"
-msgstr ""
-
-#: src/Admin/Assets/Localization.php:87
 msgid "You must have at least one price"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:88
+#: src/Admin/Assets/Localization.php:85
 msgid "You must have at least one field"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:89
+#: src/Admin/Assets/Localization.php:86
 msgid "Payments must contain at least one item"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:90
+#: src/Admin/Assets/Localization.php:87
 msgid "No results found."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:91
+#: src/Admin/Assets/Localization.php:88
 msgid "Item price must be numeric"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:92
+#: src/Admin/Assets/Localization.php:89
 msgid "Item tax must be numeric"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:93
+#: src/Admin/Assets/Localization.php:90
 msgid "Quantity must be numeric"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:95
+#: src/Admin/Assets/Localization.php:92
 msgid "You must choose a method."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:96
+#: src/Admin/Assets/Localization.php:93
 msgid "Required fields not completed."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:97
+#: src/Admin/Assets/Localization.php:94
 msgid "Are you sure you want to reset your store? This process is <strong><em>not reversible</em></strong>. Please be sure you have a recent backup."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:98
+#: src/Admin/Assets/Localization.php:95
 msgid "We are sorry but your browser is not compatible with this kind of file upload. Please upgrade your browser."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:100
+#: src/Admin/Assets/Localization.php:97
 msgid "Hide advanced settings"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:101
+#: src/Admin/Assets/Localization.php:98
 msgid "There are no downloads attached to this payment"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:102
+#: src/Admin/Assets/Localization.php:99
 msgid "Please wait &hellip;"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:103
+#: src/Admin/Assets/Localization.php:100
 msgid "You must save your changes to send the test email."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:104
+#: src/Admin/Assets/Localization.php:101
 msgid "Either Letters or Numbers should be selected."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:105
+#: src/Admin/Assets/Localization.php:102
 msgid "Deleting a price ID with existing orders can cause issues with your store. Are you sure you want to delete this?"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:108
+#: src/Admin/Assets/Localization.php:105
 msgid "Confirm"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:110
+#: src/Admin/Assets/Localization.php:107
 msgid "Copied"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:117
+#: src/Admin/Assets/Localization.php:114
 msgid "The edd_use_35_media_ui filter is no longer supported."
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:126
+#: src/Admin/Assets/Localization.php:123
 #: src/Admin/Settings/Tabs/General.php:112
 #: src/HTML/RegionSelect.php:50
 #: src/HTML/RegionSelect.php:55
 msgid "Select a region"
 msgstr ""
 
-#: src/Admin/Assets/Localization.php:129
+#: src/Admin/Assets/Localization.php:126
 #: src/Users/LoginLink/Assets.php:114
 msgid "Something went wrong. Please try again."
 msgstr ""
@@ -17880,7 +17869,7 @@ msgid "Invalid discount."
 msgstr ""
 
 #: src/Admin/Discounts/Manager.php:145
-#: src/Gateways/Square/Connection.php:301
+#: src/Gateways/Square/Connection.php:326
 msgid "Invalid nonce"
 msgstr ""
 
@@ -18067,24 +18056,24 @@ msgstr ""
 msgid "Bounced"
 msgstr ""
 
-#: src/Admin/Emails/LogsTable.php:179
+#: src/Admin/Emails/LogsTable.php:183
 msgid "Search Logs"
 msgstr ""
 
 #. translators: %s: Order number
-#: src/Admin/Emails/LogsTable.php:221
+#: src/Admin/Emails/LogsTable.php:225
 #, php-format
 msgid "Order %s"
 msgstr ""
 
 #. translators: %s: User display name
-#: src/Admin/Emails/LogsTable.php:241
+#: src/Admin/Emails/LogsTable.php:245
 #, php-format
 msgid "User %s"
 msgstr ""
 
 #. translators: %s: Refund number
-#: src/Admin/Emails/LogsTable.php:262
+#: src/Admin/Emails/LogsTable.php:266
 #, php-format
 msgid "Refund %s"
 msgstr ""
@@ -18944,8 +18933,8 @@ msgid "Get the #1 conversion optimization plugin to convert your growing website
 msgstr ""
 
 #: src/Admin/Onboarding/Steps/Tools.php:266
-#: src/Telemetry/Tracking.php:143
-#: src/Telemetry/Tracking.php:270
+#: src/Telemetry/Tracking.php:144
+#: src/Telemetry/Tracking.php:271
 msgid "Join the EDD Community"
 msgstr ""
 
@@ -20376,313 +20365,323 @@ msgstr ""
 msgid "Allow customers to receive a one-time login link to log in to their account during checkout."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:112
+#: src/Admin/Settings/Tabs/Gateways.php:105
+#: src/Emails/Templates/LoginLink.php:72
+#: src/Emails/Templates/LoginLink.php:141
+msgid "One-Time Login Link"
+msgstr ""
+
+#: src/Admin/Settings/Tabs/Gateways.php:106
+msgid "For security, login links are not sent to users with administrative or store management roles."
+msgstr ""
+
+#: src/Admin/Settings/Tabs/Gateways.php:114
 msgid "Checkout Address Fields"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:122
+#: src/Admin/Settings/Tabs/Gateways.php:124
 msgid "Geolocation Detection"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:132
-#: src/Admin/Settings/Tabs/Gateways.php:135
+#: src/Admin/Settings/Tabs/Gateways.php:134
+#: src/Admin/Settings/Tabs/Gateways.php:137
 msgid "Required Fields Notice"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:133
+#: src/Admin/Settings/Tabs/Gateways.php:135
 msgid "Display a notice on forms explaining that fields marked with an asterisk (*) are required."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:136
+#: src/Admin/Settings/Tabs/Gateways.php:138
 msgid "When enabled, a notice will appear at the top of checkout, registration, login, and profile editor forms indicating that asterisk-marked fields are required. This improves accessibility for WCAG 3.3.2 compliance."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:140
-#: src/Admin/Settings/Tabs/Gateways.php:143
+#: src/Admin/Settings/Tabs/Gateways.php:142
+#: src/Admin/Settings/Tabs/Gateways.php:145
 msgid "Moderation"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:144
+#: src/Admin/Settings/Tabs/Gateways.php:146
 msgid "It is sometimes necessary to temporarily prevent certain potential customers from checking out. Use these settings to control who can make purchases."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:149
+#: src/Admin/Settings/Tabs/Gateways.php:151
 msgid "Emails placed in the box above will not be allowed to make purchases."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:149
+#: src/Admin/Settings/Tabs/Gateways.php:151
 msgid "One per line, enter: email addresses, domains (<code>@example.com</code>), or TLDs (<code>.gov</code>)."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:151
+#: src/Admin/Settings/Tabs/Gateways.php:153
 msgid "@example.com"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:157
-#: src/Admin/Settings/Tabs/Gateways.php:160
+#: src/Admin/Settings/Tabs/Gateways.php:159
+#: src/Admin/Settings/Tabs/Gateways.php:162
 msgid "Redirect to Checkout"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:158
+#: src/Admin/Settings/Tabs/Gateways.php:160
 msgid "Immediately redirect to checkout after adding an item to the cart?"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:161
+#: src/Admin/Settings/Tabs/Gateways.php:163
 msgid "When enabled, once an item has been added to the cart, the customer will be redirected directly to your checkout page. This is useful for stores that sell single items."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:165
+#: src/Admin/Settings/Tabs/Gateways.php:167
 msgid "Cart Preview"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:167
+#: src/Admin/Settings/Tabs/Gateways.php:169
 #, php-format
 msgid "Show a sliding cart drawer when customers add products to their cart. %1$sLearn More%2$s"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:178
+#: src/Admin/Settings/Tabs/Gateways.php:180
 msgid "The cart preview will not open automatically when the store is set up to immediately redirect to checkout."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:185
+#: src/Admin/Settings/Tabs/Gateways.php:187
 msgid "Cart Preview Button"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:192
+#: src/Admin/Settings/Tabs/Gateways.php:194
 msgid "Cart Recommendations"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:194
+#: src/Admin/Settings/Tabs/Gateways.php:196
 #, php-format
 msgid "Show recommended products in the cart preview. %1$sLearn More%2$s"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:212
+#: src/Admin/Settings/Tabs/Gateways.php:214
 msgid "Enable Cart Saving"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:213
+#: src/Admin/Settings/Tabs/Gateways.php:215
 msgid "Allow users to temporarily save their cart at checkout."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:215
+#: src/Admin/Settings/Tabs/Gateways.php:217
 msgid "Cart Saving"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:216
+#: src/Admin/Settings/Tabs/Gateways.php:218
 msgid "Cart saving allows shoppers to create a temporary link to their current shopping cart so they can come back to it later, or share it with someone."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:220
+#: src/Admin/Settings/Tabs/Gateways.php:222
 #: src/Admin/Settings/Tabs/Misc.php:90
 msgid "Cart Item Quantities"
 msgstr ""
 
 #. translators: %s: Downloads plural label
-#: src/Admin/Settings/Tabs/Gateways.php:222
+#: src/Admin/Settings/Tabs/Gateways.php:224
 #, php-format
 msgid "Allow quantities to be adjusted when adding %s to the cart, and while viewing the checkout cart."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:228
-#: src/Admin/Settings/Tabs/Gateways.php:231
+#: src/Admin/Settings/Tabs/Gateways.php:230
+#: src/Admin/Settings/Tabs/Gateways.php:233
 msgid "Empty Cart Settings"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:232
+#: src/Admin/Settings/Tabs/Gateways.php:234
 msgid "Control the behavior of the checkout page when the cart is empty."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:238
+#: src/Admin/Settings/Tabs/Gateways.php:240
 msgid "Empty Cart Preview Message"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:239
+#: src/Admin/Settings/Tabs/Gateways.php:241
 msgid "The message to display in the cart preview when the cart is empty. This setting does not support shortcodes or complex formatting."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:254
+#: src/Admin/Settings/Tabs/Gateways.php:256
 msgid "As a shop owner, sometimes refunds are necessary. Use these settings to decide how refunds will work in your shop."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:258
+#: src/Admin/Settings/Tabs/Gateways.php:260
 msgid "Default Status"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:259
+#: src/Admin/Settings/Tabs/Gateways.php:261
 msgid "This will be the store default. It can be changed at a per-product level."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:267
+#: src/Admin/Settings/Tabs/Gateways.php:269
 msgid "Number of days (after a sale) when refunds can be processed.<br>Default is <code>30</code> days. Set to <code>0</code> for infinity. It can be changed at a per-product level."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:290
+#: src/Admin/Settings/Tabs/Gateways.php:292
 msgid "Enable Test Mode"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:291
+#: src/Admin/Settings/Tabs/Gateways.php:293
 msgid "What is Test Mode?"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:292
+#: src/Admin/Settings/Tabs/Gateways.php:294
 msgid "While test mode is enabled, no live transactions are processed.<br>Use test mode in conjunction with the sandbox/test account for the payment gateways to test your checkout process."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:306
+#: src/Admin/Settings/Tabs/Gateways.php:308
 msgid "Forced Test Mode"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:307
+#: src/Admin/Settings/Tabs/Gateways.php:309
 msgid "You currently cannot modify the Test Mode setting, as the 'EDD_TEST_MODE' constant has been defined as 'true' or the edd_is_test_mode filter is being forced to 'true'."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:323
+#: src/Admin/Settings/Tabs/Gateways.php:325
 msgid "Enable SKU Entry"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:324
+#: src/Admin/Settings/Tabs/Gateways.php:326
 msgid "SKUs will be shown on purchase receipt and exported purchase histories."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:329
+#: src/Admin/Settings/Tabs/Gateways.php:331
 msgid "Enable Sequential Numbering"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:330
+#: src/Admin/Settings/Tabs/Gateways.php:332
 msgid "Sequential Order Numbers"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:331
+#: src/Admin/Settings/Tabs/Gateways.php:333
 msgid "This setting will not impact previous orders. Future orders will be assigned a sequential number."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:337
+#: src/Admin/Settings/Tabs/Gateways.php:339
 msgid "Sequential Number Prefix"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:338
+#: src/Admin/Settings/Tabs/Gateways.php:340
 msgid "A prefix to prepend to all sequential order numbers."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:343
+#: src/Admin/Settings/Tabs/Gateways.php:345
 msgid "Sequential Number Postfix"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:344
+#: src/Admin/Settings/Tabs/Gateways.php:346
 msgid "A postfix to append to all sequential order numbers."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:352
+#: src/Admin/Settings/Tabs/Gateways.php:354
 msgid "Advanced Order Numbers"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:371
+#: src/Admin/Settings/Tabs/Gateways.php:373
 msgid "Sequential Starting Number"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:372
+#: src/Admin/Settings/Tabs/Gateways.php:374
 msgid "The number at which the sequence should begin."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:380
+#: src/Admin/Settings/Tabs/Gateways.php:382
 msgid "Once sequential order numbering is active, the starting number cannot be updated to an order number that's smaller than the highest order number. Update this with care."
 msgstr ""
 
 #. translators: %s: next order number, wrapped in code tags
-#: src/Admin/Settings/Tabs/Gateways.php:384
+#: src/Admin/Settings/Tabs/Gateways.php:386
 #, php-format
 msgid "The next order number will be %s."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:399
+#: src/Admin/Settings/Tabs/Gateways.php:401
 msgid "Gain access to even more control over your order numbering!"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:401
+#: src/Admin/Settings/Tabs/Gateways.php:403
 msgid "Track free orders in a separate sequential series"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:402
+#: src/Admin/Settings/Tabs/Gateways.php:404
 msgid "Assign temporary numbers to incomplete orders"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:403
+#: src/Admin/Settings/Tabs/Gateways.php:405
 msgid "Abandoned orders do not interrupt the complete order series"
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:425
+#: src/Admin/Settings/Tabs/Gateways.php:427
 #, php-format
 msgid "Access %1$sAdvanced Sequential Order Numbers%2$s today."
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:458
+#: src/Admin/Settings/Tabs/Gateways.php:460
 #, php-format
 msgid "GeoLocation Detection is only available in Easy Digital Downloads Pro. %1$sVerify your pass to get access to pro features.%2$s"
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:474
+#: src/Admin/Settings/Tabs/Gateways.php:476
 #, php-format
 msgid "Increase conversions by auto-filling address information for customers during checkout. To enable GeoLocation Detection, %1$sUpgrade to Pro%2$s."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:489
+#: src/Admin/Settings/Tabs/Gateways.php:491
 msgid "Show Register / Login Form"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:490
+#: src/Admin/Settings/Tabs/Gateways.php:492
 msgid "Display the registration and login forms on the checkout page for non-logged-in users."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:494
+#: src/Admin/Settings/Tabs/Gateways.php:496
 msgid "Registration and Login Forms"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:495
+#: src/Admin/Settings/Tabs/Gateways.php:497
 msgid "Registration Form Only"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:496
+#: src/Admin/Settings/Tabs/Gateways.php:498
 msgid "Login Form Only"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:516
+#: src/Admin/Settings/Tabs/Gateways.php:518
 msgid "Select how you would like to display the billing address fields on the checkout form."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:518
+#: src/Admin/Settings/Tabs/Gateways.php:520
 msgid "<strong>Notes</strong>:"
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:520
+#: src/Admin/Settings/Tabs/Gateways.php:522
 msgid "If taxes are enabled, you must collect enough address information to handle tax collection."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:521
+#: src/Admin/Settings/Tabs/Gateways.php:523
 msgid "If \"Postal Code\" is enabled without \"Country\", postal codes cannot be validated against country-specific formats."
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:525
+#: src/Admin/Settings/Tabs/Gateways.php:527
 #, php-format
 msgid "If \"Postal Code\" is not selected, you must disable the %1$spostal code verification%2$s rule in Stripe Radar."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:530
+#: src/Admin/Settings/Tabs/Gateways.php:532
 msgid "If an order qualifies for <strong>Affirm</strong> financing, the customer will be required to enter a billing address, regardless of the address fields selected."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:606
-#: src/Admin/Settings/Tabs/Gateways.php:619
+#: src/Admin/Settings/Tabs/Gateways.php:608
+#: src/Admin/Settings/Tabs/Gateways.php:621
 msgid "Required for tax calculations."
 msgstr ""
 
 #. translators: 1: opening button tag, 2: closing button tag
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:645
+#: src/Admin/Settings/Tabs/Gateways.php:647
 #: src/Pro/Recommendations/Manager.php:106
 #, php-format
 msgid "Enable smart product recommendations in your cart preview when you %1$sUpgrade to Pro%2$s."
@@ -22477,7 +22476,7 @@ msgid "Cart Quantity"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:38
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:36
 msgid "Preview as Guest"
 msgstr ""
@@ -22496,8 +22495,8 @@ msgid "Cart Item"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:51
-#: includes/blocks/build/checkout/index.js:6
-#: includes/blocks/src/checkout/edit.js:46
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:43
 msgid "Select a product to preview the checkout form with a specific item in the cart."
 msgstr ""
 
@@ -22510,43 +22509,43 @@ msgid "Align the account information text for logged in users."
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:65
-#: includes/blocks/build/checkout/index.js:6
-#: includes/blocks/src/checkout/edit.js:51
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:48
 msgid "Layout"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:84
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:22
 msgid "Single Column"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:85
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:23
 msgid "50/50 Split"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:86
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:24
 msgid "70/30 Split"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:87
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:25
 msgid "80/20 Split"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:88
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:26
 msgid "Bottom 50/50 Split"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:89
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:27
 msgid "Bottom 70/30 Split"
 msgstr ""
@@ -23115,11 +23114,6 @@ msgstr ""
 msgid "This tag is required for this email."
 msgstr ""
 
-#: src/Emails/Templates/LoginLink.php:72
-#: src/Emails/Templates/LoginLink.php:141
-msgid "One-Time Login Link"
-msgstr ""
-
 #: src/Emails/Templates/LoginLink.php:82
 msgid "This email is sent to a user when they request a login link to sign in without a password during checkout."
 msgstr ""
@@ -23360,7 +23354,7 @@ msgid "Note: Once you have reviewed the order, ensure you take the appropriate a
 msgstr ""
 
 #: src/Emails/Templates/Traits/Actions.php:57
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:34
 msgid "Preview"
 msgstr ""
@@ -23819,7 +23813,7 @@ msgid "Connected Account:"
 msgstr ""
 
 #: src/Gateways/Square/Admin/Settings/Render.php:119
-#: src/Gateways/Square/Connection.php:229
+#: src/Gateways/Square/Connection.php:254
 msgid "Square Account"
 msgstr ""
 
@@ -24041,41 +24035,45 @@ msgid "There was an error processing your payment. Please try again. Reference: 
 msgstr ""
 
 #: src/Gateways/Square/Connection.php:53
-#: src/Gateways/Square/Connection.php:297
+#: src/Gateways/Square/Connection.php:322
 msgid "Insufficient permissions"
 msgstr ""
 
-#: src/Gateways/Square/Connection.php:122
+#: src/Gateways/Square/Connection.php:63
+msgid "There was an error processing the connection to Square. Please attempt to connect again."
+msgstr ""
+
+#: src/Gateways/Square/Connection.php:147
 msgid "Invalid token data"
 msgstr ""
 
 #. translators: %s is the name of the required field.
-#: src/Gateways/Square/Connection.php:130
+#: src/Gateways/Square/Connection.php:155
 #, php-format
 msgid "Missing required field: %s"
 msgstr ""
 
-#: src/Gateways/Square/Connection.php:137
+#: src/Gateways/Square/Connection.php:162
 msgid "Token data is too old"
 msgstr ""
 
 #. translators: 1: Business name, 2: Connection mode (live/sandbox).
-#: src/Gateways/Square/Connection.php:232
+#: src/Gateways/Square/Connection.php:257
 #, php-format
 msgid "Square Connected! Successfully connected to %1$s in %2$s mode."
 msgstr ""
 
 #. translators: 1: Error message.
-#: src/Gateways/Square/Connection.php:273
+#: src/Gateways/Square/Connection.php:298
 #, php-format
 msgid "Square Connection Failed: %s"
 msgstr ""
 
-#: src/Gateways/Square/Connection.php:326
+#: src/Gateways/Square/Connection.php:351
 msgid "Successfully disconnected from Square"
 msgstr ""
 
-#: src/Gateways/Square/Connection.php:351
+#: src/Gateways/Square/Connection.php:376
 msgid "Invalid connection mode"
 msgstr ""
 
@@ -24849,6 +24847,10 @@ msgstr ""
 msgid "Bancontact"
 msgstr ""
 
+#: src/Gateways/Stripe/PaymentMethods/Blik.php:83
+msgid "BLIK"
+msgstr ""
+
 #: src/Gateways/Stripe/PaymentMethods/CartesBancaires.php:50
 msgid "Cartes Bancaires"
 msgstr ""
@@ -24995,6 +24997,12 @@ msgstr ""
 
 #: src/HTML/FromTo.php:45
 msgid "Set end date"
+msgstr ""
+
+#. translators: %s: Download singular label
+#: src/HTML/ProductSelect.php:93
+#, php-format
+msgid "Choose a %s"
 msgstr ""
 
 #. translators: %s: Download plural label
@@ -25443,15 +25451,15 @@ msgstr ""
 msgid "(Copy)"
 msgstr ""
 
-#: src/Pro/Admin/Exports/Exporters/EUVAT.php:99
+#: src/Pro/Admin/Exports/Exporters/EUVAT.php:116
 msgid "Standard VAT Rate"
 msgstr ""
 
-#: src/Pro/Admin/Exports/Exporters/EUVAT.php:100
+#: src/Pro/Admin/Exports/Exporters/EUVAT.php:117
 msgid "Value of Items (Excluding VAT)"
 msgstr ""
 
-#: src/Pro/Admin/Exports/Exporters/EUVAT.php:101
+#: src/Pro/Admin/Exports/Exporters/EUVAT.php:118
 #: src/Pro/Admin/Orders/Taxes.php:53
 msgid "VAT"
 msgstr ""
@@ -28333,24 +28341,24 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
-#: src/Telemetry/Tracking.php:144
+#: src/Telemetry/Tracking.php:145
 msgid "Yes, I want to help!"
 msgstr ""
 
-#: src/Telemetry/Tracking.php:275
+#: src/Telemetry/Tracking.php:276
 msgid "Allow"
 msgstr ""
 
-#: src/Telemetry/Tracking.php:277
+#: src/Telemetry/Tracking.php:278
 msgid "Do not allow"
 msgstr ""
 
-#: src/Telemetry/Tracking.php:290
+#: src/Telemetry/Tracking.php:291
 msgid "Help us provide a better experience and faster fixes by sharing some anonymous data about how you use Easy Digital Downloads."
 msgstr ""
 
 #. translators: %1$s Link to tracking information, do not translate. %2$s clsoing link tag, do not translate
-#: src/Telemetry/Tracking.php:294
+#: src/Telemetry/Tracking.php:295
 #, php-format
 msgid "%1$sHere is what we track.%2$s"
 msgstr ""
@@ -28664,31 +28672,35 @@ msgstr ""
 msgid "Number of items in cart"
 msgstr ""
 
+#: includes/blocks/build/buy-button/index.js:1
+#: includes/blocks/build/checkout/index.js:1
+#: includes/blocks/src/utilities/search-combobox.js:57
+msgid "Loading…"
+msgstr ""
+
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:3
-#: includes/blocks/build/buy-button/index.js:10
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/buy-button/edit.js:60
-#: includes/blocks/src/utilities/downloads.js:11
+#: includes/blocks/build/buy-button/index.js:2
+#: includes/blocks/build/checkout/index.js:2
+#: includes/blocks/src/utilities/downloads.js:33
 #, js-format
 msgid "Select a %s"
 msgstr ""
 
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:5
-#: includes/blocks/build/checkout/index.js:5
-#: includes/blocks/src/utilities/downloads.js:17
+#: includes/blocks/build/buy-button/index.js:3
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/utilities/downloads.js:35
 #, js-format
-msgid "Current %s"
+msgid "Search for a %s"
 msgstr ""
 
-#: includes/blocks/build/buy-button/index.js:5
-#: includes/blocks/src/utilities/discounts.js:60
+#: includes/blocks/build/buy-button/index.js:3
+#: includes/blocks/src/utilities/discounts.js:17
 msgid "Automatically apply this discount when the item is added to the cart."
 msgstr ""
 
 #. translators: %s: Download label plural
-#: includes/blocks/build/buy-button/index.js:5
+#: includes/blocks/build/buy-button/index.js:3
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/src/utilities/download-new.js:12
 #, js-format
@@ -28696,7 +28708,7 @@ msgid "No Published %s Found"
 msgstr ""
 
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:6
+#: includes/blocks/build/buy-button/index.js:4
 #: includes/blocks/build/downloads/index.js:2
 #: includes/blocks/src/utilities/download-new.js:23
 #, js-format
@@ -28704,7 +28716,7 @@ msgid "Create a New %s"
 msgstr ""
 
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:6
+#: includes/blocks/build/buy-button/index.js:4
 #: includes/blocks/build/downloads/index.js:2
 #: includes/blocks/src/utilities/download-new.js:26
 #, js-format
@@ -28712,7 +28724,7 @@ msgid "Create Your First %s"
 msgstr ""
 
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:7
+#: includes/blocks/build/buy-button/index.js:5
 #: includes/blocks/build/downloads/index.js:3
 #: includes/blocks/src/utilities/download-new.js:37
 #, js-format
@@ -28720,30 +28732,21 @@ msgid "View All %s"
 msgstr ""
 
 #. translators: %s: Download label singular
-#: includes/blocks/build/buy-button/index.js:8
-#: includes/blocks/build/checkout/index.js:6
+#: includes/blocks/build/buy-button/index.js:6
 #: includes/blocks/src/buy-button/edit.js:32
-#: includes/blocks/src/checkout/edit.js:43
 #, js-format
 msgid "Select a %s:"
 msgstr ""
 
-#. translators: %s: Download label plural
-#: includes/blocks/build/buy-button/index.js:9
-#: includes/blocks/src/buy-button/edit.js:36
-#, js-format
-msgid "Published %s"
-msgstr ""
-
-#: includes/blocks/build/buy-button/index.js:10
+#: includes/blocks/build/buy-button/index.js:6
 #: includes/blocks/build/downloads/index.js:3
-#: includes/blocks/src/buy-button/edit.js:66
+#: includes/blocks/src/buy-button/edit.js:57
 #: includes/blocks/src/downloads/edit.js:318
 msgid "Show Price"
 msgstr ""
 
-#: includes/blocks/build/buy-button/index.js:10
-#: includes/blocks/src/buy-button/edit.js:75
+#: includes/blocks/build/buy-button/index.js:6
+#: includes/blocks/src/buy-button/edit.js:66
 msgid "Enable Buy Now to process a download order without going through the full checkout."
 msgstr ""
 
@@ -28777,18 +28780,18 @@ msgstr ""
 msgid "Show Cart Total"
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:5
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/src/checkout/edit.js:32
 msgid "This is an example of a cart with a product in it."
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:6
-#: includes/blocks/src/checkout/edit.js:57
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:54
 msgid "Cart Thumbnail Size"
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:6
-#: includes/blocks/src/checkout/edit.js:65
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:62
 msgid "Show Discount Form"
 msgstr ""
 

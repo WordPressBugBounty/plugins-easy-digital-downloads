@@ -64,10 +64,11 @@ class Tracking {
 	/**
 	 * Setup the data that is going to be tracked.
 	 *
-	 * @access private
+	 * @since 3.1.1
+	 *
 	 * @return void
 	 */
-	private function setup_data() {
+	protected function setup_data() {
 		$data = new Data();
 
 		$this->data = $data->get();

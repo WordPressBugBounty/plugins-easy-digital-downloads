@@ -134,6 +134,22 @@ trait TempData {
 	}
 
 	/**
+	 * Deletes any existing temp file so a new export starts clean.
+	 *
+	 * Call this on step 1 to prevent stale data from an interrupted previous run
+	 * from being accumulated into the new export.
+	 *
+	 * @since 3.6.8
+	 */
+	protected function reset_temp_file(): void {
+		$this->get_temp_file();
+		if ( $this->temp_file && FileSystem::file_exists( $this->temp_file ) ) {
+			FileSystem::get_fs()->delete( $this->temp_file );
+			$this->temp_file = null;
+		}
+	}
+
+	/**
 	 * Set up the temporary file location data.
 	 *
 	 * @since 3.3.8

@@ -1842,8 +1842,8 @@ class Query extends Base {
 				return false;
 			}
 
-			// Cache
-			$this->update_item_cache( $retval );
+			// Cache — read path, do not bump last_changed.
+			$this->update_item_cache( $retval, false );
 		}
 
 		// Reduce the item
@@ -2642,17 +2642,25 @@ class Query extends Base {
 	 */
 	private function get_cache_key( $group = '' ) {
 
-		// Slice query vars
+		// Slice $query_vars by default keys.
 		$slice = wp_array_slice_assoc( $this->query_vars, array_keys( $this->query_var_defaults ) );
 
-		// Unset `fields` so it does not effect the cache key
+		// Unset "fields" so it does not affect the cache key.
 		unset( $slice['fields'] );
 
-		// Setup key & last_changed
+		// Remove unset columns (sentinel values) so identical logical queries
+		// produce identical cache keys across instances.
+		foreach ( $slice as $key => $value ) {
+			if ( $value === $this->query_var_default_value ) {
+				unset( $slice[ $key ] );
+			}
+		}
+
+		// Setup key & last_changed.
 		$key          = md5( serialize( $slice ) );
 		$last_changed = $this->get_last_changed_cache( $group );
 
-		// Concatenate and return cache key
+		// Return the concatenated cache key.
 		return "get_{$this->item_name_plural}:{$key}:{$last_changed}";
 	}
 
@@ -2761,8 +2769,8 @@ class Query extends Base {
 			$prepare = sprintf( $query, $ids );
 			$results = $this->get_db()->get_results( $prepare );
 
-			// Update item caches
-			$this->update_item_cache( $results );
+			// Update item caches — read path, do not bump last_changed.
+			$this->update_item_cache( $results, false );
 		}
 
 		// Update meta data caches
@@ -2785,7 +2793,7 @@ class Query extends Base {
 	 *
 	 * @param array $items
 	 */
-	private function update_item_cache( $items = array() ) {
+	private function update_item_cache( $items = array(), $bump_last_changed = true ) {
 
 		// Maybe query for single item
 		if ( is_numeric( $items ) ) {
@@ -2822,8 +2830,11 @@ class Query extends Base {
 			}
 		}
 
-		// Update last changed
-		$this->update_last_changed_cache();
+		// Only bump last_changed for mutations; read-path warming must not
+		// invalidate the list cache that was just stored.
+		if ( $bump_last_changed ) {
+			$this->update_last_changed_cache();
+		}
 	}
 
 	/**

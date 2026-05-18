@@ -99,11 +99,13 @@ class Gateways extends Tab {
 				),
 				'show_register_form'          => $this->get_register_form(),
 				'login_link'                  => array(
-					'id'    => 'login_link',
-					'name'  => __( 'Enable One-Time Login Link', 'easy-digital-downloads' ),
-					'check' => __( 'Allow customers to receive a one-time login link to log in to their account during checkout.', 'easy-digital-downloads' ),
-					'type'  => 'checkbox_toggle',
-					'data'  => array(
+					'id'            => 'login_link',
+					'name'          => __( 'Enable One-Time Login Link', 'easy-digital-downloads' ),
+					'check'         => __( 'Allow customers to receive a one-time login link to log in to their account during checkout.', 'easy-digital-downloads' ),
+					'tooltip_title' => __( 'One-Time Login Link', 'easy-digital-downloads' ),
+					'tooltip_desc'  => __( 'For security, login links are not sent to users with administrative or store management roles.', 'easy-digital-downloads' ),
+					'type'          => 'checkbox_toggle',
+					'data'          => array(
 						'edd-requirement' => 'login_link',
 					),
 				),

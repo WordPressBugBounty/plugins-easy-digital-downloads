@@ -272,6 +272,7 @@ class PaymentMethods {
 			'apple_pay',
 			'bacs_debit',
 			'bancontact',
+			'blik',
 			'card',
 			'cartes_bancaires',
 			'cashapp',

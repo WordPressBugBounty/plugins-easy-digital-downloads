@@ -53,6 +53,31 @@ class Connection {
 			wp_die( __( 'Insufficient permissions', 'easy-digital-downloads' ) );
 		}
 
+		// Verify the OAuth connect transient.
+		$mode            = edd_is_test_mode() ? 'test' : 'live';
+		$connect_process = get_transient( 'edd_square_connect_started_' . $mode );
+		$check           = wp_hash( get_current_user_id() . '_' . $mode . '_started', 'nonce' );
+
+		if ( empty( $connect_process ) || ! hash_equals( $connect_process, $check ) ) {
+			wp_die(
+				__( 'There was an error processing the connection to Square. Please attempt to connect again.', 'easy-digital-downloads' ),
+				__( 'Error', 'easy-digital-downloads' ),
+				array(
+					'response'  => 403,
+					'link_text' => __( 'Return to settings', 'easy-digital-downloads' ),
+					'link_url'  => edd_get_admin_url(
+						array(
+							'page'    => 'edd-settings',
+							'tab'     => 'gateways',
+							'section' => 'square',
+						)
+					),
+				)
+			);
+		}
+
+		delete_transient( 'edd_square_connect_started_' . $mode );
+
 		try {
 			// Process token data.
 			$this->process_oauth_tokens( $_GET['square_tokens'] );
@@ -367,6 +392,10 @@ class Connection {
 	public function get_authorization_url() {
 		// Map EDD test mode to proxy expected values.
 		$mode = edd_is_test_mode() ? 'test' : 'live';
+
+		// Store a transient to verify the OAuth redirect.
+		$check = wp_hash( get_current_user_id() . '_' . $mode . '_started', 'nonce' );
+		set_transient( 'edd_square_connect_started_' . $mode, $check, 5 * MINUTE_IN_SECONDS );
 
 		// Use the EDD proxy for OAuth instead of direct Square OAuth.
 		$proxy_url = 'https://connect.easydigitaldownloads.com/v2/square/connect';

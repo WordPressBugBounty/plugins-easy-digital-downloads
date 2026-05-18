@@ -502,7 +502,7 @@ function edd_process_paypal_ipn() {
 			return; // Something went wrong.
 		}
 
-		if ( wp_remote_retrieve_body( $api_response ) !== 'VERIFIED' && edd_get_option( 'disable_paypal_verification', false ) ) {
+		if ( wp_remote_retrieve_body( $api_response ) !== 'VERIFIED' ) {
 			edd_record_gateway_error(
 				__( 'IPN Error', 'easy-digital-downloads' ),
 				/* translators: %s: IPN Verification response */

@@ -10,5 +10,12 @@
 		&__fieldset {
 			justify-content: center;
 		}
+
+		// Pin the search combobox to a stable width so it doesn't reflow
+		// as the block column or fallback label changes.
+		.edd-search-combobox {
+			width: 320px;
+			max-width: 100%;
+		}
 	}
 }

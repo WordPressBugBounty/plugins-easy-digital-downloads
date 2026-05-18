@@ -78,12 +78,9 @@ class Localization {
 			'copy_download_link_text' => __( 'Copy these links to your clipboard and give them to your customer', 'easy-digital-downloads' ),
 			/* translators: %s: Download singular label */
 			'delete_payment_download' => sprintf( __( 'Are you sure you want to delete this %s?', 'easy-digital-downloads' ), edd_get_label_singular() ),
-			/* translators: %s: Downloads plural label */
-			'type_to_search'          => sprintf( __( 'Type to search %s', 'easy-digital-downloads' ), edd_get_label_plural() ),
-			/* translators: %s: Download singular label */
-			'one_option'              => sprintf( __( 'Choose a %s', 'easy-digital-downloads' ), edd_get_label_singular() ),
-			/* translators: %s: Downloads plural label */
-			'one_or_more_option'      => sprintf( __( 'Choose one or more %s', 'easy-digital-downloads' ), edd_get_label_plural() ),
+			'type_to_search'          => __( 'Type to search', 'easy-digital-downloads' ),
+			'one_option'              => __( 'Search', 'easy-digital-downloads' ),
+			'one_or_more_option'      => __( 'Search', 'easy-digital-downloads' ),
 			'one_price_min'           => __( 'You must have at least one price', 'easy-digital-downloads' ),
 			'one_field_min'           => __( 'You must have at least one field', 'easy-digital-downloads' ),
 			'one_download_min'        => __( 'Payments must contain at least one item', 'easy-digital-downloads' ),

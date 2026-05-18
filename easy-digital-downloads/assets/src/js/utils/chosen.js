@@ -155,6 +155,14 @@ export function buildTomSelectConfig( el, options ) {
 		config.wrapperClass = `ts-wrapper ${ el.className || '' }`;
 	}
 
+	// Single-select: clear the textbox when the control receives focus so that
+	// typing replaces the displayed selection text rather than appending to it.
+	if ( ! isMultiple ) {
+		config.onFocus = function() {
+			this.setTextboxValue( '' );
+		};
+	}
+
 	return config;
 }
 

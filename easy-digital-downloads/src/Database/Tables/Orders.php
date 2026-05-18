@@ -38,7 +38,7 @@ final class Orders extends Table {
 	 * @since  3.0
 	 * @var    int
 	 */
-	protected $version = 202307111;
+	protected $version = 202605080;
 
 	/**
 	 * Array of upgrade versions and methods.
@@ -57,6 +57,7 @@ final class Orders extends Table {
 		'202108041' => 202108041,
 		'202302241' => 202302241,
 		'202307111' => 202307111,
+		'202605080' => 202605080,
 	);
 
 	/**
@@ -100,7 +101,8 @@ final class Orders extends Table {
 			KEY email (email(100)),
 			KEY payment_key (payment_key(64)),
 			KEY date_created_completed (date_created,date_completed),
-			KEY currency (currency)";
+			KEY currency (currency),
+			KEY parent_type (parent, type)";
 	}
 
 	/**
@@ -326,6 +328,23 @@ final class Orders extends Table {
 					"ALTER TABLE {$this->table_name} ADD COLUMN date_actions_run datetime default NULL AFTER date_refundable"
 				)
 			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Upgrade to version 202605080
+	 * - Add a composite index on (parent, type) to support child-order lookups without full-table scans.
+	 *
+	 * @since 3.6.8
+	 *
+	 * @return boolean
+	 */
+	protected function __202605080() {
+		if ( ! $this->index_exists( 'parent_type' ) ) {
+			$success = $this->get_db()->query( "ALTER TABLE {$this->table_name} ADD INDEX parent_type (parent, type)" );
+			return $this->is_success( $success );
 		}
 
 		return true;

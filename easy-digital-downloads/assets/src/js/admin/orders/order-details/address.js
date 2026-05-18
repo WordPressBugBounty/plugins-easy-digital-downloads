@@ -143,6 +143,12 @@ jQueryReady( () => {
 			if ( data.html ) {
 				$( '.customer-address-select-wrap' ).show();
 				$( '.customer-address-select-wrap .edd-form-group__control' ).html( data.html );
+
+				const $select = $( '.customer-address-select-wrap .add-order-customer-address-select' );
+				const firstVal = $select.find( 'option' ).first().val();
+				if ( firstVal ) {
+					$select.val( firstVal ).trigger( 'change' );
+				}
 			} else {
 				$( '.customer-address-select-wrap' ).hide();
 			}
@@ -253,6 +259,7 @@ jQueryReady( () => {
 					regionInstance.setValue( address.region );
 				} else if ( regionEl ) {
 					regionEl.value = address.region;
+					$( regionEl ).trigger( 'change' );
 				}
 			} );
 

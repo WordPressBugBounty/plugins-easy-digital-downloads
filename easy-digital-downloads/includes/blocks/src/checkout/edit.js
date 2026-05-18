@@ -1,11 +1,11 @@
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { Disabled, PanelBody, ToggleControl, SelectControl, RangeControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import './editor.scss';
 import { queryArgs as baseQueryArgs } from '../utilities/query-args';
 import { useState } from '@wordpress/element';
-import { DownloadOptions } from '../utilities/downloads';
+import { DownloadCombobox } from '../utilities/downloads';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -37,13 +37,10 @@ export default function Edit ( { attributes, setAttributes } ) {
 						checked={!!currentQueryArgs.preview}
 						onChange={( isChecked ) => setCurrentQueryArgs( { ...currentQueryArgs, preview: isChecked } )}
 					/>
-					<SelectControl
-						icon="download"
-						/* translators: %s: Download label singular */
-						label={sprintf( __( 'Select a %s:', 'easy-digital-downloads' ), EDDBlocks.download_label_singular )}
-						onChange={( value ) => setCurrentQueryArgs( { ...currentQueryArgs, cart_item: value } )}
-						options={DownloadOptions( true )}
-						help={__( 'Select a product to preview the checkout form with a specific item in the cart.', 'easy-digital-downloads' )}
+					<DownloadCombobox
+						value={ currentQueryArgs.cart_item ?? '' }
+						onChange={ ( value ) => setCurrentQueryArgs( { ...currentQueryArgs, cart_item: value } ) }
+						help={ __( 'Select a product to preview the checkout form with a specific item in the cart.', 'easy-digital-downloads' ) }
 					/>
 				</PanelBody>
 				<PanelBody title={__( 'Settings', 'easy-digital-downloads' )}>

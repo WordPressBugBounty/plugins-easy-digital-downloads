@@ -946,7 +946,7 @@ class EDD_Payment_History_Table extends List_Table {
 		}
 
 		// Maybe filter by order amount.
-		if ( isset( $_GET['order-amount-filter-type'] ) && ! empty( $_GET['order-amount-filter-value'] ) ) {
+		if ( ! empty( $_GET['order-amount-filter-type'] ) && isset( $_GET['order-amount-filter-value'] ) && is_numeric( $_GET['order-amount-filter-value'] ) ) {
 			$filter_amount = floatval( sanitize_text_field( $_GET['order-amount-filter-value'] ) );
 
 			switch ( $_GET['order-amount-filter-type'] ) {

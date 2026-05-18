@@ -6,7 +6,7 @@ Tags: ecommerce, payments, sell digital products, digital store, stripe
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable Tag: 3.6.7
+Stable Tag: 3.6.8
 License: GPLv2 or later
 
 The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
@@ -281,17 +281,6 @@ Yes, with a Personal Pass, you can provide beautiful and downloadable invoices t
 
 Yes, with an Extended Pass you get access to [Recurring Payments](https://easydigitaldownloads.com/downloads/recurring-payments/?utm_source=docs&utm_medium=faq_tab&utm_term=recurring_addon&utm_content=faqs&utm_campaign=readme). [Full documentation here](https://easydigitaldownloads.com/docs/recurring-payments-setup-overview/?utm_source=docs&utm_medium=faq_tab&utm_term=recurring_addon&utm_content=faqs&utm_campaign=readme). The Recurring Payments extension allows you to create subscriptions so that customers continue paying you over time. This is great for selling memberships, courses, all access passes, software licenses, and other products which require an ongoing payment.
 
-== Notes ==
-
-**A Message from our President**
-
-Since 2012, I've been helping build Easy Digital Downloads and making it the best eCommerce solution for digital creators. Now, as the President of the company, my commitment continues to be making Easy Digital Downloads the most effortless way to manage your ecommerce store, handle billing, protect your files, integrate with payment processors, and sell your digital products and services.
-
-I'm proud of what we've built and our world-class customer support team that is here to help you succeed. I hope you enjoy using Easy Digital Downloads.
-
-Thank You,
-Chris Klosowski
-
 == Screenshots ==
 
 1. Detailed Reports and Analytics
@@ -304,6 +293,22 @@ Chris Klosowski
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.6.8 =
+* NEW: Stripe - Added support for BLIK payments.
+* Admin: Fixed the orders table filter by total not working with the "greater than" condition.
+* Admin: Fixed manual order tax calculation requiring an address field change to trigger.
+* Admin: Enhanced select placeholder no longer assumes the field is for downloads.
+* Admin: Improve UX of Select input search.
+* Admin: Added a tooltip for the Login link setting option toggle.
+* Blocks: Updated download select fields to use combobox.
+* Checkout: Prevent console warnings when telephone number field is present.
+* Emails: Fixed email log pagination not working as expected.
+* PayPal Standard: Improved IPN handling.
+* Square: Improved reliability of connection process.
+* Stripe: Fixed an uncaught IntegrationError when a 100% discount code is applied with Payment Elements.
+
+View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
+
 = 3.6.7 =
 * NEW: Blocks - Introducing the Profile Editor Block.
 * NEW: Checkout - Added a Business Name field to checkout addresses.
@@ -330,8 +335,6 @@ Chris Klosowski
 * Dev: Improved nocache headers for important EDD pages.
 * Dev: Removed legacy jQuery UI CSS.
 * Dev: Reset Store now properly resets download sales and revenue data.
-
-View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
 
 = 3.6.6 =
 * Admin: Added compatibility with WordPress 7.0 admin changes.

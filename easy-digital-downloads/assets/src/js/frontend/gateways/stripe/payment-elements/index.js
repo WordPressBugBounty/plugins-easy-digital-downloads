@@ -371,6 +371,10 @@ async function onAmountChange ( reason ) {
 
 	enableForm();
 
+	if ( amount <= 0 ) {
+		return;
+	}
+
 	// Update the Payment Request with server-side data.
 	window.eddStripe.configuredElement.update( {
 		amount: amount,
