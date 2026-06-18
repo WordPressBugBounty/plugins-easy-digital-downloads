@@ -66,4 +66,15 @@ class Gateway extends Base {
 	public function get_checkout_label(): string {
 		return __( 'PayPal', 'easy-digital-downloads' );
 	}
+
+	/**
+	 * Gets the current PayPal mode based on EDD's test mode setting.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @return string Either 'sandbox' or 'live'.
+	 */
+	public static function get_paypal_mode(): string {
+		return edd_is_test_mode() ? 'sandbox' : 'live';
+	}
 }

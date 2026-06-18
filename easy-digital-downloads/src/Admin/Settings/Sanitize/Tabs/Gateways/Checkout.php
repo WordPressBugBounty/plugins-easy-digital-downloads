@@ -27,24 +27,27 @@ class Checkout extends Section {
 	 * @return string
 	 */
 	protected static function sanitize_banned_emails( $value ) {
-		$emails = '';
-		if ( ! empty( $value ) ) {
-			// Sanitize the input.
-			$emails = array_map( 'trim', explode( "\n", $value ) );
-			$emails = array_unique( $emails );
-			$emails = array_map( 'sanitize_text_field', $emails );
-
-			foreach ( $emails as $id => $email ) {
-				if ( ! is_email( $email ) && '@' !== $email[0] && '.' !== $email[0] ) {
-					unset( $emails[ $id ] );
-				}
-			}
-
-			// Before return, make sure the array is re-indexed.
-			$emails = array_values( $emails );
+		if ( empty( $value ) ) {
+			return '';
 		}
 
-		return $emails;
+		if ( is_array( $value ) ) {
+			$value = implode( "\n", $value );
+		}
+
+		// Sanitize the input.
+		$emails = array_map( 'trim', explode( "\n", $value ) );
+		$emails = array_unique( $emails );
+		$emails = array_map( 'sanitize_text_field', $emails );
+
+		foreach ( $emails as $id => $email ) {
+			if ( empty( $email ) || ( ! is_email( $email ) && '@' !== $email[0] && '.' !== $email[0] ) ) {
+				unset( $emails[ $id ] );
+			}
+		}
+
+		// Before return, make sure the array is re-indexed.
+		return array_values( $emails );
 	}
 
 	/**

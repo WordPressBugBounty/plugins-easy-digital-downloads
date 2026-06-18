@@ -116,10 +116,11 @@ function edds_process_purchase_form( $purchase_data ) {
 			$billing_address = array();
 
 			foreach ( $address_info as $key => $value ) {
-				// Skip phone number because it's not supported by PaymentMethods.
-				if ( 'phone' === $key ) {
+				// Skip phone number and company because they're not supported by PaymentMethods.
+				if ( in_array( $key, array( 'phone', 'company' ), true ) ) {
 					continue;
 				}
+
 				// Adjusts address data keys to work with PaymentMethods.
 				switch ( $key ) {
 					case 'zip':

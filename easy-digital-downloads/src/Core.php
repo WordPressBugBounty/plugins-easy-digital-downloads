@@ -50,6 +50,10 @@ class Core extends EventManagement\Subscribers {
 			// Gateways.
 			new Gateways\Stripe\Webhooks\Listener(),
 			new Gateways\Square\Webhooks\Listener(),
+			new Gateways\PayPal\CommerceVersion(),
+			new Gateways\PayPal\V3\Onboarding(),
+			new Gateways\PayPal\V3\ApplePay\DomainSubscriber(),
+			new Gateways\PayPal\Payments(),
 
 			// Upgrades.
 			new Upgrades\Loader(),

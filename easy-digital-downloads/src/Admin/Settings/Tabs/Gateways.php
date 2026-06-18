@@ -595,9 +595,7 @@ class Gateways extends Tab {
 			$order = explode( ',', $order );
 
 			$options = array_merge( array_flip( $order ), $options );
-		}
-
-		if ( ! \EDD\Checkout\Validator::has_block() ) {
+		} elseif ( ! \EDD\Checkout\Validator::has_block() ) {
 			$original_shortcode_order = array( 'address', 'address_2', 'city', 'zip', 'country', 'state' );
 			$options                  = array_merge( array_flip( $original_shortcode_order ), $options );
 		}

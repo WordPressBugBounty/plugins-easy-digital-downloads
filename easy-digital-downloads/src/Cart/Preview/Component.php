@@ -58,7 +58,8 @@ class Component implements SubscriberInterface {
 			return $events;
 		}
 
-		$events['wp_enqueue_scripts'] = 'enqueue_assets';
+		$events['wp_enqueue_scripts']            = 'enqueue_assets';
+		$events['edd_ajax_add_to_cart_response'] = 'add_cart_preview_data';
 
 		return $events;
 	}
@@ -122,6 +123,28 @@ class Component implements SubscriberInterface {
 		</div>
 		<p class="description"><?php esc_html_e( 'Optionally show button to open the cart preview when items are in the cart.', 'easy-digital-downloads' ); ?></p>
 		<?php
+	}
+
+	/**
+	 * Inject cart preview data into the add-to-cart AJAX response.
+	 *
+	 * Embeds a fresh token, timestamp, and cart state so the cart preview JS
+	 * can update without making a second REST call to /contents — which fails
+	 * on hosts that drop session cookies on REST requests.
+	 *
+	 * @since 3.6.9
+	 * @param array $response The AJAX response array.
+	 * @return array
+	 */
+	public function add_cart_preview_data( array $response ): array {
+		$timestamp               = time();
+		$response['cartPreview'] = array(
+			'cart'      => \EDD\Cart\Data::get_cart_data(),
+			'token'     => \EDD\REST\Security::generate_token( $timestamp ),
+			'timestamp' => $timestamp,
+		);
+
+		return $response;
 	}
 
 	/**

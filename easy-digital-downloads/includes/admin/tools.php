@@ -956,14 +956,15 @@ function edd_tools_import_export_process_import() {
 		return;
 	}
 
-	if ( edd_get_file_extension( $_FILES['import_file']['name'] ) != 'json' ) {
-		wp_die( __( 'Please upload a valid .json file', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 400 ) );
-	}
-
 	$import_file = $_FILES['import_file']['tmp_name'];
 
 	if ( empty( $import_file ) ) {
 		wp_die( __( 'Please upload a file to import', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 400 ) );
+	}
+
+	// Validate the uploaded settings file.
+	if ( ! ( new EDD\Utils\Validators\FileType\JSON() )->is_valid( $import_file, $_FILES['import_file']['name'] ) ) {
+		wp_die( __( 'Please upload a valid .json file', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 400 ) );
 	}
 
 	// Retrieve the settings from the file and convert the json object to an array.

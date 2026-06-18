@@ -468,6 +468,10 @@ function edd_register_payment_gateways_report( $reports ) {
 			$tables['stripe_payment_methods'] = 'EDD\Reports\Endpoints\Tables\StripePaymentMethods';
 		}
 
+		if ( 'paypal_commerce' === $gateway ) {
+			$tables['paypal_payment_methods'] = 'EDD\Reports\Endpoints\Tables\PayPalPaymentMethods';
+		}
+
 		$charts = array_filter(
 			array(
 				'gateway_sales_breakdown'    => 'EDD\Reports\Endpoints\Charts\GatewaySalesBreakdown',

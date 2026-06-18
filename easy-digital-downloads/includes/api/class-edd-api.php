@@ -8,10 +8,9 @@
  * The primary purpose of this class is for external sales / earnings tracking
  * systems, such as mobile. This class is also used in the EDD iOS App.
  *
- * @package     EDD
- * @subpackage  Classes/API
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package     EDD\API
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.5
  * @since       3.0.4 Refactored to use the new stats API, returns same formatting as 2.x API.
  */
@@ -71,15 +70,6 @@ class EDD_API {
 	 * @since  1.5.1
 	 */
 	public $user_id = 0;
-
-	/**
-	 * Instance of EDD Stats class
-	 *
-	 * @var object
-	 * @access private
-	 * @since  1.7
-	 */
-	private $stats;
 
 	/**
 	 * Response data to return
@@ -156,9 +146,6 @@ class EDD_API {
 
 		// Determine if JSON_PRETTY_PRINT is available.
 		$this->pretty_print = defined( 'JSON_PRETTY_PRINT' ) ? JSON_PRETTY_PRINT : null;
-
-		// Setup EDD_Stats instance.
-		$this->stats = new EDD_Payment_Stats();
 	}
 
 	/**
@@ -183,26 +170,33 @@ class EDD_API {
 	 */
 	public function query_vars( $vars ) {
 
-		$vars[] = 'token';
-		$vars[] = 'key';
-		$vars[] = 'query';
-		$vars[] = 'type';
-		$vars[] = 'product';
-		$vars[] = 'category';
-		$vars[] = 'tag';
-		$vars[] = 'term_relation';
-		$vars[] = 'number';
-		$vars[] = 'date';
-		$vars[] = 'startdate';
-		$vars[] = 'enddate';
-		$vars[] = 'customer';
-		$vars[] = 'discount';
-		$vars[] = 'format';
-		$vars[] = 'id';
-		$vars[] = 'purchasekey';
-		$vars[] = 'email';
-		$vars[] = 'info';
-		$vars[] = 'include_tax';
+		// API-specific vars are only registered for actual API requests. Registering
+		// them globally allows WordPress to read matching $_POST fields on non-API
+		// requests (e.g. third-party form submissions), which corrupts WP_Query's
+		// front-page detection. Discount URLs use $_REQUEST directly via
+		// edd_listen_for_cart_discount(), so 'discount' does not need global registration.
+		if ( $this->is_api_request() ) {
+			$vars[] = 'token';
+			$vars[] = 'key';
+			$vars[] = 'query';
+			$vars[] = 'type';
+			$vars[] = 'product';
+			$vars[] = 'category';
+			$vars[] = 'tag';
+			$vars[] = 'term_relation';
+			$vars[] = 'number';
+			$vars[] = 'date';
+			$vars[] = 'startdate';
+			$vars[] = 'enddate';
+			$vars[] = 'customer';
+			$vars[] = 'discount';
+			$vars[] = 'format';
+			$vars[] = 'id';
+			$vars[] = 'purchasekey';
+			$vars[] = 'email';
+			$vars[] = 'info';
+			$vars[] = 'include_tax';
+		}
 
 		return $vars;
 	}
@@ -2423,5 +2417,18 @@ class EDD_API {
 		if ( edd_is_doing_unit_tests() ) {
 			$this->data = array();
 		}
+	}
+
+	/**
+	 * Determines whether the current request is targeting the EDD API endpoint.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @return bool
+	 */
+	private function is_api_request() {
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+
+		return false !== strpos( rawurldecode( $request_uri ), 'edd-api' );
 	}
 }

@@ -16,6 +16,8 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 use EDD\Gateways\PayPal;
 use EDD\Gateways\PayPal\AccountStatusValidator;
 use EDD\Gateways\PayPal\API;
+use EDD\Gateways\PayPal\V3\Credentials;
+use EDD\Gateways\PayPal\V3\Merchant;
 
 if ( ! defined( 'EDD_PAYPAL_PARTNER_CONNECT_URL' ) ) {
 	define( 'EDD_PAYPAL_PARTNER_CONNECT_URL', 'https://easydigitaldownloads.com/wp-json/paypal-connect/v1/' );
@@ -31,43 +33,57 @@ if ( ! defined( 'EDD_PAYPAL_PARTNER_CONNECT_URL' ) ) {
  * @return void
  */
 function connect_settings_field() {
-	$is_connected = PayPal\has_rest_api_connection();
-	$mode         = edd_is_test_mode() ? __( 'sandbox', 'easy-digital-downloads' ) : __( 'live', 'easy-digital-downloads' );
+	$commerce_version = PayPal\CommerceVersion::get_version();
+	$mode             = edd_is_test_mode() ? __( 'sandbox', 'easy-digital-downloads' ) : __( 'live', 'easy-digital-downloads' );
+
+	// Determine connection status based on commerce version.
+	if ( 'v3' === $commerce_version ) {
+		$is_connected = PayPal\V3\Onboarding::is_v3_onboarded();
+	} else {
+		$is_connected = PayPal\has_rest_api_connection();
+	}
+
+	// If EDD Recurring is active but the installed version doesn't support v3
+	// vault, surface a clear update notice and fall back to the v2 onboarding
+	// path. Recurring 2.13.11 and earlier predate v3 support — checking for the
+	// vault-attribute method is more durable than version-pinning when Recurring
+	// versioning changes.
+	$recurring_supports_v3 = ! class_exists( 'EDD_Recurring_PayPal_Commerce' )
+		|| method_exists( 'EDD_Recurring_PayPal_Commerce', 'add_vault_order_attributes' );
 
 	if ( ! $is_connected ) {
-		$onboarding_data = get_onboarding_data();
-		if ( 200 !== $onboarding_data['code'] || empty( $onboarding_data['body']->signupLink ) ) {
-			?>
-			<div class="notice notice-error inline">
-				<p>
-					<?php
-					echo wp_kses(
-						sprintf(
-						/* translators: 1. opening <strong> tag, 2. closing </strong> tag */
-							__( '%1$sPayPal Communication Error:%2$s We are having trouble communicating with PayPal at the moment. Please try again later, and if the issue persists, reach out to our support team.', 'easy-digital-downloads' ),
-							'<strong>',
-							'</strong>'
-						),
-						array( 'strong' => array() )
-					);
-					?>
-				</p>
-			</div>
-			<?php
+		if ( 'v3' === $commerce_version && $recurring_supports_v3 ) {
+			// Clear any stale v2 connect details.
+			$raw_mode = PayPal\Gateway::get_paypal_mode();
+			delete_option( 'edd_paypal_commerce_connect_details_' . $raw_mode );
+
+			connect_settings_field_v3( $mode );
 		} else {
-			?>
-			<a type="button" target="_blank" id="edd-paypal-commerce-link" class="button button-secondary" href="<?php echo $onboarding_data['body']->signupLink; ?>&displayMode=minibrowser" data-paypal-onboard-complete="eddPayPalOnboardingCallback" data-paypal-button="true" data-paypal-onboard-button="true" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_process_paypal_connect' ) ); ?>">
-				<?php
-				/* translators: %s: the store mode, either `sandbox` or `live` */
-				printf( esc_html__( 'Connect with PayPal in %s mode', 'easy-digital-downloads' ), esc_html( $mode ) );
-				?>
-			</a>
-			<?php
+			if ( 'v3' === $commerce_version && ! $recurring_supports_v3 ) {
+				echo '<div class="notice edd-notice notice-warning inline"><p>';
+				esc_html_e( "Update Recurring Payments to access PayPal's improved checkout experience. Until then, your existing PayPal integration will continue to work as is.", 'easy-digital-downloads' );
+				echo '</p></div>';
+			}
+
+			// Legacy v2 connect flow: shown when a store was previously connected via v2 and has since been disconnected, but has not yet been migrated to v3, or when EDD Recurring is too old for v3.
+			connect_settings_field_v2( $mode );
 		}
 		?>
 		<div id="edd-paypal-commerce-errors"></div>
 		<?php
 	} else {
+		// For v3 stores, ensure the credentials are readable; if not, prompt to re-establish.
+		if ( 'v3' === $commerce_version && ! PayPal\V3\KeyRotation::ensure( PayPal\Gateway::get_paypal_mode() ) ) {
+			?>
+			<div class="notice edd-notice notice-warning inline">
+				<p>
+					<strong><?php esc_html_e( 'PayPal connection needs re-establishing.', 'easy-digital-downloads' ); ?></strong>
+					<?php esc_html_e( "Your site's security keys changed, so the stored PayPal credentials can no longer be read and could not be recovered automatically. Disconnect and reconnect to restore the connection.", 'easy-digital-downloads' ); ?>
+				</p>
+			</div>
+			<?php
+		}
+
 		/**
 		 * Show Account Info & Disconnect
 		 */
@@ -126,6 +142,119 @@ function connect_settings_field() {
 	<?php
 }
 add_action( 'edd_paypal_connect_button', __NAMESPACE__ . '\connect_settings_field' );
+
+/**
+ * Renders the v2 (1st party) connect button.
+ *
+ * @since 3.6.9
+ *
+ * @param string $mode Translated mode label.
+ */
+function connect_settings_field_v2( $mode ) {
+	$onboarding_data = get_onboarding_data();
+	if ( 200 !== $onboarding_data['code'] || empty( $onboarding_data['body']->signupLink ) ) {
+		?>
+		<div class="notice notice-error inline">
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+					/* translators: 1. opening <strong> tag, 2. closing </strong> tag */
+						__( '%1$sPayPal Communication Error:%2$s We are having trouble communicating with PayPal at the moment. Please try again later, and if the issue persists, reach out to our support team.', 'easy-digital-downloads' ),
+						'<strong>',
+						'</strong>'
+					),
+					array( 'strong' => array() )
+				);
+				?>
+			</p>
+		</div>
+		<?php
+	} else {
+		?>
+		<a type="button" target="_blank" id="edd-paypal-commerce-link" class="button button-secondary" href="<?php echo $onboarding_data['body']->signupLink; ?>&displayMode=minibrowser" data-paypal-onboard-complete="eddPayPalOnboardingCallback" data-paypal-button="true" data-paypal-onboard-button="true" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_process_paypal_connect' ) ); ?>">
+			<?php
+			/* translators: %s: the store mode, either `sandbox` or `live` */
+			printf( esc_html__( 'Connect with PayPal in %s mode', 'easy-digital-downloads' ), esc_html( $mode ) );
+			?>
+		</a>
+		<?php
+	}
+}
+
+/**
+ * Renders the v3 (Connect) connect button.
+ *
+ * The button triggers an AJAX call to register the store with the Connect service
+ * and retrieve a PayPal signup link. On success, the PayPal minibrowser
+ * opens for merchant onboarding.
+ *
+ * @since 3.6.9
+ *
+ * @param string $mode Translated mode label.
+ */
+function connect_settings_field_v3( $mode ) {
+	if ( ! \EDD\Utils\Validators\Salts::are_secure() ) {
+		?>
+		<div class="notice edd-notice notice-warning inline">
+			<p>
+				<strong><?php esc_html_e( 'Set unique WordPress security keys to connect PayPal.', 'easy-digital-downloads' ); ?></strong>
+			</p>
+			<p>
+				<?php esc_html_e( 'To connect securely with PayPal, your site needs unique WordPress security keys (salts). This install is currently using default, empty, or missing keys, which are not safe for processing payments. Generate a fresh set of keys, add them to your wp-config.php file, and reload this page.', 'easy-digital-downloads' ); ?>
+			</p>
+			<p>
+				<?php
+				printf(
+					/* translators: 1: opening link tag to the WordPress.org key generator, 2: closing link tag, 3: opening link tag to a guide on WordPress security keys, 4: closing link tag. */
+					esc_html__( '%1$sGenerate new keys%2$s, then %3$sread how to add them to wp-config.php%4$s.', 'easy-digital-downloads' ),
+					'<a href="https://api.wordpress.org/secret-key/1.1/salt/" target="_blank" rel="noopener noreferrer">',
+					'</a>',
+					'<a href="https://www.wpbeginner.com/beginners-guide/what-why-and-hows-of-wordpress-security-keys/" target="_blank" rel="noopener noreferrer">',
+					'</a>'
+				);
+				?>
+			</p>
+		</div>
+		<?php
+		return;
+	}
+
+	// Surface the last onboarding failure (if any) so the admin can see
+	// what went wrong on the return trip from PayPal. `handle_paypal_redirect`
+	// stamps the message into a 5-minute transient and tags the redirect URL
+	// with ?edd_paypal_onboarding_error=<code>. We read both — the transient
+	// holds the human message, the query string is the trigger.
+	if ( ! empty( $_GET['edd_paypal_onboarding_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display.
+		$transient_key = 'edd_paypal_v3_onboarding_error_' . get_current_user_id();
+		$message       = get_transient( $transient_key );
+		delete_transient( $transient_key );
+
+		$error_code = sanitize_key( wp_unslash( $_GET['edd_paypal_onboarding_error'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $message ) ) {
+			$message = __( 'PayPal onboarding could not be completed. Please try again or check the debug log for details.', 'easy-digital-downloads' );
+		}
+		?>
+		<div class="notice edd-notice notice-error inline edd-paypal-onboarding-error">
+			<p>
+				<strong><?php esc_html_e( 'PayPal connection could not be completed:', 'easy-digital-downloads' ); ?></strong>
+				<?php echo esc_html( $message ); ?>
+				<?php if ( $error_code && 'unknown' !== $error_code ) : ?>
+					<br><small><code><?php echo esc_html( $error_code ); ?></code></small>
+				<?php endif; ?>
+			</p>
+		</div>
+		<?php
+	}
+	?>
+	<button type="button" id="edd-paypal-commerce-v3-connect" class="button button-primary" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_paypal_v3_onboarding' ) ); ?>">
+		<?php
+		/* translators: %s: the store mode, either `sandbox` or `live` */
+		printf( esc_html__( 'Connect with PayPal in %s mode', 'easy-digital-downloads' ), esc_html( $mode ) );
+		?>
+	</button>
+	<?php
+}
 
 /**
  * Single function to make a request to get the onboarding URL and nonce.
@@ -437,6 +566,12 @@ function get_account_info() {
 		wp_send_json_error( wpautop( __( 'You do not have permission to perform this action.', 'easy-digital-downloads' ) ) );
 	}
 
+	// Branch on commerce version.
+	if ( 'v3' === PayPal\CommerceVersion::get_version() ) {
+		get_account_info_v3();
+		return;
+	}
+
 	try {
 		$status         = 'success';
 		$account_status = '';
@@ -447,7 +582,7 @@ function get_account_info() {
 
 		$disconnect_links = array(
 			'disconnect' => '<a class="button-secondary" id="edd-paypal-disconnect-link" href="' . esc_url( get_disconnect_url() ) . '">' . __( 'Disconnect webhooks from PayPal', 'easy-digital-downloads' ) . '</a>',
-			'delete'     => '<a class="button-secondary" id="edd-paypal-delete-link" href="' . esc_url( get_delete_url() ) . '">' . __( 'Delete connection with PayPal', 'easy-digital-downloads' ) . '</a>',
+			'delete'     => '<a class="button button-secondary" id="edd-paypal-delete-link" href="' . esc_url( get_delete_url() ) . '">' . __( 'Disconnect from PayPal', 'easy-digital-downloads' ) . '</a>',
 		);
 
 		$validator = new AccountStatusValidator();
@@ -583,6 +718,43 @@ function get_account_info() {
 add_action( 'wp_ajax_edd_paypal_commerce_get_account_info', __NAMESPACE__ . '\get_account_info' );
 
 /**
+ * Returns v3 account status information.
+ *
+ * Builds the connection status panel via the Account renderer, which
+ * queries EDD Connect and falls back to wp_options when the
+ * Connect service is unreachable.
+ *
+ * @since 3.6.9
+ * @return void
+ */
+function get_account_info_v3() {
+	$account          = new PayPal\V3\Admin\Account();
+	$disconnect_links = array(
+		'delete' => '<a class="button button-secondary" id="edd-paypal-delete-link" href="' . esc_url( get_delete_url() ) . '">' . __( 'Disconnect from PayPal', 'easy-digital-downloads' ) . '</a>',
+	);
+	// Force-refreshes the 4-hour transient cache that
+	// Merchant::get_status() reads from.
+	if ( $account->has_merchant_id() ) {
+		$disconnect_links['refresh_merchant'] = sprintf(
+			'<button type="button" class="button button-secondary edd-paypal-connect-action" data-nonce="%1$s" data-action="edd_paypal_v3_get_merchant_status">%2$s</button>',
+			esc_attr( wp_create_nonce( 'edd_paypal_v3_onboarding' ) ),
+			esc_html__( 'Refresh Merchant Status', 'easy-digital-downloads' )
+		);
+
+		// Rotate Credentials UI is deferred to a follow-up; the backend is in place.
+	}
+
+	wp_send_json_success(
+		array(
+			'status'           => $account->get_status(),
+			'account_status'   => $account->render(),
+			'actions'          => array(),
+			'disconnect_links' => array_values( $disconnect_links ),
+		)
+	);
+}
+
+/**
  * Returns the URL for disconnecting from PayPal Commerce.
  *
  * @since 2.11
@@ -635,22 +807,25 @@ function process_disconnect() {
 
 	$mode = edd_is_test_mode() ? PayPal\API::MODE_SANDBOX : PayPal\API::MODE_LIVE;
 
-	try {
-		$api = new PayPal\API();
-
+	// v3 stores don't have local webhooks or API credentials to disconnect.
+	if ( 'v3' !== PayPal\CommerceVersion::get_version() ) {
 		try {
-			// Disconnect the webhook.
-			// This is in another try/catch because we want to delete the token cache (below) even if this fails.
-			// This only deletes the webhooks in PayPal, we do not remove the webhook ID in EDD until we delete the connection.
-			PayPal\Webhooks\delete_webhook( $mode );
-		} catch ( \Exception $e ) {
-			// We don't want to stop the process if we can't delete the webhooks.
-		}
+			$api = new PayPal\API();
 
-		// Also delete the token cache key, to ensure we fetch a fresh one if they connect to a different account later.
-		delete_option( $api->token_cache_key );
-	} catch ( \Exception $e ) {
-		// We don't want to stop the process if we can't delete the webhook.
+			try {
+				// Disconnect the webhook.
+				// This is in another try/catch because we want to delete the token cache (below) even if this fails.
+				// This only deletes the webhooks in PayPal, we do not remove the webhook ID in EDD until we delete the connection.
+				PayPal\Webhooks\delete_webhook( $mode );
+			} catch ( \Exception $e ) {
+				// We don't want to stop the process if we can't delete the webhooks.
+			}
+
+			// Also delete the token cache key, to ensure we fetch a fresh one if they connect to a different account later.
+			delete_option( $api->token_cache_key );
+		} catch ( \Exception $e ) {
+			// We don't want to stop the process if we can't delete the webhook.
+		}
 	}
 
 	wp_safe_redirect( esc_url_raw( get_settings_url() ) );
@@ -675,42 +850,76 @@ function process_delete() {
 
 	$mode = edd_is_test_mode() ? PayPal\API::MODE_SANDBOX : PayPal\API::MODE_LIVE;
 
-	// Delete merchant information.
+	// Delete v2 merchant information and partner connect details.
 	delete_option( 'edd_paypal_' . $mode . '_merchant_details' );
-
-	// Delete partner connect information.
 	delete_option( 'edd_paypal_commerce_connect_details_' . $mode );
 
-	try {
-		$api = new PayPal\API();
+	// Record that a v2 REST connection existed before any credentials are wiped,
+	// so the legacy IPN notice can surface after the merchant reconnects via v3.
+	if ( edd_get_option( "paypal_{$mode}_client_id" ) ) {
+		update_option( "edd_paypal_{$mode}_had_v2_connection", true, false );
+	}
 
+	// v2-specific cleanup: webhooks, API credentials, token cache.
+	if ( 'v3' !== PayPal\CommerceVersion::get_version() ) {
 		try {
-			// Disconnect the webhook.
-			// This is in another try/catch because we want to delete the token cache (below) even if this fails.
-			// This only deletes the webhooks in PayPal, we do not remove the webhook ID in EDD until we delete the connection.
-			PayPal\Webhooks\delete_webhook( $mode );
+			$api = new PayPal\API();
+
+			try {
+				PayPal\Webhooks\delete_webhook( $mode );
+			} catch ( \Exception $e ) {
+				// We don't want to stop the process if we can't delete the webhooks.
+			}
+
+			delete_option( $api->token_cache_key );
 		} catch ( \Exception $e ) {
 			// We don't want to stop the process if we can't delete the webhooks.
 		}
 
-		// Also delete the token cache key, to ensure we fetch a fresh one if they connect to a different account later.
-		delete_option( $api->token_cache_key );
-	} catch ( \Exception $e ) {
-		// We don't want to stop the process if we can't delete the webhooks.
+		delete_option( sanitize_key( 'edd_paypal_commerce_webhook_id_' . $mode ) );
+
+		$edd_settings_to_delete = array(
+			'paypal_' . $mode . '_client_id',
+			'paypal_' . $mode . '_client_secret',
+		);
+
+		foreach ( $edd_settings_to_delete as $option_name ) {
+			edd_delete_option( $option_name );
+		}
 	}
 
-	// Now delete our webhook ID.
-	delete_option( sanitize_key( 'edd_paypal_commerce_webhook_id_' . $mode ) );
-
-	// Delete API credentials.
-	$edd_settings_to_delete = array(
-		'paypal_' . $mode . '_client_id',
-		'paypal_' . $mode . '_client_secret',
-	);
-
-	foreach ( $edd_settings_to_delete as $option_name ) {
-		edd_delete_option( $option_name );
+	// For v3 stores, notify the Connect service to clean up merchant record and deregister webhook.
+	$v3_merchant_id = get_option( 'edd_paypal_' . $mode . '_merchant_id', '' );
+	if ( ! empty( $v3_merchant_id ) ) {
+		$proxy_api = new PayPal\V3\ConnectAPI( $mode );
+		$proxy_api->delete(
+			'/v3/paypal/merchants',
+			array(
+				'merchant_id' => $v3_merchant_id,
+				'mode'        => $mode,
+			)
+		);
+		// Fire and forget — don't block delete on the Connect response.
 	}
+
+	// Clear v3 Connect credentials via the canonical helpers so no option
+	// or transient is left behind (hmac_key_fingerprint, hmac_key_previous,
+	// seller_email, partner_client_id, advanced_card_available, etc.).
+	Credentials::forget( $mode );
+	Merchant::forget( $mode );
+	delete_option( 'edd_paypal_' . $mode . '_tracking_id' );
+
+	// Tear down Apple Pay domain registration state. The registration on
+	// PayPal's side belongs to the merchant we're disconnecting from, so
+	// the stored host + docroot .well-known file are stale once we wipe
+	// the connection. The next admin_init after reconnecting will
+	// re-install fresh against the new merchant.
+	PayPal\V3\ApplePay\DomainAssociation::uninstall();
+
+	// Advance commerce version to v3 so the settings UI shows the v3
+	// onboarding flow after a full disconnect, even when the store was
+	// previously pinned to v2.
+	update_option( 'edd_paypal_' . $mode . '_commerce_version', 'v3' );
 
 	// Unset the PayPal Commerce gateway as an enabled gateway.
 	$enabled_gateways = edd_get_option( 'gateways', array() );
@@ -816,7 +1025,18 @@ add_action(
 			return;
 		}
 
-		$mode            = edd_is_test_mode() ? 'sandbox' : 'live';
+		// Bail when the store is connecting via v3 (Connect). This
+		// callback dates from the v2 (1st-party) integration and uses the v2
+		// API client + MerchantAccount model — running it during a v3 redirect
+		// would race \EDD\Gateways\PayPal\V3\Onboarding::handle_paypal_redirect
+		// on the same hook, consume the connect-started transient, and leave
+		// the v3 handler with nothing to validate against. v3's onboarding
+		// completes through its own handler against the Connect service.
+		if ( 'v3' === PayPal\CommerceVersion::get_version() ) {
+			return;
+		}
+
+		$mode            = PayPal\Gateway::get_paypal_mode();
 		$connect_process = get_transient( 'edd_paypal_commerce_connect_started_' . $mode );
 		if ( empty( $connect_process ) ) {
 			return;

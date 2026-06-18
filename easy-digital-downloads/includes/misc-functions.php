@@ -1236,14 +1236,10 @@ function edd_payment_get_ip_address_url( $order_id ) {
 }
 
 /**
- * Abstraction for WordPress cron checking, to avoid code duplication.
- *
- * In future versions of EDD, this function will be changed to only refer to
- * EDD specific cron related jobs. You probably won't want to use it until then.
+ * Abstraction for cron context checking, covering both WP-Cron and Action Scheduler.
  *
  * @since 2.8.16
- *
- * @return boolean
+ * @return bool
  */
 function edd_doing_cron() {
 
@@ -1252,7 +1248,13 @@ function edd_doing_cron() {
 		return true;
 	}
 
-	// Default to false
+	// Action Scheduler fires action_scheduler_before_execute before a job and
+	// action_scheduler_after_execute after. More befores than afters means we
+	// are currently inside an AS job.
+	if ( did_action( 'action_scheduler_before_execute' ) > did_action( 'action_scheduler_after_execute' ) ) {
+		return true;
+	}
+
 	return false;
 }
 

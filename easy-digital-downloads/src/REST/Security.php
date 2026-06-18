@@ -79,6 +79,54 @@ class Security {
 	}
 
 	/**
+	 * Validate the EDD cart token from a request, without requiring a WP REST nonce.
+	 *
+	 * The cart token is an HMAC over a timestamp using the site secret — it is
+	 * stateless and behaves identically for logged-in and guest buyers. WP
+	 * nonces, by contrast, depend on session cookies and become flaky for
+	 * anonymous checkout (page caching, mid-flow session changes, etc.).
+	 *
+	 * Use this permission_callback for REST endpoints that primarily serve the
+	 * checkout flow where guest users are expected. `validate_token()` remains
+	 * the right choice for endpoints that should require an authenticated WP
+	 * session in addition to the cart token.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 * @return bool|\WP_Error True if valid, WP_Error otherwise.
+	 */
+	public function validate_cart_token( $request ) {
+		$token = $request->get_header( 'X-EDD-Cart-Token' );
+		if ( empty( $token ) ) {
+			return new \WP_Error(
+				'missing_token',
+				__( 'Cart token missing.', 'easy-digital-downloads' ),
+				array( 'status' => 401 )
+			);
+		}
+
+		$timestamp = $request->get_header( 'X-EDD-Cart-Timestamp' );
+		if ( ! is_numeric( $timestamp ) || $timestamp < time() - HOUR_IN_SECONDS ) {
+			return new \WP_Error(
+				'invalid_timestamp',
+				__( 'Invalid timestamp.', 'easy-digital-downloads' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		if ( ! Tokenizer::is_token_valid( $token, $timestamp ) ) {
+			return new \WP_Error(
+				'invalid_token',
+				__( 'Invalid token.', 'easy-digital-downloads' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Generate a token.
 	 *
 	 * @since 3.6.2

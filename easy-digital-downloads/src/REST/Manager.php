@@ -59,6 +59,8 @@ class Manager implements SubscriberInterface {
 	private function get_routes() {
 		return array(
 			new Routes\Cart(),
+			new Routes\Fastlane(),
+			new Routes\UnbrandedCard(),
 			new Routes\LogPruning(),
 			new Routes\BounceWebhook(),
 			new Routes\Notifications(),

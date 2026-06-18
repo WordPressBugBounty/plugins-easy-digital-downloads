@@ -706,7 +706,7 @@ function edd_multicheck_callback( $args ) {
 				'toggle'   => (bool) ! empty( $args['toggle'] ),
 				'sortable' => array(
 					'enabled' => (bool) ! empty( $args['sortable'] ),
-					'order'   => edd_get_option( 'edd_settings[' . edd_sanitize_key( $args['id'] ) . '_order', array() ),
+					'order'   => edd_get_option( edd_sanitize_key( $args['id'] ) . '_order', array() ),
 					'name'    => 'edd_settings[' . edd_sanitize_key( $args['id'] ) . '_order]',
 				),
 			)

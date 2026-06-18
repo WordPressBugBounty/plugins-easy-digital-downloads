@@ -156,6 +156,19 @@ class Components {
 				'object' => '\\EDD\\Taxes\\Rate',
 				'meta'   => false,
 			),
+			// The payment_token component is registered unconditionally so the
+			// table is available the moment any supporting gateway (currently
+			// PayPal v3, with Stripe and others possible in the future) is
+			// connected. Gating on a specific gateway would risk a missing
+			// table at the time the gateway is first activated, because Berlin
+			// only runs install/upgrade when the component is registered.
+			'payment_token'          => array(
+				'schema' => '\\EDD\\Database\\Schemas\\PaymentTokens',
+				'table'  => '\\EDD\\Database\\Tables\\PaymentTokens',
+				'query'  => '\\EDD\\Database\\Queries\\PaymentToken',
+				'object' => '\\EDD\\Database\\Rows\\PaymentToken',
+				'meta'   => false,
+			),
 		);
 	}
 }

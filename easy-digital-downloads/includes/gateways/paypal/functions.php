@@ -12,6 +12,7 @@
 namespace EDD\Gateways\PayPal;
 
 use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
+use EDD\Gateways\PayPal\V3\Onboarding;
 
 /**
  * Determines whether or not there's a valid REST API connection.
@@ -50,6 +51,11 @@ function has_rest_api_connection( $mode = '' ) {
 function ready_to_accept_payments( $mode = '' ) {
 	if ( empty( $mode ) ) {
 		$mode = edd_is_test_mode() ? API::MODE_SANDBOX : API::MODE_LIVE;
+	}
+
+	// v3 (Connect): onboarding is complete when store_id, hmac_key, and merchant_id are all present.
+	if ( 'v3' === get_option( "edd_paypal_{$mode}_commerce_version", 'v3' ) ) {
+		return Onboarding::is_v3_onboarded( $mode );
 	}
 
 	if ( ! has_rest_api_connection( $mode ) ) {
@@ -330,4 +336,46 @@ function _is_item_total_mismatch( $response ) {
 	}
 
 	return false;
+}
+
+/**
+ * Determines whether a host is acceptable to PayPal as a Fastlane domain.
+ *
+ * PayPal's `/v3/paypal/sdk-token` rejects the whole request with
+ * `invalid_domain` if any single entry in the `domains` array is not a
+ * publicly-resolvable hostname. Local development hosts like `multisite.local`
+ * or `site.test`, raw IP addresses, and bare hostnames all fail validation.
+ *
+ * @since 3.6.9
+ *
+ * @param string $domain The host (no protocol, no path).
+ * @return bool True if the domain is in a format PayPal will accept.
+ */
+function is_public_paypal_domain( $domain ) {
+	if ( ! is_string( $domain ) ) {
+		return false;
+	}
+
+	$domain = strtolower( trim( $domain ) );
+
+	if ( '' === $domain || 'localhost' === $domain ) {
+		return false;
+	}
+
+	// Reject raw IP addresses (v4 and v6).
+	if ( false !== filter_var( $domain, FILTER_VALIDATE_IP ) ) {
+		return false;
+	}
+
+	// Must contain at least one dot (single-label hosts are not public).
+	if ( false === strpos( $domain, '.' ) ) {
+		return false;
+	}
+
+	// Reject reserved / non-public TLDs commonly used for local development.
+	$private_tlds = array( 'local', 'test', 'localhost', 'invalid', 'example', 'internal', 'lan', 'home', 'corp' );
+	$parts        = explode( '.', $domain );
+	$tld          = end( $parts );
+
+	return ! in_array( $tld, $private_tlds, true );
 }

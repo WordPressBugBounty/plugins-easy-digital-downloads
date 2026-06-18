@@ -131,6 +131,19 @@ class LoginLink extends EmailTemplate {
 	}
 
 	/**
+	 * Determines whether the email is enabled.
+	 *
+	 * The email's enabled state mirrors the login link feature setting directly,
+	 * because status is not user-editable for this template.
+	 *
+	 * @since 3.6.9
+	 * @return bool
+	 */
+	protected function is_enabled(): bool {
+		return \EDD\Users\LoginLink\Utility::enabled();
+	}
+
+	/**
 	 * Gets the required tag parameters for the email editor.
 	 *
 	 * @since 3.6.7

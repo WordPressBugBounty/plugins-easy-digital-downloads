@@ -80,7 +80,7 @@ function edd_process_add_to_cart( $data ) {
 	}
 
 	if ( edd_straight_to_checkout() && ! edd_is_checkout() ) {
-		$query_args     = remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity' ) );
+		$query_args     = remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity', 'discount' ) );
 		$query_part     = strpos( $query_args, '?' );
 		$url_parameters = '';
 
@@ -90,7 +90,7 @@ function edd_process_add_to_cart( $data ) {
 
 		edd_redirect( edd_get_checkout_uri() . $url_parameters, 303 );
 	} else {
-		edd_redirect( remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity' ) ) );
+		edd_redirect( remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity', 'discount' ) ) );
 	}
 }
 add_action( 'edd_add_to_cart', 'edd_process_add_to_cart' );

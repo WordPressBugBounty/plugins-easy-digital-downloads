@@ -233,7 +233,7 @@ class EDD_Notices {
 	 * @return void
 	 */
 	public function remove_notices() {
-		if ( ! edd_is_admin_page() ) {
+		if ( ! edd_is_admin_page() || edd_is_admin_page( 'index.php' ) ) {
 			return;
 		}
 
@@ -571,12 +571,16 @@ class EDD_Notices {
 		}
 
 		if ( 'paypal_commerce' === filter_input( INPUT_GET, 'section', FILTER_SANITIZE_SPECIAL_CHARS ) ) {
-			if ( edd_is_test_mode() && ! \EDD\Gateways\PayPal\has_rest_api_connection( 'sandbox' ) ) {
+			// Use ready_to_accept_payments() rather than has_rest_api_connection()
+			// so the notice clears on v3 (3rd-party proxy) sandbox onboardings too.
+			// has_rest_api_connection() only knows about v2 REST credentials and
+			// always returns false on v3 stores, even when fully onboarded.
+			if ( edd_is_test_mode() && ! \EDD\Gateways\PayPal\ready_to_accept_payments( 'sandbox' ) ) {
 				$this->add_notice(
 					array(
 						'message'        => sprintf(
 							/* translators: %s: Sandbox doc link */
-							__( 'Connecting to PayPal in Test Mode requires the use of Sandbox Credentials. If you need help finding this, you can <a href="%s" target="_blank">view our documentation</a> on using PayPal Sandbox.', 'easy-digital-downloads' ),
+							__( 'Connecting to PayPal in Test Mode requires a PayPal Sandbox account. If you need help, you can <a href="%s" target="_blank">view our documentation</a> on using PayPal Sandbox.', 'easy-digital-downloads' ),
 							'https://easydigitaldownloads.com/docs/paypal-setup/#sandbox'
 						),
 						'class'          => 'notice-warning',
@@ -683,6 +687,19 @@ class EDD_Notices {
 	 */
 	private function add_paypal_sync_notice() {
 		if ( ! get_option( 'edd_paypal_webhook_sync_failed' ) ) {
+			return;
+		}
+
+		// V3 (3rd-party proxy) stores don't manage webhooks via PayPal's
+		// `/v1/notifications/webhooks` endpoint — the proxy owns webhook
+		// routing for them. The sync-failed flag is only ever set by the v2
+		// cron handler, and a v3 store that previously had v2 webhook trouble
+		// would still see this stale notice after migrating. Suppress it on
+		// v3 stores so the message is scoped to the integration it actually
+		// applies to.
+		$mode             = edd_is_test_mode() ? 'sandbox' : 'live';
+		$commerce_version = get_option( "edd_paypal_{$mode}_commerce_version", '' );
+		if ( 'v3' === $commerce_version ) {
 			return;
 		}
 		$url = edd_get_admin_url(

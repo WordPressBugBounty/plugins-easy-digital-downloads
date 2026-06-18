@@ -172,6 +172,7 @@ class Assets {
 			'showButton'        => edd_get_option( 'cart_preview_button', false ),
 			'buttonSize'        => edd_get_option( 'cart_preview_button_size', 'large' ),
 			'buttonPosition'    => edd_get_option( 'cart_preview_button_position', '' ),
+			'cart'              => \EDD\Cart\Data::get_cart_data(),
 		);
 
 		/**

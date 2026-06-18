@@ -13,6 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 use EDD\Utils\FileSystem;
+use EDD\Utils\Validators\FileType\CSV;
 
 /**
  * Upload an import file with ajax
@@ -65,19 +66,20 @@ function edd_do_ajax_import_file_upload() {
 		);
 	}
 
-	if ( empty( $_FILES['edd-import-file']['type'] ) || ! in_array( strtolower( $_FILES['edd-import-file']['type'] ), edd_importer_accepted_mime_types(), true ) ) {
+	if ( ! FileSystem::file_exists( $_FILES['edd-import-file']['tmp_name'] ) ) {
 		wp_send_json_error(
 			array(
-				'error'   => __( 'The file you uploaded does not appear to be a CSV file.', 'easy-digital-downloads' ),
+				'error'   => __( 'Something went wrong during the upload process, please try again.', 'easy-digital-downloads' ),
 				'request' => $_REQUEST,
 			)
 		);
 	}
 
-	if ( ! FileSystem::file_exists( $_FILES['edd-import-file']['tmp_name'] ) ) {
+	// Validate the uploaded import file.
+	if ( ! ( new CSV() )->is_valid( $_FILES['edd-import-file']['tmp_name'], $_FILES['edd-import-file']['name'] ) ) {
 		wp_send_json_error(
 			array(
-				'error'   => __( 'Something went wrong during the upload process, please try again.', 'easy-digital-downloads' ),
+				'error'   => __( 'The file you uploaded does not appear to be a CSV file.', 'easy-digital-downloads' ),
 				'request' => $_REQUEST,
 			)
 		);
@@ -93,7 +95,7 @@ function edd_do_ajax_import_file_upload() {
 		$import_file = array(
 			'file' => $file_path,
 			'url'  => '',
-			'type' => $_FILES['edd-import-file']['type'],
+			'type' => 'text/csv',
 		);
 	} else {
 		wp_send_json_error(
@@ -266,20 +268,7 @@ add_action( 'wp_ajax_edd_do_ajax_import', 'edd_do_ajax_import' );
  * @return array
  */
 function edd_importer_accepted_mime_types() {
-	return array(
-		'text/csv',
-		'text/comma-separated-values',
-		'text/plain',
-		'text/anytext',
-		'text/*',
-		'text/plain',
-		'text/anytext',
-		'text/*',
-		'application/csv',
-		'application/excel',
-		'application/vnd.ms-excel',
-		'application/vnd.msexcel',
-	);
+	return CSV::MIME_TYPES;
 }
 
 /**

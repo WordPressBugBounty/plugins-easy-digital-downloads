@@ -51,7 +51,12 @@ class ExtensionsAPI {
 			} elseif ( ! empty( $option['timeout'] ) ) {
 				unset( $option['timeout'] );
 
-				return $option;
+				// Apply the PayPal Commerce Pro hide-filter against the cached
+				// payload too. The cache is written once a week, so sites that
+				// were warmed before the hide-filter shipped (or whose connection
+				// state changed) would otherwise keep showing the obsolete card
+				// until the cache rolls over.
+				return $this->filter_paypal_commerce_pro( $option );
 			}
 		}
 
@@ -128,6 +133,11 @@ class ExtensionsAPI {
 					continue;
 				}
 
+				// Hide PayPal Commerce Pro when v3 replaces it or PayPal is not connected.
+				if ( $this->should_hide_paypal_commerce_pro( $item ) ) {
+					continue;
+				}
+
 				$item->pass_id = $this->get_pass_id( $item->categories, $pass_manager );
 				if ( ! empty( $item->tags ) && in_array( 2333, $item->tags, true ) ) {
 					$recommended[ $item_id ] = $this->get_item_data( $item );
@@ -166,6 +176,80 @@ class ExtensionsAPI {
 		}
 
 		return $pass_manager::ALL_ACCESS_PASS_ID;
+	}
+
+	/**
+	 * Checks whether the PayPal Commerce Pro extension should be hidden.
+	 *
+	 * Hides it when PayPal is not connected (new installs go straight to v3)
+	 * or when the store is already connected via v3.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @param object $item The extension item from the API.
+	 * @return bool
+	 */
+	private function should_hide_paypal_commerce_pro( $item ) {
+		$slug = is_object( $item ) ? ( $item->slug ?? '' ) : ( $item['slug'] ?? '' );
+		if ( 'paypal-commerce-pro' !== $slug ) {
+			return false;
+		}
+
+		return $this->paypal_commerce_pro_is_obsolete();
+	}
+
+	/**
+	 * Returns true when this install no longer needs the PayPal Commerce Pro addon.
+	 *
+	 * Decoupled from the per-item check so we can apply the hide rule to
+	 * cached payloads (where each entry is an array, not an object) without
+	 * duplicating the connection-state logic.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @return bool
+	 */
+	private function paypal_commerce_pro_is_obsolete() {
+		$mode             = \EDD\Gateways\PayPal\Gateway::get_paypal_mode();
+		$commerce_version = get_option( "edd_paypal_{$mode}_commerce_version", '' );
+
+		// Hide if connected via v3 (addon is replaced by built-in Fastlane).
+		if ( 'v3' === $commerce_version ) {
+			return true;
+		}
+
+		// Hide if PayPal is not connected at all (new installs should use v3).
+		$client_id = edd_get_option( "paypal_{$mode}_client_id", '' );
+		if ( empty( $client_id ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Removes the PayPal Commerce Pro entry from a cached extensions payload
+	 * when the addon has been superseded by v3 (or PayPal is unconnected).
+	 *
+	 * @since 3.6.9
+	 *
+	 * @param array $items Cached extensions array keyed by item ID; each entry
+	 *                     carries a `slug` field.
+	 * @return array
+	 */
+	private function filter_paypal_commerce_pro( $items ) {
+		if ( ! is_array( $items ) || ! $this->paypal_commerce_pro_is_obsolete() ) {
+			return $items;
+		}
+
+		foreach ( $items as $item_id => $entry ) {
+			$slug = is_array( $entry ) ? ( $entry['slug'] ?? '' ) : ( is_object( $entry ) ? ( $entry->slug ?? '' ) : '' );
+			if ( 'paypal-commerce-pro' === $slug ) {
+				unset( $items[ $item_id ] );
+			}
+		}
+
+		return $items;
 	}
 
 	/**

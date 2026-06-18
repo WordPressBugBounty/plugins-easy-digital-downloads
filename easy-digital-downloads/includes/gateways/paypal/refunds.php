@@ -13,7 +13,155 @@ namespace EDD\Gateways\PayPal;
 
 use EDD\Gateways\PayPal\Exceptions\API_Exception;
 use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
+use EDD\Gateways\PayPal\V3\ConnectAPI;
 use EDD\Orders\Order;
+
+/**
+ * Pre-flights a paypal_commerce refund submission before EDD creates the local
+ * refund record.
+ *
+ * Hooks `wp_ajax_edd_process_refund_form` ahead of EDD's own AJAX handler so
+ * we can call PayPal first and surface any gateway-side failure directly to
+ * the admin modal. On success the Connect response is cached so the post-flight
+ * `edd_refund_order` callback reuses it instead of double-charging the API.
+ *
+ * @since 3.6.9
+ *
+ * @return void
+ */
+function preflight_refund_submission() {
+	if ( ! current_user_can( 'edit_shop_payments' ) ) {
+		return;
+	}
+
+	$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
+	if ( ! $order_id ) {
+		return;
+	}
+
+	$order = edd_get_order( $order_id );
+	if ( ! $order || 'paypal_commerce' !== $order->gateway ) {
+		return;
+	}
+
+	if ( empty( $_POST['data'] ) ) {
+		return;
+	}
+	parse_str( $_POST['data'], $form_data );
+
+	// Only pre-flight when the admin actually asked for the PayPal-side refund.
+	if ( empty( $form_data['edd-paypal-commerce-refund'] ) ) {
+		return;
+	}
+
+	$mode = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+
+	$transaction_id = $order->get_transaction_id();
+	if ( empty( $transaction_id ) ) {
+		return;
+	}
+
+	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
+	$is_v3_order     = ! empty( $paypal_order_id );
+	$is_v3_store     = V3\Onboarding::is_v3_onboarded( $mode );
+
+	// v2 order on a v2 store — skip preflight, legacy API handles refunds directly.
+	if ( ! $is_v3_order && ! $is_v3_store ) {
+		return;
+	}
+
+	// Re-validate amounts the same way EDD core does, so a partial refund here
+	// matches the amount EDD will write to its own refund order after we return.
+	$order_items = \EDD\Orders\Refunds\FormParser::parse_order_items( $form_data );
+	$adjustments = \EDD\Orders\Refunds\FormParser::parse_adjustments( $form_data );
+
+	try {
+		$validator = new \EDD\Orders\Refunds\Validator( $order, $order_items, $adjustments );
+		$validator->validate_and_calculate_totals();
+	} catch ( \Exception $e ) {
+		// Validation errors will be surfaced again by EDD's own AJAX handler
+		// with the same details — don't intercept here.
+		return;
+	}
+
+	$refund_total = abs( (float) $validator->total );
+	if ( $refund_total <= 0 ) {
+		return;
+	}
+
+	$refund_args = array( 'capture_id' => $transaction_id );
+	if ( abs( $refund_total - abs( (float) $order->total ) ) > 0.001 ) {
+		$refund_args['amount'] = array(
+			'value'         => edd_format_amount( $refund_total ),
+			'currency_code' => $order->currency,
+		);
+	}
+
+	$proxy = new ConnectAPI( $mode );
+
+	if ( $is_v3_order ) {
+		// v3 order — refund via the orders endpoint (capture ID resolved proxy-side).
+		$proxy_response = $proxy->post( '/v3/paypal/orders/' . rawurlencode( $paypal_order_id ) . '/refund', $refund_args );
+	} else {
+		// v2 order on a v3 store — refund directly by capture/transaction ID.
+		$proxy_response = $proxy->post( '/v3/paypal/captures/' . rawurlencode( $transaction_id ) . '/refund', $refund_args );
+	}
+
+	if ( is_wp_error( $proxy_response ) || ConnectAPI::is_error( $proxy_response ) ) {
+		wp_send_json_error( resolve_refund_error_message( $proxy_response ), 422 );
+	}
+
+	// Cache the success payload so refund_transaction() reuses it instead of
+	// calling PayPal a second time when the edd_refund_order action fires.
+	set_transient( preflight_cache_key( $transaction_id ), $proxy_response, MINUTE_IN_SECONDS );
+}
+add_action( 'wp_ajax_edd_process_refund_form', __NAMESPACE__ . '\\preflight_refund_submission', 1 );
+
+/**
+ * Returns the seller-facing error message for a failed refund Connect response.
+ *
+ * Centralises the mapping so both the pre-flight handler and the post-flight
+ * `refund_transaction()` call surface identical messaging.
+ *
+ * @since 3.6.9
+ *
+ * @param mixed $proxy_response Either a WP_Error or a decoded Connect error response.
+ * @return string
+ */
+function resolve_refund_error_message( $proxy_response ): string {
+	if ( is_wp_error( $proxy_response ) ) {
+		return $proxy_response->get_error_message();
+	}
+
+	$insufficient_balance_message = __( 'Refund failed: the seller\'s PayPal balance is insufficient to process this refund. Please add funds to the PayPal account and try again.', 'easy-digital-downloads' );
+
+	if ( 'refund_insufficient_balance' === ConnectAPI::get_error_code( $proxy_response ) ) {
+		return $insufficient_balance_message;
+	}
+
+	if ( ! empty( $proxy_response['details']['details'] ) ) {
+		foreach ( (array) $proxy_response['details']['details'] as $detail ) {
+			$issue = is_array( $detail ) ? ( $detail['issue'] ?? '' ) : ( $detail->issue ?? '' );
+			if ( in_array( $issue, array( 'INSUFFICIENT_FUNDS', 'TRANSACTION_REFUSED', 'RECEIVER_UNABLE_TO_HONOR_REFUND' ), true ) ) {
+				return $insufficient_balance_message;
+			}
+		}
+	}
+
+	return ConnectAPI::get_error_message( $proxy_response );
+}
+
+/**
+ * Returns the transient key used to cache a pre-flighted refund Connect response.
+ *
+ * @since 3.6.9
+ *
+ * @param string $transaction_id Capture ID being refunded.
+ * @return string
+ */
+function preflight_cache_key( string $transaction_id ): string {
+	return 'edd_paypal_refund_preflight_' . md5( $transaction_id );
+}
 
 /**
  * Shows a checkbox to automatically refund payments in PayPal.
@@ -27,12 +175,22 @@ add_action( 'edd_after_submit_refund_table', function( Order $order ) {
 		return;
 	}
 
-	$mode = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+	$mode            = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
+	$transaction_id  = $order->get_transaction_id();
 
-	try {
-		new API( $mode );
-	} catch ( Exceptions\Authentication_Exception $e ) {
-		// If we don't have credentials.
+	if ( ! empty( $paypal_order_id ) ) {
+		// v3 order — always show.
+	} elseif ( ! empty( $transaction_id ) && V3\Onboarding::is_v3_onboarded( $mode ) ) {
+		// v2 order on a v3 store — show; proxy captures endpoint handles the refund.
+	} elseif ( ! empty( $transaction_id ) ) {
+		try {
+			new API( $mode );
+		} catch ( Exceptions\Authentication_Exception $e ) {
+			// v2 order on a v2 store with no credentials — can't refund.
+			return;
+		}
+	} else {
 		return;
 	}
 	?>
@@ -154,33 +312,77 @@ function refund_transaction( $payment_or_order, ?Order $refund_object = null ) {
 		throw new \Exception( __( 'Missing transaction ID.', 'easy-digital-downloads' ) );
 	}
 
-	$mode = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+	$mode            = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
 
-	$api = new API( $mode );
+	if ( ! empty( $paypal_order_id ) || V3\Onboarding::is_v3_onboarded( $mode ) ) {
+		// v3 order, or v2 order on a store now running v3 — route through the Connect proxy.
+		$proxy       = new ConnectAPI( $mode );
+		$refund_args = array();
+		if ( ! empty( $transaction_id ) ) {
+			$refund_args['capture_id'] = $transaction_id;
+		}
+		if ( $refund_object instanceof Order ) {
+			$refund_args['invoice_id'] = (string) $refund_object->id;
+		}
+		if ( $refund_object instanceof Order && abs( $refund_object->total ) !== abs( $order->total ) ) {
+			$refund_args['amount'] = array(
+				'value'         => (string) abs( $refund_object->total ),
+				'currency_code' => $refund_object->currency,
+			);
+		}
 
-	$args = $refund_object instanceof Order ? array( 'invoice_id' => $refund_object->id ) : array();
-	if ( $refund_object instanceof Order && abs( $refund_object->total ) !== abs( $order->total ) ) {
-		$args['amount'] = array(
-			'value'         => abs( $refund_object->total ),
-			'currency_code' => $refund_object->currency,
+		// Reuse the pre-flight response when present so we don't double-call PayPal.
+		// The pre-flight handler has already validated the gateway-side refund
+		// succeeded; the cached payload still drives the downstream side effects
+		// (negative transaction, notes, _edd_paypal_refunded meta).
+		$preflight_key  = preflight_cache_key( $transaction_id );
+		$preflighted    = get_transient( $preflight_key );
+
+		if ( false !== $preflighted ) {
+			$proxy_response = $preflighted;
+			delete_transient( $preflight_key );
+		} elseif ( ! empty( $paypal_order_id ) ) {
+			// v3 order — refund via orders endpoint (proxy resolves capture ID).
+			$proxy_response = $proxy->post( '/v3/paypal/orders/' . rawurlencode( $paypal_order_id ) . '/refund', $refund_args );
+		} else {
+			// v2 order on a v3 store — refund directly by capture/transaction ID.
+			$proxy_response = $proxy->post( '/v3/paypal/captures/' . rawurlencode( $transaction_id ) . '/refund', $refund_args );
+		}
+
+		if ( is_wp_error( $proxy_response ) || ConnectAPI::is_error( $proxy_response ) ) {
+			throw new API_Exception( resolve_refund_error_message( $proxy_response ), 500 );
+		}
+
+		$response             = json_decode( wp_json_encode( $proxy_response ) );
+		$refund_response_code = 201;
+	} else {
+		// v2 order on a v2 store — direct PayPal API call.
+		$api  = new API( $mode );
+		$args = $refund_object instanceof Order ? array( 'invoice_id' => $refund_object->id ) : array();
+		if ( $refund_object instanceof Order && abs( $refund_object->total ) !== abs( $order->total ) ) {
+			$args['amount'] = array(
+				'value'         => abs( $refund_object->total ),
+				'currency_code' => $refund_object->currency,
+			);
+		}
+		$response = $api->make_request(
+			'v2/payments/captures/' . urlencode( $transaction_id ) . '/refund',
+			$args,
+			array(
+				'Prefer' => 'return=representation',
+			)
 		);
+		$refund_response_code = $api->last_response_code;
 	}
 
-	$response = $api->make_request(
-		'v2/payments/captures/' . urlencode( $transaction_id ) . '/refund',
-		$args,
-		array(
-			'Prefer' => 'return=representation',
-		)
-	);
-
-	if ( 201 !== $api->last_response_code ) {
+	if ( 201 !== $refund_response_code ) {
 		throw new API_Exception( sprintf(
 			/* translators: 1: Response code, 2: Response message */
 			__( 'Unexpected response code: %1$d. Response: %2$s', 'easy-digital-downloads' ),
-			$api->last_response_code,
+			$refund_response_code,
 			json_encode( $response )
-		), $api->last_response_code );
+		), $refund_response_code );
 	}
 
 	if ( empty( $response->status ) || 'COMPLETED' !== strtoupper( $response->status ) ) {

@@ -26,8 +26,14 @@ function listen_for_ipn() {
 		return;
 	}
 
-	// Delay execution to allow webhooks to process first.
-	sleep( 3 );
+	// Delay execution to allow webhooks to process first. v2 receives both an
+	// IPN and a 1st-party webhook for each event, and the sleep prevents the
+	// IPN from racing the webhook. v3 receives Connect-relayed webhooks on a
+	// separate route, so there's nothing to race — skip the delay there.
+	$mode = \EDD\Gateways\PayPal\Gateway::get_paypal_mode();
+	if ( 'v3' !== get_option( "edd_paypal_{$mode}_commerce_version", '' ) ) {
+		sleep( 3 );
+	}
 
 	new \EDD\Gateways\PayPal\IPN( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 }

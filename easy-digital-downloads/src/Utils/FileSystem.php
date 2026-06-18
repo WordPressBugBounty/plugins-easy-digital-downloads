@@ -151,6 +151,32 @@ class FileSystem {
 	}
 
 	/**
+	 * Creates a directory.
+	 *
+	 * Wraps WP_Filesystem's mkdir when the direct filesystem is available, and
+	 * falls back to native PHP `mkdir()` with recursive creation otherwise.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @param string    $path  Path to the directory to create.
+	 * @param int|false $chmod Octal permission mode for the new directory. Defaults to `FS_CHMOD_DIR`.
+	 * @return bool True on success, false on failure.
+	 */
+	public static function mkdir( $path, $chmod = false ) {
+		$path = self::sanitize_file_path( $path );
+
+		if ( false === $chmod ) {
+			$chmod = defined( 'FS_CHMOD_DIR' ) ? FS_CHMOD_DIR : 0755;
+		}
+
+		if ( ! self::is_direct() ) {
+			return mkdir( $path, $chmod, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
+		}
+
+		return (bool) self::get_fs()->mkdir( $path, $chmod );
+	}
+
+	/**
 	 * Get the file contents as an array.
 	 *
 	 * Returns the file contents as an array. Each line in the file is an element in the array.

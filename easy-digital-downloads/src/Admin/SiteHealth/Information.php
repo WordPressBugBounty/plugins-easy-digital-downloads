@@ -66,6 +66,7 @@ class Information implements \EDD\EventManagement\SubscriberInterface {
 			'edd_pages'     => new Pages(),
 			'edd_templates' => new Templates(),
 			'edd_gateways'  => new Gateways(),
+			'edd_paypal'    => new PayPalCommerce(),
 			'edd_taxes'     => new Taxes(),
 			'edd_sessions'  => new Sessions(),
 			'edd_cron'      => new Cron(),

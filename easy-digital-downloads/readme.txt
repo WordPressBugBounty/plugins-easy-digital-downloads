@@ -4,9 +4,9 @@ Plugin URI: https://easydigitaldownloads.com
 Contributors: easydigitaldownloads, am, cklosows, littlerchicken, alhoseany, misulicus, smub, chriscct7, sumobi, johnjamesjacoby
 Tags: ecommerce, payments, sell digital products, digital store, stripe
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable Tag: 3.6.8
+Stable Tag: 3.6.9
 License: GPLv2 or later
 
 The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
@@ -293,6 +293,19 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.6.9 =
+* NEW: PayPal - Added support for Fastlane and additional payment methods for newly connected stores.
+* Admin: Improved notice compatibility.
+* Admin: Hardened sanitization of the banned emails setting.
+* Admin: Sorted Checkout fields were not persisting their order in the admin UI.
+* Cart: Improved the Cart Preview compatibility with caching layers.
+* Compatibility: Fixed an issue that could cause conflicts with forms added to the homepage of a site.
+* Emails: The email for the one-time login link could be stuck in a disabled state.
+* Imports: Improved parsing of import files.
+* Stripe: Card Elements was incorrectly adding the new Company field to the legacy Card Elements.
+
+View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
+
 = 3.6.8 =
 * NEW: Stripe - Added support for BLIK payments.
 * Admin: Fixed the orders table filter by total not working with the "greater than" condition.
@@ -306,8 +319,6 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 * PayPal Standard: Improved IPN handling.
 * Square: Improved reliability of connection process.
 * Stripe: Fixed an uncaught IntegrationError when a 100% discount code is applied with Payment Elements.
-
-View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
 
 = 3.6.7 =
 * NEW: Blocks - Introducing the Profile Editor Block.

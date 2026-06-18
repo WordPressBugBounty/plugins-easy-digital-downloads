@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Easy Digital Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads 3.6.8\n"
+"Project-Id-Version: Easy Digital Downloads 3.6.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-digital-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-14T18:16:27+00:00\n"
+"POT-Creation-Date: 2026-06-18T18:36:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
@@ -5833,7 +5833,7 @@ msgstr ""
 
 #: includes/admin/adjustments/adjustment-functions.php:53
 #: includes/admin/adjustments/adjustment-functions.php:73
-#: includes/admin/reporting/reports.php:727
+#: includes/admin/reporting/reports.php:731
 #: includes/reports/reports-functions.php:349
 #: includes/upgrades/functions.php:150
 #: src/Admin/Menu/Header.php:130
@@ -5968,8 +5968,8 @@ msgstr ""
 #: includes/admin/reporting/export/export-actions.php:44
 #: includes/admin/reporting/export/export-actions.php:48
 #: includes/admin/reporting/export/export-actions.php:55
-#: includes/admin/tools.php:960
-#: includes/admin/tools.php:966
+#: includes/admin/tools.php:962
+#: includes/admin/tools.php:967
 #: includes/admin/tools/class-edd-tools-recount-all-stats.php:78
 #: includes/admin/tools/class-edd-tools-recount-customer-stats.php:114
 #: includes/admin/tools/class-edd-tools-recount-download-stats.php:125
@@ -5983,10 +5983,10 @@ msgstr ""
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:518
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:593
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:711
-#: includes/api/class-edd-api.php:1979
-#: includes/api/class-edd-api.php:1983
-#: includes/api/class-edd-api.php:2005
-#: includes/api/class-edd-api.php:2015
+#: includes/api/class-edd-api.php:1973
+#: includes/api/class-edd-api.php:1977
+#: includes/api/class-edd-api.php:1999
+#: includes/api/class-edd-api.php:2009
 #: includes/blocks/includes/forms/recaptcha.php:178
 #: includes/cart/class-edd-cart.php:1558
 #: includes/cart/class-edd-cart.php:1572
@@ -6001,17 +6001,17 @@ msgstr ""
 #: includes/gateways/functions.php:257
 #: includes/gateways/manual.php:33
 #: includes/gateways/paypal-standard.php:172
-#: includes/gateways/paypal/admin/connect.php:629
-#: includes/gateways/paypal/admin/connect.php:633
-#: includes/gateways/paypal/admin/connect.php:669
-#: includes/gateways/paypal/admin/connect.php:673
-#: includes/gateways/paypal/admin/connect.php:829
-#: includes/gateways/paypal/admin/connect.php:841
-#: includes/gateways/paypal/checkout-actions.php:118
+#: includes/gateways/paypal/admin/connect.php:801
+#: includes/gateways/paypal/admin/connect.php:805
+#: includes/gateways/paypal/admin/connect.php:844
+#: includes/gateways/paypal/admin/connect.php:848
+#: includes/gateways/paypal/admin/connect.php:1049
+#: includes/gateways/paypal/admin/connect.php:1061
+#: includes/gateways/paypal/checkout-actions.php:181
 #: includes/gateways/stripe/includes/admin/upgrade-functions.php:87
 #: includes/process-download.php:311
 #: includes/process-download.php:946
-#: includes/query-filters.php:51
+#: includes/query-filters.php:50
 #: includes/user-functions.php:849
 #: includes/user-functions.php:873
 #: includes/user-functions.php:922
@@ -6034,6 +6034,7 @@ msgstr ""
 #: src/Admin/Upgrades/v3/Base.php:117
 #: src/Emails/Triggers.php:63
 #: src/Extensions/Updater.php:514
+#: src/Gateways/PayPal/V3/Onboarding.php:336
 #: src/Gateways/Square/Connection.php:64
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:293
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:302
@@ -6100,7 +6101,7 @@ msgid "Download System Info File"
 msgstr ""
 
 #: includes/admin/admin-deprecated-functions.php:336
-#: includes/admin/tools.php:1086
+#: includes/admin/tools.php:1087
 #: src/Admin/Tools/Traits/Profilers.php:229
 msgid "Copy to Clipboard"
 msgstr ""
@@ -6411,282 +6412,282 @@ msgid "The sequential starting number could not be updated because it could conf
 msgstr ""
 
 #. translators: %s: Sandbox doc link
-#: includes/admin/class-edd-notices.php:579
+#: includes/admin/class-edd-notices.php:583
 #, php-format
-msgid "Connecting to PayPal in Test Mode requires the use of Sandbox Credentials. If you need help finding this, you can <a href=\"%s\" target=\"_blank\">view our documentation</a> on using PayPal Sandbox."
+msgid "Connecting to PayPal in Test Mode requires a PayPal Sandbox account. If you need help, you can <a href=\"%s\" target=\"_blank\">view our documentation</a> on using PayPal Sandbox."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:595
+#: includes/admin/class-edd-notices.php:599
 msgid "Stripe payment methods synced successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:603
+#: includes/admin/class-edd-notices.php:607
 msgid "Stripe payment methods could not be synced."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:614
+#: includes/admin/class-edd-notices.php:618
 msgid "The cart preview feature requires the REST API to be enabled."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:645
+#: includes/admin/class-edd-notices.php:649
 msgid "Easy Digital Downloads is migrating orders. Sales and earnings data for your store will be updated when all orders have been migrated."
 msgstr ""
 
 #. translators: 1: opening link tag, 2: opening link tag, 3: closing link tag.
-#: includes/admin/class-edd-notices.php:668
+#: includes/admin/class-edd-notices.php:672
 #, php-format
 msgid "You are running an outdated version of the Easy Digital Downloads &mdash; Stripe Pro Payment Gateway. You may need to log into %1$syour account%3$s to download the latest version and %2$smanually upgrade%3$s it."
 msgstr ""
 
 #. translators: 1: Opening anchor tag; %2$s: Closing anchor tag.
-#: includes/admin/class-edd-notices.php:702
+#: includes/admin/class-edd-notices.php:719
 #, php-format
 msgid "New webhooks have been registered for PayPal Commerce, but we were unable to update them automatically. Please %1$ssync your webhooks manually%2$s."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:735
+#: includes/admin/class-edd-notices.php:752
 msgid "Discount code added."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:743
+#: includes/admin/class-edd-notices.php:760
 msgid "There was a problem adding that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:752
+#: includes/admin/class-edd-notices.php:769
 msgid "A discount with that code already exists, please use a different code."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:761
+#: includes/admin/class-edd-notices.php:778
 msgid "Discount code updated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:769
+#: includes/admin/class-edd-notices.php:786
 msgid "No changes were made to that discount code."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:777
+#: includes/admin/class-edd-notices.php:794
 msgid "There was a problem updating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:786
+#: includes/admin/class-edd-notices.php:803
 msgid "The discount code could not be added because one or more of the required fields was empty, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:795
+#: includes/admin/class-edd-notices.php:812
 msgid "The discount code entered is invalid; only alphanumeric characters are allowed, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:804
+#: includes/admin/class-edd-notices.php:821
 msgid "The discount amount must be a valid percentage or numeric flat amount. Please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:813
+#: includes/admin/class-edd-notices.php:830
 msgid "Discount code deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:821
+#: includes/admin/class-edd-notices.php:838
 msgid "There was a problem deleting that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:830
+#: includes/admin/class-edd-notices.php:847
 msgid "Discount code activated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:838
+#: includes/admin/class-edd-notices.php:855
 msgid "There was a problem activating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:847
+#: includes/admin/class-edd-notices.php:864
 msgid "Discount code deactivated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:855
+#: includes/admin/class-edd-notices.php:872
 msgid "There was a problem deactivating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:864
+#: includes/admin/class-edd-notices.php:881
 msgid "Discount code archived."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:872
+#: includes/admin/class-edd-notices.php:889
 msgid "There was a problem archiving that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:887
+#: includes/admin/class-edd-notices.php:904
 msgid "The reports have been refreshed."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:901
+#: includes/admin/class-edd-notices.php:918
 msgid "The settings have been imported."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:909
+#: includes/admin/class-edd-notices.php:926
 msgid "API keys successfully generated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:917
+#: includes/admin/class-edd-notices.php:934
 msgid "The specified user already has API keys."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:926
+#: includes/admin/class-edd-notices.php:943
 msgid "API keys successfully regenerated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:934
+#: includes/admin/class-edd-notices.php:951
 msgid "API keys successfully revoked."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:942
+#: includes/admin/class-edd-notices.php:959
 msgid "The test email summary was sent successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:951
+#: includes/admin/class-edd-notices.php:968
 msgid "Your extensions could not be refreshed because you have not verified your license key."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:961
+#: includes/admin/class-edd-notices.php:978
 msgid "Webhooks have been created for the Stripe gateway."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:970
+#: includes/admin/class-edd-notices.php:987
 msgid "There was an error creating webhooks for the Stripe gateway."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:980
+#: includes/admin/class-edd-notices.php:997
 msgid "Stripe webhooks could not be created because your site is not using HTTPS."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:995
+#: includes/admin/class-edd-notices.php:1012
 msgid "The note has been added successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1003
+#: includes/admin/class-edd-notices.php:1020
 msgid "The order has been updated successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1011
+#: includes/admin/class-edd-notices.php:1028
 msgid "Order successfully created."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1019
+#: includes/admin/class-edd-notices.php:1036
 msgid "The order has been moved to the trash."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1027
+#: includes/admin/class-edd-notices.php:1044
 msgid "The order has been restored."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1035
+#: includes/admin/class-edd-notices.php:1052
 msgid "The order has been deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1043
+#: includes/admin/class-edd-notices.php:1060
 msgid "The purchase receipt has been resent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1051
+#: includes/admin/class-edd-notices.php:1068
 msgid "The purchase receipt could not be resent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1060
+#: includes/admin/class-edd-notices.php:1077
 msgid "The purchase receipt may not have been sent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1069
+#: includes/admin/class-edd-notices.php:1086
 msgid "The order note has been deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1077
+#: includes/admin/class-edd-notices.php:1094
 msgid "The order values have been recalculated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1085
+#: includes/admin/class-edd-notices.php:1102
 msgid "The order values could not be recalculated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1100
+#: includes/admin/class-edd-notices.php:1117
 msgid "Customer successfully deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1108
+#: includes/admin/class-edd-notices.php:1125
 msgid "User successfully verified."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1116
+#: includes/admin/class-edd-notices.php:1133
 msgid "This user is already verified."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1125
+#: includes/admin/class-edd-notices.php:1142
 msgid "Verification email sent successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1133
+#: includes/admin/class-edd-notices.php:1150
 msgid "Customer email added."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1141
+#: includes/admin/class-edd-notices.php:1158
 msgid "Customer email deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1149
+#: includes/admin/class-edd-notices.php:1166
 msgid "Failed to delete customer email."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1158
+#: includes/admin/class-edd-notices.php:1175
 msgid "Primary email updated for customer."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1166
+#: includes/admin/class-edd-notices.php:1183
 msgid "Failed to set primary email."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1175
+#: includes/admin/class-edd-notices.php:1192
 msgid "Customer address deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1183
+#: includes/admin/class-edd-notices.php:1200
 msgid "Failed to delete customer address."
 msgstr ""
 
 #. translators: 1: opening strong tag, do not translate, 2: closing strong tag, do not translate
-#: includes/admin/class-edd-notices.php:1197
+#: includes/admin/class-edd-notices.php:1214
 #, php-format
 msgid "Congratulations! You are now running %1$sEasy Digital Downloads%2$s."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1209
+#: includes/admin/class-edd-notices.php:1226
 msgid "The user capabilities for Easy Digital Downloads have been reset."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1251
+#: includes/admin/class-edd-notices.php:1268
 msgid "Easy Digital Downloads debug logging is enabled. Please only leave it enabled for as long as it is needed for troubleshooting."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1254
+#: includes/admin/class-edd-notices.php:1271
 msgid "View Debug Log"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1255
+#: includes/admin/class-edd-notices.php:1272
 msgid "Delete Log File and Disable Logging"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1271
+#: includes/admin/class-edd-notices.php:1288
 #: includes/admin/customers/customer-actions.php:560
 #: includes/admin/emails/email-summary/class-edd-email-summary-admin.php:55
 #: includes/admin/tools/class-edd-tools-recount-all-stats.php:78
 #: includes/admin/tools/class-edd-tools-recount-download-stats.php:125
-#: includes/gateways/paypal/admin/connect.php:143
-#: includes/gateways/paypal/admin/connect.php:253
-#: includes/gateways/paypal/admin/connect.php:307
-#: includes/gateways/paypal/admin/connect.php:437
-#: includes/gateways/paypal/admin/connect.php:629
-#: includes/gateways/paypal/admin/connect.php:633
-#: includes/gateways/paypal/admin/connect.php:669
-#: includes/gateways/paypal/admin/connect.php:673
-#: includes/gateways/paypal/admin/connect.php:735
-#: includes/gateways/paypal/admin/connect.php:768
-#: includes/gateways/paypal/admin/connect.php:790
-#: includes/gateways/paypal/admin/connect.php:840
+#: includes/gateways/paypal/admin/connect.php:272
+#: includes/gateways/paypal/admin/connect.php:382
+#: includes/gateways/paypal/admin/connect.php:436
+#: includes/gateways/paypal/admin/connect.php:566
+#: includes/gateways/paypal/admin/connect.php:801
+#: includes/gateways/paypal/admin/connect.php:805
+#: includes/gateways/paypal/admin/connect.php:844
+#: includes/gateways/paypal/admin/connect.php:848
+#: includes/gateways/paypal/admin/connect.php:944
+#: includes/gateways/paypal/admin/connect.php:977
+#: includes/gateways/paypal/admin/connect.php:999
+#: includes/gateways/paypal/admin/connect.php:1060
 #: src/Admin/Emails/Manager.php:51
 #: src/Admin/Emails/Manager.php:99
 #: src/Admin/Emails/Manager.php:197
@@ -6694,13 +6695,20 @@ msgstr ""
 #: src/Admin/Promos/PromoHandler.php:169
 #: src/Admin/Promos/PromoHandler.php:174
 #: src/Admin/Promos/PromoHandler.php:198
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:66
+#: src/Gateways/PayPal/V3/Onboarding.php:80
+#: src/Gateways/PayPal/V3/Onboarding.php:177
+#: src/Gateways/PayPal/V3/Onboarding.php:294
+#: src/Gateways/PayPal/V3/Onboarding.php:386
+#: src/Gateways/PayPal/V3/Onboarding.php:403
+#: src/Gateways/PayPal/V3/Onboarding.php:436
 #: src/Gateways/Square/Admin/Settings/Register.php:147
 #: src/REST/Routes/LogPruning.php:104
 #: src/REST/Routes/Notifications.php:181
 msgid "You do not have permission to perform this action."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1276
+#: includes/admin/class-edd-notices.php:1293
 msgid "The debug log has been cleared and logging has been disabled."
 msgstr ""
 
@@ -6715,7 +6723,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-email-addresses-table.php:135
 #: includes/admin/customers/class-customer-table.php:129
 #: includes/admin/payments/orders.php:1135
-#: includes/misc-functions.php:1559
+#: includes/misc-functions.php:1561
 #: includes/payments/functions.php:542
 #: src/Admin/Tools/ScheduledActions.php:412
 #: src/Pro/CartRecovery/Traits/Status.php:41
@@ -6727,7 +6735,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-table.php:140
 #: includes/admin/views/customer/edit.php:82
 #: includes/class-edd-discount.php:706
-#: includes/misc-functions.php:1554
+#: includes/misc-functions.php:1556
 #: src/Admin/Discounts/Editor/Status.php:56
 #: src/Admin/Promos/About.php:834
 msgid "Active"
@@ -6940,7 +6948,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-table.php:135
 #: includes/admin/views/customer/edit.php:83
 #: includes/class-edd-discount.php:700
-#: includes/misc-functions.php:1555
+#: includes/misc-functions.php:1557
 #: src/Admin/Discounts/Editor/Status.php:57
 #: src/Admin/Promos/About.php:840
 msgid "Inactive"
@@ -7031,10 +7039,10 @@ msgstr ""
 #: includes/admin/discounts/discount-actions.php:94
 #: includes/admin/discounts/discount-actions.php:126
 #: includes/admin/discounts/discount-actions.php:157
-#: includes/admin/import/import-functions.php:26
-#: includes/admin/import/import-functions.php:146
+#: includes/admin/import/import-functions.php:27
+#: includes/admin/import/import-functions.php:148
 #: includes/admin/reporting/export/export-actions.php:25
-#: includes/api/class-edd-api.php:1979
+#: includes/api/class-edd-api.php:1973
 #: includes/class-edd-license-handler.php:479
 #: includes/user-functions.php:873
 #: src/Admin/Customers/Emails.php:80
@@ -7132,7 +7140,7 @@ msgid "Unnamed Customer"
 msgstr ""
 
 #: includes/admin/customers/customers.php:62
-#: includes/admin/reporting/reports.php:774
+#: includes/admin/reporting/reports.php:778
 #: src/Admin/Exports/Loader.php:156
 #: src/Admin/Menu/Header.php:133
 #: src/Admin/Menu/Pages.php:64
@@ -8116,45 +8124,45 @@ msgstr ""
 msgid "payments"
 msgstr ""
 
-#: includes/admin/import/import-functions.php:32
-#: includes/admin/import/import-functions.php:155
+#: includes/admin/import/import-functions.php:33
+#: includes/admin/import/import-functions.php:157
 msgid "Missing import parameters. Import class must be specified."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:47
-#: includes/admin/import/import-functions.php:196
+#: includes/admin/import/import-functions.php:48
+#: includes/admin/import/import-functions.php:198
 msgid "Invalid importer class supplied"
 msgstr ""
 
-#: includes/admin/import/import-functions.php:56
-#: includes/admin/import/import-functions.php:206
+#: includes/admin/import/import-functions.php:57
+#: includes/admin/import/import-functions.php:208
 msgid "You do not have permission to import data"
 msgstr ""
 
-#: includes/admin/import/import-functions.php:62
+#: includes/admin/import/import-functions.php:63
 msgid "Missing import file. Please provide an import file."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:71
-#: includes/admin/import/import-functions.php:186
-msgid "The file you uploaded does not appear to be a CSV file."
-msgstr ""
-
-#: includes/admin/import/import-functions.php:80
-#: includes/admin/import/import-functions.php:164
+#: includes/admin/import/import-functions.php:72
+#: includes/admin/import/import-functions.php:166
 msgid "Something went wrong during the upload process, please try again."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:101
+#: includes/admin/import/import-functions.php:82
+#: includes/admin/import/import-functions.php:188
+msgid "The file you uploaded does not appear to be a CSV file."
+msgstr ""
+
+#: includes/admin/import/import-functions.php:103
 msgid "Failed to move uploaded file to protected directory."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:235
+#: includes/admin/import/import-functions.php:237
 msgid "No data found for import parameters"
 msgstr ""
 
 #. translators: 1: URL to view imported items, 2: Import type label
-#: includes/admin/import/import-functions.php:251
+#: includes/admin/import/import-functions.php:253
 #, php-format
 msgid "Import complete! <a href=\"%1$s\">View imported %2$s</a>."
 msgstr ""
@@ -8248,11 +8256,11 @@ msgstr ""
 msgid "Nonce validation failed when submitting refund."
 msgstr ""
 
-#: includes/admin/payments/actions.php:559
+#: includes/admin/payments/actions.php:526
 msgid "Refund successfully processed."
 msgstr ""
 
-#: includes/admin/payments/actions.php:570
+#: includes/admin/payments/actions.php:537
 msgid "Unable to process refund."
 msgstr ""
 
@@ -9222,6 +9230,7 @@ msgstr ""
 #: includes/admin/reporting/class-categories-reports-table.php:77
 #: includes/admin/reporting/class-gateways-reports-table.php:77
 #: src/Reports/Data/Downloads/Earnings_By_Taxonomy_List_Table.php:179
+#: src/Reports/Data/Gateways/PayPalPaymentMethods.php:85
 #: src/Reports/Data/Gateways/StripePaymentMethods.php:81
 #: src/Reports/Data/Payment_Gateways/Gateway_Stats.php:82
 msgid "Total Sales"
@@ -9431,6 +9440,7 @@ msgstr ""
 #: src/Elementor/Widgets/Config/Checkout/Titles.php:68
 #: src/Emails/Tags/Registry.php:168
 #: src/Pro/Emails/ConditionalTags/Conditions/PaymentMethod.php:65
+#: src/Reports/Data/Gateways/PayPalPaymentMethods.php:81
 #: src/Reports/Data/Gateways/StripePaymentMethods.php:77
 #: templates/shortcode-receipt.php:63
 msgid "Payment Method"
@@ -9501,12 +9511,14 @@ msgid "Payment Error"
 msgstr ""
 
 #: includes/admin/reporting/class-gateways-reports-table.php:75
+#: src/Reports/Data/Gateways/PayPalPaymentMethods.php:82
 #: src/Reports/Data/Gateways/StripePaymentMethods.php:78
 #: src/Reports/Data/Payment_Gateways/Gateway_Stats.php:79
 msgid "Complete Sales"
 msgstr ""
 
 #: includes/admin/reporting/class-gateways-reports-table.php:76
+#: src/Reports/Data/Gateways/PayPalPaymentMethods.php:83
 #: src/Reports/Data/Gateways/StripePaymentMethods.php:79
 #: src/Reports/Data/Payment_Gateways/Gateway_Stats.php:80
 msgid "Pending / Failed Sales"
@@ -9530,7 +9542,7 @@ msgid "This screen provides you with reports for your earnings, downloads, custo
 msgstr ""
 
 #: includes/admin/reporting/contextual-help.php:67
-#: includes/admin/reporting/reports.php:807
+#: includes/admin/reporting/reports.php:811
 #: includes/admin/tools.php:851
 msgid "Export"
 msgstr ""
@@ -9675,17 +9687,17 @@ msgstr ""
 msgid "Refunds"
 msgstr ""
 
-#: includes/admin/reporting/reports.php:496
+#: includes/admin/reporting/reports.php:500
 msgid "Payment Gateways"
 msgstr ""
 
-#: includes/admin/reporting/reports.php:563
+#: includes/admin/reporting/reports.php:567
 #: includes/admin/settings/contextual-help.php:112
 #: includes/admin/settings/register-settings.php:420
 msgid "Taxes"
 msgstr ""
 
-#: includes/admin/reporting/reports.php:644
+#: includes/admin/reporting/reports.php:648
 #: includes/admin/settings/register-settings.php:526
 #: includes/privacy-functions.php:604
 #: src/Admin/Tools/Logs.php:139
@@ -9696,13 +9708,13 @@ msgstr ""
 msgid "File Downloads"
 msgstr ""
 
-#: includes/admin/reporting/reports.php:905
+#: includes/admin/reporting/reports.php:909
 #: includes/user-functions.php:877
 #: includes/user-functions.php:881
 msgid "Notice"
 msgstr ""
 
-#: includes/admin/reporting/reports.php:906
+#: includes/admin/reporting/reports.php:910
 msgid "Tax reports are only generated for taxes associated with a location. The legacy default tax rate is unable to be reported on."
 msgstr ""
 
@@ -10063,7 +10075,7 @@ msgstr ""
 #: includes/class-edd-discount.php:691
 #: src/Admin/Settings/Tabs/Gateways.php:499
 #: src/Admin/Settings/Tabs/Misc.php:351
-#: src/Cart/Preview/Component.php:84
+#: src/Cart/Preview/Component.php:85
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/build/terms/index.js:1
 #: includes/blocks/src/utilities/image-alignment.js:6
@@ -10618,49 +10630,49 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: includes/admin/tools.php:960
-msgid "Please upload a valid .json file"
-msgstr ""
-
-#: includes/admin/tools.php:966
+#: includes/admin/tools.php:962
 msgid "Please upload a file to import"
 msgstr ""
 
-#: includes/admin/tools.php:1036
+#: includes/admin/tools.php:967
+msgid "Please upload a valid .json file"
+msgstr ""
+
+#: includes/admin/tools.php:1037
 #: src/Admin/Tools/Traits/Profilers.php:176
 msgid "No File"
 msgstr ""
 
-#: includes/admin/tools.php:1039
+#: includes/admin/tools.php:1040
 #: src/Admin/Tools/Traits/Profilers.php:177
 msgid "Log is Empty"
 msgstr ""
 
-#: includes/admin/tools.php:1043
+#: includes/admin/tools.php:1044
 #: src/Admin/Tools/Screen.php:74
 msgid "Debug Log"
 msgstr ""
 
-#: includes/admin/tools.php:1049
+#: includes/admin/tools.php:1050
 msgid "Record important information to the debug log while troubleshooting."
 msgstr ""
 
 #. translators: 1: opening anchor tag, do not translate, 2: function name, do not translate, 3: closing anchor tag, do not translate
-#: includes/admin/tools.php:1068
+#: includes/admin/tools.php:1069
 #, php-format
 msgid "When debug mode is enabled, specific information will be logged here. (%1$sLearn how to use %2$s in your own code.%3$s)"
 msgstr ""
 
-#: includes/admin/tools.php:1085
+#: includes/admin/tools.php:1086
 msgid "Download Debug Log File"
 msgstr ""
 
-#: includes/admin/tools.php:1090
+#: includes/admin/tools.php:1091
 #: src/Admin/Tools/Traits/Profilers.php:238
 msgid "Clear Log"
 msgstr ""
 
-#: includes/admin/tools.php:1099
+#: includes/admin/tools.php:1100
 #: src/Admin/Tools/Traits/Profilers.php:251
 msgid "Log file"
 msgstr ""
@@ -11432,9 +11444,9 @@ msgstr ""
 
 #. translators: %s: product ID.
 #: includes/api/class-edd-api-v2.php:172
-#: includes/api/class-edd-api.php:1125
-#: includes/api/class-edd-api.php:1335
-#: includes/api/class-edd-api.php:1457
+#: includes/api/class-edd-api.php:1119
+#: includes/api/class-edd-api.php:1329
+#: includes/api/class-edd-api.php:1451
 #, php-format
 msgid "Product %s not found!"
 msgstr ""
@@ -11444,67 +11456,67 @@ msgid "Customer not found!"
 msgstr ""
 
 #: includes/api/class-edd-api-v2.php:359
-#: includes/api/class-edd-api.php:1074
+#: includes/api/class-edd-api.php:1068
 msgid "No customers found!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:462
+#: includes/api/class-edd-api.php:456
 msgid "You must specify both a token and API key!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:479
+#: includes/api/class-edd-api.php:473
 msgid "Your request could not be authenticated!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:496
+#: includes/api/class-edd-api.php:490
 msgid "Invalid API key!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:512
+#: includes/api/class-edd-api.php:506
 msgid "Invalid API version!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:685
+#: includes/api/class-edd-api.php:679
 msgid "Invalid query!"
 msgstr ""
 
 #. translators: %s: customer ID.
-#: includes/api/class-edd-api.php:1068
+#: includes/api/class-edd-api.php:1062
 #, php-format
 msgid "Customer %s not found!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:1233
-#: includes/api/class-edd-api.php:1350
+#: includes/api/class-edd-api.php:1227
+#: includes/api/class-edd-api.php:1344
 msgid "The end date must be later than the start date!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:1238
-#: includes/api/class-edd-api.php:1355
+#: includes/api/class-edd-api.php:1232
+#: includes/api/class-edd-api.php:1349
 msgid "Invalid or no date range specified!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:1625
+#: includes/api/class-edd-api.php:1619
 msgid "No discounts found!"
 msgstr ""
 
 #. translators: %s: discount ID.
-#: includes/api/class-edd-api.php:1671
+#: includes/api/class-edd-api.php:1665
 #, php-format
 msgid "Discount %s not found!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:1717
+#: includes/api/class-edd-api.php:1711
 msgid "No download logs found!"
 msgstr ""
 
-#: includes/api/class-edd-api.php:1983
+#: includes/api/class-edd-api.php:1977
 msgid "User ID Required"
 msgstr ""
 
 #. translators: %s: action being performed.
-#: includes/api/class-edd-api.php:2002
-#: includes/api/class-edd-api.php:2012
+#: includes/api/class-edd-api.php:1996
+#: includes/api/class-edd-api.php:2006
 #, php-format
 msgid "You do not have permission to %s API keys for this user"
 msgstr ""
@@ -11646,6 +11658,8 @@ msgstr ""
 #: src/Admin/Settings/Tabs/Gateways.php:243
 #: src/Cart/Preview/templates/dialog.php:46
 #: src/Gateways/Square/Checkout/Form.php:138
+#: src/REST/Controllers/Fastlane.php:94
+#: src/REST/Controllers/UnbrandedCard.php:90
 msgid "Your cart is empty."
 msgstr ""
 
@@ -13135,7 +13149,7 @@ msgstr ""
 
 #: includes/class-edd-discount.php:697
 #: includes/gateways/stripe/includes/template-functions.php:391
-#: includes/misc-functions.php:1556
+#: includes/misc-functions.php:1558
 #: src/Pro/CartRecovery/Traits/Status.php:26
 msgid "Expired"
 msgstr ""
@@ -14012,9 +14026,9 @@ msgstr ""
 #: includes/gateways/paypal-standard.php:618
 #: includes/gateways/paypal-standard.php:698
 #: includes/gateways/paypal-standard.php:712
-#: src/Gateways/PayPal/IPN.php:233
-#: src/Gateways/PayPal/IPN.php:268
-#: src/Gateways/PayPal/IPN.php:325
+#: src/Gateways/PayPal/IPN.php:266
+#: src/Gateways/PayPal/IPN.php:301
+#: src/Gateways/PayPal/IPN.php:358
 msgid "IPN Error"
 msgstr ""
 
@@ -14055,7 +14069,7 @@ msgstr ""
 
 #: includes/gateways/manual.php:33
 #: includes/gateways/paypal-standard.php:172
-#: includes/gateways/paypal/checkout-actions.php:118
+#: includes/gateways/paypal/checkout-actions.php:181
 msgid "Nonce verification has failed"
 msgstr ""
 
@@ -14219,7 +14233,7 @@ msgstr ""
 
 #. translators: %s: PayPal Transaction ID
 #: includes/gateways/paypal-standard.php:724
-#: includes/gateways/paypal/checkout-actions.php:420
+#: src/Gateways/PayPal/V3/TransactionRecorder.php:65
 #, php-format
 msgid "PayPal Transaction ID: %s"
 msgstr ""
@@ -14297,12 +14311,12 @@ msgid "PayPal PDT encountered an unexpected result, payment set to pending"
 msgstr ""
 
 #: includes/gateways/paypal-standard.php:1220
-#: includes/gateways/paypal/refunds.php:50
+#: includes/gateways/paypal/refunds.php:208
 msgid "Refund transaction in PayPal"
 msgstr ""
 
 #: includes/gateways/paypal-standard.php:1260
-#: includes/gateways/paypal/refunds.php:93
+#: includes/gateways/paypal/refunds.php:251
 msgid "Transaction not refunded in PayPal, as checkbox was not selected."
 msgstr ""
 
@@ -14328,169 +14342,239 @@ msgstr ""
 msgid "PayPal refund failed: %s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:35
-#: includes/gateways/paypal/admin/connect.php:466
+#: includes/gateways/paypal/admin/connect.php:37
+#: includes/gateways/paypal/admin/connect.php:601
+#: src/Gateways/PayPal/V3/Admin/Account.php:134
 msgid "sandbox"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:35
-#: includes/gateways/paypal/admin/connect.php:466
+#: includes/gateways/paypal/admin/connect.php:37
+#: includes/gateways/paypal/admin/connect.php:601
+#: src/Gateways/PayPal/V3/Admin/Account.php:134
 msgid "live"
 msgstr ""
 
+#: includes/gateways/paypal/admin/connect.php:64
+msgid "Update Recurring Payments to access PayPal's improved checkout experience. Until then, your existing PayPal integration will continue to work as is."
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:80
+msgid "PayPal connection needs re-establishing."
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:81
+msgid "Your site's security keys changed, so the stored PayPal credentials can no longer be read and could not be recovered automatically. Disconnect and reconnect to restore the connection."
+msgstr ""
+
 #. translators: 1. opening <strong> tag, 2. closing </strong> tag
-#: includes/gateways/paypal/admin/connect.php:47
+#: includes/gateways/paypal/admin/connect.php:163
 #, php-format
 msgid "%1$sPayPal Communication Error:%2$s We are having trouble communicating with PayPal at the moment. Please try again later, and if the issue persists, reach out to our support team."
 msgstr ""
 
 #. translators: %s: the store mode, either `sandbox` or `live`
-#: includes/gateways/paypal/admin/connect.php:62
+#: includes/gateways/paypal/admin/connect.php:178
+#: includes/gateways/paypal/admin/connect.php:253
 #, php-format
 msgid "Connect with PayPal in %s mode"
 msgstr ""
 
+#: includes/gateways/paypal/admin/connect.php:201
+msgid "Set unique WordPress security keys to connect PayPal."
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:204
+msgid "To connect securely with PayPal, your site needs unique WordPress security keys (salts). This install is currently using default, empty, or missing keys, which are not safe for processing payments. Generate a fresh set of keys, add them to your wp-config.php file, and reload this page."
+msgstr ""
+
+#. translators: 1: opening link tag to the WordPress.org key generator, 2: closing link tag, 3: opening link tag to a guide on WordPress security keys, 4: closing link tag.
+#: includes/gateways/paypal/admin/connect.php:210
+#, php-format
+msgid "%1$sGenerate new keys%2$s, then %3$sread how to add them to wp-config.php%4$s."
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:235
+msgid "PayPal onboarding could not be completed. Please try again or check the debug log for details."
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:240
+msgid "PayPal connection could not be completed:"
+msgstr ""
+
 #. translators: 1: HTTP response code, 2: error message
-#: includes/gateways/paypal/admin/connect.php:228
+#: includes/gateways/paypal/admin/connect.php:357
 #, php-format
 msgid "Unexpected response code: %1$d. Error: %2$s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:236
+#: includes/gateways/paypal/admin/connect.php:365
 msgid "An unexpected error occurred."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:268
+#: includes/gateways/paypal/admin/connect.php:397
 msgid "Failure reconnecting to PayPal. Please try again"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:274
+#: includes/gateways/paypal/admin/connect.php:403
 msgid "Your account has been successfully reconnected, but an error occurred while creating a webhook."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:311
+#: includes/gateways/paypal/admin/connect.php:440
 msgid "Missing PayPal authentication information. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:325
+#: includes/gateways/paypal/admin/connect.php:454
 msgid "Missing nonce. Please refresh the page and try again."
 msgstr ""
 
 #. translators: %d: HTTP response code
-#: includes/gateways/paypal/admin/connect.php:363
+#: includes/gateways/paypal/admin/connect.php:492
 #, php-format
 msgid "Unexpected response from PayPal while generating token. Response code: %d. Please try again."
 msgstr ""
 
 #. translators: %d: HTTP response code
-#: includes/gateways/paypal/admin/connect.php:396
+#: includes/gateways/paypal/admin/connect.php:525
 #, php-format
 msgid "Unexpected response from PayPal. Response code: %d. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:405
+#: includes/gateways/paypal/admin/connect.php:534
 msgid "Successfully connected."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:410
+#: includes/gateways/paypal/admin/connect.php:539
 msgid "Your account has been successfully connected, but an error occurred while creating a webhook."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:444
+#: includes/gateways/paypal/admin/connect.php:579
 msgid "Re-Check Payment Status"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:445
+#: includes/gateways/paypal/admin/connect.php:580
 msgid "Sync Webhook"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:449
+#: includes/gateways/paypal/admin/connect.php:584
 msgid "Disconnect webhooks from PayPal"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:450
-msgid "Delete connection with PayPal"
+#: includes/gateways/paypal/admin/connect.php:585
+#: includes/gateways/paypal/admin/connect.php:733
+msgid "Disconnect from PayPal"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:459
+#: includes/gateways/paypal/admin/connect.php:594
 msgid "API:"
 msgstr ""
 
 #. translators: %s: the connected mode, either `sandbox` or `live`
-#: includes/gateways/paypal/admin/connect.php:469
+#: includes/gateways/paypal/admin/connect.php:604
 #, php-format
 msgid "Your PayPal account is successfully connected in %s mode."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:484
+#: includes/gateways/paypal/admin/connect.php:619
 #: pro/templates/invoice/invoice-table.php:118
 msgid "Payment Status:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:488
+#: includes/gateways/paypal/admin/connect.php:623
 msgid "You need to address the following issues before you can start receiving payments:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:496
+#: includes/gateways/paypal/admin/connect.php:631
 msgid "Ready to accept payments."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:518
+#: includes/gateways/paypal/admin/connect.php:653
+#: src/Gateways/PayPal/V3/Admin/Account.php:594
+#: src/Gateways/PayPal/V3/Admin/Account.php:603
 msgid "Webhook:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:526
+#: includes/gateways/paypal/admin/connect.php:661
 msgid "Create Webhooks"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:531
+#: includes/gateways/paypal/admin/connect.php:666
 msgid "Webhook successfully configured for the following events:"
 msgstr ""
 
 #. translators: %1$s opening anchor tag; %2$s closing anchor tag; %3$s: opening line item/status/strong tags; %4$s closing strong tag; %5$s: closing list item tag
-#: includes/gateways/paypal/admin/connect.php:556
+#: includes/gateways/paypal/admin/connect.php:691
 #, php-format
 msgid "%3$sGateway Status: %4$s PayPal is not currently active. %1$sEnable PayPal%2$s in the general gateway settings to start using it.%5$s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:742
+#: includes/gateways/paypal/admin/connect.php:741
+msgid "Refresh Merchant Status"
+msgstr ""
+
+#: includes/gateways/paypal/admin/connect.php:951
 msgid "No merchant ID saved. Please reconnect to PayPal."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:828
+#: includes/gateways/paypal/admin/connect.php:1048
+#: src/Gateways/PayPal/V3/Onboarding.php:335
 msgid "There was an error processing the connection to PayPal. Please attempt to connect again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:832
+#: includes/gateways/paypal/admin/connect.php:1052
+#: src/Gateways/PayPal/V3/Onboarding.php:339
 #: src/Gateways/Square/Connection.php:67
 msgid "Return to settings"
 msgstr ""
 
-#: includes/gateways/paypal/admin/notices.php:49
+#: includes/gateways/paypal/admin/notices.php:81
+msgid "Action Required: Configure PayPal IPN for existing subscriptions"
+msgstr ""
+
+#. translators: 1: Opening anchor tag to PayPal IPN settings; 2: Closing anchor tag
+#: includes/gateways/paypal/admin/notices.php:87
+#, php-format
+msgid "You have active PayPal subscriptions that were created before your upgrade to the new PayPal integration. These subscriptions renew automatically at PayPal and their renewal payments are processed via PayPal's Instant Payment Notification (IPN). To ensure renewals are recorded in EDD, please verify that IPN is enabled in your %1$sPayPal account settings%2$s."
+msgstr ""
+
+#. translators: %s: IPN notification URL
+#: includes/gateways/paypal/admin/notices.php:100
+#, php-format
+msgid "Your IPN notification URL is: <code>%s</code>"
+msgstr ""
+
+#: includes/gateways/paypal/admin/notices.php:108
+#: src/Database/NotificationsDB.php:68
+msgid "Dismiss"
+msgstr ""
+
+#: includes/gateways/paypal/admin/notices.php:164
 msgid "Enable the new PayPal gateway for Easy Digital Downloads"
 msgstr ""
 
 #. translators: %1$s opening anchor tag; %2$s closing anchor tag
-#: includes/gateways/paypal/admin/notices.php:54
+#: includes/gateways/paypal/admin/notices.php:169
 #, php-format
 msgid "A new, improved PayPal experience is now available in Easy Digital Downloads. You can learn more about the new integration in %1$sour documentation%2$s."
 msgstr ""
 
-#: includes/gateways/paypal/admin/notices.php:61
+#: includes/gateways/paypal/admin/notices.php:176
 msgid "Activate the New PayPal"
 msgstr ""
 
-#: includes/gateways/paypal/admin/notices.php:62
+#: includes/gateways/paypal/admin/notices.php:177
 msgid "Dismiss Notice"
 msgstr ""
 
-#: includes/gateways/paypal/admin/scripts.php:35
+#: includes/gateways/paypal/admin/scripts.php:50
 msgid "An unexpected error occurred. Please refresh the page and try again."
 msgstr ""
 
 #: includes/gateways/paypal/admin/settings.php:36
 #: src/Gateways/PayPal/Gateway.php:57
 #: src/Gateways/PayPal/Gateway.php:67
+#: src/Gateways/PayPal/PaymentMethods/PayPal.php:42
+#: src/Gateways/PayPal/Payments.php:182
+#: src/Gateways/PayPal/V3/Vault.php:563
 #: src/Gateways/PayPalStandard/Gateway.php:67
 msgid "PayPal"
 msgstr ""
@@ -14546,77 +14630,117 @@ msgctxt "It is important to escape any quotations within this string, specifical
 msgid "Connecting your store with PayPal allows Easy Digital Downloads to automatically configure your store to securely communicate with PayPal.<br \\><br \\>You may see 'Sandhills Development, LLC', mentioned during the process&mdash;that is the company behind Easy Digital Downloads."
 msgstr ""
 
-#: includes/gateways/paypal/admin/settings.php:135
-msgid "Get Help"
+#: includes/gateways/paypal/admin/settings.php:119
+#: src/Admin/Onboarding/Wizard.php:236
+#: src/Gateways/Stripe/Admin/Settings.php:487
+msgid "Payment Methods"
 msgstr ""
 
 #. translators: %s: SSL setup article URL
-#: includes/gateways/paypal/admin/settings.php:147
+#: includes/gateways/paypal/admin/settings.php:151
 #, php-format
 msgid "PayPal requires an SSL certificate to accept payments. You can learn more about obtaining an SSL certificate in our <a href=\"%s\" target=\"_blank\">SSL setup article</a>."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:56
-#: includes/gateways/paypal/checkout-actions.php:130
+#: includes/gateways/paypal/checkout-actions.php:45
+#: includes/gateways/stripe/includes/i18n.php:132
+msgid "Subscriptions and non-subscriptions may not be purchased at the same time. Please purchase each separately."
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:46
+#: includes/gateways/stripe/includes/i18n.php:138
+msgid "Subscriptions must be purchased individually. Please update your cart to only contain a single subscription."
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:82
+msgid "Or Pay with"
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:94
+msgctxt "Divider between PayPal buttons and the card fields"
+msgid "Or"
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:119
+#: includes/gateways/paypal/checkout-actions.php:193
 msgid "Please connect your PayPal account in the gateway settings."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:57
-#: includes/gateways/paypal/checkout-actions.php:131
+#: includes/gateways/paypal/checkout-actions.php:120
+#: includes/gateways/paypal/checkout-actions.php:194
 msgid "Unexpected authentication error. Please contact a site administrator."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:125
+#: includes/gateways/paypal/checkout-actions.php:188
 #: src/Gateways/PayPal/Exceptions/Gateway_Exception.php:53
+#: src/Gateways/PayPal/Payments.php:236
 msgid "PayPal Gateway Error"
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:126
+#: includes/gateways/paypal/checkout-actions.php:189
 msgid "Account not ready to accept payments."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:157
-#: includes/gateways/paypal/checkout-actions.php:324
-#: includes/gateways/paypal/scripts.php:111
+#: includes/gateways/paypal/checkout-actions.php:220
+#: includes/gateways/paypal/checkout-actions.php:319
+#: includes/gateways/paypal/checkout-actions.php:464
+#: includes/gateways/paypal/scripts.php:341
+#: src/REST/Controllers/Fastlane.php:158
+#: src/REST/Controllers/Fastlane.php:170
+#: src/REST/Controllers/Fastlane.php:248
+#: src/REST/Controllers/UnbrandedCard.php:135
+#: src/REST/Controllers/UnbrandedCard.php:141
+#: src/REST/Controllers/UnbrandedCard.php:212
 msgid "An unexpected error occurred. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:210
+#: includes/gateways/paypal/checkout-actions.php:310
+#: includes/gateways/paypal/checkout-actions.php:370
+#: includes/gateways/paypal/checkout-actions.php:404
+#: includes/gateways/paypal/checkout-actions.php:478
+#: includes/gateways/paypal/checkout-actions.php:687
+msgid "An error occurred while communicating with PayPal. Please try again."
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:348
 msgid "PayPal Gateway Warning"
 msgstr ""
 
 #. translators: %s: Original order data sent to PayPal.
-#: includes/gateways/paypal/checkout-actions.php:213
+#: includes/gateways/paypal/checkout-actions.php:351
 #, php-format
 msgid "PayPal could not complete the transaction with the itemized breakdown. Original order data sent: %s"
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:232
-#: includes/gateways/paypal/checkout-actions.php:264
-#: includes/gateways/paypal/checkout-actions.php:442
-msgid "An error occurred while communicating with PayPal. Please try again."
-msgstr ""
-
-#: includes/gateways/paypal/checkout-actions.php:262
-#: includes/gateways/paypal/checkout-actions.php:440
+#: includes/gateways/paypal/checkout-actions.php:402
+#: includes/gateways/paypal/checkout-actions.php:685
 msgid "An authentication error occurred. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:301
-#: includes/gateways/paypal/checkout-actions.php:309
-#: includes/gateways/paypal/checkout-actions.php:316
+#: includes/gateways/paypal/checkout-actions.php:441
+#: includes/gateways/paypal/checkout-actions.php:449
+#: includes/gateways/paypal/checkout-actions.php:456
 msgid "A validation error occurred. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:337
+#: includes/gateways/paypal/checkout-actions.php:493
 msgid "Failed to process payment. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:346
+#: includes/gateways/paypal/checkout-actions.php:502
 msgid "Unable to complete your order with your chosen payment method. Please choose a new funding source."
 msgstr ""
 
-#: includes/gateways/paypal/checkout-actions.php:431
+#. translators: %s: PayPal capture status reason (e.g. PENDING_REVIEW).
+#. translators: %s: PayPal capture status reason.
+#: includes/gateways/paypal/checkout-actions.php:546
+#: src/REST/Controllers/Fastlane.php:312
+#: src/REST/Controllers/UnbrandedCard.php:398
+#, php-format
+msgid "PayPal placed this capture in a pending state (%s). The order will update automatically when PayPal completes review."
+msgstr ""
+
+#: includes/gateways/paypal/checkout-actions.php:674
 msgid "Your payment was declined. Please try a new payment method."
 msgstr ""
 
@@ -14659,42 +14783,60 @@ msgstr ""
 msgid "Buyer complaint"
 msgstr ""
 
-#: includes/gateways/paypal/refunds.php:55
+#: includes/gateways/paypal/refunds.php:136
+msgid "Refund failed: the seller's PayPal balance is insufficient to process this refund. Please add funds to the PayPal account and try again."
+msgstr ""
+
+#: includes/gateways/paypal/refunds.php:213
 msgid "This order is currently on hold. You can create the refund transaction in EDD; PayPal may have already issued a refund."
 msgstr ""
 
 #. translators: 1: Refund ID, 2: Error message
-#: includes/gateways/paypal/refunds.php:119
+#: includes/gateways/paypal/refunds.php:277
 #, php-format
 msgid "Failure when processing PayPal refund #%1$d: %2$s"
 msgstr ""
 
-#: includes/gateways/paypal/refunds.php:154
+#: includes/gateways/paypal/refunds.php:312
 msgid "Missing transaction ID."
 msgstr ""
 
 #. translators: 1: Response code, 2: Response message
-#: includes/gateways/paypal/refunds.php:180
+#: includes/gateways/paypal/refunds.php:382
 #, php-format
 msgid "Unexpected response code: %1$d. Response: %2$s"
 msgstr ""
 
 #. translators: %s: API response from PayPal
-#: includes/gateways/paypal/refunds.php:189
+#: includes/gateways/paypal/refunds.php:391
 #, php-format
 msgid "Missing or unexpected refund status. Response: %s"
 msgstr ""
 
 #. translators: 1: amount refunded; 2: transaction ID.
-#: includes/gateways/paypal/refunds.php:202
+#: includes/gateways/paypal/refunds.php:404
 #, php-format
 msgid "%1$s refunded in PayPal. Refund transaction ID: %2$s"
 msgstr ""
 
 #. translators: %s: ID of the refund in PayPal
-#: includes/gateways/paypal/refunds.php:209
+#: includes/gateways/paypal/refunds.php:411
 #, php-format
 msgid "Successfully refunded in PayPal. Refund transaction ID: %s"
+msgstr ""
+
+#: includes/gateways/paypal/scripts.php:161
+msgid "PayPal Fastlane SDK token request rejected"
+msgstr ""
+
+#. translators: 1: HTTP response code, 2: domain sent, 3: JSON-encoded Connect response
+#: includes/gateways/paypal/scripts.php:164
+#, php-format
+msgid "Proxy returned %1$d. Domain sent: %2$s. Response: %3$s"
+msgstr ""
+
+#: includes/gateways/paypal/scripts.php:346
+msgid "Please check your card details and try again."
 msgstr ""
 
 #: includes/gateways/paypal/webhooks/functions.php:87
@@ -15258,14 +15400,6 @@ msgstr ""
 msgid "There was an error processing your payment. Please try again."
 msgstr ""
 
-#: includes/gateways/stripe/includes/i18n.php:132
-msgid "Subscriptions and non-subscriptions may not be purchased at the same time. Please purchase each separately."
-msgstr ""
-
-#: includes/gateways/stripe/includes/i18n.php:138
-msgid "Subscriptions must be purchased individually. Please update your cart to only contain a single subscription."
-msgstr ""
-
 #: includes/gateways/stripe/includes/integrations/wp-cli.php:49
 msgid "The Stripe customer ID migration has already been run. To do this anyway, use the --force argument."
 msgstr ""
@@ -15291,52 +15425,52 @@ msgstr ""
 msgid "Unable to create customer. Please try again."
 msgstr ""
 
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:217
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:218
 msgid "Charges are no longer directly created in Stripe. Please read the following for more information: https://easydigitaldownloads.com/development/"
 msgstr ""
 
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:366
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:391
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:412
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:494
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:582
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:672
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:765
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:964
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1107
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:367
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:392
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:413
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:495
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:583
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:673
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:766
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:965
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1108
 #: src/Gateways/Stripe/Checkout/Complete.php:91
 msgid "Stripe Error"
 msgstr ""
 
 #. translators: %s: Error message
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:369
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:394
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:370
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:395
 #, php-format
 msgid "There was an error while processing a Stripe payment. Payment data: %s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:458
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:468
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:533
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:543
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:620
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:631
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:710
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:720
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:804
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:815
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:865
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1002
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1013
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1039
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1092
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:459
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:469
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:534
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:544
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:621
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:632
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:711
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:721
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:805
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:816
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:866
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1003
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1014
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1040
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:1093
 #: src/Gateways/Stripe/Checkout/Validation.php:41
 #: src/Gateways/Stripe/Checkout/Validation.php:98
 #: src/Gateways/Stripe/Checkout/Validation.php:125
 msgid "An error occurred, but your payment may have gone through. Please contact the site administrator."
 msgstr ""
 
-#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:949
+#: includes/gateways/stripe/includes/payment-actions/card-elements-actions.php:950
 msgid "Unable to create payment."
 msgstr ""
 
@@ -15635,31 +15769,31 @@ msgstr ""
 msgid "The %1$s hook is <strong>deprecated</strong> since Easy Digital Downloads version %2$s with no alternative available."
 msgstr ""
 
-#: includes/misc-functions.php:1320
+#: includes/misc-functions.php:1322
 msgid "Store Bot"
 msgstr ""
 
-#: includes/misc-functions.php:1560
+#: includes/misc-functions.php:1562
 msgid "Verified"
 msgstr ""
 
-#: includes/misc-functions.php:1561
+#: includes/misc-functions.php:1563
 msgid "Spam"
 msgstr ""
 
-#: includes/misc-functions.php:1562
+#: includes/misc-functions.php:1564
 msgid "Deleted"
 msgstr ""
 
-#: includes/misc-functions.php:1563
+#: includes/misc-functions.php:1565
 msgid "Cancelled"
 msgstr ""
 
-#: includes/misc-functions.php:1680
+#: includes/misc-functions.php:1682
 msgid "Please define default parameters in the form of an array."
 msgstr ""
 
-#: includes/misc-functions.php:1685
+#: includes/misc-functions.php:1687
 msgid "Please define an SVG icon filename."
 msgstr ""
 
@@ -16525,7 +16659,7 @@ msgstr ""
 msgid "Your email address must be shorter than 100 characters."
 msgstr ""
 
-#: includes/query-filters.php:51
+#: includes/query-filters.php:50
 msgid "You do not have permission to view this file."
 msgstr ""
 
@@ -18587,19 +18721,23 @@ msgstr ""
 msgid "Featured Downloads has been merged into Easy Digital Downloads. If you are using the [edd_featured_downloads] shortcode anywhere, please update it to use the downloads block or shortcode instead and then deactivate this plugin."
 msgstr ""
 
+#: src/Admin/Extensions/Legacy.php:168
+msgid "PayPal Commerce Pro features are now built into the EDD PayPal integration. Advanced card fields are handled via Fastlane. This plugin has been deactivated and can be safely deleted."
+msgstr ""
+
 #. translators: %s: name of the extension.
-#: src/Admin/Extensions/Legacy.php:220
+#: src/Admin/Extensions/Legacy.php:232
 #, php-format
 msgid "%s is now part of EDD!"
 msgstr ""
 
 #. translators: %s: name of the extension.
-#: src/Admin/Extensions/Legacy.php:225
+#: src/Admin/Extensions/Legacy.php:237
 #, php-format
 msgid "The functionality of %1$s has been merged into Easy Digital Downloads. It has been deactivated and you can safely delete the %2$s plugin."
 msgstr ""
 
-#: src/Admin/Extensions/Legacy.php:244
+#: src/Admin/Extensions/Legacy.php:256
 msgid "View Plugins"
 msgstr ""
 
@@ -18967,11 +19105,6 @@ msgstr ""
 
 #: src/Admin/Onboarding/Wizard.php:232
 msgid "Where is your business located? This helps Easy Digital Downloads configure the checkout and receipt templates."
-msgstr ""
-
-#: src/Admin/Onboarding/Wizard.php:236
-#: src/Gateways/Stripe/Admin/Settings.php:487
-msgid "Payment Methods"
 msgstr ""
 
 #: src/Admin/Onboarding/Wizard.php:237
@@ -20367,7 +20500,7 @@ msgstr ""
 
 #: src/Admin/Settings/Tabs/Gateways.php:105
 #: src/Emails/Templates/LoginLink.php:72
-#: src/Emails/Templates/LoginLink.php:141
+#: src/Emails/Templates/LoginLink.php:154
 msgid "One-Time Login Link"
 msgstr ""
 
@@ -20674,14 +20807,14 @@ msgstr ""
 msgid "If an order qualifies for <strong>Affirm</strong> financing, the customer will be required to enter a billing address, regardless of the address fields selected."
 msgstr ""
 
-#: src/Admin/Settings/Tabs/Gateways.php:608
-#: src/Admin/Settings/Tabs/Gateways.php:621
+#: src/Admin/Settings/Tabs/Gateways.php:606
+#: src/Admin/Settings/Tabs/Gateways.php:619
 msgid "Required for tax calculations."
 msgstr ""
 
 #. translators: 1: opening button tag, 2: closing button tag
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Admin/Settings/Tabs/Gateways.php:647
+#: src/Admin/Settings/Tabs/Gateways.php:645
 #: src/Pro/Recommendations/Manager.php:106
 #, php-format
 msgid "Enable smart product recommendations in your cart preview when you %1$sUpgrade to Pro%2$s."
@@ -21571,7 +21704,7 @@ msgstr ""
 msgid "Easy Digital Downloads &mdash; General"
 msgstr ""
 
-#: src/Admin/SiteHealth/General.php:214
+#: src/Admin/SiteHealth/General.php:218
 #: src/Admin/Tools/Logs/LogTypesListTable.php:375
 #: src/Admin/Tools/ScheduledActions.php:158
 #: src/Gateways/Square/Admin/Settings/Render.php:109
@@ -21613,6 +21746,20 @@ msgstr ""
 
 #: src/Admin/SiteHealth/Pages.php:26
 msgid "Easy Digital Downloads &mdash; Pages"
+msgstr ""
+
+#: src/Admin/SiteHealth/PayPalCommerce.php:29
+msgid "Easy Digital Downloads &mdash; PayPal Commerce"
+msgstr ""
+
+#. translators: %s: PayPal Commerce mode label, either "Live" or "Sandbox".
+#: src/Admin/SiteHealth/PayPalCommerce.php:48
+#, php-format
+msgid "Connection (%s)"
+msgstr ""
+
+#: src/Admin/SiteHealth/PayPalCommerce.php:56
+msgid "Enabled Payment Methods"
 msgstr ""
 
 #: src/Admin/SiteHealth/Sessions.php:26
@@ -22174,34 +22321,34 @@ msgstr ""
 msgid "Failed to update quantity. Please try again."
 msgstr ""
 
-#: src/Cart/Preview/Component.php:78
+#: src/Cart/Preview/Component.php:79
 msgid "Button Size"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:85
+#: src/Cart/Preview/Component.php:86
 msgid "Small"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:86
+#: src/Cart/Preview/Component.php:87
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/build/terms/index.js:1
 #: includes/blocks/src/utilities/image-size.js:14
 msgid "Large"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:104
+#: src/Cart/Preview/Component.php:105
 msgid "Button Position"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:110
+#: src/Cart/Preview/Component.php:111
 msgid "Bottom Left Corner"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:111
+#: src/Cart/Preview/Component.php:112
 msgid "Bottom Right Corner"
 msgstr ""
 
-#: src/Cart/Preview/Component.php:123
+#: src/Cart/Preview/Component.php:124
 msgid "Optionally show button to open the cart preview when items are in the cart."
 msgstr ""
 
@@ -22384,10 +22531,6 @@ msgstr ""
 
 #: src/Database/NotificationsDB.php:67
 msgid "Close panel"
-msgstr ""
-
-#: src/Database/NotificationsDB.php:68
-msgid "Dismiss"
 msgstr ""
 
 #: src/Database/NotificationsDB.php:69
@@ -23131,30 +23274,30 @@ msgstr ""
 msgid "This email is only available when the login link feature is enabled in the checkout settings."
 msgstr ""
 
-#: src/Emails/Templates/LoginLink.php:142
+#: src/Emails/Templates/LoginLink.php:155
 msgid "The link for the user to log in without a password."
 msgstr ""
 
 #. translators: %s: The email tag that will be replaced with the customer's full name.
-#: src/Emails/Templates/LoginLink.php:182
+#: src/Emails/Templates/LoginLink.php:195
 #: src/Emails/Templates/UserVerification.php:136
 #, php-format
 msgid "Hello %s,"
 msgstr ""
 
 #. translators: %s: The email tag that will be replaced with the Site Name.
-#: src/Emails/Templates/LoginLink.php:187
+#: src/Emails/Templates/LoginLink.php:200
 #, php-format
 msgid "A login link was requested for your account on %s."
 msgstr ""
 
 #. translators: %s: The email tag that will be replaced with the login link URL.
-#: src/Emails/Templates/LoginLink.php:192
+#: src/Emails/Templates/LoginLink.php:205
 #, php-format
 msgid "Click here to log in: %s"
 msgstr ""
 
-#: src/Emails/Templates/LoginLink.php:195
+#: src/Emails/Templates/LoginLink.php:208
 msgid "If you did not request this link, you can safely ignore this email."
 msgstr ""
 
@@ -23572,6 +23715,14 @@ msgid_plural "Webhook is configured but missing events. Click \"Sync Webhook\" t
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/Gateways/PayPal/Admin/Settings/PaymentMethodsField.php:53
+msgid "Connect your PayPal account to configure payment methods."
+msgstr ""
+
+#: src/Gateways/PayPal/Admin/Settings/PaymentMethodsField.php:59
+msgid "The methods actually displayed to your customers will vary based on currency, country, and what's in their cart. Methods PayPal hasn't enabled on your account cannot be enabled in EDD."
+msgstr ""
+
 #. translators: %s: The ID of the PayPal credential
 #: src/Gateways/PayPal/API.php:158
 #, php-format
@@ -23591,106 +23742,106 @@ msgid "Response Code: %1$d; Message: %2$s"
 msgstr ""
 
 #. translators: %1$s: Error message; %2$s: IPN data
-#: src/Gateways/PayPal/IPN.php:236
+#: src/Gateways/PayPal/IPN.php:269
 #, php-format
 msgid "PayPal IPN verification failed. Error: %1$s. IPN data: %2$s"
 msgstr ""
 
 #. translators: %s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:271
+#: src/Gateways/PayPal/IPN.php:304
 #, php-format
 msgid "PayPal rejected IPN as INVALID. Transaction ID: %s"
 msgstr ""
 
 #. translators: %1$s: Details; %2$s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:328
+#: src/Gateways/PayPal/IPN.php:361
 #, php-format
 msgid "IPN rejected due to verification unavailability: %1$s. Transaction ID: %2$s"
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:341
+#: src/Gateways/PayPal/IPN.php:374
 #: src/Gateways/PayPal/Traits/Validate.php:59
 msgid "IPN Warning"
 msgstr ""
 
 #. translators: %1$s: Details; %2$s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:344
+#: src/Gateways/PayPal/IPN.php:377
 #, php-format
 msgid "Processing IPN without PayPal verification due to: %1$s. Enhanced validation will be performed. Transaction ID: %2$s"
 msgstr ""
 
 #. translators: 1: Verification failure reason, 2: Details, 3: Transaction ID, 4: Amount, 5: Currency
-#: src/Gateways/PayPal/IPN.php:413
+#: src/Gateways/PayPal/IPN.php:446
 #, php-format
 msgid "Renewal order created with on_hold status for manual review.%1$s%1$sPayPal verification was unavailable:%1$sReason: %2$s%1$sDetails: %3$s%1$s%1$sThis appears to be a legitimate renewal based on:%1$s- Transaction ID: %4$s%1$s- Amount matches subscription: %5$s%1$s- Currency matches: %6$s%1$s%1$sPlease verify this transaction in your PayPal account and update the order status accordingly."
 msgstr ""
 
 #. translators: 1: Order ID, 2: Transaction ID
-#: src/Gateways/PayPal/IPN.php:434
+#: src/Gateways/PayPal/IPN.php:467
 #, php-format
 msgid "Renewal order %1$d created with on_hold status due to PayPal verification issues. Transaction ID: %2$s. Please review and approve if legitimate."
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:451
+#: src/Gateways/PayPal/IPN.php:484
 msgid "IPN - Manual Review Required"
 msgstr ""
 
 #. translators: %1$d: Order ID; %2$s: Reason; %3$s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:454
+#: src/Gateways/PayPal/IPN.php:487
 #, php-format
 msgid "Renewal order %1$d created with on_hold status. PayPal verification unavailable (%2$s). Transaction ID: %3$s. Please review in PayPal account."
 msgstr ""
 
 #. translators: 1: Dispute ID, 2: Dispute reason code. Example: The PayPal transaction has been disputed. Case ID: PP-R-NMW-10060094. Reason given: non_receipt.
-#: src/Gateways/PayPal/IPN.php:491
+#: src/Gateways/PayPal/IPN.php:524
 #, php-format
 msgid "The PayPal transaction has been disputed (IPN). Case ID: %1$s. Reason given: %2$s."
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:493
+#: src/Gateways/PayPal/IPN.php:526
 msgid "unknown"
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:600
+#: src/Gateways/PayPal/IPN.php:633
 msgid "Invalid Currency Code"
 msgstr ""
 
 #. translators: %1$d: Subscription ID; %2$s: Expected currency; %3$s: Received currency; %4$s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:603
+#: src/Gateways/PayPal/IPN.php:636
 #, php-format
 msgid "Currency mismatch for subscription %1$d. Expected: %2$s, Received: %3$s. Transaction ID: %4$s"
 msgstr ""
 
 #. translators: %s: The transaction ID of the failed payment
-#: src/Gateways/PayPal/IPN.php:633
+#: src/Gateways/PayPal/IPN.php:666
 #, php-format
 msgid "Transaction ID %s failed in PayPal"
 msgstr ""
 
 #. translators: %s: The collected outstanding balance of the subscription
-#: src/Gateways/PayPal/IPN.php:687
+#: src/Gateways/PayPal/IPN.php:720
 #, php-format
 msgid "Outstanding subscription balance of %s collected successfully."
 msgstr ""
 
 #. translators: %s: Transaction ID
-#: src/Gateways/PayPal/IPN.php:784
+#: src/Gateways/PayPal/IPN.php:817
 #, php-format
 msgid "Reversal processed in PayPal (IPN). Transaction ID: %s"
 msgstr ""
 
 #. translators: 1:  Amount refunded; %2$s - Original payment ID; %3$s - Refund transaction ID
-#: src/Gateways/PayPal/IPN.php:802
+#: src/Gateways/PayPal/IPN.php:835
 #: src/Gateways/PayPal/Webhooks/Events/Payment_Capture_Refunded.php:53
 #, php-format
 msgid "Amount: %1$s; Payment transaction ID: %2$s; Refund transaction ID: %3$s"
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:814
+#: src/Gateways/PayPal/IPN.php:847
 msgid "Partial refund processed in PayPal (IPN)."
 msgstr ""
 
-#: src/Gateways/PayPal/IPN.php:824
+#: src/Gateways/PayPal/IPN.php:857
 msgid "Full refund processed in PayPal (IPN)."
 msgstr ""
 
@@ -23702,8 +23853,132 @@ msgstr ""
 msgid "Your PayPal email address needs to be confirmed."
 msgstr ""
 
+#: src/Gateways/PayPal/PaymentMethods/ApplePay.php:44
+#: src/Gateways/PayPal/Payments.php:186
+#: src/Gateways/Stripe/PaymentMethods/ApplePay.php:58
+msgid "Apple Pay"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/ApplePay.php:55
+msgid "Accept Apple Pay on supported devices."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Card.php:45
+msgid "Credit/Debit Cards via PayPal"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Card.php:56
+msgid "Allow users to pay with credit or debit cards via PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Fastlane.php:44
+#: src/Gateways/PayPal/Payments.php:188
+msgid "Fastlane"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Fastlane.php:55
+msgid "Accelerated card checkout for returning buyers, with one-tap authentication."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Fastlane.php:99
+msgid "Fastlane requires PayPal's vaulting capability, which has not been granted to your account."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/GooglePay.php:43
+#: src/Gateways/PayPal/Payments.php:187
+#: src/Gateways/Stripe/PaymentMethods/GooglePay.php:58
+msgid "Google Pay"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/GooglePay.php:54
+msgid "Accept Google Pay on supported devices."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/PayLater.php:45
+msgid "Pay Later"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/PayLater.php:56
+msgid "Show Pay in 4 / PayPal Credit options and on-checkout messaging."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/PayLater.php:115
+msgid "Renders only when PayPal determines the buyer is eligible based on cart amount, country, and account state."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/PayPal.php:53
+msgid "Required. The primary PayPal checkout button."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/UnbrandedCard.php:45
+msgid "Credit/Debit Cards on Checkout"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/UnbrandedCard.php:56
+msgid "Allow users to pay with credit or debit cards on your checkout page."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/UnbrandedCard.php:100
+msgid "On-checkout card fields require PayPal's Advanced Card Processing, which has not been granted to your account."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Venmo.php:43
+#: src/Gateways/PayPal/Payments.php:183
+msgid "Venmo"
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Venmo.php:54
+msgid "Accept Venmo payments. Available to US merchants approved for Venmo by PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/PaymentMethods/Venmo.php:98
+msgid "Venmo is not enabled on your PayPal account. PayPal grants Venmo to qualifying US merchants after a review of country, business category, and risk profile."
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:120
+#: src/Gateways/PayPal/Payments.php:142
+msgid "PayPal Account"
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:184
+msgid "Credit Card (PayPal)"
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:185
+msgid "Credit/Debit Card"
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:215
+msgid "Your payment method was declined. Please try another."
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:219
+msgid "PayPal is busy. Please try again in a moment."
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:223
+msgid "PayPal is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: src/Gateways/PayPal/Payments.php:227
+msgid "An error occurred processing your payment. Please try again."
+msgstr ""
+
+#. translators: 1: Connect error code, 2: Connect error message, 3: Full Connect response.
+#: src/Gateways/PayPal/Payments.php:239
+#, php-format
+msgid "PayPal v3 order creation failed. Error code: %1$s. Message: %2$s. Response: %3$s"
+msgstr ""
+
+#. translators: %d: refund ID.
+#: src/Gateways/PayPal/Payments.php:302
+#, php-format
+msgid "Refund for order #%d"
+msgstr ""
+
 #: src/Gateways/PayPal/Token.php:35
 #: src/REST/Security.php:73
+#: src/REST/Security.php:121
 msgid "Invalid token."
 msgstr ""
 
@@ -23727,6 +24002,228 @@ msgstr ""
 #: src/Gateways/PayPal/Traits/Validate.php:113
 #, php-format
 msgid "IPN amount mismatch detected. Expected: %1$s, Received: %2$s. Transaction not processed. Transaction ID: %3$s"
+msgstr ""
+
+#. translators: 1: mode label (sandbox or live), 2: seller PayPal email or merchant ID
+#: src/Gateways/PayPal/V3/Admin/Account.php:373
+#, php-format
+msgid "<strong>Connected Account:</strong> Your PayPal account is connected in %1$s mode as %2$s"
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:392
+msgid "<strong>Connected Account:</strong> Your PayPal account is not connected. Please reconnect your PayPal account."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:412
+msgid "Your PayPal primary email address is not yet confirmed. Please confirm it in your PayPal account before accepting payments."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:415
+msgid "Your PayPal account is currently unable to receive payments. Please sign in to PayPal to resolve any holds or restrictions."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:418
+msgid "Required permissions were not granted to Easy Digital Downloads during onboarding. Please disconnect and reconnect your PayPal account, accepting all requested permissions."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:424
+msgid "<strong>Payment Status:</strong> Ready to accept payments."
+msgstr ""
+
+#. translators: %s: One or more reasons the PayPal account cannot currently accept payments.
+#: src/Gateways/PayPal/V3/Admin/Account.php:435
+#, php-format
+msgid "<strong>Payment Status:</strong> %s"
+msgstr ""
+
+#. translators: 1: opening strong tag, 2: closing strong tag, 3: fee percentage.
+#: src/Gateways/PayPal/V3/Admin/Account.php:462
+#, php-format
+msgid "%1$sPay as you go pricing:%2$s %3$d%% per-transaction fee + PayPal fees."
+msgstr ""
+
+#. translators: 1: opening link tag, 2: closing link tag.
+#. translators: Replacements are for the html wrappers for the phrase Upgrade to Pro and should not be translated.
+#: src/Gateways/PayPal/V3/Admin/Account.php:472
+#: src/Gateways/Square/ApplicationFee.php:166
+#: src/Gateways/Stripe/ApplicationFee.php:114
+#, php-format
+msgid "%1$sUpgrade to Pro%2$s to remove transaction fees."
+msgstr ""
+
+#. translators: 1: opening link tag, 2: closing link tag.
+#: src/Gateways/PayPal/V3/Admin/Account.php:487
+#, php-format
+msgid "%1$sActivate or upgrade your license%2$s to remove transaction fees."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:527
+msgid "Advanced Card Payments:"
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:538
+msgid "Vaulting:"
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:594
+msgid "Managed by EDD Connect. No additional configuration needed."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:605
+msgid "Managed by EDD Connect. Receiving events."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:606
+msgid "Managed by EDD Connect. Webhook is not currently active."
+msgstr ""
+
+#. translators: %s: Apple Pay domain registration error message returned from PayPal.
+#: src/Gateways/PayPal/V3/Admin/Account.php:647
+#, php-format
+msgid "<strong>Apple Pay:</strong> Domain registration failed — %s"
+msgstr ""
+
+#. translators: %s: registered domain (e.g. example.com).
+#: src/Gateways/PayPal/V3/Admin/Account.php:654
+#, php-format
+msgid "<strong>Apple Pay:</strong> Domain %s registered with PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:660
+msgid "<strong>Apple Pay:</strong> Domain not yet registered with PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Admin/Account.php:666
+msgid "Re-verify Domain"
+msgstr ""
+
+#. translators: 1: opening anchor tag, 2: closing anchor tag.
+#: src/Gateways/PayPal/V3/Admin/Account.php:701
+#, php-format
+msgid "<strong>Gateway Status:</strong> PayPal is not currently active. %1$sEnable PayPal%2$s in the general gateway settings to start using it."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:126
+msgid "Empty Apple Pay domain-association file returned from proxy."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:327
+msgid "Document root could not be determined for Apple Pay domain association."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:333
+msgid "Unable to create .well-known directory in the server root."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:340
+msgid "Unable to write Apple Pay domain-association file to the server root."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:357
+msgid "No domain available for Apple Pay registration."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:388
+msgid "No domain available for Apple Pay deregistration."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:78
+msgid "Apple Pay domain re-verified successfully."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:171
+msgid "PayPal Apple Pay:"
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:172
+msgid "Apple Pay domain registration was unsuccessful, so the Apple Pay button will not render at checkout until this is resolved."
+msgstr ""
+
+#. translators: 1: opening anchor tag, 2: closing anchor tag
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:182
+#, php-format
+msgid "You can retry from the %1$sPayPal settings%2$s, or contact your host if the server root is not writable."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ConnectAPI.php:241
+msgid "Invalid JSON response from proxy."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/ConnectAPI.php:285
+msgid "Invalid response from PayPal proxy during store registration."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/KeyRotation.php:115
+msgid "The PayPal connection credentials are unavailable, so they cannot be rotated. Please re-establish the connection instead."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/KeyRotation.php:131
+msgid "The PayPal proxy did not return a new key during rotation."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:93
+msgid "Approved and active."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:94
+#: src/Gateways/PayPal/V3/MerchantStatus.php:98
+msgid "Application is in review. This may take a few business days."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:95
+msgid "Additional information is required. Please check your PayPal account for details."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:96
+msgid "Application was denied. Please contact PayPal for more information."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:97
+msgid "Currently suspended. Please contact PayPal for more information."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/MerchantStatus.php:99
+msgid "Approval is pending. Please check your PayPal account."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:87
+msgid "Your site is using default or missing WordPress security keys (salts). For your security, set unique salts in wp-config.php before connecting to PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:111
+msgid "Invalid response from proxy during store registration."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:138
+msgid "No signup link returned from proxy."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:391
+msgid "Credentials cleared. You can now reconnect to PayPal."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:410
+msgid "No merchant ID found. Please complete onboarding first."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:445
+msgid "PayPal credentials rotated successfully."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/PurchaseUser.php:117
+msgid "You must register or login to complete your purchase."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/PurchaseUser.php:133
+msgid "An error occurred with your account. Please try again."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Vault.php:494
+msgid "A vault ID and amount are required to charge a vaulted payment method."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Vault.php:559
+msgid "Card"
 msgstr ""
 
 #. translators: 1: Dispute ID, 2: Dispute reason code. Example: The PayPal transaction has been disputed. Case ID: PP-R-NMW-10060094. Reason given: non_receipt.
@@ -23972,13 +24469,6 @@ msgstr ""
 msgid "%1$sPay as you go pricing:%2$s %3$s."
 msgstr ""
 
-#. translators: Replacements are for the html wrappers for the phrase Upgrade to Pro and should not be translated.
-#: src/Gateways/Square/ApplicationFee.php:166
-#: src/Gateways/Stripe/ApplicationFee.php:114
-#, php-format
-msgid "%1$sUpgrade to Pro%2$s to remove transaction fees."
-msgstr ""
-
 #. translators: the application fee percentage.
 #: src/Gateways/Square/ApplicationFee.php:192
 #, php-format
@@ -24078,6 +24568,9 @@ msgid "Invalid connection mode"
 msgstr ""
 
 #: src/Gateways/Square/Gateway.php:238
+#: src/REST/Controllers/Fastlane.php:236
+#: src/REST/Controllers/UnbrandedCard.php:204
+#: src/REST/Controllers/UnbrandedCard.php:293
 msgid "An error occurred while processing your payment. Please try again."
 msgstr ""
 
@@ -24835,10 +25328,6 @@ msgstr ""
 msgid "Amazon Pay"
 msgstr ""
 
-#: src/Gateways/Stripe/PaymentMethods/ApplePay.php:58
-msgid "Apple Pay"
-msgstr ""
-
 #: src/Gateways/Stripe/PaymentMethods/BacsDebit.php:50
 msgid "Bacs Debit"
 msgstr ""
@@ -24869,10 +25358,6 @@ msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/Giropay.php:42
 msgid "giropay"
-msgstr ""
-
-#: src/Gateways/Stripe/PaymentMethods/GooglePay.php:58
-msgid "Google Pay"
 msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/Grabpay.php:53
@@ -27971,6 +28456,7 @@ msgstr ""
 msgid "All time"
 msgstr ""
 
+#: src/Reports/Data/Gateways/PayPalPaymentMethods.php:84
 #: src/Reports/Data/Gateways/StripePaymentMethods.php:80
 msgid "Refunded Sales"
 msgstr ""
@@ -28046,6 +28532,10 @@ msgstr ""
 
 #: src/Reports/Endpoints/Tables/MostValuableCustomers.php:40
 msgid "Most Valuable Customers"
+msgstr ""
+
+#: src/Reports/Endpoints/Tables/PayPalPaymentMethods.php:46
+msgid "PayPal Payment Methods"
 msgstr ""
 
 #: src/Reports/Endpoints/Tables/StripePaymentMethods.php:40
@@ -28232,6 +28722,40 @@ msgstr ""
 msgid "Quantity must be a positive number."
 msgstr ""
 
+#: src/REST/Controllers/Fastlane.php:85
+msgid "Payment token is required."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:104
+#: src/REST/Controllers/UnbrandedCard.php:95
+msgid "A valid email address is required."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:115
+#: src/REST/Controllers/UnbrandedCard.php:102
+msgid "First name is required."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:124
+#: src/REST/Controllers/UnbrandedCard.php:106
+msgid "Payment gateway is not available. Please try again."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:295
+#: src/REST/Controllers/UnbrandedCard.php:388
+msgid "Your payment was declined. Please try a different payment method."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:331
+#: src/REST/Controllers/UnbrandedCard.php:404
+msgid "Your payment is being reviewed by PayPal. You will receive an email once it has been processed."
+msgstr ""
+
+#: src/REST/Controllers/Fastlane.php:352
+#: src/REST/Controllers/UnbrandedCard.php:410
+msgid "An unexpected error occurred while processing your payment. Please try again or use a different payment method."
+msgstr ""
+
 #: src/REST/Controllers/LogPruning.php:48
 #: src/REST/Controllers/LogPruning.php:55
 msgid "Invalid log type."
@@ -28259,6 +28783,26 @@ msgstr ""
 
 #: src/REST/Controllers/Notifications.php:123
 msgid "Failed to dismiss notification."
+msgstr ""
+
+#: src/REST/Controllers/UnbrandedCard.php:243
+msgid "Missing order reference."
+msgstr ""
+
+#: src/REST/Controllers/UnbrandedCard.php:251
+msgid "This order can no longer be processed."
+msgstr ""
+
+#: src/REST/Controllers/UnbrandedCard.php:254
+msgid "Order reference mismatch."
+msgstr ""
+
+#: src/REST/Controllers/UnbrandedCard.php:266
+msgid "An error occurred while verifying your payment. Please try again."
+msgstr ""
+
+#: src/REST/Controllers/UnbrandedCard.php:282
+msgid "We could not verify your card with your bank. Please try a different card or payment method."
 msgstr ""
 
 #: src/REST/Routes/LogPruning.php:66
@@ -28306,10 +28850,12 @@ msgid "ID of the notification."
 msgstr ""
 
 #: src/REST/Security.php:53
+#: src/REST/Security.php:104
 msgid "Cart token missing."
 msgstr ""
 
 #: src/REST/Security.php:64
+#: src/REST/Security.php:113
 msgid "Invalid timestamp."
 msgstr ""
 

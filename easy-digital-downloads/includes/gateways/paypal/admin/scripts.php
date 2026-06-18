@@ -28,12 +28,28 @@ function enqueue_connect_scripts() {
 	}
 
 	PayPal\maybe_enqueue_polyfills();
+
+	wp_enqueue_style(
+		'edd-paypal-admin',
+		edd_get_assets_url( 'css/admin/' ) . 'paypal.min.css',
+		array(),
+		EDD_VERSION
+	);
+	wp_style_add_data( 'edd-paypal-admin', 'rtl', 'replace' );
+	wp_style_add_data( 'edd-paypal-admin', 'suffix', '.min' );
+
+	$commerce_version = PayPal\CommerceVersion::get_version();
+	$is_connected     = 'v3' === $commerce_version
+		? PayPal\V3\Onboarding::is_v3_onboarded()
+		: PayPal\has_rest_api_connection();
+
 	wp_localize_script(
 		'edd-admin-settings',
 		'eddPayPalConnectVars',
 		array(
-			'defaultError' => esc_html__( 'An unexpected error occurred. Please refresh the page and try again.', 'easy-digital-downloads' ),
-			'isConnected'  => PayPal\has_rest_api_connection(),
+			'defaultError'    => esc_html__( 'An unexpected error occurred. Please refresh the page and try again.', 'easy-digital-downloads' ),
+			'isConnected'     => $is_connected,
+			'commerceVersion' => $commerce_version,
 		)
 	);
 }

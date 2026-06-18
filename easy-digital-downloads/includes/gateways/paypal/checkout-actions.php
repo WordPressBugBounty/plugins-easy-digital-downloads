@@ -14,6 +14,11 @@ namespace EDD\Gateways\PayPal;
 use EDD\Gateways\PayPal\Exceptions\API_Exception;
 use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
 use EDD\Gateways\PayPal\Exceptions\Gateway_Exception;
+use EDD\Gateways\PayPal\V3\CaptureStatus;
+use EDD\Gateways\PayPal\V3\ConnectAPI;
+use EDD\Gateways\PayPal\V3\PurchaseUser;
+use EDD\Gateways\PayPal\V3\TransactionRecorder;
+use EDD\Gateways\PayPal\V3\Vault;
 
 /**
  * Removes the credit card form for PayPal Commerce
@@ -33,6 +38,23 @@ add_action( 'edd_paypal_commerce_cc_form', '__return_false' );
  */
 function override_purchase_button( $button ) {
 	if ( 'paypal_commerce' === edd_get_chosen_gateway() && edd_get_cart_total() ) {
+
+		// PayPal can't process multiple subscriptions or a mixed cart; show the error instead of loading the buttons.
+		if ( ! edd_gateway_supports_cart_contents( 'paypal_commerce' ) ) {
+			$error_message = ( function_exists( 'edd_recurring' ) && edd_recurring()->cart_is_mixed() )
+				? __( 'Subscriptions and non-subscriptions may not be purchased at the same time. Please purchase each separately.', 'easy-digital-downloads' )
+				: __( 'Subscriptions must be purchased individually. Please update your cart to only contain a single subscription.', 'easy-digital-downloads' );
+			ob_start();
+			?>
+			<div class="edd_errors edd-alert edd-alert-info">
+				<p class="edd_error" id="edd_error_edd-paypal-incompatible-cart">
+					<?php echo esc_html( $error_message ); ?>
+				</p>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
+
 		ob_start();
 		if ( ready_to_accept_payments() ) {
 			wp_nonce_field( 'edd_process_paypal', 'edd_process_paypal_nonce' );
@@ -40,10 +62,51 @@ function override_purchase_button( $button ) {
 			?>
 			<input type="hidden" name="edd-process-paypal-token" data-timestamp="<?php echo esc_attr( $timestamp ); ?>" data-token="<?php echo esc_attr( \EDD\Utils\Tokenizer::tokenize( $timestamp ) ); ?>" />
 			<div id="edd-paypal-errors-wrap"></div>
+			<?php
+			$mode         = \EDD\Gateways\PayPal\Gateway::get_paypal_mode();
+			$has_fastlane = get_option( "edd_paypal_{$mode}_vaulting_available", false ) && \EDD\Gateways\PayPal\PaymentMethods::is_enabled( 'fastlane', true );
+
+			if ( $has_fastlane ) :
+				?>
+			<div id="edd-fastlane-container">
+				<div id="edd-fastlane-card-container"></div>
+				<div id="edd-fastlane-watermark"></div>
+				<div id="edd-fastlane-spinner" style="display: none;">
+					<span class="edd-loading-ajax edd-loading"></span>
+				</div>
+				<button id="edd-fastlane-submit" type="button" class="edd-submit button <?php echo esc_attr( edd_get_button_color_class() ); ?>" style="display: none;">
+					<?php echo esc_html( edd_get_checkout_button_purchase_label() ); ?>
+				</button>
+			</div>
+			<div id="edd-fastlane-divider" class="edd-fastlane-divider" style="display: none;">
+				<span><?php esc_html_e( 'Or Pay with', 'easy-digital-downloads' ); ?></span>
+			</div>
+			<?php endif; ?>
+			<div id="edd-paypal-applepay-container" class="edd-paypal-wallet-container" style="display: none;"></div>
+			<div id="edd-paypal-googlepay-container" class="edd-paypal-wallet-container" style="display: none;"></div>
 			<div id="edd-paypal-container"></div>
+			<div id="edd-paypal-messages"></div>
 			<div id="edd-paypal-spinner" style="display: none;">
 				<span class="edd-loading-ajax edd-loading"></span>
 			</div>
+			<?php if ( \EDD\Gateways\PayPal\PaymentMethods::is_enabled( 'unbranded_card', \EDD\Gateways\PayPal\PaymentMethods::default_state( 'unbranded_card' ) ) ) : ?>
+			<div id="edd-paypal-unbranded-card-divider" class="edd-paypal-card-divider" style="display: none;">
+				<span><?php echo esc_html_x( 'Or', 'Divider between PayPal buttons and the card fields', 'easy-digital-downloads' ); ?></span>
+			</div>
+			<div id="edd-paypal-unbranded-card-container" class="edd-paypal-unbranded-card" style="display: none;">
+				<div id="edd-paypal-card-number" class="edd-paypal-card-field"></div>
+				<div class="edd-paypal-card-row">
+					<div id="edd-paypal-card-expiry" class="edd-paypal-card-field"></div>
+					<div id="edd-paypal-card-cvv" class="edd-paypal-card-field"></div>
+				</div>
+				<button id="edd-paypal-unbranded-card-submit" type="button" class="edd-submit button <?php echo esc_attr( edd_get_button_color_class() ); ?>">
+					<?php echo esc_html( edd_get_checkout_button_purchase_label() ); ?>
+				</button>
+				<div id="edd-paypal-unbranded-card-spinner" style="display: none;">
+					<span class="edd-loading-ajax edd-loading"></span>
+				</div>
+			</div>
+			<?php endif; ?>
 			<?php
 			/**
 			 * Triggers right below the button container.
@@ -163,20 +226,30 @@ function create_order( $purchase_data ) {
 			);
 		}
 
+		// Stamp the wallet hint passed by the Apple Pay / Google Pay JS buttons
+		// so the receipt label is correct even when PayPal's capture response
+		// only includes the underlying card details (PayPal IWT requirement:
+		// the thank-you page must show Apple Pay / Google Pay as the payment
+		// method, not the generic "PayPal" fallback).
+		$wallet_hint = isset( $_POST['edd_paypal_wallet_type'] ) ? sanitize_key( wp_unslash( $_POST['edd_paypal_wallet_type'] ) ) : '';
+		if ( in_array( $wallet_hint, array( 'apple_pay', 'google_pay' ), true ) ) {
+			edd_update_order_meta( $payment_id, '_edd_paypal_payment_source', $wallet_hint );
+		}
+
 		$order_data = array(
-			'intent'               => 'CAPTURE',
-			'purchase_units'       => get_order_purchase_units( $payment_id, $purchase_data, $payment_args ),
-			'application_context'  => array(
+			'intent'              => 'CAPTURE',
+			'purchase_units'      => get_order_purchase_units( $payment_id, $purchase_data, $payment_args ),
+			'application_context' => array(
 				// 'locale'              => get_locale(), // PayPal doesn't like this. Might be able to replace `_` with `-`
+				'brand_name'          => substr( get_bloginfo( 'name' ), 0, 127 ),
 				'shipping_preference' => 'NO_SHIPPING',
 				'user_action'         => 'PAY_NOW',
 				'return_url'          => edd_get_checkout_uri(),
 				'cancel_url'          => edd_get_failed_transaction_uri( '?payment-id=' . urlencode( $payment_id ) ),
 			),
-			'payment_instructions' => array(
-				'disbursement_mode' => 'INSTANT',
-			),
 		);
+
+		// Disbursement mode must live inside purchase_units[*].payment_instruction (singular); a top-level payment_instructions (plural) key is silently discarded by PayPal's Orders schema.
 
 		// Add payer data if we have it. We won't have it when using Buy Now buttons.
 		if ( ! empty( $purchase_data['user_email'] ) ) {
@@ -201,6 +274,71 @@ function create_order( $purchase_data ) {
 		$order_data = apply_filters( 'edd_paypal_order_arguments', $order_data, $purchase_data, $payment_id );
 
 		try {
+			$mode = \EDD\Gateways\PayPal\Gateway::get_paypal_mode();
+			if ( 'v3' === CommerceVersion::get_version() ) {
+				if ( ! isset( $order_data['payment_source']['paypal']['experience_context'] ) ) {
+					$order_data['payment_source']['paypal']['experience_context'] = array();
+				}
+
+				// Copy return/cancel URLs into experience_context if not already present
+				// (vault flows already set these). PayPal rejects orders that have URLs in
+				// both application_context and experience_context with INCOMPATIBLE_PARAMETER_VALUE,
+				// so the URLs must live in exactly one place — experience_context wins.
+				if ( empty( $order_data['payment_source']['paypal']['experience_context']['return_url'] ) && ! empty( $order_data['application_context']['return_url'] ) ) {
+					$order_data['payment_source']['paypal']['experience_context']['return_url'] = $order_data['application_context']['return_url'];
+				}
+				if ( empty( $order_data['payment_source']['paypal']['experience_context']['cancel_url'] ) && ! empty( $order_data['application_context']['cancel_url'] ) ) {
+					$order_data['payment_source']['paypal']['experience_context']['cancel_url'] = $order_data['application_context']['cancel_url'];
+				}
+				unset( $order_data['application_context']['return_url'] );
+				unset( $order_data['application_context']['cancel_url'] );
+
+				$proxy    = new ConnectAPI( $mode );
+				$response = $proxy->post( '/v3/paypal/orders', $order_data );
+
+				if ( is_wp_error( $response ) || ConnectAPI::is_error( $response ) ) {
+					$message = is_wp_error( $response ) ? $response->get_error_message() : ConnectAPI::get_error_message( $response );
+					edd_debug_log(
+						sprintf(
+							'PayPal v3 order creation failed. Order data: %s. Proxy response: %s',
+							wp_json_encode( $order_data ),
+							wp_json_encode( $response )
+						),
+						true
+					);
+					throw new Gateway_Exception(
+						__( 'An error occurred while communicating with PayPal. Please try again.', 'easy-digital-downloads' ),
+						500,
+						sprintf( 'Proxy order creation failed: %s', $message )
+					);
+				}
+
+				$order_id = isset( $response['id'] ) ? $response['id'] : '';
+				if ( empty( $order_id ) ) {
+					throw new Gateway_Exception(
+						__( 'An unexpected error occurred. Please try again.', 'easy-digital-downloads' ),
+						500,
+						sprintf( 'Proxy returned no order ID: %s', wp_json_encode( $response ) )
+					);
+				}
+
+				edd_debug_log( sprintf( '-- PayPal v3 proxy order created. PayPal order ID: %s; EDD order ID: %d', esc_html( $order_id ), $payment_id ) );
+				edd_update_order_meta( $payment_id, 'paypal_order_id', sanitize_text_field( $order_id ) );
+
+				$timestamp = time();
+				wp_send_json_success(
+					array(
+						'paypal_order_id' => $order_id,
+						'edd_order_id'    => $payment_id,
+						'total'           => isset( $order_data['purchase_units'][0]['amount']['value'] ) ? $order_data['purchase_units'][0]['amount']['value'] : '',
+						'currency'        => isset( $order_data['purchase_units'][0]['amount']['currency_code'] ) ? $order_data['purchase_units'][0]['amount']['currency_code'] : '',
+						'nonce'           => wp_create_nonce( 'edd_process_paypal' ),
+						'timestamp'       => $timestamp,
+						'token'           => \EDD\Utils\Tokenizer::tokenize( $timestamp ),
+					)
+				);
+			}
+
 			$api      = new API();
 			$response = $api->make_request( 'v2/checkout/orders', $order_data );
 
@@ -240,7 +378,7 @@ function create_order( $purchase_data ) {
 
 			edd_debug_log( sprintf( '-- Successful PayPal response. PayPal order ID: %s; EDD order ID: %d', esc_html( $response->id ), $payment_id ) );
 
-			edd_update_payment_meta( $payment_id, 'paypal_order_id', sanitize_text_field( $response->id ) );
+			edd_update_order_meta( $payment_id, 'paypal_order_id', sanitize_text_field( $response->id ) );
 
 			/*
 			 * Send successfully created order ID back.
@@ -253,6 +391,8 @@ function create_order( $purchase_data ) {
 				array(
 					'paypal_order_id' => $response->id,
 					'edd_order_id'    => $payment_id,
+					'total'           => isset( $order_data['purchase_units'][0]['amount']['value'] ) ? $order_data['purchase_units'][0]['amount']['value'] : '',
+					'currency'        => isset( $order_data['purchase_units'][0]['amount']['currency_code'] ) ? $order_data['purchase_units'][0]['amount']['currency_code'] : '',
 					'nonce'           => wp_create_nonce( 'edd_process_paypal' ),
 					'timestamp'       => $timestamp,
 					'token'           => \EDD\Utils\Tokenizer::tokenize( $timestamp ),
@@ -328,12 +468,28 @@ function capture_order() {
 		}
 
 		try {
-			$api      = new API();
-			$response = $api->make_request( 'v2/checkout/orders/' . urlencode( $_POST['paypal_order_id'] ) . '/capture' );
+			$mode = \EDD\Gateways\PayPal\Gateway::get_paypal_mode();
+			if ( 'v3' === CommerceVersion::get_version() ) {
+				$proxy        = new ConnectAPI( $mode );
+				$proxy_result = $proxy->post( '/v3/paypal/orders/' . rawurlencode( sanitize_text_field( $_POST['paypal_order_id'] ) ) . '/capture', array() );
 
-			edd_debug_log( sprintf( '-- PayPal Response code: %d; order ID: %s', $api->last_response_code, esc_html( $_POST['paypal_order_id'] ) ) );
+				if ( is_wp_error( $proxy_result ) || ConnectAPI::is_error( $proxy_result ) ) {
+					$message = is_wp_error( $proxy_result ) ? $proxy_result->get_error_message() : ConnectAPI::get_error_message( $proxy_result );
+					throw new Gateway_Exception( __( 'An error occurred while communicating with PayPal. Please try again.', 'easy-digital-downloads' ), 500, sprintf( 'Proxy capture failed: %s', $message ) );
+				}
 
-			if ( ! in_array( $api->last_response_code, array( 200, 201 ) ) ) {
+				// Normalize Connect array response to stdClass for reuse of the existing payment-update logic below.
+				$response           = json_decode( wp_json_encode( $proxy_result ) );
+				$last_response_code = 200;
+			} else {
+				$api                = new API();
+				$response           = $api->make_request( 'v2/checkout/orders/' . urlencode( $_POST['paypal_order_id'] ) . '/capture' );
+				$last_response_code = $api->last_response_code;
+			}
+
+			edd_debug_log( sprintf( '-- PayPal Response code: %d; order ID: %s', $last_response_code, esc_html( $_POST['paypal_order_id'] ) ) );
+
+			if ( ! in_array( $last_response_code, array( 200, 201 ), true ) ) {
 				$message = ! empty( $response->message ) ? $response->message : __( 'Failed to process payment. Please try again.', 'easy-digital-downloads' );
 
 				/*
@@ -357,19 +513,41 @@ function capture_order() {
 				);
 			}
 
-			$payment        = false;
+			$order          = false;
 			$transaction_id = false;
+			$new_status     = '';
 			if ( isset( $response->purchase_units ) && is_array( $response->purchase_units ) ) {
 				foreach ( $response->purchase_units as $purchase_unit ) {
 					if ( ! empty( $purchase_unit->reference_id ) ) {
-						$payment        = edd_get_payment_by( 'key', $purchase_unit->reference_id );
+						$order          = edd_get_order_by( 'payment_key', $purchase_unit->reference_id );
 						$transaction_id = isset( $purchase_unit->payments->captures[0]->id ) ? $purchase_unit->payments->captures[0]->id : false;
 
-						if ( ! empty( $payment ) && isset( $purchase_unit->payments->captures[0]->status ) ) {
-							if ( 'COMPLETED' === strtoupper( $purchase_unit->payments->captures[0]->status ) ) {
-								$payment->status = 'complete';
-							} elseif ( 'DECLINED' === strtoupper( $purchase_unit->payments->captures[0]->status ) ) {
-								$payment->status = 'failed';
+						if ( ! empty( $order ) && isset( $purchase_unit->payments->captures[0]->status ) ) {
+							$capture_status = strtoupper( $purchase_unit->payments->captures[0]->status );
+							$capture_reason = ! empty( $purchase_unit->payments->captures[0]->status_details->reason )
+								? sanitize_text_field( $purchase_unit->payments->captures[0]->status_details->reason )
+								: '';
+							// Shared capture-status table: PENDING (fraud review /
+							// e-check holds) routes to on_hold, and an unknown
+							// status stays empty so the order status isn't changed
+							// rather than silently completing.
+							$new_status = CaptureStatus::to_edd_status( $capture_status );
+
+							// Stamp the PayPal reason on the order so the
+							// merchant has the context PayPal returned (e.g.
+							// `PENDING_REVIEW`, `BUYER_COMPLAINT`).
+							if ( 'on_hold' === $new_status && ! empty( $capture_reason ) ) {
+								edd_add_note(
+									array(
+										'object_id'   => $order->id,
+										'object_type' => 'order',
+										'content'     => sprintf(
+											/* translators: %s: PayPal capture status reason (e.g. PENDING_REVIEW). */
+											__( 'PayPal placed this capture in a pending state (%s). The order will update automatically when PayPal completes review.', 'easy-digital-downloads' ),
+											esc_html( $capture_reason )
+										),
+									)
+								);
 							}
 						}
 						break;
@@ -377,55 +555,120 @@ function capture_order() {
 				}
 			}
 
-			if ( ! empty( $payment ) ) {
+			if ( ! empty( $order ) ) {
 				/**
 				 * Buy Now Button
 				 *
 				 * Fill in missing data when using "Buy Now". This bypasses checkout so not all information
 				 * was collected prior to payment. Instead, we pull it from the PayPal info.
 				 */
-				if ( empty( $payment->email ) ) {
+				if ( empty( $order->email ) ) {
+					$order_updates = array();
+					$first_name    = '';
+					$last_name     = '';
+
 					if ( ! empty( $response->payer->email_address ) ) {
-						$payment->email = sanitize_text_field( $response->payer->email_address );
+						$order_updates['email'] = sanitize_text_field( $response->payer->email_address );
 					}
-					if ( empty( $payment->first_name ) && ! empty( $response->payer->name->given_name ) ) {
-						$payment->first_name = sanitize_text_field( $response->payer->name->given_name );
+					if ( ! empty( $response->payer->name->given_name ) ) {
+						$first_name = sanitize_text_field( $response->payer->name->given_name );
 					}
-					if ( empty( $payment->last_name ) && ! empty( $response->payer->name->surname ) ) {
-						$payment->last_name = sanitize_text_field( $response->payer->name->surname );
+					if ( ! empty( $response->payer->name->surname ) ) {
+						$last_name = sanitize_text_field( $response->payer->name->surname );
 					}
 
-					if ( empty( $payment->customer_id ) && ! empty( $payment->email ) ) {
-						$customer = new \EDD_Customer( $payment->email );
+					if ( empty( $order->customer_id ) && ! empty( $order_updates['email'] ) ) {
+						$customer = edd_get_customer_by( 'email', $order_updates['email'] );
 
-						if ( $customer->id < 1 ) {
-							$customer->create(
+						if ( ! $customer ) {
+							$customer_id = edd_add_customer(
 								array(
-									'email'   => $payment->email,
-									'name'    => trim( sprintf( '%s %s', $payment->first_name, $payment->last_name ) ),
-									'user_id' => $payment->user_id,
+									'email'   => $order_updates['email'],
+									'name'    => trim( sprintf( '%s %s', $first_name, $last_name ) ),
+									'user_id' => $order->user_id,
 								)
 							);
+						} else {
+							$customer_id = $customer->id;
 						}
+
+						if ( ! empty( $customer_id ) ) {
+							$order_updates['customer_id'] = $customer_id;
+						}
+					}
+
+					if ( ! empty( $order_updates ) ) {
+						edd_update_order( $order->id, $order_updates );
+					}
+
+					// Refresh the order to pick up the writes above. We intentionally
+					// do NOT touch the order_addresses table here — PayPal payer data
+					// only gives us a buyer's first/last name, and address rows are
+					// meant to hold full addresses. The customer's name is already
+					// captured via edd_add_customer above.
+					$order = edd_get_order( $order->id );
+				}
+
+				TransactionRecorder::record( $order->id, $transaction_id );
+
+				// Store the specific payment source for receipt display.
+				// Wallets are checked before `card` because PayPal sometimes
+				// includes both keys for wallet payments (the wallet identifies
+				// the funding source; `card` holds the underlying tokenized
+				// card details). Without wallet-first ordering, Apple Pay /
+				// Google Pay orders would mis-render as "Card" on the receipt.
+				//
+				// We also skip overriding when the order was already stamped
+				// with a wallet hint at create time (from the Apple/Google
+				// Pay JS buttons) — the JS knows the wallet authoritatively,
+				// and some PayPal capture responses don't echo the wallet
+				// info back in payment_source.
+				if ( ! empty( $response->payment_source ) ) {
+					$existing       = edd_get_order_meta( $order->id, '_edd_paypal_payment_source', true );
+					$payment_source = 'paypal';
+					if ( isset( $response->payment_source->venmo ) ) {
+						$payment_source = 'venmo';
+					} elseif ( isset( $response->payment_source->apple_pay ) ) {
+						$payment_source = 'apple_pay';
+					} elseif ( isset( $response->payment_source->google_pay ) ) {
+						$payment_source = 'google_pay';
+					} elseif ( isset( $response->payment_source->card ) ) {
+						$payment_source = 'card';
+					}
+
+					if ( empty( $existing ) || ! in_array( $existing, array( 'apple_pay', 'google_pay' ), true ) ) {
+						edd_update_order_meta( $order->id, '_edd_paypal_payment_source', $payment_source );
+					}
+
+					// Store the PayPal account email when the wallet was used, so the
+					// receipt can show the buyer's PayPal email alongside the funding
+					// source label (PayPal IWT requirement).
+					$payer_email = '';
+					if ( ! empty( $response->payment_source->paypal->email_address ) ) {
+						$payer_email = $response->payment_source->paypal->email_address;
+					} elseif ( 'paypal' === $payment_source && ! empty( $response->payer->email_address ) ) {
+						$payer_email = $response->payer->email_address;
+					}
+					if ( ! empty( $payer_email ) && is_email( $payer_email ) ) {
+						edd_update_order_meta( $order->id, '_edd_paypal_payer_email', sanitize_email( $payer_email ) );
 					}
 				}
 
-				if ( ! empty( $transaction_id ) ) {
-					$payment->transaction_id = sanitize_text_field( $transaction_id );
+				// Stamp + persist any vault token synchronously, before the
+				// status update below, via the shared helper. We do this on every
+				// capture (not just an opt-in path) because subscription orders
+				// force vault=true upstream and need the token recorded
+				// synchronously. Relying on the async PAYMENT.CAPTURE.COMPLETED
+				// webhook stranded any sub whose webhook failed to deliver. The
+				// response is an object here, so normalize it to the array shape
+				// the helper reads.
+				Vault::persist_from_capture( $order->id, $transaction_id, json_decode( wp_json_encode( $response ), true ) );
 
-					edd_insert_payment_note(
-						$payment->ID,
-						sprintf(
-						/* translators: %s: PayPal Transaction ID */
-							__( 'PayPal Transaction ID: %s', 'easy-digital-downloads' ),
-							esc_html( $transaction_id )
-						)
-					);
+				if ( ! empty( $new_status ) ) {
+					edd_update_order_status( $order->id, $new_status );
 				}
 
-				$payment->save();
-
-				if ( 'failed' === $payment->status ) {
+				if ( 'failed' === $new_status ) {
 					$retry = true;
 					throw new Gateway_Exception(
 						__( 'Your payment was declined. Please try a new payment method.', 'easy-digital-downloads' ),
@@ -434,6 +677,8 @@ function capture_order() {
 					);
 				}
 			}
+
+			PurchaseUser::maybe_log_in_after_capture( $order->id );
 
 			wp_send_json_success( array( 'redirect_url' => edd_get_success_page_uri() ) );
 		} catch ( Authentication_Exception $e ) {

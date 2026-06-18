@@ -126,6 +126,10 @@ class General {
 					'label' => 'PayPal REST Endpoints',
 					'value' => $this->is_rest_api_enabled( 'edd/webhooks/v1/paypal/webhook-test' ) ? 'Accessible' : 'Not Accessible',
 				),
+				'secure_salts'             => array(
+					'label' => 'Secure Salts',
+					'value' => \EDD\Utils\Validators\Salts::are_secure() ? 'Yes' : 'No',
+				),
 			),
 		);
 	}

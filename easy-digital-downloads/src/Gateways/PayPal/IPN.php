@@ -15,6 +15,7 @@ namespace EDD\Gateways\PayPal;
 defined( 'ABSPATH' ) || exit;
 
 use EDD\Gateways\PayPal;
+use EDD\Gateways\PayPal\V3\Onboarding;
 
 /**
  * IPN class.
@@ -101,8 +102,9 @@ class IPN {
 			return;
 		}
 
-		// If PayPal is not connected, we don't need to run here.
-		if ( ! PayPal\has_rest_api_connection() ) {
+		// The IPN is a fallback for abandoned v2 subscription webhooks; bail when
+		// it has nothing to process for this store. See can_process_ipn().
+		if ( ! $this->can_process_ipn() ) {
 			return;
 		}
 
@@ -163,6 +165,37 @@ class IPN {
 		$this->maybe_handle_recurring();
 
 		$this->maybe_handle_refunds();
+	}
+
+	/**
+	 * Determines whether the IPN listener should process the current request.
+	 *
+	 * The IPN backs up PayPal subscriptions whose direct webhook was abandoned,
+	 * which is a v2 (1st party) concern. It runs when the store is still on v2,
+	 * or when it previously had v2 and has since switched to v3: those legacy
+	 * subscriptions keep billing and still emit IPN, and IPN verification uses
+	 * PayPal's `cmd=_notify-validate` postback (see is_verified()), not the REST
+	 * API, so it works without v2 credentials. A store that only ever used v3 has
+	 * no abandoned webhooks, so the IPN stays off there.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @return bool True if the IPN should run for this request.
+	 */
+	private function can_process_ipn() {
+		// A live v2 connection always processes IPN.
+		if ( PayPal\has_rest_api_connection() ) {
+			return true;
+		}
+
+		// A store that switched from v2 to v3 still has abandoned v2 webhooks to
+		// back up via IPN.
+		$mode = PayPal\Gateway::get_paypal_mode();
+		if ( get_option( "edd_paypal_{$mode}_had_v2_connection", false ) && Onboarding::is_v3_onboarded() ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

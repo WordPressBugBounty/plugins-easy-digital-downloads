@@ -2498,3 +2498,42 @@ function edd_ajax_user_search() {
 		)
 	);
 }
+
+/**
+ * Removed the discount query var from the main query to prevent it from
+ * interfering with WP_Query on the static front page.
+ *
+ * No longer necessary. The 'discount' query var is no longer registered
+ * globally — it is only registered for API requests, so it never reaches
+ * WP_Query on non-API requests. Cleanup of the discount query arg during
+ * cart actions is now handled in edd_process_add_to_cart().
+ *
+ * @since 2.4.3
+ * @deprecated 3.6.9
+ *
+ * @param WP_Query $query Main query.
+ * @return void
+ */
+function edd_unset_discount_query_arg( $query ) {
+	_edd_deprecated_function( __FUNCTION__, '3.6.9' );
+}
+
+/**
+ * Prevented canonical redirects on the static front page when a discount
+ * query var was present in the URL.
+ *
+ * No longer necessary. The 'discount' query var is no longer registered
+ * globally, so WordPress does not treat /?discount=CODE as a recognised
+ * query var and no redirect is triggered.
+ *
+ * @since 2.4.3
+ * @deprecated 3.6.9
+ *
+ * @param string $redirect_url  Redirect URL.
+ * @param string $requested_url Requested URL.
+ * @return string
+ */
+function edd_prevent_canonical_redirect( $redirect_url, $requested_url ) {
+	_edd_deprecated_function( __FUNCTION__, '3.6.9' );
+	return $redirect_url;
+}

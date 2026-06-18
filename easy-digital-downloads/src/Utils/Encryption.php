@@ -105,6 +105,25 @@ final class Encryption {
 	}
 
 	/**
+	 * Returns a fingerprint of the current encryption key.
+	 *
+	 * Lets callers detect that the encryption key has changed without storing
+	 * the key itself.
+	 *
+	 * @since 3.6.9
+	 *
+	 * @param string $label Domain-separation label.
+	 * @return string|null Lowercase hex fingerprint, or null when unavailable.
+	 */
+	public static function key_fingerprint( string $label = 'edd-hmac-fingerprint' ): ?string {
+		if ( ! self::requirements_met() ) {
+			return null;
+		}
+
+		return hash_hmac( 'sha256', $label, self::get_encryption_key() );
+	}
+
+	/**
 	 * Checks if encryption requirements are met.
 	 *
 	 * @since 3.6.5

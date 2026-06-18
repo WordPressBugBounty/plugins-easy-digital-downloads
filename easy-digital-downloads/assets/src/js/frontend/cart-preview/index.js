@@ -66,8 +66,14 @@ class EDDCartPreview {
 		this.setupGlobalAPI();
 		this.setupEDDIntegration();
 
-		// Fetch initial cart contents
-		this.fetchCartContents();
+		// Initialize from server-rendered cart data if available, to avoid a
+		// REST call that fails on hosts that drop session cookies on REST requests.
+		if ( this.config.cart ) {
+			this.updateStateFromResponse( this.config.cart );
+			this.updateUI();
+		} else {
+			this.fetchCartContents();
+		}
 	}
 
 	/**
@@ -230,6 +236,7 @@ class EDDCartPreview {
 			close: this.close,
 			toggle: this.toggle,
 			refresh: () => this.fetchCartContents(),
+			updateState: ( data ) => this.updateStateFromResponse( data ),
 			getState: () => ( { ...this.state } ),
 			hooks: this.hooks
 		};
@@ -256,8 +263,17 @@ class EDDCartPreview {
 			$( document.body ).on( 'edd_cart_item_added', async ( event, response ) => {
 				this.log( 'EDD Cart: Item added', response );
 
-				// Refresh cart contents
-				await this.fetchCartContents();
+				const embeddedCart = response?.cartPreview ?? null;
+				if ( embeddedCart ) {
+					if ( this.fetchController ) {
+						this.fetchController.abort();
+						this.fetchController = null;
+					}
+					this.updateStateFromResponse( embeddedCart );
+					this.updateUI();
+				} else {
+					await this.fetchCartContents();
+				}
 
 				// Announce for screen readers
 				if ( this.elements.status && response?.addedToCart ) {

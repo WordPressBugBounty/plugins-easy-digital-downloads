@@ -30,7 +30,7 @@ class Stats {
 	private $product_count;
 
 	public function get() {
-		return array(
+		$data = array(
 			'activated'            => $this->convert_timestamp( edd_get_activation_date() ),
 			'pro_activated'        => $this->convert_timestamp( get_option( 'edd_pro_activation_date' ) ),
 			'first_order'          => $this->get_first_order_date(),
@@ -40,7 +40,17 @@ class Stats {
 			'categories'           => $this->get_category_count(),
 			'tags'                 => $this->get_tag_count(),
 			'pass_id'              => $this->get_pass_id(),
+			'discounts'            => $this->get_discount_count(),
 		);
+
+		/**
+		 * Filters the stats data to send to the telemetry server.
+		 *
+		 * @since 3.6.9
+		 *
+		 * @param array $data The stats data.
+		 */
+		return apply_filters( 'edd_telemetry_stats', $data );
 	}
 
 	/**
@@ -152,5 +162,15 @@ class Stats {
 	 */
 	private function get_tag_count() {
 		return wp_count_terms( 'download_tag' );
+	}
+
+	/**
+	 * Gets the number of active discount codes on the website.
+	 *
+	 * @since 3.6.9
+	 * @return int
+	 */
+	private function get_discount_count() {
+		return edd_get_discount_count( array( 'status' => 'active' ) );
 	}
 }

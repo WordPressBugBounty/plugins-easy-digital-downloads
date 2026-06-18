@@ -88,6 +88,14 @@ class Settings {
 			}
 		}
 
+		// PayPal Commerce active integration version (v2 = 1st-party REST API;
+		// v3 = 3rd-party proxy + PayPal Commerce Platform). Telemetry only fires
+		// in live mode, so we report the live-mode version only.
+		$paypal_commerce_version = get_option( 'edd_paypal_live_commerce_version', '' );
+		if ( ! empty( $paypal_commerce_version ) ) {
+			$data['paypal_commerce_version'] = $paypal_commerce_version;
+		}
+
 		return $data;
 	}
 
@@ -107,7 +115,7 @@ class Settings {
 
 		$default = isset( $setting['std'] ) ? $setting['std'] : '';
 		$value   = edd_get_option( $setting['id'], $default );
-		if ( in_array( $setting['type'], array( 'checkbox', 'checkbox_description' ), true ) ) {
+		if ( in_array( $setting['type'], array( 'checkbox', 'checkbox_description', 'checkbox_toggle' ), true ) ) {
 			return (int) (bool) $value;
 		}
 		if ( empty( $value ) ) {

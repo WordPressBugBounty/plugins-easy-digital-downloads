@@ -110,7 +110,7 @@ class Legacy implements \EDD\EventManagement\SubscriberInterface {
 	 * @return array
 	 */
 	protected function get_extensions() {
-		return array(
+		$extensions = array(
 			'edd-manual-purchases'         => array(
 				'notification-id' => 'mp-legacy-notice',
 				'name'            => 'Manual Purchases',
@@ -158,6 +158,18 @@ class Legacy implements \EDD\EventManagement\SubscriberInterface {
 				'content'         => __( 'Featured Downloads has been merged into Easy Digital Downloads. If you are using the [edd_featured_downloads] shortcode anywhere, please update it to use the downloads block or shortcode instead and then deactivate this plugin.', 'easy-digital-downloads' ),
 			),
 		);
+
+		// Mark PayPal Commerce Pro as legacy when connected via v3.
+		if ( 'v3' === \EDD\Gateways\PayPal\CommerceVersion::get_version() ) {
+			$extensions['edd-paypal-commerce-pro'] = array(
+				'notification-id' => 'pcp-legacy-notice',
+				'name'            => 'PayPal Commerce Pro',
+				'basename'        => 'edd-paypal-commerce-pro/edd-paypal-commerce-pro.php',
+				'content'         => __( 'PayPal Commerce Pro features are now built into the EDD PayPal integration. Advanced card fields are handled via Fastlane. This plugin has been deactivated and can be safely deleted.', 'easy-digital-downloads' ),
+			);
+		}
+
+		return $extensions;
 	}
 
 	/**

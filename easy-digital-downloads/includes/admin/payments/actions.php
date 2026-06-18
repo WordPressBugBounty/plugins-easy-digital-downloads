@@ -512,41 +512,8 @@ function edd_ajax_process_refund_form() {
 		wp_send_json_error( __( 'Nonce validation failed when submitting refund.', 'easy-digital-downloads' ), 401 );
 	}
 
-	// Collect selected order items.
-	$order_items = array();
-	if ( ! empty( $form_data['refund_order_item'] ) && is_array( $form_data['refund_order_item'] ) ) {
-		foreach ( $form_data['refund_order_item'] as $order_item_id => $order_item ) {
-			// If there's no quantity or subtotal - bail.
-			if ( empty( $order_item['quantity'] ) || ( empty( $order_item['subtotal'] ) && empty( $order_item['tax'] ) ) ) {
-				continue;
-			}
-
-			$order_items[] = array(
-				'order_item_id' => absint( $order_item_id ),
-				'quantity'      => intval( $order_item['quantity'] ),
-				'subtotal'      => edd_sanitize_amount( $order_item['subtotal'] ),
-				'tax'           => ! empty( $order_item['tax'] ) ? edd_sanitize_amount( $order_item['tax'] ) : 0.00,
-			);
-		}
-	}
-
-	// Collect selected adjustments.
-	$adjustments = array();
-	if ( ! empty( $form_data['refund_order_adjustment'] ) && is_array( $form_data['refund_order_adjustment'] ) ) {
-		foreach ( $form_data['refund_order_adjustment'] as $adjustment_id => $adjustment ) {
-			// If there's no quantity or subtotal - bail.
-			if ( empty( $adjustment['quantity'] ) || empty( $adjustment['subtotal'] ) ) {
-				continue;
-			}
-
-			$adjustments[] = array(
-				'adjustment_id' => absint( $adjustment_id ),
-				'quantity'      => intval( $adjustment['quantity'] ),
-				'subtotal'      => floatval( edd_sanitize_amount( $adjustment['subtotal'] ) ),
-				'tax'           => ! empty( $adjustment['tax'] ) ? floatval( edd_sanitize_amount( $adjustment['tax'] ) ) : 0.00,
-			);
-		}
-	}
+	$order_items = \EDD\Orders\Refunds\FormParser::parse_order_items( $form_data );
+	$adjustments = \EDD\Orders\Refunds\FormParser::parse_adjustments( $form_data );
 
 	$order_id  = absint( $_POST['order_id'] );
 	$refund_id = edd_refund_order( $order_id, $order_items, $adjustments );

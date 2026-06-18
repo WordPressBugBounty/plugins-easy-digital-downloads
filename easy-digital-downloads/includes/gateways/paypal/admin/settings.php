@@ -110,6 +110,17 @@ function register_gateway_settings( $gateway_settings ) {
 		);
 	}
 
+	// Payment Methods toggles — shown when connected on V3.
+	$is_v3 = 'v3' === PayPal\CommerceVersion::get_version();
+
+	if ( PayPal\ready_to_accept_payments() && $is_v3 ) {
+		$paypal_settings['paypal_payment_methods'] = array(
+			'id'   => 'paypal_payment_methods',
+			'name' => __( 'Payment Methods', 'easy-digital-downloads' ),
+			'type' => 'hook',
+		);
+	}
+
 	/**
 	 * Filters the PayPal Settings.
 	 *
@@ -129,13 +140,6 @@ add_filter( 'edd_settings_gateways', __NAMESPACE__ . '\register_gateway_settings
  * @since 2.11
  */
 function documentation_settings_field() {
-	?>
-	<p>
-		<a id="edd-paypal-commerce-get-help" class="edd-hidden" href="https://easydigitaldownloads.com/support/" target="_blank">
-			<?php esc_html_e( 'Get Help', 'easy-digital-downloads' ); ?>
-		</a>
-	</p>
-	<?php
 	if ( ! is_ssl() ) {
 		?>
 		<div class="notice notice-warning inline">
@@ -179,3 +183,5 @@ function documentation_flyout_link( $link ) {
 	return $link;
 }
 add_filter( 'edd_flyout_docs_link', __NAMESPACE__ . '\documentation_flyout_link' );
+
+add_action( 'edd_paypal_payment_methods', array( Settings\PaymentMethodsField::class, 'render' ) );
