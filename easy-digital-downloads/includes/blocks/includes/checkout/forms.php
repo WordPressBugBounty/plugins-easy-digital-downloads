@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Checkout\Forms;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Outputs the purchase form for checkout.

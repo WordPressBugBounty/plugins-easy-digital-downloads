@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Retrieves an instance of EDD_Payment for a specified ID.

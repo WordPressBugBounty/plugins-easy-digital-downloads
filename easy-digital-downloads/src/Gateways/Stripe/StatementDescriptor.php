@@ -9,7 +9,7 @@
 namespace EDD\Gateways\Stripe;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class to handle the Stripe statement descriptor.

@@ -12,7 +12,7 @@
 use EDD\Database\Rows\Adjustment;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_Discount Class

@@ -13,7 +13,7 @@ namespace EDD\Orders;
 use EDD\Refundable_Item;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Order_Adjustment Class.

@@ -7,7 +7,7 @@
  * @since       3.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // If the recipient cannot be modified, just show a fake recipient.
 if (

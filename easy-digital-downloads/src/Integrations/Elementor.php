@@ -11,7 +11,7 @@
 namespace EDD\Integrations;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Elementor class

@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Admin\Settings;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_filter( 'edd_settings_general', __NAMESPACE__ . '\pages' );
 /**

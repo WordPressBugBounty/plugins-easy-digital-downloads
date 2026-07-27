@@ -2,7 +2,7 @@
 
 namespace EDD\Discounts;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class ItemAmount.

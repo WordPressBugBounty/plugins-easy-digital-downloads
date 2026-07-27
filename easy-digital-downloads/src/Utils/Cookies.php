@@ -3,7 +3,7 @@
 namespace EDD\Utils;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Cookies Class

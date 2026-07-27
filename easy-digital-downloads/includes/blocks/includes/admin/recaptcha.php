@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Recaptcha\Settings;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Register the settings for reCAPTCHA keys.

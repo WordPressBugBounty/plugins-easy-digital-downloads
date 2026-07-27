@@ -7,7 +7,7 @@
  * @since       3.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // If the email has no ID, it does not exist in the database and we cannot delete legacy data.
 if ( ! $email->email->id ) {

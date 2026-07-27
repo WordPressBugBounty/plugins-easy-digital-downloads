@@ -23,7 +23,7 @@
 namespace EDD\Gateways\Square\Checkout;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Gateways\Square\Checkout\Transactions\Single;
 use EDD\Gateways\Square\Helpers\Compat;

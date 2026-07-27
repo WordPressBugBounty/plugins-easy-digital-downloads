@@ -15,7 +15,7 @@
 namespace EDD\Cron\Events;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Utils\Exceptions;
 use EDD\Cron\Traits\NextScheduled;

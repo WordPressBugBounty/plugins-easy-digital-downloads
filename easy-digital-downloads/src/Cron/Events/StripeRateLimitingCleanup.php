@@ -9,7 +9,7 @@
 namespace EDD\Cron\Events;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Weekly Events

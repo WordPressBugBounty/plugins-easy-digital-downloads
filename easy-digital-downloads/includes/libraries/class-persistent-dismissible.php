@@ -8,7 +8,7 @@
 namespace Sandhills\Utils;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * This class_exists() check avoids a fatal error if this class exists in more

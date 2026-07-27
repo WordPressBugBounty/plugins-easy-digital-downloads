@@ -2,7 +2,7 @@
 
 namespace EDD\Sessions\Managers\Traits;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Database\Queries\Session as DB;
 

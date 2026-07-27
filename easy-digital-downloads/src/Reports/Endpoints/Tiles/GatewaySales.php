@@ -11,7 +11,7 @@
 namespace EDD\Reports\Endpoints\Tiles;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Gateway Sales Tile class.

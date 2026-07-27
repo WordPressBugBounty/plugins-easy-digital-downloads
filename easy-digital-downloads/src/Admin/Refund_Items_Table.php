@@ -15,7 +15,7 @@ use EDD\Orders\Order;
 use EDD\Orders\Order_Adjustment;
 use EDD\Orders\Order_Item;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Order_Items_Table Class.

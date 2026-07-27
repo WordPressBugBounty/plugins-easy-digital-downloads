@@ -11,7 +11,7 @@
 namespace EDD\Lite\Admin\Promos\Notices;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Admin\Promos\Notices\Notice;
 

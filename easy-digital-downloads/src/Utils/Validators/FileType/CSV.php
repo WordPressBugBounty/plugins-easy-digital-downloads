@@ -43,14 +43,21 @@ final class CSV extends Base {
 	);
 
 	/**
-	 * Accepted filename extension for CSV files.
+	 * Accepted filename extensions for delimited-text imports.
+	 *
+	 * Returned as an `extension => mime` map for wp_check_filetype(). Alongside
+	 * comma-separated (.csv), the plain-text (.txt) variant is accepted.
 	 *
 	 * @since 3.6.9
+	 * @since 3.6.9.1 Added the txt extension.
 	 *
 	 * @return array
 	 */
 	protected function extensions(): array {
-		return array( 'csv' => 'text/csv' );
+		return array(
+			'csv' => 'text/csv',
+			'txt' => 'text/plain',
+		);
 	}
 
 	/**

@@ -7,7 +7,7 @@
  * @since       3.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_filter(
 	'tiny_mce_plugins',

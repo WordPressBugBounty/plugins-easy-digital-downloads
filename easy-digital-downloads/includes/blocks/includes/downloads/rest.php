@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Downloads\Rest;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_action( 'rest_api_init', __NAMESPACE__ . '\register_rest_fields' );
 /**

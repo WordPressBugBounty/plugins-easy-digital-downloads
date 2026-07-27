@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Recaptcha;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\register_script' );
 /**

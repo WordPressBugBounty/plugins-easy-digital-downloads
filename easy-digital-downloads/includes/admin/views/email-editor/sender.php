@@ -7,7 +7,7 @@
  * @since       3.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 ?>
 <div class="edd-form-group edd-email__sender">

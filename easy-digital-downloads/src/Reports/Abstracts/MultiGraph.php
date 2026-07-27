@@ -16,7 +16,7 @@ namespace EDD\Reports\Abstracts;
 use EDD\Reports;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Abstract base class for multi-dataset EDD Reports Chart builders.

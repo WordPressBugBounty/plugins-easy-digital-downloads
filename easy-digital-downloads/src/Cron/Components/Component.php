@@ -14,7 +14,7 @@ use EDD\EventManagement\EventManager;
 use EDD\EventManagement\SubscriberInterface;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Component

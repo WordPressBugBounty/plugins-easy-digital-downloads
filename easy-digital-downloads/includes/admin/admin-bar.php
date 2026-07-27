@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Maybe add the store status to the WordPress admin bar

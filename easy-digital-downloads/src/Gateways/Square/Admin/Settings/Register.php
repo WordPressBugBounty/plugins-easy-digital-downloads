@@ -11,7 +11,7 @@
 namespace EDD\Gateways\Square\Admin\Settings;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
 use EDD\Gateways\Square\Gateway;

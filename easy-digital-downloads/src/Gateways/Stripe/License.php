@@ -2,7 +2,7 @@
 
 namespace EDD\Gateways\Stripe;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class to handle the Stripe license data.

@@ -2,7 +2,7 @@
 
 namespace EDD\Sessions\Managers;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * PHP Session Manager

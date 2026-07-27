@@ -2,7 +2,7 @@
 
 namespace EDD\Emails\Templates;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class PasswordReset

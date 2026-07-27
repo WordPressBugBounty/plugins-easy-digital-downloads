@@ -11,7 +11,7 @@
 namespace EDD\Elementor\Widgets\Config\Traits;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Common options trait for sharing helper methods.

@@ -12,7 +12,7 @@ namespace EDD\Telemetry;
 use EDD\Admin\Pass_Manager;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class Stats

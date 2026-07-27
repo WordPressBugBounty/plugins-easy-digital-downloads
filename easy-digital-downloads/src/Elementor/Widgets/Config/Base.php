@@ -11,7 +11,7 @@
 namespace EDD\Elementor\Widgets\Config;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Abstract base class for control configurations.

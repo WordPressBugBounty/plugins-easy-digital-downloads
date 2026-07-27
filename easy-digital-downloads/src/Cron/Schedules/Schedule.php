@@ -12,7 +12,7 @@ namespace EDD\Cron\Schedules;
 use EDD\Utils\Exception;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Schedule

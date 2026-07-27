@@ -13,7 +13,7 @@ namespace EDD\Blocks\Checkout\Ajax;
 use EDD\Blocks\Checkout\Functions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_action( 'enqueue_block_assets', __NAMESPACE__ . '\enqueue_cart_script' );
 /**

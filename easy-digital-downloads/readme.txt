@@ -6,7 +6,7 @@ Tags: ecommerce, payments, sell digital products, digital store, stripe
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable Tag: 3.6.9
+Stable Tag: 3.6.9.1
 License: GPLv2 or later
 
 The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
@@ -293,6 +293,10 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.6.9.1 =
+* Admin: Hardened the display of payment gateway error and API request log messages.
+* Imports: Improved hardening and validation of uploaded import files.
+
 = 3.6.9 =
 * NEW: PayPal - Added support for Fastlane and additional payment methods for newly connected stores.
 * Admin: Improved notice compatibility.

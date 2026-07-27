@@ -1,6 +1,6 @@
 <?php
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Legacy `EDD_Auto_Register` class was refactored and moved to the new `EDD\Checkout\AutoRegister` class.

@@ -11,7 +11,7 @@
 namespace EDD\Reports\Endpoints\Traits;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Trait Colors

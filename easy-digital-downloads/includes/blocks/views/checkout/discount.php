@@ -6,7 +6,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // The discount form always shows in the checkout preview.
 if ( ! \EDD\Blocks\Utility::is_block_editor() ) {

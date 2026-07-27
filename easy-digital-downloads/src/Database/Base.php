@@ -13,7 +13,7 @@ namespace EDD\Database;
 use AllowDynamicProperties;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * The base class that all other database base classes extend.

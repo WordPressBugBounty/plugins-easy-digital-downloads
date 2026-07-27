@@ -12,7 +12,7 @@
 // Exit if accessed directly.
 use EDD\Adjustments\Adjustment;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Manually add an order.

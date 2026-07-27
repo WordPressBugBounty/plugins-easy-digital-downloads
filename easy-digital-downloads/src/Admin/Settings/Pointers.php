@@ -2,7 +2,7 @@
 
 namespace EDD\Admin\Settings;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
 

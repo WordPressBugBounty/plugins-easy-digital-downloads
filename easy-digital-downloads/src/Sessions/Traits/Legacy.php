@@ -2,7 +2,7 @@
 
 namespace EDD\Sessions\Traits;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 trait Legacy {
 

@@ -9,7 +9,7 @@
 namespace EDD\Downloads;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Downloads process class

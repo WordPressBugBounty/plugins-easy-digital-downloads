@@ -11,7 +11,7 @@
 namespace EDD\Reports\Endpoints\Tiles;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Refund Rate Tile class.

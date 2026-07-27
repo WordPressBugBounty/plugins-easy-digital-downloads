@@ -14,7 +14,7 @@
 namespace EDD\REST\Routes;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\REST\Security;
 use EDD\REST\Controllers\UnbrandedCard as Controller;

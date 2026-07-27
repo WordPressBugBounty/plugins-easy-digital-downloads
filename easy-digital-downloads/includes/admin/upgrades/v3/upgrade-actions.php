@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Handles the 3.0 upgrade process.

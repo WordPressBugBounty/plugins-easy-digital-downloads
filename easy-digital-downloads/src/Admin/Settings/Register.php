@@ -10,7 +10,7 @@
  */
 namespace EDD\Admin\Settings;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 class Register {
 

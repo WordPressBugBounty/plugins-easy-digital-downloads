@@ -9,7 +9,7 @@
 namespace EDD\Admin\Settings\Sanitize\Tabs\Gateways;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Admin\Settings\Sanitize\Tabs\Section;
 

@@ -7,7 +7,7 @@
  */
 namespace EDD\Utils;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 class ListHandler {
 

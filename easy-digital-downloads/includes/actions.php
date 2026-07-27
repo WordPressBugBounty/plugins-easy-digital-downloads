@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Hooks EDD actions, when present in the $_GET superglobal. Every edd_action

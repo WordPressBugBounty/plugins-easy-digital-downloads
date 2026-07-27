@@ -2,7 +2,7 @@
 
 namespace EDD\Licensing;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class to handle and normalize the license data.

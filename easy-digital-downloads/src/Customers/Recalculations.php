@@ -4,7 +4,7 @@
  */
 namespace EDD\Customers;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
 use EDD\Cron\Events\SingleEvent;

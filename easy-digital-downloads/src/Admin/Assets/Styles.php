@@ -75,7 +75,6 @@ class Styles {
 	private static function get_styles() {
 		return array(
 			'jquery-chosen',
-			'thickbox',
 			'wp-jquery-ui-dialog',
 			'wp-color-picker',
 			'edd-admin',

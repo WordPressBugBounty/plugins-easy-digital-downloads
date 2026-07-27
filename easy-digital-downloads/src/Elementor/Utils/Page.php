@@ -11,7 +11,7 @@
 namespace EDD\Elementor\Utils;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use Elementor\Plugin as ElementorPlugin;
 

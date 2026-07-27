@@ -2,7 +2,7 @@
 
 namespace EDD\CLI\Migration;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * CLI command to query for customers with missing email addresses after a migration.

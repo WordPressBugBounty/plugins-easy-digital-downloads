@@ -13,7 +13,7 @@
 namespace EDD\REST\Controllers;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * LogPruning Controller class

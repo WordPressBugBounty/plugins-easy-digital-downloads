@@ -11,7 +11,7 @@
 namespace EDD\Database;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Base class used for each column for a custom table.

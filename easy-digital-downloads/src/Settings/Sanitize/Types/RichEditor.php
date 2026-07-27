@@ -9,7 +9,7 @@
 namespace EDD\Settings\Sanitize\Types;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Sanitizes the Rich Editor setting type.

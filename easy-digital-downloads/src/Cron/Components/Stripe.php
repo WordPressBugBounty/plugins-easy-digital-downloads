@@ -12,7 +12,7 @@ namespace EDD\Cron\Components;
 use EDD\Gateways\Stripe\Admin\LicenseManager;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Stripe Class

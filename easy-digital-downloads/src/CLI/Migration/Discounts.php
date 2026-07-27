@@ -2,7 +2,7 @@
 
 namespace EDD\CLI\Migration;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 class Discounts {
 

@@ -12,7 +12,7 @@
 namespace EDD\Admin\Onboarding\Steps;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 abstract class Step {
 	use \EDD\Admin\Onboarding\Helpers;

@@ -12,7 +12,7 @@ namespace PayWithAmazon;
  */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 final class EDD_Amazon_Payments {
 

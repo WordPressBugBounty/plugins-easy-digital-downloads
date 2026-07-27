@@ -11,7 +11,7 @@
 
 namespace EDD\Gateways\PayPal\Webhooks\Events;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 class Customer_Dispute_Created extends Webhook_Event {
 

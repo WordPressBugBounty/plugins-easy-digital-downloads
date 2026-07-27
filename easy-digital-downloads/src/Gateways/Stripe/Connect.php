@@ -9,7 +9,7 @@
 
 namespace EDD\Gateways\Stripe;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * The class to manage the Stripe Connect properties.

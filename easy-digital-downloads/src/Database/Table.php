@@ -11,7 +11,7 @@
 namespace EDD\Database;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * A base database table class, which facilitates the creation of (and schema

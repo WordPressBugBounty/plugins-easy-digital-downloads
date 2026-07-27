@@ -88,7 +88,6 @@ class Scripts {
 			'jquery-ui-dialog',
 			'jquery-ui-tooltip',
 			'media-upload',
-			'thickbox',
 			'wp-ajax-response',
 			'wp-color-picker',
 		);

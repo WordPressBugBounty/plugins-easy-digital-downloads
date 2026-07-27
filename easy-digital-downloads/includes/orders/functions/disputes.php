@@ -8,7 +8,7 @@
  * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       3.2.0
  */
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Records an order dispute by changing the order status to on hold

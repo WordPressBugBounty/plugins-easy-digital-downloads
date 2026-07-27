@@ -9,7 +9,7 @@
 namespace EDD\Admin\Settings\Sanitize\Tabs;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Base Tab class for sanitization.

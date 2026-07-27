@@ -8,7 +8,7 @@
  * @since 2.9.6
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Adds a Stripe Connect site health test.

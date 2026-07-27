@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Utils\FileSystem;
 use EDD\Utils\Validators\FileType\CSV;
@@ -76,7 +76,8 @@ function edd_do_ajax_import_file_upload() {
 	}
 
 	// Validate the uploaded import file.
-	if ( ! ( new CSV() )->is_valid( $_FILES['edd-import-file']['tmp_name'], $_FILES['edd-import-file']['name'] ) ) {
+	$csv = new CSV();
+	if ( ! $csv->is_valid( $_FILES['edd-import-file']['tmp_name'], $_FILES['edd-import-file']['name'] ) ) {
 		wp_send_json_error(
 			array(
 				'error'   => __( 'The file you uploaded does not appear to be a CSV file.', 'easy-digital-downloads' ),
@@ -85,8 +86,9 @@ function edd_do_ajax_import_file_upload() {
 		);
 	}
 
-	// Upload the file to the protected EDD exports directory.
-	$file_name   = sanitize_file_name( $_FILES['edd-import-file']['name'] );
+	// Upload to the protected exports directory under a single validated
+	// extension, so a crafted name like "shell.php.csv" cannot persist as-is.
+	$file_name   = $csv->sanitize_filename( $_FILES['edd-import-file']['name'] );
 	$exports_dir = edd_get_exports_dir();
 	$file_path   = trailingslashit( $exports_dir ) . wp_unique_filename( $exports_dir, $file_name );
 
@@ -160,7 +162,19 @@ function edd_do_ajax_import() {
 		);
 	}
 
-	if ( ! FileSystem::file_exists( $_REQUEST['upload']['file'] ) ) {
+	$file = sanitize_text_field( wp_unslash( $_REQUEST['upload']['file'] ) );
+
+	$exports_dir = trailingslashit( edd_get_exports_dir() );
+	if ( false !== strpos( $file, '..' ) || 0 !== strpos( $file, $exports_dir ) ) {
+		wp_send_json_error(
+			array(
+				'error'   => __( 'The import file path is invalid.', 'easy-digital-downloads' ),
+				'request' => $_REQUEST,
+			)
+		);
+	}
+
+	if ( ! FileSystem::file_exists( $file ) ) {
 		wp_send_json_error(
 			array(
 				'error'   => __( 'Something went wrong during the upload process, please try again.', 'easy-digital-downloads' ),
@@ -168,8 +182,6 @@ function edd_do_ajax_import() {
 			)
 		);
 	}
-
-	$file = sanitize_text_field( $_REQUEST['upload']['file'] );
 
 	$mime_type_allowed = false;
 	if ( is_callable( 'mime_content_type' ) ) {

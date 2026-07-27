@@ -10,7 +10,7 @@
 namespace EDD\Assets;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit; // @codingStandardsIgnoreLine
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Checkout scripts.

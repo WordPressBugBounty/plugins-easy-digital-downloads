@@ -11,7 +11,7 @@
 namespace EDD\Database\Queries;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // @todo Remove the need for this dependency
 use \WP_Meta_Query;

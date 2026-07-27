@@ -15,7 +15,7 @@
 namespace EDD\Gateways\PayPal\V3;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Resolves buyer identity and issues auth cookies for REST-based PayPal flows.

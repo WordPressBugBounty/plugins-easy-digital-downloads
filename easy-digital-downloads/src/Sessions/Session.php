@@ -2,7 +2,7 @@
 
 namespace EDD\Sessions;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Database\Row;
 

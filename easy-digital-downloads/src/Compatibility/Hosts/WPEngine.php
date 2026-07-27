@@ -9,7 +9,7 @@
 namespace EDD\Compatibility\Hosts;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * WPEngine compatibility

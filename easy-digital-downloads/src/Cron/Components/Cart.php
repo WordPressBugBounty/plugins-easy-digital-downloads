@@ -10,7 +10,7 @@
 namespace EDD\Cron\Components;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Cart Class for Cron Events.

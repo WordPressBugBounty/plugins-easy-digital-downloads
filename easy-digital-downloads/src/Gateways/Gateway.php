@@ -11,7 +11,7 @@
 namespace EDD\Gateways;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Abstract class for registered gateways.

@@ -13,7 +13,7 @@ namespace EDD\Customers;
 use EDD\Base_Object;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Customer Email Address Class.

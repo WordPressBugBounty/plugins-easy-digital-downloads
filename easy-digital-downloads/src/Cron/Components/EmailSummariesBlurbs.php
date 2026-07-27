@@ -15,7 +15,7 @@ use EDD\Cron\Events\SingleEvent;
 use EDD\Cron\Traits;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EmailSummariesBlurbs Class.

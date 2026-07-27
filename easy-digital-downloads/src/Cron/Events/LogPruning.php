@@ -14,7 +14,7 @@ use EDD\Cron\Traits\Clear;
 use EDD\Cron\Schedulers\Handler;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * LogPruning Event Class

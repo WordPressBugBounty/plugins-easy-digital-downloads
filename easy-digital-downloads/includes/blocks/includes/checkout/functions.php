@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Checkout\Functions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Whether the checkout page is using blocks.

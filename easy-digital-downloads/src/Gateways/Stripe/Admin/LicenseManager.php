@@ -7,7 +7,7 @@
 
 namespace EDD\Gateways\Stripe\Admin;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class to handle the admin notifications.

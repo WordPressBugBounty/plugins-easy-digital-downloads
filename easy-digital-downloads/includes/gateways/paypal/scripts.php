@@ -11,7 +11,7 @@
 namespace EDD\Gateways\PayPal;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
 use EDD\Gateways\PayPal\V3\Customer;

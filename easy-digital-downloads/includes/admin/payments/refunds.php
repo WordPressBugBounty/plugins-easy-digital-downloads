@@ -12,7 +12,7 @@
 use EDD\Orders\Order;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /** Header ******************************************************************/
 

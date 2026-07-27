@@ -10,7 +10,7 @@
 */
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_Payment_Stats Class.

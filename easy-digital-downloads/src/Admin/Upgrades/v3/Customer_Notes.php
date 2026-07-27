@@ -13,7 +13,7 @@ namespace EDD\Admin\Upgrades\v3;
 use EDD\Utils\Date;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Customer_Notes Class.

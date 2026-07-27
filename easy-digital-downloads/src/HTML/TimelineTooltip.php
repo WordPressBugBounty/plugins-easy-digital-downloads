@@ -12,7 +12,7 @@
 
 namespace EDD\HTML;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class TimelineTooltip

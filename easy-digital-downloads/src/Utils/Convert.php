@@ -9,7 +9,7 @@
 namespace EDD\Utils;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Utility class to help convert and reformat data.

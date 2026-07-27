@@ -10,7 +10,7 @@
 namespace EDD\Blocks\Terms;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Blocks\Functions;
 

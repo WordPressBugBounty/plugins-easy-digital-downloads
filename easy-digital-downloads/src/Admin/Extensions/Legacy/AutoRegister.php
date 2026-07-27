@@ -2,7 +2,7 @@
 
 namespace EDD\Admin\Extensions\Legacy;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class AutoRegister

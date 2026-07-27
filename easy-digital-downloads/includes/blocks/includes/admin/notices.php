@@ -10,7 +10,7 @@
 
 namespace EDD\Blocks\Admin\Notices;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_action( 'admin_notices', __NAMESPACE__ . '\existing_blocks_plugin' );
 /**

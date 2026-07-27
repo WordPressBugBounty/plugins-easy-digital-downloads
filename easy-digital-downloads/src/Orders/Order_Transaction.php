@@ -13,7 +13,7 @@ namespace EDD\Orders;
 use EDD\Database\Rows;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Order Transaction Class.

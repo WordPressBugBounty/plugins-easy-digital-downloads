@@ -13,7 +13,7 @@ namespace EDD\Admin\Settings\Tabs;
 
 use EDD\Admin\Settings\Traits\Helpers;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Abstract class for a settings tab.

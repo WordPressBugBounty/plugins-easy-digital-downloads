@@ -13,7 +13,7 @@ namespace EDD\Reports\Data\Customers;
 use EDD\Reports;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // Load \EDD_Customer_Reports_Table if not loaded.
 if ( ! class_exists( '\EDD_Customer_Reports_Table' ) ) {

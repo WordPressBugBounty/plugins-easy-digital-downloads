@@ -15,7 +15,7 @@ use EDD\Emails\Registry;
 use EDD\Reports;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Get Download Sales Log

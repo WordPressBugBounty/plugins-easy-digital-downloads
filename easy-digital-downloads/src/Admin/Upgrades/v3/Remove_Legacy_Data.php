@@ -11,7 +11,7 @@
 namespace EDD\Admin\Upgrades\v3;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Remove_Legacy_Data Class.

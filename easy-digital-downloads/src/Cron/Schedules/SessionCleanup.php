@@ -9,7 +9,7 @@
 namespace EDD\Cron\Schedules;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Session Cleanup Schedule

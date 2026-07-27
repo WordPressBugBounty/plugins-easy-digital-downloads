@@ -13,7 +13,7 @@
 use EDD\Reports;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * The callback function which fetches the data for the overview_sales_earnings_chart reports endpoint.

@@ -11,7 +11,7 @@
 namespace EDD\Elementor\Widgets;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Elementor\Utils\Page;
 use EDD\Elementor\Widgets\Config\Checkout as Config;

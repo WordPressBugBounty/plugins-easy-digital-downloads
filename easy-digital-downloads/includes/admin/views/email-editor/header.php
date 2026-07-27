@@ -7,7 +7,7 @@
  * @since       3.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 $message      = filter_input( INPUT_GET, 'edd-message', FILTER_SANITIZE_SPECIAL_CHARS );
 $status_badge = false;

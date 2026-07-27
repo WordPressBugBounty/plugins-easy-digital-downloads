@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_filter( 'wp_login_errors', 'edd_login_register_error_message', 10, 2 );
 /**

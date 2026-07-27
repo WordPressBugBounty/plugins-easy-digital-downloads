@@ -2,7 +2,7 @@
 
 namespace EDD\EventManagement;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class Subscriber

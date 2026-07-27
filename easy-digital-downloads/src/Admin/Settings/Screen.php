@@ -2,7 +2,7 @@
 
 namespace EDD\Admin\Settings;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Admin\Menu\SecondaryNavigation;
 use EDD\Admin\Menu\SubNav;

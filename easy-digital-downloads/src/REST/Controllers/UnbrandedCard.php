@@ -25,7 +25,7 @@
 namespace EDD\REST\Controllers;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\REST\Security;
 use EDD\Gateways\PayPal\Gateway;

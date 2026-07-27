@@ -9,7 +9,7 @@
 namespace EDD\Settings\Sanitize\Types;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Base Type class for sanitizing a EDD setting type.

@@ -11,7 +11,7 @@
 namespace EDD\Gateways\Square\Webhooks\Events;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * The Square Refund Updated event.

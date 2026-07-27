@@ -2,7 +2,7 @@
 namespace EDD\Integrations;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Handles registering the `easydigitaldownloads` username in the WPCode snippets library.

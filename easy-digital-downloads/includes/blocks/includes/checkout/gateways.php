@@ -10,7 +10,7 @@
 
 namespace EDD\Blocks\Checkout\Gateways;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Gets the accepted payment icons.

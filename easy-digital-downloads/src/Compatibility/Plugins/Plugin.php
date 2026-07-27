@@ -9,7 +9,7 @@
 
 namespace EDD\Compatibility\Plugins;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Plugin compatibility

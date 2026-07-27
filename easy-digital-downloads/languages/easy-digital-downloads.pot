@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Easy Digital Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads 3.6.9\n"
+"Project-Id-Version: Easy Digital Downloads 3.6.9.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-digital-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T18:36:37+00:00\n"
+"POT-Creation-Date: 2026-07-27T17:11:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
@@ -5962,8 +5962,8 @@ msgstr ""
 #: includes/admin/payments/view-order-details.php:62
 #: includes/admin/payments/view-refund.php:23
 #: includes/admin/payments/view-refund.php:32
-#: includes/admin/reporting/class-api-requests-logs-list-table.php:75
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:89
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:89
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:99
 #: includes/admin/reporting/export/export-actions.php:25
 #: includes/admin/reporting/export/export-actions.php:44
 #: includes/admin/reporting/export/export-actions.php:48
@@ -6867,7 +6867,7 @@ msgstr ""
 #: includes/admin/reporting/class-export-download-history.php:59
 #: includes/admin/reporting/class-export-payments.php:76
 #: includes/admin/reporting/class-file-downloads-logs-list-table.php:132
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:92
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:102
 #: includes/admin/reporting/class-sales-logs-list-table.php:101
 #: includes/admin/tools.php:440
 #: includes/blocks/views/orders/totals.php:39
@@ -7040,7 +7040,7 @@ msgstr ""
 #: includes/admin/discounts/discount-actions.php:126
 #: includes/admin/discounts/discount-actions.php:157
 #: includes/admin/import/import-functions.php:27
-#: includes/admin/import/import-functions.php:148
+#: includes/admin/import/import-functions.php:150
 #: includes/admin/reporting/export/export-actions.php:25
 #: includes/api/class-edd-api.php:1973
 #: includes/class-edd-license-handler.php:479
@@ -7272,7 +7272,7 @@ msgstr ""
 #: includes/admin/payments/class-payments-table.php:426
 #: includes/admin/payments/orders.php:955
 #: includes/admin/payments/orders.php:961
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:91
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:101
 #: includes/admin/reporting/class-gateways-reports-table.php:74
 #: src/Admin/Exports/Exporters/TaxedOrders.php:79
 #: src/Reports/Data/Payment_Gateways/Gateway_Stats.php:78
@@ -8037,7 +8037,7 @@ msgid "Purchase button behavior"
 msgstr ""
 
 #: includes/admin/downloads/metabox.php:874
-#: includes/admin/thickbox.php:126
+#: includes/admin/thickbox.php:128
 #: src/Admin/Settings/Tabs/Misc.php:138
 #: src/Pro/Recommendations/Preview.php:175
 msgid "Add to Cart"
@@ -8125,17 +8125,17 @@ msgid "payments"
 msgstr ""
 
 #: includes/admin/import/import-functions.php:33
-#: includes/admin/import/import-functions.php:157
+#: includes/admin/import/import-functions.php:159
 msgid "Missing import parameters. Import class must be specified."
 msgstr ""
 
 #: includes/admin/import/import-functions.php:48
-#: includes/admin/import/import-functions.php:198
+#: includes/admin/import/import-functions.php:210
 msgid "Invalid importer class supplied"
 msgstr ""
 
 #: includes/admin/import/import-functions.php:57
-#: includes/admin/import/import-functions.php:208
+#: includes/admin/import/import-functions.php:220
 msgid "You do not have permission to import data"
 msgstr ""
 
@@ -8144,25 +8144,29 @@ msgid "Missing import file. Please provide an import file."
 msgstr ""
 
 #: includes/admin/import/import-functions.php:72
-#: includes/admin/import/import-functions.php:166
+#: includes/admin/import/import-functions.php:180
 msgid "Something went wrong during the upload process, please try again."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:82
-#: includes/admin/import/import-functions.php:188
+#: includes/admin/import/import-functions.php:83
+#: includes/admin/import/import-functions.php:200
 msgid "The file you uploaded does not appear to be a CSV file."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:103
+#: includes/admin/import/import-functions.php:105
 msgid "Failed to move uploaded file to protected directory."
 msgstr ""
 
-#: includes/admin/import/import-functions.php:237
+#: includes/admin/import/import-functions.php:171
+msgid "The import file path is invalid."
+msgstr ""
+
+#: includes/admin/import/import-functions.php:249
 msgid "No data found for import parameters"
 msgstr ""
 
 #. translators: 1: URL to view imported items, 2: Import type label
-#: includes/admin/import/import-functions.php:253
+#: includes/admin/import/import-functions.php:265
 #, php-format
 msgid "Import complete! <a href=\"%1$s\">View imported %2$s</a>."
 msgstr ""
@@ -8835,6 +8839,10 @@ msgid "Recalculate Order Values"
 msgstr ""
 
 #: includes/admin/payments/orders.php:831
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:75
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:77
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:63
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:65
 #: includes/admin/views/customer/edit.php:34
 #: includes/admin/views/customer/edit.php:36
 #: includes/admin/views/tmpl-order-copy-download-link.php:38
@@ -9169,7 +9177,7 @@ msgstr ""
 
 #: includes/admin/reporting/class-api-requests-logs-list-table.php:38
 #: includes/admin/reporting/class-file-downloads-logs-list-table.php:125
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:87
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:97
 #: src/Admin/Exports/Exporters/APIRequests.php:44
 msgid "Log ID"
 msgstr ""
@@ -9192,23 +9200,28 @@ msgstr ""
 msgid "Request Speed"
 msgstr ""
 
-#: includes/admin/reporting/class-api-requests-logs-list-table.php:68
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:71
 msgid "View Request"
 msgstr ""
 
-#: includes/admin/reporting/class-api-requests-logs-list-table.php:70
-msgid "API Request:"
-msgstr ""
-
-#: includes/admin/reporting/class-api-requests-logs-list-table.php:80
-msgid "API User:"
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:74
+#: src/Admin/Exports/Exporters/APIRequests.php:45
+msgid "API Request"
 msgstr ""
 
 #: includes/admin/reporting/class-api-requests-logs-list-table.php:82
+msgid "API Request:"
+msgstr ""
+
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:96
+msgid "API User:"
+msgstr ""
+
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:100
 msgid "API Key:"
 msgstr ""
 
-#: includes/admin/reporting/class-api-requests-logs-list-table.php:84
+#: includes/admin/reporting/class-api-requests-logs-list-table.php:104
 msgid "Request Date:"
 msgstr ""
 
@@ -9475,7 +9488,7 @@ msgid "guest"
 msgstr ""
 
 #: includes/admin/reporting/class-file-downloads-logs-list-table.php:128
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:88
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:98
 #: includes/admin/reporting/class-sales-logs-list-table.php:97
 #: src/Admin/Exports/Exporters/Orders.php:50
 #: src/Admin/Exports/Exporters/TaxedOrders.php:62
@@ -9491,20 +9504,20 @@ msgstr ""
 msgid "User Agent"
 msgstr ""
 
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:54
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:59
 msgid "View Log Message"
 msgstr ""
 
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:68
-msgid "Log data:"
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:62
+msgid "Log Message"
 msgstr ""
 
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:90
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:100
 msgid "Error Message"
 msgstr ""
 
 #. translators: %s: payment data
-#: includes/admin/reporting/class-gateway-error-logs-list-table.php:117
+#: includes/admin/reporting/class-gateway-error-logs-list-table.php:127
 #: includes/gateways/manual.php:72
 #: includes/gateways/paypal-standard.php:197
 msgid "Payment Error"
@@ -10151,25 +10164,25 @@ msgid "Configure rates for each region you wish to collect sales tax in."
 msgstr ""
 
 #. translators: singular download label
-#: includes/admin/thickbox.php:31
-#: includes/admin/thickbox.php:184
+#: includes/admin/thickbox.php:33
+#: includes/admin/thickbox.php:186
 #, php-format
 msgid "Insert %s"
 msgstr ""
 
-#: includes/admin/thickbox.php:58
+#: includes/admin/thickbox.php:60
 #: src/Admin/Emails/Styles.php:125
 #: src/Gateways/Stripe/PaymentMethods/Link.php:58
 msgid "Link"
 msgstr ""
 
-#: includes/admin/thickbox.php:59
+#: includes/admin/thickbox.php:61
 #: includes/template-functions.php:543
 #: src/Admin/Emails/Styles.php:185
 msgid "Button"
 msgstr ""
 
-#: includes/admin/thickbox.php:77
+#: includes/admin/thickbox.php:79
 #: includes/blocks/includes/downloads/downloads.php:145
 #: includes/checkout/template.php:859
 #: includes/gateways/stripe/includes/payment-methods/buy-now/template.php:191
@@ -10179,59 +10192,59 @@ msgstr ""
 msgid "Purchase"
 msgstr ""
 
-#: includes/admin/thickbox.php:81
+#: includes/admin/thickbox.php:83
 msgid "You must choose a download"
 msgstr ""
 
-#: includes/admin/thickbox.php:115
+#: includes/admin/thickbox.php:117
 msgid "Choose an existing product"
 msgstr ""
 
-#: includes/admin/thickbox.php:122
+#: includes/admin/thickbox.php:124
 msgid "Behavior"
 msgstr ""
 
-#: includes/admin/thickbox.php:127
+#: includes/admin/thickbox.php:129
 msgid "Direct Link"
 msgstr ""
 
-#: includes/admin/thickbox.php:129
+#: includes/admin/thickbox.php:131
 msgid "How do you want this to work?"
 msgstr ""
 
-#: includes/admin/thickbox.php:136
+#: includes/admin/thickbox.php:138
 msgid "Style"
 msgstr ""
 
-#: includes/admin/thickbox.php:146
+#: includes/admin/thickbox.php:148
 msgid "Choose between a Button or a Link"
 msgstr ""
 
-#: includes/admin/thickbox.php:153
+#: includes/admin/thickbox.php:155
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:85
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:109
 #: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:131
 msgid "Color"
 msgstr ""
 
-#: includes/admin/thickbox.php:163
+#: includes/admin/thickbox.php:165
 msgid "Choose the button color"
 msgstr ""
 
-#: includes/admin/thickbox.php:170
+#: includes/admin/thickbox.php:172
 #: includes/blocks/includes/admin/settings.php:169
 msgid "Text"
 msgstr ""
 
-#: includes/admin/thickbox.php:173
+#: includes/admin/thickbox.php:175
 msgid "View Product"
 msgstr ""
 
-#: includes/admin/thickbox.php:174
+#: includes/admin/thickbox.php:176
 msgid "This is the text inside the button or link"
 msgstr ""
 
-#: includes/admin/thickbox.php:183
+#: includes/admin/thickbox.php:185
 #: includes/admin/views/tmpl-tax-rates-table-dialog.php:64
 #: includes/gateways/stripe/includes/template-functions.php:682
 #: includes/gateways/stripe/includes/template-functions.php:727
@@ -18314,10 +18327,6 @@ msgstr ""
 
 #: src/Admin/Emails/Styles.php:186
 msgid "Show a link as a button."
-msgstr ""
-
-#: src/Admin/Exports/Exporters/APIRequests.php:45
-msgid "API Request"
 msgstr ""
 
 #: src/Admin/Exports/Exporters/APIRequests.php:47

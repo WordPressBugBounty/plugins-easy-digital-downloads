@@ -11,14 +11,14 @@
 namespace EDD\Reports\Data\File_Downloads;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Reports;
 use EDD\Stats;
 use EDD\Admin\List_Table;
 
 // Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Top_Five_Most_Downloaded_List_Table class.

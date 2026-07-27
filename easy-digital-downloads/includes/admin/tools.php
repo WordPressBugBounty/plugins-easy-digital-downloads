@@ -284,7 +284,7 @@ function edd_tools_import_export_display() {
 					<?php wp_nonce_field( 'edd_ajax_import', 'edd_ajax_import' ); ?>
 					<input type="hidden" name="edd-import-class" value="EDD_Batch_Payments_Import"/>
 					<p>
-						<input name="edd-import-file" id="edd-payments-import-file" type="file" accept=".csv" required/>
+						<input name="edd-import-file" id="edd-payments-import-file" type="file" accept=".csv,.txt" required/>
 					</p>
 					<span>
 						<input type="submit" value="<?php esc_html_e( 'Import CSV', 'easy-digital-downloads' ); ?>"
@@ -603,7 +603,7 @@ function edd_tools_import_export_display() {
 					<?php wp_nonce_field( 'edd_ajax_import', 'edd_ajax_import' ); ?>
 					<input type="hidden" name="edd-import-class" value="EDD_Batch_Downloads_Import"/>
 					<p>
-						<input name="edd-import-file" id="edd-downloads-import-file" type="file" accept=".csv" required/>
+						<input name="edd-import-file" id="edd-downloads-import-file" type="file" accept=".csv,.txt" required/>
 					</p>
 					<span>
 						<input type="submit" value="<?php _e( 'Import CSV', 'easy-digital-downloads' ); ?>"

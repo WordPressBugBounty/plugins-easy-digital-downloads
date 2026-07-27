@@ -11,7 +11,7 @@
 
 namespace EDD\Database\Tables;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Database\Table;
 

@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_API_Request_Log_Table List Table Class
@@ -60,30 +60,52 @@ class EDD_API_Request_Log_Table extends EDD_Base_Log_List_Table {
 	 * Output Error Message column
 	 *
 	 * @since 1.5
+	 * @since 3.6.9.1 Moved from thickbox to native dialog.
 	 * @param array $item Contains all the data of the log.
 	 * @return void
 	 */
 	public function column_details( $item ) {
+		$dialog_id       = 'log-details-' . absint( $item['ID'] );
+		$dialog_title_id = $dialog_id . '__title';
 		?>
-		<a href="#TB_inline?width=640&amp;inlineId=log-details-<?php echo esc_attr( $item['ID'] ); ?>" class="thickbox"><?php esc_html_e( 'View Request', 'easy-digital-downloads' ); ?></a>
-		<div id="log-details-<?php echo absint( $item['ID'] ); ?>" style="display:none;">
-			<p><strong><?php esc_html_e( 'API Request:', 'easy-digital-downloads' ); ?></strong></p>
-			<div><?php echo esc_html( $item['request'] ); ?></div>
-			<?php
-			if ( ! empty( $item['error'] ) ) {
-				?>
-				<p><strong><?php esc_html_e( 'Error', 'easy-digital-downloads' ); ?></strong></p>
-				<div><?php echo esc_html( $item['error'] ); ?></div>
+		<button type="button" class="button-link edd-logs__view-dialog" data-dialog-id="<?php echo esc_attr( $dialog_id ); ?>"><?php esc_html_e( 'View Request', 'easy-digital-downloads' ); ?></button>
+		<dialog id="<?php echo esc_attr( $dialog_id ); ?>" class="edd-modal edd-modal--log" aria-labelledby="<?php echo esc_attr( $dialog_title_id ); ?>">
+			<div class="edd-modal__header">
+				<h2 id="<?php echo esc_attr( $dialog_title_id ); ?>"><?php esc_html_e( 'API Request', 'easy-digital-downloads' ); ?></h2>
+				<button type="button" class="edd-modal__close" aria-label="<?php esc_attr_e( 'Close', 'easy-digital-downloads' ); ?>">
+					<span class="dashicons dashicons-no-alt"></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Close', 'easy-digital-downloads' ); ?></span>
+				</button>
+			</div>
+			<div class="edd-modal__content">
+				<div class="edd-modal__item--api-request">
+					<p><strong><?php esc_html_e( 'API Request:', 'easy-digital-downloads' ); ?></strong></p>
+					<div><?php echo esc_html( $item['request'] ); ?></div>
+				</div>
 				<?php
-			}
-			?>
-			<p><strong><?php esc_html_e( 'API User:', 'easy-digital-downloads' ); ?></strong></p>
-			<div><?php echo esc_html( $item['user_id'] ); ?></div>
-			<p><strong><?php esc_html_e( 'API Key:', 'easy-digital-downloads' ); ?></strong></p>
-			<div><?php echo esc_html( $item['api_key'] ); ?></div>
-			<p><strong><?php esc_html_e( 'Request Date:', 'easy-digital-downloads' ); ?></strong></p>
-			<div><?php echo esc_html( edd_date_i18n( strtotime( $item['date'] ), 'Y-m-d H:i:s' ) . ' ' . edd_get_timezone_abbr() ); ?></div>
-		</div>
+				if ( ! empty( $item['error'] ) ) {
+					?>
+					<div class="edd-modal__item--api-request">
+						<p><strong><?php esc_html_e( 'Error', 'easy-digital-downloads' ); ?></strong></p>
+						<div><?php echo esc_html( $item['error'] ); ?></div>
+					</div>
+					<?php
+				}
+				?>
+				<div class="edd-modal__item--api-request">
+					<p><strong><?php esc_html_e( 'API User:', 'easy-digital-downloads' ); ?></strong></p>
+					<div><?php echo esc_html( $item['user_id'] ); ?></div>
+				</div>
+				<div class="edd-modal__item--api-request">
+					<p><strong><?php esc_html_e( 'API Key:', 'easy-digital-downloads' ); ?></strong></p>
+					<div><?php echo esc_html( $item['api_key'] ); ?></div>
+				</div>
+				<div class="edd-modal__item--api-request">
+					<p><strong><?php esc_html_e( 'Request Date:', 'easy-digital-downloads' ); ?></strong></p>
+					<div><?php echo esc_html( edd_date_i18n( strtotime( $item['date'] ), 'Y-m-d H:i:s' ) . ' ' . edd_get_timezone_abbr() ); ?></div>
+				</div>
+			</div>
+		</dialog>
 		<?php
 	}
 

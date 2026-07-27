@@ -8,7 +8,7 @@
  */
 namespace EDD\Upgrades\Utilities;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Migration Check Class.

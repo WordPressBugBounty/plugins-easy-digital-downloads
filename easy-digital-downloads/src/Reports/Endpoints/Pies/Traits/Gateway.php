@@ -11,7 +11,7 @@
 namespace EDD\Reports\Endpoints\Pies\Traits;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Trait Gateway

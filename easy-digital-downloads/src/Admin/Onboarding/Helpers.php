@@ -12,7 +12,7 @@
 namespace EDD\Admin\Onboarding;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 trait Helpers {
 	/**

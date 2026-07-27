@@ -8,7 +8,7 @@
  * @license    GPL2+
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Get the current database version

@@ -13,7 +13,7 @@
 use EDD\Logs\File_Download_Log;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_File_Downloads_Log_Table Class

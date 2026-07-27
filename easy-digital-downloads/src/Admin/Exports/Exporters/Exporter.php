@@ -13,7 +13,7 @@
 namespace EDD\Admin\Exports\Exporters;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Utils\FileSystem;
 use EDD\Utils\Transient;

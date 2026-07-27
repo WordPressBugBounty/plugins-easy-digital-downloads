@@ -11,7 +11,7 @@
 namespace EDD\Gateways\Square\Checkout\Transactions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Gateways\Square\Helpers\Order;
 use EDD\Gateways\Square\Helpers\Payment;

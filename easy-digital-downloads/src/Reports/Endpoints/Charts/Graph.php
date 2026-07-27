@@ -14,7 +14,7 @@
 namespace EDD\Reports\Endpoints\Charts;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Reports;
 use EDD\Reports\Endpoints\Endpoint;

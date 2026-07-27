@@ -13,7 +13,7 @@ namespace EDD\Notes;
 use EDD\Base_Object;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Note Class.

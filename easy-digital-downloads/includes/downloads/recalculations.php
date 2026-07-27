@@ -8,7 +8,7 @@
  * @since       3.1
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Cron\Schedulers\Handler;
 

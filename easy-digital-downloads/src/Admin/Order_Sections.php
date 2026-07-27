@@ -11,7 +11,7 @@
 namespace EDD\Admin;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class for creating a vertically tabbed UI for reports.

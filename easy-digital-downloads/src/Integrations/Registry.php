@@ -2,7 +2,7 @@
 
 namespace EDD\Integrations;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
 /**

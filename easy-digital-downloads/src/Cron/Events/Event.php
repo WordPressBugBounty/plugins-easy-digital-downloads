@@ -15,7 +15,7 @@ use EDD\Cron\Traits\NextScheduled;
 use EDD\Cron\Schedulers\Handler;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Event Class

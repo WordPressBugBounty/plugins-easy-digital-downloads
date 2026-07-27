@@ -14,7 +14,7 @@
 namespace EDD\Admin\Exports\Legacy;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_Export Class

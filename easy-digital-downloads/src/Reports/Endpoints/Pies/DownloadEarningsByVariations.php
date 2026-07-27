@@ -11,7 +11,7 @@
 namespace EDD\Reports\Endpoints\Pies;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Download Earnings by Variations Pie Chart class.

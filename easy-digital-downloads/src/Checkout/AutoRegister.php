@@ -2,7 +2,7 @@
 
 namespace EDD\Checkout;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\Subscriber;
 

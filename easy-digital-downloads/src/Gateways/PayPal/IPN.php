@@ -12,7 +12,7 @@
 
 namespace EDD\Gateways\PayPal;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Gateways\PayPal;
 use EDD\Gateways\PayPal\V3\Onboarding;

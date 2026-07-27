@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Orders\Functions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Gets the order details/downloads link.

@@ -13,7 +13,7 @@ namespace EDD\Logs;
 use EDD\Base_Object;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_File_Download_Log Class.

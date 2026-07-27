@@ -11,7 +11,7 @@
 namespace EDD\Admin;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // Load WP_List_Table if not loaded.
 if ( ! class_exists( 'WP_List_Table' ) ) {

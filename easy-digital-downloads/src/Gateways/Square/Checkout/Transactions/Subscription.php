@@ -11,7 +11,7 @@
 namespace EDD\Gateways\Square\Checkout\Transactions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Subscription transaction class for the Square integration.

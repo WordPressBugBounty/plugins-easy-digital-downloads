@@ -79,6 +79,24 @@ abstract class Base {
 	}
 
 	/**
+	 * Reduces a filename to a single extension.
+	 *
+	 * Folds any inner extensions into the base, so "shell.php.csv" becomes
+	 * "shell-php.csv". Use after is_valid() has confirmed the extension.
+	 *
+	 * @since 3.6.9.1
+	 *
+	 * @param string $filename The client-supplied filename.
+	 * @return string The sanitized filename.
+	 */
+	public function sanitize_filename( string $filename ): string {
+		$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+		$base      = str_replace( '.', '-', (string) pathinfo( $filename, PATHINFO_FILENAME ) );
+
+		return sanitize_file_name( '' === $extension ? $base : "{$base}.{$extension}" );
+	}
+
+	/**
 	 * Determines whether the file's contents match an accepted MIME type.
 	 *
 	 * @since 3.6.9

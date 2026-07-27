@@ -16,7 +16,7 @@ namespace EDD\REST\Controllers;
 use EDD\Emails\Providers\Provider;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Bounce Webhook controller class.

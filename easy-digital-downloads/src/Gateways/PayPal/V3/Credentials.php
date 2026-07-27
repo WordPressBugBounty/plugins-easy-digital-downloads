@@ -15,7 +15,7 @@
 namespace EDD\Gateways\PayPal\V3;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Utils\Encryption;
 use EDD\Utils\Transient;

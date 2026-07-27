@@ -11,7 +11,7 @@
 
 namespace EDD\Downloads;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class Service

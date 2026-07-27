@@ -13,7 +13,7 @@
 namespace EDD\REST\Routes;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\REST\Controllers\LogPruning as Controller;
 

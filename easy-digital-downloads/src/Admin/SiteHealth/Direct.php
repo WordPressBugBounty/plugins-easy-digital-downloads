@@ -5,7 +5,7 @@
 
 namespace EDD\Admin\SiteHealth;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 class Direct extends Test {
 

@@ -11,7 +11,7 @@
 namespace EDD\Elementor\Widgets\Controls;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Elementor\Widgets\Base;
 use Elementor\Controls_Manager;

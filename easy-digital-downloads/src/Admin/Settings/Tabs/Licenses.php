@@ -11,7 +11,7 @@
 
 namespace EDD\Admin\Settings\Tabs;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Licenses settings tab class.

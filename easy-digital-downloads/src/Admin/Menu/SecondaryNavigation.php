@@ -2,7 +2,7 @@
 
 namespace EDD\Admin\Menu;
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class SecondaryNavigation

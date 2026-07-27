@@ -2,15 +2,14 @@
 /**
  * Thickbox
  *
- * @package     EDD
- * @subpackage  Admin
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package     EDD\Admin
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
 
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Adds an "Insert Download" button above the TinyMCE Editor on add/edit screens.
@@ -20,17 +19,20 @@ defined( 'ABSPATH' ) || exit;
  */
 function edd_media_button() {
 
-	// Bail if not a post new/edit screen
+	// Bail if not a post new/edit screen.
 	if ( ! edd_is_insertable_admin_page() ) {
 		return;
 	}
 
-	// Setup the icon
+	// Thickbox is only needed for the Insert Download button, so enqueue it here rather than globally.
+	add_thickbox();
+
+	// Setup the icon.
 	$icon = '<span class="wp-media-buttons-icon dashicons dashicons-download" id="edd-media-button"></span>';
 	/* translators: singular download label */
 	$text = sprintf( __( 'Insert %s', 'easy-digital-downloads' ), edd_get_label_singular() );
 
-	// Output the thickbox button
+	// Output the thickbox button.
 	echo '<a href="#TB_inline?&width=600&height=300&inlineId=choose-download" name="' . esc_attr( $text ) . '" class="thickbox button edd-thickbox">' . $icon . esc_html( $text ) . '</a>';
 }
 add_action( 'media_buttons', 'edd_media_button', 11 );

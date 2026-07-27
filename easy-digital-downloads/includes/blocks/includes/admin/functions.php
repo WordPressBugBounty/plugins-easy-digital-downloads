@@ -11,7 +11,7 @@
 namespace EDD\Blocks\Admin\Functions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_filter( 'display_post_states', __NAMESPACE__ . '\display_post_states', 15, 2 );
 /**

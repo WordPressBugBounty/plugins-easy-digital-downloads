@@ -1,6 +1,6 @@
 <?php
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 return array(
 	'AT' => __( 'Austria', 'easy-digital-downloads' ),

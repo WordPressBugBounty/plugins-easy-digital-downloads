@@ -13,7 +13,7 @@ namespace EDD\Logs;
 use EDD\Base_Object;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * API Request Log Class.

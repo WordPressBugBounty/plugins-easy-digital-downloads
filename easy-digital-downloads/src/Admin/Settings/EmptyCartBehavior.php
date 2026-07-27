@@ -11,7 +11,7 @@
 namespace EDD\Admin\Settings;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Empty Cart Behavior Settings Validation class.

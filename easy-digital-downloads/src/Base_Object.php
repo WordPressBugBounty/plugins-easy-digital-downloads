@@ -11,7 +11,7 @@
 namespace EDD;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Implements a base object to be extended by core objects.

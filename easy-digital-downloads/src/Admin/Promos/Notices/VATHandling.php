@@ -11,7 +11,7 @@
 namespace EDD\Admin\Promos\Notices;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * VAT Handling Upgrade Notice class.

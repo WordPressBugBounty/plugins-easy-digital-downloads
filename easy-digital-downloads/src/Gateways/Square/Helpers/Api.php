@@ -11,7 +11,7 @@
 namespace EDD\Gateways\Square\Helpers;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Vendor\Square\SquareClient;
 use EDD\Vendor\Square\SquareClientBuilder;

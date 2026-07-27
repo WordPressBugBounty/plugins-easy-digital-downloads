@@ -12,7 +12,7 @@
 use EDD\Logs\Api_Request_Log;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 
 /**

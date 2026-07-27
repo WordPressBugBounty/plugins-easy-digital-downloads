@@ -13,7 +13,7 @@
 namespace EDD\Cron\Schedulers;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Handler Class

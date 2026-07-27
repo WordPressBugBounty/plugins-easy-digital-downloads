@@ -11,7 +11,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 // edd_do_automatic upgrades is defined in includes/upgrades/functions.php.
 add_action( 'admin_init', 'edd_do_automatic_upgrades' );

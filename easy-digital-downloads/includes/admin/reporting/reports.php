@@ -12,7 +12,7 @@
 use EDD\Reports;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Load a report early in the admin-area.

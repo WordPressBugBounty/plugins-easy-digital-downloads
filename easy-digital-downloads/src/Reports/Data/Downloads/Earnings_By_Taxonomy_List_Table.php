@@ -12,7 +12,7 @@
 namespace EDD\Reports\Data\Downloads;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Reports;
 use EDD\Admin\List_Table;

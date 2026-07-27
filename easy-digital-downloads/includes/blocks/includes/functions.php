@@ -10,7 +10,7 @@
 namespace EDD\Blocks\Functions;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 add_filter( 'block_categories_all', __NAMESPACE__ . '\register_edd_block_category', 10, 2 );
 /**

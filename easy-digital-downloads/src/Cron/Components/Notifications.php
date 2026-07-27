@@ -12,7 +12,7 @@ namespace EDD\Cron\Components;
 use EDD\Utils\NotificationImporter;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Notifications Class

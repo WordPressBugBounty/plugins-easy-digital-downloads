@@ -12,7 +12,7 @@
 use EDD\Logs\File_Download_Log;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Add a file download log.

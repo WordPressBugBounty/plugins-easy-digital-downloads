@@ -13,7 +13,7 @@
 namespace EDD\Admin\Tools\Logs;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Log Storage Calculator class.

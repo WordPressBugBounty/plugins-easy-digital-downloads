@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * EDD_Gateway_Error_Log_Table Class
@@ -46,34 +46,44 @@ class EDD_Gateway_Error_Log_Table extends EDD_Base_Log_List_Table {
 	 * Output Error Message Column
 	 *
 	 * @since 1.4.4
+	 * @since 3.6.9.1 Moved from thickbox to native dialog.
 	 * @param array $item Contains all the data of the log.
 	 * @return void
 	 */
 	public function column_message( $item ) {
+		$dialog_id       = 'log-message-' . absint( $item['ID'] );
+		$dialog_title_id = $dialog_id . '__title';
+
+		$log_output = $this->get_log_output( $item );
 		?>
-		<a href="#TB_inline?width=640&amp;inlineId=log-message-<?php echo esc_attr( $item['ID'] ); ?>" class="thickbox"><?php esc_html_e( 'View Log Message', 'easy-digital-downloads' ); ?></a>
-		<div id="log-message-<?php echo esc_attr( $item['ID'] ); ?>" style="display:none;">
-			<?php
-
-			$log_message = $item['content'];
-			$serialized  = strpos( $log_message, '{"' );
-
-			// Check to see if the log message contains serialized information.
-			if ( false !== $serialized ) {
-				$length = strlen( $log_message ) - $serialized;
-				$intro  = substr( $log_message, 0, - $length );
-				$data   = substr( $log_message, $serialized, strlen( $log_message ) - 1 );
-
-				echo wpautop( $intro );
-				echo '<strong>' . wpautop( __( 'Log data:', 'easy-digital-downloads' ) ) . '</strong>';
-				echo '<div style="word-wrap: break-word;">' . wpautop( $data ) . '</div>';
-			} else {
-				// No serialized data found.
-				echo wpautop( $log_message );
-			}
-			?>
-		</div>
+		<button type="button" class="button-link edd-logs__view-dialog" data-dialog-id="<?php echo esc_attr( $dialog_id ); ?>"><?php esc_html_e( 'View Log Message', 'easy-digital-downloads' ); ?></button>
+		<dialog id="<?php echo esc_attr( $dialog_id ); ?>" class="edd-modal edd-modal--log" aria-labelledby="<?php echo esc_attr( $dialog_title_id ); ?>">
+			<div class="edd-modal__header">
+				<h2 id="<?php echo esc_attr( $dialog_title_id ); ?>"><?php esc_html_e( 'Log Message', 'easy-digital-downloads' ); ?></h2>
+				<button type="button" class="edd-modal__close" aria-label="<?php esc_attr_e( 'Close', 'easy-digital-downloads' ); ?>">
+					<span class="dashicons dashicons-no-alt"></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Close', 'easy-digital-downloads' ); ?></span>
+				</button>
+			</div>
+			<div class="edd-modal__content">
+				<?php if ( ! empty( $log_output['intro'] ) ) : ?>
+					<p><?php echo esc_html( $log_output['intro'] ); ?></p>
+				<?php endif; ?>
+				<pre class="edd-modal__log"><?php echo esc_html( $log_output['log_data'] ); ?></pre>
+			</div>
+		</dialog>
 		<?php
+	}
+
+	/**
+	 * Output Error Column.
+	 *
+	 * @since 3.6.9.1
+	 * @param array $item Contains all the data of the log.
+	 * @return string
+	 */
+	public function column_error( $item ) {
+		return ! empty( $item['error'] ) ? esc_html( $item['error'] ) : '&ndash;';
 	}
 
 	/**
@@ -99,7 +109,7 @@ class EDD_Gateway_Error_Log_Table extends EDD_Base_Log_List_Table {
 	 * @since 1.4
 	 * @param array $log_query Query arguments.
 	 * @global object $edd_logs  EDD Logs Object.
-	 * @return array $logs_data Array of all the Log entries
+	 * @return array $logs_data Array of the log data for the current view.
 	 */
 	public function get_logs( $log_query = array() ) {
 		$logs_data         = array();
@@ -134,5 +144,28 @@ class EDD_Gateway_Error_Log_Table extends EDD_Base_Log_List_Table {
 		$log_query['type'] = 'gateway_error';
 
 		return edd_count_logs( $log_query );
+	}
+
+	/**
+	 * Gets the log output for the current view
+	 *
+	 * @since 3.6.9.1
+	 * @param array $item Log item.
+	 * @return array $log_output Array of the log data for the current view.
+	 */
+	private function get_log_output( $item ) {
+		$log_message = $item['content'];
+		$json_pos    = strpos( $log_message, '{"' );
+		$intro       = false !== $json_pos ? trim( substr( $log_message, 0, $json_pos ) ) : '';
+		$log_data    = false !== $json_pos ? substr( $log_message, $json_pos ) : $log_message;
+		$decoded     = json_decode( $log_data, true );
+		if ( null !== $decoded ) {
+			$log_data = wp_json_encode( $decoded, JSON_PRETTY_PRINT );
+		}
+
+		return array(
+			'intro'    => $intro,
+			'log_data' => $log_data,
+		);
 	}
 }

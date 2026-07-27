@@ -9,7 +9,7 @@
 namespace EDD\Orders\Refunds;
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 /**
  * Class to build a number for a refund.
