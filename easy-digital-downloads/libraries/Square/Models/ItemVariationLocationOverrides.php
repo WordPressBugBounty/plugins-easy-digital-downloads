@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Price and inventory alerting overrides for a `CatalogItemVariation` at a specific `Location`.
  */
@@ -15,42 +13,34 @@ class ItemVariationLocationOverrides implements \JsonSerializable
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var Money|null
      */
     private $priceMoney;
-
     /**
      * @var string|null
      */
     private $pricingType;
-
     /**
      * @var array
      */
     private $trackInventory = [];
-
     /**
      * @var string|null
      */
     private $inventoryAlertType;
-
     /**
      * @var array
      */
     private $inventoryAlertThreshold = [];
-
     /**
      * @var bool|null
      */
     private $soldOut;
-
     /**
      * @var string|null
      */
     private $soldOutValidUntil;
-
     /**
      * Returns Location Id.
      * The ID of the `Location`. This can include locations that are deactivated.
@@ -62,7 +52,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the `Location`. This can include locations that are deactivated.
@@ -73,7 +62,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the `Location`. This can include locations that are deactivated.
@@ -82,7 +70,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -97,7 +84,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         return $this->priceMoney;
     }
-
     /**
      * Sets Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -114,7 +100,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->priceMoney = $priceMoney;
     }
-
     /**
      * Returns Pricing Type.
      * Indicates whether the price of a CatalogItemVariation should be entered manually at the time of sale.
@@ -123,7 +108,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         return $this->pricingType;
     }
-
     /**
      * Sets Pricing Type.
      * Indicates whether the price of a CatalogItemVariation should be entered manually at the time of sale.
@@ -134,7 +118,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->pricingType = $pricingType;
     }
-
     /**
      * Returns Track Inventory.
      * If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
@@ -146,7 +129,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
         }
         return $this->trackInventory['value'];
     }
-
     /**
      * Sets Track Inventory.
      * If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
@@ -157,7 +139,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->trackInventory['value'] = $trackInventory;
     }
-
     /**
      * Unsets Track Inventory.
      * If `true`, inventory tracking is active for the `CatalogItemVariation` at this `Location`.
@@ -166,20 +147,18 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->trackInventory = [];
     }
-
     /**
      * Returns Inventory Alert Type.
-     * Indicates whether EDD\Vendor\Square should alert the merchant when the inventory quantity of a
+     * Indicates whether Square should alert the merchant when the inventory quantity of a
      * CatalogItemVariation is low.
      */
     public function getInventoryAlertType(): ?string
     {
         return $this->inventoryAlertType;
     }
-
     /**
      * Sets Inventory Alert Type.
-     * Indicates whether EDD\Vendor\Square should alert the merchant when the inventory quantity of a
+     * Indicates whether Square should alert the merchant when the inventory quantity of a
      * CatalogItemVariation is low.
      *
      * @maps inventory_alert_type
@@ -188,7 +167,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->inventoryAlertType = $inventoryAlertType;
     }
-
     /**
      * Returns Inventory Alert Threshold.
      * If the inventory quantity for the variation is less than or equal to this value and
@@ -204,7 +182,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
         }
         return $this->inventoryAlertThreshold['value'];
     }
-
     /**
      * Sets Inventory Alert Threshold.
      * If the inventory quantity for the variation is less than or equal to this value and
@@ -219,7 +196,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->inventoryAlertThreshold['value'] = $inventoryAlertThreshold;
     }
-
     /**
      * Unsets Inventory Alert Threshold.
      * If the inventory quantity for the variation is less than or equal to this value and
@@ -232,7 +208,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->inventoryAlertThreshold = [];
     }
-
     /**
      * Returns Sold Out.
      * Indicates whether the overridden item variation is sold out at the specified location.
@@ -250,7 +225,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         return $this->soldOut;
     }
-
     /**
      * Sets Sold Out.
      * Indicates whether the overridden item variation is sold out at the specified location.
@@ -270,7 +244,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->soldOut = $soldOut;
     }
-
     /**
      * Returns Sold Out Valid Until.
      * The seller-assigned timestamp, of the RFC 3339 format, to indicate when this sold-out variation
@@ -283,7 +256,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         return $this->soldOutValidUntil;
     }
-
     /**
      * Sets Sold Out Valid Until.
      * The seller-assigned timestamp, of the RFC 3339 format, to indicate when this sold-out variation
@@ -298,7 +270,6 @@ class ItemVariationLocationOverrides implements \JsonSerializable
     {
         $this->soldOutValidUntil = $soldOutValidUntil;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -307,38 +278,37 @@ class ItemVariationLocationOverrides implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->locationId)) {
-            $json['location_id']               = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (isset($this->priceMoney)) {
-            $json['price_money']               = $this->priceMoney;
+            $json['price_money'] = $this->priceMoney;
         }
         if (isset($this->pricingType)) {
-            $json['pricing_type']              = $this->pricingType;
+            $json['pricing_type'] = $this->pricingType;
         }
         if (!empty($this->trackInventory)) {
-            $json['track_inventory']           = $this->trackInventory['value'];
+            $json['track_inventory'] = $this->trackInventory['value'];
         }
         if (isset($this->inventoryAlertType)) {
-            $json['inventory_alert_type']      = $this->inventoryAlertType;
+            $json['inventory_alert_type'] = $this->inventoryAlertType;
         }
         if (!empty($this->inventoryAlertThreshold)) {
             $json['inventory_alert_threshold'] = $this->inventoryAlertThreshold['value'];
         }
         if (isset($this->soldOut)) {
-            $json['sold_out']                  = $this->soldOut;
+            $json['sold_out'] = $this->soldOut;
         }
         if (isset($this->soldOutValidUntil)) {
-            $json['sold_out_valid_until']      = $this->soldOutValidUntil;
+            $json['sold_out_valid_until'] = $this->soldOutValidUntil;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

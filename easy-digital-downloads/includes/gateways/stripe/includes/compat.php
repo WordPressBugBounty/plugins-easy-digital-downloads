@@ -136,16 +136,16 @@ function _edds_process_purchase_form() {
 		}
 
 		$purchase_data = EDD\Sessions\PurchaseData::start( false );
-		if ( empty( $purchase_data ) ) {
-			throw new \Exception( esc_html__( 'Error processing purchase. Please reload the page and try again.', 'easy-digital-downloads' ) );
+
+		// Surface any validation errors (e.g. an account is required for the items in
+		// the cart) before falling back to the generic message. Otherwise an empty
+		// $purchase_data masks the real reason the purchase was rejected.
+		$errors = edd_get_errors();
+		if ( ! empty( $errors ) ) {
+			throw new \Exception( esc_html( current( $errors ) ) );
 		}
 
-		$errors = edd_get_errors();
-		if ( empty( $purchase_data['user_info'] ) || ! empty( $errors ) ) {
-			if ( is_array( $errors ) ) {
-				throw new \Exception( current( $errors ) );
-			}
-
+		if ( empty( $purchase_data ) || empty( $purchase_data['user_info'] ) ) {
 			throw new \Exception( esc_html__( 'Error processing purchase. Please reload the page and try again.', 'easy-digital-downloads' ) );
 		}
 

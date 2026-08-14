@@ -85,11 +85,13 @@ abstract class Base {
 	 * "shell-php.csv". Use after is_valid() has confirmed the extension.
 	 *
 	 * @since 3.6.9.1
+	 * @since 3.7.0 Made static; it uses no instance state and callers outside a
+	 *                       specific format need it.
 	 *
 	 * @param string $filename The client-supplied filename.
 	 * @return string The sanitized filename.
 	 */
-	public function sanitize_filename( string $filename ): string {
+	public static function sanitize_filename( string $filename ): string {
 		$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 		$base      = str_replace( '.', '-', (string) pathinfo( $filename, PATHINFO_FILENAME ) );
 

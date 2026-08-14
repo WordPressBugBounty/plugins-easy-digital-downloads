@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A custom attribute value. Each custom attribute value has a corresponding
  * `CustomAttributeDefinition` object.
@@ -16,37 +14,30 @@ class CustomAttribute implements \JsonSerializable
      * @var array
      */
     private $key = [];
-
     /**
      * @var array
      */
     private $value = [];
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var string|null
      */
     private $visibility;
-
     /**
      * @var CustomAttributeDefinition|null
      */
     private $definition;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * Returns Key.
      * The identifier
@@ -68,7 +59,6 @@ class CustomAttribute implements \JsonSerializable
         }
         return $this->key['value'];
     }
-
     /**
      * Sets Key.
      * The identifier
@@ -89,7 +79,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->key['value'] = $key;
     }
-
     /**
      * Unsets Key.
      * The identifier
@@ -108,7 +97,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->key = [];
     }
-
     /**
      * Returns Value.
      * The value assigned to the custom attribute. It is validated against the custom
@@ -126,7 +114,6 @@ class CustomAttribute implements \JsonSerializable
         }
         return $this->value['value'];
     }
-
     /**
      * Sets Value.
      * The value assigned to the custom attribute. It is validated against the custom
@@ -143,7 +130,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->value['value'] = $value;
     }
-
     /**
      * Unsets Value.
      * The value assigned to the custom attribute. It is validated against the custom
@@ -156,7 +142,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->value = [];
     }
-
     /**
      * Returns Version.
      * Read only. The current version of the custom attribute. This field is incremented when the custom
@@ -174,7 +159,6 @@ class CustomAttribute implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * Read only. The current version of the custom attribute. This field is incremented when the custom
@@ -194,7 +178,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Visibility.
      * The level of permission that a seller or other applications requires to
@@ -206,7 +189,6 @@ class CustomAttribute implements \JsonSerializable
     {
         return $this->visibility;
     }
-
     /**
      * Sets Visibility.
      * The level of permission that a seller or other applications requires to
@@ -220,7 +202,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->visibility = $visibility;
     }
-
     /**
      * Returns Definition.
      * Represents a definition for custom attribute values. A custom attribute definition
@@ -230,7 +211,6 @@ class CustomAttribute implements \JsonSerializable
     {
         return $this->definition;
     }
-
     /**
      * Sets Definition.
      * Represents a definition for custom attribute values. A custom attribute definition
@@ -242,7 +222,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->definition = $definition;
     }
-
     /**
      * Returns Updated At.
      * The timestamp that indicates when the custom attribute was created or was most recently
@@ -252,7 +231,6 @@ class CustomAttribute implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp that indicates when the custom attribute was created or was most recently
@@ -264,7 +242,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Created At.
      * The timestamp that indicates when the custom attribute was created, in RFC 3339 format.
@@ -273,7 +250,6 @@ class CustomAttribute implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp that indicates when the custom attribute was created, in RFC 3339 format.
@@ -284,7 +260,6 @@ class CustomAttribute implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -293,18 +268,18 @@ class CustomAttribute implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->key)) {
-            $json['key']        = $this->key['value'];
+            $json['key'] = $this->key['value'];
         }
         if (!empty($this->value)) {
-            $json['value']      = $this->value['value'];
+            $json['value'] = $this->value['value'];
         }
         if (isset($this->version)) {
-            $json['version']    = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->visibility)) {
             $json['visibility'] = $this->visibility;
@@ -321,7 +296,6 @@ class CustomAttribute implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

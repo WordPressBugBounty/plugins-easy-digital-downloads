@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a group of customer profiles.
  *
  * Customer groups can be created, be modified, and have their membership defined using
- * the Customers API or within the Customer Directory in the EDD\Vendor\Square Seller Dashboard or Point of Sale.
+ * the Customers API or within the Customer Directory in the Square Seller Dashboard or Point of Sale.
  */
 class CustomerGroup implements \JsonSerializable
 {
@@ -18,22 +16,18 @@ class CustomerGroup implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string
      */
     private $name;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @param string $name
      */
@@ -41,7 +35,6 @@ class CustomerGroup implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Id.
      * A unique Square-generated ID for the customer group.
@@ -50,7 +43,6 @@ class CustomerGroup implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A unique Square-generated ID for the customer group.
@@ -61,7 +53,6 @@ class CustomerGroup implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Name.
      * The name of the customer group.
@@ -70,7 +61,6 @@ class CustomerGroup implements \JsonSerializable
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * The name of the customer group.
@@ -82,7 +72,6 @@ class CustomerGroup implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Created At.
      * The timestamp when the customer group was created, in RFC 3339 format.
@@ -91,7 +80,6 @@ class CustomerGroup implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the customer group was created, in RFC 3339 format.
@@ -102,7 +90,6 @@ class CustomerGroup implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp when the customer group was last updated, in RFC 3339 format.
@@ -111,7 +98,6 @@ class CustomerGroup implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp when the customer group was last updated, in RFC 3339 format.
@@ -122,7 +108,6 @@ class CustomerGroup implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -131,14 +116,14 @@ class CustomerGroup implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']         = $this->id;
+            $json['id'] = $this->id;
         }
-        $json['name']           = $this->name;
+        $json['name'] = $this->name;
         if (isset($this->createdAt)) {
             $json['created_at'] = $this->createdAt;
         }
@@ -148,7 +133,6 @@ class CustomerGroup implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

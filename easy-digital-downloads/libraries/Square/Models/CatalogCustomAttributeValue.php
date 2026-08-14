@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * An instance of a custom attribute. Custom attributes can be defined and
  * added to `ITEM` and `ITEM_VARIATION` type catalog objects.
@@ -18,42 +16,34 @@ class CatalogCustomAttributeValue implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $stringValue = [];
-
     /**
      * @var string|null
      */
     private $customAttributeDefinitionId;
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var array
      */
     private $numberValue = [];
-
     /**
      * @var array
      */
     private $booleanValue = [];
-
     /**
      * @var array
      */
     private $selectionUidValues = [];
-
     /**
      * @var string|null
      */
     private $key;
-
     /**
      * Returns Name.
      * The name of the custom attribute.
@@ -65,7 +55,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the custom attribute.
@@ -76,7 +65,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the custom attribute.
@@ -85,7 +73,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns String Value.
      * The string value of the custom attribute.  Populated if `type` = `STRING`.
@@ -97,7 +84,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
         }
         return $this->stringValue['value'];
     }
-
     /**
      * Sets String Value.
      * The string value of the custom attribute.  Populated if `type` = `STRING`.
@@ -108,7 +94,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->stringValue['value'] = $stringValue;
     }
-
     /**
      * Unsets String Value.
      * The string value of the custom attribute.  Populated if `type` = `STRING`.
@@ -117,9 +102,8 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->stringValue = [];
     }
-
     /**
-     * Returns Custom EDD_EDD_Attribute Definition Id.
+     * Returns Custom Attribute Definition Id.
      * The id of the [CatalogCustomAttributeDefinition](entity:CatalogCustomAttributeDefinition) this value
      * belongs to.
      */
@@ -127,9 +111,8 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         return $this->customAttributeDefinitionId;
     }
-
     /**
-     * Sets Custom EDD_EDD_Attribute Definition Id.
+     * Sets Custom Attribute Definition Id.
      * The id of the [CatalogCustomAttributeDefinition](entity:CatalogCustomAttributeDefinition) this value
      * belongs to.
      *
@@ -139,7 +122,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->customAttributeDefinitionId = $customAttributeDefinitionId;
     }
-
     /**
      * Returns Type.
      * Defines the possible types for a custom attribute.
@@ -148,7 +130,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Defines the possible types for a custom attribute.
@@ -159,7 +140,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Number Value.
      * Populated if `type` = `NUMBER`. Contains a string
@@ -172,7 +152,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
         }
         return $this->numberValue['value'];
     }
-
     /**
      * Sets Number Value.
      * Populated if `type` = `NUMBER`. Contains a string
@@ -184,7 +163,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->numberValue['value'] = $numberValue;
     }
-
     /**
      * Unsets Number Value.
      * Populated if `type` = `NUMBER`. Contains a string
@@ -194,7 +172,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->numberValue = [];
     }
-
     /**
      * Returns Boolean Value.
      * A `true` or `false` value. Populated if `type` = `BOOLEAN`.
@@ -206,7 +183,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
         }
         return $this->booleanValue['value'];
     }
-
     /**
      * Sets Boolean Value.
      * A `true` or `false` value. Populated if `type` = `BOOLEAN`.
@@ -217,7 +193,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->booleanValue['value'] = $booleanValue;
     }
-
     /**
      * Unsets Boolean Value.
      * A `true` or `false` value. Populated if `type` = `BOOLEAN`.
@@ -226,7 +201,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->booleanValue = [];
     }
-
     /**
      * Returns Selection Uid Values.
      * One or more choices from `allowed_selections`. Populated if `type` = `SELECTION`.
@@ -240,7 +214,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
         }
         return $this->selectionUidValues['value'];
     }
-
     /**
      * Sets Selection Uid Values.
      * One or more choices from `allowed_selections`. Populated if `type` = `SELECTION`.
@@ -253,7 +226,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->selectionUidValues['value'] = $selectionUidValues;
     }
-
     /**
      * Unsets Selection Uid Values.
      * One or more choices from `allowed_selections`. Populated if `type` = `SELECTION`.
@@ -262,7 +234,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->selectionUidValues = [];
     }
-
     /**
      * Returns Key.
      * If the associated `CatalogCustomAttributeDefinition` object is defined by another application, this
@@ -276,7 +247,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         return $this->key;
     }
-
     /**
      * Sets Key.
      * If the associated `CatalogCustomAttributeDefinition` object is defined by another application, this
@@ -292,7 +262,6 @@ class CatalogCustomAttributeValue implements \JsonSerializable
     {
         $this->key = $key;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -301,38 +270,37 @@ class CatalogCustomAttributeValue implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']                           = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->stringValue)) {
-            $json['string_value']                   = $this->stringValue['value'];
+            $json['string_value'] = $this->stringValue['value'];
         }
         if (isset($this->customAttributeDefinitionId)) {
             $json['custom_attribute_definition_id'] = $this->customAttributeDefinitionId;
         }
         if (isset($this->type)) {
-            $json['type']                           = $this->type;
+            $json['type'] = $this->type;
         }
         if (!empty($this->numberValue)) {
-            $json['number_value']                   = $this->numberValue['value'];
+            $json['number_value'] = $this->numberValue['value'];
         }
         if (!empty($this->booleanValue)) {
-            $json['boolean_value']                  = $this->booleanValue['value'];
+            $json['boolean_value'] = $this->booleanValue['value'];
         }
         if (!empty($this->selectionUidValues)) {
-            $json['selection_uid_values']           = $this->selectionUidValues['value'];
+            $json['selection_uid_values'] = $this->selectionUidValues['value'];
         }
         if (isset($this->key)) {
-            $json['key']                            = $this->key;
+            $json['key'] = $this->key;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

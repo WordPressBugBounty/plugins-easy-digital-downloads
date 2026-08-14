@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase\BodyMatchers;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
-
 class BodyComparator
 {
     private $allowExtra;
     private $isOrdered;
     private $checkValues;
     private $nativeMatching;
-
     /**
      * @param bool  $allowExtra     Are extra elements allowed in right array?
      * @param bool  $isOrdered      Should elements in right array be compared in order to the left array?
@@ -20,18 +17,13 @@ class BodyComparator
      * @param bool  $nativeMatching Should check arrays natively? i.e. allowExtra can be applied
      *                              on either expected list or actual list
      */
-    public function __construct(
-        bool $allowExtra = true,
-        bool $isOrdered = false,
-        bool $checkValues = true,
-        bool $nativeMatching = false
-    ) {
+    public function __construct(bool $allowExtra = true, bool $isOrdered = false, bool $checkValues = true, bool $nativeMatching = false)
+    {
         $this->allowExtra = $allowExtra;
         $this->isOrdered = $isOrdered;
         $this->checkValues = $checkValues;
         $this->nativeMatching = $nativeMatching;
     }
-
     /**
      * Recursively check whether the expected value is a proper subset of the right value
      *
@@ -103,7 +95,6 @@ class BodyComparator
         });
         return $success;
     }
-
     /**
      * Return True, if both are null, False if anyone is null, Null otherwise
      */
@@ -120,7 +111,6 @@ class BodyComparator
         }
         return null;
     }
-
     /**
      * Return True, if both are equal primitive, False if anyone is primitive, Null otherwise
      */
@@ -137,7 +127,6 @@ class BodyComparator
         }
         return null;
     }
-
     /**
      * Check whether the list is a subset of another list.
      *
@@ -156,7 +145,6 @@ class BodyComparator
         }
         return $leftList == $this->intersectArrays($leftList, $rightList);
     }
-
     /**
      * Computes the intersection of arrays, even for arrays of arrays
      *
@@ -180,7 +168,6 @@ class BodyComparator
         }
         return $commonList;
     }
-
     /**
      * If passed instance is an object, cast it as an array
      */

@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Writer;
 
 use EDD\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use EDD\Vendor\Symfony\Component\Translation\MessageCatalogue;
-
 /**
  * TranslationWriter writes translation messages.
  *

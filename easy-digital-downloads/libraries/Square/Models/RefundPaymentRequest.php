@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a request to refund a payment using [RefundPayment]($e/Refunds/RefundPayment).
  */
@@ -15,67 +13,54 @@ class RefundPaymentRequest implements \JsonSerializable
      * @var string
      */
     private $idempotencyKey;
-
     /**
      * @var Money
      */
     private $amountMoney;
-
     /**
      * @var Money|null
      */
     private $appFeeMoney;
-
     /**
      * @var array
      */
     private $paymentId = [];
-
     /**
      * @var array
      */
     private $destinationId = [];
-
     /**
      * @var array
      */
     private $unlinked = [];
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var array
      */
     private $customerId = [];
-
     /**
      * @var array
      */
     private $reason = [];
-
     /**
      * @var array
      */
     private $paymentVersionToken = [];
-
     /**
      * @var array
      */
     private $teamMemberId = [];
-
     /**
      * @var DestinationDetailsCashRefundDetails|null
      */
     private $cashDetails;
-
     /**
      * @var DestinationDetailsExternalRefundDetails|null
      */
     private $externalDetails;
-
     /**
      * @param string $idempotencyKey
      * @param Money $amountMoney
@@ -85,7 +70,6 @@ class RefundPaymentRequest implements \JsonSerializable
         $this->idempotencyKey = $idempotencyKey;
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Idempotency Key.
      * A unique string that identifies this `RefundPayment` request. The key can be any valid string
@@ -101,7 +85,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * A unique string that identifies this `RefundPayment` request. The key can be any valid string
@@ -120,7 +103,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -135,7 +117,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -153,7 +134,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns App Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -168,7 +148,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         return $this->appFeeMoney;
     }
-
     /**
      * Sets App Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -185,7 +164,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->appFeeMoney = $appFeeMoney;
     }
-
     /**
      * Returns Payment Id.
      * The unique ID of the payment being refunded.
@@ -198,7 +176,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->paymentId['value'];
     }
-
     /**
      * Sets Payment Id.
      * The unique ID of the payment being refunded.
@@ -210,7 +187,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->paymentId['value'] = $paymentId;
     }
-
     /**
      * Unsets Payment Id.
      * The unique ID of the payment being refunded.
@@ -220,14 +196,13 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->paymentId = [];
     }
-
     /**
      * Returns Destination Id.
      * The ID indicating where funds will be refunded to. Required for unlinked refunds. For more
      * information, see [Process an Unlinked Refund](https://developer.squareup.com/docs/refunds-
      * api/unlinked-refunds).
      *
-     * For refunds linked to EDD\Vendor\Square payments, `destination_id` is usually omitted; in this case, funds
+     * For refunds linked to Square payments, `destination_id` is usually omitted; in this case, funds
      * will be returned to the original payment source. The field may be specified in order to request
      * a cross-method refund to a gift card. For more information,
      * see [Cross-method refunds to gift cards](https://developer.squareup.com/docs/payments-api/refund-
@@ -240,14 +215,13 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->destinationId['value'];
     }
-
     /**
      * Sets Destination Id.
      * The ID indicating where funds will be refunded to. Required for unlinked refunds. For more
      * information, see [Process an Unlinked Refund](https://developer.squareup.com/docs/refunds-
      * api/unlinked-refunds).
      *
-     * For refunds linked to EDD\Vendor\Square payments, `destination_id` is usually omitted; in this case, funds
+     * For refunds linked to Square payments, `destination_id` is usually omitted; in this case, funds
      * will be returned to the original payment source. The field may be specified in order to request
      * a cross-method refund to a gift card. For more information,
      * see [Cross-method refunds to gift cards](https://developer.squareup.com/docs/payments-api/refund-
@@ -259,14 +233,13 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->destinationId['value'] = $destinationId;
     }
-
     /**
      * Unsets Destination Id.
      * The ID indicating where funds will be refunded to. Required for unlinked refunds. For more
      * information, see [Process an Unlinked Refund](https://developer.squareup.com/docs/refunds-
      * api/unlinked-refunds).
      *
-     * For refunds linked to EDD\Vendor\Square payments, `destination_id` is usually omitted; in this case, funds
+     * For refunds linked to Square payments, `destination_id` is usually omitted; in this case, funds
      * will be returned to the original payment source. The field may be specified in order to request
      * a cross-method refund to a gift card. For more information,
      * see [Cross-method refunds to gift cards](https://developer.squareup.com/docs/payments-api/refund-
@@ -276,10 +249,9 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->destinationId = [];
     }
-
     /**
      * Returns Unlinked.
-     * Indicates that the refund is not linked to a EDD\Vendor\Square payment.
+     * Indicates that the refund is not linked to a Square payment.
      * If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not
      * be provided.
      */
@@ -290,10 +262,9 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->unlinked['value'];
     }
-
     /**
      * Sets Unlinked.
-     * Indicates that the refund is not linked to a EDD\Vendor\Square payment.
+     * Indicates that the refund is not linked to a Square payment.
      * If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not
      * be provided.
      *
@@ -303,10 +274,9 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->unlinked['value'] = $unlinked;
     }
-
     /**
      * Unsets Unlinked.
-     * Indicates that the refund is not linked to a EDD\Vendor\Square payment.
+     * Indicates that the refund is not linked to a Square payment.
      * If set to true, `destination_id` and `location_id` must be supplied while `payment_id` must not
      * be provided.
      */
@@ -314,7 +284,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->unlinked = [];
     }
-
     /**
      * Returns Location Id.
      * The location ID associated with the unlinked refund.
@@ -328,7 +297,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The location ID associated with the unlinked refund.
@@ -341,7 +309,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The location ID associated with the unlinked refund.
@@ -352,7 +319,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Customer Id.
      * The [Customer](entity:Customer) ID of the customer associated with the refund.
@@ -366,7 +332,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->customerId['value'];
     }
-
     /**
      * Sets Customer Id.
      * The [Customer](entity:Customer) ID of the customer associated with the refund.
@@ -379,7 +344,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->customerId['value'] = $customerId;
     }
-
     /**
      * Unsets Customer Id.
      * The [Customer](entity:Customer) ID of the customer associated with the refund.
@@ -390,7 +354,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->customerId = [];
     }
-
     /**
      * Returns Reason.
      * A description of the reason for the refund.
@@ -402,7 +365,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->reason['value'];
     }
-
     /**
      * Sets Reason.
      * A description of the reason for the refund.
@@ -413,7 +375,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->reason['value'] = $reason;
     }
-
     /**
      * Unsets Reason.
      * A description of the reason for the refund.
@@ -422,7 +383,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->reason = [];
     }
-
     /**
      * Returns Payment Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -437,7 +397,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->paymentVersionToken['value'];
     }
-
     /**
      * Sets Payment Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -451,7 +410,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->paymentVersionToken['value'] = $paymentVersionToken;
     }
-
     /**
      * Unsets Payment Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -463,7 +421,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->paymentVersionToken = [];
     }
-
     /**
      * Returns Team Member Id.
      * An optional [TeamMember](entity:TeamMember) ID to associate with this refund.
@@ -475,7 +432,6 @@ class RefundPaymentRequest implements \JsonSerializable
         }
         return $this->teamMemberId['value'];
     }
-
     /**
      * Sets Team Member Id.
      * An optional [TeamMember](entity:TeamMember) ID to associate with this refund.
@@ -486,7 +442,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->teamMemberId['value'] = $teamMemberId;
     }
-
     /**
      * Unsets Team Member Id.
      * An optional [TeamMember](entity:TeamMember) ID to associate with this refund.
@@ -495,7 +450,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->teamMemberId = [];
     }
-
     /**
      * Returns Cash Details.
      * Stores details about a cash refund. Contains only non-confidential information.
@@ -504,7 +458,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         return $this->cashDetails;
     }
-
     /**
      * Sets Cash Details.
      * Stores details about a cash refund. Contains only non-confidential information.
@@ -515,7 +468,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->cashDetails = $cashDetails;
     }
-
     /**
      * Returns External Details.
      * Stores details about an external refund. Contains only non-confidential information.
@@ -524,7 +476,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         return $this->externalDetails;
     }
-
     /**
      * Sets External Details.
      * Stores details about an external refund. Contains only non-confidential information.
@@ -535,7 +486,6 @@ class RefundPaymentRequest implements \JsonSerializable
     {
         $this->externalDetails = $externalDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -544,49 +494,48 @@ class RefundPaymentRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['idempotency_key']           = $this->idempotencyKey;
-        $json['amount_money']              = $this->amountMoney;
+        $json['idempotency_key'] = $this->idempotencyKey;
+        $json['amount_money'] = $this->amountMoney;
         if (isset($this->appFeeMoney)) {
-            $json['app_fee_money']         = $this->appFeeMoney;
+            $json['app_fee_money'] = $this->appFeeMoney;
         }
         if (!empty($this->paymentId)) {
-            $json['payment_id']            = $this->paymentId['value'];
+            $json['payment_id'] = $this->paymentId['value'];
         }
         if (!empty($this->destinationId)) {
-            $json['destination_id']        = $this->destinationId['value'];
+            $json['destination_id'] = $this->destinationId['value'];
         }
         if (!empty($this->unlinked)) {
-            $json['unlinked']              = $this->unlinked['value'];
+            $json['unlinked'] = $this->unlinked['value'];
         }
         if (!empty($this->locationId)) {
-            $json['location_id']           = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (!empty($this->customerId)) {
-            $json['customer_id']           = $this->customerId['value'];
+            $json['customer_id'] = $this->customerId['value'];
         }
         if (!empty($this->reason)) {
-            $json['reason']                = $this->reason['value'];
+            $json['reason'] = $this->reason['value'];
         }
         if (!empty($this->paymentVersionToken)) {
             $json['payment_version_token'] = $this->paymentVersionToken['value'];
         }
         if (!empty($this->teamMemberId)) {
-            $json['team_member_id']        = $this->teamMemberId['value'];
+            $json['team_member_id'] = $this->teamMemberId['value'];
         }
         if (isset($this->cashDetails)) {
-            $json['cash_details']          = $this->cashDetails;
+            $json['cash_details'] = $this->cashDetails;
         }
         if (isset($this->externalDetails)) {
-            $json['external_details']      = $this->externalDetails;
+            $json['external_details'] = $this->externalDetails;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

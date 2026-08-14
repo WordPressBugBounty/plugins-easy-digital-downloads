@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents fraud risk information for the associated payment.
  *
  * When you take a payment through Square's Payments API (using the `CreatePayment`
- * endpoint), EDD\Vendor\Square evaluates it and assigns a risk level to the payment. Sellers
+ * endpoint), Square evaluates it and assigns a risk level to the payment. Sellers
  * can use this information to determine the course of action (for example,
  * provide the goods/services or refund the payment).
  */
@@ -20,12 +18,10 @@ class RiskEvaluation implements \JsonSerializable
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $riskLevel;
-
     /**
      * Returns Created At.
      * The timestamp when payment risk was evaluated, in RFC 3339 format.
@@ -34,7 +30,6 @@ class RiskEvaluation implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when payment risk was evaluated, in RFC 3339 format.
@@ -45,7 +40,6 @@ class RiskEvaluation implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Risk Level.
      */
@@ -53,7 +47,6 @@ class RiskEvaluation implements \JsonSerializable
     {
         return $this->riskLevel;
     }
-
     /**
      * Sets Risk Level.
      *
@@ -63,7 +56,6 @@ class RiskEvaluation implements \JsonSerializable
     {
         $this->riskLevel = $riskLevel;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -72,7 +64,7 @@ class RiskEvaluation implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -85,7 +77,6 @@ class RiskEvaluation implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

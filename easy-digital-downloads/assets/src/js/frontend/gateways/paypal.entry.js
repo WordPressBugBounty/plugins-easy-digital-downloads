@@ -7,6 +7,10 @@ import EDDPayPalApplePay from './paypal/applepay.js';
 import EDDPayPalGooglePay from './paypal/googlepay.js';
 import EDDPayPalUnbrandedCard from './paypal/unbrandedcard.js';
 import { showPayPalError } from './paypal/errors.js';
+import { beginLoading, endLoading } from '@easy-digital-downloads/cart-loading';
+
+// Token for the shared checkout loading overlay while an order is being finalized.
+let loadingToken = null;
 
 // Registry of the PayPal payment methods that load via their own SDK component
 // and need a JS bootstrap. Keyed by EDD method slug; each entry pairs the
@@ -42,6 +46,11 @@ var EDD_PayPal = {
 		if ( spinner ) {
 			spinner.style.display = 'block';
 		}
+
+		// Drive the shared checkout overlay alongside PayPal's own button lockdown.
+		if ( ! loadingToken ) {
+			loadingToken = beginLoading( 'paypal' );
+		}
 	},
 
 	/**
@@ -59,6 +68,9 @@ var EDD_PayPal = {
 		if ( spinner ) {
 			spinner.style.display = 'none';
 		}
+
+		endLoading( loadingToken );
+		loadingToken = null;
 	},
 
 	/**
@@ -202,8 +214,17 @@ var EDD_PayPal = {
 			this.initButtons( '#edd-paypal-container', 'checkout' );
 		}
 
-		jQuery( document.body ).on( 'edd_discount_applied', this.maybeRefreshPage );
-		jQuery( document.body ).on( 'edd_discount_removed', this.maybeRefreshPage );
+		// Refresh the page when the cart total requires it (e.g. a 100% discount).
+		// The native edd:cart-updated event consolidates every cart mutation, so
+		// we listen for it alone rather than the individual legacy jQuery events.
+		document.addEventListener( 'edd:cart-updated', function() {
+			const totalStr = document.querySelector( '.edd_cart_total .edd_cart_amount' )?.dataset.total;
+			if ( undefined === totalStr ) {
+				return;
+			}
+			const total = Number.parseFloat( totalStr );
+			EDD_PayPal.maybeRefreshPageForTotal( total );
+		} );
 	},
 
 	/**
@@ -215,19 +236,18 @@ var EDD_PayPal = {
 	},
 
 	/**
-	 * Refreshes the page when adding or removing a 100% discount.
+	 * Refreshes the page when the cart total requires it (e.g. a 100% discount).
 	 *
-	 * @param e
-	 * @param {object} data
+	 * @param {number} total The current cart total.
 	 */
-	maybeRefreshPage: function( e, data ) {
+	maybeRefreshPageForTotal: function( total ) {
 		if ( ! EDD_PayPal.isPayPal() ) {
 			return;
 		}
-		if ( ! EDD_PayPal.isMounted && data.total_plain > 0 ) {
+		if ( ! EDD_PayPal.isMounted && total > 0 ) {
 			window.location.reload();
 		}
-		if ( 0 == parseFloat( data.total_plain ) ) {
+		if ( 0 === total ) {
 			window.location.reload();
 		}
 	},

@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Response\Types;
 
 use EDD\Vendor\Core\Response\Context;
-
 class ResponseMultiType
 {
     /**
      * @var string|null
      */
     private $typeGroup;
-
     /**
      * @var string[]
      */
     private $deserializers = [];
-
     /**
      * Sets type group to the one provided.
      */
@@ -25,7 +21,6 @@ class ResponseMultiType
     {
         $this->typeGroup = $typeGroup;
     }
-
     /**
      * Sets deserializers array to the one provided.
      */
@@ -33,7 +28,6 @@ class ResponseMultiType
     {
         $this->deserializers = $deserializers;
     }
-
     /**
      * Returns ResponseMultiType from the body of response within the context provided.
      */

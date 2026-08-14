@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Information about a booking creator.
  */
@@ -15,17 +13,14 @@ class BookingCreatorDetails implements \JsonSerializable
      * @var string|null
      */
     private $creatorType;
-
     /**
      * @var string|null
      */
     private $teamMemberId;
-
     /**
      * @var string|null
      */
     private $customerId;
-
     /**
      * Returns Creator Type.
      * Supported types of a booking creator.
@@ -34,7 +29,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         return $this->creatorType;
     }
-
     /**
      * Sets Creator Type.
      * Supported types of a booking creator.
@@ -45,7 +39,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         $this->creatorType = $creatorType;
     }
-
     /**
      * Returns Team Member Id.
      * The ID of the team member who created the booking, when the booking creator is of the `TEAM_MEMBER`
@@ -56,7 +49,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         return $this->teamMemberId;
     }
-
     /**
      * Sets Team Member Id.
      * The ID of the team member who created the booking, when the booking creator is of the `TEAM_MEMBER`
@@ -69,7 +61,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         $this->teamMemberId = $teamMemberId;
     }
-
     /**
      * Returns Customer Id.
      * The ID of the customer who created the booking, when the booking creator is of the `CUSTOMER` type.
@@ -79,7 +70,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         return $this->customerId;
     }
-
     /**
      * Sets Customer Id.
      * The ID of the customer who created the booking, when the booking creator is of the `CUSTOMER` type.
@@ -91,7 +81,6 @@ class BookingCreatorDetails implements \JsonSerializable
     {
         $this->customerId = $customerId;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -100,23 +89,22 @@ class BookingCreatorDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->creatorType)) {
-            $json['creator_type']   = $this->creatorType;
+            $json['creator_type'] = $this->creatorType;
         }
         if (isset($this->teamMemberId)) {
             $json['team_member_id'] = $this->teamMemberId;
         }
         if (isset($this->customerId)) {
-            $json['customer_id']    = $this->customerId;
+            $json['customer_id'] = $this->customerId;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

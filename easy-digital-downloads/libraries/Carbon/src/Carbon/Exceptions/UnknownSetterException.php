@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Exceptions;
 
 use InvalidArgumentException as BaseInvalidArgumentException;
 use Throwable;
-
 class UnknownSetterException extends BaseInvalidArgumentException implements BadMethodCallException
 {
     /**
@@ -22,7 +20,6 @@ class UnknownSetterException extends BaseInvalidArgumentException implements Bad
      * @var string
      */
     protected $setter;
-
     /**
      * Constructor.
      *
@@ -33,10 +30,8 @@ class UnknownSetterException extends BaseInvalidArgumentException implements Bad
     public function __construct($setter, $code = 0, ?Throwable $previous = null)
     {
         $this->setter = $setter;
-
-        parent::__construct("Unknown setter '$setter'", $code, $previous);
+        parent::__construct("Unknown setter '{$setter}'", $code, $previous);
     }
-
     /**
      * Get the setter.
      *

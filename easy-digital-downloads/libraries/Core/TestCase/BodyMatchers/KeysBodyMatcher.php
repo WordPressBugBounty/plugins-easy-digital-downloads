@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase\BodyMatchers;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
-
 class KeysBodyMatcher extends BodyMatcher
 {
     /**
@@ -17,16 +15,12 @@ class KeysBodyMatcher extends BodyMatcher
         $matcher->defaultMessage = 'Response body does not match in keys';
         return $matcher;
     }
-
     /**
      * Compares rawBody with expectedBody and asserts if expectedBody is a subset of rawBody or not.
      */
     public function assert(string $rawBody)
     {
         parent::assert($rawBody);
-        $this->testCase->assertTrue(
-            $this->bodyComparator->compare($this->expectedBody, CoreHelper::deserialize($rawBody)),
-            $this->defaultMessage
-        );
+        $this->testCase->assertTrue($this->bodyComparator->compare($this->expectedBody, CoreHelper::deserialize($rawBody)), $this->defaultMessage);
     }
 }

@@ -57,6 +57,22 @@ class FileSystem {
 	}
 
 	/**
+	 * Gets the file permission mode for files created by EDD.
+	 *
+	 * Defers to WordPress's `FS_CHMOD_FILE` so permissions follow the site's own
+	 * conventions, falling back to 0644 if the constant is not defined.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return int Octal permission mode for files.
+	 */
+	public static function get_chmod_file() {
+		self::init_fs();
+
+		return defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
+	}
+
+	/**
 	 * Maybe move the file from the original location to the new location.
 	 *
 	 * @since 3.2.10

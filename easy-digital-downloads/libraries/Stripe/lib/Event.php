@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -42,7 +41,7 @@ namespace EDD\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property null|string $account The connected account that originates the event.
- * @property null|string $api_version The EDD\Vendor\Stripe API version used to render <code>data</code>. This property is populated only for events on or after October 31, 2014.
+ * @property null|string $api_version The Stripe API version used to render <code>data</code>. This property is populated only for events on or after October 31, 2014.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property \EDD\Vendor\Stripe\StripeObject $data
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -53,7 +52,6 @@ namespace EDD\Vendor\Stripe;
 class Event extends ApiResource
 {
     const OBJECT_NAME = 'event';
-
     const ACCOUNT_APPLICATION_AUTHORIZED = 'account.application.authorized';
     const ACCOUNT_APPLICATION_DEAUTHORIZED = 'account.application.deauthorized';
     const ACCOUNT_EXTERNAL_ACCOUNT_CREATED = 'account.external_account.created';
@@ -291,7 +289,6 @@ class Event extends ApiResource
     const TREASURY_RECEIVED_CREDIT_FAILED = 'treasury.received_credit.failed';
     const TREASURY_RECEIVED_CREDIT_SUCCEEDED = 'treasury.received_credit.succeeded';
     const TREASURY_RECEIVED_DEBIT_CREATED = 'treasury.received_debit.created';
-
     const TYPE_ACCOUNT_APPLICATION_AUTHORIZED = 'account.application.authorized';
     const TYPE_ACCOUNT_APPLICATION_DEAUTHORIZED = 'account.application.deauthorized';
     const TYPE_ACCOUNT_EXTERNAL_ACCOUNT_CREATED = 'account.external_account.created';
@@ -529,12 +526,11 @@ class Event extends ApiResource
     const TYPE_TREASURY_RECEIVED_CREDIT_FAILED = 'treasury.received_credit.failed';
     const TYPE_TREASURY_RECEIVED_CREDIT_SUCCEEDED = 'treasury.received_credit.succeeded';
     const TYPE_TREASURY_RECEIVED_DEBIT_CREATED = 'treasury.received_debit.created';
-
     /**
      * List events, going back up to 30 days. Each event data is rendered according to
-     * EDD\Vendor\Stripe API version at its creation time, specified in <a
+     * Stripe API version at its creation time, specified in <a
      * href="https://docs.stripe.com/api/events/object">event object</a>
-     * <code>api_version</code> attribute (not according to your current EDD\Vendor\Stripe API
+     * <code>api_version</code> attribute (not according to your current Stripe API
      * version or <code>Stripe-Version</code> header).
      *
      * @param null|array $params
@@ -547,10 +543,8 @@ class Event extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an event if it was created in the last 30 days. Supply
      * the unique identifier of the event, which you might have received in a webhook.
@@ -567,7 +561,6 @@ class Event extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a service charge applied to an order.
  */
@@ -15,82 +13,66 @@ class OrderServiceCharge implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * @var array
      */
     private $percentage = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @var Money|null
      */
     private $totalMoney;
-
     /**
      * @var Money|null
      */
     private $totalTaxMoney;
-
     /**
      * @var string|null
      */
     private $calculationPhase;
-
     /**
      * @var array
      */
     private $taxable = [];
-
     /**
      * @var array
      */
     private $appliedTaxes = [];
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var string|null
      */
     private $treatmentType;
-
     /**
      * @var string|null
      */
     private $scope;
-
     /**
      * Returns Uid.
      * A unique ID that identifies the service charge only within this order.
@@ -102,7 +84,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the service charge only within this order.
@@ -113,7 +94,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the service charge only within this order.
@@ -122,7 +102,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Name.
      * The name of the service charge.
@@ -134,7 +113,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the service charge.
@@ -145,7 +123,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the service charge.
@@ -154,7 +131,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The catalog object ID referencing the service charge [CatalogObject](entity:CatalogObject).
@@ -166,7 +142,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The catalog object ID referencing the service charge [CatalogObject](entity:CatalogObject).
@@ -177,7 +152,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The catalog object ID referencing the service charge [CatalogObject](entity:CatalogObject).
@@ -186,7 +160,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this service charge references.
@@ -198,7 +171,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this service charge references.
@@ -209,7 +181,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this service charge references.
@@ -218,7 +189,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Returns Percentage.
      * The service charge percentage as a string representation of a
@@ -233,7 +203,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->percentage['value'];
     }
-
     /**
      * Sets Percentage.
      * The service charge percentage as a string representation of a
@@ -247,7 +216,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->percentage['value'] = $percentage;
     }
-
     /**
      * Unsets Percentage.
      * The service charge percentage as a string representation of a
@@ -259,7 +227,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->percentage = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -274,7 +241,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -291,7 +257,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -306,7 +271,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -323,7 +287,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Returns Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -338,7 +301,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->totalMoney;
     }
-
     /**
      * Sets Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -355,7 +317,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->totalMoney = $totalMoney;
     }
-
     /**
      * Returns Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -370,7 +331,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->totalTaxMoney;
     }
-
     /**
      * Sets Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -387,7 +347,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->totalTaxMoney = $totalTaxMoney;
     }
-
     /**
      * Returns Calculation Phase.
      * Represents a phase in the process of calculating order totals.
@@ -400,7 +359,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->calculationPhase;
     }
-
     /**
      * Sets Calculation Phase.
      * Represents a phase in the process of calculating order totals.
@@ -415,7 +373,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->calculationPhase = $calculationPhase;
     }
-
     /**
      * Returns Taxable.
      * Indicates whether the service charge can be taxed. If set to `true`,
@@ -429,7 +386,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->taxable['value'];
     }
-
     /**
      * Sets Taxable.
      * Indicates whether the service charge can be taxed. If set to `true`,
@@ -442,7 +398,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->taxable['value'] = $taxable;
     }
-
     /**
      * Unsets Taxable.
      * Indicates whether the service charge can be taxed. If set to `true`,
@@ -453,7 +408,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->taxable = [];
     }
-
     /**
      * Returns Applied Taxes.
      * The list of references to the taxes applied to this service charge. Each
@@ -478,7 +432,6 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->appliedTaxes['value'];
     }
-
     /**
      * Sets Applied Taxes.
      * The list of references to the taxes applied to this service charge. Each
@@ -502,7 +455,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->appliedTaxes['value'] = $appliedTaxes;
     }
-
     /**
      * Unsets Applied Taxes.
      * The list of references to the taxes applied to this service charge. Each
@@ -522,12 +474,11 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->appliedTaxes = [];
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this service charge. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -553,12 +504,11 @@ class OrderServiceCharge implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this service charge. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -583,12 +533,11 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this service charge. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -609,7 +558,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Type.
      */
@@ -617,7 +565,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      *
@@ -627,7 +574,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Treatment Type.
      * Indicates whether the service charge will be treated as a value-holding line item or
@@ -637,7 +583,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->treatmentType;
     }
-
     /**
      * Sets Treatment Type.
      * Indicates whether the service charge will be treated as a value-holding line item or
@@ -649,7 +594,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->treatmentType = $treatmentType;
     }
-
     /**
      * Returns Scope.
      * Indicates whether this is a line-item or order-level apportioned
@@ -659,7 +603,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         return $this->scope;
     }
-
     /**
      * Sets Scope.
      * Indicates whether this is a line-item or order-level apportioned
@@ -671,7 +614,6 @@ class OrderServiceCharge implements \JsonSerializable
     {
         $this->scope = $scope;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -680,62 +622,61 @@ class OrderServiceCharge implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']               = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->name)) {
-            $json['name']              = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->catalogObjectId)) {
             $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']   = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         if (!empty($this->percentage)) {
-            $json['percentage']        = $this->percentage['value'];
+            $json['percentage'] = $this->percentage['value'];
         }
         if (isset($this->amountMoney)) {
-            $json['amount_money']      = $this->amountMoney;
+            $json['amount_money'] = $this->amountMoney;
         }
         if (isset($this->appliedMoney)) {
-            $json['applied_money']     = $this->appliedMoney;
+            $json['applied_money'] = $this->appliedMoney;
         }
         if (isset($this->totalMoney)) {
-            $json['total_money']       = $this->totalMoney;
+            $json['total_money'] = $this->totalMoney;
         }
         if (isset($this->totalTaxMoney)) {
-            $json['total_tax_money']   = $this->totalTaxMoney;
+            $json['total_tax_money'] = $this->totalTaxMoney;
         }
         if (isset($this->calculationPhase)) {
             $json['calculation_phase'] = $this->calculationPhase;
         }
         if (!empty($this->taxable)) {
-            $json['taxable']           = $this->taxable['value'];
+            $json['taxable'] = $this->taxable['value'];
         }
         if (!empty($this->appliedTaxes)) {
-            $json['applied_taxes']     = $this->appliedTaxes['value'];
+            $json['applied_taxes'] = $this->appliedTaxes['value'];
         }
         if (!empty($this->metadata)) {
-            $json['metadata']          = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (isset($this->type)) {
-            $json['type']              = $this->type;
+            $json['type'] = $this->type;
         }
         if (isset($this->treatmentType)) {
-            $json['treatment_type']    = $this->treatmentType;
+            $json['treatment_type'] = $this->treatmentType;
         }
         if (isset($this->scope)) {
-            $json['scope']             = $this->scope;
+            $json['scope'] = $this->scope;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

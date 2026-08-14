@@ -242,7 +242,7 @@ class Gateway extends \EDD\Gateways\Gateway {
 							'card_information' => __( 'Card Information', 'easy-digital-downloads' ),
 							'processing'       => __( 'Processing...', 'easy-digital-downloads' ),
 							'payment_failed'   => __( 'Payment failed. Please try again.', 'easy-digital-downloads' ),
-							'invalid_card'     => __( 'Please enter valid card information.', 'easy-digital-downloads' ),
+							'invalid_card'     => __( 'Please check your card details and try again.', 'easy-digital-downloads' ),
 							'network_error'    => __( 'Network error. Please check your connection and try again.', 'easy-digital-downloads' ),
 						),
 					)

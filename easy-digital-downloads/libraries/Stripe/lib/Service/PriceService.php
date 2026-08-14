@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -26,7 +25,6 @@ class PriceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/prices', $params, $opts);
     }
-
     /**
      * Creates a new price for an existing product. The price can be recurring or
      * one-time.
@@ -42,7 +40,6 @@ class PriceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/prices', $params, $opts);
     }
-
     /**
      * Retrieves the price with the given ID.
      *
@@ -58,7 +55,6 @@ class PriceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/prices/%s', $id), $params, $opts);
     }
-
     /**
      * Search for prices you’ve previously created using Stripe’s <a
      * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
@@ -78,7 +74,6 @@ class PriceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestSearchResult('get', '/v1/prices/search', $params, $opts);
     }
-
     /**
      * Updates the specified price by setting the values of the parameters passed. Any
      * parameters not provided are left unchanged.

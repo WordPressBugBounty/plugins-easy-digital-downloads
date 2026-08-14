@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class PaymentMethodConfigurationService extends \EDD\Vendor\Stripe\Service\Abstr
     {
         return $this->requestCollection('get', '/v1/payment_method_configurations', $params, $opts);
     }
-
     /**
      * Creates a payment method configuration.
      *
@@ -39,7 +37,6 @@ class PaymentMethodConfigurationService extends \EDD\Vendor\Stripe\Service\Abstr
     {
         return $this->request('post', '/v1/payment_method_configurations', $params, $opts);
     }
-
     /**
      * Retrieve payment method configuration.
      *
@@ -55,7 +52,6 @@ class PaymentMethodConfigurationService extends \EDD\Vendor\Stripe\Service\Abstr
     {
         return $this->request('get', $this->buildPath('/v1/payment_method_configurations/%s', $id), $params, $opts);
     }
-
     /**
      * Update payment method configuration.
      *

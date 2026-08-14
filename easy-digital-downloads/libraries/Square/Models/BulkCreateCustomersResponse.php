@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields included in the response body from the
  * [BulkCreateCustomers]($e/Customers/BulkCreateCustomers) endpoint.
@@ -16,12 +14,10 @@ class BulkCreateCustomersResponse implements \JsonSerializable
      * @var array<string,CreateCustomerResponse>|null
      */
     private $responses;
-
     /**
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * Returns Responses.
      * A map of responses that correspond to individual create requests, represented by
@@ -38,7 +34,6 @@ class BulkCreateCustomersResponse implements \JsonSerializable
     {
         return $this->responses;
     }
-
     /**
      * Sets Responses.
      * A map of responses that correspond to individual create requests, represented by
@@ -57,7 +52,6 @@ class BulkCreateCustomersResponse implements \JsonSerializable
     {
         $this->responses = $responses;
     }
-
     /**
      * Returns Errors.
      * Any top-level errors that prevented the bulk operation from running.
@@ -68,7 +62,6 @@ class BulkCreateCustomersResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any top-level errors that prevented the bulk operation from running.
@@ -81,7 +74,6 @@ class BulkCreateCustomersResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -90,7 +82,7 @@ class BulkCreateCustomersResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -98,12 +90,11 @@ class BulkCreateCustomersResponse implements \JsonSerializable
             $json['responses'] = $this->responses;
         }
         if (isset($this->errors)) {
-            $json['errors']    = $this->errors;
+            $json['errors'] = $this->errors;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

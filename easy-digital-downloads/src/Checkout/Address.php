@@ -68,8 +68,8 @@ class Address {
 
 		$fields = array_intersect( $fields, Registry::get_allowed_fields() );
 
-		// If Affirm is available, ensure all required address fields are present.
-		if ( \EDD\Gateways\Stripe\PaymentMethods::affirm_requires_support() ) {
+		// If a payment method requires a billing address, ensure all required address fields are present.
+		if ( \EDD\Gateways\Stripe\PaymentMethods::requires_billing_address() ) {
 			$fields = array_unique( array_merge( array( 'country', 'address', 'address_2', 'city', 'state', 'zip' ), $fields ) );
 		}
 

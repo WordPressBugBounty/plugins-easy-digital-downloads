@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Issuing;
 
 /**
@@ -26,7 +25,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/issuing/authorizations', $params, $opts);
     }
-
     /**
      * [Deprecated] Approves a pending Issuing <code>Authorization</code> object. This
      * request should be made within the timeout window of the <a
@@ -49,7 +47,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/issuing/authorizations/%s/approve', $id), $params, $opts);
     }
-
     /**
      * [Deprecated] Declines a pending Issuing <code>Authorization</code> object. This
      * request should be made within the timeout window of the <a
@@ -72,7 +69,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/issuing/authorizations/%s/decline', $id), $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Authorization</code> object.
      *
@@ -88,7 +84,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/issuing/authorizations/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the specified Issuing <code>Authorization</code> object by setting the
      * values of the parameters passed. Any parameters not provided will be left

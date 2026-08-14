@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
@@ -29,16 +28,12 @@ namespace EDD\Vendor\Stripe\Issuing;
 class Cardholder extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.cardholder';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const STATUS_ACTIVE = 'active';
     const STATUS_BLOCKED = 'blocked';
     const STATUS_INACTIVE = 'inactive';
-
     const TYPE_COMPANY = 'company';
     const TYPE_INDIVIDUAL = 'individual';
-
     /**
      * Creates a new Issuing <code>Cardholder</code> object that can be issued cards.
      *
@@ -53,14 +48,11 @@ class Cardholder extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of Issuing <code>Cardholder</code> objects. The objects are
      * sorted in descending order by creation date, with the most recently created
@@ -76,10 +68,8 @@ class Cardholder extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Cardholder</code> object.
      *
@@ -95,10 +85,8 @@ class Cardholder extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified Issuing <code>Cardholder</code> object by setting the
      * values of the parameters passed. Any parameters not provided will be left
@@ -116,11 +104,9 @@ class Cardholder extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

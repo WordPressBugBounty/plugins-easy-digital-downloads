@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class ApplePayDomainService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/apple_pay/domains', $params, $opts);
     }
-
     /**
      * Create an apple pay domain.
      *
@@ -39,7 +37,6 @@ class ApplePayDomainService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/apple_pay/domains', $params, $opts);
     }
-
     /**
      * Delete an apple pay domain.
      *
@@ -55,7 +52,6 @@ class ApplePayDomainService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/apple_pay/domains/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieve an apple pay domain.
      *

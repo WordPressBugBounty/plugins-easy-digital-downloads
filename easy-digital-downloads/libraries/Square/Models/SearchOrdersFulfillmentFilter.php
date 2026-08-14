@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Filter based on [order fulfillment]($m/Fulfillment) information.
  */
@@ -15,12 +13,10 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
      * @var array
      */
     private $fulfillmentTypes = [];
-
     /**
      * @var array
      */
     private $fulfillmentStates = [];
-
     /**
      * Returns Fulfillment Types.
      * A list of [fulfillment types](entity:FulfillmentType) to filter
@@ -37,7 +33,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
         }
         return $this->fulfillmentTypes['value'];
     }
-
     /**
      * Sets Fulfillment Types.
      * A list of [fulfillment types](entity:FulfillmentType) to filter
@@ -53,7 +48,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
     {
         $this->fulfillmentTypes['value'] = $fulfillmentTypes;
     }
-
     /**
      * Unsets Fulfillment Types.
      * A list of [fulfillment types](entity:FulfillmentType) to filter
@@ -65,7 +59,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
     {
         $this->fulfillmentTypes = [];
     }
-
     /**
      * Returns Fulfillment States.
      * A list of [fulfillment states](entity:FulfillmentState) to filter
@@ -82,7 +75,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
         }
         return $this->fulfillmentStates['value'];
     }
-
     /**
      * Sets Fulfillment States.
      * A list of [fulfillment states](entity:FulfillmentState) to filter
@@ -98,7 +90,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
     {
         $this->fulfillmentStates['value'] = $fulfillmentStates;
     }
-
     /**
      * Unsets Fulfillment States.
      * A list of [fulfillment states](entity:FulfillmentState) to filter
@@ -110,7 +101,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
     {
         $this->fulfillmentStates = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -119,12 +109,12 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->fulfillmentTypes)) {
-            $json['fulfillment_types']  = $this->fulfillmentTypes['value'];
+            $json['fulfillment_types'] = $this->fulfillmentTypes['value'];
         }
         if (!empty($this->fulfillmentStates)) {
             $json['fulfillment_states'] = $this->fulfillmentStates['value'];
@@ -132,7 +122,6 @@ class SearchOrdersFulfillmentFilter implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

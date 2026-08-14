@@ -1,28 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DestinationDetailsCardRefundDetails implements \JsonSerializable
 {
     /**
      * @var Card|null
      */
     private $card;
-
     /**
      * @var array
      */
     private $entryMethod = [];
-
     /**
      * @var array
      */
     private $authResultCode = [];
-
     /**
      * Returns Card.
      * Represents the payment details of a card to be used for payments. These
@@ -32,7 +27,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         return $this->card;
     }
-
     /**
      * Sets Card.
      * Represents the payment details of a card to be used for payments. These
@@ -44,7 +38,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         $this->card = $card;
     }
-
     /**
      * Returns Entry Method.
      * The method used to enter the card's details for the refund. The method can be
@@ -57,7 +50,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
         }
         return $this->entryMethod['value'];
     }
-
     /**
      * Sets Entry Method.
      * The method used to enter the card's details for the refund. The method can be
@@ -69,7 +61,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         $this->entryMethod['value'] = $entryMethod;
     }
-
     /**
      * Unsets Entry Method.
      * The method used to enter the card's details for the refund. The method can be
@@ -79,7 +70,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         $this->entryMethod = [];
     }
-
     /**
      * Returns Auth Result Code.
      * The authorization code provided by the issuer when a refund is approved.
@@ -91,7 +81,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
         }
         return $this->authResultCode['value'];
     }
-
     /**
      * Sets Auth Result Code.
      * The authorization code provided by the issuer when a refund is approved.
@@ -102,7 +91,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         $this->authResultCode['value'] = $authResultCode;
     }
-
     /**
      * Unsets Auth Result Code.
      * The authorization code provided by the issuer when a refund is approved.
@@ -111,7 +99,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
     {
         $this->authResultCode = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -120,15 +107,15 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->card)) {
-            $json['card']             = $this->card;
+            $json['card'] = $this->card;
         }
         if (!empty($this->entryMethod)) {
-            $json['entry_method']     = $this->entryMethod['value'];
+            $json['entry_method'] = $this->entryMethod['value'];
         }
         if (!empty($this->authResultCode)) {
             $json['auth_result_code'] = $this->authResultCode['value'];
@@ -136,7 +123,6 @@ class DestinationDetailsCardRefundDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

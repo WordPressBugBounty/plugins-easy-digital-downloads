@@ -1,13 +1,12 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
- * @property string|\EDD\Vendor\Stripe\Account $account ID of the EDD\Vendor\Stripe account this fee was taken from.
+ * @property string|\EDD\Vendor\Stripe\Account $account ID of the Stripe account this fee was taken from.
  * @property int $amount Amount earned, in cents (or local equivalent).
  * @property int $amount_refunded Amount in cents (or local equivalent) refunded (can be less than the amount attribute on the fee if a partial refund was issued)
  * @property string|\EDD\Vendor\Stripe\Application $application ID of the Connect application that earned the fee.
@@ -24,9 +23,7 @@ namespace EDD\Vendor\Stripe;
 class ApplicationFee extends ApiResource
 {
     const OBJECT_NAME = 'application_fee';
-
     use ApiOperations\NestedResource;
-
     /**
      * Returns a list of application fees you’ve previously collected. The application
      * fees are returned in sorted order, with the most recent fees appearing first.
@@ -41,10 +38,8 @@ class ApplicationFee extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an application fee that your account has collected. The
      * same information is returned when refunding the application fee.
@@ -61,12 +56,9 @@ class ApplicationFee extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     const PATH_REFUNDS = '/refunds';
-
     /**
      * @param string $id the ID of the application fee on which to retrieve the application fee refunds
      * @param null|array $params
@@ -80,7 +72,6 @@ class ApplicationFee extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_REFUNDS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the application fee on which to create the application fee refund
      * @param null|array $params
@@ -94,7 +85,6 @@ class ApplicationFee extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_REFUNDS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the application fee to which the application fee refund belongs
      * @param string $refundId the ID of the application fee refund to retrieve
@@ -109,7 +99,6 @@ class ApplicationFee extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_REFUNDS, $refundId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the application fee to which the application fee refund belongs
      * @param string $refundId the ID of the application fee refund to update

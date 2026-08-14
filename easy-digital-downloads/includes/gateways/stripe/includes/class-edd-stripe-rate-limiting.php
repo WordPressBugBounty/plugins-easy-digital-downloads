@@ -383,7 +383,7 @@ class EDD_Stripe_Rate_Limiting {
 			$file = FileSystem::get_fs()->get_contents( $this->file );
 		} else {
 			FileSystem::get_fs()->put_contents( $this->file, $file );
-			FileSystem::get_fs()->chmod( $this->file, 0664 );
+			FileSystem::get_fs()->chmod( $this->file, FileSystem::get_chmod_file() );
 		}
 
 		return $file;

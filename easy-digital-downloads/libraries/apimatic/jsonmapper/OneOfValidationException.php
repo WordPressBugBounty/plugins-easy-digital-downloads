@@ -36,10 +36,7 @@ class OneOfValidationException extends JsonMapperException
      */
     static function moreThanOneOfException($matchedType, $mappedWith, $json)
     {
-        return new self(
-            "There are more than one matching types i.e." .
-            " { $matchedType and $mappedWith } on: $json"
-        );
+        return new self("There are more than one matching types i.e." . " { {$matchedType} and {$mappedWith} } on: {$json}");
     }
     /**
      * JSON does not match any of the provided types.
@@ -51,9 +48,6 @@ class OneOfValidationException extends JsonMapperException
      */
     static function cannotMapAnyOfException($type, $json)
     {
-        return new self(
-            "We could not match any acceptable type from" .
-            " $type on: $json"
-        );
+        return new self("We could not match any acceptable type from" . " {$type} on: {$json}");
     }
 }

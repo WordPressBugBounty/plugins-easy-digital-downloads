@@ -42,6 +42,7 @@ class Core extends \EDD\Core {
 	protected function get_replaceable_providers() {
 		return array(
 			'Admin\Promos\PromoHandler' => new Admin\Promos\PromoHandler(),
+			'REST\Manager'              => new \EDD\REST\Manager(),
 		);
 	}
 

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon;
 
 use EDD\Vendor\Carbon\Traits\Date;
@@ -16,7 +15,6 @@ use EDD\Vendor\Carbon\Traits\DeprecatedProperties;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-
 /**
  * A simple API extension for DateTimeImmutable.
  *
@@ -60,13 +58,13 @@ use DateTimeZone;
  * @property-read string              $latinUpperMeridiem                                                                             "AM"/"PM" (Ante meridiem or Post meridiem latin uppercase mark)
  * @property-read string              $timezoneAbbreviatedName                                                                        the current timezone abbreviated name
  * @property-read string              $tzAbbrName                                                                                     alias of $timezoneAbbreviatedName
- * @property-read string              $dayName                                                                                        long name of weekday translated according to EDD\Vendor\Carbon locale, in english if no translation available for current language
- * @property-read string              $shortDayName                                                                                   short name of weekday translated according to EDD\Vendor\Carbon locale, in english if no translation available for current language
- * @property-read string              $minDayName                                                                                     very short name of weekday translated according to EDD\Vendor\Carbon locale, in english if no translation available for current language
- * @property-read string              $monthName                                                                                      long name of month translated according to EDD\Vendor\Carbon locale, in english if no translation available for current language
- * @property-read string              $shortMonthName                                                                                 short name of month translated according to EDD\Vendor\Carbon locale, in english if no translation available for current language
- * @property-read string              $meridiem                                                                                       lowercase meridiem mark translated according to EDD\Vendor\Carbon locale, in latin if no translation available for current language
- * @property-read string              $upperMeridiem                                                                                  uppercase meridiem mark translated according to EDD\Vendor\Carbon locale, in latin if no translation available for current language
+ * @property-read string              $dayName                                                                                        long name of weekday translated according to Carbon locale, in english if no translation available for current language
+ * @property-read string              $shortDayName                                                                                   short name of weekday translated according to Carbon locale, in english if no translation available for current language
+ * @property-read string              $minDayName                                                                                     very short name of weekday translated according to Carbon locale, in english if no translation available for current language
+ * @property-read string              $monthName                                                                                      long name of month translated according to Carbon locale, in english if no translation available for current language
+ * @property-read string              $shortMonthName                                                                                 short name of month translated according to Carbon locale, in english if no translation available for current language
+ * @property-read string              $meridiem                                                                                       lowercase meridiem mark translated according to Carbon locale, in latin if no translation available for current language
+ * @property-read string              $upperMeridiem                                                                                  uppercase meridiem mark translated according to Carbon locale, in latin if no translation available for current language
  * @property-read int                 $noZeroHour                                                                                     current hour from 1 to 24
  * @property-read int                 $weeksInYear                                                                                    51 through 53
  * @property-read int                 $isoWeeksInYear                                                                                 51 through 53
@@ -97,35 +95,35 @@ use DateTimeZone;
  * @method        bool                isThursday()                                                                                    Checks if the instance day is thursday.
  * @method        bool                isFriday()                                                                                      Checks if the instance day is friday.
  * @method        bool                isSaturday()                                                                                    Checks if the instance day is saturday.
- * @method        bool                isSameYear(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same year as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameYear(Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same year as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentYear()                                                                                 Checks if the instance is in the same year as the current moment.
  * @method        bool                isNextYear()                                                                                    Checks if the instance is in the same year as the current moment next year.
  * @method        bool                isLastYear()                                                                                    Checks if the instance is in the same year as the current moment last year.
- * @method        bool                isSameWeek(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same week as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameWeek(Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same week as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentWeek()                                                                                 Checks if the instance is in the same week as the current moment.
  * @method        bool                isNextWeek()                                                                                    Checks if the instance is in the same week as the current moment next week.
  * @method        bool                isLastWeek()                                                                                    Checks if the instance is in the same week as the current moment last week.
- * @method        bool                isSameDay(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                    Checks if the given date is in the same day as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameDay(Carbon|DateTimeInterface|string|null $date = null)                                    Checks if the given date is in the same day as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentDay()                                                                                  Checks if the instance is in the same day as the current moment.
  * @method        bool                isNextDay()                                                                                     Checks if the instance is in the same day as the current moment next day.
  * @method        bool                isLastDay()                                                                                     Checks if the instance is in the same day as the current moment last day.
- * @method        bool                isSameHour(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same hour as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameHour(Carbon|DateTimeInterface|string|null $date = null)                                   Checks if the given date is in the same hour as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentHour()                                                                                 Checks if the instance is in the same hour as the current moment.
  * @method        bool                isNextHour()                                                                                    Checks if the instance is in the same hour as the current moment next hour.
  * @method        bool                isLastHour()                                                                                    Checks if the instance is in the same hour as the current moment last hour.
- * @method        bool                isSameMinute(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same minute as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameMinute(Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same minute as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentMinute()                                                                               Checks if the instance is in the same minute as the current moment.
  * @method        bool                isNextMinute()                                                                                  Checks if the instance is in the same minute as the current moment next minute.
  * @method        bool                isLastMinute()                                                                                  Checks if the instance is in the same minute as the current moment last minute.
- * @method        bool                isSameSecond(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same second as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameSecond(Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same second as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentSecond()                                                                               Checks if the instance is in the same second as the current moment.
  * @method        bool                isNextSecond()                                                                                  Checks if the instance is in the same second as the current moment next second.
  * @method        bool                isLastSecond()                                                                                  Checks if the instance is in the same second as the current moment last second.
- * @method        bool                isSameMicro(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                  Checks if the given date is in the same microsecond as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameMicro(Carbon|DateTimeInterface|string|null $date = null)                                  Checks if the given date is in the same microsecond as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentMicro()                                                                                Checks if the instance is in the same microsecond as the current moment.
  * @method        bool                isNextMicro()                                                                                   Checks if the instance is in the same microsecond as the current moment next microsecond.
  * @method        bool                isLastMicro()                                                                                   Checks if the instance is in the same microsecond as the current moment last microsecond.
- * @method        bool                isSameMicrosecond(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                            Checks if the given date is in the same microsecond as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameMicrosecond(Carbon|DateTimeInterface|string|null $date = null)                            Checks if the given date is in the same microsecond as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentMicrosecond()                                                                          Checks if the instance is in the same microsecond as the current moment.
  * @method        bool                isNextMicrosecond()                                                                             Checks if the instance is in the same microsecond as the current moment next microsecond.
  * @method        bool                isLastMicrosecond()                                                                             Checks if the instance is in the same microsecond as the current moment last microsecond.
@@ -135,15 +133,15 @@ use DateTimeZone;
  * @method        bool                isCurrentQuarter()                                                                              Checks if the instance is in the same quarter as the current moment.
  * @method        bool                isNextQuarter()                                                                                 Checks if the instance is in the same quarter as the current moment next quarter.
  * @method        bool                isLastQuarter()                                                                                 Checks if the instance is in the same quarter as the current moment last quarter.
- * @method        bool                isSameDecade(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same decade as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameDecade(Carbon|DateTimeInterface|string|null $date = null)                                 Checks if the given date is in the same decade as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentDecade()                                                                               Checks if the instance is in the same decade as the current moment.
  * @method        bool                isNextDecade()                                                                                  Checks if the instance is in the same decade as the current moment next decade.
  * @method        bool                isLastDecade()                                                                                  Checks if the instance is in the same decade as the current moment last decade.
- * @method        bool                isSameCentury(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                                Checks if the given date is in the same century as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameCentury(Carbon|DateTimeInterface|string|null $date = null)                                Checks if the given date is in the same century as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentCentury()                                                                              Checks if the instance is in the same century as the current moment.
  * @method        bool                isNextCentury()                                                                                 Checks if the instance is in the same century as the current moment next century.
  * @method        bool                isLastCentury()                                                                                 Checks if the instance is in the same century as the current moment last century.
- * @method        bool                isSameMillennium(EDD\Vendor\Carbon|DateTimeInterface|string|null $date = null)                             Checks if the given date is in the same millennium as the instance. If null passed, compare to now (with the same timezone).
+ * @method        bool                isSameMillennium(Carbon|DateTimeInterface|string|null $date = null)                             Checks if the given date is in the same millennium as the instance. If null passed, compare to now (with the same timezone).
  * @method        bool                isCurrentMillennium()                                                                           Checks if the instance is in the same millennium as the current moment.
  * @method        bool                isNextMillennium()                                                                              Checks if the instance is in the same millennium as the current moment next millennium.
  * @method        bool                isLastMillennium()                                                                              Checks if the instance is in the same millennium as the current moment last millennium.
@@ -351,77 +349,77 @@ use DateTimeZone;
  * @method        CarbonImmutable     addRealMicro()                                                                                  Add one microsecond to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMicros(int $value = 1)                                                                   Sub microseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMicro()                                                                                  Sub one microsecond to the instance (using timestamp).
- * @method        CarbonPeriod        microsUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each microsecond or every X microseconds if a factor is given.
+ * @method        CarbonPeriod        microsUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each microsecond or every X microseconds if a factor is given.
  * @method        CarbonImmutable     addRealMicroseconds(int $value = 1)                                                             Add microseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMicrosecond()                                                                            Add one microsecond to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMicroseconds(int $value = 1)                                                             Sub microseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMicrosecond()                                                                            Sub one microsecond to the instance (using timestamp).
- * @method        CarbonPeriod        microsecondsUntil($endDate = null, int $factor = 1)                                             Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each microsecond or every X microseconds if a factor is given.
+ * @method        CarbonPeriod        microsecondsUntil($endDate = null, int $factor = 1)                                             Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each microsecond or every X microseconds if a factor is given.
  * @method        CarbonImmutable     addRealMillis(int $value = 1)                                                                   Add milliseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMilli()                                                                                  Add one millisecond to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMillis(int $value = 1)                                                                   Sub milliseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMilli()                                                                                  Sub one millisecond to the instance (using timestamp).
- * @method        CarbonPeriod        millisUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each millisecond or every X milliseconds if a factor is given.
+ * @method        CarbonPeriod        millisUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each millisecond or every X milliseconds if a factor is given.
  * @method        CarbonImmutable     addRealMilliseconds(int $value = 1)                                                             Add milliseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMillisecond()                                                                            Add one millisecond to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMilliseconds(int $value = 1)                                                             Sub milliseconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMillisecond()                                                                            Sub one millisecond to the instance (using timestamp).
- * @method        CarbonPeriod        millisecondsUntil($endDate = null, int $factor = 1)                                             Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each millisecond or every X milliseconds if a factor is given.
+ * @method        CarbonPeriod        millisecondsUntil($endDate = null, int $factor = 1)                                             Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each millisecond or every X milliseconds if a factor is given.
  * @method        CarbonImmutable     addRealSeconds(int $value = 1)                                                                  Add seconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealSecond()                                                                                 Add one second to the instance (using timestamp).
  * @method        CarbonImmutable     subRealSeconds(int $value = 1)                                                                  Sub seconds (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealSecond()                                                                                 Sub one second to the instance (using timestamp).
- * @method        CarbonPeriod        secondsUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each second or every X seconds if a factor is given.
+ * @method        CarbonPeriod        secondsUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each second or every X seconds if a factor is given.
  * @method        CarbonImmutable     addRealMinutes(int $value = 1)                                                                  Add minutes (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMinute()                                                                                 Add one minute to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMinutes(int $value = 1)                                                                  Sub minutes (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMinute()                                                                                 Sub one minute to the instance (using timestamp).
- * @method        CarbonPeriod        minutesUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each minute or every X minutes if a factor is given.
+ * @method        CarbonPeriod        minutesUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each minute or every X minutes if a factor is given.
  * @method        CarbonImmutable     addRealHours(int $value = 1)                                                                    Add hours (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealHour()                                                                                   Add one hour to the instance (using timestamp).
  * @method        CarbonImmutable     subRealHours(int $value = 1)                                                                    Sub hours (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealHour()                                                                                   Sub one hour to the instance (using timestamp).
- * @method        CarbonPeriod        hoursUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each hour or every X hours if a factor is given.
+ * @method        CarbonPeriod        hoursUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each hour or every X hours if a factor is given.
  * @method        CarbonImmutable     addRealDays(int $value = 1)                                                                     Add days (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealDay()                                                                                    Add one day to the instance (using timestamp).
  * @method        CarbonImmutable     subRealDays(int $value = 1)                                                                     Sub days (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealDay()                                                                                    Sub one day to the instance (using timestamp).
- * @method        CarbonPeriod        daysUntil($endDate = null, int $factor = 1)                                                     Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each day or every X days if a factor is given.
+ * @method        CarbonPeriod        daysUntil($endDate = null, int $factor = 1)                                                     Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each day or every X days if a factor is given.
  * @method        CarbonImmutable     addRealWeeks(int $value = 1)                                                                    Add weeks (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealWeek()                                                                                   Add one week to the instance (using timestamp).
  * @method        CarbonImmutable     subRealWeeks(int $value = 1)                                                                    Sub weeks (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealWeek()                                                                                   Sub one week to the instance (using timestamp).
- * @method        CarbonPeriod        weeksUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each week or every X weeks if a factor is given.
+ * @method        CarbonPeriod        weeksUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each week or every X weeks if a factor is given.
  * @method        CarbonImmutable     addRealMonths(int $value = 1)                                                                   Add months (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMonth()                                                                                  Add one month to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMonths(int $value = 1)                                                                   Sub months (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMonth()                                                                                  Sub one month to the instance (using timestamp).
- * @method        CarbonPeriod        monthsUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each month or every X months if a factor is given.
+ * @method        CarbonPeriod        monthsUntil($endDate = null, int $factor = 1)                                                   Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each month or every X months if a factor is given.
  * @method        CarbonImmutable     addRealQuarters(int $value = 1)                                                                 Add quarters (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealQuarter()                                                                                Add one quarter to the instance (using timestamp).
  * @method        CarbonImmutable     subRealQuarters(int $value = 1)                                                                 Sub quarters (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealQuarter()                                                                                Sub one quarter to the instance (using timestamp).
- * @method        CarbonPeriod        quartersUntil($endDate = null, int $factor = 1)                                                 Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each quarter or every X quarters if a factor is given.
+ * @method        CarbonPeriod        quartersUntil($endDate = null, int $factor = 1)                                                 Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each quarter or every X quarters if a factor is given.
  * @method        CarbonImmutable     addRealYears(int $value = 1)                                                                    Add years (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealYear()                                                                                   Add one year to the instance (using timestamp).
  * @method        CarbonImmutable     subRealYears(int $value = 1)                                                                    Sub years (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealYear()                                                                                   Sub one year to the instance (using timestamp).
- * @method        CarbonPeriod        yearsUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each year or every X years if a factor is given.
+ * @method        CarbonPeriod        yearsUntil($endDate = null, int $factor = 1)                                                    Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each year or every X years if a factor is given.
  * @method        CarbonImmutable     addRealDecades(int $value = 1)                                                                  Add decades (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealDecade()                                                                                 Add one decade to the instance (using timestamp).
  * @method        CarbonImmutable     subRealDecades(int $value = 1)                                                                  Sub decades (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealDecade()                                                                                 Sub one decade to the instance (using timestamp).
- * @method        CarbonPeriod        decadesUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each decade or every X decades if a factor is given.
+ * @method        CarbonPeriod        decadesUntil($endDate = null, int $factor = 1)                                                  Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each decade or every X decades if a factor is given.
  * @method        CarbonImmutable     addRealCenturies(int $value = 1)                                                                Add centuries (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealCentury()                                                                                Add one century to the instance (using timestamp).
  * @method        CarbonImmutable     subRealCenturies(int $value = 1)                                                                Sub centuries (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealCentury()                                                                                Sub one century to the instance (using timestamp).
- * @method        CarbonPeriod        centuriesUntil($endDate = null, int $factor = 1)                                                Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each century or every X centuries if a factor is given.
+ * @method        CarbonPeriod        centuriesUntil($endDate = null, int $factor = 1)                                                Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each century or every X centuries if a factor is given.
  * @method        CarbonImmutable     addRealMillennia(int $value = 1)                                                                Add millennia (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     addRealMillennium()                                                                             Add one millennium to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMillennia(int $value = 1)                                                                Sub millennia (the $value count passed in) to the instance (using timestamp).
  * @method        CarbonImmutable     subRealMillennium()                                                                             Sub one millennium to the instance (using timestamp).
- * @method        CarbonPeriod        millenniaUntil($endDate = null, int $factor = 1)                                                Return an iterable period from current date to given end (string, DateTime or EDD\Vendor\Carbon instance) for each millennium or every X millennia if a factor is given.
+ * @method        CarbonPeriod        millenniaUntil($endDate = null, int $factor = 1)                                                Return an iterable period from current date to given end (string, DateTime or Carbon instance) for each millennium or every X millennia if a factor is given.
  * @method        CarbonImmutable     roundYear(float $precision = 1, string $function = "round")                                     Round the current instance year with given precision using the given function.
  * @method        CarbonImmutable     roundYears(float $precision = 1, string $function = "round")                                    Round the current instance year with given precision using the given function.
  * @method        CarbonImmutable     floorYear(float $precision = 1)                                                                 Truncate the current instance year with given precision.
@@ -512,14 +510,12 @@ class CarbonImmutable extends DateTimeImmutable implements CarbonInterface
     use Date {
         __clone as dateTraitClone;
     }
-
     public function __clone()
     {
         $this->dateTraitClone();
         $this->endOfTime = false;
         $this->startOfTime = false;
     }
-
     /**
      * Create a very old date representing start of time.
      *
@@ -529,10 +525,8 @@ class CarbonImmutable extends DateTimeImmutable implements CarbonInterface
     {
         $date = static::parse('0001-01-01')->years(self::getStartOfTimeYear());
         $date->startOfTime = true;
-
         return $date;
     }
-
     /**
      * Create a very far date representing end of time.
      *
@@ -542,10 +536,8 @@ class CarbonImmutable extends DateTimeImmutable implements CarbonInterface
     {
         $date = static::parse('9999-12-31 23:59:59.999999')->years(self::getEndOfTimeYear());
         $date->endOfTime = true;
-
         return $date;
     }
-
     /**
      * @codeCoverageIgnore
      */
@@ -554,15 +546,12 @@ class CarbonImmutable extends DateTimeImmutable implements CarbonInterface
         if (version_compare(PHP_VERSION, '7.3.0-dev', '<')) {
             return 145261681241552;
         }
-
         // Remove if https://bugs.php.net/bug.php?id=81107 is fixed
         if (version_compare(PHP_VERSION, '8.1.0-dev', '>=')) {
             return 1118290769066902787;
         }
-
         return PHP_INT_MAX;
     }
-
     /**
      * @codeCoverageIgnore
      */
@@ -571,12 +560,10 @@ class CarbonImmutable extends DateTimeImmutable implements CarbonInterface
         if (version_compare(PHP_VERSION, '7.3.0-dev', '<')) {
             return -135908816449551;
         }
-
         // Remove if https://bugs.php.net/bug.php?id=81107 is fixed
         if (version_compare(PHP_VERSION, '8.1.0-dev', '>=')) {
             return -1118290769066898816;
         }
-
         return max(PHP_INT_MIN, -9223372036854773760);
     }
 }

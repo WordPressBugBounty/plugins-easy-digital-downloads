@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -30,17 +29,14 @@ namespace EDD\Vendor\Stripe;
 class Coupon extends ApiResource
 {
     const OBJECT_NAME = 'coupon';
-
     use ApiOperations\Update;
-
     const DURATION_FOREVER = 'forever';
     const DURATION_ONCE = 'once';
     const DURATION_REPEATING = 'repeating';
-
     /**
      * You can create coupons easily via the <a
      * href="https://dashboard.stripe.com/coupons">coupon management</a> page of the
-     * EDD\Vendor\Stripe dashboard. Coupon creation is also accessible via the API if you need to
+     * Stripe dashboard. Coupon creation is also accessible via the API if you need to
      * create coupons on the fly.
      *
      * A coupon has either a <code>percent_off</code> or an <code>amount_off</code> and
@@ -64,18 +60,15 @@ class Coupon extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * You can delete coupons via the <a
      * href="https://dashboard.stripe.com/coupons">coupon management</a> page of the
-     * EDD\Vendor\Stripe dashboard. However, deleting a coupon does not affect any customers who
+     * Stripe dashboard. However, deleting a coupon does not affect any customers who
      * have already applied the coupon; it means that new customers can’t redeem the
      * coupon. You can also delete coupons via the API.
      *
@@ -89,14 +82,11 @@ class Coupon extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your coupons.
      *
@@ -110,10 +100,8 @@ class Coupon extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the coupon with the given ID.
      *
@@ -129,10 +117,8 @@ class Coupon extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the metadata of a coupon. Other coupon details (currency, duration,
      * amount_off) are, by design, not editable.
@@ -149,11 +135,9 @@ class Coupon extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

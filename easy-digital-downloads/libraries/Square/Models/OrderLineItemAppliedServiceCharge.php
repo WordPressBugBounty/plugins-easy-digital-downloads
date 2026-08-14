@@ -1,28 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class OrderLineItemAppliedServiceCharge implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string
      */
     private $serviceChargeUid;
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @param string $serviceChargeUid
      */
@@ -30,7 +25,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         $this->serviceChargeUid = $serviceChargeUid;
     }
-
     /**
      * Returns Uid.
      * A unique ID that identifies the applied service charge only within this order.
@@ -42,7 +36,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the applied service charge only within this order.
@@ -53,7 +46,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the applied service charge only within this order.
@@ -62,7 +54,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Service Charge Uid.
      * The `uid` of the service charge that the applied service charge represents. It must
@@ -75,7 +66,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         return $this->serviceChargeUid;
     }
-
     /**
      * Sets Service Charge Uid.
      * The `uid` of the service charge that the applied service charge represents. It must
@@ -91,7 +81,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         $this->serviceChargeUid = $serviceChargeUid;
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -106,7 +95,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -123,7 +111,6 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -132,21 +119,20 @@ class OrderLineItemAppliedServiceCharge implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']            = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         $json['service_charge_uid'] = $this->serviceChargeUid;
         if (isset($this->appliedMoney)) {
-            $json['applied_money']  = $this->appliedMoney;
+            $json['applied_money'] = $this->appliedMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

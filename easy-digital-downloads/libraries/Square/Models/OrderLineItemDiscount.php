@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a discount that applies to one or more line items in an
  * order.
@@ -20,62 +18,50 @@ class OrderLineItemDiscount implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var array
      */
     private $percentage = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var string|null
      */
     private $scope;
-
     /**
      * @var string[]|null
      */
     private $rewardIds;
-
     /**
      * @var string|null
      */
     private $pricingRuleId;
-
     /**
      * Returns Uid.
      * A unique ID that identifies the discount only within this order.
@@ -87,7 +73,6 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the discount only within this order.
@@ -98,7 +83,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the discount only within this order.
@@ -107,7 +91,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The catalog object ID referencing [CatalogDiscount](entity:CatalogDiscount).
@@ -119,7 +102,6 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The catalog object ID referencing [CatalogDiscount](entity:CatalogDiscount).
@@ -130,7 +112,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The catalog object ID referencing [CatalogDiscount](entity:CatalogDiscount).
@@ -139,7 +120,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this discount references.
@@ -151,7 +131,6 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this discount references.
@@ -162,7 +141,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this discount references.
@@ -171,7 +149,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Returns Name.
      * The discount's name.
@@ -183,7 +160,6 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The discount's name.
@@ -194,7 +170,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The discount's name.
@@ -203,7 +178,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Type.
      * Indicates how the discount is applied to the associated line item or order.
@@ -212,7 +186,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Indicates how the discount is applied to the associated line item or order.
@@ -223,7 +196,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Percentage.
      * The percentage of the discount, as a string representation of a decimal number.
@@ -238,7 +210,6 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->percentage['value'];
     }
-
     /**
      * Sets Percentage.
      * The percentage of the discount, as a string representation of a decimal number.
@@ -252,7 +223,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->percentage['value'] = $percentage;
     }
-
     /**
      * Unsets Percentage.
      * The percentage of the discount, as a string representation of a decimal number.
@@ -264,7 +234,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->percentage = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -279,7 +248,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -296,7 +264,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -311,7 +278,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -328,12 +294,11 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this discount. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -359,12 +324,11 @@ class OrderLineItemDiscount implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this discount. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -389,12 +353,11 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this discount. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -415,7 +378,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Scope.
      * Indicates whether this is a line-item or order-level discount.
@@ -424,7 +386,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->scope;
     }
-
     /**
      * Sets Scope.
      * Indicates whether this is a line-item or order-level discount.
@@ -435,7 +396,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->scope = $scope;
     }
-
     /**
      * Returns Reward Ids.
      * The reward IDs corresponding to this discount. The application and
@@ -450,7 +410,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->rewardIds;
     }
-
     /**
      * Sets Reward Ids.
      * The reward IDs corresponding to this discount. The application and
@@ -467,7 +426,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->rewardIds = $rewardIds;
     }
-
     /**
      * Returns Pricing Rule Id.
      * The object ID of a [pricing rule](entity:CatalogPricingRule) to be applied
@@ -479,7 +437,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         return $this->pricingRuleId;
     }
-
     /**
      * Sets Pricing Rule Id.
      * The object ID of a [pricing rule](entity:CatalogPricingRule) to be applied
@@ -493,7 +450,6 @@ class OrderLineItemDiscount implements \JsonSerializable
     {
         $this->pricingRuleId = $pricingRuleId;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -502,50 +458,49 @@ class OrderLineItemDiscount implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']               = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->catalogObjectId)) {
             $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']   = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         if (!empty($this->name)) {
-            $json['name']              = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->type)) {
-            $json['type']              = $this->type;
+            $json['type'] = $this->type;
         }
         if (!empty($this->percentage)) {
-            $json['percentage']        = $this->percentage['value'];
+            $json['percentage'] = $this->percentage['value'];
         }
         if (isset($this->amountMoney)) {
-            $json['amount_money']      = $this->amountMoney;
+            $json['amount_money'] = $this->amountMoney;
         }
         if (isset($this->appliedMoney)) {
-            $json['applied_money']     = $this->appliedMoney;
+            $json['applied_money'] = $this->appliedMoney;
         }
         if (!empty($this->metadata)) {
-            $json['metadata']          = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (isset($this->scope)) {
-            $json['scope']             = $this->scope;
+            $json['scope'] = $this->scope;
         }
         if (isset($this->rewardIds)) {
-            $json['reward_ids']        = $this->rewardIds;
+            $json['reward_ids'] = $this->rewardIds;
         }
         if (isset($this->pricingRuleId)) {
-            $json['pricing_rule_id']   = $this->pricingRuleId;
+            $json['pricing_rule_id'] = $this->pricingRuleId;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

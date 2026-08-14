@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A filter based on order `source` information.
  */
@@ -15,7 +13,6 @@ class SearchOrdersSourceFilter implements \JsonSerializable
      * @var array
      */
     private $sourceNames = [];
-
     /**
      * Returns Source Names.
      * Filters by the [Source](entity:OrderSource) `name`. The filter returns any orders
@@ -32,7 +29,6 @@ class SearchOrdersSourceFilter implements \JsonSerializable
         }
         return $this->sourceNames['value'];
     }
-
     /**
      * Sets Source Names.
      * Filters by the [Source](entity:OrderSource) `name`. The filter returns any orders
@@ -48,7 +44,6 @@ class SearchOrdersSourceFilter implements \JsonSerializable
     {
         $this->sourceNames['value'] = $sourceNames;
     }
-
     /**
      * Unsets Source Names.
      * Filters by the [Source](entity:OrderSource) `name`. The filter returns any orders
@@ -60,7 +55,6 @@ class SearchOrdersSourceFilter implements \JsonSerializable
     {
         $this->sourceNames = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -69,7 +63,7 @@ class SearchOrdersSourceFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -79,7 +73,6 @@ class SearchOrdersSourceFilter implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

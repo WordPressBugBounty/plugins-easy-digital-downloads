@@ -1,18 +1,16 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Traits;
 
 use Closure;
-
 /**
  * Trait ToStringFormat.
  *
@@ -26,9 +24,8 @@ trait ToStringFormat
      * @var string|Closure|null
      */
     protected static $toStringFormat;
-
     /**
-     * Reset the format used to the default when type juggling a EDD\Vendor\Carbon instance to a string
+     * Reset the format used to the default when type juggling a Carbon instance to a string
      *
      * @return void
      */
@@ -36,14 +33,13 @@ trait ToStringFormat
     {
         static::setToStringFormat(null);
     }
-
     /**
      * @deprecated To avoid conflict between different third-party libraries, static setters should not be used.
-     *             You should rather let EDD\Vendor\Carbon object being cast to string with DEFAULT_TO_STRING_FORMAT, and
+     *             You should rather let Carbon object being cast to string with DEFAULT_TO_STRING_FORMAT, and
      *             use other method or custom format passed to format() method if you need to dump another string
      *             format.
      *
-     * Set the default format used when type juggling a EDD\Vendor\Carbon instance to a string.
+     * Set the default format used when type juggling a Carbon instance to a string.
      *
      * @param string|Closure|null $format
      *

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a generic time range. The start and end values are
  * represented in RFC 3339 format. Time ranges are customized to be
@@ -19,12 +17,10 @@ class TimeRange implements \JsonSerializable
      * @var array
      */
     private $startAt = [];
-
     /**
      * @var array
      */
     private $endAt = [];
-
     /**
      * Returns Start At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -37,7 +33,6 @@ class TimeRange implements \JsonSerializable
         }
         return $this->startAt['value'];
     }
-
     /**
      * Sets Start At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -49,7 +44,6 @@ class TimeRange implements \JsonSerializable
     {
         $this->startAt['value'] = $startAt;
     }
-
     /**
      * Unsets Start At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -59,7 +53,6 @@ class TimeRange implements \JsonSerializable
     {
         $this->startAt = [];
     }
-
     /**
      * Returns End At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -72,7 +65,6 @@ class TimeRange implements \JsonSerializable
         }
         return $this->endAt['value'];
     }
-
     /**
      * Sets End At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -84,7 +76,6 @@ class TimeRange implements \JsonSerializable
     {
         $this->endAt['value'] = $endAt;
     }
-
     /**
      * Unsets End At.
      * A datetime value in RFC 3339 format indicating when the time range
@@ -94,7 +85,6 @@ class TimeRange implements \JsonSerializable
     {
         $this->endAt = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -103,7 +93,7 @@ class TimeRange implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -111,12 +101,11 @@ class TimeRange implements \JsonSerializable
             $json['start_at'] = $this->startAt['value'];
         }
         if (!empty($this->endAt)) {
-            $json['end_at']   = $this->endAt['value'];
+            $json['end_at'] = $this->endAt['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

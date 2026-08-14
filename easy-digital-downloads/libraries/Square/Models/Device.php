@@ -1,33 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class Device implements \JsonSerializable
 {
     /**
      * @var string|null
      */
     private $id;
-
     /**
      * @var DeviceAttributes
      */
     private $attributes;
-
     /**
      * @var array
      */
     private $components = [];
-
     /**
      * @var DeviceStatus|null
      */
     private $status;
-
     /**
      * @param DeviceAttributes $attributes
      */
@@ -35,7 +29,6 @@ class Device implements \JsonSerializable
     {
         $this->attributes = $attributes;
     }
-
     /**
      * Returns Id.
      * A synthetic identifier for the device. The identifier includes a standardized prefix and
@@ -45,7 +38,6 @@ class Device implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A synthetic identifier for the device. The identifier includes a standardized prefix and
@@ -57,7 +49,6 @@ class Device implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Attributes.
      */
@@ -65,7 +56,6 @@ class Device implements \JsonSerializable
     {
         return $this->attributes;
     }
-
     /**
      * Sets Attributes.
      *
@@ -76,7 +66,6 @@ class Device implements \JsonSerializable
     {
         $this->attributes = $attributes;
     }
-
     /**
      * Returns Components.
      * A list of components applicable to the device.
@@ -90,7 +79,6 @@ class Device implements \JsonSerializable
         }
         return $this->components['value'];
     }
-
     /**
      * Sets Components.
      * A list of components applicable to the device.
@@ -103,7 +91,6 @@ class Device implements \JsonSerializable
     {
         $this->components['value'] = $components;
     }
-
     /**
      * Unsets Components.
      * A list of components applicable to the device.
@@ -112,7 +99,6 @@ class Device implements \JsonSerializable
     {
         $this->components = [];
     }
-
     /**
      * Returns Status.
      */
@@ -120,7 +106,6 @@ class Device implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      *
@@ -130,7 +115,6 @@ class Device implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -139,24 +123,23 @@ class Device implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']         = $this->id;
+            $json['id'] = $this->id;
         }
-        $json['attributes']     = $this->attributes;
+        $json['attributes'] = $this->attributes;
         if (!empty($this->components)) {
             $json['components'] = $this->components['value'];
         }
         if (isset($this->status)) {
-            $json['status']     = $this->status;
+            $json['status'] = $this->status;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

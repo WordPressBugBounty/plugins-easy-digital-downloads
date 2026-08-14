@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestArraySerialization;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
-
 class QueryParam extends EncodedParam
 {
     /**
@@ -17,12 +15,10 @@ class QueryParam extends EncodedParam
     {
         return new self($key, $value);
     }
-
     private function __construct(string $key, $value)
     {
         parent::__construct($key, $value, 'query');
     }
-
     /**
      * Sets the parameter format to un-indexed.
      */
@@ -31,7 +27,6 @@ class QueryParam extends EncodedParam
         $this->format = RequestArraySerialization::UN_INDEXED;
         return $this;
     }
-
     /**
      * Sets the parameter format to plain.
      */
@@ -40,7 +35,6 @@ class QueryParam extends EncodedParam
         $this->format = RequestArraySerialization::PLAIN;
         return $this;
     }
-
     /**
      * Sets the parameter format to comma separated.
      */
@@ -49,7 +43,6 @@ class QueryParam extends EncodedParam
         $this->format = RequestArraySerialization::CSV;
         return $this;
     }
-
     /**
      * Sets the parameter format to tab separated.
      */
@@ -58,7 +51,6 @@ class QueryParam extends EncodedParam
         $this->format = RequestArraySerialization::TSV;
         return $this;
     }
-
     /**
      * Sets the parameter format to pipe separated.
      */
@@ -67,7 +59,6 @@ class QueryParam extends EncodedParam
         $this->format = RequestArraySerialization::PSV;
         return $this;
     }
-
     /**
      * Adds the parameter to the request provided.
      *
@@ -83,8 +74,8 @@ class QueryParam extends EncodedParam
         if (empty($query)) {
             return;
         }
-        $hasParams = (strrpos($request->getQueryUrl(), '?') > 0);
-        $separator = (($hasParams) ? '&' : '?');
+        $hasParams = strrpos($request->getQueryUrl(), '?') > 0;
+        $separator = $hasParams ? '&' : '?';
         $request->appendPath($separator . $query);
     }
 }

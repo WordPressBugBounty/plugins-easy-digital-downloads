@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Filtering criteria to use for a `SearchOrders` request. Multiple filters
  * are ANDed together.
@@ -16,27 +14,22 @@ class SearchOrdersFilter implements \JsonSerializable
      * @var SearchOrdersStateFilter|null
      */
     private $stateFilter;
-
     /**
      * @var SearchOrdersDateTimeFilter|null
      */
     private $dateTimeFilter;
-
     /**
      * @var SearchOrdersFulfillmentFilter|null
      */
     private $fulfillmentFilter;
-
     /**
      * @var SearchOrdersSourceFilter|null
      */
     private $sourceFilter;
-
     /**
      * @var SearchOrdersCustomerFilter|null
      */
     private $customerFilter;
-
     /**
      * Returns State Filter.
      * Filter by the current order `state`.
@@ -45,7 +38,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         return $this->stateFilter;
     }
-
     /**
      * Sets State Filter.
      * Filter by the current order `state`.
@@ -56,7 +48,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         $this->stateFilter = $stateFilter;
     }
-
     /**
      * Returns Date Time Filter.
      * Filter for `Order` objects based on whether their `CREATED_AT`,
@@ -79,7 +70,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         return $this->dateTimeFilter;
     }
-
     /**
      * Sets Date Time Filter.
      * Filter for `Order` objects based on whether their `CREATED_AT`,
@@ -104,7 +94,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         $this->dateTimeFilter = $dateTimeFilter;
     }
-
     /**
      * Returns Fulfillment Filter.
      * Filter based on [order fulfillment]($m/Fulfillment) information.
@@ -113,7 +102,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         return $this->fulfillmentFilter;
     }
-
     /**
      * Sets Fulfillment Filter.
      * Filter based on [order fulfillment]($m/Fulfillment) information.
@@ -124,7 +112,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         $this->fulfillmentFilter = $fulfillmentFilter;
     }
-
     /**
      * Returns Source Filter.
      * A filter based on order `source` information.
@@ -133,7 +120,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         return $this->sourceFilter;
     }
-
     /**
      * Sets Source Filter.
      * A filter based on order `source` information.
@@ -144,7 +130,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         $this->sourceFilter = $sourceFilter;
     }
-
     /**
      * Returns Customer Filter.
      * A filter based on the order `customer_id` and any tender `customer_id`
@@ -155,7 +140,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         return $this->customerFilter;
     }
-
     /**
      * Sets Customer Filter.
      * A filter based on the order `customer_id` and any tender `customer_id`
@@ -168,7 +152,6 @@ class SearchOrdersFilter implements \JsonSerializable
     {
         $this->customerFilter = $customerFilter;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -177,29 +160,28 @@ class SearchOrdersFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->stateFilter)) {
-            $json['state_filter']       = $this->stateFilter;
+            $json['state_filter'] = $this->stateFilter;
         }
         if (isset($this->dateTimeFilter)) {
-            $json['date_time_filter']   = $this->dateTimeFilter;
+            $json['date_time_filter'] = $this->dateTimeFilter;
         }
         if (isset($this->fulfillmentFilter)) {
             $json['fulfillment_filter'] = $this->fulfillmentFilter;
         }
         if (isset($this->sourceFilter)) {
-            $json['source_filter']      = $this->sourceFilter;
+            $json['source_filter'] = $this->sourceFilter;
         }
         if (isset($this->customerFilter)) {
-            $json['customer_filter']    = $this->customerFilter;
+            $json['customer_filter'] = $this->customerFilter;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

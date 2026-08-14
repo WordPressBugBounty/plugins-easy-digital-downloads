@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Http;
 
 use EDD\Vendor\Core\Types\Sdk\CoreContext;
-
 /**
  * Represents an HTTP call in context
  */
@@ -20,7 +18,6 @@ class HttpContext extends CoreContext
     {
         return $this->request;
     }
-
     /**
      * Returns the HTTP Response
      *

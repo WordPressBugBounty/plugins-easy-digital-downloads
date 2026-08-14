@@ -49,15 +49,21 @@ class Transient {
 	 * Gets the option value.
 	 *
 	 * @since 3.3.5
+	 * @since 3.7.0 Added the $return_stale parameter.
+	 * @param bool $return_stale When true, return the stored value even if expired (last-known-good).
 	 * @return mixed
 	 */
-	public function get() {
+	public function get( bool $return_stale = false ) {
 		$option = get_option( $this->option_name, false );
 		if ( ! $option ) {
 			return false;
 		}
 		if ( is_string( $option ) ) {
 			$option = json_decode( $option, true );
+		}
+
+		if ( $return_stale ) {
+			return isset( $option['value'] ) ? $option['value'] : false;
 		}
 
 		return ! $this->is_expired( $option ) ? $option['value'] : false;

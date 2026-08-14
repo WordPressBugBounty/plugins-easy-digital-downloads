@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class CalculateOrderRequest implements \JsonSerializable
 {
     /**
      * @var Order
      */
     private $order;
-
     /**
      * @var array
      */
     private $proposedRewards = [];
-
     /**
      * @param Order $order
      */
@@ -25,7 +21,6 @@ class CalculateOrderRequest implements \JsonSerializable
     {
         $this->order = $order;
     }
-
     /**
      * Returns Order.
      * Contains all information related to a single order to process with Square,
@@ -39,7 +34,6 @@ class CalculateOrderRequest implements \JsonSerializable
     {
         return $this->order;
     }
-
     /**
      * Sets Order.
      * Contains all information related to a single order to process with Square,
@@ -56,7 +50,6 @@ class CalculateOrderRequest implements \JsonSerializable
     {
         $this->order = $order;
     }
-
     /**
      * Returns Proposed Rewards.
      * Identifies one or more loyalty reward tiers to apply during the order calculation.
@@ -74,7 +67,6 @@ class CalculateOrderRequest implements \JsonSerializable
         }
         return $this->proposedRewards['value'];
     }
-
     /**
      * Sets Proposed Rewards.
      * Identifies one or more loyalty reward tiers to apply during the order calculation.
@@ -91,7 +83,6 @@ class CalculateOrderRequest implements \JsonSerializable
     {
         $this->proposedRewards['value'] = $proposedRewards;
     }
-
     /**
      * Unsets Proposed Rewards.
      * Identifies one or more loyalty reward tiers to apply during the order calculation.
@@ -104,7 +95,6 @@ class CalculateOrderRequest implements \JsonSerializable
     {
         $this->proposedRewards = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -113,18 +103,17 @@ class CalculateOrderRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['order']                = $this->order;
+        $json['order'] = $this->order;
         if (!empty($this->proposedRewards)) {
             $json['proposed_rewards'] = $this->proposedRewards['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

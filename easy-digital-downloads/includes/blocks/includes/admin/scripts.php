@@ -63,6 +63,7 @@ function localize() {
 		'EDDBlocks',
 		array(
 			'current_user'            => md5( $user->user_email ),
+			'current_user_email'      => $user->user_email,
 			'all_access'              => function_exists( 'edd_all_access' ),
 			'recurring'               => function_exists( 'EDD_Recurring' ),
 			'is_pro'                  => edd_is_pro(),
@@ -78,6 +79,7 @@ function localize() {
 			'button_colors'           => $button_colors,
 			'featured_promo'          => ! edd_is_pro() && class_exists( '\\EDD\\Lite\\Admin\\Promos\\Notices\\FeaturedDownloads' ),
 			'manage_shop_discounts'   => current_user_can( 'manage_shop_discounts' ),
+			'quantities_enabled'      => edd_item_quantities_enabled(),
 		)
 	);
 }
@@ -91,19 +93,34 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\localize' );
 add_action( 'admin_print_footer_scripts', '\edd_print_payment_icons_on_checkout' );
 
 /**
- * If the EDD styles are registered, load them for the block editor.
- *
- * WordPress 7.0 moved to a fully iframed editor (Block API v3), so
- * enqueue_block_editor_assets no longer fires inside the iframe.
- * enqueue_block_assets fires inside the iframe, on the frontend, and
- * in the editor shell, so the style is always available where blocks render.
+ * If the EDD styles are registered, load them into the block editor iframe.
  *
  * @since 2.0
- * @return void
+ * @since 3.7.0 Switched from enqueue_block_assets (which also loads in the
+ *                        editor's admin chrome, overriding metabox styles) to inlining
+ *                        the stylesheet into the iframe via block_editor_settings_all.
+ * @param array $editor_settings Block editor settings.
+ * @return array
  */
-function add_edd_styles_block_editor() {
-	if ( ! wp_style_is( 'edd-styles', 'enqueued' ) ) {
-		wp_enqueue_style( 'edd-styles' );
+function add_edd_styles_block_editor( $editor_settings ) {
+	if ( ! wp_style_is( 'edd-styles', 'registered' ) ) {
+		return $editor_settings;
 	}
+
+	$path = \EDD\Assets\Styles::get_stylesheet_path();
+	if ( ! $path || ! \EDD\Utils\FileSystem::file_exists( $path ) ) {
+		return $editor_settings;
+	}
+
+	$style = wp_styles()->registered['edd-styles'];
+
+	$editor_settings['styles'][] = array(
+		'css'            => \EDD\Utils\FileSystem::get_contents( $path ),
+		'baseURL'        => $style->src,
+		'__unstableType' => 'theme',
+		'isGlobalStyles' => false,
+	);
+
+	return $editor_settings;
 }
-add_action( 'enqueue_block_assets', __NAMESPACE__ . '\add_edd_styles_block_editor' );
+add_filter( 'block_editor_settings_all', __NAMESPACE__ . '\add_edd_styles_block_editor' );

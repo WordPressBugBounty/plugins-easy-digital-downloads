@@ -20,10 +20,12 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 use EDD\EventManagement\SubscriberInterface;
 use EDD\Gateways\PayPal\CommerceVersion;
 use EDD\Gateways\PayPal\Gateway;
+use EDD\Gateways\PayPal\V3\ConnectSync;
 use EDD\Gateways\PayPal\V3\Credentials;
 use EDD\Gateways\PayPal\V3\KeyRotation;
 use EDD\Gateways\PayPal\V3\Merchant;
 use EDD\Utils\Identifier;
+use EDD\Utils\URL;
 use EDD\Utils\Validators\Salts;
 
 /**
@@ -58,8 +60,6 @@ class Onboarding implements SubscriberInterface {
 			'wp_ajax_edd_paypal_v3_get_merchant_status' => 'ajax_get_merchant_status',
 			'wp_ajax_edd_paypal_v3_rotate_hmac'         => 'ajax_rotate_hmac',
 			'load-download_page_edd-settings'           => 'handle_paypal_redirect',
-			'edd/license/saved'                         => 'sync_license_to_connect',
-			'edd/license/deleted'                       => 'sync_license_to_connect',
 		);
 	}
 
@@ -69,6 +69,11 @@ class Onboarding implements SubscriberInterface {
 	 * Step 1 of v3 onboarding: POST /v3/stores/register, then POST /v3/paypal/signup-link.
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.0 Blocks re-registration when home_url() looks like a
+	 *        staging/local host and doesn't match a previously registered
+	 *        production URL for this mode, closing the gap where disconnecting
+	 *        and reconnecting from a staging clone could otherwise hijack an
+	 *        established production store's Connect API registration.
 	 *
 	 * @return array{signup_link: string, tracking_id: string}|\WP_Error
 	 */
@@ -88,13 +93,37 @@ class Onboarding implements SubscriberInterface {
 			);
 		}
 
-		$mode = Gateway::get_paypal_mode();
-		$api  = new ConnectAPI( $mode );
+		$mode     = Gateway::get_paypal_mode();
+		$home_url = home_url();
+
+		// A baseline only exists once a mode has been successfully registered
+		// before. If home_url() no longer matches it and looks non-production,
+		// this is a staging/local clone attempting to take over an established
+		// production registration rather than a genuine first-time connection.
+		$baseline = ConnectSync::get_registered_url( $mode );
+		if ( '' !== $baseline && URL::normalize( $baseline ) !== URL::normalize( $home_url ) && ! URL::is_production_url( $home_url ) ) {
+			edd_debug_log(
+				sprintf(
+					'PayPal v3: blocked store registration for %s mode — home_url() looks like a staging/local host (%s) and does not match the previously registered production URL (%s).',
+					$mode,
+					$home_url,
+					$baseline
+				)
+			);
+			return new \WP_Error(
+				'edd_paypal_v3_non_production_register',
+				__( 'This site looks like a staging or local copy of a store already connected to PayPal in live mode. To protect that connection, registering PayPal from here has been blocked. Complete this from your live production site instead.', 'easy-digital-downloads' )
+			);
+		}
+
+		$api = new ConnectAPI( $mode );
 
 		// Step 1: Register the store.
 		$register_response = $api->register_store(
 			array(
-				'site_url'    => site_url(),
+				// Use home_url() to match the base WP core uses for rest_url(),
+				// keeping the Connect API's stored URL in sync with webhook delivery.
+				'site_url'    => $home_url,
 				'site_uuid'   => Identifier::get_site_uuid(),
 				'license_key' => self::get_license_key(),
 				'gateway'     => 'paypal',
@@ -114,6 +143,11 @@ class Onboarding implements SubscriberInterface {
 		// Persist store credentials.
 		Credentials::store_store_id( $mode, (string) $register_response['store_id'] );
 		Credentials::store_hmac_key( $mode, (string) $register_response['hmac_key'] );
+
+		// Record the baseline immediately so a subsequent registration attempt
+		// (e.g. from a staging clone) can be recognized as one, without waiting
+		// on the next daily reconcile cron.
+		ConnectSync::set_registered_url( $mode, $home_url );
 
 		// Step 2: Get the signup link. We now have HMAC credentials.
 		$api->set_store_id( $register_response['store_id'] );
@@ -225,6 +259,10 @@ class Onboarding implements SubscriberInterface {
 	 * Reconnects by clearing v2 credentials and resetting for v3.
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.0 No longer clears the URL-sync baseline: keeping it
+	 *        lets register_store()'s guard recognize a subsequent registration
+	 *        attempt from a staging/local host as a takeover of this mode's
+	 *        established production registration, rather than a fresh connection.
 	 *
 	 * @param string $mode Optional. 'sandbox' or 'live'. Defaults to current mode.
 	 */
@@ -500,42 +538,13 @@ class Onboarding implements SubscriberInterface {
 	 * Forwards the store's current Pro license whenever it's saved or removed, keeping the connection in sync.
 	 *
 	 * @since 3.6.9
+	 * @deprecated 3.7.0 Use ConnectSync::sync_license() instead.
 	 *
 	 * @return void
 	 */
 	public static function sync_license_to_connect() {
-		$license_key = self::get_license_key();
+		_edd_deprecated_function( __METHOD__, '3.7.0', 'EDD\\Gateways\\PayPal\\V3\\ConnectSync::sync_license()' );
 
-		foreach ( array( 'sandbox', 'live' ) as $mode ) {
-			if ( ! self::is_v3_onboarded( $mode ) ) {
-				continue;
-			}
-
-			$api      = new ConnectAPI( $mode );
-			$response = $api->post(
-				'/v3/stores/refresh-license',
-				array( 'license_key' => $license_key )
-			);
-
-			if ( is_wp_error( $response ) || ConnectAPI::is_error( $response ) ) {
-				edd_debug_log(
-					sprintf(
-						'PayPal v3: failed to sync license to proxy for %s mode: %s',
-						$mode,
-						is_wp_error( $response ) ? $response->get_error_message() : ConnectAPI::get_error_message( $response )
-					)
-				);
-				continue;
-			}
-
-			edd_debug_log(
-				sprintf(
-					'PayPal v3: license synced to proxy for %s mode. status=%s fee_rate=%s',
-					$mode,
-					$response['license_status'] ?? '(unknown)',
-					$response['platform_fee_rate'] ?? '(unknown)'
-				)
-			);
-		}
+		( new ConnectSync() )->sync_license();
 	}
 }

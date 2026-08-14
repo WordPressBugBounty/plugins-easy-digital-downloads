@@ -357,12 +357,6 @@ function edd_tools_sysinfo_get() {
 
 	global $wpdb;
 
-	if ( ! class_exists( 'Browser' ) ) {
-		require_once EDD_PLUGIN_DIR . 'includes/libraries/browser.php';
-	}
-
-	$browser = new Browser();
-
 	// Get theme info
 	$theme_data   = wp_get_theme();
 	$theme        = $theme_data->Name . ' ' . $theme_data->Version;
@@ -393,9 +387,9 @@ function edd_tools_sysinfo_get() {
 		$return = apply_filters( 'edd_sysinfo_after_host_info', $return );
 	}
 
-	// The local users' browser information, handled by the Browser class
+	// The local user's browser information.
 	$return .= "\n" . '-- User Browser' . "\n\n";
-	$return .= $browser;
+	$return .= 'User Agent:               ' . \EDD\Utils\Browser::get_user_agent() . "\n";
 
 	$return = apply_filters( 'edd_sysinfo_after_user_browser', $return );
 

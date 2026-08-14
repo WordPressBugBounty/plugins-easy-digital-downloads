@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes delivery details of an order fulfillment.
  */
@@ -15,117 +13,94 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
      * @var FulfillmentRecipient|null
      */
     private $recipient;
-
     /**
      * @var string|null
      */
     private $scheduleType;
-
     /**
      * @var string|null
      */
     private $placedAt;
-
     /**
      * @var array
      */
     private $deliverAt = [];
-
     /**
      * @var array
      */
     private $prepTimeDuration = [];
-
     /**
      * @var array
      */
     private $deliveryWindowDuration = [];
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var array
      */
     private $completedAt = [];
-
     /**
      * @var string|null
      */
     private $inProgressAt;
-
     /**
      * @var string|null
      */
     private $rejectedAt;
-
     /**
      * @var string|null
      */
     private $readyAt;
-
     /**
      * @var string|null
      */
     private $deliveredAt;
-
     /**
      * @var string|null
      */
     private $canceledAt;
-
     /**
      * @var array
      */
     private $cancelReason = [];
-
     /**
      * @var array
      */
     private $courierPickupAt = [];
-
     /**
      * @var array
      */
     private $courierPickupWindowDuration = [];
-
     /**
      * @var array
      */
     private $isNoContactDelivery = [];
-
     /**
      * @var array
      */
     private $dropoffNotes = [];
-
     /**
      * @var array
      */
     private $courierProviderName = [];
-
     /**
      * @var array
      */
     private $courierSupportPhoneNumber = [];
-
     /**
      * @var array
      */
     private $squareDeliveryId = [];
-
     /**
      * @var array
      */
     private $externalDeliveryId = [];
-
     /**
      * @var array
      */
     private $managedDelivery = [];
-
     /**
      * Returns Recipient.
      * Information about the fulfillment recipient.
@@ -134,7 +109,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->recipient;
     }
-
     /**
      * Sets Recipient.
      * Information about the fulfillment recipient.
@@ -145,7 +119,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->recipient = $recipient;
     }
-
     /**
      * Returns Schedule Type.
      * The schedule type of the delivery fulfillment.
@@ -154,7 +127,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->scheduleType;
     }
-
     /**
      * Sets Schedule Type.
      * The schedule type of the delivery fulfillment.
@@ -165,7 +137,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->scheduleType = $scheduleType;
     }
-
     /**
      * Returns Placed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -178,7 +149,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->placedAt;
     }
-
     /**
      * Sets Placed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -193,7 +163,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->placedAt = $placedAt;
     }
-
     /**
      * Returns Deliver At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -214,7 +183,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->deliverAt['value'];
     }
-
     /**
      * Sets Deliver At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -234,7 +202,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->deliverAt['value'] = $deliverAt;
     }
-
     /**
      * Unsets Deliver At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -252,7 +219,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->deliverAt = [];
     }
-
     /**
      * Returns Prep Time Duration.
      * The duration of time it takes to prepare and deliver this fulfillment.
@@ -265,7 +231,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->prepTimeDuration['value'];
     }
-
     /**
      * Sets Prep Time Duration.
      * The duration of time it takes to prepare and deliver this fulfillment.
@@ -277,7 +242,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->prepTimeDuration['value'] = $prepTimeDuration;
     }
-
     /**
      * Unsets Prep Time Duration.
      * The duration of time it takes to prepare and deliver this fulfillment.
@@ -287,7 +251,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->prepTimeDuration = [];
     }
-
     /**
      * Returns Delivery Window Duration.
      * The time period after `deliver_at` in which to deliver the order.
@@ -304,7 +267,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->deliveryWindowDuration['value'];
     }
-
     /**
      * Sets Delivery Window Duration.
      * The time period after `deliver_at` in which to deliver the order.
@@ -320,7 +282,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->deliveryWindowDuration['value'] = $deliveryWindowDuration;
     }
-
     /**
      * Unsets Delivery Window Duration.
      * The time period after `deliver_at` in which to deliver the order.
@@ -334,11 +295,10 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->deliveryWindowDuration = [];
     }
-
     /**
      * Returns Note.
      * Provides additional instructions about the delivery fulfillment.
-     * It is displayed in the EDD\Vendor\Square Point of Sale application and set by the API.
+     * It is displayed in the Square Point of Sale application and set by the API.
      */
     public function getNote(): ?string
     {
@@ -347,11 +307,10 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * Provides additional instructions about the delivery fulfillment.
-     * It is displayed in the EDD\Vendor\Square Point of Sale application and set by the API.
+     * It is displayed in the Square Point of Sale application and set by the API.
      *
      * @maps note
      */
@@ -359,17 +318,15 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * Provides additional instructions about the delivery fulfillment.
-     * It is displayed in the EDD\Vendor\Square Point of Sale application and set by the API.
+     * It is displayed in the Square Point of Sale application and set by the API.
      */
     public function unsetNote(): void
     {
         $this->note = [];
     }
-
     /**
      * Returns Completed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -384,7 +341,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->completedAt['value'];
     }
-
     /**
      * Sets Completed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -398,7 +354,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->completedAt['value'] = $completedAt;
     }
-
     /**
      * Unsets Completed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -410,7 +365,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->completedAt = [];
     }
-
     /**
      * Returns In Progress At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -422,7 +376,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->inProgressAt;
     }
-
     /**
      * Sets In Progress At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -436,7 +389,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->inProgressAt = $inProgressAt;
     }
-
     /**
      * Returns Rejected At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -448,7 +400,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->rejectedAt;
     }
-
     /**
      * Sets Rejected At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -462,7 +413,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->rejectedAt = $rejectedAt;
     }
-
     /**
      * Returns Ready At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -475,7 +425,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->readyAt;
     }
-
     /**
      * Sets Ready At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -490,7 +439,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->readyAt = $readyAt;
     }
-
     /**
      * Returns Delivered At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -501,7 +449,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->deliveredAt;
     }
-
     /**
      * Sets Delivered At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -514,7 +461,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->deliveredAt = $deliveredAt;
     }
-
     /**
      * Returns Canceled At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -527,7 +473,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         return $this->canceledAt;
     }
-
     /**
      * Sets Canceled At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -542,7 +487,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->canceledAt = $canceledAt;
     }
-
     /**
      * Returns Cancel Reason.
      * The delivery cancellation reason. Max length: 100 characters.
@@ -554,7 +498,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->cancelReason['value'];
     }
-
     /**
      * Sets Cancel Reason.
      * The delivery cancellation reason. Max length: 100 characters.
@@ -565,7 +508,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->cancelReason['value'] = $cancelReason;
     }
-
     /**
      * Unsets Cancel Reason.
      * The delivery cancellation reason. Max length: 100 characters.
@@ -574,7 +516,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->cancelReason = [];
     }
-
     /**
      * Returns Courier Pickup At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -588,7 +529,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->courierPickupAt['value'];
     }
-
     /**
      * Sets Courier Pickup At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -601,7 +541,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierPickupAt['value'] = $courierPickupAt;
     }
-
     /**
      * Unsets Courier Pickup At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -612,7 +551,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierPickupAt = [];
     }
-
     /**
      * Returns Courier Pickup Window Duration.
      * The time period after `courier_pickup_at` in which the courier should pick up the order.
@@ -625,7 +563,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->courierPickupWindowDuration['value'];
     }
-
     /**
      * Sets Courier Pickup Window Duration.
      * The time period after `courier_pickup_at` in which the courier should pick up the order.
@@ -637,7 +574,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierPickupWindowDuration['value'] = $courierPickupWindowDuration;
     }
-
     /**
      * Unsets Courier Pickup Window Duration.
      * The time period after `courier_pickup_at` in which the courier should pick up the order.
@@ -647,7 +583,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierPickupWindowDuration = [];
     }
-
     /**
      * Returns Is No Contact Delivery.
      * Whether the delivery is preferred to be no contact.
@@ -659,7 +594,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->isNoContactDelivery['value'];
     }
-
     /**
      * Sets Is No Contact Delivery.
      * Whether the delivery is preferred to be no contact.
@@ -670,7 +604,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->isNoContactDelivery['value'] = $isNoContactDelivery;
     }
-
     /**
      * Unsets Is No Contact Delivery.
      * Whether the delivery is preferred to be no contact.
@@ -679,7 +612,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->isNoContactDelivery = [];
     }
-
     /**
      * Returns Dropoff Notes.
      * A note to provide additional instructions about how to deliver the order.
@@ -691,7 +623,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->dropoffNotes['value'];
     }
-
     /**
      * Sets Dropoff Notes.
      * A note to provide additional instructions about how to deliver the order.
@@ -702,7 +633,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->dropoffNotes['value'] = $dropoffNotes;
     }
-
     /**
      * Unsets Dropoff Notes.
      * A note to provide additional instructions about how to deliver the order.
@@ -711,7 +641,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->dropoffNotes = [];
     }
-
     /**
      * Returns Courier Provider Name.
      * The name of the courier provider.
@@ -723,7 +652,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->courierProviderName['value'];
     }
-
     /**
      * Sets Courier Provider Name.
      * The name of the courier provider.
@@ -734,7 +662,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierProviderName['value'] = $courierProviderName;
     }
-
     /**
      * Unsets Courier Provider Name.
      * The name of the courier provider.
@@ -743,7 +670,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierProviderName = [];
     }
-
     /**
      * Returns Courier Support Phone Number.
      * The support phone number of the courier.
@@ -755,7 +681,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->courierSupportPhoneNumber['value'];
     }
-
     /**
      * Sets Courier Support Phone Number.
      * The support phone number of the courier.
@@ -766,7 +691,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierSupportPhoneNumber['value'] = $courierSupportPhoneNumber;
     }
-
     /**
      * Unsets Courier Support Phone Number.
      * The support phone number of the courier.
@@ -775,9 +699,8 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->courierSupportPhoneNumber = [];
     }
-
     /**
-     * Returns EDD\Vendor\Square Delivery Id.
+     * Returns Square Delivery Id.
      * The identifier for the delivery created by Square.
      */
     public function getSquareDeliveryId(): ?string
@@ -787,9 +710,8 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->squareDeliveryId['value'];
     }
-
     /**
-     * Sets EDD\Vendor\Square Delivery Id.
+     * Sets Square Delivery Id.
      * The identifier for the delivery created by Square.
      *
      * @maps square_delivery_id
@@ -798,16 +720,14 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->squareDeliveryId['value'] = $squareDeliveryId;
     }
-
     /**
-     * Unsets EDD\Vendor\Square Delivery Id.
+     * Unsets Square Delivery Id.
      * The identifier for the delivery created by Square.
      */
     public function unsetSquareDeliveryId(): void
     {
         $this->squareDeliveryId = [];
     }
-
     /**
      * Returns External Delivery Id.
      * The identifier for the delivery created by the third-party courier service.
@@ -819,7 +739,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->externalDeliveryId['value'];
     }
-
     /**
      * Sets External Delivery Id.
      * The identifier for the delivery created by the third-party courier service.
@@ -830,7 +749,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->externalDeliveryId['value'] = $externalDeliveryId;
     }
-
     /**
      * Unsets External Delivery Id.
      * The identifier for the delivery created by the third-party courier service.
@@ -839,7 +757,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->externalDeliveryId = [];
     }
-
     /**
      * Returns Managed Delivery.
      * The flag to indicate the delivery is managed by a third party (ie DoorDash), which means
@@ -852,7 +769,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
         }
         return $this->managedDelivery['value'];
     }
-
     /**
      * Sets Managed Delivery.
      * The flag to indicate the delivery is managed by a third party (ie DoorDash), which means
@@ -864,7 +780,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->managedDelivery['value'] = $managedDelivery;
     }
-
     /**
      * Unsets Managed Delivery.
      * The flag to indicate the delivery is managed by a third party (ie DoorDash), which means
@@ -874,7 +789,6 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
     {
         $this->managedDelivery = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -883,83 +797,82 @@ class FulfillmentDeliveryDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->recipient)) {
-            $json['recipient']                      = $this->recipient;
+            $json['recipient'] = $this->recipient;
         }
         if (isset($this->scheduleType)) {
-            $json['schedule_type']                  = $this->scheduleType;
+            $json['schedule_type'] = $this->scheduleType;
         }
         if (isset($this->placedAt)) {
-            $json['placed_at']                      = $this->placedAt;
+            $json['placed_at'] = $this->placedAt;
         }
         if (!empty($this->deliverAt)) {
-            $json['deliver_at']                     = $this->deliverAt['value'];
+            $json['deliver_at'] = $this->deliverAt['value'];
         }
         if (!empty($this->prepTimeDuration)) {
-            $json['prep_time_duration']             = $this->prepTimeDuration['value'];
+            $json['prep_time_duration'] = $this->prepTimeDuration['value'];
         }
         if (!empty($this->deliveryWindowDuration)) {
-            $json['delivery_window_duration']       = $this->deliveryWindowDuration['value'];
+            $json['delivery_window_duration'] = $this->deliveryWindowDuration['value'];
         }
         if (!empty($this->note)) {
-            $json['note']                           = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (!empty($this->completedAt)) {
-            $json['completed_at']                   = $this->completedAt['value'];
+            $json['completed_at'] = $this->completedAt['value'];
         }
         if (isset($this->inProgressAt)) {
-            $json['in_progress_at']                 = $this->inProgressAt;
+            $json['in_progress_at'] = $this->inProgressAt;
         }
         if (isset($this->rejectedAt)) {
-            $json['rejected_at']                    = $this->rejectedAt;
+            $json['rejected_at'] = $this->rejectedAt;
         }
         if (isset($this->readyAt)) {
-            $json['ready_at']                       = $this->readyAt;
+            $json['ready_at'] = $this->readyAt;
         }
         if (isset($this->deliveredAt)) {
-            $json['delivered_at']                   = $this->deliveredAt;
+            $json['delivered_at'] = $this->deliveredAt;
         }
         if (isset($this->canceledAt)) {
-            $json['canceled_at']                    = $this->canceledAt;
+            $json['canceled_at'] = $this->canceledAt;
         }
         if (!empty($this->cancelReason)) {
-            $json['cancel_reason']                  = $this->cancelReason['value'];
+            $json['cancel_reason'] = $this->cancelReason['value'];
         }
         if (!empty($this->courierPickupAt)) {
-            $json['courier_pickup_at']              = $this->courierPickupAt['value'];
+            $json['courier_pickup_at'] = $this->courierPickupAt['value'];
         }
         if (!empty($this->courierPickupWindowDuration)) {
             $json['courier_pickup_window_duration'] = $this->courierPickupWindowDuration['value'];
         }
         if (!empty($this->isNoContactDelivery)) {
-            $json['is_no_contact_delivery']         = $this->isNoContactDelivery['value'];
+            $json['is_no_contact_delivery'] = $this->isNoContactDelivery['value'];
         }
         if (!empty($this->dropoffNotes)) {
-            $json['dropoff_notes']                  = $this->dropoffNotes['value'];
+            $json['dropoff_notes'] = $this->dropoffNotes['value'];
         }
         if (!empty($this->courierProviderName)) {
-            $json['courier_provider_name']          = $this->courierProviderName['value'];
+            $json['courier_provider_name'] = $this->courierProviderName['value'];
         }
         if (!empty($this->courierSupportPhoneNumber)) {
-            $json['courier_support_phone_number']   = $this->courierSupportPhoneNumber['value'];
+            $json['courier_support_phone_number'] = $this->courierSupportPhoneNumber['value'];
         }
         if (!empty($this->squareDeliveryId)) {
-            $json['square_delivery_id']             = $this->squareDeliveryId['value'];
+            $json['square_delivery_id'] = $this->squareDeliveryId['value'];
         }
         if (!empty($this->externalDeliveryId)) {
-            $json['external_delivery_id']           = $this->externalDeliveryId['value'];
+            $json['external_delivery_id'] = $this->externalDeliveryId['value'];
         }
         if (!empty($this->managedDelivery)) {
-            $json['managed_delivery']               = $this->managedDelivery['value'];
+            $json['managed_delivery'] = $this->managedDelivery['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

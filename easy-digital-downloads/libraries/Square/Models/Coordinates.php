@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Latitude and longitude coordinates.
  */
@@ -15,12 +13,10 @@ class Coordinates implements \JsonSerializable
      * @var array
      */
     private $latitude = [];
-
     /**
      * @var array
      */
     private $longitude = [];
-
     /**
      * Returns Latitude.
      * The latitude of the coordinate expressed in degrees.
@@ -32,7 +28,6 @@ class Coordinates implements \JsonSerializable
         }
         return $this->latitude['value'];
     }
-
     /**
      * Sets Latitude.
      * The latitude of the coordinate expressed in degrees.
@@ -43,7 +38,6 @@ class Coordinates implements \JsonSerializable
     {
         $this->latitude['value'] = $latitude;
     }
-
     /**
      * Unsets Latitude.
      * The latitude of the coordinate expressed in degrees.
@@ -52,7 +46,6 @@ class Coordinates implements \JsonSerializable
     {
         $this->latitude = [];
     }
-
     /**
      * Returns Longitude.
      * The longitude of the coordinate expressed in degrees.
@@ -64,7 +57,6 @@ class Coordinates implements \JsonSerializable
         }
         return $this->longitude['value'];
     }
-
     /**
      * Sets Longitude.
      * The longitude of the coordinate expressed in degrees.
@@ -75,7 +67,6 @@ class Coordinates implements \JsonSerializable
     {
         $this->longitude['value'] = $longitude;
     }
-
     /**
      * Unsets Longitude.
      * The longitude of the coordinate expressed in degrees.
@@ -84,7 +75,6 @@ class Coordinates implements \JsonSerializable
     {
         $this->longitude = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -93,12 +83,12 @@ class Coordinates implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->latitude)) {
-            $json['latitude']  = $this->latitude['value'];
+            $json['latitude'] = $this->latitude['value'];
         }
         if (!empty($this->longitude)) {
             $json['longitude'] = $this->longitude['value'];
@@ -106,7 +96,6 @@ class Coordinates implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a subscription plan. A subscription plan represents what you want to sell in a
  * subscription model, and includes references to each of the associated subscription plan variations.
@@ -18,32 +16,26 @@ class CatalogSubscriptionPlan implements \JsonSerializable
      * @var string
      */
     private $name;
-
     /**
      * @var array
      */
     private $phases = [];
-
     /**
      * @var array
      */
     private $subscriptionPlanVariations = [];
-
     /**
      * @var array
      */
     private $eligibleItemIds = [];
-
     /**
      * @var array
      */
     private $eligibleCategoryIds = [];
-
     /**
      * @var array
      */
     private $allItems = [];
-
     /**
      * @param string $name
      */
@@ -51,7 +43,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Name.
      * The name of the plan.
@@ -60,7 +51,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * The name of the plan.
@@ -72,7 +62,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Phases.
      * A list of SubscriptionPhase containing the [SubscriptionPhase](entity:SubscriptionPhase) for this
@@ -88,7 +77,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
         }
         return $this->phases['value'];
     }
-
     /**
      * Sets Phases.
      * A list of SubscriptionPhase containing the [SubscriptionPhase](entity:SubscriptionPhase) for this
@@ -103,7 +91,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->phases['value'] = $phases;
     }
-
     /**
      * Unsets Phases.
      * A list of SubscriptionPhase containing the [SubscriptionPhase](entity:SubscriptionPhase) for this
@@ -114,7 +101,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->phases = [];
     }
-
     /**
      * Returns Subscription Plan Variations.
      * The list of subscription plan variations available for this product
@@ -128,7 +114,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
         }
         return $this->subscriptionPlanVariations['value'];
     }
-
     /**
      * Sets Subscription Plan Variations.
      * The list of subscription plan variations available for this product
@@ -141,7 +126,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->subscriptionPlanVariations['value'] = $subscriptionPlanVariations;
     }
-
     /**
      * Unsets Subscription Plan Variations.
      * The list of subscription plan variations available for this product
@@ -150,7 +134,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->subscriptionPlanVariations = [];
     }
-
     /**
      * Returns Eligible Item Ids.
      * The list of IDs of `CatalogItems` that are eligible for subscription by this SubscriptionPlan's
@@ -165,7 +148,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
         }
         return $this->eligibleItemIds['value'];
     }
-
     /**
      * Sets Eligible Item Ids.
      * The list of IDs of `CatalogItems` that are eligible for subscription by this SubscriptionPlan's
@@ -179,7 +161,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->eligibleItemIds['value'] = $eligibleItemIds;
     }
-
     /**
      * Unsets Eligible Item Ids.
      * The list of IDs of `CatalogItems` that are eligible for subscription by this SubscriptionPlan's
@@ -189,7 +170,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->eligibleItemIds = [];
     }
-
     /**
      * Returns Eligible Category Ids.
      * The list of IDs of `CatalogCategory` that are eligible for subscription by this SubscriptionPlan's
@@ -204,7 +184,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
         }
         return $this->eligibleCategoryIds['value'];
     }
-
     /**
      * Sets Eligible Category Ids.
      * The list of IDs of `CatalogCategory` that are eligible for subscription by this SubscriptionPlan's
@@ -218,7 +197,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->eligibleCategoryIds['value'] = $eligibleCategoryIds;
     }
-
     /**
      * Unsets Eligible Category Ids.
      * The list of IDs of `CatalogCategory` that are eligible for subscription by this SubscriptionPlan's
@@ -228,7 +206,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->eligibleCategoryIds = [];
     }
-
     /**
      * Returns All Items.
      * If true, all items in the merchant's catalog are subscribable by this SubscriptionPlan.
@@ -240,7 +217,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
         }
         return $this->allItems['value'];
     }
-
     /**
      * Sets All Items.
      * If true, all items in the merchant's catalog are subscribable by this SubscriptionPlan.
@@ -251,7 +227,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->allItems['value'] = $allItems;
     }
-
     /**
      * Unsets All Items.
      * If true, all items in the merchant's catalog are subscribable by this SubscriptionPlan.
@@ -260,7 +235,6 @@ class CatalogSubscriptionPlan implements \JsonSerializable
     {
         $this->allItems = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -269,30 +243,29 @@ class CatalogSubscriptionPlan implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                             = $this->name;
+        $json['name'] = $this->name;
         if (!empty($this->phases)) {
-            $json['phases']                       = $this->phases['value'];
+            $json['phases'] = $this->phases['value'];
         }
         if (!empty($this->subscriptionPlanVariations)) {
             $json['subscription_plan_variations'] = $this->subscriptionPlanVariations['value'];
         }
         if (!empty($this->eligibleItemIds)) {
-            $json['eligible_item_ids']            = $this->eligibleItemIds['value'];
+            $json['eligible_item_ids'] = $this->eligibleItemIds['value'];
         }
         if (!empty($this->eligibleCategoryIds)) {
-            $json['eligible_category_ids']        = $this->eligibleCategoryIds['value'];
+            $json['eligible_category_ids'] = $this->eligibleCategoryIds['value'];
         }
         if (!empty($this->allItems)) {
-            $json['all_items']                    = $this->allItems['value'];
+            $json['all_items'] = $this->allItems['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

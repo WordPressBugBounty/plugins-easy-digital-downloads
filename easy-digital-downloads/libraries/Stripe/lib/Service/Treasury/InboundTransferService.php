@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class InboundTransferService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/inbound_transfers', $params, $opts);
     }
-
     /**
      * Cancels an InboundTransfer.
      *
@@ -40,7 +38,6 @@ class InboundTransferService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/treasury/inbound_transfers/%s/cancel', $id), $params, $opts);
     }
-
     /**
      * Creates an InboundTransfer.
      *
@@ -55,7 +52,6 @@ class InboundTransferService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/treasury/inbound_transfers', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing InboundTransfer.
      *

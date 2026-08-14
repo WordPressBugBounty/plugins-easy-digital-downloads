@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of a request
  * to the [ListLocations]($e/Locations/ListLocations) endpoint.
@@ -18,12 +16,10 @@ class ListLocationsResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Location[]|null
      */
     private $locations;
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -34,7 +30,6 @@ class ListLocationsResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -47,7 +42,6 @@ class ListLocationsResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Locations.
      * The business locations.
@@ -58,7 +52,6 @@ class ListLocationsResponse implements \JsonSerializable
     {
         return $this->locations;
     }
-
     /**
      * Sets Locations.
      * The business locations.
@@ -71,7 +64,6 @@ class ListLocationsResponse implements \JsonSerializable
     {
         $this->locations = $locations;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -80,12 +72,12 @@ class ListLocationsResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']    = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->locations)) {
             $json['locations'] = $this->locations;
@@ -93,7 +85,6 @@ class ListLocationsResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

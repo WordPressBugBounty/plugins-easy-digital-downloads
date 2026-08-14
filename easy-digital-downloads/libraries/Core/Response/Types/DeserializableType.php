@@ -4,14 +4,12 @@ namespace EDD\Vendor\Core\Response\Types;
 
 use Closure;
 use EDD\Vendor\Core\Response\Context;
-
 class DeserializableType
 {
     /**
      * @var callable|null
      */
     private $deserializerMethod;
-
     /**
      * Sets deserializer method to the one provided.
      */
@@ -19,7 +17,6 @@ class DeserializableType
     {
         $this->deserializerMethod = $deserializerMethod;
     }
-
     /**
      * Returns the deserializer method if already set.
      */

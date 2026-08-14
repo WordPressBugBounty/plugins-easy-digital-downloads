@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Radar;
 
 /**
@@ -16,12 +15,7 @@ class RadarServiceFactory extends \EDD\Vendor\Stripe\Service\AbstractServiceFact
     /**
      * @var array<string, string>
      */
-    private static $classMap = [
-        'earlyFraudWarnings' => EarlyFraudWarningService::class,
-        'valueListItems' => ValueListItemService::class,
-        'valueLists' => ValueListService::class,
-    ];
-
+    private static $classMap = ['earlyFraudWarnings' => EarlyFraudWarningService::class, 'valueListItems' => ValueListItemService::class, 'valueLists' => ValueListService::class];
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

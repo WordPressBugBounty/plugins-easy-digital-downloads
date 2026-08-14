@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A named selection for this `SELECTION`-type custom attribute definition.
  */
@@ -15,12 +13,10 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string
      */
     private $name;
-
     /**
      * @param string $name
      */
@@ -28,7 +24,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
     {
         $this->name = $name;
     }
-
     /**
      * Returns Uid.
      * Unique ID set by Square.
@@ -40,7 +35,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * Unique ID set by Square.
@@ -51,7 +45,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * Unique ID set by Square.
@@ -60,7 +53,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
     {
         $this->uid = [];
     }
-
     /**
      * Returns Name.
      * Selection name, unique within `allowed_selections`.
@@ -69,7 +61,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * Selection name, unique within `allowed_selections`.
@@ -81,7 +72,6 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
     {
         $this->name = $name;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -90,18 +80,17 @@ class CatalogCustomAttributeDefinitionSelectionConfigCustomAttributeSelection im
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
             $json['uid'] = $this->uid['value'];
         }
-        $json['name']    = $this->name;
+        $json['name'] = $this->name;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -17,19 +17,29 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Retrieves a URL to allow Stripe Connect via oAuth.
  *
  * @since 2.8.0
+ * @since 3.7.0 Added the `$redirect_screen` parameter.
  *
+ * @param string $redirect_screen Optional. Identifier appended to the return URL so the completion
+ *                                handler can route the user back to the originating screen. Must be
+ *                                registered via the `edds_stripe_connect_redirect_screens` filter.
  * @return string
  */
-function edds_stripe_connect_url() {
-	$return_url = add_query_arg(
-		array(
-			'post_type' => 'download',
-			'page'      => 'edd-settings',
-			'tab'       => 'gateways',
-			'section'   => 'edd-stripe',
-		),
-		admin_url( 'edit.php' )
-	);
+function edds_stripe_connect_url( $redirect_screen = '' ) {
+	if ( ! empty( $redirect_screen ) ) {
+		$return_url = edd_get_admin_url(
+			array(
+				'redirect_screen' => sanitize_key( $redirect_screen ),
+			)
+		);
+	} else {
+		$return_url = edd_get_admin_url(
+			array(
+				'page'    => 'edd-settings',
+				'tab'     => 'gateways',
+				'section' => 'edd-stripe',
+			)
+		);
+	}
 
 	/**
 	 * Filters the URL users are returned to after using Stripe Connect oAuth.
@@ -40,11 +50,16 @@ function edds_stripe_connect_url() {
 	 */
 	$return_url = apply_filters( 'edds_stripe_connect_return_url', $return_url );
 
+	// The return URL is encoded when a redirect screen is used so its query args survive the round-trip.
+	$customer_site_url = ! empty( $redirect_screen )
+		? urlencode( esc_url_raw( $return_url ) )
+		: esc_url_raw( $return_url );
+
 	$stripe_connect_url = add_query_arg(
 		array(
 			'live_mode'         => (int) ! edd_is_test_mode(),
 			'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
-			'customer_site_url' => esc_url_raw( $return_url ),
+			'customer_site_url' => $customer_site_url,
 		),
 		'https://easydigitaldownloads.com/?edd_gateway_connect_init=stripe_connect'
 	);
@@ -68,27 +83,16 @@ function edds_process_gateway_connect_completion() {
 
 	$redirect_screen = ! empty( $_GET['redirect_screen'] ) ? sanitize_text_field( $_GET['redirect_screen'] ) : '';
 
-	// A cancelled connection doesn't contain the completion or state values, but we do need to listen for the redirect_screen for the wizard.
+	// A cancelled connection doesn't contain the completion or state values, but we do need to listen for the redirect_screen.
 	if (
 		isset( $_GET['edd_gateway_connect_error'] ) &&
 		filter_var( $_GET['edd_gateway_connect_error'], FILTER_VALIDATE_BOOLEAN ) &&
 		! empty( $redirect_screen )
 	) {
-		$error_redirect = '';
+		$redirect_screens = \EDD\Gateways\Stripe\Admin\Connect::get_redirect_screens();
 
-		switch ( $redirect_screen ) {
-			case 'onboarding-wizard':
-				$error_redirect = edd_get_admin_url(
-					array(
-						'page'         => 'edd-onboarding-wizard',
-						'current_step' => 'payment_methods',
-					)
-				);
-				break;
-		}
-
-		if ( ! empty( $error_redirect ) ) {
-			edd_redirect( $error_redirect );
+		if ( ! empty( $redirect_screens[ $redirect_screen ]['url'] ) ) {
+			edd_redirect( $redirect_screens[ $redirect_screen ]['url'] );
 		}
 	}
 
@@ -157,16 +161,18 @@ function edds_process_gateway_connect_completion() {
 		)
 	);
 
-	if ( ! empty( $redirect_screen ) && 'onboarding-wizard' === $redirect_screen ) {
-		$redirect_url       = edd_get_admin_url(
-			array(
-				'page'         => 'edd-onboarding-wizard',
-				'current_step' => 'payment_methods',
-			)
-		);
-		$gateways           = edd_get_option( 'gateways', array() );
-		$gateways['stripe'] = true;
-		edd_update_option( 'gateways', $gateways );
+	if ( ! empty( $redirect_screen ) ) {
+		$redirect_screens = \EDD\Gateways\Stripe\Admin\Connect::get_redirect_screens();
+
+		if ( ! empty( $redirect_screens[ $redirect_screen ]['url'] ) ) {
+			$redirect_url = $redirect_screens[ $redirect_screen ]['url'];
+
+			if ( ! empty( $redirect_screens[ $redirect_screen ]['enable_gateway'] ) ) {
+				$gateways           = edd_get_option( 'gateways', array() );
+				$gateways['stripe'] = true;
+				edd_update_option( 'gateways', $gateways );
+			}
+		}
 	}
 
 	edd_redirect( $redirect_url );
@@ -543,11 +549,7 @@ function edds_stripe_connect_account_info_ajax_response() {
 		}
 		// Manual API key management.
 	} else {
-		$connect_button = sprintf(
-			'<a href="%s" class="edd-stripe-connect"><span>%s</span></a>',
-			esc_url( edds_stripe_connect_url() ),
-			esc_html__( 'Connect with Stripe', 'easy-digital-downloads' )
-		);
+		$connect_button = \EDD\Gateways\Stripe\Admin\Connect::get_connect_button();
 
 		$connect = esc_html__( 'It is highly recommended to Connect with Stripe for easier setup and improved security.', 'easy-digital-downloads' );
 
@@ -605,45 +607,49 @@ function edds_stripe_connect_admin_notices_register() {
 		return new WP_Error( 'edds-invalid-registry', esc_html__( 'Unable to locate registry', 'easy-digital-downloads' ) );
 	}
 
-	$connect_button = sprintf(
-		'<a href="%s" class="edd-stripe-connect"><span>%s</span></a>',
-		esc_url( edds_stripe_connect_url() ),
-		esc_html__( 'Connect with Stripe', 'easy-digital-downloads' )
-	);
+	// The messages are callbacks so the connect button is only built when a notice is actually printed.
+	$build_message = static function ( $text ) {
+		$connect_button = \EDD\Gateways\Stripe\Admin\Connect::get_connect_button();
+
+		if ( empty( $connect_button ) ) {
+			return sprintf( '<p>%s</p>', $text );
+		}
+
+		return sprintf( '<p>%s</p><p>%s</p>', $text, $connect_button );
+	};
 
 	try {
 		// Stripe Connect.
 		$registry->add(
 			'stripe-connect',
 			array(
-				'message'     => sprintf(
-					'<p>%s</p><p>%s</p>',
-					esc_html__( 'Start accepting payments with Stripe by connecting your account. Stripe Connect helps ensure easier setup and improved security.', 'easy-digital-downloads' ),
-					$connect_button
-				),
+				'message'     => static function () use ( $build_message ) {
+					return $build_message(
+						esc_html__( 'Start accepting payments with Stripe by connecting your account. Stripe Connect helps ensure easier setup and improved security.', 'easy-digital-downloads' )
+					);
+				},
 				'type'        => 'info',
 				'dismissible' => true,
 			)
 		);
 
 		// Stripe Connect reconnect.
-		/* translators: %s Test mode status. */
-		$test_mode_status = edd_is_test_mode()
-			? _x( 'enabled', 'gateway test mode status', 'easy-digital-downloads' )
-			: _x( 'disabled', 'gateway test mode status', 'easy-digital-downloads' );
-
 		$registry->add(
 			'stripe-connect-reconnect',
 			array(
-				'message'     => sprintf(
-					'<p>%s</p><p>%s</p>',
-					sprintf(
-						/* translators: %s Test mode status. Enabled or disabled. */
-						__( '"Test Mode" has been %s. Please verify your Stripe connection status.', 'easy-digital-downloads' ),
-						$test_mode_status
-					),
-					$connect_button
-				),
+				'message'     => static function () use ( $build_message ) {
+					$test_mode_status = edd_is_test_mode()
+						? _x( 'enabled', 'gateway test mode status', 'easy-digital-downloads' )
+						: _x( 'disabled', 'gateway test mode status', 'easy-digital-downloads' );
+
+					return $build_message(
+						sprintf(
+							/* translators: %s Test mode status. Enabled or disabled. */
+							__( '"Test Mode" has been %s. Please verify your Stripe connection status.', 'easy-digital-downloads' ),
+							$test_mode_status
+						)
+					);
+				},
 				'type'        => 'warning',
 				'dismissible' => true,
 			)
@@ -693,8 +699,6 @@ function edds_stripe_connect_admin_notices_print() {
 		$mode_toggle = isset( $_GET['edd-message'] ) && 'connect-to-stripe' === $_GET['edd-message'];
 
 		if ( array_key_exists( 'stripe', $enabled_gateways ) && empty( $api_key ) ) {
-			edd_stripe_connect_admin_style();
-
 			// Stripe Connect.
 			if ( false === $mode_toggle ) {
 				$notices->output( 'stripe-connect' );

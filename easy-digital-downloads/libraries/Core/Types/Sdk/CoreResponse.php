@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 class CoreResponse
@@ -12,21 +11,18 @@ class CoreResponse
      * @var int
      */
     private $statusCode;
-
     /**
      * Headers received
      *
      * @var array
      */
     private $headers;
-
     /**
      * Raw body of the response
      *
      * @var string
      */
     private $rawBody;
-
     /**
      * Create a new instance of a HttpResponse
      *
@@ -40,7 +36,6 @@ class CoreResponse
         $this->headers = $headers;
         $this->rawBody = $rawBody;
     }
-
     /**
      * Get status code
      *
@@ -50,7 +45,6 @@ class CoreResponse
     {
         return $this->statusCode;
     }
-
     /**
      * Get headers
      *
@@ -60,7 +54,6 @@ class CoreResponse
     {
         return $this->headers;
     }
-
     /**
      * Get raw response body
      *

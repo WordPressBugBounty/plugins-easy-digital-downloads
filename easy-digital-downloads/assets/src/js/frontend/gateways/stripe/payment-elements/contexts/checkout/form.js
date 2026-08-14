@@ -9,6 +9,10 @@ import {
 } from '../..'; // eslint-disable-line @wordpress/dependency-group
 
 import { apiRequest, generateNotice, consoleOutput } from 'utils'; // eslint-disable-line @wordpress/dependency-group
+import { beginLoading, endLoading } from '@easy-digital-downloads/cart-loading'; // eslint-disable-line @wordpress/dependency-group
+
+// Token for the shared checkout loading overlay while a payment is processing.
+let loadingToken = null;
 
 /**
  * Binds Payment submission functionality.
@@ -221,7 +225,8 @@ export function updateForm ( remove_spinner = true ) {
 	$( '.edd-stripe-alert' ).remove();
 
 	if ( remove_spinner ) {
-		purchaseButton.parent().find( '.edd-loading-ajax' ).remove();
+		endLoading( loadingToken );
+		loadingToken = null;
 	}
 }
 
@@ -238,7 +243,8 @@ export function disableForm ( hide_errors = false ) {
 	purchaseButton.prop( 'disabled', 'disabled' );
 	purchaseButton.prop( 'readonly', 'readonly' );
 
-	purchaseButton.parent().find('.edd-loading-ajax').remove();
+	endLoading( loadingToken );
+	loadingToken = null;
 
 	if ( hide_errors ) {
 		$( '.edd_errors.edd-alert-error' ).remove();
@@ -271,16 +277,16 @@ export function enableForm() {
 	purchaseButton.prop( 'readonly', '' );
 
 	// Enable form.
-	purchaseButton.parent().find('.edd-loading-ajax').remove();
+	endLoading( loadingToken );
+	loadingToken = null;
 	$( '.edd_errors.edd-alert-error' ).remove();
 	$( '.edd-error' ).hide();
 }
 
 function maybeAddSpinner() {
-	let purchaseButtonParent = $('#edd-purchase-button').parent();
-
-	if ( purchaseButtonParent.find('.edd-loading-ajax').length === 0 ) {
-		purchaseButtonParent.append( '<span class="edd-loading-ajax edd-loading"></span>' );
+	// The shared checkout overlay provides the spinner; the button stays disabled by updateForm().
+	if ( ! loadingToken ) {
+		loadingToken = beginLoading( 'stripe-pe' );
 	}
 }
 

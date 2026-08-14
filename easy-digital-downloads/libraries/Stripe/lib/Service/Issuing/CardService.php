@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Issuing;
 
 /**
@@ -26,7 +25,6 @@ class CardService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/issuing/cards', $params, $opts);
     }
-
     /**
      * Creates an Issuing <code>Card</code> object.
      *
@@ -41,7 +39,6 @@ class CardService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/issuing/cards', $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Card</code> object.
      *
@@ -57,7 +54,6 @@ class CardService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/issuing/cards/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the specified Issuing <code>Card</code> object by setting the values of
      * the parameters passed. Any parameters not provided will be left unchanged.

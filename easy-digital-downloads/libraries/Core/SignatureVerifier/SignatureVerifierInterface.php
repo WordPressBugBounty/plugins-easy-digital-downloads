@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\SignatureVerifier;
 
 use EDD\Vendor\Symfony\Component\HttpFoundation\Request;
 use EDD\Vendor\Core\SignatureVerifier\VerificationFailure;
-
 interface SignatureVerifierInterface
 {
     /**

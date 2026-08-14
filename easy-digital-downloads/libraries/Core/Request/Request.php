@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request;
 
 use Closure;
@@ -13,7 +12,6 @@ use EDD\Vendor\CoreInterfaces\Core\Format;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestMethod;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
 use EDD\Vendor\CoreInterfaces\Http\RetryOption;
-
 class Request implements RequestSetterInterface
 {
     private $converter;
@@ -26,7 +24,6 @@ class Request implements RequestSetterInterface
     private $body;
     private $retryOption = RetryOption::USE_GLOBAL_SETTINGS;
     private $allowContentType = true;
-
     /**
      * Creates a new Request object.
      */
@@ -39,7 +36,6 @@ class Request implements RequestSetterInterface
         }
         $this->queryUrl = CoreHelper::validateUrl($this->queryUrl);
     }
-
     /**
      * Returns the http method to be used for the call.
      */
@@ -47,7 +43,6 @@ class Request implements RequestSetterInterface
     {
         return $this->requestMethod;
     }
-
     /**
      * Returns the query URL for the request.
      */
@@ -55,7 +50,6 @@ class Request implements RequestSetterInterface
     {
         return $this->queryUrl;
     }
-
     /**
      * Returns the headers associated with the request.
      */
@@ -63,7 +57,6 @@ class Request implements RequestSetterInterface
     {
         return $this->headers;
     }
-
     /**
      * Returns the parameters for the request.
      */
@@ -71,7 +64,6 @@ class Request implements RequestSetterInterface
     {
         return $this->parameters;
     }
-
     /**
      * Returns encoded parameters associated the request.
      */
@@ -79,7 +71,6 @@ class Request implements RequestSetterInterface
     {
         return $this->parametersEncoded;
     }
-
     /**
      * Returns multipart parameters associated with the request.
      */
@@ -87,7 +78,6 @@ class Request implements RequestSetterInterface
     {
         return $this->parametersMultipart;
     }
-
     /**
      * Returns body associated with the request.
      */
@@ -95,7 +85,6 @@ class Request implements RequestSetterInterface
     {
         return $this->body;
     }
-
     /**
      * Returns the state of retryOption for the request.
      */
@@ -103,7 +92,6 @@ class Request implements RequestSetterInterface
     {
         return $this->retryOption;
     }
-
     /**
      * Converts the request to HttpRequest.
      */
@@ -111,7 +99,6 @@ class Request implements RequestSetterInterface
     {
         return $this->converter->createHttpRequest($this);
     }
-
     /**
      * Creates an ApiException with the message provided.
      */
@@ -119,7 +106,6 @@ class Request implements RequestSetterInterface
     {
         return $this->converter->createApiException($message, $this, null);
     }
-
     /**
      * Adds accept header to the request.
      */
@@ -133,7 +119,6 @@ class Request implements RequestSetterInterface
         }
         $this->addHeader('Accept', $accept);
     }
-
     /**
      * Sets the Http Method to be used for current request.
      */
@@ -141,7 +126,6 @@ class Request implements RequestSetterInterface
     {
         $this->requestMethod = $requestMethod;
     }
-
     /**
      * Appends path to the query URL.
      */
@@ -149,7 +133,6 @@ class Request implements RequestSetterInterface
     {
         $this->queryUrl .= $path;
     }
-
     /**
      * Add or replace a single header
      *
@@ -160,7 +143,6 @@ class Request implements RequestSetterInterface
     {
         $this->headers[$key] = CoreHelper::serialize($value);
     }
-
     /**
      * Adds template param value to the query URL, corresponding to the key provided.
      */
@@ -168,7 +150,6 @@ class Request implements RequestSetterInterface
     {
         $this->queryUrl = str_replace("{{$key}}", $value, $this->queryUrl);
     }
-
     /**
      * Adds an encoded form param to the request.
      */
@@ -177,7 +158,6 @@ class Request implements RequestSetterInterface
         $this->parametersEncoded[$key] = $value;
         $this->parameters[$key] = $realValue;
     }
-
     /**
      * Adds a multipart form param to the request.
      */
@@ -186,7 +166,6 @@ class Request implements RequestSetterInterface
         $this->parametersMultipart[$key] = $value;
         $this->parameters[$key] = $value;
     }
-
     /**
      * Adds a body param to the current request.
      */
@@ -202,7 +181,6 @@ class Request implements RequestSetterInterface
             $this->body = [$key => $value];
         }
     }
-
     private function addContentType(string $format): void
     {
         if (!$this->allowContentType) {
@@ -231,7 +209,6 @@ class Request implements RequestSetterInterface
         }
         $this->addHeader('content-type', Format::SCALAR);
     }
-
     /**
      * Sets body format for the request and returns the body in a serialized format.
      */
@@ -240,15 +217,12 @@ class Request implements RequestSetterInterface
         if (!empty($this->parameters)) {
             return;
         }
-
         if (is_null($this->body)) {
             return;
         }
-
         $this->addContentType($format);
         $this->body = Closure::fromCallable($serializer)($this->body);
     }
-
     /**
      * Sets value for retryOption for the request.
      */
@@ -256,7 +230,6 @@ class Request implements RequestSetterInterface
     {
         $this->retryOption = $retryOption;
     }
-
     /**
      * Sets if the request has an allowContentType header or not.
      */

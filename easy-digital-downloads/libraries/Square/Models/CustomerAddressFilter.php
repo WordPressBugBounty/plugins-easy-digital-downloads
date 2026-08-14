@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The customer address filter. This filter is used in a
  * [CustomerCustomAttributeFilterValue]($m/CustomerCustomAttributeFilterValue) filter when
@@ -17,12 +15,10 @@ class CustomerAddressFilter implements \JsonSerializable
      * @var CustomerTextFilter|null
      */
     private $postalCode;
-
     /**
      * @var string|null
      */
     private $country;
-
     /**
      * Returns Postal Code.
      * A filter to select customers based on exact or fuzzy matching of
@@ -33,7 +29,6 @@ class CustomerAddressFilter implements \JsonSerializable
     {
         return $this->postalCode;
     }
-
     /**
      * Sets Postal Code.
      * A filter to select customers based on exact or fuzzy matching of
@@ -46,7 +41,6 @@ class CustomerAddressFilter implements \JsonSerializable
     {
         $this->postalCode = $postalCode;
     }
-
     /**
      * Returns Country.
      * Indicates the country associated with another entity, such as a business.
@@ -56,7 +50,6 @@ class CustomerAddressFilter implements \JsonSerializable
     {
         return $this->country;
     }
-
     /**
      * Sets Country.
      * Indicates the country associated with another entity, such as a business.
@@ -68,7 +61,6 @@ class CustomerAddressFilter implements \JsonSerializable
     {
         $this->country = $country;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -77,7 +69,7 @@ class CustomerAddressFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -85,12 +77,11 @@ class CustomerAddressFilter implements \JsonSerializable
             $json['postal_code'] = $this->postalCode;
         }
         if (isset($this->country)) {
-            $json['country']     = $this->country;
+            $json['country'] = $this->country;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

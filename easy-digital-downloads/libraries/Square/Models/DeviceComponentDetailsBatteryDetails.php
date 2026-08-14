@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $visiblePercent = [];
-
     /**
      * @var string|null
      */
     private $externalPower;
-
     /**
      * Returns Visible Percent.
      * The battery charge percentage as displayed on the device.
@@ -29,7 +25,6 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
         }
         return $this->visiblePercent['value'];
     }
-
     /**
      * Sets Visible Percent.
      * The battery charge percentage as displayed on the device.
@@ -40,7 +35,6 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
     {
         $this->visiblePercent['value'] = $visiblePercent;
     }
-
     /**
      * Unsets Visible Percent.
      * The battery charge percentage as displayed on the device.
@@ -49,7 +43,6 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
     {
         $this->visiblePercent = [];
     }
-
     /**
      * Returns External Power.
      * An enum for ExternalPower.
@@ -58,7 +51,6 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
     {
         return $this->externalPower;
     }
-
     /**
      * Sets External Power.
      * An enum for ExternalPower.
@@ -69,7 +61,6 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
     {
         $this->externalPower = $externalPower;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -78,7 +69,7 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -86,12 +77,11 @@ class DeviceComponentDetailsBatteryDetails implements \JsonSerializable
             $json['visible_percent'] = $this->visiblePercent['value'];
         }
         if (isset($this->externalPower)) {
-            $json['external_power']  = $this->externalPower;
+            $json['external_power'] = $this->externalPower;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

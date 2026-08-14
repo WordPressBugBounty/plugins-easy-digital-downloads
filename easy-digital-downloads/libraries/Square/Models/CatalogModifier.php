@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a
  * Burger item.
@@ -16,32 +14,26 @@ class CatalogModifier implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var Money|null
      */
     private $priceMoney;
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * @var array
      */
     private $modifierListId = [];
-
     /**
      * @var array
      */
     private $locationOverrides = [];
-
     /**
      * @var array
      */
     private $imageId = [];
-
     /**
      * Returns Name.
      * The modifier name.  This is a searchable attribute for use in applicable query filters, and its
@@ -54,7 +46,6 @@ class CatalogModifier implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The modifier name.  This is a searchable attribute for use in applicable query filters, and its
@@ -66,7 +57,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The modifier name.  This is a searchable attribute for use in applicable query filters, and its
@@ -76,7 +66,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -91,7 +80,6 @@ class CatalogModifier implements \JsonSerializable
     {
         return $this->priceMoney;
     }
-
     /**
      * Sets Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -108,7 +96,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->priceMoney = $priceMoney;
     }
-
     /**
      * Returns Ordinal.
      * Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
@@ -120,7 +107,6 @@ class CatalogModifier implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
@@ -131,7 +117,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * Determines where this `CatalogModifier` appears in the `CatalogModifierList`.
@@ -140,7 +125,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Returns Modifier List Id.
      * The ID of the `CatalogModifierList` associated with this modifier.
@@ -152,7 +136,6 @@ class CatalogModifier implements \JsonSerializable
         }
         return $this->modifierListId['value'];
     }
-
     /**
      * Sets Modifier List Id.
      * The ID of the `CatalogModifierList` associated with this modifier.
@@ -163,7 +146,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->modifierListId['value'] = $modifierListId;
     }
-
     /**
      * Unsets Modifier List Id.
      * The ID of the `CatalogModifierList` associated with this modifier.
@@ -172,7 +154,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->modifierListId = [];
     }
-
     /**
      * Returns Location Overrides.
      * Location-specific price overrides.
@@ -186,7 +167,6 @@ class CatalogModifier implements \JsonSerializable
         }
         return $this->locationOverrides['value'];
     }
-
     /**
      * Sets Location Overrides.
      * Location-specific price overrides.
@@ -199,7 +179,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->locationOverrides['value'] = $locationOverrides;
     }
-
     /**
      * Unsets Location Overrides.
      * Location-specific price overrides.
@@ -208,7 +187,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->locationOverrides = [];
     }
-
     /**
      * Returns Image Id.
      * The ID of the image associated with this `CatalogModifier` instance.
@@ -222,7 +200,6 @@ class CatalogModifier implements \JsonSerializable
         }
         return $this->imageId['value'];
     }
-
     /**
      * Sets Image Id.
      * The ID of the image associated with this `CatalogModifier` instance.
@@ -235,7 +212,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->imageId['value'] = $imageId;
     }
-
     /**
      * Unsets Image Id.
      * The ID of the image associated with this `CatalogModifier` instance.
@@ -246,7 +222,6 @@ class CatalogModifier implements \JsonSerializable
     {
         $this->imageId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -255,32 +230,31 @@ class CatalogModifier implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']               = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->priceMoney)) {
-            $json['price_money']        = $this->priceMoney;
+            $json['price_money'] = $this->priceMoney;
         }
         if (!empty($this->ordinal)) {
-            $json['ordinal']            = $this->ordinal['value'];
+            $json['ordinal'] = $this->ordinal['value'];
         }
         if (!empty($this->modifierListId)) {
-            $json['modifier_list_id']   = $this->modifierListId['value'];
+            $json['modifier_list_id'] = $this->modifierListId['value'];
         }
         if (!empty($this->locationOverrides)) {
             $json['location_overrides'] = $this->locationOverrides['value'];
         }
         if (!empty($this->imageId)) {
-            $json['image_id']           = $this->imageId['value'];
+            $json['image_id'] = $this->imageId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

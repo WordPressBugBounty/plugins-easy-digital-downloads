@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Issuing;
 
 /**
@@ -26,7 +25,6 @@ class PersonalizationDesignService extends \EDD\Vendor\Stripe\Service\AbstractSe
     {
         return $this->requestCollection('get', '/v1/issuing/personalization_designs', $params, $opts);
     }
-
     /**
      * Creates a personalization design object.
      *
@@ -41,7 +39,6 @@ class PersonalizationDesignService extends \EDD\Vendor\Stripe\Service\AbstractSe
     {
         return $this->request('post', '/v1/issuing/personalization_designs', $params, $opts);
     }
-
     /**
      * Retrieves a personalization design object.
      *
@@ -57,7 +54,6 @@ class PersonalizationDesignService extends \EDD\Vendor\Stripe\Service\AbstractSe
     {
         return $this->request('get', $this->buildPath('/v1/issuing/personalization_designs/%s', $id), $params, $opts);
     }
-
     /**
      * Updates a card personalization object.
      *

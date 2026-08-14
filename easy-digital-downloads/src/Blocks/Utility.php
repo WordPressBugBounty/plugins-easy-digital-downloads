@@ -24,16 +24,22 @@ class Utility {
 	 * Checks whether we are viewing content in the block editor.
 	 *
 	 * @since 3.6.0
-	 * @param string $current_user_can Whether the current user needs to have a specific capability.
+	 * @param string    $current_user_can Whether the current user needs to have a specific capability.
+	 * @param \WP_Block $block The block object.
 	 * @return false|string
 	 */
-	public static function is_block_editor( $current_user_can = '' ) {
+	public static function is_block_editor( $current_user_can = '', $block = null ) {
 		$is_block_editor = ! empty( $_GET['edd_blocks_is_block_editor'] ) ? $_GET['edd_blocks_is_block_editor'] : false;
 
+		if ( empty( $is_block_editor ) && ! empty( $block ) && isset( $block->context['edd/previewMode'] ) ) {
+			$is_block_editor = $block->context['edd/previewMode'];
+		}
+
 		// If not the block editor or custom capabilities are not required, return.
-		if ( ! $is_block_editor || empty( $current_user_can ) ) {
+		if ( ! $is_block_editor || empty( $current_user_can ) || is_bool( $is_block_editor ) ) {
 			return $is_block_editor;
 		}
+
 		$user = wp_get_current_user();
 
 		return hash_equals( md5( $user->user_email ), $is_block_editor ) && current_user_can( $current_user_can );
@@ -43,10 +49,11 @@ class Utility {
 	 * Whether the checkout page is being previewed as a guest.
 	 *
 	 * @since 3.6.0
+	 * @param null|\WP_Block $block The block object.
 	 * @return bool
 	 */
-	public static function doing_guest_preview(): bool {
-		$is_block_editor = (bool) self::is_block_editor();
+	public static function doing_guest_preview( $block = null ): bool {
+		$is_block_editor = (bool) self::is_block_editor( 'edit_shop_payments', $block );
 		$is_preview      = filter_input( INPUT_GET, 'preview', FILTER_VALIDATE_BOOLEAN );
 
 		return apply_filters( 'edd_blocks_doing_guest_preview', $is_block_editor && $is_preview );
@@ -74,5 +81,37 @@ class Utility {
 		<?php
 
 		echo apply_filters( 'edd_checkout_button_purchase', ob_get_clean() );
+	}
+
+	/**
+	 * Triggers the `edd_checkout_form_top` hook. The hook is invoked from multiple blocks
+	 * to ensure that whichever is first triggers it.
+	 *
+	 * @since 3.7.0
+	 * @param array $block_attributes The array of block attributes.
+	 * @return void
+	 */
+	public static function do_checkout_form_top( array $block_attributes ): void {
+		if ( did_action( 'edd_checkout_form_top' ) ) {
+			return;
+		}
+
+		// Payment-info declares no attributes, so if it fired the hook first we
+		// fall back to the checkout defaults so UserDetails still renders.
+		if ( empty( $block_attributes ) ) {
+			$block_attributes = \EDD\Blocks\Checkout\Attributes::get();
+		}
+
+		// The blocks handle the these differently from the legacy shortcode.
+		remove_action( 'edd_checkout_form_top', 'edd_show_payment_icons' );
+		remove_action( 'edd_checkout_form_top', 'edd_discount_field', -1 );
+
+		/**
+		 * Hooks in at the start of the blocks purchase form.
+		 *
+		 * @since 3.6.0
+		 * @param array $block_attributes The block attributes.
+		 */
+		do_action( 'edd_checkout_form_top', $block_attributes );
 	}
 }

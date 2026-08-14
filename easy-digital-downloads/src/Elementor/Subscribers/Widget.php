@@ -51,10 +51,15 @@ class Widget implements SubscriberInterface {
 	 * Register EDD widgets
 	 *
 	 * @since 3.6.0
+	 * @since 3.7.0 Added the four CheckoutInner section widgets.
 	 */
 	public function register_widgets( $widgets_manager ) {
 		$widgets = array(
 			new \EDD\Elementor\Widgets\Checkout(),
+			new \EDD\Elementor\Widgets\CheckoutInner\Cart(),         // get_name: edd-checkout-cart.
+			new \EDD\Elementor\Widgets\CheckoutInner\PersonalInfo(), // get_name: edd-checkout-personal-info.
+			new \EDD\Elementor\Widgets\CheckoutInner\PaymentInfo(),  // get_name: edd-checkout-payment-info.
+			new \EDD\Elementor\Widgets\CheckoutInner\DiscountForm(), // get_name: edd-checkout-discount-form.
 		);
 
 		foreach ( $widgets as $widget ) {

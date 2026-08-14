@@ -31,16 +31,18 @@ class Stats {
 
 	public function get() {
 		$data = array(
-			'activated'            => $this->convert_timestamp( edd_get_activation_date() ),
-			'pro_activated'        => $this->convert_timestamp( get_option( 'edd_pro_activation_date' ) ),
-			'first_order'          => $this->get_first_order_date(),
-			'onboarding_started'   => get_option( 'edd_onboarding_started' ),
-			'onboarding_completed' => get_option( 'edd_onboarding_completed' ),
-			'products'             => $this->get_product_count(),
-			'categories'           => $this->get_category_count(),
-			'tags'                 => $this->get_tag_count(),
-			'pass_id'              => $this->get_pass_id(),
-			'discounts'            => $this->get_discount_count(),
+			'activated'                  => $this->convert_timestamp( edd_get_activation_date() ),
+			'pro_activated'              => $this->convert_timestamp( get_option( 'edd_pro_activation_date' ) ),
+			'first_order'                => $this->get_first_order_date(),
+			'onboarding_started'         => get_option( 'edd_onboarding_started' ),
+			'onboarding_completed'       => get_option( 'edd_onboarding_completed' ),
+			'products'                   => $this->get_product_count(),
+			'categories'                 => $this->get_category_count(),
+			'tags'                       => $this->get_tag_count(),
+			'customer_count'             => $this->get_customer_count(),
+			'median_orders_per_customer' => $this->get_median_orders_per_customer(),
+			'pass_id'                    => $this->get_pass_id(),
+			'discounts'                  => $this->get_discount_count(),
 		);
 
 		/**
@@ -51,6 +53,58 @@ class Stats {
 		 * @param array $data The stats data.
 		 */
 		return apply_filters( 'edd_telemetry_stats', $data );
+	}
+
+	/**
+	 * Gets the total number of customers.
+	 *
+	 * @since 3.7.0
+	 * @return int
+	 */
+	private function get_customer_count() {
+		return edd_count_customers();
+	}
+
+	/**
+	 * Gets the median number of orders per customer.
+	 *
+	 * "Orders" here is the customer's purchase_count, which counts only completed
+	 * sale orders (net statuses, type "sale") -- consistent with EDD's sales
+	 * reporting. Pending, abandoned, failed, refunded and refund-type orders are
+	 * not included.
+	 *
+	 * We report the median rather than the mean because a small number of
+	 * high-volume customers can heavily skew the average, making it a poor
+	 * representation of a typical customer.
+	 *
+	 * @since 3.7.0
+	 * @return float
+	 */
+	private function get_median_orders_per_customer() {
+		global $wpdb;
+
+		// Count rows from the same table we order over, so the median offset stays accurate.
+		$count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->edd_customers}" );
+		if ( empty( $count ) ) {
+			return 0;
+		}
+
+		$offset = intdiv( $count - 1, 2 ); // Lower of the two middle rows (zero-indexed).
+		$limit  = 2 - ( $count % 2 );      // One row for an odd count, two for an even count.
+
+		$median = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT AVG(purchase_count) FROM (
+					SELECT purchase_count FROM {$wpdb->edd_customers}
+					ORDER BY purchase_count ASC
+					LIMIT %d OFFSET %d
+				) AS middle",
+				$limit,
+				$offset
+			)
+		);
+
+		return round( (float) $median, 2 );
 	}
 
 	/**

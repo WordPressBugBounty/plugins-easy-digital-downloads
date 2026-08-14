@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a transaction processed with Square, either with the
- * Connect API or with EDD\Vendor\Square Point of Sale.
+ * Connect API or with Square Point of Sale.
  *
  * The `tenders` field of this object lists all methods of payment used to pay in
  * the transaction.
@@ -19,64 +17,53 @@ class Transaction implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var array
      */
     private $tenders = [];
-
     /**
      * @var array
      */
     private $refunds = [];
-
     /**
      * @var array
      */
     private $referenceId = [];
-
     /**
      * @var string|null
      */
     private $product;
-
     /**
      * @var array
      */
     private $clientId = [];
-
     /**
      * @var Address|null
      */
     private $shippingAddress;
-
     /**
      * @var array
      */
     private $orderId = [];
-
     /**
      * Returns Id.
-     * The transaction's unique ID, issued by EDD\Vendor\Square payments servers.
+     * The transaction's unique ID, issued by Square payments servers.
      */
     public function getId(): ?string
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
-     * The transaction's unique ID, issued by EDD\Vendor\Square payments servers.
+     * The transaction's unique ID, issued by Square payments servers.
      *
      * @maps id
      */
@@ -84,7 +71,6 @@ class Transaction implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Location Id.
      * The ID of the transaction's associated location.
@@ -96,7 +82,6 @@ class Transaction implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the transaction's associated location.
@@ -107,7 +92,6 @@ class Transaction implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the transaction's associated location.
@@ -116,7 +100,6 @@ class Transaction implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Created At.
      * The timestamp for when the transaction was created, in RFC 3339 format.
@@ -125,7 +108,6 @@ class Transaction implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp for when the transaction was created, in RFC 3339 format.
@@ -136,7 +118,6 @@ class Transaction implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Tenders.
      * The tenders used to pay in the transaction.
@@ -150,7 +131,6 @@ class Transaction implements \JsonSerializable
         }
         return $this->tenders['value'];
     }
-
     /**
      * Sets Tenders.
      * The tenders used to pay in the transaction.
@@ -163,7 +143,6 @@ class Transaction implements \JsonSerializable
     {
         $this->tenders['value'] = $tenders;
     }
-
     /**
      * Unsets Tenders.
      * The tenders used to pay in the transaction.
@@ -172,7 +151,6 @@ class Transaction implements \JsonSerializable
     {
         $this->tenders = [];
     }
-
     /**
      * Returns Refunds.
      * Refunds that have been applied to any tender in the transaction.
@@ -186,7 +164,6 @@ class Transaction implements \JsonSerializable
         }
         return $this->refunds['value'];
     }
-
     /**
      * Sets Refunds.
      * Refunds that have been applied to any tender in the transaction.
@@ -199,7 +176,6 @@ class Transaction implements \JsonSerializable
     {
         $this->refunds['value'] = $refunds;
     }
-
     /**
      * Unsets Refunds.
      * Refunds that have been applied to any tender in the transaction.
@@ -208,7 +184,6 @@ class Transaction implements \JsonSerializable
     {
         $this->refunds = [];
     }
-
     /**
      * Returns Reference Id.
      * If the transaction was created with the [Charge](api-endpoint:Transactions-Charge)
@@ -222,7 +197,6 @@ class Transaction implements \JsonSerializable
         }
         return $this->referenceId['value'];
     }
-
     /**
      * Sets Reference Id.
      * If the transaction was created with the [Charge](api-endpoint:Transactions-Charge)
@@ -235,7 +209,6 @@ class Transaction implements \JsonSerializable
     {
         $this->referenceId['value'] = $referenceId;
     }
-
     /**
      * Unsets Reference Id.
      * If the transaction was created with the [Charge](api-endpoint:Transactions-Charge)
@@ -246,19 +219,17 @@ class Transaction implements \JsonSerializable
     {
         $this->referenceId = [];
     }
-
     /**
      * Returns Product.
-     * Indicates the EDD\Vendor\Square product used to process a transaction.
+     * Indicates the Square product used to process a transaction.
      */
     public function getProduct(): ?string
     {
         return $this->product;
     }
-
     /**
      * Sets Product.
-     * Indicates the EDD\Vendor\Square product used to process a transaction.
+     * Indicates the Square product used to process a transaction.
      *
      * @maps product
      */
@@ -266,11 +237,10 @@ class Transaction implements \JsonSerializable
     {
         $this->product = $product;
     }
-
     /**
      * Returns Client Id.
-     * If the transaction was created in the EDD\Vendor\Square Point of Sale app, this value
-     * is the ID generated for the transaction by EDD\Vendor\Square Point of Sale.
+     * If the transaction was created in the Square Point of Sale app, this value
+     * is the ID generated for the transaction by Square Point of Sale.
      *
      * This ID has no relationship to the transaction's canonical `id`, which is
      * generated by Square's backend servers. This value is generated for bookkeeping
@@ -287,11 +257,10 @@ class Transaction implements \JsonSerializable
         }
         return $this->clientId['value'];
     }
-
     /**
      * Sets Client Id.
-     * If the transaction was created in the EDD\Vendor\Square Point of Sale app, this value
-     * is the ID generated for the transaction by EDD\Vendor\Square Point of Sale.
+     * If the transaction was created in the Square Point of Sale app, this value
+     * is the ID generated for the transaction by Square Point of Sale.
      *
      * This ID has no relationship to the transaction's canonical `id`, which is
      * generated by Square's backend servers. This value is generated for bookkeeping
@@ -307,11 +276,10 @@ class Transaction implements \JsonSerializable
     {
         $this->clientId['value'] = $clientId;
     }
-
     /**
      * Unsets Client Id.
-     * If the transaction was created in the EDD\Vendor\Square Point of Sale app, this value
-     * is the ID generated for the transaction by EDD\Vendor\Square Point of Sale.
+     * If the transaction was created in the Square Point of Sale app, this value
+     * is the ID generated for the transaction by Square Point of Sale.
      *
      * This ID has no relationship to the transaction's canonical `id`, which is
      * generated by Square's backend servers. This value is generated for bookkeeping
@@ -325,7 +293,6 @@ class Transaction implements \JsonSerializable
     {
         $this->clientId = [];
     }
-
     /**
      * Returns Shipping Address.
      * Represents a postal address in a country.
@@ -336,7 +303,6 @@ class Transaction implements \JsonSerializable
     {
         return $this->shippingAddress;
     }
-
     /**
      * Sets Shipping Address.
      * Represents a postal address in a country.
@@ -349,7 +315,6 @@ class Transaction implements \JsonSerializable
     {
         $this->shippingAddress = $shippingAddress;
     }
-
     /**
      * Returns Order Id.
      * The order_id is an identifier for the order associated with this transaction, if any.
@@ -361,7 +326,6 @@ class Transaction implements \JsonSerializable
         }
         return $this->orderId['value'];
     }
-
     /**
      * Sets Order Id.
      * The order_id is an identifier for the order associated with this transaction, if any.
@@ -372,7 +336,6 @@ class Transaction implements \JsonSerializable
     {
         $this->orderId['value'] = $orderId;
     }
-
     /**
      * Unsets Order Id.
      * The order_id is an identifier for the order associated with this transaction, if any.
@@ -381,7 +344,6 @@ class Transaction implements \JsonSerializable
     {
         $this->orderId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -390,44 +352,43 @@ class Transaction implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']               = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->locationId)) {
-            $json['location_id']      = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']       = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (!empty($this->tenders)) {
-            $json['tenders']          = $this->tenders['value'];
+            $json['tenders'] = $this->tenders['value'];
         }
         if (!empty($this->refunds)) {
-            $json['refunds']          = $this->refunds['value'];
+            $json['refunds'] = $this->refunds['value'];
         }
         if (!empty($this->referenceId)) {
-            $json['reference_id']     = $this->referenceId['value'];
+            $json['reference_id'] = $this->referenceId['value'];
         }
         if (isset($this->product)) {
-            $json['product']          = $this->product;
+            $json['product'] = $this->product;
         }
         if (!empty($this->clientId)) {
-            $json['client_id']        = $this->clientId['value'];
+            $json['client_id'] = $this->clientId['value'];
         }
         if (isset($this->shippingAddress)) {
             $json['shipping_address'] = $this->shippingAddress;
         }
         if (!empty($this->orderId)) {
-            $json['order_id']         = $this->orderId['value'];
+            $json['order_id'] = $this->orderId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

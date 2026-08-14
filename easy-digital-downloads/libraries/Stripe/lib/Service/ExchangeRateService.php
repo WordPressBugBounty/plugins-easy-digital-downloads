@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -12,7 +11,7 @@ class ExchangeRateService extends \EDD\Vendor\Stripe\Service\AbstractService
 {
     /**
      * Returns a list of objects that contain the rates at which foreign currencies are
-     * converted to one another. Only shows the currencies for which EDD\Vendor\Stripe supports.
+     * converted to one another. Only shows the currencies for which Stripe supports.
      *
      * @param null|array $params
      * @param null|RequestOptionsArray|\EDD\Vendor\Stripe\Util\RequestOptions $opts
@@ -25,7 +24,6 @@ class ExchangeRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/exchange_rates', $params, $opts);
     }
-
     /**
      * Retrieves the exchange rates from the given currency to every supported
      * currency.

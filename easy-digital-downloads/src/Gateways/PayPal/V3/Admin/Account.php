@@ -20,6 +20,7 @@ namespace EDD\Gateways\PayPal\V3\Admin;
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Gateways\PayPal;
+use EDD\Gateways\PayPal\V3\ConnectSync;
 use EDD\Gateways\PayPal\V3\Merchant;
 use EDD\Gateways\PayPal\V3\MerchantStatus;
 use EDD\Gateways\PayPal\V3\Onboarding;
@@ -295,8 +296,8 @@ class Account {
 		}
 
 		set_transient( $lock_key, 1, 5 * MINUTE_IN_SECONDS );
-		edd_debug_log( sprintf( 'PayPal v3: proxy reports license_status=unknown in %s mode while a Pro license is active locally — triggering refresh-license self-heal.', $this->mode ) );
-		Onboarding::sync_license_to_connect();
+		edd_debug_log( sprintf( 'PayPal v3: Connect API reports license_status=unknown in %s mode while a Pro license is active locally — triggering refresh-license self-heal.', $this->mode ) );
+		( new ConnectSync() )->sync_license();
 
 		// Re-fetch status so the rest of this render reflects the post-resync result.
 		$api       = new ConnectAPI( $this->mode );

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\FinancialConnections;
 
 /**
@@ -21,7 +20,6 @@ namespace EDD\Vendor\Stripe\FinancialConnections;
 class Session extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'financial_connections.session';
-
     /**
      * To launch the Financial Connections authorization flow, create a
      * <code>Session</code>. The session’s <code>client_secret</code> can be used to
@@ -38,14 +36,11 @@ class Session extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieves the details of a Financial Connections <code>Session</code>.
      *
@@ -61,7 +56,6 @@ class Session extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

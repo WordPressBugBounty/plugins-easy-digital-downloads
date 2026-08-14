@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The hours of operation for a location.
  */
@@ -15,7 +13,6 @@ class BusinessHours implements \JsonSerializable
      * @var array
      */
     private $periods = [];
-
     /**
      * Returns Periods.
      * The list of time periods during which the business is open. There can be at most 10 periods per day.
@@ -29,7 +26,6 @@ class BusinessHours implements \JsonSerializable
         }
         return $this->periods['value'];
     }
-
     /**
      * Sets Periods.
      * The list of time periods during which the business is open. There can be at most 10 periods per day.
@@ -42,7 +38,6 @@ class BusinessHours implements \JsonSerializable
     {
         $this->periods['value'] = $periods;
     }
-
     /**
      * Unsets Periods.
      * The list of time periods during which the business is open. There can be at most 10 periods per day.
@@ -51,7 +46,6 @@ class BusinessHours implements \JsonSerializable
     {
         $this->periods = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -60,7 +54,7 @@ class BusinessHours implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -70,7 +64,6 @@ class BusinessHours implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,20 +1,19 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Forwarding;
 
 /**
- * Instructs EDD\Vendor\Stripe to make a request on your behalf using the destination URL. The destination URL
- * is activated by EDD\Vendor\Stripe at the time of onboarding. EDD\Vendor\Stripe verifies requests with your credentials
+ * Instructs Stripe to make a request on your behalf using the destination URL. The destination URL
+ * is activated by Stripe at the time of onboarding. Stripe verifies requests with your credentials
  * provided during onboarding, and injects card details from the payment_method into the request.
  *
- * EDD\Vendor\Stripe redacts all sensitive fields and headers, including authentication credentials and card numbers,
+ * Stripe redacts all sensitive fields and headers, including authentication credentials and card numbers,
  * before storing the request and response data in the forwarding Request object, which are subject to a
  * 30-day retention period.
  *
- * You can provide a EDD\Vendor\Stripe idempotency key to make sure that requests with the same key result in only one
- * outbound request. The EDD\Vendor\Stripe idempotency key provided should be unique and different from any idempotency
+ * You can provide a Stripe idempotency key to make sure that requests with the same key result in only one
+ * outbound request. The Stripe idempotency key provided should be unique and different from any idempotency
  * keys provided on the underlying third-party request.
  *
  * Forwarding Requests are synchronous requests that return a response or time out according to
@@ -36,7 +35,6 @@ namespace EDD\Vendor\Stripe\Forwarding;
 class Request extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'forwarding.request';
-
     /**
      * Creates a ForwardingRequest object.
      *
@@ -51,14 +49,11 @@ class Request extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Lists all ForwardingRequest objects.
      *
@@ -72,10 +67,8 @@ class Request extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a ForwardingRequest object.
      *
@@ -91,7 +84,6 @@ class Request extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

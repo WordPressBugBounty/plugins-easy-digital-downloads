@@ -8,13 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Loader;
 
 use EDD\Vendor\Symfony\Component\Translation\Exception\InvalidResourceException;
 use EDD\Vendor\Symfony\Component\Translation\Exception\NotFoundResourceException;
 use EDD\Vendor\Symfony\Component\Translation\MessageCatalogue;
-
 /**
  * LoaderInterface is the interface implemented by all translation loaders.
  *

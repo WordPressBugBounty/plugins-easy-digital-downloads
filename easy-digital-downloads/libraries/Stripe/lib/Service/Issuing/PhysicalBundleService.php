@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Issuing;
 
 /**
@@ -25,7 +24,6 @@ class PhysicalBundleService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/issuing/physical_bundles', $params, $opts);
     }
-
     /**
      * Retrieves a physical bundle object.
      *

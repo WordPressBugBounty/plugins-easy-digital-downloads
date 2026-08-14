@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a time period - either a single period or a repeating period.
  */
@@ -15,7 +13,6 @@ class CatalogTimePeriod implements \JsonSerializable
      * @var array
      */
     private $event = [];
-
     /**
      * Returns Event.
      * An iCalendar (RFC 5545) [event](https://tools.ietf.org/html/rfc5545#section-3.6.1), which
@@ -41,7 +38,6 @@ class CatalogTimePeriod implements \JsonSerializable
         }
         return $this->event['value'];
     }
-
     /**
      * Sets Event.
      * An iCalendar (RFC 5545) [event](https://tools.ietf.org/html/rfc5545#section-3.6.1), which
@@ -66,7 +62,6 @@ class CatalogTimePeriod implements \JsonSerializable
     {
         $this->event['value'] = $event;
     }
-
     /**
      * Unsets Event.
      * An iCalendar (RFC 5545) [event](https://tools.ietf.org/html/rfc5545#section-3.6.1), which
@@ -89,7 +84,6 @@ class CatalogTimePeriod implements \JsonSerializable
     {
         $this->event = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -98,7 +92,7 @@ class CatalogTimePeriod implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -108,7 +102,6 @@ class CatalogTimePeriod implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

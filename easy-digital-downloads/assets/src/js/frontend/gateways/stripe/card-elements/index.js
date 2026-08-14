@@ -102,7 +102,7 @@ function generateElementStyles() {
 				${
 					[ 'top-right', 'bottom-right', 'bottom-left', 'top-left' ]
 						.map( ( dir ) => (
-							`border-${ dir }-radius: ${ inputStyles.getPropertyValue( 'border-top-right-radius' ) };`
+							`border-${ dir }-radius: ${ inputStyles.getPropertyValue( `border-${ dir }-radius` ) };`
 						) )
 						.join( '' )
 				}

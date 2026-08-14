@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of JsonMapper
  *
@@ -29,21 +30,18 @@ class TypeCombination
      * @var string
      */
     private $_format;
-
     /**
      * Name of this typeCombinator group i.e. oneOf/anyOf.
      *
      * @var string
      */
     private $_groupName;
-
     /**
      * Name of discriminator field for this typeCombinator group.
      *
      * @var string
      */
     private $_discriminatorField;
-
     /**
      * Mapping of each discriminator value on types in this typeCombinator group.
      * i.e. [typeName => discriminatorValues]
@@ -51,14 +49,12 @@ class TypeCombination
      * @var array
      */
     private $_discriminatorMapping = [];
-
     /**
      * Array of string types or TypeCombination objects
      *
      * @var array
      */
     private $_types;
-
     /**
      * A list of factory methods to deserialize the given object,
      * for one of the wrapped types in this group
@@ -66,7 +62,6 @@ class TypeCombination
      * @var string[]
      */
     private $_deserializers;
-
     /**
      * Private constructor for TypeCombination class
      *
@@ -83,7 +78,6 @@ class TypeCombination
         $this->_deserializers = $deserializers;
         $this->_insertDiscriminators();
     }
-
     /**
      * String format of this typeCombinator group.
      *
@@ -93,7 +87,6 @@ class TypeCombination
     {
         return $this->_format;
     }
-
     /**
      * Name of this typeCombinator group i.e. oneOf/anyOf/array/map.
      *
@@ -103,7 +96,6 @@ class TypeCombination
     {
         return $this->_groupName;
     }
-
     /**
      * Array of string types or TypeCombination objects
      *
@@ -113,7 +105,6 @@ class TypeCombination
     {
         return $this->_types;
     }
-
     /**
      * A list of factory methods to deserialize the given object,
      * for one of the wrapped types in this group
@@ -124,7 +115,6 @@ class TypeCombination
     {
         return $this->_deserializers;
     }
-
     /**
      * Get discriminator info as an array (if exists)
      *
@@ -141,27 +131,21 @@ class TypeCombination
      */
     public function getDiscriminator($type, $discriminatorSubs = [])
     {
-        if (!isset($this->_discriminatorField)
-            || !isset($this->_discriminatorMapping[$type])
-        ) {
+        if (!isset($this->_discriminatorField) || !isset($this->_discriminatorMapping[$type])) {
             return null;
         }
         $fieldName = $this->_discriminatorField;
         if (isset($discriminatorSubs[$fieldName])) {
             $fieldName = $discriminatorSubs[$fieldName];
         }
-        $discValues = array_map(
-            function ($value) use ($discriminatorSubs) {
-                if (isset($discriminatorSubs[$value])) {
-                    return $discriminatorSubs[$value];
-                }
-                return $value;
-            },
-            $this->_discriminatorMapping[$type]
-        );
+        $discValues = array_map(function ($value) use ($discriminatorSubs) {
+            if (isset($discriminatorSubs[$value])) {
+                return $discriminatorSubs[$value];
+            }
+            return $value;
+        }, $this->_discriminatorMapping[$type]);
         return [$fieldName, $discValues];
     }
-
     /**
      * Extract innermost oneof/anyof group hidden inside array/map
      * type group
@@ -171,14 +155,11 @@ class TypeCombination
     public function extractOneOfAnyOfGroup()
     {
         $innerType = $this->getTypes()[0];
-        if (in_array($this->getGroupName(), ["array", "map"])
-            && $innerType instanceof TypeCombination
-        ) {
+        if (in_array($this->getGroupName(), ["array", "map"]) && $innerType instanceof TypeCombination) {
             return $innerType->extractOneOfAnyOfGroup();
         }
         return $this;
     }
-
     /**
      * Extract all internal groups similar to the given group as a list of
      * TypeCombination objects, it will only return similar array/map groups
@@ -214,7 +195,6 @@ class TypeCombination
         }
         return $result;
     }
-
     /**
      * Extract type info like: isMap, isArray, and inner type for maps/arrays.
      *
@@ -229,21 +209,17 @@ class TypeCombination
         if (preg_match('/^array<string,.*>$/', $type)) {
             return [true, false, substr($type, strlen('array<string,'), -1)];
         }
-
         // Check if the type is array, i.e. ends with '[]'
         if (preg_match('/\[]$/', $type)) {
             return [false, true, substr($type, 0, -2)];
         }
-
         // Check if the type is array, i.e. wrapped in 'array<...>'
         if (preg_match('/^array<.*>$/', $type)) {
             return [false, true, substr($type, strlen('array<'), -1)];
         }
-
         // If the type does not match the array formats, return the original type
         return [false, false, $type];
     }
-
     /**
      * Create an oneof/anyof TypeCombination instance, by specifying inner types
      *
@@ -255,23 +231,11 @@ class TypeCombination
      */
     public static function with($types, $gName = 'anyof')
     {
-        $format = join(
-            ',',
-            array_map(
-                function ($t) {
-                    return is_string($t) ? $t : $t->getFormat();
-                },
-                $types
-            )
-        );
-        return new self(
-            "$gName($format)",
-            $gName,
-            $types,
-            []
-        );
+        $format = join(',', array_map(function ($t) {
+            return is_string($t) ? $t : $t->getFormat();
+        }, $types));
+        return new self("{$gName}({$format})", $gName, $types, []);
     }
-
     /**
      * Wrap the given typeGroup string in the TypeCombination class,
      * i.e. getTypes() method will return all the grouped types,
@@ -297,17 +261,13 @@ class TypeCombination
         if ($start !== false && $end !== false) {
             list($isMap, $isArray, $innerType) = self::extractTypeInfo($typeGroup);
             if ($isMap || $isArray) {
-                return self::_createTypeGroup(
-                    $isMap ? 'map' : 'array',
-                    $innerType,
-                    $deserializers
-                );
+                return self::_createTypeGroup($isMap ? 'map' : 'array', $innerType, $deserializers);
             }
             $name = substr($typeGroup, 0, $start);
             $groupName = empty($name) ? $groupName : $name;
             $typeGroup = substr($typeGroup, $start + 1, -1);
         }
-        $format = "($typeGroup)";
+        $format = "({$typeGroup})";
         $types = [];
         $type = '';
         $groupCount = 0;
@@ -328,7 +288,6 @@ class TypeCombination
         self::_insertType($types, $type, $deserializers);
         return new self($format, $groupName, $types, $deserializers);
     }
-
     /**
      * Creates a TypeCombination object with the given name and inner
      * types group that must be another typeCombination object
@@ -341,15 +300,9 @@ class TypeCombination
      */
     private static function _createTypeGroup($name, $type, $deserializers)
     {
-        $format = $name == 'map' ? "array<string,$type>" : $type . '[]';
-        return new self(
-            $format,
-            $name,
-            [self::withFormat($type, $deserializers)],
-            $deserializers
-        );
+        $format = $name == 'map' ? "array<string,{$type}>" : $type . '[]';
+        return new self($format, $name, [self::withFormat($type, $deserializers)], $deserializers);
     }
-
     /**
      * Insert the type in the types array which is passed by reference,
      * Also check if type is not empty
@@ -371,7 +324,6 @@ class TypeCombination
             $types[] = $type;
         }
     }
-
     /**
      * Insert discriminator and discriminators mapping from group and
      * type names.
@@ -380,31 +332,23 @@ class TypeCombination
      */
     private function _insertDiscriminators()
     {
-        list($this->_groupName, $this->_discriminatorField)
-            = self::_extractDiscriminator($this->_groupName);
-        $this->_types = $this->_filterUniqueTypes(
-            array_map(
-                function ($type) {
-                    if (!is_string($type)) {
-                        return $type;
-                    }
-                    list($type, $discriminator)
-                        = self::_extractDiscriminator($type);
-                    if (array_key_exists($type, $this->_discriminatorMapping)) {
-                        $this->_discriminatorMapping[$type][] = $discriminator;
-                    } else {
-                        $this->_discriminatorMapping[$type] = [$discriminator];
-                    }
-                    return $type;
-                },
-                $this->_types
-            )
-        );
+        list($this->_groupName, $this->_discriminatorField) = self::_extractDiscriminator($this->_groupName);
+        $this->_types = $this->_filterUniqueTypes(array_map(function ($type) {
+            if (!is_string($type)) {
+                return $type;
+            }
+            list($type, $discriminator) = self::_extractDiscriminator($type);
+            if (array_key_exists($type, $this->_discriminatorMapping)) {
+                $this->_discriminatorMapping[$type][] = $discriminator;
+            } else {
+                $this->_discriminatorMapping[$type] = [$discriminator];
+            }
+            return $type;
+        }, $this->_types));
         if (isset($this->_discriminatorField)) {
             $this->_format .= '{' . $this->_discriminatorField . '}';
         }
     }
-
     /**
      * Filter out the same types.
      *
@@ -427,7 +371,6 @@ class TypeCombination
         }
         return $uniqueTypes;
     }
-
     /**
      * Extract type discriminator.
      *

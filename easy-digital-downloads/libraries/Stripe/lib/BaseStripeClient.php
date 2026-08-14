@@ -6,31 +6,16 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
 {
     /** @var string default base URL for Stripe's API */
     const DEFAULT_API_BASE = 'https://api.stripe.com';
-
     /** @var string default base URL for Stripe's OAuth API */
     const DEFAULT_CONNECT_BASE = 'https://connect.stripe.com';
-
     /** @var string default base URL for Stripe's Files API */
     const DEFAULT_FILES_BASE = 'https://files.stripe.com';
-
     /** @var array<string, null|string> */
-    const DEFAULT_CONFIG = [
-        'api_key' => null,
-        'app_info' => null,
-        'client_id' => null,
-        'stripe_account' => null,
-        'stripe_version' => \EDD\Vendor\Stripe\Util\ApiVersion::CURRENT,
-        'api_base' => self::DEFAULT_API_BASE,
-        'connect_base' => self::DEFAULT_CONNECT_BASE,
-        'files_base' => self::DEFAULT_FILES_BASE,
-    ];
-
+    const DEFAULT_CONFIG = ['api_key' => null, 'app_info' => null, 'client_id' => null, 'stripe_account' => null, 'stripe_version' => \EDD\Vendor\Stripe\Util\ApiVersion::CURRENT, 'api_base' => self::DEFAULT_API_BASE, 'connect_base' => self::DEFAULT_CONNECT_BASE, 'files_base' => self::DEFAULT_FILES_BASE];
     /** @var array<string, mixed> */
     private $config;
-
     /** @var \EDD\Vendor\Stripe\Util\RequestOptions */
     private $defaultOpts;
-
     /**
      * Initializes a new instance of the {@link BaseStripeClient} class.
      *
@@ -39,13 +24,13 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
      *
      * Configuration settings include the following options:
      *
-     * - api_key (null|string): the EDD\Vendor\Stripe API key, to be used in regular API requests.
-     * - app_info (null|array): information to identify a plugin that integrates EDD\Vendor\Stripe using this library.
+     * - api_key (null|string): the Stripe API key, to be used in regular API requests.
+     * - app_info (null|array): information to identify a plugin that integrates Stripe using this library.
      *                          Expects: array{name: string, version?: string, url?: string, partner_id?: string}
-     * - client_id (null|string): the EDD\Vendor\Stripe client ID, to be used in OAuth requests.
-     * - stripe_account (null|string): a EDD\Vendor\Stripe account ID. If set, all requests sent by the client
+     * - client_id (null|string): the Stripe client ID, to be used in OAuth requests.
+     * - stripe_account (null|string): a Stripe account ID. If set, all requests sent by the client
      *   will automatically use the {@code Stripe-Account} header with that account ID.
-     * - stripe_version (null|string): a EDD\Vendor\Stripe API version. If set, all requests sent by the client
+     * - stripe_version (null|string): a Stripe API version. If set, all requests sent by the client
      *   will include the {@code Stripe-Version} header with that API version.
      *
      * The following configuration settings are also available, though setting these should rarely be necessary
@@ -68,18 +53,11 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
         } elseif (!\is_array($config)) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('$config must be a string or an array');
         }
-
         $config = \array_merge(self::DEFAULT_CONFIG, $config);
         $this->validateConfig($config);
-
         $this->config = $config;
-
-        $this->defaultOpts = \EDD\Vendor\Stripe\Util\RequestOptions::parse([
-            'stripe_account' => $config['stripe_account'],
-            'stripe_version' => $config['stripe_version'],
-        ]);
+        $this->defaultOpts = \EDD\Vendor\Stripe\Util\RequestOptions::parse(['stripe_account' => $config['stripe_account'], 'stripe_version' => $config['stripe_version']]);
     }
-
     /**
      * Gets the API key used by the client to send requests.
      *
@@ -89,7 +67,6 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     {
         return $this->config['api_key'];
     }
-
     /**
      * Gets the client ID used by the client in OAuth requests.
      *
@@ -99,7 +76,6 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     {
         return $this->config['client_id'];
     }
-
     /**
      * Gets the base URL for Stripe's API.
      *
@@ -109,7 +85,6 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     {
         return $this->config['api_base'];
     }
-
     /**
      * Gets the base URL for Stripe's OAuth API.
      *
@@ -119,7 +94,6 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     {
         return $this->config['connect_base'];
     }
-
     /**
      * Gets the base URL for Stripe's Files API.
      *
@@ -129,17 +103,15 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     {
         return $this->config['files_base'];
     }
-
     /**
      * Gets the app info for this client.
      *
-     * @return null|array information to identify a plugin that integrates EDD\Vendor\Stripe using this library
+     * @return null|array information to identify a plugin that integrates Stripe using this library
      */
     public function getAppInfo()
     {
         return $this->config['app_info'];
     }
-
     /**
      * Sends a request to Stripe's API.
      *
@@ -159,10 +131,8 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
         $opts->discardNonPersistentHeaders();
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Sends a request to Stripe's API, passing chunks of the streamed response
      * into a user-provided $readBodyChunkCallable callback.
@@ -181,7 +151,6 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
         $requestor = new \EDD\Vendor\Stripe\ApiRequestor($this->apiKeyForRequest($opts), $baseUrl, $this->getAppInfo());
         list($response, $opts->apiKey) = $requestor->requestStream($method, $path, $readBodyChunkCallable, $params, $opts->headers, ['stripe_client']);
     }
-
     /**
      * Sends a request to Stripe's API.
      *
@@ -195,17 +164,14 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     public function requestCollection($method, $path, $params, $opts)
     {
         $obj = $this->request($method, $path, $params, $opts);
-        if (!($obj instanceof \EDD\Vendor\Stripe\Collection)) {
+        if (!$obj instanceof \EDD\Vendor\Stripe\Collection) {
             $received_class = \get_class($obj);
-            $msg = "Expected to receive `EDD\Vendor\Stripe\\Collection` object from EDD\Vendor\Stripe API. Instead received `{$received_class}`.";
-
+            $msg = "Expected to receive `Stripe\\Collection` object from Stripe API. Instead received `{$received_class}`.";
             throw new \EDD\Vendor\Stripe\Exception\UnexpectedValueException($msg);
         }
         $obj->setFilters($params);
-
         return $obj;
     }
-
     /**
      * Sends a request to Stripe's API.
      *
@@ -219,17 +185,14 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     public function requestSearchResult($method, $path, $params, $opts)
     {
         $obj = $this->request($method, $path, $params, $opts);
-        if (!($obj instanceof \EDD\Vendor\Stripe\SearchResult)) {
+        if (!$obj instanceof \EDD\Vendor\Stripe\SearchResult) {
             $received_class = \get_class($obj);
-            $msg = "Expected to receive `EDD\Vendor\Stripe\\SearchResult` object from EDD\Vendor\Stripe API. Instead received `{$received_class}`.";
-
+            $msg = "Expected to receive `Stripe\\SearchResult` object from Stripe API. Instead received `{$received_class}`.";
             throw new \EDD\Vendor\Stripe\Exception\UnexpectedValueException($msg);
         }
         $obj->setFilters($params);
-
         return $obj;
     }
-
     /**
      * @param \EDD\Vendor\Stripe\Util\RequestOptions $opts
      *
@@ -240,18 +203,12 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     private function apiKeyForRequest($opts)
     {
         $apiKey = $opts->apiKey ?: $this->getApiKey();
-
         if (null === $apiKey) {
-            $msg = 'No API key provided. Set your API key when constructing the '
-                . 'StripeClient instance, or provide it on a per-request basis '
-                . 'using the `api_key` key in the $opts argument.';
-
+            $msg = 'No API key provided. Set your API key when constructing the ' . 'StripeClient instance, or provide it on a per-request basis ' . 'using the `api_key` key in the $opts argument.';
             throw new \EDD\Vendor\Stripe\Exception\AuthenticationException($msg);
         }
-
         return $apiKey;
     }
-
     /**
      * @param array<string, mixed> $config
      *
@@ -263,67 +220,52 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
         if (null !== $config['api_key'] && !\is_string($config['api_key'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('api_key must be null or a string');
         }
-
-        if (null !== $config['api_key'] && ('' === $config['api_key'])) {
+        if (null !== $config['api_key'] && '' === $config['api_key']) {
             $msg = 'api_key cannot be the empty string';
-
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException($msg);
         }
-
-        if (null !== $config['api_key'] && (\preg_match('/\s/', $config['api_key']))) {
+        if (null !== $config['api_key'] && \preg_match('/\s/', $config['api_key'])) {
             $msg = 'api_key cannot contain whitespace';
-
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException($msg);
         }
-
         // client_id
         if (null !== $config['client_id'] && !\is_string($config['client_id'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('client_id must be null or a string');
         }
-
         // stripe_account
         if (null !== $config['stripe_account'] && !\is_string($config['stripe_account'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('stripe_account must be null or a string');
         }
-
         // stripe_version
         if (null !== $config['stripe_version'] && !\is_string($config['stripe_version'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('stripe_version must be null or a string');
         }
-
         // api_base
         if (!\is_string($config['api_base'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('api_base must be a string');
         }
-
         // connect_base
         if (!\is_string($config['connect_base'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('connect_base must be a string');
         }
-
         // files_base
         if (!\is_string($config['files_base'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('files_base must be a string');
         }
-
         // app info
         if (null !== $config['app_info'] && !\is_array($config['app_info'])) {
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('app_info must be an array');
         }
-
         $appInfoKeys = ['name', 'version', 'url', 'partner_id'];
         if (null !== $config['app_info'] && array_diff_key($config['app_info'], array_flip($appInfoKeys))) {
             $msg = 'app_info must be of type array{name: string, version?: string, url?: string, partner_id?: string}';
-
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException($msg);
         }
-
         // check absence of extra keys
         $extraConfigKeys = \array_diff(\array_keys($config), \array_keys(self::DEFAULT_CONFIG));
         if (!empty($extraConfigKeys)) {
             // Wrap in single quote to more easily catch trailing spaces errors
             $invalidKeys = "'" . \implode("', '", $extraConfigKeys) . "'";
-
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException('Found unknown key(s) in configuration array: ' . $invalidKeys);
         }
     }

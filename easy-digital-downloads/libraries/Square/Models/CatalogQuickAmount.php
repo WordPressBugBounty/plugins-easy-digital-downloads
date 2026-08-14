@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a Quick Amount in the Catalog.
  */
@@ -15,22 +13,18 @@ class CatalogQuickAmount implements \JsonSerializable
      * @var string
      */
     private $type;
-
     /**
      * @var Money
      */
     private $amount;
-
     /**
      * @var array
      */
     private $score = [];
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * @param string $type
      * @param Money $amount
@@ -40,7 +34,6 @@ class CatalogQuickAmount implements \JsonSerializable
         $this->type = $type;
         $this->amount = $amount;
     }
-
     /**
      * Returns Type.
      * Determines the type of a specific Quick Amount.
@@ -49,7 +42,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Determines the type of a specific Quick Amount.
@@ -61,7 +53,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Amount.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -76,7 +67,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         return $this->amount;
     }
-
     /**
      * Sets Amount.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -94,7 +84,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->amount = $amount;
     }
-
     /**
      * Returns Score.
      * Describes the ranking of the Quick Amount provided by machine learning model, in the range [0, 100].
@@ -107,7 +96,6 @@ class CatalogQuickAmount implements \JsonSerializable
         }
         return $this->score['value'];
     }
-
     /**
      * Sets Score.
      * Describes the ranking of the Quick Amount provided by machine learning model, in the range [0, 100].
@@ -119,7 +107,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->score['value'] = $score;
     }
-
     /**
      * Unsets Score.
      * Describes the ranking of the Quick Amount provided by machine learning model, in the range [0, 100].
@@ -129,7 +116,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->score = [];
     }
-
     /**
      * Returns Ordinal.
      * The order in which this Quick Amount should be displayed.
@@ -141,7 +127,6 @@ class CatalogQuickAmount implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * The order in which this Quick Amount should be displayed.
@@ -152,7 +137,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * The order in which this Quick Amount should be displayed.
@@ -161,7 +145,6 @@ class CatalogQuickAmount implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -170,14 +153,14 @@ class CatalogQuickAmount implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['type']        = $this->type;
-        $json['amount']      = $this->amount;
+        $json['type'] = $this->type;
+        $json['amount'] = $this->amount;
         if (!empty($this->score)) {
-            $json['score']   = $this->score['value'];
+            $json['score'] = $this->score['value'];
         }
         if (!empty($this->ordinal)) {
             $json['ordinal'] = $this->ordinal['value'];
@@ -185,7 +168,6 @@ class CatalogQuickAmount implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

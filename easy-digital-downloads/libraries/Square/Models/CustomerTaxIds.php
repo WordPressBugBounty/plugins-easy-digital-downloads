@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
  * field is available only for customers of sellers in EU countries or the United Kingdom.
@@ -18,7 +16,6 @@ class CustomerTaxIds implements \JsonSerializable
      * @var array
      */
     private $euVat = [];
-
     /**
      * Returns Eu Vat.
      * The EU VAT identification number for the customer. For example, `IE3426675K`. The ID can contain
@@ -31,7 +28,6 @@ class CustomerTaxIds implements \JsonSerializable
         }
         return $this->euVat['value'];
     }
-
     /**
      * Sets Eu Vat.
      * The EU VAT identification number for the customer. For example, `IE3426675K`. The ID can contain
@@ -43,7 +39,6 @@ class CustomerTaxIds implements \JsonSerializable
     {
         $this->euVat['value'] = $euVat;
     }
-
     /**
      * Unsets Eu Vat.
      * The EU VAT identification number for the customer. For example, `IE3426675K`. The ID can contain
@@ -53,7 +48,6 @@ class CustomerTaxIds implements \JsonSerializable
     {
         $this->euVat = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -62,7 +56,7 @@ class CustomerTaxIds implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -72,7 +66,6 @@ class CustomerTaxIds implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

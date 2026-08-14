@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -12,8 +11,8 @@ namespace EDD\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property null|\EDD\Vendor\Stripe\StripeObject $address The customer's address.
- * @property null|int $balance The current balance, if any, that's stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that's added to their next invoice. The balance only considers amounts that EDD\Vendor\Stripe hasn't successfully applied to any invoice. It doesn't reflect unpaid invoices. This balance is only taken into account after invoices finalize.
- * @property null|\EDD\Vendor\Stripe\CashBalance $cash_balance The current funds being held by EDD\Vendor\Stripe on behalf of the customer. You can apply these funds towards payment intents when the source is &quot;cash_balance&quot;. The <code>settings[reconciliation_mode]</code> field describes if these funds apply to these payment intents manually or automatically.
+ * @property null|int $balance The current balance, if any, that's stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that's added to their next invoice. The balance only considers amounts that Stripe hasn't successfully applied to any invoice. It doesn't reflect unpaid invoices. This balance is only taken into account after invoices finalize.
+ * @property null|\EDD\Vendor\Stripe\CashBalance $cash_balance The current funds being held by Stripe on behalf of the customer. You can apply these funds towards payment intents when the source is &quot;cash_balance&quot;. The <code>settings[reconciliation_mode]</code> field describes if these funds apply to these payment intents manually or automatically.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string $currency Three-letter <a href="https://stripe.com/docs/currencies">ISO code for the currency</a> the customer can be charged in for recurring billing purposes.
  * @property null|string|\EDD\Vendor\Stripe\Account|\EDD\Vendor\Stripe\BankAccount|\EDD\Vendor\Stripe\Card|\EDD\Vendor\Stripe\Source $default_source <p>ID of the default payment source for the customer.</p><p>If you use payment methods created through the PaymentMethods API, see the <a href="https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method">invoice_settings.default_payment_method</a> field instead.</p>
@@ -21,7 +20,7 @@ namespace EDD\Vendor\Stripe;
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.
  * @property null|\EDD\Vendor\Stripe\Discount $discount Describes the current discount active on the customer, if there is one.
  * @property null|string $email The customer's email address.
- * @property null|\EDD\Vendor\Stripe\StripeObject $invoice_credit_balance The current multi-currency balances, if any, that's stored on the customer. If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency. If negative, the customer has an amount owed that's added to their next invoice denominated in that currency. These balances don't apply to unpaid invoices. They solely track amounts that EDD\Vendor\Stripe hasn't successfully applied to any invoice. EDD\Vendor\Stripe only applies a balance in a specific currency to an invoice after that invoice (which is in the same currency) finalizes.
+ * @property null|\EDD\Vendor\Stripe\StripeObject $invoice_credit_balance The current multi-currency balances, if any, that's stored on the customer. If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency. If negative, the customer has an amount owed that's added to their next invoice denominated in that currency. These balances don't apply to unpaid invoices. They solely track amounts that Stripe hasn't successfully applied to any invoice. Stripe only applies a balance in a specific currency to an invoice after that invoice (which is in the same currency) finalizes.
  * @property null|string $invoice_prefix The prefix for the customer used to generate unique invoice numbers.
  * @property null|\EDD\Vendor\Stripe\StripeObject $invoice_settings
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -41,14 +40,11 @@ namespace EDD\Vendor\Stripe;
 class Customer extends ApiResource
 {
     const OBJECT_NAME = 'customer';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     const TAX_EXEMPT_EXEMPT = 'exempt';
     const TAX_EXEMPT_NONE = 'none';
     const TAX_EXEMPT_REVERSE = 'reverse';
-
     /**
      * Creates a new customer object.
      *
@@ -63,14 +59,11 @@ class Customer extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Permanently deletes a customer. It cannot be undone. Also immediately cancels
      * any active subscriptions on the customer.
@@ -85,14 +78,11 @@ class Customer extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your customers. The customers are returned sorted by creation
      * date, with the most recent customers appearing first.
@@ -107,10 +97,8 @@ class Customer extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a Customer object.
      *
@@ -126,10 +114,8 @@ class Customer extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified customer by setting the values of the parameters passed.
      * Any parameters not provided will be left unchanged. For example, if you pass the
@@ -157,26 +143,19 @@ class Customer extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     public static function getSavedNestedResources()
     {
         static $savedNestedResources = null;
         if (null === $savedNestedResources) {
-            $savedNestedResources = new Util\Set([
-                'source',
-            ]);
+            $savedNestedResources = new Util\Set(['source']);
         }
-
         return $savedNestedResources;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -188,10 +167,8 @@ class Customer extends ApiResource
         $url = $this->instanceUrl() . '/discount';
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom(['discount' => null], $opts, true);
-
         return $this;
     }
-
     /**
      * @param string $id
      * @param null|array $params
@@ -207,10 +184,8 @@ class Customer extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param string $payment_method
      * @param null|array $params
@@ -226,10 +201,8 @@ class Customer extends ApiResource
         list($response, $opts) = $this->_request('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -241,12 +214,9 @@ class Customer extends ApiResource
     public static function search($params = null, $opts = null)
     {
         $url = '/v1/customers/search';
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\SearchResult::class, $params, $opts);
     }
-
     const PATH_BALANCE_TRANSACTIONS = '/balance_transactions';
-
     /**
      * @param string $id the ID of the customer on which to retrieve the customer balance transactions
      * @param null|array $params
@@ -260,7 +230,6 @@ class Customer extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_BALANCE_TRANSACTIONS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer on which to create the customer balance transaction
      * @param null|array $params
@@ -274,7 +243,6 @@ class Customer extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_BALANCE_TRANSACTIONS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the customer balance transaction belongs
      * @param string $balanceTransactionId the ID of the customer balance transaction to retrieve
@@ -289,7 +257,6 @@ class Customer extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_BALANCE_TRANSACTIONS, $balanceTransactionId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the customer balance transaction belongs
      * @param string $balanceTransactionId the ID of the customer balance transaction to update
@@ -305,7 +272,6 @@ class Customer extends ApiResource
         return self::_updateNestedResource($id, static::PATH_BALANCE_TRANSACTIONS, $balanceTransactionId, $params, $opts);
     }
     const PATH_CASH_BALANCE_TRANSACTIONS = '/cash_balance_transactions';
-
     /**
      * @param string $id the ID of the customer on which to retrieve the customer cash balance transactions
      * @param null|array $params
@@ -319,7 +285,6 @@ class Customer extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_CASH_BALANCE_TRANSACTIONS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the customer cash balance transaction belongs
      * @param string $cashBalanceTransactionId the ID of the customer cash balance transaction to retrieve
@@ -335,7 +300,6 @@ class Customer extends ApiResource
         return self::_retrieveNestedResource($id, static::PATH_CASH_BALANCE_TRANSACTIONS, $cashBalanceTransactionId, $params, $opts);
     }
     const PATH_SOURCES = '/sources';
-
     /**
      * @param string $id the ID of the customer on which to retrieve the payment sources
      * @param null|array $params
@@ -349,7 +313,6 @@ class Customer extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_SOURCES, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer on which to create the payment source
      * @param null|array $params
@@ -363,7 +326,6 @@ class Customer extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_SOURCES, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the payment source belongs
      * @param string $sourceId the ID of the payment source to delete
@@ -378,7 +340,6 @@ class Customer extends ApiResource
     {
         return self::_deleteNestedResource($id, static::PATH_SOURCES, $sourceId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the payment source belongs
      * @param string $sourceId the ID of the payment source to retrieve
@@ -393,7 +354,6 @@ class Customer extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_SOURCES, $sourceId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the payment source belongs
      * @param string $sourceId the ID of the payment source to update
@@ -409,7 +369,6 @@ class Customer extends ApiResource
         return self::_updateNestedResource($id, static::PATH_SOURCES, $sourceId, $params, $opts);
     }
     const PATH_CASH_BALANCE = '/cash_balance';
-
     /**
      * @param string $id the ID of the customer to which the cash balance belongs
      * @param null|array $params
@@ -424,7 +383,6 @@ class Customer extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_CASH_BALANCE, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the cash balance belongs
      * @param null|array $params
@@ -440,7 +398,6 @@ class Customer extends ApiResource
         return self::_updateNestedResource($id, static::PATH_CASH_BALANCE, $params, $opts);
     }
     const PATH_TAX_IDS = '/tax_ids';
-
     /**
      * @param string $id the ID of the customer on which to retrieve the tax ids
      * @param null|array $params
@@ -454,7 +411,6 @@ class Customer extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_TAX_IDS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer on which to create the tax id
      * @param null|array $params
@@ -468,7 +424,6 @@ class Customer extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_TAX_IDS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the tax id belongs
      * @param string $taxIdId the ID of the tax id to delete
@@ -483,7 +438,6 @@ class Customer extends ApiResource
     {
         return self::_deleteNestedResource($id, static::PATH_TAX_IDS, $taxIdId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the customer to which the tax id belongs
      * @param string $taxIdId the ID of the tax id to retrieve

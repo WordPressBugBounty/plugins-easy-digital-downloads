@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Additional details about EDD\Vendor\Square Account payments.
+ * Additional details about Square Account payments.
  */
 class SquareAccountDetails implements \JsonSerializable
 {
@@ -15,12 +13,10 @@ class SquareAccountDetails implements \JsonSerializable
      * @var array
      */
     private $paymentSourceToken = [];
-
     /**
      * @var array
      */
     private $errors = [];
-
     /**
      * Returns Payment Source Token.
      * Unique identifier for the payment source used for this payment.
@@ -32,7 +28,6 @@ class SquareAccountDetails implements \JsonSerializable
         }
         return $this->paymentSourceToken['value'];
     }
-
     /**
      * Sets Payment Source Token.
      * Unique identifier for the payment source used for this payment.
@@ -43,7 +38,6 @@ class SquareAccountDetails implements \JsonSerializable
     {
         $this->paymentSourceToken['value'] = $paymentSourceToken;
     }
-
     /**
      * Unsets Payment Source Token.
      * Unique identifier for the payment source used for this payment.
@@ -52,7 +46,6 @@ class SquareAccountDetails implements \JsonSerializable
     {
         $this->paymentSourceToken = [];
     }
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -66,7 +59,6 @@ class SquareAccountDetails implements \JsonSerializable
         }
         return $this->errors['value'];
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -79,7 +71,6 @@ class SquareAccountDetails implements \JsonSerializable
     {
         $this->errors['value'] = $errors;
     }
-
     /**
      * Unsets Errors.
      * Information about errors encountered during the request.
@@ -88,7 +79,6 @@ class SquareAccountDetails implements \JsonSerializable
     {
         $this->errors = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -97,7 +87,7 @@ class SquareAccountDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -105,12 +95,11 @@ class SquareAccountDetails implements \JsonSerializable
             $json['payment_source_token'] = $this->paymentSourceToken['value'];
         }
         if (!empty($this->errors)) {
-            $json['errors']               = $this->errors['value'];
+            $json['errors'] = $this->errors['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

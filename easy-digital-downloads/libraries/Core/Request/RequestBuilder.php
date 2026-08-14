@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request;
 
 use EDD\Vendor\Core\Authentication\Auth;
@@ -11,43 +10,34 @@ use EDD\Vendor\Core\Utils\XmlSerializer;
 use EDD\Vendor\CoreInterfaces\Core\Format;
 use EDD\Vendor\CoreInterfaces\Core\Request\ParamInterface;
 use EDD\Vendor\CoreInterfaces\Http\RetryOption;
-
 class RequestBuilder
 {
     private $requestMethod;
     private $path;
-
     /**
      * @var string|null
      */
     private $server;
-
     private $retryOption = RetryOption::USE_GLOBAL_SETTINGS;
     private $allowContentType = true;
-
     /**
      * @var ParamInterface[]
      */
     private $parameters = [];
-
     /**
      * @var callable
      */
     private $bodySerializer = [CoreHelper::class, 'serialize'];
     private $bodyFormat = Format::JSON;
-
     /**
      * @var Auth|null
      */
     private $auth;
-
     public function __construct(string $requestMethod, string $path)
     {
         $this->requestMethod = $requestMethod;
         $this->path = $path;
     }
-
-
     /**
      * The server URL to be set for the request.
      */
@@ -56,7 +46,6 @@ class RequestBuilder
         $this->server = $server;
         return $this;
     }
-
     /**
      * Sets the retryOption value that is to be set for the request on creation.
      */
@@ -65,7 +54,6 @@ class RequestBuilder
         $this->retryOption = $retryOption;
         return $this;
     }
-
     /**
      * Disables setting of allowContentType for request on creation.
      */
@@ -74,7 +62,6 @@ class RequestBuilder
         $this->allowContentType = false;
         return $this;
     }
-
     /**
      * @param Auth|string ...$auths
      * @return $this
@@ -84,7 +71,6 @@ class RequestBuilder
         $this->auth = Auth::or(...$auths);
         return $this;
     }
-
     /**
      * Parameters to be set on request creation.
      */
@@ -93,7 +79,6 @@ class RequestBuilder
         $this->parameters = array_merge($this->parameters, $parameters);
         return $this;
     }
-
     /**
      * Sets body format to xml and serializes the body to xml.
      */
@@ -105,7 +90,6 @@ class RequestBuilder
         };
         return $this;
     }
-
     /**
      * Sets body format to xml and serializes the body to xml.
      */
@@ -117,7 +101,6 @@ class RequestBuilder
         };
         return $this;
     }
-
     /**
      * Sets body format to xml and serializes the body to xml.
      */
@@ -129,7 +112,6 @@ class RequestBuilder
         };
         return $this;
     }
-
     /**
      * Initializes a new Request object with the properties set within RequestBuilder.
      */

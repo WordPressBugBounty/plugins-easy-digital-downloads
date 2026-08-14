@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -43,21 +42,16 @@ namespace EDD\Vendor\Stripe;
 class CreditNote extends ApiResource
 {
     const OBJECT_NAME = 'credit_note';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     const REASON_DUPLICATE = 'duplicate';
     const REASON_FRAUDULENT = 'fraudulent';
     const REASON_ORDER_CHANGE = 'order_change';
     const REASON_PRODUCT_UNSATISFACTORY = 'product_unsatisfactory';
-
     const STATUS_ISSUED = 'issued';
     const STATUS_VOID = 'void';
-
     const TYPE_POST_PAYMENT = 'post_payment';
     const TYPE_PRE_PAYMENT = 'pre_payment';
-
     /**
      * Issue a credit note to adjust the amount of a finalized invoice. For a
      * <code>status=open</code> invoice, a credit note reduces its
@@ -69,11 +63,11 @@ class CreditNote extends ApiResource
      * an existing refund (using <code>refund</code>).</li> <li>Customer balance
      * credit: credit the customer’s balance (using <code>credit_amount</code>) which
      * will be automatically applied to their next invoice when it’s finalized.</li>
-     * <li>Outside of EDD\Vendor\Stripe credit: record the amount that is or will be credited
-     * outside of EDD\Vendor\Stripe (using <code>out_of_band_amount</code>).</li> </ul>
+     * <li>Outside of Stripe credit: record the amount that is or will be credited
+     * outside of Stripe (using <code>out_of_band_amount</code>).</li> </ul>
      *
      * For post-payment credit notes the sum of the refund, credit and outside of
-     * EDD\Vendor\Stripe amounts must equal the credit note total.
+     * Stripe amounts must equal the credit note total.
      *
      * You may issue multiple credit notes for an invoice. Each credit note will
      * increment the invoice’s <code>pre_payment_credit_notes_amount</code> or
@@ -91,14 +85,11 @@ class CreditNote extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of credit notes.
      *
@@ -112,10 +103,8 @@ class CreditNote extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the credit note object with the given identifier.
      *
@@ -131,10 +120,8 @@ class CreditNote extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates an existing credit note.
      *
@@ -150,14 +137,11 @@ class CreditNote extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -172,10 +156,8 @@ class CreditNote extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -190,10 +172,8 @@ class CreditNote extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -207,12 +187,9 @@ class CreditNote extends ApiResource
         $url = $this->instanceUrl() . '/void';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     const PATH_LINES = '/lines';
-
     /**
      * @param string $id the ID of the credit note on which to retrieve the credit note line items
      * @param null|array $params

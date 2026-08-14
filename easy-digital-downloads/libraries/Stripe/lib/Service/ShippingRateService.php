@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class ShippingRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/shipping_rates', $params, $opts);
     }
-
     /**
      * Creates a new shipping rate object.
      *
@@ -39,7 +37,6 @@ class ShippingRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/shipping_rates', $params, $opts);
     }
-
     /**
      * Returns the shipping rate object with the given ID.
      *
@@ -55,7 +52,6 @@ class ShippingRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/shipping_rates/%s', $id), $params, $opts);
     }
-
     /**
      * Updates an existing shipping rate object.
      *

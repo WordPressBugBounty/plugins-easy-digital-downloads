@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the body parameters that can be included in requests to the
  * [BulkDeleteCustomers]($e/Customers/BulkDeleteCustomers) endpoint.
@@ -16,7 +14,6 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
      * @var string[]
      */
     private $customerIds;
-
     /**
      * @param string[] $customerIds
      */
@@ -24,7 +21,6 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
     {
         $this->customerIds = $customerIds;
     }
-
     /**
      * Returns Customer Ids.
      * The IDs of the [customer profiles](entity:Customer) to delete.
@@ -35,7 +31,6 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
     {
         return $this->customerIds;
     }
-
     /**
      * Sets Customer Ids.
      * The IDs of the [customer profiles](entity:Customer) to delete.
@@ -49,7 +44,6 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
     {
         $this->customerIds = $customerIds;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -58,7 +52,7 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -66,7 +60,6 @@ class BulkDeleteCustomersRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

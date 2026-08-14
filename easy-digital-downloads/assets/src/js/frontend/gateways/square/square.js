@@ -7,6 +7,10 @@
  */
 import * as process from './process';
 import { apiRequest } from '../../../utils/api-request';
+import { beginLoading, endLoading } from '@easy-digital-downloads/cart-loading';
+
+// Token for the shared checkout loading overlay while a payment is processing.
+let loadingToken = null;
 
 export function init() {
 	window.eddSquare.squareData = typeof eddSquare !== 'undefined' ? eddSquare : null;
@@ -20,10 +24,12 @@ export function init() {
 	}
 
 	// Setup some validation states for the card fields.
+	// Postal code is intentionally omitted: Square only renders a postal code field
+	// for certain card issuing countries (it's hidden entirely for some, e.g. Japan
+	// and China).
 	window.eddSquare.cardValidation = {
 		cardNumber: false,
 		expirationDate: false,
-		postalCode: false,
 		cvv: false,
 	}
 
@@ -122,16 +128,14 @@ function bindCardFieldValidation() {
 		window.eddSquare.card.addEventListener(
 			'focusClassRemoved',
 			async (cardInputEvent) => {
-				window.eddSquare.cardValidation[cardInputEvent.detail.field] = cardInputEvent.detail.currentState.isCompletelyValid;
-				checkCardValidation();
+				setCardFieldValidation( cardInputEvent.detail.field, cardInputEvent.detail.currentState.isCompletelyValid );
 			}
 		);
 
 		window.eddSquare.card.addEventListener(
 			'cardBrandChanged',
 			async (cardInputEvent) => {
-				window.eddSquare.cardValidation[cardInputEvent.detail.field] = cardInputEvent.detail.currentState.isCompletelyValid;
-				checkCardValidation();
+				setCardFieldValidation( cardInputEvent.detail.field, cardInputEvent.detail.currentState.isCompletelyValid );
 			}
 		);
 
@@ -139,20 +143,32 @@ function bindCardFieldValidation() {
 		window.eddSquare.card.addEventListener(
 			'errorClassAdded',
 			async (cardInputEvent) => {
-				window.eddSquare.cardValidation[cardInputEvent.detail.field] = false;
-				checkCardValidation();
-			}
-		);
-
-		// Listen specifically for the postal code field, as it's the last one.
-		window.eddSquare.card.addEventListener(
-			'postalCodeChanged',
-			async (cardInputEvent) => {
-				window.eddSquare.cardValidation.postalCode = cardInputEvent.detail.currentState.isCompletelyValid;
-				checkCardValidation();
+				setCardFieldValidation( cardInputEvent.detail.field, false );
 			}
 		);
 	}
+}
+
+/**
+ * Updates the button-gating validation state for a single card field.
+ *
+ * We only gate the purchase button on the always-present card fields seeded in
+ * cardValidation (number, expiry, CVV). Square renders its postal code field only
+ * for some card issuing countries, so events for fields we don't track (postal
+ * code) are ignored here. Otherwise a postal code blur could disable the button at
+ * the moment of click, swallowing the submit. Postal code is instead validated by
+ * Square during tokenization, which surfaces an error if it's missing or invalid.
+ *
+ * @param {string}  field   The Square card field name from the event detail.
+ * @param {boolean} isValid Whether the field is completely valid.
+ */
+function setCardFieldValidation( field, isValid ) {
+	if ( ! ( field in window.eddSquare.cardValidation ) ) {
+		return;
+	}
+
+	window.eddSquare.cardValidation[ field ] = isValid;
+	checkCardValidation();
 }
 
 function checkCardValidation() {
@@ -188,6 +204,11 @@ async function initializeSquarePayments() {
 
 function bindSquareSubmitHandler() {
 	const purchaseButton = document.getElementById( 'edd-purchase-button' );
+
+	// Remove the core checkout submit handler so it can't also process this click.
+	// Square handles its own submission; this has to be jQuery to match how core binds it.
+	$( document ).off( 'click', '#edd_purchase_form #edd_purchase_submit [type=submit]' );
+
 	const events = [ 'click', 'keydown' ];
 	events.forEach( ( event ) => {
 		purchaseButton.addEventListener( event, processPayment );
@@ -229,17 +250,21 @@ async function processPayment(event) { // event is passed by addEventListener
 	clearErrors();
 
 	const form = document.getElementById('edd_purchase_form'),
-		submitButton = document.getElementById('edd-purchase-button'),
 		tokenInput = $( '#edd-process-square-token' );
 
 
 	if ( ! window.eddSquare.card ) {
 		showError( ( window.eddSquare.squareData.strings && window.eddSquare.squareData.strings.cardError ) || 'Card payment not initialized' );
-		bindSquareSubmitHandler();
+		restorePurchaseButton();
 		return;
 	}
 
 	updatePurchaseButton( 'processing' );
+
+	// Drive the shared checkout overlay alongside Square's button lockdown.
+	if ( ! loadingToken ) {
+		loadingToken = beginLoading( 'square' );
+	}
 
 	const loadingIndicator = document.getElementById('edd-square-loading'); // Assuming this ID
 	if (loadingIndicator) loadingIndicator.style.display = 'block';
@@ -258,7 +283,7 @@ async function processPayment(event) { // event is passed by addEventListener
 
 		if ( ! token ) {
 			showError( 'Failed to process card payment.' );
-			bindSquareSubmitHandler();
+			restorePurchaseButton();
 			return;
 		}
 
@@ -274,7 +299,7 @@ async function processPayment(event) { // event is passed by addEventListener
 
 		if ( square_payment_status !== 'COMPLETED' ) {
 			showError( 'Payment failed. Please try again.' );
-			bindSquareSubmitHandler(); // Re-bind the submit handler.
+			restorePurchaseButton();
 			return;
 		}
 
@@ -283,12 +308,8 @@ async function processPayment(event) { // event is passed by addEventListener
 		// 4. Redirect to the success page.
 		window.location.href = eddSquare.success_page_uri;
 	} catch (e) {
-		console.log( e );
-		bindSquareSubmitHandler();
-		showError(e.message || ((window.eddSquare.squareData.strings && window.eddSquare.squareData.strings.genericError) || 'An error occurred.'));
-		submitButton.disabled = false;
-		submitButton.value = window.eddSquare.submitButtonOriginalText || ((window.eddSquare.squareData.strings && window.eddSquare.squareData.strings.completePurchase) || 'Complete Purchase');
-		if (loadingIndicator) loadingIndicator.style.display = 'none';
+		showError( e.message || ( window.eddSquare.squareData.strings && window.eddSquare.squareData.strings.genericError ) || 'An error occurred.' );
+		restorePurchaseButton();
 	}
 }
 
@@ -314,6 +335,25 @@ function clearErrors() {
 		errorMessageWrapper.textContent = '';
 		errorElementWrapper.style.display = 'none';
 	}
+}
+
+/**
+ * Restores the purchase button to its ready state after a failed submission.
+ *
+ * Routes through the 'enabled' state so the readonly and data-edd-button-state
+ * attributes set during processing are cleared. Without this, the button is left
+ * looking stuck even though it's clickable.
+ */
+function restorePurchaseButton() {
+	const loadingIndicator = document.getElementById( 'edd-square-loading' );
+	if ( loadingIndicator ) {
+		loadingIndicator.style.display = 'none';
+	}
+
+	endLoading( loadingToken );
+	loadingToken = null;
+
+	updatePurchaseButton( 'enabled' );
 }
 
 function disableSubmitButton() {

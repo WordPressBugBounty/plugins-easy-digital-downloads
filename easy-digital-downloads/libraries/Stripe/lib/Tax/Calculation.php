@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Tax;
 
 /**
@@ -28,7 +27,6 @@ namespace EDD\Vendor\Stripe\Tax;
 class Calculation extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'tax.calculation';
-
     /**
      * Calculates tax based on the input and returns a Tax <code>Calculation</code>
      * object.
@@ -44,14 +42,11 @@ class Calculation extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieves a Tax <code>Calculation</code> object, if the calculation hasn’t
      * expired.
@@ -68,10 +63,8 @@ class Calculation extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param string $id
      * @param null|array $params
@@ -87,7 +80,6 @@ class Calculation extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

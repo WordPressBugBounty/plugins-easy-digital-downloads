@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\TestHelpers\Issuing;
 
 /**
@@ -25,7 +24,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/authorizations/%s/capture', $id), $params, $opts);
     }
-
     /**
      * Create a test-mode authorization.
      *
@@ -40,7 +38,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/test_helpers/issuing/authorizations', $params, $opts);
     }
-
     /**
      * Expire a test-mode Authorization.
      *
@@ -56,7 +53,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/authorizations/%s/expire', $id), $params, $opts);
     }
-
     /**
      * Finalize the amount on an Authorization prior to capture, when the initial
      * authorization was for an estimated amount.
@@ -73,7 +69,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/authorizations/%s/finalize_amount', $id), $params, $opts);
     }
-
     /**
      * Increment a test-mode Authorization.
      *
@@ -89,7 +84,6 @@ class AuthorizationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/authorizations/%s/increment', $id), $params, $opts);
     }
-
     /**
      * Reverse a test-mode Authorization.
      *

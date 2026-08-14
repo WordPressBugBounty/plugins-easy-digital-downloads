@@ -786,8 +786,7 @@ function edd_get_user_verification_token( $url = '' ) {
 
 			if ( in_array( 'ua', $options ) ) {
 
-				$ua                 = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-				$args['user_agent'] = rawurlencode( $ua );
+				$args['user_agent'] = rawurlencode( \EDD\Utils\Browser::get_user_agent() );
 
 			}
 		}

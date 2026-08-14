@@ -52,6 +52,7 @@ class Core extends EventManagement\Subscribers {
 			new Gateways\Square\Webhooks\Listener(),
 			new Gateways\PayPal\CommerceVersion(),
 			new Gateways\PayPal\V3\Onboarding(),
+			new Gateways\PayPal\V3\ConnectSync(),
 			new Gateways\PayPal\V3\ApplePay\DomainSubscriber(),
 			new Gateways\PayPal\Payments(),
 
@@ -77,7 +78,7 @@ class Core extends EventManagement\Subscribers {
 			new Blocks\Loader(),
 
 			new Cart\Preview\Component(),
-			new REST\Manager(),
+			new Cart\AddToCartRedirectCleanup(),
 		);
 	}
 
@@ -125,6 +126,16 @@ class Core extends EventManagement\Subscribers {
 			new Admin\Settings\Ajax\Toggle(),
 			new Admin\Tools\Loader(),
 			new Admin\CartRecovery\Screen(),
+			new Admin\Settings\ProductEducation\ActiveLayer(),
+
+			// Checkout Templates admin UI (settings + browser). Registered
+			// unconditionally on purpose: the settings and browse screens render
+			// without Elementor so users can see what the feature offers and which
+			// editor it needs. The Elementor editor integration itself is gated
+			// separately in src/Integrations/Elementor.php, which loads only when
+			// Elementor is active.
+			new Admin\Checkout\Templates\Settings(),
+			new Admin\Checkout\Templates\Browser(),
 		);
 
 		return $providers;
@@ -140,6 +151,7 @@ class Core extends EventManagement\Subscribers {
 			'Admin\Extensions\Legacy'   => new Admin\Extensions\Legacy(),
 			'Admin\Promos\PromoHandler' => new Admin\Promos\PromoHandler(),
 			'Admin\Discounts\Generate'  => new Admin\Discounts\Generate(),
+			'REST\Manager'              => new REST\Manager(),
 		);
 	}
 
@@ -156,6 +168,7 @@ class Core extends EventManagement\Subscribers {
 			'Admin\Extensions\Legacy'   => 'EDD\Admin\Extensions\Legacy',
 			'Admin\Promos\PromoHandler' => 'EDD\Admin\Promos\PromoHandler',
 			'Admin\Discounts\Generate'  => 'EDD\Admin\Discounts\Generate',
+			'REST\Manager'              => 'EDD\REST\Manager',
 		);
 	}
 }

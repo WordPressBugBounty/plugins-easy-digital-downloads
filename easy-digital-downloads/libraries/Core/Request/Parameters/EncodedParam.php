@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestArraySerialization;
-
 abstract class EncodedParam extends Parameter
 {
     protected $format = RequestArraySerialization::INDEXED;
@@ -14,7 +12,6 @@ abstract class EncodedParam extends Parameter
     {
         parent::__construct($key, $value, $typeName);
     }
-
     /**
      * Generate URL-encoded query string from the giving list of parameters.
      *
@@ -28,27 +25,12 @@ abstract class EncodedParam extends Parameter
         if ($format == RequestArraySerialization::INDEXED) {
             return http_build_query($data);
         }
-        $separatorFormat = in_array($format, [
-            RequestArraySerialization::TSV,
-            RequestArraySerialization::PSV,
-            RequestArraySerialization::CSV
-        ], true);
+        $separatorFormat = in_array($format, [RequestArraySerialization::TSV, RequestArraySerialization::PSV, RequestArraySerialization::CSV], true);
         $innerAssociativeArray = !empty($parent) && CoreHelper::isAssociative($data);
         $first = true;
         $separator = substr($format, strpos($format, ':') + 1);
         $result = [];
-        array_walk($data, function (
-            $value,
-            $key
-        ) use (
-            &$result,
-            &$first,
-            $parent,
-            $format,
-            $separatorFormat,
-            $separator,
-            $innerAssociativeArray
-        ): void {
+        array_walk($data, function ($value, $key) use (&$result, &$first, $parent, $format, $separatorFormat, $separator, $innerAssociativeArray): void {
             if (is_null($value)) {
                 return;
             }
@@ -75,13 +57,12 @@ abstract class EncodedParam extends Parameter
         });
         return implode($separatorFormat ? '' : '&', $result);
     }
-
     private function generateKeyWithParent(string $format, $key, string $parent, bool $isScalarValue): string
     {
         if (empty($parent)) {
             return $key;
         }
-        $keyForCurrentNonScalarNonAssociativeArray = "{$parent}[$key]";
+        $keyForCurrentNonScalarNonAssociativeArray = "{$parent}[{$key}]";
         if (!is_numeric($key)) {
             return $keyForCurrentNonScalarNonAssociativeArray;
         }
@@ -90,7 +71,6 @@ abstract class EncodedParam extends Parameter
         }
         return $parent . $this->getKeyPostFix($format);
     }
-
     private function getKeyPostFix(string $format): string
     {
         if ($format == RequestArraySerialization::UN_INDEXED) {

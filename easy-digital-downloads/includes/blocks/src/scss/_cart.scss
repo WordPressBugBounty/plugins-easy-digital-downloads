@@ -1,5 +1,17 @@
 @import "~@wordpress/base-styles/breakpoints";
 
+// Empty-cart state: center the lone message and give it room, rather than a bare line of text in the
+// top-left. Kept light on purpose: a [downloads]/[purchase_link] message renders a product grid in
+// place of the message, so this only centers and pads it, never mutes or resizes the grid's content.
+.edd_empty_cart {
+	display: block;
+	// Fill the line so the centering reads: the message is a flex child inside the Elementor checkout
+	// container, where it would otherwise shrink-wrap and sit hard left.
+	width: 100%;
+	padding: 3rem 1rem;
+	text-align: center;
+}
+
 .edd-blocks-form__cart {
 	.edd_cart_remove_item_btn {
 		border: none;

@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Response;
-
 final class ResponseIsRedirected extends Constraint
 {
     /**
@@ -23,7 +21,6 @@ final class ResponseIsRedirected extends Constraint
     {
         return 'is redirected';
     }
-
     /**
      * @param Response $response
      *
@@ -33,7 +30,6 @@ final class ResponseIsRedirected extends Constraint
     {
         return $response->isRedirect();
     }
-
     /**
      * @param Response $response
      *
@@ -41,9 +37,8 @@ final class ResponseIsRedirected extends Constraint
      */
     protected function failureDescription($response): string
     {
-        return 'the Response '.$this->toString();
+        return 'the Response ' . $this->toString();
     }
-
     /**
      * @param Response $response
      *

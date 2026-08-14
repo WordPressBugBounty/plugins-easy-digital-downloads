@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Utils;
 
 use EDD\Vendor\Core\Types\Sdk\CoreFileWrapper;
@@ -9,7 +8,6 @@ use DateTime;
 use InvalidArgumentException;
 use JsonSerializable;
 use stdClass;
-
 class CoreHelper
 {
     /**
@@ -32,7 +30,6 @@ class CoreHelper
         }
         return json_encode($value);
     }
-
     /**
      * Deserialize a Json string
      *
@@ -44,7 +41,6 @@ class CoreHelper
     {
         return json_decode($json, $associative) ?? $json;
     }
-
     /**
      * Validates and processes the given Url to ensure safe usage with cURL.
      * @param string $url The given Url to process
@@ -61,16 +57,12 @@ class CoreHelper
         // separate out protocol and path
         $protocol = $matches[1];
         $path = substr($url, strlen($protocol));
-
         // replace multiple consecutive forward slashes by single ones
         $path = preg_replace("#//+#", "/", $path);
-
         // remove forward slash from end
         $path = rtrim($path, '/');
-
         return $protocol . $path;
     }
-
     /**
      * Check if an array isAssociative (has string keys)
      *
@@ -86,7 +78,6 @@ class CoreHelper
         }
         return false;
     }
-
     /**
      * Check if provided value is null or empty.
      *
@@ -100,7 +91,6 @@ class CoreHelper
         }
         return empty($value);
     }
-
     /**
      * Check if all the given value or values are present in the provided list.
      *
@@ -123,7 +113,6 @@ class CoreHelper
         }
         return true;
     }
-
     /**
      * Clone the given value
      *
@@ -140,7 +129,6 @@ class CoreHelper
         }
         return $value;
     }
-
     /**
      * Converts provided value to ?string type.
      *
@@ -153,7 +141,6 @@ class CoreHelper
         }
         return $value;
     }
-
     /**
      * Return basic OS info.
      */
@@ -167,7 +154,6 @@ class CoreHelper
         }
         return $osFamily . '-' . call_user_func($functionName, 'r');
     }
-
     /**
      * Return base64 encoded string for given username and password, prepended with Basic substring.
      */
@@ -176,9 +162,8 @@ class CoreHelper
         if ($username == '' || $password == '') {
             return '';
         }
-        return 'Basic ' . base64_encode("$username:$password");
+        return 'Basic ' . base64_encode("{$username}:{$password}");
     }
-
     /**
      * Return the accessToken prepended with Bearer substring.
      */
@@ -189,7 +174,6 @@ class CoreHelper
         }
         return 'Bearer ' . $accessToken;
     }
-
     /**
      * Prepare a mixed typed value or array into a readable form.
      *
@@ -199,22 +183,16 @@ class CoreHelper
      *
      * @return mixed A valid readable instance to be sent in form/query.
      */
-    public static function prepareValue(
-        $value,
-        bool $exportBoolAsString = true,
-        bool $castAsString = false
-    ) {
+    public static function prepareValue($value, bool $exportBoolAsString = true, bool $castAsString = false)
+    {
         if (is_null($value)) {
             return null;
         }
-
         if (is_bool($value)) {
             return $exportBoolAsString ? var_export($value, true) : $value;
         }
-
         return $castAsString ? (string) $value : self::prepareCollectedValues($value, $exportBoolAsString);
     }
-
     /**
      * Prepare a mixed typed value or array into a readable form.
      *
@@ -228,21 +206,17 @@ class CoreHelper
         $selfCaller = function ($v) use ($exportBoolAsString) {
             return self::prepareValue($v, $exportBoolAsString);
         };
-
         if (is_array($value)) {
             // recursively calling this function to resolve all types in any array
             return array_map($selfCaller, $value);
         }
-
         if ($value instanceof JsonSerializable) {
             $modelArray = $value->jsonSerialize();
             // recursively calling this function to resolve all types in any model
             return array_map($selfCaller, $modelArray instanceof stdClass ? [] : $modelArray);
         }
-
         return $value;
     }
-
     /**
      * Converts the properties to a human-readable string representation.
      *
@@ -250,50 +224,40 @@ class CoreHelper
      *
      * $prefix [$properties:key: $properties:value, $processedProperties]
      */
-    public static function stringify(
-        string $prefix,
-        array $properties,
-        string $processedProperties = ''
-    ): string {
+    public static function stringify(string $prefix, array $properties, string $processedProperties = ''): string
+    {
         $formattedProperties = array_map([self::class, 'stringifyProperty'], array_keys($properties), $properties);
         if (!empty($processedProperties)) {
             $formattedProperties[] = substr($processedProperties, strpos($processedProperties, '[') + 1, -1);
         }
-
         $formattedPropertiesString = implode(', ', array_filter($formattedProperties));
-        return ltrim("$prefix [$formattedPropertiesString]");
+        return ltrim("{$prefix} [{$formattedPropertiesString}]");
     }
-
     /**
      * Converts the provided key value pair into a human-readable string representation.
      */
     private static function stringifyProperty($key, $value)
     {
         if (is_null($value)) {
-            return null; // Skip null values
+            return null;
+            // Skip null values
         }
-
         $value = self::handleNonConvertibleTypes($value);
         $value = is_array($value) ? self::stringify('', $value) : self::prepareValue($value, true, true);
-
         if (is_string($key)) {
-            return "$key: $value";
+            return "{$key}: {$value}";
         }
-
         // Skip keys representation for numeric keys (i.e. non associative arrays)
         return $value;
     }
-
     private static function handleNonConvertibleTypes($value)
     {
         if ($value instanceof stdClass) {
             return (array) $value;
         }
-
         if ($value instanceof DateTime) {
             return DateHelper::toRfc3339DateTime($value);
         }
-
         return $value;
     }
 }

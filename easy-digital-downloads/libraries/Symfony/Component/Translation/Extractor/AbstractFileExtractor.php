@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Extractor;
 
 use EDD\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
-
 /**
  * Base class used by classes that extract translation messages from files.
  *
@@ -39,15 +37,12 @@ abstract class AbstractFileExtractor
         } else {
             $files = $this->extractFromDirectory($resource);
         }
-
         return $files;
     }
-
     private function toSplFileInfo(string $file): \SplFileInfo
     {
         return new \SplFileInfo($file);
     }
-
     /**
      * @return bool
      *
@@ -58,15 +53,12 @@ abstract class AbstractFileExtractor
         if (!is_file($file)) {
             throw new InvalidArgumentException(sprintf('The "%s" file does not exist.', $file));
         }
-
         return true;
     }
-
     /**
      * @return bool
      */
     abstract protected function canBeExtracted(string $file);
-
     /**
      * @param string|array $resource Files, a file or a directory
      *

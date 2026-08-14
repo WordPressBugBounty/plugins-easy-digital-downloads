@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains query criteria for the search.
  */
@@ -15,12 +13,10 @@ class SearchOrdersQuery implements \JsonSerializable
      * @var SearchOrdersFilter|null
      */
     private $filter;
-
     /**
      * @var SearchOrdersSort|null
      */
     private $sort;
-
     /**
      * Returns Filter.
      * Filtering criteria to use for a `SearchOrders` request. Multiple filters
@@ -30,7 +26,6 @@ class SearchOrdersQuery implements \JsonSerializable
     {
         return $this->filter;
     }
-
     /**
      * Sets Filter.
      * Filtering criteria to use for a `SearchOrders` request. Multiple filters
@@ -42,7 +37,6 @@ class SearchOrdersQuery implements \JsonSerializable
     {
         $this->filter = $filter;
     }
-
     /**
      * Returns Sort.
      * Sorting criteria for a `SearchOrders` request. Results can only be sorted
@@ -52,7 +46,6 @@ class SearchOrdersQuery implements \JsonSerializable
     {
         return $this->sort;
     }
-
     /**
      * Sets Sort.
      * Sorting criteria for a `SearchOrders` request. Results can only be sorted
@@ -64,7 +57,6 @@ class SearchOrdersQuery implements \JsonSerializable
     {
         $this->sort = $sort;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -73,7 +65,7 @@ class SearchOrdersQuery implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -81,12 +73,11 @@ class SearchOrdersQuery implements \JsonSerializable
             $json['filter'] = $this->filter;
         }
         if (isset($this->sort)) {
-            $json['sort']   = $this->sort;
+            $json['sort'] = $this->sort;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

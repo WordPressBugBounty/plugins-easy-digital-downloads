@@ -64,7 +64,7 @@ class EDD_Notices {
 			array(
 				'id'             => '',
 				'message'        => '',
-				'class'          => false,
+				'class'          => 'updated',
 				'is_dismissible' => true,
 			)
 		);
@@ -73,8 +73,6 @@ class EDD_Notices {
 		if ( ! empty( $notice_args['id'] ) && array_key_exists( $notice_args['id'], $this->notices ) ) {
 			return;
 		}
-
-		$default_class = 'updated';
 
 		// One message as string.
 		if ( is_string( $notice_args['message'] ) ) {
@@ -85,8 +83,8 @@ class EDD_Notices {
 
 			// Messages as objects.
 		} elseif ( is_wp_error( $notice_args['message'] ) ) {
-			$default_class = 'is-error';
-			$errors        = $notice_args['message']->get_error_messages();
+			$notice_args['class'] = 'is-error';
+			$errors               = $notice_args['message']->get_error_messages();
 
 			switch ( count( $errors ) ) {
 				case 0:
@@ -108,14 +106,11 @@ class EDD_Notices {
 		}
 
 		// CSS Classes.
-		$classes = array(
-			'notice',
-			'edd-notice',
-			$default_class,
+		$classes = is_string( $notice_args['class'] ) ? explode( ' ', $notice_args['class'] ) : $notice_args['class'];
+		$classes = array_merge(
+			array( 'notice', 'edd-notice' ),
+			$classes
 		);
-		if ( ! empty( $notice_args['class'] ) ) {
-			$classes = array_merge( $classes, explode( ' ', $notice_args['class'] ) );
-		}
 
 		// Add dismissible class.
 		if ( ! empty( $notice_args['is_dismissible'] ) ) {
@@ -124,7 +119,6 @@ class EDD_Notices {
 
 		// Assemble the message.
 		$message = '<div class="' . implode( ' ', array_map( 'sanitize_html_class', $classes ) ) . '">' . $message . '</div>';
-		$message = str_replace( "'", "\'", $message );
 
 		// Add notice to notices array.
 		$this->notices[ $notice_args['id'] ] = $message;
@@ -653,26 +647,40 @@ class EDD_Notices {
 	}
 
 	/**
-	 * Adds a notice if the Stripe Pro gateway is outdated.
-	 * This is due to a name change in the gateway.
+	 * Adds a notice if the site is running Stripe's legacy Card Elements.
 	 *
 	 * @since 3.2.1
 	 * @return void
 	 */
 	private function add_stripe_notice() {
-		if ( ! defined( 'EDD_STRIPE_VERSION' ) || ( defined( 'EDD_STRIPE_VERSION' ) && version_compare( EDD_STRIPE_VERSION, '2.8.4', '>=' ) ) ) {
+		if ( ! edd_is_admin_page() || edd_is_admin_page( 'index.php' ) ) {
 			return;
 		}
+
+		if ( 'payment-elements' === edds_get_elements_mode() || ! edd_is_gateway_active( 'stripe' ) ) {
+			return;
+		}
+		$settings_url = edd_get_admin_url(
+			array(
+				'page'    => 'edd-settings',
+				'tab'     => 'gateways',
+				'section' => 'edd-stripe',
+			)
+		);
 		$this->add_notice(
 			array(
-				'id'             => 'edd-stripe-outdated',
+				'id'             => 'edd-stripe-card-elements',
 				'class'          => 'notice-warning',
-				'message'        => sprintf(
-					/* translators: 1: opening link tag, 2: opening link tag, 3: closing link tag. */
-					__( 'You are running an outdated version of the Easy Digital Downloads &mdash; Stripe Pro Payment Gateway. You may need to log into %1$syour account%3$s to download the latest version and %2$smanually upgrade%3$s it.', 'easy-digital-downloads' ),
-					'<a href="https://easydigitaldownloads.com/your-account/" target="_blank">',
-					'<a href="https://easydigitaldownloads.com/docs/how-do-i-install-an-extension/#faq" target="_blank">',
-					'</a>'
+				'message'        => array(
+					__( 'Upgrade to Payment Elements — a better Stripe checkout for you and your customers.', 'easy-digital-downloads' ),
+					__( 'Stripe\'s Payment Elements gives you one secure, modern checkout that supports Apple Pay, Google Pay, Link, Klarna, and dozens of international payment methods — with the latest fraud protection and bank authentication (SCA) handled automatically. Your store is still on the legacy Card Elements checkout, which Stripe no longer recommends and EDD will remove in a future release.', 'easy-digital-downloads' ),
+					sprintf(
+						/* translators: 1: opening anchor tag to the Stripe settings, do not translate; 2: closing anchor tag, do not translate; 3: opening anchor tag to the documentation, do not translate */
+						__( 'Ready to switch? Go to %1$sSettings → Gateways → Stripe%2$s and change Elements Mode to Payment Elements. %3$sLearn what changes →%2$s', 'easy-digital-downloads' ),
+						'<a href="' . $settings_url . '">',
+						'</a>',
+						'<a href="https://easydigitaldownloads.com/docs/stripe/#migrating" target="_blank">',
+					),
 				),
 				'is_dismissible' => false,
 			)

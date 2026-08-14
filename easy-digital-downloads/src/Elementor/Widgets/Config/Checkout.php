@@ -46,7 +46,9 @@ class Checkout {
 			StylesCart::get_controls(),
 			FormSections::get_controls(),
 			FormElements::get_controls(),
-			Sections::get_controls()
+			// The monolithic widget keeps the 3.6.0 personal-info fieldset selector so existing
+			// stores' saved section styling renders unchanged; the composable box uses the wrapper.
+			Sections::get_controls( 'monolith' )
 		);
 	}
 }

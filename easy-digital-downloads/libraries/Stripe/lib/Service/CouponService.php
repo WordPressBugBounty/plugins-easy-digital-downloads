@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,11 +23,10 @@ class CouponService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/coupons', $params, $opts);
     }
-
     /**
      * You can create coupons easily via the <a
      * href="https://dashboard.stripe.com/coupons">coupon management</a> page of the
-     * EDD\Vendor\Stripe dashboard. Coupon creation is also accessible via the API if you need to
+     * Stripe dashboard. Coupon creation is also accessible via the API if you need to
      * create coupons on the fly.
      *
      * A coupon has either a <code>percent_off</code> or an <code>amount_off</code> and
@@ -52,11 +50,10 @@ class CouponService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/coupons', $params, $opts);
     }
-
     /**
      * You can delete coupons via the <a
      * href="https://dashboard.stripe.com/coupons">coupon management</a> page of the
-     * EDD\Vendor\Stripe dashboard. However, deleting a coupon does not affect any customers who
+     * Stripe dashboard. However, deleting a coupon does not affect any customers who
      * have already applied the coupon; it means that new customers can’t redeem the
      * coupon. You can also delete coupons via the API.
      *
@@ -72,7 +69,6 @@ class CouponService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/coupons/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieves the coupon with the given ID.
      *
@@ -88,7 +84,6 @@ class CouponService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/coupons/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the metadata of a coupon. Other coupon details (currency, duration,
      * amount_off) are, by design, not editable.

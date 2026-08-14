@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a collection of catalog objects for the purpose of applying a
  * `PricingRule`. Including a catalog object will include all of its subtypes.
@@ -19,37 +17,30 @@ class CatalogProductSet implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $productIdsAny = [];
-
     /**
      * @var array
      */
     private $productIdsAll = [];
-
     /**
      * @var array
      */
     private $quantityExact = [];
-
     /**
      * @var array
      */
     private $quantityMin = [];
-
     /**
      * @var array
      */
     private $quantityMax = [];
-
     /**
      * @var array
      */
     private $allProducts = [];
-
     /**
      * Returns Name.
      * User-defined name for the product set. For example, "Clearance Items"
@@ -62,7 +53,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * User-defined name for the product set. For example, "Clearance Items"
@@ -74,7 +64,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * User-defined name for the product set. For example, "Clearance Items"
@@ -84,7 +73,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Product Ids Any.
      * Unique IDs for any `CatalogObject` included in this product set. Any
@@ -107,7 +95,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->productIdsAny['value'];
     }
-
     /**
      * Sets Product Ids Any.
      * Unique IDs for any `CatalogObject` included in this product set. Any
@@ -129,7 +116,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->productIdsAny['value'] = $productIdsAny;
     }
-
     /**
      * Unsets Product Ids Any.
      * Unique IDs for any `CatalogObject` included in this product set. Any
@@ -147,7 +133,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->productIdsAny = [];
     }
-
     /**
      * Returns Product Ids All.
      * Unique IDs for any `CatalogObject` included in this product set.
@@ -166,7 +151,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->productIdsAll['value'];
     }
-
     /**
      * Sets Product Ids All.
      * Unique IDs for any `CatalogObject` included in this product set.
@@ -184,7 +168,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->productIdsAll['value'] = $productIdsAll;
     }
-
     /**
      * Unsets Product Ids All.
      * Unique IDs for any `CatalogObject` included in this product set.
@@ -198,7 +181,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->productIdsAll = [];
     }
-
     /**
      * Returns Quantity Exact.
      * If set, there must be exactly this many items from `products_any` or `products_all`
@@ -213,7 +195,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->quantityExact['value'];
     }
-
     /**
      * Sets Quantity Exact.
      * If set, there must be exactly this many items from `products_any` or `products_all`
@@ -227,7 +208,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityExact['value'] = $quantityExact;
     }
-
     /**
      * Unsets Quantity Exact.
      * If set, there must be exactly this many items from `products_any` or `products_all`
@@ -239,7 +219,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityExact = [];
     }
-
     /**
      * Returns Quantity Min.
      * If set, there must be at least this many items from `products_any` or `products_all`
@@ -253,7 +232,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->quantityMin['value'];
     }
-
     /**
      * Sets Quantity Min.
      * If set, there must be at least this many items from `products_any` or `products_all`
@@ -266,7 +244,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityMin['value'] = $quantityMin;
     }
-
     /**
      * Unsets Quantity Min.
      * If set, there must be at least this many items from `products_any` or `products_all`
@@ -277,7 +254,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityMin = [];
     }
-
     /**
      * Returns Quantity Max.
      * If set, the pricing rule will apply to a maximum of this many items from
@@ -290,7 +266,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->quantityMax['value'];
     }
-
     /**
      * Sets Quantity Max.
      * If set, the pricing rule will apply to a maximum of this many items from
@@ -302,7 +277,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityMax['value'] = $quantityMax;
     }
-
     /**
      * Unsets Quantity Max.
      * If set, the pricing rule will apply to a maximum of this many items from
@@ -312,7 +286,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->quantityMax = [];
     }
-
     /**
      * Returns All Products.
      * If set to `true`, the product set will include every item in the catalog.
@@ -325,7 +298,6 @@ class CatalogProductSet implements \JsonSerializable
         }
         return $this->allProducts['value'];
     }
-
     /**
      * Sets All Products.
      * If set to `true`, the product set will include every item in the catalog.
@@ -337,7 +309,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->allProducts['value'] = $allProducts;
     }
-
     /**
      * Unsets All Products.
      * If set to `true`, the product set will include every item in the catalog.
@@ -347,7 +318,6 @@ class CatalogProductSet implements \JsonSerializable
     {
         $this->allProducts = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -356,12 +326,12 @@ class CatalogProductSet implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']            = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->productIdsAny)) {
             $json['product_ids_any'] = $this->productIdsAny['value'];
@@ -370,21 +340,20 @@ class CatalogProductSet implements \JsonSerializable
             $json['product_ids_all'] = $this->productIdsAll['value'];
         }
         if (!empty($this->quantityExact)) {
-            $json['quantity_exact']  = $this->quantityExact['value'];
+            $json['quantity_exact'] = $this->quantityExact['value'];
         }
         if (!empty($this->quantityMin)) {
-            $json['quantity_min']    = $this->quantityMin['value'];
+            $json['quantity_min'] = $this->quantityMin['value'];
         }
         if (!empty($this->quantityMax)) {
-            $json['quantity_max']    = $this->quantityMax['value'];
+            $json['quantity_max'] = $this->quantityMax['value'];
         }
         if (!empty($this->allProducts)) {
-            $json['all_products']    = $this->allProducts['value'];
+            $json['all_products'] = $this->allProducts['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

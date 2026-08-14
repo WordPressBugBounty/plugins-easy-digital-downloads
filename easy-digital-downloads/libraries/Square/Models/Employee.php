@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * An employee object that is used by the external API.
  *
@@ -17,52 +15,42 @@ class Employee implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $firstName = [];
-
     /**
      * @var array
      */
     private $lastName = [];
-
     /**
      * @var array
      */
     private $email = [];
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var array
      */
     private $locationIds = [];
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var array
      */
     private $isOwner = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * Returns Id.
      * UUID for this object.
@@ -71,7 +59,6 @@ class Employee implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * UUID for this object.
@@ -82,7 +69,6 @@ class Employee implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns First Name.
      * The employee's first name.
@@ -94,7 +80,6 @@ class Employee implements \JsonSerializable
         }
         return $this->firstName['value'];
     }
-
     /**
      * Sets First Name.
      * The employee's first name.
@@ -105,7 +90,6 @@ class Employee implements \JsonSerializable
     {
         $this->firstName['value'] = $firstName;
     }
-
     /**
      * Unsets First Name.
      * The employee's first name.
@@ -114,7 +98,6 @@ class Employee implements \JsonSerializable
     {
         $this->firstName = [];
     }
-
     /**
      * Returns Last Name.
      * The employee's last name.
@@ -126,7 +109,6 @@ class Employee implements \JsonSerializable
         }
         return $this->lastName['value'];
     }
-
     /**
      * Sets Last Name.
      * The employee's last name.
@@ -137,7 +119,6 @@ class Employee implements \JsonSerializable
     {
         $this->lastName['value'] = $lastName;
     }
-
     /**
      * Unsets Last Name.
      * The employee's last name.
@@ -146,7 +127,6 @@ class Employee implements \JsonSerializable
     {
         $this->lastName = [];
     }
-
     /**
      * Returns Email.
      * The employee's email address
@@ -158,7 +138,6 @@ class Employee implements \JsonSerializable
         }
         return $this->email['value'];
     }
-
     /**
      * Sets Email.
      * The employee's email address
@@ -169,7 +148,6 @@ class Employee implements \JsonSerializable
     {
         $this->email['value'] = $email;
     }
-
     /**
      * Unsets Email.
      * The employee's email address
@@ -178,7 +156,6 @@ class Employee implements \JsonSerializable
     {
         $this->email = [];
     }
-
     /**
      * Returns Phone Number.
      * The employee's phone number in E.164 format, i.e. "+12125554250"
@@ -190,7 +167,6 @@ class Employee implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The employee's phone number in E.164 format, i.e. "+12125554250"
@@ -201,7 +177,6 @@ class Employee implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The employee's phone number in E.164 format, i.e. "+12125554250"
@@ -210,7 +185,6 @@ class Employee implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Location Ids.
      * A list of location IDs where this employee has access to.
@@ -224,7 +198,6 @@ class Employee implements \JsonSerializable
         }
         return $this->locationIds['value'];
     }
-
     /**
      * Sets Location Ids.
      * A list of location IDs where this employee has access to.
@@ -237,7 +210,6 @@ class Employee implements \JsonSerializable
     {
         $this->locationIds['value'] = $locationIds;
     }
-
     /**
      * Unsets Location Ids.
      * A list of location IDs where this employee has access to.
@@ -246,7 +218,6 @@ class Employee implements \JsonSerializable
     {
         $this->locationIds = [];
     }
-
     /**
      * Returns Status.
      * The status of the Employee being retrieved.
@@ -257,7 +228,6 @@ class Employee implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * The status of the Employee being retrieved.
@@ -270,7 +240,6 @@ class Employee implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Is Owner.
      * Whether this employee is the owner of the merchant. Each merchant
@@ -284,7 +253,6 @@ class Employee implements \JsonSerializable
         }
         return $this->isOwner['value'];
     }
-
     /**
      * Sets Is Owner.
      * Whether this employee is the owner of the merchant. Each merchant
@@ -297,7 +265,6 @@ class Employee implements \JsonSerializable
     {
         $this->isOwner['value'] = $isOwner;
     }
-
     /**
      * Unsets Is Owner.
      * Whether this employee is the owner of the merchant. Each merchant
@@ -308,7 +275,6 @@ class Employee implements \JsonSerializable
     {
         $this->isOwner = [];
     }
-
     /**
      * Returns Created At.
      * A read-only timestamp in RFC 3339 format.
@@ -317,7 +283,6 @@ class Employee implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * A read-only timestamp in RFC 3339 format.
@@ -328,7 +293,6 @@ class Employee implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * A read-only timestamp in RFC 3339 format.
@@ -337,7 +301,6 @@ class Employee implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * A read-only timestamp in RFC 3339 format.
@@ -348,7 +311,6 @@ class Employee implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -357,21 +319,21 @@ class Employee implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']           = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->firstName)) {
-            $json['first_name']   = $this->firstName['value'];
+            $json['first_name'] = $this->firstName['value'];
         }
         if (!empty($this->lastName)) {
-            $json['last_name']    = $this->lastName['value'];
+            $json['last_name'] = $this->lastName['value'];
         }
         if (!empty($this->email)) {
-            $json['email']        = $this->email['value'];
+            $json['email'] = $this->email['value'];
         }
         if (!empty($this->phoneNumber)) {
             $json['phone_number'] = $this->phoneNumber['value'];
@@ -380,21 +342,20 @@ class Employee implements \JsonSerializable
             $json['location_ids'] = $this->locationIds['value'];
         }
         if (isset($this->status)) {
-            $json['status']       = $this->status;
+            $json['status'] = $this->status;
         }
         if (!empty($this->isOwner)) {
-            $json['is_owner']     = $this->isOwner['value'];
+            $json['is_owner'] = $this->isOwner['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']   = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']   = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -38,7 +38,9 @@ add_filter( 'edd_ajax_add_to_cart_response', __NAMESPACE__ . '\update_cart_respo
 function update_cart_response( $response ) {
 	$cart_items = edd_get_cart_contents();
 	if ( empty( $cart_items ) ) {
-		$response['block_cart'] = '<p class="edd-blocks-form__cart">' . esc_html( __( 'Your cart is empty.', 'easy-digital-downloads' ) ) . '</p>';
+		// Echo unescaped in a div, like the other consumers: kses_post would strip the [downloads]
+		// add-to-cart form/input, and a <p> cannot hold the shortcode grid's block-level markup.
+		$response['block_cart'] = '<div class="edd-blocks-form__cart">' . edd_empty_cart_message() . '</div>';
 	} else {
 		ob_start();
 		\EDD\Blocks\Checkout\Elements\Cart::render(

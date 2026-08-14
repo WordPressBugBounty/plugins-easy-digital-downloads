@@ -21,16 +21,16 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  * pages.
  *
  * @since 1.0
- * @param  bool $network_wide If the plugin is being network-activated
+ * @param  bool $network_wide If the plugin is being network-activated.
  * @return void
  */
 function edd_install( $network_wide = false ) {
 
-	// Multi-site install
+	// Multi-site install.
 	if ( is_multisite() && ! empty( $network_wide ) ) {
 		edd_run_multisite_install();
 
-	// Single site install
+		// Single site install.
 	} else {
 		edd_run_install();
 	}
@@ -44,43 +44,43 @@ function edd_install( $network_wide = false ) {
 function edd_run_multisite_install() {
 	global $wpdb;
 
-	// Get site count
+	// Get site count.
 	$network_id = get_current_network_id();
 	$query      = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->blogs} WHERE site_id = %d", $network_id );
 	$count      = $wpdb->get_var( $query );
 
-	// Bail if no sites (this is really strange and bad)
+	// Bail if no sites (this is really strange and bad).
 	if ( empty( $count ) || is_wp_error( $count ) ) {
 		return;
 	}
 
-	// Setup the steps
+	// Setup the steps.
 	$per_step    = 100;
 	$total_steps = ceil( $count / $per_step );
 	$step        = 1;
 	$offset      = 0;
 
-	// Step through all sites in this network in groups of 100
+	// Step through all sites in this network in groups of 100.
 	do {
 
-		// Get next batch of site IDs
+		// Get next batch of site IDs.
 		$query    = $wpdb->prepare( "SELECT blog_id FROM {$wpdb->blogs} WHERE site_id = %d LIMIT %d, %d", $network_id, $offset, $per_step );
 		$site_ids = $wpdb->get_col( $query );
 
-		// Proceed if site IDs exist
+		// Proceed if site IDs exist.
 		if ( ! empty( $site_ids ) ) {
 			foreach ( $site_ids as $site_id ) {
 				edd_run_install( $site_id );
 			}
 		}
 
-		// Bump the limit for the next iteration
+		// Bump the limit for the next iteration.
 		$offset = ( $step * $per_step ) - 1;
 
-		// Bump the step
+		// Bump the step.
 		++$step;
 
-	// Bail when steps are greater than or equal to total steps
+		// Bail when steps are greater than or equal to total steps.
 	} while ( $total_steps > $step );
 }
 
@@ -160,19 +160,20 @@ function edd_run_install( $site_id = false ) {
 
 /**
  * Maybe set upgrades as complete during a fresh
+ *
  * @since 3.0
  */
 function edd_set_all_upgrades_complete() {
 
-	// Bail if not a fresh installation
+	// Bail if not a fresh installation.
 	if ( edd_get_db_version() ) {
 		return;
 	}
 
-	// When new upgrade routines are added, mark them as complete on fresh install
+	// When new upgrade routines are added, mark them as complete on fresh install.
 	$upgrade_routines = edd_get_all_upgrades();
 
-	// Loop through upgrade routines and mark them as complete
+	// Loop through upgrade routines and mark them as complete.
 	foreach ( $upgrade_routines as $upgrade ) {
 		edd_set_upgrade_complete( $upgrade );
 	}
@@ -292,7 +293,7 @@ function edd_get_required_pages() {
 			),
 			'failure_page'          => array(
 				'post_title'   => __( 'Transaction Failed', 'easy-digital-downloads' ),
-				'post_content' => '<!-- wp:paragraph --><p>' . __( 'Your transaction failed; please try again or contact site support.', 'easy-digital-downloads' ) .'</p><!-- /wp:paragraph -->',
+				'post_content' => '<!-- wp:paragraph --><p>' . __( 'Your transaction failed; please try again or contact site support.', 'easy-digital-downloads' ) . '</p><!-- /wp:paragraph -->',
 			),
 			'purchase_history_page' => array(
 				'post_title'   => __( 'Purchase History', 'easy-digital-downloads' ),
@@ -313,17 +314,17 @@ function edd_install_settings() {
 
 	global $edd_options;
 
-	// Setup some default options
+	// Setup some default options.
 	$options = array();
 
-	// Populate some default values
+	// Populate some default values.
 	$all_settings = edd_get_registered_settings();
 
 	if ( ! empty( $all_settings ) ) {
 		foreach ( $all_settings as $tab => $sections ) {
-			foreach ( $sections as $section => $settings) {
+			foreach ( $sections as $section => $settings ) {
 
-				// Check for backwards compatibility
+				// Check for backwards compatibility.
 				$tab_sections = edd_get_settings_tab_sections( $tab );
 				if ( ! is_array( $tab_sections ) || ! array_key_exists( $section, $tab_sections ) ) {
 					$section  = 'main';
@@ -342,13 +343,18 @@ function edd_install_settings() {
 	// Enable Pro features by default on new Pro installs.
 	if ( edd_is_pro() && ! edd_is_inactive_pro() ) {
 		$options['campaign_tracker'] = '1';
+		$options['acr_enabled']      = '1';
+
+		// Automatically refund tax when a delayed EU VAT validation succeeds. Existing
+		// installs remain opt-in (the option is simply unset for them).
+		$options['edd_vat_auto_refund'] = '1';
 	}
 
 	$settings       = get_option( 'edd_settings', array() );
 	$merged_options = array_merge( $settings, $options );
 	$edd_options    = $merged_options;
 
-	// Update the settings
+	// Update the settings.
 	update_option( 'edd_settings', $merged_options );
 }
 
@@ -361,7 +367,7 @@ function edd_install_settings() {
  */
 function edd_new_blog_created( $blog ) {
 
-	// Bail if plugin is not activated for the network
+	// Bail if plugin is not activated for the network.
 	if ( ! is_plugin_active_for_network( plugin_basename( EDD_PLUGIN_FILE ) ) ) {
 		return;
 	}
@@ -396,7 +402,7 @@ function edd_after_install() {
 	do_action( 'edd_after_install', $edd_options );
 
 	if ( false !== $edd_options ) {
-		// Delete the transient
+		// Delete the transient.
 		delete_transient( '_edd_installed' );
 	}
 }
@@ -423,7 +429,7 @@ function edd_install_roles_on_network() {
 		if ( empty( $wp_roles->roles ) ) {
 			$wp_roles->roles = array();
 		}
-		// Create EDD shop roles
+		// Create EDD shop roles.
 		$roles = new EDD_Roles();
 		$roles->add_roles();
 		$roles->add_caps();

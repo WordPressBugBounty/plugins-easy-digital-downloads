@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Represents a EDD\Vendor\Square customer profile in the Customer Directory of a EDD\Vendor\Square seller.
+ * Represents a Square customer profile in the Customer Directory of a Square seller.
  */
 class Customer implements \JsonSerializable
 {
@@ -15,102 +13,82 @@ class Customer implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var array
      */
     private $cards = [];
-
     /**
      * @var array
      */
     private $givenName = [];
-
     /**
      * @var array
      */
     private $familyName = [];
-
     /**
      * @var array
      */
     private $nickname = [];
-
     /**
      * @var array
      */
     private $companyName = [];
-
     /**
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var array
      */
     private $birthday = [];
-
     /**
      * @var array
      */
     private $referenceId = [];
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var CustomerPreferences|null
      */
     private $preferences;
-
     /**
      * @var string|null
      */
     private $creationSource;
-
     /**
      * @var array
      */
     private $groupIds = [];
-
     /**
      * @var array
      */
     private $segmentIds = [];
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var CustomerTaxIds|null
      */
     private $taxIds;
-
     /**
      * Returns Id.
      * A unique Square-assigned ID for the customer profile.
@@ -123,7 +101,6 @@ class Customer implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A unique Square-assigned ID for the customer profile.
@@ -138,7 +115,6 @@ class Customer implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Created At.
      * The timestamp when the customer profile was created, in RFC 3339 format.
@@ -147,7 +123,6 @@ class Customer implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the customer profile was created, in RFC 3339 format.
@@ -158,7 +133,6 @@ class Customer implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp when the customer profile was last updated, in RFC 3339 format.
@@ -167,7 +141,6 @@ class Customer implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp when the customer profile was last updated, in RFC 3339 format.
@@ -178,7 +151,6 @@ class Customer implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Cards.
      * Payment details of the credit, debit, and gift cards stored on file for the customer profile.
@@ -199,7 +171,6 @@ class Customer implements \JsonSerializable
         }
         return $this->cards['value'];
     }
-
     /**
      * Sets Cards.
      * Payment details of the credit, debit, and gift cards stored on file for the customer profile.
@@ -219,7 +190,6 @@ class Customer implements \JsonSerializable
     {
         $this->cards['value'] = $cards;
     }
-
     /**
      * Unsets Cards.
      * Payment details of the credit, debit, and gift cards stored on file for the customer profile.
@@ -235,7 +205,6 @@ class Customer implements \JsonSerializable
     {
         $this->cards = [];
     }
-
     /**
      * Returns Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -247,7 +216,6 @@ class Customer implements \JsonSerializable
         }
         return $this->givenName['value'];
     }
-
     /**
      * Sets Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -258,7 +226,6 @@ class Customer implements \JsonSerializable
     {
         $this->givenName['value'] = $givenName;
     }
-
     /**
      * Unsets Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -267,7 +234,6 @@ class Customer implements \JsonSerializable
     {
         $this->givenName = [];
     }
-
     /**
      * Returns Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -279,7 +245,6 @@ class Customer implements \JsonSerializable
         }
         return $this->familyName['value'];
     }
-
     /**
      * Sets Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -290,7 +255,6 @@ class Customer implements \JsonSerializable
     {
         $this->familyName['value'] = $familyName;
     }
-
     /**
      * Unsets Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -299,7 +263,6 @@ class Customer implements \JsonSerializable
     {
         $this->familyName = [];
     }
-
     /**
      * Returns Nickname.
      * A nickname for the customer profile.
@@ -311,7 +274,6 @@ class Customer implements \JsonSerializable
         }
         return $this->nickname['value'];
     }
-
     /**
      * Sets Nickname.
      * A nickname for the customer profile.
@@ -322,7 +284,6 @@ class Customer implements \JsonSerializable
     {
         $this->nickname['value'] = $nickname;
     }
-
     /**
      * Unsets Nickname.
      * A nickname for the customer profile.
@@ -331,7 +292,6 @@ class Customer implements \JsonSerializable
     {
         $this->nickname = [];
     }
-
     /**
      * Returns Company Name.
      * A business name associated with the customer profile.
@@ -343,7 +303,6 @@ class Customer implements \JsonSerializable
         }
         return $this->companyName['value'];
     }
-
     /**
      * Sets Company Name.
      * A business name associated with the customer profile.
@@ -354,7 +313,6 @@ class Customer implements \JsonSerializable
     {
         $this->companyName['value'] = $companyName;
     }
-
     /**
      * Unsets Company Name.
      * A business name associated with the customer profile.
@@ -363,7 +321,6 @@ class Customer implements \JsonSerializable
     {
         $this->companyName = [];
     }
-
     /**
      * Returns Email Address.
      * The email address associated with the customer profile.
@@ -375,7 +332,6 @@ class Customer implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * The email address associated with the customer profile.
@@ -386,7 +342,6 @@ class Customer implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * The email address associated with the customer profile.
@@ -395,7 +350,6 @@ class Customer implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -406,7 +360,6 @@ class Customer implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -419,7 +372,6 @@ class Customer implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Returns Phone Number.
      * The phone number associated with the customer profile.
@@ -431,7 +383,6 @@ class Customer implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The phone number associated with the customer profile.
@@ -442,7 +393,6 @@ class Customer implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The phone number associated with the customer profile.
@@ -451,7 +401,6 @@ class Customer implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-
@@ -465,7 +414,6 @@ class Customer implements \JsonSerializable
         }
         return $this->birthday['value'];
     }
-
     /**
      * Sets Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-
@@ -478,7 +426,6 @@ class Customer implements \JsonSerializable
     {
         $this->birthday['value'] = $birthday;
     }
-
     /**
      * Unsets Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` format. For example, `1998-09-
@@ -489,7 +436,6 @@ class Customer implements \JsonSerializable
     {
         $this->birthday = [];
     }
-
     /**
      * Returns Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -502,7 +448,6 @@ class Customer implements \JsonSerializable
         }
         return $this->referenceId['value'];
     }
-
     /**
      * Sets Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -514,7 +459,6 @@ class Customer implements \JsonSerializable
     {
         $this->referenceId['value'] = $referenceId;
     }
-
     /**
      * Unsets Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -524,7 +468,6 @@ class Customer implements \JsonSerializable
     {
         $this->referenceId = [];
     }
-
     /**
      * Returns Note.
      * A custom note associated with the customer profile.
@@ -536,7 +479,6 @@ class Customer implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * A custom note associated with the customer profile.
@@ -547,7 +489,6 @@ class Customer implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * A custom note associated with the customer profile.
@@ -556,7 +497,6 @@ class Customer implements \JsonSerializable
     {
         $this->note = [];
     }
-
     /**
      * Returns Preferences.
      * Represents communication preferences for the customer profile.
@@ -565,7 +505,6 @@ class Customer implements \JsonSerializable
     {
         return $this->preferences;
     }
-
     /**
      * Sets Preferences.
      * Represents communication preferences for the customer profile.
@@ -576,7 +515,6 @@ class Customer implements \JsonSerializable
     {
         $this->preferences = $preferences;
     }
-
     /**
      * Returns Creation Source.
      * Indicates the method used to create the customer profile.
@@ -585,7 +523,6 @@ class Customer implements \JsonSerializable
     {
         return $this->creationSource;
     }
-
     /**
      * Sets Creation Source.
      * Indicates the method used to create the customer profile.
@@ -596,7 +533,6 @@ class Customer implements \JsonSerializable
     {
         $this->creationSource = $creationSource;
     }
-
     /**
      * Returns Group Ids.
      * The IDs of [customer groups](entity:CustomerGroup) the customer belongs to.
@@ -610,7 +546,6 @@ class Customer implements \JsonSerializable
         }
         return $this->groupIds['value'];
     }
-
     /**
      * Sets Group Ids.
      * The IDs of [customer groups](entity:CustomerGroup) the customer belongs to.
@@ -623,7 +558,6 @@ class Customer implements \JsonSerializable
     {
         $this->groupIds['value'] = $groupIds;
     }
-
     /**
      * Unsets Group Ids.
      * The IDs of [customer groups](entity:CustomerGroup) the customer belongs to.
@@ -632,7 +566,6 @@ class Customer implements \JsonSerializable
     {
         $this->groupIds = [];
     }
-
     /**
      * Returns Segment Ids.
      * The IDs of [customer segments](entity:CustomerSegment) the customer belongs to.
@@ -646,7 +579,6 @@ class Customer implements \JsonSerializable
         }
         return $this->segmentIds['value'];
     }
-
     /**
      * Sets Segment Ids.
      * The IDs of [customer segments](entity:CustomerSegment) the customer belongs to.
@@ -659,7 +591,6 @@ class Customer implements \JsonSerializable
     {
         $this->segmentIds['value'] = $segmentIds;
     }
-
     /**
      * Unsets Segment Ids.
      * The IDs of [customer segments](entity:CustomerSegment) the customer belongs to.
@@ -668,7 +599,6 @@ class Customer implements \JsonSerializable
     {
         $this->segmentIds = [];
     }
-
     /**
      * Returns Version.
      * The Square-assigned version number of the customer profile. The version number is incremented each
@@ -679,7 +609,6 @@ class Customer implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The Square-assigned version number of the customer profile. The version number is incremented each
@@ -692,7 +621,6 @@ class Customer implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -704,7 +632,6 @@ class Customer implements \JsonSerializable
     {
         return $this->taxIds;
     }
-
     /**
      * Sets Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -718,7 +645,6 @@ class Customer implements \JsonSerializable
     {
         $this->taxIds = $taxIds;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -727,74 +653,73 @@ class Customer implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']              = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']      = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']      = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (!empty($this->cards)) {
-            $json['cards']           = $this->cards['value'];
+            $json['cards'] = $this->cards['value'];
         }
         if (!empty($this->givenName)) {
-            $json['given_name']      = $this->givenName['value'];
+            $json['given_name'] = $this->givenName['value'];
         }
         if (!empty($this->familyName)) {
-            $json['family_name']     = $this->familyName['value'];
+            $json['family_name'] = $this->familyName['value'];
         }
         if (!empty($this->nickname)) {
-            $json['nickname']        = $this->nickname['value'];
+            $json['nickname'] = $this->nickname['value'];
         }
         if (!empty($this->companyName)) {
-            $json['company_name']    = $this->companyName['value'];
+            $json['company_name'] = $this->companyName['value'];
         }
         if (!empty($this->emailAddress)) {
-            $json['email_address']   = $this->emailAddress['value'];
+            $json['email_address'] = $this->emailAddress['value'];
         }
         if (isset($this->address)) {
-            $json['address']         = $this->address;
+            $json['address'] = $this->address;
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']    = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (!empty($this->birthday)) {
-            $json['birthday']        = $this->birthday['value'];
+            $json['birthday'] = $this->birthday['value'];
         }
         if (!empty($this->referenceId)) {
-            $json['reference_id']    = $this->referenceId['value'];
+            $json['reference_id'] = $this->referenceId['value'];
         }
         if (!empty($this->note)) {
-            $json['note']            = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (isset($this->preferences)) {
-            $json['preferences']     = $this->preferences;
+            $json['preferences'] = $this->preferences;
         }
         if (isset($this->creationSource)) {
             $json['creation_source'] = $this->creationSource;
         }
         if (!empty($this->groupIds)) {
-            $json['group_ids']       = $this->groupIds['value'];
+            $json['group_ids'] = $this->groupIds['value'];
         }
         if (!empty($this->segmentIds)) {
-            $json['segment_ids']     = $this->segmentIds['value'];
+            $json['segment_ids'] = $this->segmentIds['value'];
         }
         if (isset($this->version)) {
-            $json['version']         = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->taxIds)) {
-            $json['tax_ids']         = $this->taxIds;
+            $json['tax_ids'] = $this->taxIds;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

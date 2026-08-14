@@ -13,6 +13,8 @@ namespace EDD\Blocks\Checkout\Elements;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
+use EDD\Blocks\Utility;
+
 /**
  * Purchase Form class.
  *
@@ -24,10 +26,11 @@ class PurchaseForm {
 	 * Outputs the purchase form for checkout.
 	 *
 	 * @since 3.6.0
-	 * @param array $block_attributes The block attributes.
+	 * @param array     $block_attributes The block attributes.
+	 * @param \WP_Block $block            The block object.
 	 * @return void
 	 */
-	public static function render( $block_attributes ) {
+	public static function render( $block_attributes, $block = null ) {
 		?>
 		<div class="edd-blocks__purchase-form">
 			<?php
@@ -37,16 +40,9 @@ class PurchaseForm {
 			?>
 			<form id="edd_purchase_form" class="edd_form edd-blocks-form edd-blocks-form__purchase" action="<?php echo esc_url( $form_action ); ?>" method="POST">
 				<?php
-				remove_action( 'edd_checkout_form_top', 'edd_show_payment_icons' );
-				/**
-				 * Hooks in at the start of the blocks purchase form.
-				 *
-				 * @since 3.6.0
-				 * @param array $block_attributes The block attributes.
-				 */
-				do_action( 'edd_checkout_form_top', $block_attributes );
+				Utility::do_checkout_form_top( $block_attributes );
 
-				PaymentDetails::render( $block_attributes );
+				PaymentDetails::render( $block_attributes, $block );
 
 				/**
 				 * Hooks in at the end of the blocks purchase form.

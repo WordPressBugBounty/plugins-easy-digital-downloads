@@ -1,30 +1,25 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 abstract class CoreApiResponse
 {
     protected $request;
-
     /**
      * @var int|null
      */
     private $statusCode;
-
     /**
      * @var string|null
      */
     private $reasonPhrase;
-
     /**
      * @var array|null
      */
     private $headers;
     private $result;
     private $body;
-
     public function __construct($request, ?int $statusCode, ?string $reasonPhrase, ?array $headers, $result, $body)
     {
         $this->request = $request;
@@ -34,12 +29,10 @@ abstract class CoreApiResponse
         $this->result = $result;
         $this->body = $body;
     }
-
     /**
      * Returns the original request that resulted in this response.
      */
     abstract public function getRequest();
-
     /**
      * Returns the response status code.
      */
@@ -47,7 +40,6 @@ abstract class CoreApiResponse
     {
         return $this->statusCode;
     }
-
     /**
      * Returns the HTTP reason phrase from the response.
      */
@@ -55,7 +47,6 @@ abstract class CoreApiResponse
     {
         return $this->reasonPhrase;
     }
-
     /**
      * Returns the response headers.
      */
@@ -63,7 +54,6 @@ abstract class CoreApiResponse
     {
         return $this->headers;
     }
-
     /**
      * Returns the response data.
      *
@@ -73,7 +63,6 @@ abstract class CoreApiResponse
     {
         return $this->result;
     }
-
     /**
      * Returns the original body from the response.
      *
@@ -83,7 +72,6 @@ abstract class CoreApiResponse
     {
         return $this->body;
     }
-
     /**
      * Is response OK?
      */
@@ -100,7 +88,6 @@ abstract class CoreApiResponse
         }
         return true;
     }
-
     /**
      * Is response missing or not OK?
      */

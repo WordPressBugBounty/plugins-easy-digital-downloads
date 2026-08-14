@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Response;
 
 use EDD\Vendor\Core\Client;
@@ -9,14 +8,12 @@ use EDD\Vendor\Core\Utils\JsonHelper;
 use EDD\Vendor\CoreInterfaces\Core\ContextInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestInterface;
 use EDD\Vendor\CoreInterfaces\Core\Response\ResponseInterface;
-
 class Context implements ContextInterface
 {
     private $request;
     private $response;
     private $converter;
     private $jsonHelper;
-
     /**
      * Initializes a new Context with the request, response, jsonHelper and the converter set.
      */
@@ -27,7 +24,6 @@ class Context implements ContextInterface
         $this->converter = Client::getConverter($client);
         $this->jsonHelper = Client::getJsonHelper($client);
     }
-
     /**
      * Returns Request object.
      */
@@ -35,7 +31,6 @@ class Context implements ContextInterface
     {
         return $this->request;
     }
-
     /**
      * Returns Response object.
      */
@@ -43,7 +38,6 @@ class Context implements ContextInterface
     {
         return $this->response;
     }
-
     /**
      * Returns Response body as a scalar or an associative array.
      */
@@ -55,16 +49,15 @@ class Context implements ContextInterface
         }
         return $responseBody;
     }
-
     /**
      * Is successful response.
      */
     public function isFailure(): bool
     {
         $statusCode = $this->response->getStatusCode();
-        return $statusCode !== min(max($statusCode, 200), 208); // [200,208] = HTTP OK
+        return $statusCode !== min(max($statusCode, 200), 208);
+        // [200,208] = HTTP OK
     }
-
     /**
      * Is response body missing.
      */
@@ -73,7 +66,6 @@ class Context implements ContextInterface
         $rawBody = $this->response->getRawBody();
         return trim($rawBody) === '';
     }
-
     /**
      * Returns JsonHelper object.
      */
@@ -81,7 +73,6 @@ class Context implements ContextInterface
     {
         return $this->jsonHelper;
     }
-
     /**
      * Returns an ApiException with errorMessage and childClass set, if not null.
      */
@@ -99,7 +90,6 @@ class Context implements ContextInterface
         $responseBody->response = $this->response->convert($this->converter);
         return $this->jsonHelper->mapClass($responseBody, $childClass);
     }
-
     /**
      * Returns an ApiResponse object from the context by mapping the class specified by className.
      */
@@ -114,7 +104,6 @@ class Context implements ContextInterface
         }
         return $this->toApiResponse($this->jsonHelper->mapClass($responseBody, $className));
     }
-
     /**
      * Returns an ApiResponse object from the context using the specified deserializedBody.
      */

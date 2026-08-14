@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Location-specific overrides for specified properties of a `CatalogModifier` object.
  */
@@ -15,17 +13,14 @@ class ModifierLocationOverrides implements \JsonSerializable
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var Money|null
      */
     private $priceMoney;
-
     /**
      * @var bool|null
      */
     private $soldOut;
-
     /**
      * Returns Location Id.
      * The ID of the `Location` object representing the location. This can include a deactivated location.
@@ -37,7 +32,6 @@ class ModifierLocationOverrides implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the `Location` object representing the location. This can include a deactivated location.
@@ -48,7 +42,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the `Location` object representing the location. This can include a deactivated location.
@@ -57,7 +50,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -72,7 +64,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         return $this->priceMoney;
     }
-
     /**
      * Sets Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -89,7 +80,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         $this->priceMoney = $priceMoney;
     }
-
     /**
      * Returns Sold Out.
      * Indicates whether the modifier is sold out at the specified location or not. As an example, for
@@ -102,7 +92,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         return $this->soldOut;
     }
-
     /**
      * Sets Sold Out.
      * Indicates whether the modifier is sold out at the specified location or not. As an example, for
@@ -117,7 +106,6 @@ class ModifierLocationOverrides implements \JsonSerializable
     {
         $this->soldOut = $soldOut;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -126,7 +114,7 @@ class ModifierLocationOverrides implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -137,12 +125,11 @@ class ModifierLocationOverrides implements \JsonSerializable
             $json['price_money'] = $this->priceMoney;
         }
         if (isset($this->soldOut)) {
-            $json['sold_out']    = $this->soldOut;
+            $json['sold_out'] = $this->soldOut;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,43 +1,35 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class Event implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $merchantId = [];
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var array
      */
     private $type = [];
-
     /**
      * @var array
      */
     private $eventId = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var EventData|null
      */
     private $data;
-
     /**
      * Returns Merchant Id.
      * The ID of the target merchant associated with the event.
@@ -49,7 +41,6 @@ class Event implements \JsonSerializable
         }
         return $this->merchantId['value'];
     }
-
     /**
      * Sets Merchant Id.
      * The ID of the target merchant associated with the event.
@@ -60,7 +51,6 @@ class Event implements \JsonSerializable
     {
         $this->merchantId['value'] = $merchantId;
     }
-
     /**
      * Unsets Merchant Id.
      * The ID of the target merchant associated with the event.
@@ -69,7 +59,6 @@ class Event implements \JsonSerializable
     {
         $this->merchantId = [];
     }
-
     /**
      * Returns Location Id.
      * The ID of the target location associated with the event.
@@ -81,7 +70,6 @@ class Event implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the target location associated with the event.
@@ -92,7 +80,6 @@ class Event implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the target location associated with the event.
@@ -101,7 +88,6 @@ class Event implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Type.
      * The type of event this represents.
@@ -113,7 +99,6 @@ class Event implements \JsonSerializable
         }
         return $this->type['value'];
     }
-
     /**
      * Sets Type.
      * The type of event this represents.
@@ -124,7 +109,6 @@ class Event implements \JsonSerializable
     {
         $this->type['value'] = $type;
     }
-
     /**
      * Unsets Type.
      * The type of event this represents.
@@ -133,7 +117,6 @@ class Event implements \JsonSerializable
     {
         $this->type = [];
     }
-
     /**
      * Returns Event Id.
      * A unique ID for the event.
@@ -145,7 +128,6 @@ class Event implements \JsonSerializable
         }
         return $this->eventId['value'];
     }
-
     /**
      * Sets Event Id.
      * A unique ID for the event.
@@ -156,7 +138,6 @@ class Event implements \JsonSerializable
     {
         $this->eventId['value'] = $eventId;
     }
-
     /**
      * Unsets Event Id.
      * A unique ID for the event.
@@ -165,7 +146,6 @@ class Event implements \JsonSerializable
     {
         $this->eventId = [];
     }
-
     /**
      * Returns Created At.
      * Timestamp of when the event was created, in RFC 3339 format.
@@ -174,7 +154,6 @@ class Event implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * Timestamp of when the event was created, in RFC 3339 format.
@@ -185,7 +164,6 @@ class Event implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Data.
      */
@@ -193,7 +171,6 @@ class Event implements \JsonSerializable
     {
         return $this->data;
     }
-
     /**
      * Sets Data.
      *
@@ -203,7 +180,6 @@ class Event implements \JsonSerializable
     {
         $this->data = $data;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -212,7 +188,7 @@ class Event implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -223,21 +199,20 @@ class Event implements \JsonSerializable
             $json['location_id'] = $this->locationId['value'];
         }
         if (!empty($this->type)) {
-            $json['type']        = $this->type['value'];
+            $json['type'] = $this->type['value'];
         }
         if (!empty($this->eventId)) {
-            $json['event_id']    = $this->eventId['value'];
+            $json['event_id'] = $this->eventId['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']  = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->data)) {
-            $json['data']        = $this->data;
+            $json['data'] = $this->data;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

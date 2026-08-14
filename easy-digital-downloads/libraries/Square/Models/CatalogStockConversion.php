@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the rule of conversion between a stockable
  * [CatalogItemVariation]($m/CatalogItemVariation)
@@ -18,32 +16,25 @@ class CatalogStockConversion implements \JsonSerializable
      * @var string
      */
     private $stockableItemVariationId;
-
     /**
      * @var string
      */
     private $stockableQuantity;
-
     /**
      * @var string
      */
     private $nonstockableQuantity;
-
     /**
      * @param string $stockableItemVariationId
      * @param string $stockableQuantity
      * @param string $nonstockableQuantity
      */
-    public function __construct(
-        string $stockableItemVariationId,
-        string $stockableQuantity,
-        string $nonstockableQuantity
-    ) {
+    public function __construct(string $stockableItemVariationId, string $stockableQuantity, string $nonstockableQuantity)
+    {
         $this->stockableItemVariationId = $stockableItemVariationId;
         $this->stockableQuantity = $stockableQuantity;
         $this->nonstockableQuantity = $nonstockableQuantity;
     }
-
     /**
      * Returns Stockable Item Variation Id.
      * References to the stockable [CatalogItemVariation](entity:CatalogItemVariation)
@@ -57,7 +48,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         return $this->stockableItemVariationId;
     }
-
     /**
      * Sets Stockable Item Variation Id.
      * References to the stockable [CatalogItemVariation](entity:CatalogItemVariation)
@@ -74,7 +64,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         $this->stockableItemVariationId = $stockableItemVariationId;
     }
-
     /**
      * Returns Stockable Quantity.
      * The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)
@@ -86,7 +75,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         return $this->stockableQuantity;
     }
-
     /**
      * Sets Stockable Quantity.
      * The quantity of the stockable item variation (as identified by `stockable_item_variation_id`)
@@ -101,7 +89,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         $this->stockableQuantity = $stockableQuantity;
     }
-
     /**
      * Returns Nonstockable Quantity.
      * The converted equivalent quantity of the non-stockable [CatalogItemVariation](entity:
@@ -117,7 +104,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         return $this->nonstockableQuantity;
     }
-
     /**
      * Sets Nonstockable Quantity.
      * The converted equivalent quantity of the non-stockable [CatalogItemVariation](entity:
@@ -136,7 +122,6 @@ class CatalogStockConversion implements \JsonSerializable
     {
         $this->nonstockableQuantity = $nonstockableQuantity;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -145,17 +130,16 @@ class CatalogStockConversion implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         $json['stockable_item_variation_id'] = $this->stockableItemVariationId;
-        $json['stockable_quantity']          = $this->stockableQuantity;
-        $json['nonstockable_quantity']       = $this->nonstockableQuantity;
+        $json['stockable_quantity'] = $this->stockableQuantity;
+        $json['nonstockable_quantity'] = $this->nonstockableQuantity;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

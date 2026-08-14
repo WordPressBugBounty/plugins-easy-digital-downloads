@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Reflects the current status of a card payment. Contains only non-confidential information.
  */
@@ -15,82 +13,66 @@ class CardPaymentDetails implements \JsonSerializable
      * @var array
      */
     private $status = [];
-
     /**
      * @var Card|null
      */
     private $card;
-
     /**
      * @var array
      */
     private $entryMethod = [];
-
     /**
      * @var array
      */
     private $cvvStatus = [];
-
     /**
      * @var array
      */
     private $avsStatus = [];
-
     /**
      * @var array
      */
     private $authResultCode = [];
-
     /**
      * @var array
      */
     private $applicationIdentifier = [];
-
     /**
      * @var array
      */
     private $applicationName = [];
-
     /**
      * @var array
      */
     private $applicationCryptogram = [];
-
     /**
      * @var array
      */
     private $verificationMethod = [];
-
     /**
      * @var array
      */
     private $verificationResults = [];
-
     /**
      * @var array
      */
     private $statementDescription = [];
-
     /**
      * @var DeviceDetails|null
      */
     private $deviceDetails;
-
     /**
      * @var CardPaymentTimeline|null
      */
     private $cardPaymentTimeline;
-
     /**
      * @var array
      */
     private $refundRequiresCardPresence = [];
-
     /**
      * @var array
      */
     private $errors = [];
-
     /**
      * Returns Status.
      * The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or
@@ -103,7 +85,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->status['value'];
     }
-
     /**
      * Sets Status.
      * The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or
@@ -115,7 +96,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->status['value'] = $status;
     }
-
     /**
      * Unsets Status.
      * The card payment's current state. The state can be AUTHORIZED, CAPTURED, VOIDED, or
@@ -125,7 +105,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->status = [];
     }
-
     /**
      * Returns Card.
      * Represents the payment details of a card to be used for payments. These
@@ -135,7 +114,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         return $this->card;
     }
-
     /**
      * Sets Card.
      * Represents the payment details of a card to be used for payments. These
@@ -147,7 +125,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->card = $card;
     }
-
     /**
      * Returns Entry Method.
      * The method used to enter the card's details for the payment. The method can be
@@ -160,7 +137,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->entryMethod['value'];
     }
-
     /**
      * Sets Entry Method.
      * The method used to enter the card's details for the payment. The method can be
@@ -172,7 +148,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->entryMethod['value'] = $entryMethod;
     }
-
     /**
      * Unsets Entry Method.
      * The method used to enter the card's details for the payment. The method can be
@@ -182,7 +157,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->entryMethod = [];
     }
-
     /**
      * Returns Cvv Status.
      * The status code returned from the Card Verification Value (CVV) check. The code can be
@@ -195,7 +169,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->cvvStatus['value'];
     }
-
     /**
      * Sets Cvv Status.
      * The status code returned from the Card Verification Value (CVV) check. The code can be
@@ -207,7 +180,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->cvvStatus['value'] = $cvvStatus;
     }
-
     /**
      * Unsets Cvv Status.
      * The status code returned from the Card Verification Value (CVV) check. The code can be
@@ -217,7 +189,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->cvvStatus = [];
     }
-
     /**
      * Returns Avs Status.
      * The status code returned from the Address Verification System (AVS) check. The code can be
@@ -230,7 +201,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->avsStatus['value'];
     }
-
     /**
      * Sets Avs Status.
      * The status code returned from the Address Verification System (AVS) check. The code can be
@@ -242,7 +212,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->avsStatus['value'] = $avsStatus;
     }
-
     /**
      * Unsets Avs Status.
      * The status code returned from the Address Verification System (AVS) check. The code can be
@@ -252,7 +221,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->avsStatus = [];
     }
-
     /**
      * Returns Auth Result Code.
      * The status code returned by the card issuer that describes the payment's
@@ -265,7 +233,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->authResultCode['value'];
     }
-
     /**
      * Sets Auth Result Code.
      * The status code returned by the card issuer that describes the payment's
@@ -277,7 +244,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->authResultCode['value'] = $authResultCode;
     }
-
     /**
      * Unsets Auth Result Code.
      * The status code returned by the card issuer that describes the payment's
@@ -287,7 +253,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->authResultCode = [];
     }
-
     /**
      * Returns Application Identifier.
      * For EMV payments, the application ID identifies the EMV application used for the payment.
@@ -299,7 +264,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->applicationIdentifier['value'];
     }
-
     /**
      * Sets Application Identifier.
      * For EMV payments, the application ID identifies the EMV application used for the payment.
@@ -310,7 +274,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationIdentifier['value'] = $applicationIdentifier;
     }
-
     /**
      * Unsets Application Identifier.
      * For EMV payments, the application ID identifies the EMV application used for the payment.
@@ -319,7 +282,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationIdentifier = [];
     }
-
     /**
      * Returns Application Name.
      * For EMV payments, the human-readable name of the EMV application used for the payment.
@@ -331,7 +293,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->applicationName['value'];
     }
-
     /**
      * Sets Application Name.
      * For EMV payments, the human-readable name of the EMV application used for the payment.
@@ -342,7 +303,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationName['value'] = $applicationName;
     }
-
     /**
      * Unsets Application Name.
      * For EMV payments, the human-readable name of the EMV application used for the payment.
@@ -351,7 +311,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationName = [];
     }
-
     /**
      * Returns Application Cryptogram.
      * For EMV payments, the cryptogram generated for the payment.
@@ -363,7 +322,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->applicationCryptogram['value'];
     }
-
     /**
      * Sets Application Cryptogram.
      * For EMV payments, the cryptogram generated for the payment.
@@ -374,7 +332,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationCryptogram['value'] = $applicationCryptogram;
     }
-
     /**
      * Unsets Application Cryptogram.
      * For EMV payments, the cryptogram generated for the payment.
@@ -383,7 +340,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->applicationCryptogram = [];
     }
-
     /**
      * Returns Verification Method.
      * For EMV payments, the method used to verify the cardholder's identity. The method can be
@@ -396,7 +352,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->verificationMethod['value'];
     }
-
     /**
      * Sets Verification Method.
      * For EMV payments, the method used to verify the cardholder's identity. The method can be
@@ -408,7 +363,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->verificationMethod['value'] = $verificationMethod;
     }
-
     /**
      * Unsets Verification Method.
      * For EMV payments, the method used to verify the cardholder's identity. The method can be
@@ -418,7 +372,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->verificationMethod = [];
     }
-
     /**
      * Returns Verification Results.
      * For EMV payments, the results of the cardholder verification. The result can be
@@ -431,7 +384,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->verificationResults['value'];
     }
-
     /**
      * Sets Verification Results.
      * For EMV payments, the results of the cardholder verification. The result can be
@@ -443,7 +395,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->verificationResults['value'] = $verificationResults;
     }
-
     /**
      * Unsets Verification Results.
      * For EMV payments, the results of the cardholder verification. The result can be
@@ -453,7 +404,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->verificationResults = [];
     }
-
     /**
      * Returns Statement Description.
      * The statement description sent to the card networks.
@@ -468,7 +418,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->statementDescription['value'];
     }
-
     /**
      * Sets Statement Description.
      * The statement description sent to the card networks.
@@ -482,7 +431,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->statementDescription['value'] = $statementDescription;
     }
-
     /**
      * Unsets Statement Description.
      * The statement description sent to the card networks.
@@ -494,7 +442,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->statementDescription = [];
     }
-
     /**
      * Returns Device Details.
      * Details about the device that took the payment.
@@ -503,7 +450,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         return $this->deviceDetails;
     }
-
     /**
      * Sets Device Details.
      * Details about the device that took the payment.
@@ -514,7 +460,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->deviceDetails = $deviceDetails;
     }
-
     /**
      * Returns Card Payment Timeline.
      * The timeline for card payments.
@@ -523,7 +468,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         return $this->cardPaymentTimeline;
     }
-
     /**
      * Sets Card Payment Timeline.
      * The timeline for card payments.
@@ -534,7 +478,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->cardPaymentTimeline = $cardPaymentTimeline;
     }
-
     /**
      * Returns Refund Requires Card Presence.
      * Whether the card must be physically present for the payment to
@@ -547,7 +490,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->refundRequiresCardPresence['value'];
     }
-
     /**
      * Sets Refund Requires Card Presence.
      * Whether the card must be physically present for the payment to
@@ -559,7 +501,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->refundRequiresCardPresence['value'] = $refundRequiresCardPresence;
     }
-
     /**
      * Unsets Refund Requires Card Presence.
      * Whether the card must be physically present for the payment to
@@ -569,7 +510,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->refundRequiresCardPresence = [];
     }
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -583,7 +523,6 @@ class CardPaymentDetails implements \JsonSerializable
         }
         return $this->errors['value'];
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -596,7 +535,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->errors['value'] = $errors;
     }
-
     /**
      * Unsets Errors.
      * Information about errors encountered during the request.
@@ -605,7 +543,6 @@ class CardPaymentDetails implements \JsonSerializable
     {
         $this->errors = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -614,62 +551,61 @@ class CardPaymentDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->status)) {
-            $json['status']                        = $this->status['value'];
+            $json['status'] = $this->status['value'];
         }
         if (isset($this->card)) {
-            $json['card']                          = $this->card;
+            $json['card'] = $this->card;
         }
         if (!empty($this->entryMethod)) {
-            $json['entry_method']                  = $this->entryMethod['value'];
+            $json['entry_method'] = $this->entryMethod['value'];
         }
         if (!empty($this->cvvStatus)) {
-            $json['cvv_status']                    = $this->cvvStatus['value'];
+            $json['cvv_status'] = $this->cvvStatus['value'];
         }
         if (!empty($this->avsStatus)) {
-            $json['avs_status']                    = $this->avsStatus['value'];
+            $json['avs_status'] = $this->avsStatus['value'];
         }
         if (!empty($this->authResultCode)) {
-            $json['auth_result_code']              = $this->authResultCode['value'];
+            $json['auth_result_code'] = $this->authResultCode['value'];
         }
         if (!empty($this->applicationIdentifier)) {
-            $json['application_identifier']        = $this->applicationIdentifier['value'];
+            $json['application_identifier'] = $this->applicationIdentifier['value'];
         }
         if (!empty($this->applicationName)) {
-            $json['application_name']              = $this->applicationName['value'];
+            $json['application_name'] = $this->applicationName['value'];
         }
         if (!empty($this->applicationCryptogram)) {
-            $json['application_cryptogram']        = $this->applicationCryptogram['value'];
+            $json['application_cryptogram'] = $this->applicationCryptogram['value'];
         }
         if (!empty($this->verificationMethod)) {
-            $json['verification_method']           = $this->verificationMethod['value'];
+            $json['verification_method'] = $this->verificationMethod['value'];
         }
         if (!empty($this->verificationResults)) {
-            $json['verification_results']          = $this->verificationResults['value'];
+            $json['verification_results'] = $this->verificationResults['value'];
         }
         if (!empty($this->statementDescription)) {
-            $json['statement_description']         = $this->statementDescription['value'];
+            $json['statement_description'] = $this->statementDescription['value'];
         }
         if (isset($this->deviceDetails)) {
-            $json['device_details']                = $this->deviceDetails;
+            $json['device_details'] = $this->deviceDetails;
         }
         if (isset($this->cardPaymentTimeline)) {
-            $json['card_payment_timeline']         = $this->cardPaymentTimeline;
+            $json['card_payment_timeline'] = $this->cardPaymentTimeline;
         }
         if (!empty($this->refundRequiresCardPresence)) {
             $json['refund_requires_card_presence'] = $this->refundRequiresCardPresence['value'];
         }
         if (!empty($this->errors)) {
-            $json['errors']                        = $this->errors['value'];
+            $json['errors'] = $this->errors['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

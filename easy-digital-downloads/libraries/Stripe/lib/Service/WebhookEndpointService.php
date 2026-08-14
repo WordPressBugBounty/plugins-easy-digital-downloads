@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class WebhookEndpointService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/webhook_endpoints', $params, $opts);
     }
-
     /**
      * A webhook endpoint must have a <code>url</code> and a list of
      * <code>enabled_events</code>. You may optionally specify the Boolean
@@ -47,11 +45,10 @@ class WebhookEndpointService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/webhook_endpoints', $params, $opts);
     }
-
     /**
      * You can also delete webhook endpoints via the <a
      * href="https://dashboard.stripe.com/account/webhooks">webhook endpoint
-     * management</a> page of the EDD\Vendor\Stripe dashboard.
+     * management</a> page of the Stripe dashboard.
      *
      * @param string $id
      * @param null|array $params
@@ -65,7 +62,6 @@ class WebhookEndpointService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/webhook_endpoints/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieves the webhook endpoint with the given ID.
      *
@@ -81,7 +77,6 @@ class WebhookEndpointService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/webhook_endpoints/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the webhook endpoint. You may edit the <code>url</code>, the list of
      * <code>enabled_events</code>, and the status of your endpoint.

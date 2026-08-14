@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in requests to the
  * [UpdateOrder]($e/Orders/UpdateOrder) endpoint.
@@ -16,17 +14,14 @@ class UpdateOrderRequest implements \JsonSerializable
      * @var Order|null
      */
     private $order;
-
     /**
      * @var array
      */
     private $fieldsToClear = [];
-
     /**
      * @var array
      */
     private $idempotencyKey = [];
-
     /**
      * Returns Order.
      * Contains all information related to a single order to process with Square,
@@ -40,7 +35,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         return $this->order;
     }
-
     /**
      * Sets Order.
      * Contains all information related to a single order to process with Square,
@@ -56,7 +50,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         $this->order = $order;
     }
-
     /**
      * Returns Fields to Clear.
      * The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders/update-
@@ -74,7 +67,6 @@ class UpdateOrderRequest implements \JsonSerializable
         }
         return $this->fieldsToClear['value'];
     }
-
     /**
      * Sets Fields to Clear.
      * The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders/update-
@@ -91,7 +83,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         $this->fieldsToClear['value'] = $fieldsToClear;
     }
-
     /**
      * Unsets Fields to Clear.
      * The [dot notation paths](https://developer.squareup.com/docs/orders-api/manage-orders/update-
@@ -104,7 +95,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         $this->fieldsToClear = [];
     }
-
     /**
      * Returns Idempotency Key.
      * A value you specify that uniquely identifies this update request.
@@ -124,7 +114,6 @@ class UpdateOrderRequest implements \JsonSerializable
         }
         return $this->idempotencyKey['value'];
     }
-
     /**
      * Sets Idempotency Key.
      * A value you specify that uniquely identifies this update request.
@@ -143,7 +132,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey['value'] = $idempotencyKey;
     }
-
     /**
      * Unsets Idempotency Key.
      * A value you specify that uniquely identifies this update request.
@@ -160,7 +148,6 @@ class UpdateOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -169,12 +156,12 @@ class UpdateOrderRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->order)) {
-            $json['order']           = $this->order;
+            $json['order'] = $this->order;
         }
         if (!empty($this->fieldsToClear)) {
             $json['fields_to_clear'] = $this->fieldsToClear['value'];
@@ -185,7 +172,6 @@ class UpdateOrderRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

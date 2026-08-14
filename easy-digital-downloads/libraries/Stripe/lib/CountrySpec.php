@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * EDD\Vendor\Stripe needs to collect certain pieces of information about each account
+ * Stripe needs to collect certain pieces of information about each account
  * created. These requirements can differ depending on the account's country. The
  * Country Specs API makes these rules available to your integration.
  *
@@ -24,7 +23,6 @@ namespace EDD\Vendor\Stripe;
 class CountrySpec extends ApiResource
 {
     const OBJECT_NAME = 'country_spec';
-
     /**
      * Lists all Country Spec objects available in the API.
      *
@@ -38,10 +36,8 @@ class CountrySpec extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Returns a Country Spec for a given Country code.
      *
@@ -57,7 +53,6 @@ class CountrySpec extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

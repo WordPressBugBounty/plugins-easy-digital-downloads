@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Response;
 
 use EDD\Vendor\Core\Response\Types\ErrorType;
-
 class ResponseError
 {
     /**
@@ -15,7 +13,6 @@ class ResponseError
     private $useApiResponse = false;
     private $mapErrorTypes = false;
     private $nullOn404 = false;
-
     /**
      * Adds an error to the errors array with the errorCode and ErrorType provided.
      */
@@ -23,7 +20,6 @@ class ResponseError
     {
         $this->errors[$errorCode] = $error;
     }
-
     /**
      * Sets the useApiResponse flag.
      */
@@ -31,7 +27,6 @@ class ResponseError
     {
         $this->useApiResponse = true;
     }
-
     /**
      * Sets the mapErrorTypes flag.
      */
@@ -39,7 +34,6 @@ class ResponseError
     {
         $this->mapErrorTypes = true;
     }
-
     /**
      * Sets the nullOn404 flag.
      */
@@ -47,7 +41,6 @@ class ResponseError
     {
         $this->nullOn404 = true;
     }
-
     /**
      * Returns calculated result on failure or throws an exception.
      */
@@ -60,30 +53,24 @@ class ResponseError
         if ($this->shouldReturnNull($statusCode)) {
             return null;
         }
-
         $errorType = $this->getErrorType($statusCode);
         if (empty($errorType)) {
             throw $context->toApiException('HTTP Response Not OK');
         }
-
         throw $errorType->throwable($context);
     }
-
     private function getApiResponse(Context $context)
     {
         $statusCode = $context->getResponse()->getStatusCode();
         if ($this->shouldReturnNull($statusCode)) {
             return $context->toApiResponse(null);
         }
-
         $errorType = $this->getErrorType($statusCode);
         if (!$this->mapErrorTypes || empty($errorType)) {
             return $context->toApiResponse($context->getResponseBody());
         }
-
         return $context->toApiResponseWithMappedType($errorType->getClassName());
     }
-
     private function getErrorType(int $statusCode): ?ErrorType
     {
         if (isset($this->errors[strval($statusCode)])) {
@@ -94,7 +81,6 @@ class ResponseError
         }
         return null;
     }
-
     private function shouldReturnNull(int $statusCode): bool
     {
         if (!$this->nullOn404) {

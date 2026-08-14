@@ -9,7 +9,6 @@ namespace EDD\Vendor\Stripe\Exception;
 class InvalidRequestException extends ApiErrorException
 {
     protected $stripeParam;
-
     /**
      * Creates a new InvalidRequestException exception.
      *
@@ -18,26 +17,17 @@ class InvalidRequestException extends ApiErrorException
      * @param null|string $httpBody the HTTP body as a string
      * @param null|array $jsonBody the JSON deserialized body
      * @param null|array|\EDD\Vendor\Stripe\Util\CaseInsensitiveArray $httpHeaders the HTTP headers array
-     * @param null|string $stripeCode the EDD\Vendor\Stripe error code
+     * @param null|string $stripeCode the Stripe error code
      * @param null|string $stripeParam the parameter related to the error
      *
      * @return InvalidRequestException
      */
-    public static function factory(
-        $message,
-        $httpStatus = null,
-        $httpBody = null,
-        $jsonBody = null,
-        $httpHeaders = null,
-        $stripeCode = null,
-        $stripeParam = null
-    ) {
+    public static function factory($message, $httpStatus = null, $httpBody = null, $jsonBody = null, $httpHeaders = null, $stripeCode = null, $stripeParam = null)
+    {
         $instance = parent::factory($message, $httpStatus, $httpBody, $jsonBody, $httpHeaders, $stripeCode);
         $instance->setStripeParam($stripeParam);
-
         return $instance;
     }
-
     /**
      * Gets the parameter related to the error.
      *
@@ -47,7 +37,6 @@ class InvalidRequestException extends ApiErrorException
     {
         return $this->stripeParam;
     }
-
     /**
      * Sets the parameter related to the error.
      *

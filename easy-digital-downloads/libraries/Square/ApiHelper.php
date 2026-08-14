@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\Core\Utils\JsonHelper;
 use InvalidArgumentException;
 use stdClass;
-
 /**
  * API utility class.
  */
@@ -18,15 +16,13 @@ class ApiHelper
      * @var JsonHelper
      */
     private static $jsonHelper;
-
     public static function getJsonHelper(): JsonHelper
     {
         if (self::$jsonHelper == null) {
-            self::$jsonHelper = new JsonHelper([], [], null, 'EDD\Vendor\Square\\Models');
+            self::$jsonHelper = new JsonHelper([], [], null, 'Square\Models');
         }
         return self::$jsonHelper;
     }
-
     /**
      * Serialize any given mixed value.
      *
@@ -38,7 +34,6 @@ class ApiHelper
     {
         return CoreHelper::serialize($value);
     }
-
     /**
      * Deserialize a Json string.
      *
@@ -50,7 +45,6 @@ class ApiHelper
     {
         return CoreHelper::deserialize($json);
     }
-
     /**
      * Merge headers
      *
@@ -61,12 +55,10 @@ class ApiHelper
     public static function mergeHeaders(array $headers, array $newHeaders): array
     {
         $headerKeys = [];
-
         // Create a map of lower-cased-header-name to original-header-names
         foreach ($headers as $headerName => $val) {
             $headerKeys[\strtolower($headerName)] = $headerName;
         }
-
         // Override headers with new values
         foreach ($newHeaders as $headerName => $headerValue) {
             $lowerCasedName = \strtolower($headerName);
@@ -76,10 +68,8 @@ class ApiHelper
             $headerKeys[$lowerCasedName] = $headerName;
             $headers[$headerName] = $headerValue;
         }
-
         return $headers;
     }
-
     /**
      * Assert if headers array is valid.
      *
@@ -91,32 +81,17 @@ class ApiHelper
             // Validate header name (must be string, must use allowed chars)
             // Ref: https://tools.ietf.org/html/rfc7230#section-3.2
             if (!is_string($header)) {
-                throw new InvalidArgumentException(sprintf(
-                    'Header name must be a string but %s provided.',
-                    is_object($header) ? get_class($header) : gettype($header)
-                ));
+                throw new InvalidArgumentException(sprintf('Header name must be a string but %s provided.', is_object($header) ? get_class($header) : gettype($header)));
             }
-
             if (preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $header) !== 1) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        '"%s" is not a valid header name.',
-                        $header
-                    )
-                );
+                throw new InvalidArgumentException(sprintf('"%s" is not a valid header name.', $header));
             }
-
             // Validate value (must be scalar)
             if (!is_scalar($value) || null === $value) {
-                throw new InvalidArgumentException(sprintf(
-                    'Header value must be scalar but %s provided for header "%s".',
-                    is_object($value) ? get_class($value) : gettype($value),
-                    $header
-                ));
+                throw new InvalidArgumentException(sprintf('Header value must be scalar but %s provided for header "%s".', is_object($value) ? get_class($value) : gettype($value), $header));
             }
         }
     }
-
     /**
      * Decodes a valid json string into an array to send in Api calls.
      *
@@ -130,7 +105,7 @@ class ApiHelper
      */
     public static function decodeJson($json, string $name, bool $associative = true): ?array
     {
-        if (is_null($json) || (is_array($json) && (!$associative || CoreHelper::isAssociative($json)))) {
+        if (is_null($json) || is_array($json) && (!$associative || CoreHelper::isAssociative($json))) {
             return $json;
         }
         if ($json instanceof stdClass) {
@@ -142,9 +117,8 @@ class ApiHelper
                 return $decoded;
             }
         }
-        throw new InvalidArgumentException("Invalid json value for argument: '$name'");
+        throw new InvalidArgumentException("Invalid json value for argument: '{$name}'");
     }
-
     /**
      * Decodes a valid jsonArray string into an array to send in Api calls.
      *
@@ -163,12 +137,12 @@ class ApiHelper
             return null;
         }
         $isAssociative = CoreHelper::isAssociative($decoded);
-        if (($asMap && $isAssociative) || (!$asMap && !$isAssociative)) {
+        if ($asMap && $isAssociative || !$asMap && !$isAssociative) {
             return array_map(function ($v) use ($name) {
                 return self::decodeJson($v, $name);
             }, $decoded);
         }
         $type = $asMap ? 'map' : 'array';
-        throw new InvalidArgumentException("Invalid json $type value for argument: '$name'");
+        throw new InvalidArgumentException("Invalid json {$type} value for argument: '{$name}'");
     }
 }

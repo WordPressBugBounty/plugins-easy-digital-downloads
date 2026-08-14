@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents an applied portion of a tax to a line item in an order.
  *
@@ -20,17 +18,14 @@ class OrderLineItemAppliedTax implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string
      */
     private $taxUid;
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @param string $taxUid
      */
@@ -38,7 +33,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         $this->taxUid = $taxUid;
     }
-
     /**
      * Returns Uid.
      * A unique ID that identifies the applied tax only within this order.
@@ -50,7 +44,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the applied tax only within this order.
@@ -61,7 +54,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the applied tax only within this order.
@@ -70,7 +62,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Tax Uid.
      * The `uid` of the tax for which this applied tax represents. It must reference
@@ -83,7 +74,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         return $this->taxUid;
     }
-
     /**
      * Sets Tax Uid.
      * The `uid` of the tax for which this applied tax represents. It must reference
@@ -99,7 +89,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         $this->taxUid = $taxUid;
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -114,7 +103,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -131,7 +119,6 @@ class OrderLineItemAppliedTax implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -140,21 +127,20 @@ class OrderLineItemAppliedTax implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']           = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
-        $json['tax_uid']           = $this->taxUid;
+        $json['tax_uid'] = $this->taxUid;
         if (isset($this->appliedMoney)) {
             $json['applied_money'] = $this->appliedMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

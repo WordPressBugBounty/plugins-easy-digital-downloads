@@ -79,8 +79,11 @@ function edd_process_add_to_cart( $data ) {
 		edd_add_to_cart( $download_id, $options );
 	}
 
+	// `discount` is intentionally kept in these redirects so a preset discount survives
+	// to the landing request and is re-applied there; EDD\Cart\AddToCartRedirectCleanup
+	// then scrubs it from the URL. See #2609.
 	if ( edd_straight_to_checkout() && ! edd_is_checkout() ) {
-		$query_args     = remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity', 'discount' ) );
+		$query_args     = remove_query_arg( edd_cart_removable_query_args() );
 		$query_part     = strpos( $query_args, '?' );
 		$url_parameters = '';
 
@@ -90,7 +93,7 @@ function edd_process_add_to_cart( $data ) {
 
 		edd_redirect( edd_get_checkout_uri() . $url_parameters, 303 );
 	} else {
-		edd_redirect( remove_query_arg( array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity', 'discount' ) ) );
+		edd_redirect( remove_query_arg( edd_cart_removable_query_args() ) );
 	}
 }
 add_action( 'edd_add_to_cart', 'edd_process_add_to_cart' );

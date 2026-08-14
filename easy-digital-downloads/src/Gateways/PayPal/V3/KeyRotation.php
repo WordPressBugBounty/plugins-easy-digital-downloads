@@ -21,6 +21,7 @@ use EDD\Gateways\PayPal\Gateway;
 use EDD\Utils\Encryption;
 use EDD\Utils\Identifier;
 use EDD\Utils\Transient;
+use EDD\Utils\URL;
 
 /**
  * KeyRotation class.
@@ -38,6 +39,11 @@ class KeyRotation {
 	 * keep validating. Returns true when a usable key is present after the call.
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.0 Skips the recovery re-register when home_url() looks
+	 *        like a staging/local host, to avoid hijacking the production
+	 *        store's Connect API registration (e.g. a production site cloned
+	 *        to staging with different WP salts, which breaks HMAC decryption
+	 *        and would otherwise trigger recovery here).
 	 *
 	 * @param string $mode Optional. 'sandbox' or 'live'. Defaults to current mode.
 	 * @return bool True when a usable key is present (already valid or recovered).
@@ -58,11 +64,25 @@ class KeyRotation {
 			return false;
 		}
 
+		$home_url = home_url();
+		if ( ! URL::is_production_url( $home_url ) ) {
+			edd_debug_log(
+				sprintf(
+					'PayPal v3: skipped HMAC recovery re-register for %s mode — home_url() looks like a staging/local host (%s). The Connect API registration was left unchanged.',
+					$mode,
+					$home_url
+				)
+			);
+			return false;
+		}
+
 		// Re-register to retrieve the key.
 		$api      = new ConnectAPI( $mode );
 		$response = $api->register_store(
 			array(
-				'site_url'    => site_url(),
+				// Use home_url() to match the base WP core uses for rest_url(),
+				// keeping the Connect API's stored URL in sync with webhook delivery.
+				'site_url'    => $home_url,
 				'site_uuid'   => Identifier::get_site_uuid(),
 				'license_key' => Onboarding::get_license_key(),
 				'gateway'     => 'paypal',

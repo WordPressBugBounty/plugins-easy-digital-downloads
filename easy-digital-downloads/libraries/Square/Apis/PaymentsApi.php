@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\BodyParam;
@@ -21,7 +20,6 @@ use EDD\Vendor\Square\Models\GetPaymentResponse;
 use EDD\Vendor\Square\Models\ListPaymentsResponse;
 use EDD\Vendor\Square\Models\UpdatePaymentRequest;
 use EDD\Vendor\Square\Models\UpdatePaymentResponse;
-
 class PaymentsApi extends BaseApi
 {
     /**
@@ -90,52 +88,16 @@ class PaymentsApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function listPayments(
-        ?string $beginTime = null,
-        ?string $endTime = null,
-        ?string $sortOrder = null,
-        ?string $cursor = null,
-        ?string $locationId = null,
-        ?int $total = null,
-        ?string $last4 = null,
-        ?string $cardBrand = null,
-        ?int $limit = null,
-        ?bool $isOfflinePayment = false,
-        ?string $offlineBeginTime = null,
-        ?string $offlineEndTime = null,
-        ?string $updatedAtBeginTime = null,
-        ?string $updatedAtEndTime = null,
-        ?string $sortField = null
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/payments')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('begin_time', $beginTime),
-                QueryParam::init('end_time', $endTime),
-                QueryParam::init('sort_order', $sortOrder),
-                QueryParam::init('cursor', $cursor),
-                QueryParam::init('location_id', $locationId),
-                QueryParam::init('total', $total),
-                QueryParam::init('last_4', $last4),
-                QueryParam::init('card_brand', $cardBrand),
-                QueryParam::init('limit', $limit),
-                QueryParam::init('is_offline_payment', $isOfflinePayment),
-                QueryParam::init('offline_begin_time', $offlineBeginTime),
-                QueryParam::init('offline_end_time', $offlineEndTime),
-                QueryParam::init('updated_at_begin_time', $updatedAtBeginTime),
-                QueryParam::init('updated_at_end_time', $updatedAtEndTime),
-                QueryParam::init('sort_field', $sortField)
-            );
-
+    public function listPayments(?string $beginTime = null, ?string $endTime = null, ?string $sortOrder = null, ?string $cursor = null, ?string $locationId = null, ?int $total = null, ?string $last4 = null, ?string $cardBrand = null, ?int $limit = null, ?bool $isOfflinePayment = false, ?string $offlineBeginTime = null, ?string $offlineEndTime = null, ?string $updatedAtBeginTime = null, ?string $updatedAtEndTime = null, ?string $sortField = null): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/payments')->auth('global')->parameters(QueryParam::init('begin_time', $beginTime), QueryParam::init('end_time', $endTime), QueryParam::init('sort_order', $sortOrder), QueryParam::init('cursor', $cursor), QueryParam::init('location_id', $locationId), QueryParam::init('total', $total), QueryParam::init('last_4', $last4), QueryParam::init('card_brand', $cardBrand), QueryParam::init('limit', $limit), QueryParam::init('is_offline_payment', $isOfflinePayment), QueryParam::init('offline_begin_time', $offlineBeginTime), QueryParam::init('offline_end_time', $offlineEndTime), QueryParam::init('updated_at_begin_time', $updatedAtBeginTime), QueryParam::init('updated_at_end_time', $updatedAtEndTime), QueryParam::init('sort_field', $sortField));
         $_resHandler = $this->responseHandler()->type(ListPaymentsResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Creates a payment using the provided source. You can use this endpoint
      * to charge a card (credit/debit card or
-     * EDD\Vendor\Square gift card) or record a payment that the seller received outside of EDD\Vendor\Square
+     * Square gift card) or record a payment that the seller received outside of Square
      * (cash payment from a buyer or a payment that an external entity
      * processed on behalf of the seller).
      *
@@ -149,15 +111,10 @@ class PaymentsApi extends BaseApi
      */
     public function createPayment(CreatePaymentRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CreatePaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Cancels (voids) a payment identified by the idempotency key that is specified in the
      * request.
@@ -166,7 +123,7 @@ class PaymentsApi extends BaseApi
      * a
      * `CreatePayment` request, a network error occurs and you do not get a response). In this case, you
      * can
-     * direct EDD\Vendor\Square to cancel the payment using this endpoint. In the request, you provide the same
+     * direct Square to cancel the payment using this endpoint. In the request, you provide the same
      * idempotency key that you provided in your `CreatePayment` request that you want to cancel. After
      * canceling the payment, you can submit your `CreatePayment` request again.
      *
@@ -183,17 +140,10 @@ class PaymentsApi extends BaseApi
      */
     public function cancelPaymentByIdempotencyKey(CancelPaymentByIdempotencyKeyRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/cancel')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
-        $_resHandler = $this->responseHandler()
-            ->type(CancelPaymentByIdempotencyKeyResponse::class)
-            ->returnApiResponse();
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/cancel')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+        $_resHandler = $this->responseHandler()->type(CancelPaymentByIdempotencyKeyResponse::class)->returnApiResponse();
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves details for a specific payment.
      *
@@ -203,15 +153,10 @@ class PaymentsApi extends BaseApi
      */
     public function getPayment(string $paymentId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/payments/{payment_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('payment_id', $paymentId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/payments/{payment_id}')->auth('global')->parameters(TemplateParam::init('payment_id', $paymentId));
         $_resHandler = $this->responseHandler()->type(GetPaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates a payment with the APPROVED status.
      * You can update the `amount_money` and `tip_money` using this endpoint.
@@ -224,19 +169,10 @@ class PaymentsApi extends BaseApi
      */
     public function updatePayment(string $paymentId, UpdatePaymentRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/payments/{payment_id}')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('payment_id', $paymentId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/payments/{payment_id}')->auth('global')->parameters(TemplateParam::init('payment_id', $paymentId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(UpdatePaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Cancels (voids) a payment. You can use this endpoint to cancel a payment with
      * the APPROVED `status`.
@@ -247,15 +183,10 @@ class PaymentsApi extends BaseApi
      */
     public function cancelPayment(string $paymentId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/{payment_id}/cancel')
-            ->auth('global')
-            ->parameters(TemplateParam::init('payment_id', $paymentId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/{payment_id}/cancel')->auth('global')->parameters(TemplateParam::init('payment_id', $paymentId));
         $_resHandler = $this->responseHandler()->type(CancelPaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Completes (captures) a payment.
      * By default, payments are set to complete immediately after they are created.
@@ -270,16 +201,8 @@ class PaymentsApi extends BaseApi
      */
     public function completePayment(string $paymentId, CompletePaymentRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/{payment_id}/complete')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('payment_id', $paymentId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/payments/{payment_id}/complete')->auth('global')->parameters(TemplateParam::init('payment_id', $paymentId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CompletePaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

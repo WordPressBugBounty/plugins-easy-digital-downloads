@@ -27,14 +27,19 @@ class Passes extends Component {
 
 	/**
 	 * Gets the array of subscribed events.
+	 *
+	 * @since 3.3.0
+	 * @since 3.7.0 Uses the Pro weekly hook when Pro is active.
 	 */
 	public static function get_subscribed_events(): array {
 		if ( is_multisite() && ! is_main_site() ) {
 			return array();
 		}
 
+		$hook = edd_is_pro() ? 'edd_pro_weekly_scheduled_events' : 'edd_weekly_scheduled_events';
+
 		return array(
-			'edd_weekly_scheduled_events' => 'weekly_license_check',
+			$hook => 'weekly_license_check',
 		);
 	}
 

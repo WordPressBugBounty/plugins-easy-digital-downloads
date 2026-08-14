@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase;
 
 use EDD\Vendor\apimatic\jsonmapper\JsonMapperException;
@@ -10,7 +9,6 @@ use EDD\Vendor\Core\Client;
 use EDD\Vendor\Core\Types\Sdk\CoreFileWrapper;
 use EDD\Vendor\Core\Utils\CoreHelper;
 use Exception;
-
 class TestParam
 {
     /**
@@ -28,7 +26,6 @@ class TestParam
     {
         return Client::getJsonHelper()->mapTypes(CoreHelper::deserialize($json, false), $typeGroup, $deserializers);
     }
-
     /**
      * Returns an object type TestParam.
      *
@@ -47,7 +44,6 @@ class TestParam
         }
         return Client::getJsonHelper()->mapClass(CoreHelper::deserialize($json, false), $classname, $dimension);
     }
-
     /**
      * Returns a custom TestParam.
      *
@@ -59,7 +55,6 @@ class TestParam
     {
         return Closure::fromCallable($callback)(CoreHelper::deserialize($json, false));
     }
-
     /**
      * Returns a file type TestParam.
      *
@@ -70,7 +65,6 @@ class TestParam
         $realPath = CoreFileWrapper::getDownloadedRealFilePath($url);
         return self::localFile($realPath);
     }
-
     /**
      * Returns a localFile TestParam.
      *

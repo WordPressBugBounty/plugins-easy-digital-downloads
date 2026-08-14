@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Treasury;
 
 /**
@@ -24,7 +23,6 @@ namespace EDD\Vendor\Stripe\Treasury;
 class TransactionEntry extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'treasury.transaction_entry';
-
     const FLOW_TYPE_CREDIT_REVERSAL = 'credit_reversal';
     const FLOW_TYPE_DEBIT_REVERSAL = 'debit_reversal';
     const FLOW_TYPE_INBOUND_TRANSFER = 'inbound_transfer';
@@ -34,7 +32,6 @@ class TransactionEntry extends \EDD\Vendor\Stripe\ApiResource
     const FLOW_TYPE_OUTBOUND_TRANSFER = 'outbound_transfer';
     const FLOW_TYPE_RECEIVED_CREDIT = 'received_credit';
     const FLOW_TYPE_RECEIVED_DEBIT = 'received_debit';
-
     const TYPE_CREDIT_REVERSAL = 'credit_reversal';
     const TYPE_CREDIT_REVERSAL_POSTING = 'credit_reversal_posting';
     const TYPE_DEBIT_REVERSAL = 'debit_reversal';
@@ -55,7 +52,6 @@ class TransactionEntry extends \EDD\Vendor\Stripe\ApiResource
     const TYPE_OUTBOUND_TRANSFER_RETURN = 'outbound_transfer_return';
     const TYPE_RECEIVED_CREDIT = 'received_credit';
     const TYPE_RECEIVED_DEBIT = 'received_debit';
-
     /**
      * Retrieves a list of TransactionEntry objects.
      *
@@ -69,10 +65,8 @@ class TransactionEntry extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a TransactionEntry object.
      *
@@ -88,7 +82,6 @@ class TransactionEntry extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

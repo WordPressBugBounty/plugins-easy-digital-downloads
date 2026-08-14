@@ -71,6 +71,11 @@ class Text extends Base {
 				required
 				<?php
 			endif;
+			if ( ! empty( $this->args['aria-describedby'] ) ) :
+				?>
+				aria-describedby="<?php echo esc_attr( $this->args['aria-describedby'] ); ?>"
+				<?php
+			endif;
 			?>
 		/>
 		<?php if ( $this->args['include_span'] ) : ?>
@@ -89,19 +94,20 @@ class Text extends Base {
 	 */
 	protected function defaults() {
 		return array(
-			'id'           => '',
-			'name'         => 'text',
-			'value'        => '',
-			'label'        => '',
-			'desc'         => '',
-			'placeholder'  => '',
-			'class'        => 'regular-text',
-			'disabled'     => false,
-			'autocomplete' => '',
-			'data'         => false,
-			'required'     => false,
-			'include_span' => true,
-			'type'         => 'text',
+			'id'               => '',
+			'name'             => 'text',
+			'value'            => '',
+			'label'            => '',
+			'desc'             => '',
+			'placeholder'      => '',
+			'class'            => 'regular-text',
+			'disabled'         => false,
+			'autocomplete'     => '',
+			'data'             => false,
+			'required'         => false,
+			'aria-describedby' => '',
+			'include_span'     => true,
+			'type'             => 'text',
 		);
 	}
 

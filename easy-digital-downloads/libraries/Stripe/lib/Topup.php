@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * To top up your EDD\Vendor\Stripe balance, you create a top-up object. You can retrieve
+ * To top up your Stripe balance, you create a top-up object. You can retrieve
  * individual top-ups, as well as list all top-ups. Top-ups are identified by a
  * unique, random ID.
  *
@@ -18,7 +17,7 @@ namespace EDD\Vendor\Stripe;
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.
- * @property null|int $expected_availability_date Date the funds are expected to arrive in your EDD\Vendor\Stripe account for payouts. This factors in delays like weekends or bank holidays. May not be specified depending on status of top-up.
+ * @property null|int $expected_availability_date Date the funds are expected to arrive in your Stripe account for payouts. This factors in delays like weekends or bank holidays. May not be specified depending on status of top-up.
  * @property null|string $failure_code Error code explaining reason for top-up failure if available (see <a href="https://stripe.com/docs/api#errors">the errors section</a> for a list of codes).
  * @property null|string $failure_message Message to user further explaining reason for top-up failure if available.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -31,15 +30,12 @@ namespace EDD\Vendor\Stripe;
 class Topup extends ApiResource
 {
     const OBJECT_NAME = 'topup';
-
     use ApiOperations\Update;
-
     const STATUS_CANCELED = 'canceled';
     const STATUS_FAILED = 'failed';
     const STATUS_PENDING = 'pending';
     const STATUS_REVERSED = 'reversed';
     const STATUS_SUCCEEDED = 'succeeded';
-
     /**
      * Top up the balance of an account.
      *
@@ -54,14 +50,11 @@ class Topup extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of top-ups.
      *
@@ -75,13 +68,11 @@ class Topup extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of a top-up that has previously been created. Supply the
-     * unique top-up ID that was returned from your previous request, and EDD\Vendor\Stripe will
+     * unique top-up ID that was returned from your previous request, and Stripe will
      * return the corresponding top-up information.
      *
      * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
@@ -96,10 +87,8 @@ class Topup extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the metadata of a top-up. Other top-up details are not editable by
      * design.
@@ -116,14 +105,11 @@ class Topup extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -137,7 +123,6 @@ class Topup extends ApiResource
         $url = $this->instanceUrl() . '/cancel';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

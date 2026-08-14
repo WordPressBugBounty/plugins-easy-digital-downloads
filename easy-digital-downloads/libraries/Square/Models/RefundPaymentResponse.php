@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the response returned by
  * [RefundPayment]($e/Refunds/RefundPayment).
@@ -19,12 +17,10 @@ class RefundPaymentResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var PaymentRefund|null
      */
     private $refund;
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -35,7 +31,6 @@ class RefundPaymentResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -48,7 +43,6 @@ class RefundPaymentResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Refund.
      * Represents a refund of a payment made using Square. Contains information about
@@ -58,7 +52,6 @@ class RefundPaymentResponse implements \JsonSerializable
     {
         return $this->refund;
     }
-
     /**
      * Sets Refund.
      * Represents a refund of a payment made using Square. Contains information about
@@ -70,7 +63,6 @@ class RefundPaymentResponse implements \JsonSerializable
     {
         $this->refund = $refund;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -79,7 +71,7 @@ class RefundPaymentResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -92,7 +84,6 @@ class RefundPaymentResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

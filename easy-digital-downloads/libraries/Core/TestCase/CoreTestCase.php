@@ -1,21 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase;
 
 use EDD\Vendor\Core\TestCase\BodyMatchers\BodyComparator;
 use EDD\Vendor\Core\TestCase\BodyMatchers\BodyMatcher;
 use EDD\Vendor\Core\Types\CallbackCatcher;
 use PHPUnit\Framework\TestCase;
-
 class CoreTestCase
 {
     private $callback;
     private $statusCodeMatcher;
     private $headersMatcher;
     private $bodyMatcher;
-
     /**
      * Initializes a new CoreTestCase object with the parameters provided.
      */
@@ -28,7 +25,6 @@ class CoreTestCase
         $this->bodyMatcher->shouldAssert = false;
         $this->bodyMatcher->set($testCase, $result);
     }
-
     /**
      * Sets the expected status value for the test case.
      */
@@ -37,7 +33,6 @@ class CoreTestCase
         $this->statusCodeMatcher->setStatusCode($statusCode);
         return $this;
     }
-
     /**
      * Sets expected status range in case expected statuses are within a certain range.
      */
@@ -46,7 +41,6 @@ class CoreTestCase
         $this->statusCodeMatcher->setStatusRange($lowerStatusCode, $upperStatusCode);
         return $this;
     }
-
     /**
      * Sets headers expected from the response within a test case.
      */
@@ -55,7 +49,6 @@ class CoreTestCase
         $this->headersMatcher->setHeaders($headers);
         return $this;
     }
-
     /**
      * Sets allowExtra flag to true, which allows headers other than the one specified to be present
      * within the response.
@@ -65,7 +58,6 @@ class CoreTestCase
         $this->headersMatcher->allowExtra();
         return $this;
     }
-
     /**
      * Sets bodyMatcher of the object to the one provided.
      */
@@ -75,7 +67,6 @@ class CoreTestCase
         $this->bodyMatcher = $bodyMatcher;
         return $this;
     }
-
     /**
      * Calls assert on statusCodeMatcher, headersMatcher and bodyMatcher set within the object.
      */

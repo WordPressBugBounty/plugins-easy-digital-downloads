@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\QueryParam;
@@ -10,13 +9,12 @@ use EDD\Vendor\CoreInterfaces\Core\Request\RequestMethod;
 use EDD\Vendor\Square\Http\ApiResponse;
 use EDD\Vendor\Square\Models\ListMerchantsResponse;
 use EDD\Vendor\Square\Models\RetrieveMerchantResponse;
-
 class MerchantsApi extends BaseApi
 {
     /**
      * Provides details about the merchant associated with a given access token.
      *
-     * The access token used to connect your application to a EDD\Vendor\Square seller is associated
+     * The access token used to connect your application to a Square seller is associated
      * with a single merchant. That means that `ListMerchants` returns a list
      * with a single `Merchant` object. You can specify your personal access token
      * to get your own merchant information or specify an OAuth token to get the
@@ -31,15 +29,10 @@ class MerchantsApi extends BaseApi
      */
     public function listMerchants(?int $cursor = null): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/merchants')
-            ->auth('global')
-            ->parameters(QueryParam::init('cursor', $cursor));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/merchants')->auth('global')->parameters(QueryParam::init('cursor', $cursor));
         $_resHandler = $this->responseHandler()->type(ListMerchantsResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves the `Merchant` object for the given `merchant_id`.
      *
@@ -51,12 +44,8 @@ class MerchantsApi extends BaseApi
      */
     public function retrieveMerchant(string $merchantId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/merchants/{merchant_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('merchant_id', $merchantId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/merchants/{merchant_id}')->auth('global')->parameters(TemplateParam::init('merchant_id', $merchantId));
         $_resHandler = $this->responseHandler()->type(RetrieveMerchantResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

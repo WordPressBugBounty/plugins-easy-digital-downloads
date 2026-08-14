@@ -142,9 +142,9 @@ class Tracking {
 		$settings['main']['allow_tracking'] = array(
 			'id'    => 'allow_tracking',
 			'name'  => __( 'Join the EDD Community', 'easy-digital-downloads' ),
+			'type'  => 'checkbox_toggle',
 			'check' => __( 'Yes, I want to help!', 'easy-digital-downloads' ) . ' <span class="allow_tracking edd-heart ' . $hidden . '"><img src="' . esc_url( EDD_PLUGIN_URL . 'assets/images/icons/icon-edd-heart.svg' ) . '" alt="" class="emoji" /></span>',
 			'desc'  => $this->get_telemetry_description(),
-			'type'  => 'checkbox_description',
 		);
 
 		return $settings;
@@ -291,7 +291,7 @@ class Tracking {
 		return __( 'Help us provide a better experience and faster fixes by sharing some anonymous data about how you use Easy Digital Downloads.', 'easy-digital-downloads' ) .
 			' ' .
 			sprintf(
-				/* translators: %1$s Link to tracking information, do not translate. %2$s clsoing link tag, do not translate */
+				/* translators: 1: Opening link tag to tracking information, do not translate. 2: Closing link tag, do not translate. */
 				__( '%1$sHere is what we track.%2$s', 'easy-digital-downloads' ),
 				'<a href="' . edd_link_helper(
 					'https://easydigitaldownloads.com/docs/what-information-will-be-tracked-by-opting-into-usage-tracking/',

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The creation source filter.
  *
@@ -18,12 +16,10 @@ class CustomerCreationSourceFilter implements \JsonSerializable
      * @var array
      */
     private $values = [];
-
     /**
      * @var string|null
      */
     private $rule;
-
     /**
      * Returns Values.
      * The list of creation sources used as filtering criteria.
@@ -38,7 +34,6 @@ class CustomerCreationSourceFilter implements \JsonSerializable
         }
         return $this->values['value'];
     }
-
     /**
      * Sets Values.
      * The list of creation sources used as filtering criteria.
@@ -52,7 +47,6 @@ class CustomerCreationSourceFilter implements \JsonSerializable
     {
         $this->values['value'] = $values;
     }
-
     /**
      * Unsets Values.
      * The list of creation sources used as filtering criteria.
@@ -62,7 +56,6 @@ class CustomerCreationSourceFilter implements \JsonSerializable
     {
         $this->values = [];
     }
-
     /**
      * Returns Rule.
      * Indicates whether customers should be included in, or excluded from,
@@ -72,7 +65,6 @@ class CustomerCreationSourceFilter implements \JsonSerializable
     {
         return $this->rule;
     }
-
     /**
      * Sets Rule.
      * Indicates whether customers should be included in, or excluded from,
@@ -84,7 +76,6 @@ class CustomerCreationSourceFilter implements \JsonSerializable
     {
         $this->rule = $rule;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -93,7 +84,7 @@ class CustomerCreationSourceFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -101,12 +92,11 @@ class CustomerCreationSourceFilter implements \JsonSerializable
             $json['values'] = $this->values['value'];
         }
         if (isset($this->rule)) {
-            $json['rule']   = $this->rule;
+            $json['rule'] = $this->rule;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

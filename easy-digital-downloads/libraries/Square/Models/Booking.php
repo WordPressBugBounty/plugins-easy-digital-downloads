@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a booking as a time-bound service contract for a seller's staff member to provide a
  * specified service
@@ -17,87 +15,70 @@ class Booking implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var array
      */
     private $startAt = [];
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var array
      */
     private $customerId = [];
-
     /**
      * @var array
      */
     private $customerNote = [];
-
     /**
      * @var array
      */
     private $sellerNote = [];
-
     /**
      * @var array
      */
     private $appointmentSegments = [];
-
     /**
      * @var int|null
      */
     private $transitionTimeMinutes;
-
     /**
      * @var bool|null
      */
     private $allDay;
-
     /**
      * @var string|null
      */
     private $locationType;
-
     /**
      * @var BookingCreatorDetails|null
      */
     private $creatorDetails;
-
     /**
      * @var string|null
      */
     private $source;
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * Returns Id.
      * A unique ID of this object representing a booking.
@@ -106,7 +87,6 @@ class Booking implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A unique ID of this object representing a booking.
@@ -117,7 +97,6 @@ class Booking implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Version.
      * The revision number for the booking used for optimistic concurrency.
@@ -126,7 +105,6 @@ class Booking implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The revision number for the booking used for optimistic concurrency.
@@ -137,7 +115,6 @@ class Booking implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Status.
      * Supported booking statuses.
@@ -146,7 +123,6 @@ class Booking implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Supported booking statuses.
@@ -157,7 +133,6 @@ class Booking implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Created At.
      * The RFC 3339 timestamp specifying the creation time of this booking.
@@ -166,7 +141,6 @@ class Booking implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The RFC 3339 timestamp specifying the creation time of this booking.
@@ -177,7 +151,6 @@ class Booking implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The RFC 3339 timestamp specifying the most recent update time of this booking.
@@ -186,7 +159,6 @@ class Booking implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The RFC 3339 timestamp specifying the most recent update time of this booking.
@@ -197,7 +169,6 @@ class Booking implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Start At.
      * The RFC 3339 timestamp specifying the starting time of this booking.
@@ -209,7 +180,6 @@ class Booking implements \JsonSerializable
         }
         return $this->startAt['value'];
     }
-
     /**
      * Sets Start At.
      * The RFC 3339 timestamp specifying the starting time of this booking.
@@ -220,7 +190,6 @@ class Booking implements \JsonSerializable
     {
         $this->startAt['value'] = $startAt;
     }
-
     /**
      * Unsets Start At.
      * The RFC 3339 timestamp specifying the starting time of this booking.
@@ -229,7 +198,6 @@ class Booking implements \JsonSerializable
     {
         $this->startAt = [];
     }
-
     /**
      * Returns Location Id.
      * The ID of the [Location](entity:Location) object representing the location where the booked service
@@ -242,7 +210,6 @@ class Booking implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the [Location](entity:Location) object representing the location where the booked service
@@ -254,7 +221,6 @@ class Booking implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the [Location](entity:Location) object representing the location where the booked service
@@ -264,7 +230,6 @@ class Booking implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Customer Id.
      * The ID of the [Customer](entity:Customer) object representing the customer receiving the booked
@@ -277,7 +242,6 @@ class Booking implements \JsonSerializable
         }
         return $this->customerId['value'];
     }
-
     /**
      * Sets Customer Id.
      * The ID of the [Customer](entity:Customer) object representing the customer receiving the booked
@@ -289,7 +253,6 @@ class Booking implements \JsonSerializable
     {
         $this->customerId['value'] = $customerId;
     }
-
     /**
      * Unsets Customer Id.
      * The ID of the [Customer](entity:Customer) object representing the customer receiving the booked
@@ -299,7 +262,6 @@ class Booking implements \JsonSerializable
     {
         $this->customerId = [];
     }
-
     /**
      * Returns Customer Note.
      * The free-text field for the customer to supply notes about the booking. For example, the note can be
@@ -313,7 +275,6 @@ class Booking implements \JsonSerializable
         }
         return $this->customerNote['value'];
     }
-
     /**
      * Sets Customer Note.
      * The free-text field for the customer to supply notes about the booking. For example, the note can be
@@ -326,7 +287,6 @@ class Booking implements \JsonSerializable
     {
         $this->customerNote['value'] = $customerNote;
     }
-
     /**
      * Unsets Customer Note.
      * The free-text field for the customer to supply notes about the booking. For example, the note can be
@@ -337,7 +297,6 @@ class Booking implements \JsonSerializable
     {
         $this->customerNote = [];
     }
-
     /**
      * Returns Seller Note.
      * The free-text field for the seller to supply notes about the booking. For example, the note can be
@@ -352,7 +311,6 @@ class Booking implements \JsonSerializable
         }
         return $this->sellerNote['value'];
     }
-
     /**
      * Sets Seller Note.
      * The free-text field for the seller to supply notes about the booking. For example, the note can be
@@ -366,7 +324,6 @@ class Booking implements \JsonSerializable
     {
         $this->sellerNote['value'] = $sellerNote;
     }
-
     /**
      * Unsets Seller Note.
      * The free-text field for the seller to supply notes about the booking. For example, the note can be
@@ -378,7 +335,6 @@ class Booking implements \JsonSerializable
     {
         $this->sellerNote = [];
     }
-
     /**
      * Returns Appointment Segments.
      * A list of appointment segments for this booking.
@@ -392,7 +348,6 @@ class Booking implements \JsonSerializable
         }
         return $this->appointmentSegments['value'];
     }
-
     /**
      * Sets Appointment Segments.
      * A list of appointment segments for this booking.
@@ -405,7 +360,6 @@ class Booking implements \JsonSerializable
     {
         $this->appointmentSegments['value'] = $appointmentSegments;
     }
-
     /**
      * Unsets Appointment Segments.
      * A list of appointment segments for this booking.
@@ -414,7 +368,6 @@ class Booking implements \JsonSerializable
     {
         $this->appointmentSegments = [];
     }
-
     /**
      * Returns Transition Time Minutes.
      * Additional time at the end of a booking.
@@ -424,7 +377,6 @@ class Booking implements \JsonSerializable
     {
         return $this->transitionTimeMinutes;
     }
-
     /**
      * Sets Transition Time Minutes.
      * Additional time at the end of a booking.
@@ -436,7 +388,6 @@ class Booking implements \JsonSerializable
     {
         $this->transitionTimeMinutes = $transitionTimeMinutes;
     }
-
     /**
      * Returns All Day.
      * Whether the booking is of a full business day.
@@ -445,7 +396,6 @@ class Booking implements \JsonSerializable
     {
         return $this->allDay;
     }
-
     /**
      * Sets All Day.
      * Whether the booking is of a full business day.
@@ -456,7 +406,6 @@ class Booking implements \JsonSerializable
     {
         $this->allDay = $allDay;
     }
-
     /**
      * Returns Location Type.
      * Supported types of location where service is provided.
@@ -465,7 +414,6 @@ class Booking implements \JsonSerializable
     {
         return $this->locationType;
     }
-
     /**
      * Sets Location Type.
      * Supported types of location where service is provided.
@@ -476,7 +424,6 @@ class Booking implements \JsonSerializable
     {
         $this->locationType = $locationType;
     }
-
     /**
      * Returns Creator Details.
      * Information about a booking creator.
@@ -485,7 +432,6 @@ class Booking implements \JsonSerializable
     {
         return $this->creatorDetails;
     }
-
     /**
      * Sets Creator Details.
      * Information about a booking creator.
@@ -496,7 +442,6 @@ class Booking implements \JsonSerializable
     {
         $this->creatorDetails = $creatorDetails;
     }
-
     /**
      * Returns Source.
      * Supported sources a booking was created from.
@@ -505,7 +450,6 @@ class Booking implements \JsonSerializable
     {
         return $this->source;
     }
-
     /**
      * Sets Source.
      * Supported sources a booking was created from.
@@ -516,7 +460,6 @@ class Booking implements \JsonSerializable
     {
         $this->source = $source;
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -527,7 +470,6 @@ class Booking implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -540,7 +482,6 @@ class Booking implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -549,65 +490,64 @@ class Booking implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                      = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->version)) {
-            $json['version']                 = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->status)) {
-            $json['status']                  = $this->status;
+            $json['status'] = $this->status;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']              = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']              = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (!empty($this->startAt)) {
-            $json['start_at']                = $this->startAt['value'];
+            $json['start_at'] = $this->startAt['value'];
         }
         if (!empty($this->locationId)) {
-            $json['location_id']             = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (!empty($this->customerId)) {
-            $json['customer_id']             = $this->customerId['value'];
+            $json['customer_id'] = $this->customerId['value'];
         }
         if (!empty($this->customerNote)) {
-            $json['customer_note']           = $this->customerNote['value'];
+            $json['customer_note'] = $this->customerNote['value'];
         }
         if (!empty($this->sellerNote)) {
-            $json['seller_note']             = $this->sellerNote['value'];
+            $json['seller_note'] = $this->sellerNote['value'];
         }
         if (!empty($this->appointmentSegments)) {
-            $json['appointment_segments']    = $this->appointmentSegments['value'];
+            $json['appointment_segments'] = $this->appointmentSegments['value'];
         }
         if (isset($this->transitionTimeMinutes)) {
             $json['transition_time_minutes'] = $this->transitionTimeMinutes;
         }
         if (isset($this->allDay)) {
-            $json['all_day']                 = $this->allDay;
+            $json['all_day'] = $this->allDay;
         }
         if (isset($this->locationType)) {
-            $json['location_type']           = $this->locationType;
+            $json['location_type'] = $this->locationType;
         }
         if (isset($this->creatorDetails)) {
-            $json['creator_details']         = $this->creatorDetails;
+            $json['creator_details'] = $this->creatorDetails;
         }
         if (isset($this->source)) {
-            $json['source']                  = $this->source;
+            $json['source'] = $this->source;
         }
         if (isset($this->address)) {
-            $json['address']                 = $this->address;
+            $json['address'] = $this->address;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

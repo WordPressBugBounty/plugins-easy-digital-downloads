@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * An enumerated value that can link a
  * `CatalogItemVariation` to an item option as one of
@@ -17,27 +15,22 @@ class CatalogItemOptionValue implements \JsonSerializable
      * @var array
      */
     private $itemOptionId = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var array
      */
     private $color = [];
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * Returns Item Option Id.
      * Unique ID of the associated item option.
@@ -49,7 +42,6 @@ class CatalogItemOptionValue implements \JsonSerializable
         }
         return $this->itemOptionId['value'];
     }
-
     /**
      * Sets Item Option Id.
      * Unique ID of the associated item option.
@@ -60,7 +52,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->itemOptionId['value'] = $itemOptionId;
     }
-
     /**
      * Unsets Item Option Id.
      * Unique ID of the associated item option.
@@ -69,7 +60,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->itemOptionId = [];
     }
-
     /**
      * Returns Name.
      * Name of this item option value. This is a searchable attribute for use in applicable query filters.
@@ -81,7 +71,6 @@ class CatalogItemOptionValue implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * Name of this item option value. This is a searchable attribute for use in applicable query filters.
@@ -92,7 +81,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * Name of this item option value. This is a searchable attribute for use in applicable query filters.
@@ -101,7 +89,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Description.
      * A human-readable description for the option value. This is a searchable attribute for use in
@@ -114,7 +101,6 @@ class CatalogItemOptionValue implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
      * A human-readable description for the option value. This is a searchable attribute for use in
@@ -126,7 +112,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
      * A human-readable description for the option value. This is a searchable attribute for use in
@@ -136,7 +121,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->description = [];
     }
-
     /**
      * Returns Color.
      * The HTML-supported hex color for the item option (e.g., "#ff8d4e85").
@@ -151,7 +135,6 @@ class CatalogItemOptionValue implements \JsonSerializable
         }
         return $this->color['value'];
     }
-
     /**
      * Sets Color.
      * The HTML-supported hex color for the item option (e.g., "#ff8d4e85").
@@ -165,7 +148,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->color['value'] = $color;
     }
-
     /**
      * Unsets Color.
      * The HTML-supported hex color for the item option (e.g., "#ff8d4e85").
@@ -177,7 +159,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->color = [];
     }
-
     /**
      * Returns Ordinal.
      * Determines where this option value appears in a list of option values.
@@ -189,7 +170,6 @@ class CatalogItemOptionValue implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * Determines where this option value appears in a list of option values.
@@ -200,7 +180,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * Determines where this option value appears in a list of option values.
@@ -209,7 +188,6 @@ class CatalogItemOptionValue implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -218,7 +196,7 @@ class CatalogItemOptionValue implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -226,21 +204,20 @@ class CatalogItemOptionValue implements \JsonSerializable
             $json['item_option_id'] = $this->itemOptionId['value'];
         }
         if (!empty($this->name)) {
-            $json['name']           = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->description)) {
-            $json['description']    = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (!empty($this->color)) {
-            $json['color']          = $this->color['value'];
+            $json['color'] = $this->color['value'];
         }
         if (!empty($this->ordinal)) {
-            $json['ordinal']        = $this->ordinal['value'];
+            $json['ordinal'] = $this->ordinal['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

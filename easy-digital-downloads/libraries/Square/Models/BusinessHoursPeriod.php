@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a period of time during which a business location is open.
  */
@@ -15,17 +13,14 @@ class BusinessHoursPeriod implements \JsonSerializable
      * @var string|null
      */
     private $dayOfWeek;
-
     /**
      * @var array
      */
     private $startLocalTime = [];
-
     /**
      * @var array
      */
     private $endLocalTime = [];
-
     /**
      * Returns Day of Week.
      * Indicates the specific day  of the week.
@@ -34,7 +29,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         return $this->dayOfWeek;
     }
-
     /**
      * Sets Day of Week.
      * Indicates the specific day  of the week.
@@ -45,7 +39,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         $this->dayOfWeek = $dayOfWeek;
     }
-
     /**
      * Returns Start Local Time.
      * The start time of a business hours period, specified in local time using partial-time
@@ -59,7 +52,6 @@ class BusinessHoursPeriod implements \JsonSerializable
         }
         return $this->startLocalTime['value'];
     }
-
     /**
      * Sets Start Local Time.
      * The start time of a business hours period, specified in local time using partial-time
@@ -72,7 +64,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         $this->startLocalTime['value'] = $startLocalTime;
     }
-
     /**
      * Unsets Start Local Time.
      * The start time of a business hours period, specified in local time using partial-time
@@ -83,7 +74,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         $this->startLocalTime = [];
     }
-
     /**
      * Returns End Local Time.
      * The end time of a business hours period, specified in local time using partial-time
@@ -97,7 +87,6 @@ class BusinessHoursPeriod implements \JsonSerializable
         }
         return $this->endLocalTime['value'];
     }
-
     /**
      * Sets End Local Time.
      * The end time of a business hours period, specified in local time using partial-time
@@ -110,7 +99,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         $this->endLocalTime['value'] = $endLocalTime;
     }
-
     /**
      * Unsets End Local Time.
      * The end time of a business hours period, specified in local time using partial-time
@@ -121,7 +109,6 @@ class BusinessHoursPeriod implements \JsonSerializable
     {
         $this->endLocalTime = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -130,23 +117,22 @@ class BusinessHoursPeriod implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->dayOfWeek)) {
-            $json['day_of_week']      = $this->dayOfWeek;
+            $json['day_of_week'] = $this->dayOfWeek;
         }
         if (!empty($this->startLocalTime)) {
             $json['start_local_time'] = $this->startLocalTime['value'];
         }
         if (!empty($this->endLocalTime)) {
-            $json['end_local_time']   = $this->endLocalTime['value'];
+            $json['end_local_time'] = $this->endLocalTime['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

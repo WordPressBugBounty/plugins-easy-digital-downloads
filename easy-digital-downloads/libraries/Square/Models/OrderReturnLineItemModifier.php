@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A line item modifier being returned.
  */
@@ -15,42 +13,34 @@ class OrderReturnLineItemModifier implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $sourceModifierUid = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var Money|null
      */
     private $basePriceMoney;
-
     /**
      * @var Money|null
      */
     private $totalPriceMoney;
-
     /**
      * @var array
      */
     private $quantity = [];
-
     /**
      * Returns Uid.
      * A unique ID that identifies the return modifier only within this order.
@@ -62,7 +52,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the return modifier only within this order.
@@ -73,7 +62,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the return modifier only within this order.
@@ -82,7 +70,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Source Modifier Uid.
      * The modifier `uid` from the order's line item that contains the
@@ -95,7 +82,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->sourceModifierUid['value'];
     }
-
     /**
      * Sets Source Modifier Uid.
      * The modifier `uid` from the order's line item that contains the
@@ -107,7 +93,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->sourceModifierUid['value'] = $sourceModifierUid;
     }
-
     /**
      * Unsets Source Modifier Uid.
      * The modifier `uid` from the order's line item that contains the
@@ -117,7 +102,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->sourceModifierUid = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The catalog object ID referencing [CatalogModifier](entity:CatalogModifier).
@@ -129,7 +113,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The catalog object ID referencing [CatalogModifier](entity:CatalogModifier).
@@ -140,7 +123,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The catalog object ID referencing [CatalogModifier](entity:CatalogModifier).
@@ -149,7 +131,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this line item modifier references.
@@ -161,7 +142,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this line item modifier references.
@@ -172,7 +152,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this line item modifier references.
@@ -181,7 +160,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Returns Name.
      * The name of the item modifier.
@@ -193,7 +171,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the item modifier.
@@ -204,7 +181,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the item modifier.
@@ -213,7 +189,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Base Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -228,7 +203,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         return $this->basePriceMoney;
     }
-
     /**
      * Sets Base Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -245,7 +219,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->basePriceMoney = $basePriceMoney;
     }
-
     /**
      * Returns Total Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -260,7 +233,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         return $this->totalPriceMoney;
     }
-
     /**
      * Sets Total Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -277,7 +249,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->totalPriceMoney = $totalPriceMoney;
     }
-
     /**
      * Returns Quantity.
      * The quantity of the line item modifier. The modifier quantity can be 0 or more.
@@ -295,7 +266,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
         }
         return $this->quantity['value'];
     }
-
     /**
      * Sets Quantity.
      * The quantity of the line item modifier. The modifier quantity can be 0 or more.
@@ -312,7 +282,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->quantity['value'] = $quantity;
     }
-
     /**
      * Unsets Quantity.
      * The quantity of the line item modifier. The modifier quantity can be 0 or more.
@@ -327,7 +296,6 @@ class OrderReturnLineItemModifier implements \JsonSerializable
     {
         $this->quantity = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -336,38 +304,37 @@ class OrderReturnLineItemModifier implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                 = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->sourceModifierUid)) {
             $json['source_modifier_uid'] = $this->sourceModifierUid['value'];
         }
         if (!empty($this->catalogObjectId)) {
-            $json['catalog_object_id']   = $this->catalogObjectId['value'];
+            $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']     = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         if (!empty($this->name)) {
-            $json['name']                = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->basePriceMoney)) {
-            $json['base_price_money']    = $this->basePriceMoney;
+            $json['base_price_money'] = $this->basePriceMoney;
         }
         if (isset($this->totalPriceMoney)) {
-            $json['total_price_money']   = $this->totalPriceMoney;
+            $json['total_price_money'] = $this->totalPriceMoney;
         }
         if (!empty($this->quantity)) {
-            $json['quantity']            = $this->quantity['value'];
+            $json['quantity'] = $this->quantity['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

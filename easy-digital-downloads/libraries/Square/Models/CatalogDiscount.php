@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A discount applicable to items.
  */
@@ -15,42 +13,34 @@ class CatalogDiscount implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var string|null
      */
     private $discountType;
-
     /**
      * @var array
      */
     private $percentage = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * @var array
      */
     private $pinRequired = [];
-
     /**
      * @var array
      */
     private $labelColor = [];
-
     /**
      * @var string|null
      */
     private $modifyTaxBasis;
-
     /**
      * @var Money|null
      */
     private $maximumAmountMoney;
-
     /**
      * Returns Name.
      * The discount name. This is a searchable attribute for use in applicable query filters, and its value
@@ -63,7 +53,6 @@ class CatalogDiscount implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The discount name. This is a searchable attribute for use in applicable query filters, and its value
@@ -75,7 +64,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The discount name. This is a searchable attribute for use in applicable query filters, and its value
@@ -85,7 +73,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Discount Type.
      * How to apply a CatalogDiscount to a CatalogItem.
@@ -94,7 +81,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         return $this->discountType;
     }
-
     /**
      * Sets Discount Type.
      * How to apply a CatalogDiscount to a CatalogItem.
@@ -105,7 +91,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->discountType = $discountType;
     }
-
     /**
      * Returns Percentage.
      * The percentage of the discount as a string representation of a decimal number, using a `.` as the
@@ -123,7 +108,6 @@ class CatalogDiscount implements \JsonSerializable
         }
         return $this->percentage['value'];
     }
-
     /**
      * Sets Percentage.
      * The percentage of the discount as a string representation of a decimal number, using a `.` as the
@@ -140,7 +124,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->percentage['value'] = $percentage;
     }
-
     /**
      * Unsets Percentage.
      * The percentage of the discount as a string representation of a decimal number, using a `.` as the
@@ -155,7 +138,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->percentage = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -170,7 +152,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -187,11 +168,10 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Pin Required.
      * Indicates whether a mobile staff member needs to enter their PIN to apply the
-     * discount to a payment in the EDD\Vendor\Square Point of Sale app.
+     * discount to a payment in the Square Point of Sale app.
      */
     public function getPinRequired(): ?bool
     {
@@ -200,11 +180,10 @@ class CatalogDiscount implements \JsonSerializable
         }
         return $this->pinRequired['value'];
     }
-
     /**
      * Sets Pin Required.
      * Indicates whether a mobile staff member needs to enter their PIN to apply the
-     * discount to a payment in the EDD\Vendor\Square Point of Sale app.
+     * discount to a payment in the Square Point of Sale app.
      *
      * @maps pin_required
      */
@@ -212,20 +191,18 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->pinRequired['value'] = $pinRequired;
     }
-
     /**
      * Unsets Pin Required.
      * Indicates whether a mobile staff member needs to enter their PIN to apply the
-     * discount to a payment in the EDD\Vendor\Square Point of Sale app.
+     * discount to a payment in the Square Point of Sale app.
      */
     public function unsetPinRequired(): void
     {
         $this->pinRequired = [];
     }
-
     /**
      * Returns Label Color.
-     * The color of the discount display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the discount display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      */
     public function getLabelColor(): ?string
@@ -235,10 +212,9 @@ class CatalogDiscount implements \JsonSerializable
         }
         return $this->labelColor['value'];
     }
-
     /**
      * Sets Label Color.
-     * The color of the discount display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the discount display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      *
      * @maps label_color
@@ -247,17 +223,15 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->labelColor['value'] = $labelColor;
     }
-
     /**
      * Unsets Label Color.
-     * The color of the discount display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the discount display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      */
     public function unsetLabelColor(): void
     {
         $this->labelColor = [];
     }
-
     /**
      * Returns Modify Tax Basis.
      */
@@ -265,7 +239,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         return $this->modifyTaxBasis;
     }
-
     /**
      * Sets Modify Tax Basis.
      *
@@ -275,7 +248,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->modifyTaxBasis = $modifyTaxBasis;
     }
-
     /**
      * Returns Maximum Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -290,7 +262,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         return $this->maximumAmountMoney;
     }
-
     /**
      * Sets Maximum Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -307,7 +278,6 @@ class CatalogDiscount implements \JsonSerializable
     {
         $this->maximumAmountMoney = $maximumAmountMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -316,30 +286,30 @@ class CatalogDiscount implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']                 = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->discountType)) {
-            $json['discount_type']        = $this->discountType;
+            $json['discount_type'] = $this->discountType;
         }
         if (!empty($this->percentage)) {
-            $json['percentage']           = $this->percentage['value'];
+            $json['percentage'] = $this->percentage['value'];
         }
         if (isset($this->amountMoney)) {
-            $json['amount_money']         = $this->amountMoney;
+            $json['amount_money'] = $this->amountMoney;
         }
         if (!empty($this->pinRequired)) {
-            $json['pin_required']         = $this->pinRequired['value'];
+            $json['pin_required'] = $this->pinRequired['value'];
         }
         if (!empty($this->labelColor)) {
-            $json['label_color']          = $this->labelColor['value'];
+            $json['label_color'] = $this->labelColor['value'];
         }
         if (isset($this->modifyTaxBasis)) {
-            $json['modify_tax_basis']     = $this->modifyTaxBasis;
+            $json['modify_tax_basis'] = $this->modifyTaxBasis;
         }
         if (isset($this->maximumAmountMoney)) {
             $json['maximum_amount_money'] = $this->maximumAmountMoney;
@@ -347,7 +317,6 @@ class CatalogDiscount implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

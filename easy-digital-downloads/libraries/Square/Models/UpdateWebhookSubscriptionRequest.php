@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Updates a [Subscription]($m/WebhookSubscription).
  */
@@ -15,7 +13,6 @@ class UpdateWebhookSubscriptionRequest implements \JsonSerializable
      * @var WebhookSubscription|null
      */
     private $subscription;
-
     /**
      * Returns Subscription.
      * Represents the details of a webhook subscription, including notification URL,
@@ -25,7 +22,6 @@ class UpdateWebhookSubscriptionRequest implements \JsonSerializable
     {
         return $this->subscription;
     }
-
     /**
      * Sets Subscription.
      * Represents the details of a webhook subscription, including notification URL,
@@ -37,7 +33,6 @@ class UpdateWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->subscription = $subscription;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -46,7 +41,7 @@ class UpdateWebhookSubscriptionRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -56,7 +51,6 @@ class UpdateWebhookSubscriptionRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The wrapper object for the component entries of a given component type.
  */
@@ -15,32 +13,26 @@ class Component implements \JsonSerializable
      * @var string
      */
     private $type;
-
     /**
      * @var DeviceComponentDetailsApplicationDetails|null
      */
     private $applicationDetails;
-
     /**
      * @var DeviceComponentDetailsCardReaderDetails|null
      */
     private $cardReaderDetails;
-
     /**
      * @var DeviceComponentDetailsBatteryDetails|null
      */
     private $batteryDetails;
-
     /**
      * @var DeviceComponentDetailsWiFiDetails|null
      */
     private $wifiDetails;
-
     /**
      * @var DeviceComponentDetailsEthernetDetails|null
      */
     private $ethernetDetails;
-
     /**
      * @param string $type
      */
@@ -48,7 +40,6 @@ class Component implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Type.
      * An enum for ComponentType.
@@ -57,7 +48,6 @@ class Component implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * An enum for ComponentType.
@@ -69,7 +59,6 @@ class Component implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Application Details.
      */
@@ -77,7 +66,6 @@ class Component implements \JsonSerializable
     {
         return $this->applicationDetails;
     }
-
     /**
      * Sets Application Details.
      *
@@ -87,7 +75,6 @@ class Component implements \JsonSerializable
     {
         $this->applicationDetails = $applicationDetails;
     }
-
     /**
      * Returns Card Reader Details.
      */
@@ -95,7 +82,6 @@ class Component implements \JsonSerializable
     {
         return $this->cardReaderDetails;
     }
-
     /**
      * Sets Card Reader Details.
      *
@@ -105,7 +91,6 @@ class Component implements \JsonSerializable
     {
         $this->cardReaderDetails = $cardReaderDetails;
     }
-
     /**
      * Returns Battery Details.
      */
@@ -113,7 +98,6 @@ class Component implements \JsonSerializable
     {
         return $this->batteryDetails;
     }
-
     /**
      * Sets Battery Details.
      *
@@ -123,7 +107,6 @@ class Component implements \JsonSerializable
     {
         $this->batteryDetails = $batteryDetails;
     }
-
     /**
      * Returns Wifi Details.
      */
@@ -131,7 +114,6 @@ class Component implements \JsonSerializable
     {
         return $this->wifiDetails;
     }
-
     /**
      * Sets Wifi Details.
      *
@@ -141,7 +123,6 @@ class Component implements \JsonSerializable
     {
         $this->wifiDetails = $wifiDetails;
     }
-
     /**
      * Returns Ethernet Details.
      */
@@ -149,7 +130,6 @@ class Component implements \JsonSerializable
     {
         return $this->ethernetDetails;
     }
-
     /**
      * Sets Ethernet Details.
      *
@@ -159,7 +139,6 @@ class Component implements \JsonSerializable
     {
         $this->ethernetDetails = $ethernetDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -168,11 +147,11 @@ class Component implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['type']                    = $this->type;
+        $json['type'] = $this->type;
         if (isset($this->applicationDetails)) {
             $json['application_details'] = $this->applicationDetails;
         }
@@ -180,18 +159,17 @@ class Component implements \JsonSerializable
             $json['card_reader_details'] = $this->cardReaderDetails;
         }
         if (isset($this->batteryDetails)) {
-            $json['battery_details']     = $this->batteryDetails;
+            $json['battery_details'] = $this->batteryDetails;
         }
         if (isset($this->wifiDetails)) {
-            $json['wifi_details']        = $this->wifiDetails;
+            $json['wifi_details'] = $this->wifiDetails;
         }
         if (isset($this->ethernetDetails)) {
-            $json['ethernet_details']    = $this->ethernetDetails;
+            $json['ethernet_details'] = $this->ethernetDetails;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

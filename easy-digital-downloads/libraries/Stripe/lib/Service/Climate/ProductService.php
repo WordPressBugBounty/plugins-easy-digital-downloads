@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Climate;
 
 /**
@@ -24,7 +23,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/climate/products', $params, $opts);
     }
-
     /**
      * Retrieves the details of a Climate product with the given ID.
      *

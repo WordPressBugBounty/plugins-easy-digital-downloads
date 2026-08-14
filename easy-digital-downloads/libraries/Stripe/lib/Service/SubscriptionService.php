@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/subscriptions', $params, $opts);
     }
-
     /**
      * Cancels a customer’s subscription immediately. The customer will not be charged
      * again for the subscription.
@@ -37,7 +35,7 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
      * collected at the end of the period. But if the subscription is set to cancel
      * immediately, pending prorations will be removed.
      *
-     * By default, upon subscription cancellation, EDD\Vendor\Stripe will stop automatic
+     * By default, upon subscription cancellation, Stripe will stop automatic
      * collection of all finalized invoices for the customer. This is intended to
      * prevent unexpected payment attempts after the customer has canceled a
      * subscription. However, you can resume automatic collection of the invoices
@@ -57,7 +55,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/subscriptions/%s', $id), $params, $opts);
     }
-
     /**
      * Creates a new subscription on an existing customer. Each customer can have up to
      * 500 active or scheduled subscriptions.
@@ -84,7 +81,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/subscriptions', $params, $opts);
     }
-
     /**
      * Removes the currently applied discount on a subscription.
      *
@@ -100,7 +96,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/subscriptions/%s/discount', $id), $params, $opts);
     }
-
     /**
      * Initiates resumption of a paused subscription, optionally resetting the billing
      * cycle anchor and creating prorations. If a resumption invoice is generated, it
@@ -121,7 +116,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/subscriptions/%s/resume', $id), $params, $opts);
     }
-
     /**
      * Retrieves the subscription with the given ID.
      *
@@ -137,7 +131,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/subscriptions/%s', $id), $params, $opts);
     }
-
     /**
      * Search for subscriptions you’ve previously created using Stripe’s <a
      * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
@@ -157,7 +150,6 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestSearchResult('get', '/v1/subscriptions/search', $params, $opts);
     }
-
     /**
      * Updates an existing subscription to match the specified parameters. When
      * changing prices or quantities, we optionally prorate the price we charge next
@@ -185,7 +177,7 @@ class SubscriptionService extends \EDD\Vendor\Stripe\Service\AbstractService
      * In these cases, we apply a credit for the unused time on the previous price,
      * immediately charge the customer using the new price, and reset the billing date.
      * Learn about how <a
-     * href="/billing/subscriptions/upgrade-downgrade#immediate-payment">EDD\Vendor\Stripe
+     * href="/billing/subscriptions/upgrade-downgrade#immediate-payment">Stripe
      * immediately attempts payment for subscription changes</a>.
      *
      * If you want to charge for an upgrade immediately, pass

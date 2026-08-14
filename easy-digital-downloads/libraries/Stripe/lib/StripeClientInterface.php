@@ -3,7 +3,7 @@
 namespace EDD\Vendor\Stripe;
 
 /**
- * Interface for a EDD\Vendor\Stripe client.
+ * Interface for a Stripe client.
  */
 interface StripeClientInterface extends BaseStripeClientInterface
 {

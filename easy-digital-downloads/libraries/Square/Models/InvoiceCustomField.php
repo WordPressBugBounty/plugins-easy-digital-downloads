@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * An additional seller-defined and customer-facing field to include on the invoice. For more
  * information,
@@ -21,17 +19,14 @@ class InvoiceCustomField implements \JsonSerializable
      * @var array
      */
     private $label = [];
-
     /**
      * @var array
      */
     private $value = [];
-
     /**
      * @var string|null
      */
     private $placement;
-
     /**
      * Returns Label.
      * The label or title of the custom field. This field is required for a custom field.
@@ -43,7 +38,6 @@ class InvoiceCustomField implements \JsonSerializable
         }
         return $this->label['value'];
     }
-
     /**
      * Sets Label.
      * The label or title of the custom field. This field is required for a custom field.
@@ -54,7 +48,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         $this->label['value'] = $label;
     }
-
     /**
      * Unsets Label.
      * The label or title of the custom field. This field is required for a custom field.
@@ -63,7 +56,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         $this->label = [];
     }
-
     /**
      * Returns Value.
      * The text of the custom field. If omitted, only the label is rendered.
@@ -75,7 +67,6 @@ class InvoiceCustomField implements \JsonSerializable
         }
         return $this->value['value'];
     }
-
     /**
      * Sets Value.
      * The text of the custom field. If omitted, only the label is rendered.
@@ -86,7 +77,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         $this->value['value'] = $value;
     }
-
     /**
      * Unsets Value.
      * The text of the custom field. If omitted, only the label is rendered.
@@ -95,7 +85,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         $this->value = [];
     }
-
     /**
      * Returns Placement.
      * Indicates where to render a custom field on the Square-hosted invoice page and in emailed or PDF
@@ -105,7 +94,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         return $this->placement;
     }
-
     /**
      * Sets Placement.
      * Indicates where to render a custom field on the Square-hosted invoice page and in emailed or PDF
@@ -117,7 +105,6 @@ class InvoiceCustomField implements \JsonSerializable
     {
         $this->placement = $placement;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -126,15 +113,15 @@ class InvoiceCustomField implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->label)) {
-            $json['label']     = $this->label['value'];
+            $json['label'] = $this->label['value'];
         }
         if (!empty($this->value)) {
-            $json['value']     = $this->value['value'];
+            $json['value'] = $this->value['value'];
         }
         if (isset($this->placement)) {
             $json['placement'] = $this->placement;
@@ -142,7 +129,6 @@ class InvoiceCustomField implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

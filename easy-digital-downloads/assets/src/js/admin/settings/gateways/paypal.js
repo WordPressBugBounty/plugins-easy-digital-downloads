@@ -334,8 +334,9 @@ function eddPayPalV3Connect() {
 			onboardLink.dataset.paypalOnboardComplete = 'eddPayPalV3OnboardingCallback';
 			onboardLink.dataset.paypalButton          = 'true';
 			onboardLink.dataset.paypalOnboardButton   = 'true';
-			onboardLink.className                     = 'button button-secondary';
-			onboardLink.textContent                   = connectButton.textContent;
+			onboardLink.className                     = 'edd-paypal-connect';
+			// Copy innerHTML (not textContent) so the PayPal logo carries over.
+			onboardLink.innerHTML                     = connectButton.innerHTML;
 			onboardLink.dataset.nonce                 = connectButton.dataset.nonce;
 
 			// Replace the connect button with the onboarding link.

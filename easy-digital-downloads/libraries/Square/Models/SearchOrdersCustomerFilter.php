@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A filter based on the order `customer_id` and any tender `customer_id`
  * associated with the order. It does not filter based on the
@@ -17,7 +15,6 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
      * @var array
      */
     private $customerIds = [];
-
     /**
      * Returns Customer Ids.
      * A list of customer IDs to filter by.
@@ -33,7 +30,6 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
         }
         return $this->customerIds['value'];
     }
-
     /**
      * Sets Customer Ids.
      * A list of customer IDs to filter by.
@@ -48,7 +44,6 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
     {
         $this->customerIds['value'] = $customerIds;
     }
-
     /**
      * Unsets Customer Ids.
      * A list of customer IDs to filter by.
@@ -59,7 +54,6 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
     {
         $this->customerIds = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -68,7 +62,7 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -78,7 +72,6 @@ class SearchOrdersCustomerFilter implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,10 +1,6 @@
 <div id="edd_payment_mode_select_wrap">
 	<?php do_action( 'edd_payment_mode_top' ); ?>
 
-	<?php if ( edd_is_ajax_disabled() ) { ?>
-		<form id="edd_payment_mode" action="<?php echo esc_url( edd_get_current_page_url() ); ?>" method="GET">
-	<?php } ?>
-
 	<fieldset id="edd_payment_mode_select">
 		<legend><?php esc_html_e( 'Payment Method', 'easy-digital-downloads' ); ?></legend>
 		<?php do_action( 'edd_payment_mode_before_gateways_wrap' ); ?>
@@ -16,6 +12,7 @@
 			$gateways      = edd_get_enabled_payment_gateways( true );
 			$payment_icons = EDD\Blocks\Checkout\Gateways\get_payment_icons();
 			$default       = edd_get_option( 'default_gateway' );
+			$payment_mode  = edd_get_chosen_gateway();
 			foreach ( $gateways as $gateway_id => $gateway ) {
 				$checked = $gateway_id === $default ? 'checked' : checked( $gateway_id, $payment_mode, false );
 				$class   = 'edd-gateway-option';
@@ -51,8 +48,4 @@
 		<input type="hidden" name="page_id" value="<?php echo esc_attr( absint( get_queried_object_id() ) ); ?>"/>
 		<input type="submit" name="gateway_submit" id="edd_next_button" class="edd-submit" value="<?php esc_html_e( 'Next', 'easy-digital-downloads' ); ?>"/>
 	</div>
-
-	<?php if ( edd_is_ajax_disabled() ) : ?>
-		</form>
-	<?php endif; ?>
 </div>

@@ -1,29 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Response\Types;
 
 use Closure;
 use EDD\Vendor\Core\Response\Context;
-
 class ResponseType
 {
     /**
      * @var string|null
      */
     private $responseClass;
-
     /**
      * @var callable|null
      */
     private $xmlDeserializer;
-
     /**
      * @var int|null
      */
     private $dimensions;
-
     /**
      * Sets response class to the one provided.
      */
@@ -31,7 +26,6 @@ class ResponseType
     {
         $this->responseClass = $responseClass;
     }
-
     /**
      * Sets xml deserializer to the one provided.
      */
@@ -39,7 +33,6 @@ class ResponseType
     {
         $this->xmlDeserializer = $xmlDeserializer;
     }
-
     /**
      * Sets dimensions of the object.
      */
@@ -47,7 +40,6 @@ class ResponseType
     {
         $this->dimensions = $dimensions;
     }
-
     /**
      * Returns ResponseClass from the context provided.
      */
@@ -57,15 +49,8 @@ class ResponseType
             return null;
         }
         if (isset($this->xmlDeserializer)) {
-            return Closure::fromCallable($this->xmlDeserializer)(
-                $context->getResponse()->getRawBody(),
-                $this->responseClass
-            );
+            return Closure::fromCallable($this->xmlDeserializer)($context->getResponse()->getRawBody(), $this->responseClass);
         }
-        return $context->getJsonHelper()->mapClass(
-            $context->getResponse()->getBody(),
-            $this->responseClass,
-            $this->dimensions
-        );
+        return $context->getJsonHelper()->mapClass($context->getResponse()->getBody(), $this->responseClass, $this->dimensions);
     }
 }

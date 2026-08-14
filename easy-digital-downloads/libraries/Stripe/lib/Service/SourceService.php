@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class SourceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/sources/%s/source_transactions', $id), $params, $opts);
     }
-
     /**
      * Creates a new source object.
      *
@@ -40,7 +38,6 @@ class SourceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/sources', $params, $opts);
     }
-
     /**
      * Delete a specified source for a given customer.
      *
@@ -57,10 +54,9 @@ class SourceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/customers/%s/sources/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves an existing source object. Supply the unique source ID from a source
-     * creation request and EDD\Vendor\Stripe will return the corresponding up-to-date source
+     * creation request and Stripe will return the corresponding up-to-date source
      * object information.
      *
      * @param string $id
@@ -75,7 +71,6 @@ class SourceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/sources/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the specified source by setting the values of the parameters passed. Any
      * parameters not provided will be left unchanged.
@@ -97,7 +92,6 @@ class SourceService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/sources/%s', $id), $params, $opts);
     }
-
     /**
      * Verify a given source.
      *

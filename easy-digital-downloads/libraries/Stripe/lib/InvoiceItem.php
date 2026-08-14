@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -13,7 +12,7 @@ namespace EDD\Vendor\Stripe;
  * Invoice Items can be created before you are ready to actually send the invoice. This can be particularly useful when combined
  * with a <a href="https://stripe.com/docs/api/subscriptions">subscription</a>. Sometimes you want to add a charge or credit to a customer, but actually charge
  * or credit the customer’s card only at the end of a regular billing cycle. This is useful for combining several charges
- * (to minimize per-transaction fees), or for having EDD\Vendor\Stripe tabulate your usage-based billing totals.
+ * (to minimize per-transaction fees), or for having Stripe tabulate your usage-based billing totals.
  *
  * Related guides: <a href="https://stripe.com/docs/invoicing/integration">Integrate with the Invoicing API</a>, <a href="https://stripe.com/docs/billing/invoices/subscription#adding-upcoming-invoice-items">Subscription Invoices</a>.
  *
@@ -44,9 +43,7 @@ namespace EDD\Vendor\Stripe;
 class InvoiceItem extends ApiResource
 {
     const OBJECT_NAME = 'invoiceitem';
-
     use ApiOperations\Update;
-
     /**
      * Creates an item to be added to a draft invoice (up to 250 items per invoice). If
      * no invoice is specified, the item will be on the next invoice created for the
@@ -63,14 +60,11 @@ class InvoiceItem extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes an invoice item, removing it from an invoice. Deleting invoice items is
      * only possible when they’re not attached to invoices, or if it’s attached to a
@@ -86,14 +80,11 @@ class InvoiceItem extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your invoice items. Invoice items are returned sorted by
      * creation date, with the most recently created invoice items appearing first.
@@ -108,10 +99,8 @@ class InvoiceItem extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the invoice item with the given ID.
      *
@@ -127,10 +116,8 @@ class InvoiceItem extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the amount or description of an invoice item on an upcoming invoice.
      * Updating an invoice item is only possible before the invoice it’s attached to is
@@ -148,11 +135,9 @@ class InvoiceItem extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

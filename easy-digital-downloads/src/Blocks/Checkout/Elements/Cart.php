@@ -44,6 +44,10 @@ class Cart {
 			$template_vars['cart_items'] = edd_get_cart_contents();
 		}
 
+		if ( \EDD\Checkout\Validator::has_block( null, 'edd/checkout-discount-form' ) ) {
+			$template_vars['block_attributes']['show_discount_form'] = false;
+		}
+
 		$block_attributes = $template_vars['block_attributes'];
 		$is_cart_widget   = $template_vars['is_cart_widget'];
 		$cart_items       = $template_vars['cart_items'];

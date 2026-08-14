@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\BodyParam;
@@ -22,7 +21,6 @@ use EDD\Vendor\Square\Models\UpdateWebhookSubscriptionRequest;
 use EDD\Vendor\Square\Models\UpdateWebhookSubscriptionResponse;
 use EDD\Vendor\Square\Models\UpdateWebhookSubscriptionSignatureKeyRequest;
 use EDD\Vendor\Square\Models\UpdateWebhookSubscriptionSignatureKeyResponse;
-
 class WebhookSubscriptionsApi extends BaseApi
 {
     /**
@@ -35,15 +33,10 @@ class WebhookSubscriptionsApi extends BaseApi
      */
     public function listWebhookEventTypes(?string $apiVersion = null): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/event-types')
-            ->auth('global')
-            ->parameters(QueryParam::init('api_version', $apiVersion));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/event-types')->auth('global')->parameters(QueryParam::init('api_version', $apiVersion));
         $_resHandler = $this->responseHandler()->type(ListWebhookEventTypesResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Lists all webhook subscriptions owned by your application.
      *
@@ -66,26 +59,12 @@ class WebhookSubscriptionsApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function listWebhookSubscriptions(
-        ?string $cursor = null,
-        ?bool $includeDisabled = false,
-        ?string $sortOrder = null,
-        ?int $limit = null
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/subscriptions')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('cursor', $cursor),
-                QueryParam::init('include_disabled', $includeDisabled),
-                QueryParam::init('sort_order', $sortOrder),
-                QueryParam::init('limit', $limit)
-            );
-
+    public function listWebhookSubscriptions(?string $cursor = null, ?bool $includeDisabled = false, ?string $sortOrder = null, ?int $limit = null): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/subscriptions')->auth('global')->parameters(QueryParam::init('cursor', $cursor), QueryParam::init('include_disabled', $includeDisabled), QueryParam::init('sort_order', $sortOrder), QueryParam::init('limit', $limit));
         $_resHandler = $this->responseHandler()->type(ListWebhookSubscriptionsResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Creates a webhook subscription.
      *
@@ -98,15 +77,10 @@ class WebhookSubscriptionsApi extends BaseApi
      */
     public function createWebhookSubscription(CreateWebhookSubscriptionRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/webhooks/subscriptions')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/webhooks/subscriptions')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CreateWebhookSubscriptionResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Deletes a webhook subscription.
      *
@@ -117,15 +91,10 @@ class WebhookSubscriptionsApi extends BaseApi
      */
     public function deleteWebhookSubscription(string $subscriptionId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/webhooks/subscriptions/{subscription_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('subscription_id', $subscriptionId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/webhooks/subscriptions/{subscription_id}')->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId));
         $_resHandler = $this->responseHandler()->type(DeleteWebhookSubscriptionResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves a webhook subscription identified by its ID.
      *
@@ -136,15 +105,10 @@ class WebhookSubscriptionsApi extends BaseApi
      */
     public function retrieveWebhookSubscription(string $subscriptionId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/subscriptions/{subscription_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('subscription_id', $subscriptionId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/webhooks/subscriptions/{subscription_id}')->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId));
         $_resHandler = $this->responseHandler()->type(RetrieveWebhookSubscriptionResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates a webhook subscription.
      *
@@ -157,23 +121,12 @@ class WebhookSubscriptionsApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function updateWebhookSubscription(
-        string $subscriptionId,
-        UpdateWebhookSubscriptionRequest $body
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/webhooks/subscriptions/{subscription_id}')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+    public function updateWebhookSubscription(string $subscriptionId, UpdateWebhookSubscriptionRequest $body): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/webhooks/subscriptions/{subscription_id}')->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(UpdateWebhookSubscriptionResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates a webhook subscription by replacing the existing signature key with a new one.
      *
@@ -186,28 +139,12 @@ class WebhookSubscriptionsApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function updateWebhookSubscriptionSignatureKey(
-        string $subscriptionId,
-        UpdateWebhookSubscriptionSignatureKeyRequest $body
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/v2/webhooks/subscriptions/{subscription_id}/signature-key'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->type(UpdateWebhookSubscriptionSignatureKeyResponse::class)
-            ->returnApiResponse();
-
+    public function updateWebhookSubscriptionSignatureKey(string $subscriptionId, UpdateWebhookSubscriptionSignatureKeyRequest $body): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/webhooks/subscriptions/{subscription_id}/signature-key')->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+        $_resHandler = $this->responseHandler()->type(UpdateWebhookSubscriptionSignatureKeyResponse::class)->returnApiResponse();
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Tests a webhook subscription by sending a test event to the notification URL.
      *
@@ -222,19 +159,8 @@ class WebhookSubscriptionsApi extends BaseApi
      */
     public function testWebhookSubscription(string $subscriptionId, TestWebhookSubscriptionRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/v2/webhooks/subscriptions/{subscription_id}/test'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/webhooks/subscriptions/{subscription_id}/test')->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(TestWebhookSubscriptionResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

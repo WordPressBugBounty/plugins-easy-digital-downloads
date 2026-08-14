@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\FinancialConnections;
 
 /**
@@ -23,11 +22,9 @@ namespace EDD\Vendor\Stripe\FinancialConnections;
 class Transaction extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'financial_connections.transaction';
-
     const STATUS_PENDING = 'pending';
     const STATUS_POSTED = 'posted';
     const STATUS_VOID = 'void';
-
     /**
      * Returns a list of Financial Connections <code>Transaction</code> objects.
      *
@@ -41,10 +38,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of a Financial Connections <code>Transaction</code>.
      *
@@ -60,7 +55,6 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

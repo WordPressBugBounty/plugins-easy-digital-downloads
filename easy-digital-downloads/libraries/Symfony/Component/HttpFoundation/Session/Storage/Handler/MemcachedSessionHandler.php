@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage\Handler;
 
 /**
@@ -22,17 +21,14 @@ namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage\Handler;
 class MemcachedSessionHandler extends AbstractSessionHandler
 {
     private $memcached;
-
     /**
      * @var int Time to live in seconds
      */
     private $ttl;
-
     /**
      * @var string Key prefix for shared environments
      */
     private $prefix;
-
     /**
      * Constructor.
      *
@@ -45,15 +41,12 @@ class MemcachedSessionHandler extends AbstractSessionHandler
     public function __construct(\Memcached $memcached, array $options = [])
     {
         $this->memcached = $memcached;
-
         if ($diff = array_diff(array_keys($options), ['prefix', 'expiretime', 'ttl'])) {
             throw new \InvalidArgumentException(sprintf('The following options are not supported "%s".', implode(', ', $diff)));
         }
-
         $this->ttl = $options['expiretime'] ?? $options['ttl'] ?? null;
         $this->prefix = $options['prefix'] ?? 'sf2s';
     }
-
     /**
      * @return bool
      */
@@ -62,57 +55,47 @@ class MemcachedSessionHandler extends AbstractSessionHandler
     {
         return $this->memcached->quit();
     }
-
     /**
      * {@inheritdoc}
      */
     protected function doRead(string $sessionId)
     {
-        return $this->memcached->get($this->prefix.$sessionId) ?: '';
+        return $this->memcached->get($this->prefix . $sessionId) ?: '';
     }
-
     /**
      * @return bool
      */
     #[\ReturnTypeWillChange]
     public function updateTimestamp($sessionId, $data)
     {
-        $this->memcached->touch($this->prefix.$sessionId, $this->getCompatibleTtl());
-
+        $this->memcached->touch($this->prefix . $sessionId, $this->getCompatibleTtl());
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
     protected function doWrite(string $sessionId, string $data)
     {
-        return $this->memcached->set($this->prefix.$sessionId, $data, $this->getCompatibleTtl());
+        return $this->memcached->set($this->prefix . $sessionId, $data, $this->getCompatibleTtl());
     }
-
     private function getCompatibleTtl(): int
     {
         $ttl = (int) ($this->ttl ?? \ini_get('session.gc_maxlifetime'));
-
         // If the relative TTL that is used exceeds 30 days, memcached will treat the value as Unix time.
         // We have to convert it to an absolute Unix time at this point, to make sure the TTL is correct.
         if ($ttl > 60 * 60 * 24 * 30) {
             $ttl += time();
         }
-
         return $ttl;
     }
-
     /**
      * {@inheritdoc}
      */
     protected function doDestroy(string $sessionId)
     {
-        $result = $this->memcached->delete($this->prefix.$sessionId);
-
+        $result = $this->memcached->delete($this->prefix . $sessionId);
         return $result || \Memcached::RES_NOTFOUND == $this->memcached->getResultCode();
     }
-
     /**
      * @return int|false
      */
@@ -122,7 +105,6 @@ class MemcachedSessionHandler extends AbstractSessionHandler
         // not required here because memcached will auto expire the records anyhow.
         return 0;
     }
-
     /**
      * Return a Memcached instance.
      *

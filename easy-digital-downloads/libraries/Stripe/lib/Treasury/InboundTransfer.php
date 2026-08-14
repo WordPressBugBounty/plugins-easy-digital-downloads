@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Treasury;
 
 /**
@@ -33,12 +32,10 @@ namespace EDD\Vendor\Stripe\Treasury;
 class InboundTransfer extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'treasury.inbound_transfer';
-
     const STATUS_CANCELED = 'canceled';
     const STATUS_FAILED = 'failed';
     const STATUS_PROCESSING = 'processing';
     const STATUS_SUCCEEDED = 'succeeded';
-
     /**
      * Creates an InboundTransfer.
      *
@@ -53,14 +50,11 @@ class InboundTransfer extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of InboundTransfers sent from the specified FinancialAccount.
      *
@@ -74,10 +68,8 @@ class InboundTransfer extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing InboundTransfer.
      *
@@ -93,10 +85,8 @@ class InboundTransfer extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -110,7 +100,6 @@ class InboundTransfer extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/cancel';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

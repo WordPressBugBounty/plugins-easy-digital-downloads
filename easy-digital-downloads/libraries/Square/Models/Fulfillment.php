@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains details about how to fulfill this order.
  * Orders can only be created with at most one fulfillment using the API.
  * However, orders returned by the Orders API might contain multiple fulfillments because sellers can
- * create multiple fulfillments using EDD\Vendor\Square products such as EDD\Vendor\Square Online.
+ * create multiple fulfillments using Square products such as Square Online.
  */
 class Fulfillment implements \JsonSerializable
 {
@@ -18,47 +16,38 @@ class Fulfillment implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var string|null
      */
     private $state;
-
     /**
      * @var string|null
      */
     private $lineItemApplication;
-
     /**
      * @var FulfillmentFulfillmentEntry[]|null
      */
     private $entries;
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var FulfillmentPickupDetails|null
      */
     private $pickupDetails;
-
     /**
      * @var FulfillmentShipmentDetails|null
      */
     private $shipmentDetails;
-
     /**
      * @var FulfillmentDeliveryDetails|null
      */
     private $deliveryDetails;
-
     /**
      * Returns Uid.
      * A unique ID that identifies the fulfillment only within this order.
@@ -70,7 +59,6 @@ class Fulfillment implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the fulfillment only within this order.
@@ -81,7 +69,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the fulfillment only within this order.
@@ -90,7 +77,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Type.
      * The type of fulfillment.
@@ -99,7 +85,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * The type of fulfillment.
@@ -110,7 +95,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns State.
      * The current state of this fulfillment.
@@ -119,7 +103,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->state;
     }
-
     /**
      * Sets State.
      * The current state of this fulfillment.
@@ -130,7 +113,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->state = $state;
     }
-
     /**
      * Returns Line Item Application.
      * The `line_item_application` describes what order line items this fulfillment applies
@@ -140,7 +122,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->lineItemApplication;
     }
-
     /**
      * Sets Line Item Application.
      * The `line_item_application` describes what order line items this fulfillment applies
@@ -152,7 +133,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->lineItemApplication = $lineItemApplication;
     }
-
     /**
      * Returns Entries.
      * A list of entries pertaining to the fulfillment of an order. Each entry must reference
@@ -173,7 +153,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->entries;
     }
-
     /**
      * Sets Entries.
      * A list of entries pertaining to the fulfillment of an order. Each entry must reference
@@ -196,12 +175,11 @@ class Fulfillment implements \JsonSerializable
     {
         $this->entries = $entries;
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this fulfillment. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -227,12 +205,11 @@ class Fulfillment implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this fulfillment. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -257,12 +234,11 @@ class Fulfillment implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this fulfillment. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -283,7 +259,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Pickup Details.
      * Contains details necessary to fulfill a pickup order.
@@ -292,7 +267,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->pickupDetails;
     }
-
     /**
      * Sets Pickup Details.
      * Contains details necessary to fulfill a pickup order.
@@ -303,7 +277,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->pickupDetails = $pickupDetails;
     }
-
     /**
      * Returns Shipment Details.
      * Contains the details necessary to fulfill a shipment order.
@@ -312,7 +285,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->shipmentDetails;
     }
-
     /**
      * Sets Shipment Details.
      * Contains the details necessary to fulfill a shipment order.
@@ -323,7 +295,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->shipmentDetails = $shipmentDetails;
     }
-
     /**
      * Returns Delivery Details.
      * Describes delivery details of an order fulfillment.
@@ -332,7 +303,6 @@ class Fulfillment implements \JsonSerializable
     {
         return $this->deliveryDetails;
     }
-
     /**
      * Sets Delivery Details.
      * Describes delivery details of an order fulfillment.
@@ -343,7 +313,6 @@ class Fulfillment implements \JsonSerializable
     {
         $this->deliveryDetails = $deliveryDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -352,41 +321,40 @@ class Fulfillment implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                   = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (isset($this->type)) {
-            $json['type']                  = $this->type;
+            $json['type'] = $this->type;
         }
         if (isset($this->state)) {
-            $json['state']                 = $this->state;
+            $json['state'] = $this->state;
         }
         if (isset($this->lineItemApplication)) {
             $json['line_item_application'] = $this->lineItemApplication;
         }
         if (isset($this->entries)) {
-            $json['entries']               = $this->entries;
+            $json['entries'] = $this->entries;
         }
         if (!empty($this->metadata)) {
-            $json['metadata']              = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (isset($this->pickupDetails)) {
-            $json['pickup_details']        = $this->pickupDetails;
+            $json['pickup_details'] = $this->pickupDetails;
         }
         if (isset($this->shipmentDetails)) {
-            $json['shipment_details']      = $this->shipmentDetails;
+            $json['shipment_details'] = $this->shipmentDetails;
         }
         if (isset($this->deliveryDetails)) {
-            $json['delivery_details']      = $this->deliveryDetails;
+            $json['delivery_details'] = $this->deliveryDetails;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

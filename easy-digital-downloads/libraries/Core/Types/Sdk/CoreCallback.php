@@ -1,26 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 use Closure;
 use EDD\Vendor\CoreInterfaces\Core\ContextInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestInterface;
 use EDD\Vendor\CoreInterfaces\Sdk\ConverterInterface;
-
 class CoreCallback
 {
     /**
      * Callable for on-before event of API calls
      */
     private $onBeforeRequest;
-
     /**
      * Callable for on-after event of API calls
      */
     private $onAfterRequest;
-
     /**
      * Create a new HttpCallBack instance
      *
@@ -32,7 +28,6 @@ class CoreCallback
         $this->onBeforeRequest = $onBeforeRequest;
         $this->onAfterRequest = $onAfterRequest;
     }
-
     /**
      * Set On-before API call event callable
      *
@@ -42,7 +37,6 @@ class CoreCallback
     {
         $this->onBeforeRequest = $func;
     }
-
     /**
      * Get On-before API call event callable
      *
@@ -52,7 +46,6 @@ class CoreCallback
     {
         return $this->onBeforeRequest;
     }
-
     /**
      * Set On-after API call event callable
      *
@@ -62,7 +55,6 @@ class CoreCallback
     {
         $this->onAfterRequest = $func;
     }
-
     /**
      * Get On-After API call event callable
      *
@@ -72,7 +64,6 @@ class CoreCallback
     {
         return $this->onAfterRequest;
     }
-
     /**
      * Call on-before event callable
      *
@@ -84,12 +75,10 @@ class CoreCallback
             Closure::fromCallable($this->onBeforeRequest)($request);
         }
     }
-
     public function callOnBeforeWithConversion(RequestInterface $request, ConverterInterface $converter)
     {
         $this->callOnBeforeRequest($converter->createHttpRequest($request));
     }
-
     /**
      * Call on-after event callable
      *
@@ -101,7 +90,6 @@ class CoreCallback
             Closure::fromCallable($this->onAfterRequest)($context);
         }
     }
-
     public function callOnAfterWithConversion(ContextInterface $context, ConverterInterface $converter)
     {
         $this->callOnAfterRequest($converter->createHttpContext($context));

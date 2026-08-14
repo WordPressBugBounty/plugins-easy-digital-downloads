@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 class CoreRequest
@@ -12,28 +11,24 @@ class CoreRequest
      * @var string
      */
     private $httpMethod;
-
     /**
      * Headers
      *
      * @var array
      */
     private $headers;
-
     /**
      * Query url
      *
      * @var string
      */
     private $queryUrl;
-
     /**
      * Input parameters
      *
      * @var array
      */
     private $parameters;
-
     /**
      * Create a new HttpRequest
      *
@@ -42,18 +37,13 @@ class CoreRequest
      * @param string $queryUrl   Query url
      * @param array  $parameters Map of parameters sent
      */
-    public function __construct(
-        string $httpMethod,
-        array $headers = [],
-        string $queryUrl = "",
-        array $parameters = []
-    ) {
+    public function __construct(string $httpMethod, array $headers = [], string $queryUrl = "", array $parameters = [])
+    {
         $this->httpMethod = $httpMethod;
         $this->headers = $headers;
         $this->queryUrl = $queryUrl;
         $this->parameters = $parameters;
     }
-
     /**
      * Get HTTP method
      */
@@ -61,7 +51,6 @@ class CoreRequest
     {
         return $this->httpMethod;
     }
-
     /**
      * Set HTTP method
      *
@@ -71,7 +60,6 @@ class CoreRequest
     {
         $this->httpMethod = $httpMethod;
     }
-
     /**
      * Get headers
      *
@@ -81,7 +69,6 @@ class CoreRequest
     {
         return $this->headers;
     }
-
     /**
      * Set headers
      *
@@ -91,7 +78,6 @@ class CoreRequest
     {
         $this->headers = $headers;
     }
-
     /**
      * Add or replace a single header
      *
@@ -102,7 +88,6 @@ class CoreRequest
     {
         $this->headers[$key] = $value;
     }
-
     /**
      * Get query url
      *
@@ -112,7 +97,6 @@ class CoreRequest
     {
         return $this->queryUrl;
     }
-
     /**
      * Set query url
      *
@@ -122,7 +106,6 @@ class CoreRequest
     {
         $this->queryUrl = $queryUrl;
     }
-
     /**
      * Get parameters
      *
@@ -132,7 +115,6 @@ class CoreRequest
     {
         return $this->parameters;
     }
-
     /**
      * Set parameters
      *

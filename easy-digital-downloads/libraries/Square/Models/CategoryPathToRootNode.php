@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A node in the path from a retrieved category to its root node.
  */
@@ -15,12 +13,10 @@ class CategoryPathToRootNode implements \JsonSerializable
      * @var array
      */
     private $categoryId = [];
-
     /**
      * @var array
      */
     private $categoryName = [];
-
     /**
      * Returns Category Id.
      * The category's ID.
@@ -32,7 +28,6 @@ class CategoryPathToRootNode implements \JsonSerializable
         }
         return $this->categoryId['value'];
     }
-
     /**
      * Sets Category Id.
      * The category's ID.
@@ -43,7 +38,6 @@ class CategoryPathToRootNode implements \JsonSerializable
     {
         $this->categoryId['value'] = $categoryId;
     }
-
     /**
      * Unsets Category Id.
      * The category's ID.
@@ -52,7 +46,6 @@ class CategoryPathToRootNode implements \JsonSerializable
     {
         $this->categoryId = [];
     }
-
     /**
      * Returns Category Name.
      * The category's name.
@@ -64,7 +57,6 @@ class CategoryPathToRootNode implements \JsonSerializable
         }
         return $this->categoryName['value'];
     }
-
     /**
      * Sets Category Name.
      * The category's name.
@@ -75,7 +67,6 @@ class CategoryPathToRootNode implements \JsonSerializable
     {
         $this->categoryName['value'] = $categoryName;
     }
-
     /**
      * Unsets Category Name.
      * The category's name.
@@ -84,7 +75,6 @@ class CategoryPathToRootNode implements \JsonSerializable
     {
         $this->categoryName = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -93,12 +83,12 @@ class CategoryPathToRootNode implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->categoryId)) {
-            $json['category_id']   = $this->categoryId['value'];
+            $json['category_id'] = $this->categoryId['value'];
         }
         if (!empty($this->categoryName)) {
             $json['category_name'] = $this->categoryName['value'];
@@ -106,7 +96,6 @@ class CategoryPathToRootNode implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

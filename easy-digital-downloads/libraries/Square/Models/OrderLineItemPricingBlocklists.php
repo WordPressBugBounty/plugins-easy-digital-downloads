@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes pricing adjustments that are blocked from automatic
  * application to a line item. For more information, see
@@ -18,12 +16,10 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
      * @var array
      */
     private $blockedDiscounts = [];
-
     /**
      * @var array
      */
     private $blockedTaxes = [];
-
     /**
      * Returns Blocked Discounts.
      * A list of discounts blocked from applying to the line item.
@@ -39,7 +35,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
         }
         return $this->blockedDiscounts['value'];
     }
-
     /**
      * Sets Blocked Discounts.
      * A list of discounts blocked from applying to the line item.
@@ -54,7 +49,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
     {
         $this->blockedDiscounts['value'] = $blockedDiscounts;
     }
-
     /**
      * Unsets Blocked Discounts.
      * A list of discounts blocked from applying to the line item.
@@ -65,7 +59,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
     {
         $this->blockedDiscounts = [];
     }
-
     /**
      * Returns Blocked Taxes.
      * A list of taxes blocked from applying to the line item.
@@ -81,7 +74,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
         }
         return $this->blockedTaxes['value'];
     }
-
     /**
      * Sets Blocked Taxes.
      * A list of taxes blocked from applying to the line item.
@@ -96,7 +88,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
     {
         $this->blockedTaxes['value'] = $blockedTaxes;
     }
-
     /**
      * Unsets Blocked Taxes.
      * A list of taxes blocked from applying to the line item.
@@ -107,7 +98,6 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
     {
         $this->blockedTaxes = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -116,7 +106,7 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -124,12 +114,11 @@ class OrderLineItemPricingBlocklists implements \JsonSerializable
             $json['blocked_discounts'] = $this->blockedDiscounts['value'];
         }
         if (!empty($this->blockedTaxes)) {
-            $json['blocked_taxes']     = $this->blockedTaxes['value'];
+            $json['blocked_taxes'] = $this->blockedTaxes['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

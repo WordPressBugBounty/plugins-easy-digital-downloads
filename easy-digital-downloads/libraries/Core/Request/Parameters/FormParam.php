@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\Core\Types\Sdk\CoreFileWrapper;
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestArraySerialization;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
-
 class FormParam extends EncodedParam
 {
     /**
@@ -18,7 +16,6 @@ class FormParam extends EncodedParam
     {
         return new self($key, $value);
     }
-
     /**
      * @var array<string,string>
      */
@@ -27,7 +24,6 @@ class FormParam extends EncodedParam
     {
         parent::__construct($key, $value, 'form');
     }
-
     /**
      * Sets encoding header with the key and value provided.
      */
@@ -36,7 +32,6 @@ class FormParam extends EncodedParam
         $this->encodingHeaders[strtolower($key)] = $value;
         return $this;
     }
-
     /**
      * Sets the parameter format to un-indexed.
      */
@@ -45,7 +40,6 @@ class FormParam extends EncodedParam
         $this->format = RequestArraySerialization::UN_INDEXED;
         return $this;
     }
-
     /**
      * Sets the parameter format to plain.
      */
@@ -54,13 +48,10 @@ class FormParam extends EncodedParam
         $this->format = RequestArraySerialization::PLAIN;
         return $this;
     }
-
     private function isMultipart(): bool
     {
-        return isset($this->encodingHeaders['content-type']) &&
-            $this->encodingHeaders['content-type'] != 'application/x-www-form-urlencoded';
+        return isset($this->encodingHeaders['content-type']) && $this->encodingHeaders['content-type'] != 'application/x-www-form-urlencoded';
     }
-
     /**
      * Adds the parameter to the request provided.
      *

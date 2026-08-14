@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the response returned by
  * [UpdatePayment]($e/Payments/UpdatePayment).
@@ -16,12 +14,10 @@ class UpdatePaymentResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Payment|null
      */
     private $payment;
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -32,7 +28,6 @@ class UpdatePaymentResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -45,19 +40,17 @@ class UpdatePaymentResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Payment.
-     * Represents a payment processed by the EDD\Vendor\Square API.
+     * Represents a payment processed by the Square API.
      */
     public function getPayment(): ?Payment
     {
         return $this->payment;
     }
-
     /**
      * Sets Payment.
-     * Represents a payment processed by the EDD\Vendor\Square API.
+     * Represents a payment processed by the Square API.
      *
      * @maps payment
      */
@@ -65,7 +58,6 @@ class UpdatePaymentResponse implements \JsonSerializable
     {
         $this->payment = $payment;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -74,12 +66,12 @@ class UpdatePaymentResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']  = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->payment)) {
             $json['payment'] = $this->payment;
@@ -87,7 +79,6 @@ class UpdatePaymentResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

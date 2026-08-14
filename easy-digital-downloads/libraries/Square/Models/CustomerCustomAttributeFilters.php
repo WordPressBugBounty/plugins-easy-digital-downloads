@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The custom attribute filters in a set of [customer filters]($m/CustomerFilter) used in a search
  * query. Use this filter
@@ -20,7 +18,6 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
      * @var array
      */
     private $filters = [];
-
     /**
      * Returns Filters.
      * The custom attribute filters. Each filter must specify `key` and include the `filter` field with a
@@ -37,7 +34,6 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
         }
         return $this->filters['value'];
     }
-
     /**
      * Sets Filters.
      * The custom attribute filters. Each filter must specify `key` and include the `filter` field with a
@@ -53,7 +49,6 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
     {
         $this->filters['value'] = $filters;
     }
-
     /**
      * Unsets Filters.
      * The custom attribute filters. Each filter must specify `key` and include the `filter` field with a
@@ -65,7 +60,6 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
     {
         $this->filters = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -74,7 +68,7 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -84,7 +78,6 @@ class CustomerCustomAttributeFilters implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

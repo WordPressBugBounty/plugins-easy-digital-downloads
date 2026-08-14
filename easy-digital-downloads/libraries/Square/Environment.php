@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square;
 
 /**
@@ -10,8 +9,6 @@ namespace EDD\Vendor\Square;
 class Environment
 {
     public const PRODUCTION = 'production';
-
     public const SANDBOX = 'sandbox';
-
     public const CUSTOM = 'custom';
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Additional details about BANK_ACCOUNT type payments.
  */
@@ -15,42 +13,34 @@ class BankAccountPaymentDetails implements \JsonSerializable
      * @var array
      */
     private $bankName = [];
-
     /**
      * @var array
      */
     private $transferType = [];
-
     /**
      * @var array
      */
     private $accountOwnershipType = [];
-
     /**
      * @var array
      */
     private $fingerprint = [];
-
     /**
      * @var array
      */
     private $country = [];
-
     /**
      * @var array
      */
     private $statementDescription = [];
-
     /**
      * @var ACHDetails|null
      */
     private $achDetails;
-
     /**
      * @var array
      */
     private $errors = [];
-
     /**
      * Returns Bank Name.
      * The name of the bank associated with the bank account.
@@ -62,7 +52,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->bankName['value'];
     }
-
     /**
      * Sets Bank Name.
      * The name of the bank associated with the bank account.
@@ -73,7 +62,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->bankName['value'] = $bankName;
     }
-
     /**
      * Unsets Bank Name.
      * The name of the bank associated with the bank account.
@@ -82,7 +70,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->bankName = [];
     }
-
     /**
      * Returns Transfer Type.
      * The type of the bank transfer. The type can be `ACH` or `UNKNOWN`.
@@ -94,7 +81,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->transferType['value'];
     }
-
     /**
      * Sets Transfer Type.
      * The type of the bank transfer. The type can be `ACH` or `UNKNOWN`.
@@ -105,7 +91,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->transferType['value'] = $transferType;
     }
-
     /**
      * Unsets Transfer Type.
      * The type of the bank transfer. The type can be `ACH` or `UNKNOWN`.
@@ -114,7 +99,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->transferType = [];
     }
-
     /**
      * Returns Account Ownership Type.
      * The ownership type of the bank account performing the transfer.
@@ -127,7 +111,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->accountOwnershipType['value'];
     }
-
     /**
      * Sets Account Ownership Type.
      * The ownership type of the bank account performing the transfer.
@@ -139,7 +122,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->accountOwnershipType['value'] = $accountOwnershipType;
     }
-
     /**
      * Unsets Account Ownership Type.
      * The ownership type of the bank account performing the transfer.
@@ -149,7 +131,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->accountOwnershipType = [];
     }
-
     /**
      * Returns Fingerprint.
      * Uniquely identifies the bank account for this seller and can be used
@@ -162,7 +143,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->fingerprint['value'];
     }
-
     /**
      * Sets Fingerprint.
      * Uniquely identifies the bank account for this seller and can be used
@@ -174,7 +154,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->fingerprint['value'] = $fingerprint;
     }
-
     /**
      * Unsets Fingerprint.
      * Uniquely identifies the bank account for this seller and can be used
@@ -184,7 +163,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->fingerprint = [];
     }
-
     /**
      * Returns Country.
      * The two-letter ISO code representing the country the bank account is located in.
@@ -196,7 +174,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->country['value'];
     }
-
     /**
      * Sets Country.
      * The two-letter ISO code representing the country the bank account is located in.
@@ -207,7 +184,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->country['value'] = $country;
     }
-
     /**
      * Unsets Country.
      * The two-letter ISO code representing the country the bank account is located in.
@@ -216,7 +192,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->country = [];
     }
-
     /**
      * Returns Statement Description.
      * The statement description as sent to the bank.
@@ -228,7 +203,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->statementDescription['value'];
     }
-
     /**
      * Sets Statement Description.
      * The statement description as sent to the bank.
@@ -239,7 +213,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->statementDescription['value'] = $statementDescription;
     }
-
     /**
      * Unsets Statement Description.
      * The statement description as sent to the bank.
@@ -248,7 +221,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->statementDescription = [];
     }
-
     /**
      * Returns Ach Details.
      * ACH-specific details about `BANK_ACCOUNT` type payments with the `transfer_type` of `ACH`.
@@ -257,7 +229,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         return $this->achDetails;
     }
-
     /**
      * Sets Ach Details.
      * ACH-specific details about `BANK_ACCOUNT` type payments with the `transfer_type` of `ACH`.
@@ -268,7 +239,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->achDetails = $achDetails;
     }
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -282,7 +252,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
         }
         return $this->errors['value'];
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -295,7 +264,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->errors['value'] = $errors;
     }
-
     /**
      * Unsets Errors.
      * Information about errors encountered during the request.
@@ -304,7 +272,6 @@ class BankAccountPaymentDetails implements \JsonSerializable
     {
         $this->errors = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -313,38 +280,37 @@ class BankAccountPaymentDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->bankName)) {
-            $json['bank_name']              = $this->bankName['value'];
+            $json['bank_name'] = $this->bankName['value'];
         }
         if (!empty($this->transferType)) {
-            $json['transfer_type']          = $this->transferType['value'];
+            $json['transfer_type'] = $this->transferType['value'];
         }
         if (!empty($this->accountOwnershipType)) {
             $json['account_ownership_type'] = $this->accountOwnershipType['value'];
         }
         if (!empty($this->fingerprint)) {
-            $json['fingerprint']            = $this->fingerprint['value'];
+            $json['fingerprint'] = $this->fingerprint['value'];
         }
         if (!empty($this->country)) {
-            $json['country']                = $this->country['value'];
+            $json['country'] = $this->country['value'];
         }
         if (!empty($this->statementDescription)) {
-            $json['statement_description']  = $this->statementDescription['value'];
+            $json['statement_description'] = $this->statementDescription['value'];
         }
         if (isset($this->achDetails)) {
-            $json['ach_details']            = $this->achDetails;
+            $json['ach_details'] = $this->achDetails;
         }
         if (!empty($this->errors)) {
-            $json['errors']                 = $this->errors['value'];
+            $json['errors'] = $this->errors['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

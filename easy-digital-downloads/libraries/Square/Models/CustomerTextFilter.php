@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A filter to select customers based on exact or fuzzy matching of
  * customer attributes against a specified query. Depending on the customer attributes,
@@ -17,12 +15,10 @@ class CustomerTextFilter implements \JsonSerializable
      * @var array
      */
     private $exact = [];
-
     /**
      * @var array
      */
     private $fuzzy = [];
-
     /**
      * Returns Exact.
      * Use the exact filter to select customers whose attributes match exactly the specified query.
@@ -34,7 +30,6 @@ class CustomerTextFilter implements \JsonSerializable
         }
         return $this->exact['value'];
     }
-
     /**
      * Sets Exact.
      * Use the exact filter to select customers whose attributes match exactly the specified query.
@@ -45,7 +40,6 @@ class CustomerTextFilter implements \JsonSerializable
     {
         $this->exact['value'] = $exact;
     }
-
     /**
      * Unsets Exact.
      * Use the exact filter to select customers whose attributes match exactly the specified query.
@@ -54,7 +48,6 @@ class CustomerTextFilter implements \JsonSerializable
     {
         $this->exact = [];
     }
-
     /**
      * Returns Fuzzy.
      * Use the fuzzy filter to select customers whose attributes match the specified query
@@ -69,7 +62,6 @@ class CustomerTextFilter implements \JsonSerializable
         }
         return $this->fuzzy['value'];
     }
-
     /**
      * Sets Fuzzy.
      * Use the fuzzy filter to select customers whose attributes match the specified query
@@ -83,7 +75,6 @@ class CustomerTextFilter implements \JsonSerializable
     {
         $this->fuzzy['value'] = $fuzzy;
     }
-
     /**
      * Unsets Fuzzy.
      * Use the fuzzy filter to select customers whose attributes match the specified query
@@ -95,7 +86,6 @@ class CustomerTextFilter implements \JsonSerializable
     {
         $this->fuzzy = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -104,7 +94,7 @@ class CustomerTextFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -117,7 +107,6 @@ class CustomerTextFilter implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

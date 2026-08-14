@@ -23,7 +23,6 @@ trait SingletonRetrieve
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static(null, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

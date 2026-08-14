@@ -1,13 +1,12 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Tax;
 
 /**
  * A Tax <code>Registration</code> lets us know that your business is registered to collect tax on payments within a region, enabling you to <a href="https://stripe.com/docs/tax">automatically collect tax</a>.
  *
- * EDD\Vendor\Stripe doesn't register on your behalf with the relevant authorities when you create a Tax <code>Registration</code> object. For more information on how to register to collect tax, see <a href="https://stripe.com/docs/tax/registering">our guide</a>.
+ * Stripe doesn't register on your behalf with the relevant authorities when you create a Tax <code>Registration</code> object. For more information on how to register to collect tax, see <a href="https://stripe.com/docs/tax/registering">our guide</a>.
  *
  * Related guide: <a href="https://stripe.com/docs/tax/registrations-api">Using the Registrations API</a>
  *
@@ -24,13 +23,10 @@ namespace EDD\Vendor\Stripe\Tax;
 class Registration extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'tax.registration';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const STATUS_ACTIVE = 'active';
     const STATUS_EXPIRED = 'expired';
     const STATUS_SCHEDULED = 'scheduled';
-
     /**
      * Creates a new Tax <code>Registration</code> object.
      *
@@ -45,14 +41,11 @@ class Registration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of Tax <code>Registration</code> objects.
      *
@@ -66,10 +59,8 @@ class Registration extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Returns a Tax <code>Registration</code> object.
      *
@@ -85,10 +76,8 @@ class Registration extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates an existing Tax <code>Registration</code> object.
      *
@@ -107,11 +96,9 @@ class Registration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Terminal;
 
 /**
@@ -24,7 +23,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/terminal/readers', $params, $opts);
     }
-
     /**
      * Cancels the current reader action.
      *
@@ -40,7 +38,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/terminal/readers/%s/cancel_action', $id), $params, $opts);
     }
-
     /**
      * Creates a new <code>Reader</code> object.
      *
@@ -55,7 +52,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/terminal/readers', $params, $opts);
     }
-
     /**
      * Deletes a <code>Reader</code> object.
      *
@@ -71,7 +67,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/terminal/readers/%s', $id), $params, $opts);
     }
-
     /**
      * Initiates a payment flow on a Reader.
      *
@@ -87,7 +82,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/terminal/readers/%s/process_payment_intent', $id), $params, $opts);
     }
-
     /**
      * Initiates a setup intent flow on a Reader.
      *
@@ -103,7 +97,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/terminal/readers/%s/process_setup_intent', $id), $params, $opts);
     }
-
     /**
      * Initiates a refund on a Reader.
      *
@@ -119,7 +112,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/terminal/readers/%s/refund_payment', $id), $params, $opts);
     }
-
     /**
      * Retrieves a <code>Reader</code> object.
      *
@@ -135,7 +127,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/terminal/readers/%s', $id), $params, $opts);
     }
-
     /**
      * Sets reader display to show cart details.
      *
@@ -151,7 +142,6 @@ class ReaderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/terminal/readers/%s/set_reader_display', $id), $params, $opts);
     }
-
     /**
      * Updates a <code>Reader</code> object by setting the values of the parameters
      * passed. Any parameters not provided will be left unchanged.

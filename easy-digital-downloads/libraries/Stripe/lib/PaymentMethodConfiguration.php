@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -13,7 +12,7 @@ namespace EDD\Vendor\Stripe;
  *
  * <strong>Child</strong> configurations apply to payments created on your connected accounts using direct charges, and charges with the on_behalf_of parameter.
  *
- * Child configurations have a <code>parent</code> that sets default values and controls which settings connected accounts may override. You can specify a parent ID at payment time, and EDD\Vendor\Stripe will automatically resolve the connected account’s associated child configuration. Parent configurations are <a href="https://dashboard.stripe.com/settings/payment_methods/connected_accounts">managed in the dashboard</a> and are not available in this API.
+ * Child configurations have a <code>parent</code> that sets default values and controls which settings connected accounts may override. You can specify a parent ID at payment time, and Stripe will automatically resolve the connected account’s associated child configuration. Parent configurations are <a href="https://dashboard.stripe.com/settings/payment_methods/connected_accounts">managed in the dashboard</a> and are not available in this API.
  *
  * Related guides:
  * - <a href="https://stripe.com/docs/connect/payment-method-configurations">Payment Method Configurations API</a>
@@ -72,9 +71,7 @@ namespace EDD\Vendor\Stripe;
 class PaymentMethodConfiguration extends ApiResource
 {
     const OBJECT_NAME = 'payment_method_configuration';
-
     use ApiOperations\Update;
-
     /**
      * Creates a payment method configuration.
      *
@@ -89,14 +86,11 @@ class PaymentMethodConfiguration extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * List payment method configurations.
      *
@@ -110,10 +104,8 @@ class PaymentMethodConfiguration extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieve payment method configuration.
      *
@@ -129,10 +121,8 @@ class PaymentMethodConfiguration extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Update payment method configuration.
      *
@@ -148,11 +138,9 @@ class PaymentMethodConfiguration extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

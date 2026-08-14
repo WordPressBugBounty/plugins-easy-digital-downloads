@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Information about the fulfillment recipient.
  */
@@ -15,27 +13,22 @@ class FulfillmentRecipient implements \JsonSerializable
      * @var array
      */
     private $customerId = [];
-
     /**
      * @var array
      */
     private $displayName = [];
-
     /**
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * Returns Customer Id.
      * The ID of the customer associated with the fulfillment.
@@ -54,7 +47,6 @@ class FulfillmentRecipient implements \JsonSerializable
         }
         return $this->customerId['value'];
     }
-
     /**
      * Sets Customer Id.
      * The ID of the customer associated with the fulfillment.
@@ -72,7 +64,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->customerId['value'] = $customerId;
     }
-
     /**
      * Unsets Customer Id.
      * The ID of the customer associated with the fulfillment.
@@ -88,7 +79,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->customerId = [];
     }
-
     /**
      * Returns Display Name.
      * The display name of the fulfillment recipient. This field is required.
@@ -103,7 +93,6 @@ class FulfillmentRecipient implements \JsonSerializable
         }
         return $this->displayName['value'];
     }
-
     /**
      * Sets Display Name.
      * The display name of the fulfillment recipient. This field is required.
@@ -117,7 +106,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->displayName['value'] = $displayName;
     }
-
     /**
      * Unsets Display Name.
      * The display name of the fulfillment recipient. This field is required.
@@ -129,7 +117,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->displayName = [];
     }
-
     /**
      * Returns Email Address.
      * The email address of the fulfillment recipient.
@@ -144,7 +131,6 @@ class FulfillmentRecipient implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * The email address of the fulfillment recipient.
@@ -158,7 +144,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * The email address of the fulfillment recipient.
@@ -170,7 +155,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Returns Phone Number.
      * The phone number of the fulfillment recipient. This field is required.
@@ -185,7 +169,6 @@ class FulfillmentRecipient implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The phone number of the fulfillment recipient. This field is required.
@@ -199,7 +182,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The phone number of the fulfillment recipient. This field is required.
@@ -211,7 +193,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -222,7 +203,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -235,7 +215,6 @@ class FulfillmentRecipient implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -244,29 +223,28 @@ class FulfillmentRecipient implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->customerId)) {
-            $json['customer_id']   = $this->customerId['value'];
+            $json['customer_id'] = $this->customerId['value'];
         }
         if (!empty($this->displayName)) {
-            $json['display_name']  = $this->displayName['value'];
+            $json['display_name'] = $this->displayName['value'];
         }
         if (!empty($this->emailAddress)) {
             $json['email_address'] = $this->emailAddress['value'];
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']  = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (isset($this->address)) {
-            $json['address']       = $this->address;
+            $json['address'] = $this->address;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

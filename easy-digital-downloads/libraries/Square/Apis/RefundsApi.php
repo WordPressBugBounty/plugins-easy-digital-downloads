@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\BodyParam;
@@ -14,7 +13,6 @@ use EDD\Vendor\Square\Models\GetPaymentRefundResponse;
 use EDD\Vendor\Square\Models\ListPaymentRefundsResponse;
 use EDD\Vendor\Square\Models\RefundPaymentRequest;
 use EDD\Vendor\Square\Models\RefundPaymentResponse;
-
 class RefundsApi extends BaseApi
 {
     /**
@@ -69,34 +67,12 @@ class RefundsApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function listPaymentRefunds(
-        ?string $beginTime = null,
-        ?string $endTime = null,
-        ?string $sortOrder = null,
-        ?string $cursor = null,
-        ?string $locationId = null,
-        ?string $status = null,
-        ?string $sourceType = null,
-        ?int $limit = null
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/refunds')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('begin_time', $beginTime),
-                QueryParam::init('end_time', $endTime),
-                QueryParam::init('sort_order', $sortOrder),
-                QueryParam::init('cursor', $cursor),
-                QueryParam::init('location_id', $locationId),
-                QueryParam::init('status', $status),
-                QueryParam::init('source_type', $sourceType),
-                QueryParam::init('limit', $limit)
-            );
-
+    public function listPaymentRefunds(?string $beginTime = null, ?string $endTime = null, ?string $sortOrder = null, ?string $cursor = null, ?string $locationId = null, ?string $status = null, ?string $sourceType = null, ?int $limit = null): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/refunds')->auth('global')->parameters(QueryParam::init('begin_time', $beginTime), QueryParam::init('end_time', $endTime), QueryParam::init('sort_order', $sortOrder), QueryParam::init('cursor', $cursor), QueryParam::init('location_id', $locationId), QueryParam::init('status', $status), QueryParam::init('source_type', $sourceType), QueryParam::init('limit', $limit));
         $_resHandler = $this->responseHandler()->type(ListPaymentRefundsResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Refunds a payment. You can refund the entire payment amount or a
      * portion of it. You can use this endpoint to refund a card payment or record a
@@ -110,15 +86,10 @@ class RefundsApi extends BaseApi
      */
     public function refundPayment(RefundPaymentRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/refunds')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/refunds')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(RefundPaymentResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves a specific refund using the `refund_id`.
      *
@@ -128,12 +99,8 @@ class RefundsApi extends BaseApi
      */
     public function getPaymentRefund(string $refundId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/refunds/{refund_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('refund_id', $refundId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/refunds/{refund_id}')->auth('global')->parameters(TemplateParam::init('refund_id', $refundId));
         $_resHandler = $this->responseHandler()->type(GetPaymentRefundResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Sigma;
 
 /**
@@ -24,7 +23,6 @@ class ScheduledQueryRunService extends \EDD\Vendor\Stripe\Service\AbstractServic
     {
         return $this->requestCollection('get', '/v1/sigma/scheduled_query_runs', $params, $opts);
     }
-
     /**
      * Retrieves the details of an scheduled query run.
      *

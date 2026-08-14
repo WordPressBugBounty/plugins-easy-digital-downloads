@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a supplier to a seller.
  */
@@ -15,52 +13,42 @@ class Vendor implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * @var array
      */
     private $contacts = [];
-
     /**
      * @var array
      */
     private $accountNumber = [];
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * Returns Id.
      * A unique Square-generated ID for the [Vendor](entity:Vendor).
@@ -70,7 +58,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A unique Square-generated ID for the [Vendor](entity:Vendor).
@@ -82,7 +69,6 @@ class Vendor implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Created At.
      * An RFC 3339-formatted timestamp that indicates when the
@@ -92,7 +78,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * An RFC 3339-formatted timestamp that indicates when the
@@ -104,7 +89,6 @@ class Vendor implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * An RFC 3339-formatted timestamp that indicates when the
@@ -114,7 +98,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * An RFC 3339-formatted timestamp that indicates when the
@@ -126,7 +109,6 @@ class Vendor implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Name.
      * The name of the [Vendor](entity:Vendor).
@@ -139,7 +121,6 @@ class Vendor implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the [Vendor](entity:Vendor).
@@ -151,7 +132,6 @@ class Vendor implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the [Vendor](entity:Vendor).
@@ -161,7 +141,6 @@ class Vendor implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -172,7 +151,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -185,7 +163,6 @@ class Vendor implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Returns Contacts.
      * The contacts of the [Vendor](entity:Vendor).
@@ -199,7 +176,6 @@ class Vendor implements \JsonSerializable
         }
         return $this->contacts['value'];
     }
-
     /**
      * Sets Contacts.
      * The contacts of the [Vendor](entity:Vendor).
@@ -212,7 +188,6 @@ class Vendor implements \JsonSerializable
     {
         $this->contacts['value'] = $contacts;
     }
-
     /**
      * Unsets Contacts.
      * The contacts of the [Vendor](entity:Vendor).
@@ -221,7 +196,6 @@ class Vendor implements \JsonSerializable
     {
         $this->contacts = [];
     }
-
     /**
      * Returns Account Number.
      * The account number of the [Vendor](entity:Vendor).
@@ -233,7 +207,6 @@ class Vendor implements \JsonSerializable
         }
         return $this->accountNumber['value'];
     }
-
     /**
      * Sets Account Number.
      * The account number of the [Vendor](entity:Vendor).
@@ -244,7 +217,6 @@ class Vendor implements \JsonSerializable
     {
         $this->accountNumber['value'] = $accountNumber;
     }
-
     /**
      * Unsets Account Number.
      * The account number of the [Vendor](entity:Vendor).
@@ -253,7 +225,6 @@ class Vendor implements \JsonSerializable
     {
         $this->accountNumber = [];
     }
-
     /**
      * Returns Note.
      * A note detailing information about the [Vendor](entity:Vendor).
@@ -265,7 +236,6 @@ class Vendor implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * A note detailing information about the [Vendor](entity:Vendor).
@@ -276,7 +246,6 @@ class Vendor implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * A note detailing information about the [Vendor](entity:Vendor).
@@ -285,7 +254,6 @@ class Vendor implements \JsonSerializable
     {
         $this->note = [];
     }
-
     /**
      * Returns Version.
      * The version of the [Vendor](entity:Vendor).
@@ -294,7 +262,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version of the [Vendor](entity:Vendor).
@@ -305,7 +272,6 @@ class Vendor implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Status.
      * The status of the [Vendor]($m/Vendor),
@@ -315,7 +281,6 @@ class Vendor implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * The status of the [Vendor]($m/Vendor),
@@ -327,7 +292,6 @@ class Vendor implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -336,44 +300,43 @@ class Vendor implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']             = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']     = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']     = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (!empty($this->name)) {
-            $json['name']           = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->address)) {
-            $json['address']        = $this->address;
+            $json['address'] = $this->address;
         }
         if (!empty($this->contacts)) {
-            $json['contacts']       = $this->contacts['value'];
+            $json['contacts'] = $this->contacts['value'];
         }
         if (!empty($this->accountNumber)) {
             $json['account_number'] = $this->accountNumber['value'];
         }
         if (!empty($this->note)) {
-            $json['note']           = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (isset($this->version)) {
-            $json['version']        = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->status)) {
-            $json['status']         = $this->status;
+            $json['status'] = $this->status;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents an amount of money. `Money` fields can be signed or unsigned.
  * Fields that do not explicitly define whether they are signed or unsigned are
@@ -21,12 +19,10 @@ class Money implements \JsonSerializable
      * @var array
      */
     private $amount = [];
-
     /**
      * @var string|null
      */
     private $currency;
-
     /**
      * Returns Amount.
      * The amount of money, in the smallest denomination of the currency
@@ -41,7 +37,6 @@ class Money implements \JsonSerializable
         }
         return $this->amount['value'];
     }
-
     /**
      * Sets Amount.
      * The amount of money, in the smallest denomination of the currency
@@ -55,7 +50,6 @@ class Money implements \JsonSerializable
     {
         $this->amount['value'] = $amount;
     }
-
     /**
      * Unsets Amount.
      * The amount of money, in the smallest denomination of the currency
@@ -67,7 +61,6 @@ class Money implements \JsonSerializable
     {
         $this->amount = [];
     }
-
     /**
      * Returns Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -77,7 +70,6 @@ class Money implements \JsonSerializable
     {
         return $this->currency;
     }
-
     /**
      * Sets Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -89,7 +81,6 @@ class Money implements \JsonSerializable
     {
         $this->currency = $currency;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -98,12 +89,12 @@ class Money implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->amount)) {
-            $json['amount']   = $this->amount['value'];
+            $json['amount'] = $this->amount['value'];
         }
         if (isset($this->currency)) {
             $json['currency'] = $this->currency;
@@ -111,7 +102,6 @@ class Money implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Response;
-
 final class ResponseIsUnprocessable extends Constraint
 {
     /**
@@ -23,7 +21,6 @@ final class ResponseIsUnprocessable extends Constraint
     {
         return 'is unprocessable';
     }
-
     /**
      * @param Response $other
      *
@@ -33,7 +30,6 @@ final class ResponseIsUnprocessable extends Constraint
     {
         return Response::HTTP_UNPROCESSABLE_ENTITY === $other->getStatusCode();
     }
-
     /**
      * @param Response $other
      *
@@ -41,9 +37,8 @@ final class ResponseIsUnprocessable extends Constraint
      */
     protected function failureDescription($other): string
     {
-        return 'the Response '.$this->toString();
+        return 'the Response ' . $this->toString();
     }
-
     /**
      * @param Response $other
      *

@@ -1236,47 +1236,23 @@ function edd_payment_get_ip_address_url( $order_id ) {
 }
 
 /**
- * Abstraction for cron context checking, covering both WP-Cron and Action Scheduler.
+ * Checks if the current request is a cron request, covering both WP-Cron and Action Scheduler.
  *
  * @since 2.8.16
  * @return bool
  */
 function edd_doing_cron() {
-
-	// Bail if doing WordPress cron.
-	if ( wp_doing_cron() ) {
-		return true;
-	}
-
-	// Action Scheduler fires action_scheduler_before_execute before a job and
-	// action_scheduler_after_execute after. More befores than afters means we
-	// are currently inside an AS job.
-	if ( did_action( 'action_scheduler_before_execute' ) > did_action( 'action_scheduler_after_execute' ) ) {
-		return true;
-	}
-
-	return false;
+	return EDD\Utils\Request::is_request( 'cron' );
 }
 
 /**
- * Abstraction for WordPress AJAX checking, to avoid code duplication.
- *
- * In future versions of EDD, this function will be changed to only refer to
- * EDD specific AJAX related requests. You probably won't want to use it until then.
+ * Checks if the current request is an AJAX request.
  *
  * @since 3.0
- *
- * @return boolean
+ * @return bool
  */
 function edd_doing_ajax() {
-
-	// Bail if doing WordPress AJAX.
-	if ( wp_doing_ajax() ) {
-		return true;
-	}
-
-	// Default to false
-	return false;
+	return EDD\Utils\Request::is_request( 'ajax' );
 }
 
 /**
@@ -1976,9 +1952,9 @@ function edd_get_activation_date() {
  *
  * @param string $base_url    The base URL for the generation.
  * @param array  $query_args  The arguments to add to the $base_url.
- * @param bool   $run_esc_url If true, esc_url will be run
+ * @param bool   $run_esc_url If true, esc_url will be run.
  *
- * @return string.
+ * @return string
  */
 function edd_link_helper( $base_url = 'https://easydigitaldownloads.com/', $query_args = array(), $run_esc_url = true ) {
 	$default_args = array(

@@ -1,13 +1,12 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * <code>Application Fee Refund</code> objects allow you to refund an application fee that
  * has previously been created but not yet refunded. Funds will be refunded to
- * the EDD\Vendor\Stripe account from which the fee was originally collected.
+ * the Stripe account from which the fee was originally collected.
  *
  * Related guide: <a href="https://stripe.com/docs/connect/destination-charges#refunding-app-fee">Refunding application fees</a>
  *
@@ -23,35 +22,26 @@ namespace EDD\Vendor\Stripe;
 class ApplicationFeeRefund extends ApiResource
 {
     const OBJECT_NAME = 'fee_refund';
-
     use ApiOperations\Update {
         save as protected _save;
     }
-
     /**
-     * @return string the API URL for this EDD\Vendor\Stripe refund
+     * @return string the API URL for this Stripe refund
      */
     public function instanceUrl()
     {
         $id = $this['id'];
         $fee = $this['fee'];
         if (!$id) {
-            throw new Exception\UnexpectedValueException(
-                'Could not determine which URL to request: ' .
-                "class instance has invalid ID: {$id}",
-                null
-            );
+            throw new Exception\UnexpectedValueException('Could not determine which URL to request: ' . "class instance has invalid ID: {$id}", null);
         }
         $id = Util\Util::utf8($id);
         $fee = Util\Util::utf8($fee);
-
         $base = ApplicationFee::classUrl();
         $feeExtn = \urlencode($fee);
         $extn = \urlencode($id);
-
         return "{$base}/{$feeExtn}/refunds/{$extn}";
     }
-
     /**
      * @param null|array|string $opts
      *

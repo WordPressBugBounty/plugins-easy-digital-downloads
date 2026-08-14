@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage;
 
 use EDD\Vendor\Symfony\Component\HttpFoundation\Request;
-
 /**
  * @author Jérémy Derussé <jeremy@derusse.com>
  *
@@ -21,18 +19,15 @@ use EDD\Vendor\Symfony\Component\HttpFoundation\Request;
 final class ServiceSessionFactory implements SessionStorageFactoryInterface
 {
     private $storage;
-
     public function __construct(SessionStorageInterface $storage)
     {
         $this->storage = $storage;
     }
-
     public function createStorage(?Request $request): SessionStorageInterface
     {
         if ($this->storage instanceof NativeSessionStorage && $request && $request->isSecure()) {
             $this->storage->setOptions(['cookie_secure' => true]);
         }
-
         return $this->storage;
     }
 }

@@ -4,7 +4,6 @@ namespace EDD\Vendor\CoreInterfaces\Http;
 
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestInterface;
 use EDD\Vendor\CoreInterfaces\Core\Response\ResponseInterface;
-
 interface HttpClientInterface
 {
     /**

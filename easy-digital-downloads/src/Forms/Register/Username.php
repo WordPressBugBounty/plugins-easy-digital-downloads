@@ -23,13 +23,27 @@ use EDD\Forms\Fields\Field;
 class Username extends Field {
 
 	/**
+	 * Render the field.
+	 *
+	 * @since 3.3.9
+	 * @return void
+	 */
+	public function render(): void {
+		if ( ! $this->is_block() ) {
+			$this->render_shortcode();
+			return;
+		}
+		parent::render();
+	}
+
+	/**
 	 * Get the field ID.
 	 *
 	 * @since 3.3.9
 	 * @return string
 	 */
 	public function get_id(): string {
-		return 'edd_user_register';
+		return $this->is_block() ? 'edd_user_register' : 'edd_user_login';
 	}
 
 	/** Get the field label.
@@ -52,10 +66,11 @@ class Username extends Field {
 			<?php
 			$login = new \EDD\HTML\Text(
 				array(
-					'name'     => 'edd_user_login',
-					'id'       => 'edd_user_register',
-					'class'    => $this->get_field_classes(),
-					'required' => true,
+					'name'         => 'edd_user_login',
+					'id'           => $this->get_id(),
+					'class'        => $this->get_field_classes(),
+					'required'     => $this->is_required(),
+					'include_span' => false,
 				)
 			);
 			$login->output();
@@ -71,7 +86,7 @@ class Username extends Field {
 	 * @return string
 	 */
 	public function get_description(): string {
-		return '';
+		return $this->is_block() ? '' : __( 'The username you will use to log into your account.', 'easy-digital-downloads' );
 	}
 
 	/**
@@ -81,7 +96,10 @@ class Username extends Field {
 	 * @return bool
 	 */
 	protected function is_required(): bool {
-		return true;
+		if ( $this->is_block() ) {
+			return true;
+		}
+		return edd_no_guest_checkout();
 	}
 
 	/**
@@ -92,5 +110,33 @@ class Username extends Field {
 	 */
 	protected function get_key(): string {
 		return 'username';
+	}
+
+	/**
+	 * Renders the field for the shortcode checkout, using legacy wrapper IDs.
+	 *
+	 * @since 3.7.0
+	 */
+	private function render_shortcode(): void {
+		$required = $this->is_required();
+		?>
+		<div id="edd-user-login-wrap">
+			<?php
+			$this->do_label();
+			$this->do_description();
+			$login = new \EDD\HTML\Text(
+				array(
+					'name'         => 'edd_user_login',
+					'id'           => 'edd_user_login',
+					'class'        => $this->get_field_classes(),
+					'placeholder'  => esc_html__( 'Username', 'easy-digital-downloads' ),
+					'required'     => $required,
+					'include_span' => false,
+				)
+			);
+			$login->output();
+			?>
+		</div>
+		<?php
 	}
 }

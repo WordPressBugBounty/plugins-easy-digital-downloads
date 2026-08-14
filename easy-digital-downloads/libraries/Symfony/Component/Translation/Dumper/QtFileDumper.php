@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Dumper;
 
 use EDD\Vendor\Symfony\Component\Translation\MessageCatalogue;
-
 /**
  * QtFileDumper generates ts files from a message catalogue.
  *
@@ -30,7 +28,6 @@ class QtFileDumper extends FileDumper
         $ts = $dom->appendChild($dom->createElement('TS'));
         $context = $ts->appendChild($dom->createElement('context'));
         $context->appendChild($dom->createElement('name', $domain));
-
         foreach ($messages->all($domain) as $source => $target) {
             $message = $context->appendChild($dom->createElement('message'));
             $metadata = $messages->getMetadata($source, $domain);
@@ -47,10 +44,8 @@ class QtFileDumper extends FileDumper
             $message->appendChild($dom->createElement('source', $source));
             $message->appendChild($dom->createElement('translation', $target));
         }
-
         return $dom->saveXML();
     }
-
     /**
      * {@inheritdoc}
      */

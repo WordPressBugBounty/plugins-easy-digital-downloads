@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class TaxRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/tax_rates', $params, $opts);
     }
-
     /**
      * Creates a new tax rate.
      *
@@ -40,7 +38,6 @@ class TaxRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/tax_rates', $params, $opts);
     }
-
     /**
      * Retrieves a tax rate with the given ID.
      *
@@ -56,7 +53,6 @@ class TaxRateService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/tax_rates/%s', $id), $params, $opts);
     }
-
     /**
      * Updates an existing tax rate.
      *

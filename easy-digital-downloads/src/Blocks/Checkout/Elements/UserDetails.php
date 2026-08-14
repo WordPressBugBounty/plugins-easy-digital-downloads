@@ -44,6 +44,7 @@ class UserDetails implements SubscriberInterface {
 		if ( empty( $block_attributes ) ) {
 			return;
 		}
+
 		$css_classes = array(
 			'edd-blocks__user-details',
 		);

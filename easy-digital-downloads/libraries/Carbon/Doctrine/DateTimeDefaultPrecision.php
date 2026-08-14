@@ -5,7 +5,6 @@ namespace EDD\Vendor\Carbon\Doctrine;
 class DateTimeDefaultPrecision
 {
     private static $precision = 6;
-
     /**
      * Change the default Doctrine datetime and datetime_immutable precision.
      *
@@ -15,7 +14,6 @@ class DateTimeDefaultPrecision
     {
         self::$precision = $precision;
     }
-
     /**
      * Get the default Doctrine datetime and datetime_immutable precision.
      *

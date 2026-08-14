@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents an error encountered during a request to the Connect API.
  *
@@ -18,22 +16,18 @@ class Error implements \JsonSerializable
      * @var string
      */
     private $category;
-
     /**
      * @var string
      */
     private $code;
-
     /**
      * @var string|null
      */
     private $detail;
-
     /**
      * @var string|null
      */
     private $field;
-
     /**
      * @param string $category
      * @param string $code
@@ -43,7 +37,6 @@ class Error implements \JsonSerializable
         $this->category = $category;
         $this->code = $code;
     }
-
     /**
      * Returns Category.
      * Indicates which high-level category of error has occurred during a
@@ -53,7 +46,6 @@ class Error implements \JsonSerializable
     {
         return $this->category;
     }
-
     /**
      * Sets Category.
      * Indicates which high-level category of error has occurred during a
@@ -66,21 +58,19 @@ class Error implements \JsonSerializable
     {
         $this->category = $category;
     }
-
     /**
      * Returns Code.
      * Indicates the specific error that occurred during a request to a
-     * EDD\Vendor\Square API.
+     * Square API.
      */
     public function getCode(): string
     {
         return $this->code;
     }
-
     /**
      * Sets Code.
      * Indicates the specific error that occurred during a request to a
-     * EDD\Vendor\Square API.
+     * Square API.
      *
      * @required
      * @maps code
@@ -89,7 +79,6 @@ class Error implements \JsonSerializable
     {
         $this->code = $code;
     }
-
     /**
      * Returns Detail.
      * A human-readable description of the error for debugging purposes.
@@ -98,7 +87,6 @@ class Error implements \JsonSerializable
     {
         return $this->detail;
     }
-
     /**
      * Sets Detail.
      * A human-readable description of the error for debugging purposes.
@@ -109,7 +97,6 @@ class Error implements \JsonSerializable
     {
         $this->detail = $detail;
     }
-
     /**
      * Returns Field.
      * The name of the field provided in the original request (if any) that
@@ -119,7 +106,6 @@ class Error implements \JsonSerializable
     {
         return $this->field;
     }
-
     /**
      * Sets Field.
      * The name of the field provided in the original request (if any) that
@@ -131,7 +117,6 @@ class Error implements \JsonSerializable
     {
         $this->field = $field;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -140,22 +125,21 @@ class Error implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['category']   = $this->category;
-        $json['code']       = $this->code;
+        $json['category'] = $this->category;
+        $json['code'] = $this->code;
         if (isset($this->detail)) {
             $json['detail'] = $this->detail;
         }
         if (isset($this->field)) {
-            $json['field']  = $this->field;
+            $json['field'] = $this->field;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class ReceivedCreditService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/received_credits', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing ReceivedCredit by passing the unique
      * ReceivedCredit ID from the ReceivedCredit list.

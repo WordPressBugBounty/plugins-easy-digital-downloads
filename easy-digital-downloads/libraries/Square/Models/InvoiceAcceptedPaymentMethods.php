@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The payment methods that customers can use to pay an [invoice]($m/Invoice) on the Square-hosted
  * invoice payment page.
@@ -16,27 +14,22 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
      * @var array
      */
     private $card = [];
-
     /**
      * @var array
      */
     private $squareGiftCard = [];
-
     /**
      * @var array
      */
     private $bankAccount = [];
-
     /**
      * @var array
      */
     private $buyNowPayLater = [];
-
     /**
      * @var array
      */
     private $cashAppPay = [];
-
     /**
      * Returns Card.
      * Indicates whether credit card or debit card payments are accepted. The default value is `false`.
@@ -48,7 +41,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
         }
         return $this->card['value'];
     }
-
     /**
      * Sets Card.
      * Indicates whether credit card or debit card payments are accepted. The default value is `false`.
@@ -59,7 +51,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->card['value'] = $card;
     }
-
     /**
      * Unsets Card.
      * Indicates whether credit card or debit card payments are accepted. The default value is `false`.
@@ -68,10 +59,9 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->card = [];
     }
-
     /**
-     * Returns EDD\Vendor\Square Gift Card.
-     * Indicates whether EDD\Vendor\Square gift card payments are accepted. The default value is `false`.
+     * Returns Square Gift Card.
+     * Indicates whether Square gift card payments are accepted. The default value is `false`.
      */
     public function getSquareGiftCard(): ?bool
     {
@@ -80,10 +70,9 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
         }
         return $this->squareGiftCard['value'];
     }
-
     /**
-     * Sets EDD\Vendor\Square Gift Card.
-     * Indicates whether EDD\Vendor\Square gift card payments are accepted. The default value is `false`.
+     * Sets Square Gift Card.
+     * Indicates whether Square gift card payments are accepted. The default value is `false`.
      *
      * @maps square_gift_card
      */
@@ -91,16 +80,14 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->squareGiftCard['value'] = $squareGiftCard;
     }
-
     /**
-     * Unsets EDD\Vendor\Square Gift Card.
-     * Indicates whether EDD\Vendor\Square gift card payments are accepted. The default value is `false`.
+     * Unsets Square Gift Card.
+     * Indicates whether Square gift card payments are accepted. The default value is `false`.
      */
     public function unsetSquareGiftCard(): void
     {
         $this->squareGiftCard = [];
     }
-
     /**
      * Returns Bank Account.
      * Indicates whether ACH bank transfer payments are accepted. The default value is `false`.
@@ -112,7 +99,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
         }
         return $this->bankAccount['value'];
     }
-
     /**
      * Sets Bank Account.
      * Indicates whether ACH bank transfer payments are accepted. The default value is `false`.
@@ -123,7 +109,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->bankAccount['value'] = $bankAccount;
     }
-
     /**
      * Unsets Bank Account.
      * Indicates whether ACH bank transfer payments are accepted. The default value is `false`.
@@ -132,7 +117,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->bankAccount = [];
     }
-
     /**
      * Returns Buy Now Pay Later.
      * Indicates whether Afterpay (also known as Clearpay) payments are accepted. The default value is
@@ -156,7 +140,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
         }
         return $this->buyNowPayLater['value'];
     }
-
     /**
      * Sets Buy Now Pay Later.
      * Indicates whether Afterpay (also known as Clearpay) payments are accepted. The default value is
@@ -179,7 +162,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->buyNowPayLater['value'] = $buyNowPayLater;
     }
-
     /**
      * Unsets Buy Now Pay Later.
      * Indicates whether Afterpay (also known as Clearpay) payments are accepted. The default value is
@@ -200,7 +182,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->buyNowPayLater = [];
     }
-
     /**
      * Returns Cash App Pay.
      * Indicates whether Cash App payments are accepted. The default value is `false`.
@@ -214,7 +195,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
         }
         return $this->cashAppPay['value'];
     }
-
     /**
      * Sets Cash App Pay.
      * Indicates whether Cash App payments are accepted. The default value is `false`.
@@ -227,7 +207,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->cashAppPay['value'] = $cashAppPay;
     }
-
     /**
      * Unsets Cash App Pay.
      * Indicates whether Cash App payments are accepted. The default value is `false`.
@@ -238,7 +217,6 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
     {
         $this->cashAppPay = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -247,29 +225,28 @@ class InvoiceAcceptedPaymentMethods implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->card)) {
-            $json['card']              = $this->card['value'];
+            $json['card'] = $this->card['value'];
         }
         if (!empty($this->squareGiftCard)) {
-            $json['square_gift_card']  = $this->squareGiftCard['value'];
+            $json['square_gift_card'] = $this->squareGiftCard['value'];
         }
         if (!empty($this->bankAccount)) {
-            $json['bank_account']      = $this->bankAccount['value'];
+            $json['bank_account'] = $this->bankAccount['value'];
         }
         if (!empty($this->buyNowPayLater)) {
             $json['buy_now_pay_later'] = $this->buyNowPayLater['value'];
         }
         if (!empty($this->cashAppPay)) {
-            $json['cash_app_pay']      = $this->cashAppPay['value'];
+            $json['cash_app_pay'] = $this->cashAppPay['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

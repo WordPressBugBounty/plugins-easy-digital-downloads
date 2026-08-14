@@ -13,6 +13,9 @@
 	}
 
 	#edd_purchase_form {
+		// A grid item floors at its min-content width; without this the widest control can scroll a phone sideways.
+		min-width: 0;
+
 		@import "../scss/forms";
 
 		select {
@@ -104,10 +107,13 @@
 		display: flex;
 		gap: 0.5rem;
 		align-items: center;
+		flex-wrap: wrap;
 
 		input {
 			display: block !important;
 			margin: 0 !important;
+			// Let the input shrink below its intrinsic width so the flex row can too.
+			min-width: 0;
 		}
 	}
 
@@ -185,9 +191,10 @@
 		grid-column: span 2;
 	}
 
+	// The grid items are the field wrappers, so the span goes on the wrapper, not the field.
 	&.cc-address--state-zip {
-		.edd-card-state,
-		.edd-card-zip {
+		> div.edd-blocks-form__group-state,
+		> div.edd-blocks-form__group-zip {
 			grid-column: span 1;
 		}
 	}
@@ -286,4 +293,40 @@
 			}
 		}
 	}
+}
+
+// The box fires the form top/bottom hooks inside itself, so hook output is a sibling of the box's
+// columns and would compete for width in a row layout; make it span the row instead. No inset: the
+// slot sits at the box's content edge, so a centred box's hook output lines up without one.
+.edd-checkout-box__slot {
+	flex: 0 1 auto;
+}
+
+// The personal-info section controls style the wrapper (the only element common to the guest, log in
+// and register forms), so the fieldset's own default box draws a second panel inside the card. Zero
+// it, scoped to the Elementor layer — on a plain block checkout that box IS the card.
+.edd-checkout--elementor #edd_purchase_form .edd-checkout-block__personal-info > fieldset.edd-blocks-form {
+	border: none;
+	padding: 0;
+}
+
+// Gate the full-width span on the wrap it needs: forcing a slot to 100% in a non-wrapping container
+// squeezes the columns instead of dropping below them, so only wrap when a slot printed. The slot's
+// flex parent is `.e-con` on a full-width box but `.e-con-inner` on a boxed one, so match either.
+.edd-checkout--elementor :is(.e-con, .e-con-inner):has(> .edd-checkout-box__slot) {
+	flex-wrap: wrap;
+
+	> .edd-checkout-box__slot {
+		flex: 1 1 100%;
+		min-width: 100%;
+	}
+}
+
+// Logged-in notice: mute it and separate it from the form so it reads as an intentional line rather
+// than a bold, heading-like block orphaned at the top of the box. Composable checkout only; the block
+// checkout keeps its treatment.
+.edd-checkout--elementor .edd-blocks__logged-in {
+	margin: 1.5rem 0;
+	font-size: 0.9375rem;
+	opacity: 0.7;
 }

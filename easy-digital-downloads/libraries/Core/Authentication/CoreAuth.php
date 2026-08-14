@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Authentication;
 
 use EDD\Vendor\CoreInterfaces\Core\Authentication\AuthInterface;
@@ -9,7 +8,6 @@ use EDD\Vendor\CoreInterfaces\Core\Request\ParamInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\TypeValidatorInterface;
 use InvalidArgumentException;
-
 /**
  * Use to apply authentication parameters to the request
  */
@@ -17,7 +15,6 @@ class CoreAuth implements AuthInterface
 {
     private $parameters;
     private $isValid = false;
-
     /**
      * @param ParamInterface ...$parameters
      */
@@ -25,7 +22,6 @@ class CoreAuth implements AuthInterface
     {
         $this->parameters = $parameters;
     }
-
     /**
      * @throws InvalidArgumentException
      */
@@ -36,7 +32,6 @@ class CoreAuth implements AuthInterface
         });
         $this->isValid = true;
     }
-
     public function apply(RequestSetterInterface $request): void
     {
         if (!$this->isValid) {

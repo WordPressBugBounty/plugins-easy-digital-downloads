@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the details of a tender with `type` `BUY_NOW_PAY_LATER`.
  */
@@ -15,12 +13,10 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
      * @var string|null
      */
     private $buyNowPayLaterBrand;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * Returns Buy Now Pay Later Brand.
      */
@@ -28,7 +24,6 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
     {
         return $this->buyNowPayLaterBrand;
     }
-
     /**
      * Sets Buy Now Pay Later Brand.
      *
@@ -38,7 +33,6 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->buyNowPayLaterBrand = $buyNowPayLaterBrand;
     }
-
     /**
      * Returns Status.
      */
@@ -46,7 +40,6 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      *
@@ -56,7 +49,6 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -65,7 +57,7 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -73,12 +65,11 @@ class TenderBuyNowPayLaterDetails implements \JsonSerializable
             $json['buy_now_pay_later_brand'] = $this->buyNowPayLaterBrand;
         }
         if (isset($this->status)) {
-            $json['status']                  = $this->status;
+            $json['status'] = $this->status;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

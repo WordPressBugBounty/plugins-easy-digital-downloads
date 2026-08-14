@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A lightweight description of an [order]($m/Order) that is returned when
  * `returned_entries` is `true` on a [SearchOrdersRequest]($e/Orders/SearchOrders).
@@ -16,17 +14,14 @@ class OrderEntry implements \JsonSerializable
      * @var array
      */
     private $orderId = [];
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * Returns Order Id.
      * The ID of the order.
@@ -38,7 +33,6 @@ class OrderEntry implements \JsonSerializable
         }
         return $this->orderId['value'];
     }
-
     /**
      * Sets Order Id.
      * The ID of the order.
@@ -49,7 +43,6 @@ class OrderEntry implements \JsonSerializable
     {
         $this->orderId['value'] = $orderId;
     }
-
     /**
      * Unsets Order Id.
      * The ID of the order.
@@ -58,7 +51,6 @@ class OrderEntry implements \JsonSerializable
     {
         $this->orderId = [];
     }
-
     /**
      * Returns Version.
      * The version number, which is incremented each time an update is committed to the order.
@@ -72,7 +64,6 @@ class OrderEntry implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version number, which is incremented each time an update is committed to the order.
@@ -88,7 +79,6 @@ class OrderEntry implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Location Id.
      * The location ID the order belongs to.
@@ -100,7 +90,6 @@ class OrderEntry implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The location ID the order belongs to.
@@ -111,7 +100,6 @@ class OrderEntry implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The location ID the order belongs to.
@@ -120,7 +108,6 @@ class OrderEntry implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -129,15 +116,15 @@ class OrderEntry implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->orderId)) {
-            $json['order_id']    = $this->orderId['value'];
+            $json['order_id'] = $this->orderId['value'];
         }
         if (isset($this->version)) {
-            $json['version']     = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->locationId)) {
             $json['location_id'] = $this->locationId['value'];
@@ -145,7 +132,6 @@ class OrderEntry implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

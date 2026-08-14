@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Pricing options for an order. The options affect how the order's price is calculated.
  * They can be used, for example, to apply automatic price adjustments that are based on preconfigured
@@ -17,12 +15,10 @@ class OrderPricingOptions implements \JsonSerializable
      * @var array
      */
     private $autoApplyDiscounts = [];
-
     /**
      * @var array
      */
     private $autoApplyTaxes = [];
-
     /**
      * Returns Auto Apply Discounts.
      * The option to determine whether pricing rule-based
@@ -35,7 +31,6 @@ class OrderPricingOptions implements \JsonSerializable
         }
         return $this->autoApplyDiscounts['value'];
     }
-
     /**
      * Sets Auto Apply Discounts.
      * The option to determine whether pricing rule-based
@@ -47,7 +42,6 @@ class OrderPricingOptions implements \JsonSerializable
     {
         $this->autoApplyDiscounts['value'] = $autoApplyDiscounts;
     }
-
     /**
      * Unsets Auto Apply Discounts.
      * The option to determine whether pricing rule-based
@@ -57,7 +51,6 @@ class OrderPricingOptions implements \JsonSerializable
     {
         $this->autoApplyDiscounts = [];
     }
-
     /**
      * Returns Auto Apply Taxes.
      * The option to determine whether rule-based taxes are automatically
@@ -70,7 +63,6 @@ class OrderPricingOptions implements \JsonSerializable
         }
         return $this->autoApplyTaxes['value'];
     }
-
     /**
      * Sets Auto Apply Taxes.
      * The option to determine whether rule-based taxes are automatically
@@ -82,7 +74,6 @@ class OrderPricingOptions implements \JsonSerializable
     {
         $this->autoApplyTaxes['value'] = $autoApplyTaxes;
     }
-
     /**
      * Unsets Auto Apply Taxes.
      * The option to determine whether rule-based taxes are automatically
@@ -92,7 +83,6 @@ class OrderPricingOptions implements \JsonSerializable
     {
         $this->autoApplyTaxes = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -101,7 +91,7 @@ class OrderPricingOptions implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -109,12 +99,11 @@ class OrderPricingOptions implements \JsonSerializable
             $json['auto_apply_discounts'] = $this->autoApplyDiscounts['value'];
         }
         if (!empty($this->autoApplyTaxes)) {
-            $json['auto_apply_taxes']     = $this->autoApplyTaxes['value'];
+            $json['auto_apply_taxes'] = $this->autoApplyTaxes['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Details about a refund's destination.
  */
@@ -15,17 +13,14 @@ class DestinationDetails implements \JsonSerializable
      * @var DestinationDetailsCardRefundDetails|null
      */
     private $cardDetails;
-
     /**
      * @var DestinationDetailsCashRefundDetails|null
      */
     private $cashDetails;
-
     /**
      * @var DestinationDetailsExternalRefundDetails|null
      */
     private $externalDetails;
-
     /**
      * Returns Card Details.
      */
@@ -33,7 +28,6 @@ class DestinationDetails implements \JsonSerializable
     {
         return $this->cardDetails;
     }
-
     /**
      * Sets Card Details.
      *
@@ -43,7 +37,6 @@ class DestinationDetails implements \JsonSerializable
     {
         $this->cardDetails = $cardDetails;
     }
-
     /**
      * Returns Cash Details.
      * Stores details about a cash refund. Contains only non-confidential information.
@@ -52,7 +45,6 @@ class DestinationDetails implements \JsonSerializable
     {
         return $this->cashDetails;
     }
-
     /**
      * Sets Cash Details.
      * Stores details about a cash refund. Contains only non-confidential information.
@@ -63,7 +55,6 @@ class DestinationDetails implements \JsonSerializable
     {
         $this->cashDetails = $cashDetails;
     }
-
     /**
      * Returns External Details.
      * Stores details about an external refund. Contains only non-confidential information.
@@ -72,7 +63,6 @@ class DestinationDetails implements \JsonSerializable
     {
         return $this->externalDetails;
     }
-
     /**
      * Sets External Details.
      * Stores details about an external refund. Contains only non-confidential information.
@@ -83,7 +73,6 @@ class DestinationDetails implements \JsonSerializable
     {
         $this->externalDetails = $externalDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -92,15 +81,15 @@ class DestinationDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->cardDetails)) {
-            $json['card_details']     = $this->cardDetails;
+            $json['card_details'] = $this->cardDetails;
         }
         if (isset($this->cashDetails)) {
-            $json['cash_details']     = $this->cashDetails;
+            $json['cash_details'] = $this->cashDetails;
         }
         if (isset($this->externalDetails)) {
             $json['external_details'] = $this->externalDetails;
@@ -108,7 +97,6 @@ class DestinationDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

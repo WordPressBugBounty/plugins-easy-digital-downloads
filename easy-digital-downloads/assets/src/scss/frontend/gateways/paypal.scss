@@ -13,6 +13,17 @@
  * @since   3.6.9
  */
 
+/*
+ * Maximum width of the PayPal payment column.
+ *
+ * PayPal's Smart Buttons cap their own rendered width (~600px) and left-align
+ * inside their iframe when given a wider container, but the Apple Pay / Google
+ * Pay wallet buttons and our own card submit buttons stretch to 100%. Keeping
+ * the whole stack below PayPal's own limit lets PayPal fill the column instead
+ * of left-aligning, so every button lines up at the same width.
+ */
+$edd-paypal-checkout-max-width: 575px;
+
 /* Fastlane wrapper. */
 #edd-fastlane-container {
     margin: 20px 0;
@@ -184,5 +195,38 @@
     /* PayPal renders its messaging inside an iframe; center the iframe itself. */
     iframe {
         margin: 0 auto;
+    }
+}
+
+/*
+ * Constrain and center the entire PayPal payment stack.
+ *
+ * On a wide checkout (e.g. an FSE block template with a full-width content
+ * area) the wallet buttons would otherwise render much wider than the PayPal
+ * Smart Buttons, which cap themselves at ~600px and left-align — leaving the
+ * group mismatched and pushed to one side. Capping the stack to a shared width
+ * below PayPal's own limit lets PayPal fill the column instead of left-aligning,
+ * and centering it keeps the buttons, dividers, and card fields as one tidy,
+ * aligned column.
+ *
+ * Scoped to `#edd_purchase_submit` (the checkout submit fieldset that wraps this
+ * markup in both the classic and block checkout) so the horizontal centering
+ * beats core's `#edd_checkout_form_wrap fieldset > div` margin reset. Placed last
+ * so it also wins the specificity tie with the wallet container's own margin
+ * rule above. Only `max-width` and the horizontal margins are set here, so each
+ * element keeps the vertical spacing defined in its own rule. Narrow checkouts
+ * are unaffected — `max-width` never forces an element wider than its container.
+ */
+#edd_purchase_submit {
+    #edd-fastlane-container,
+    .edd-fastlane-divider,
+    .edd-paypal-wallet-container,
+    #edd-paypal-container,
+    #edd-paypal-messages,
+    .edd-paypal-card-divider,
+    .edd-paypal-unbranded-card {
+        max-width: $edd-paypal-checkout-max-width;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

@@ -4,8 +4,16 @@
  * Internal dependencies.
  */
 import { recalculateTaxes } from './checkout/utils.js';
+import { initCartEventsBridge } from './utilities/cart-events.js';
+import { initCartLoading, beginLoading, endLoading } from '@easy-digital-downloads/cart-loading';
 
 jQuery( document ).ready( function( $ ) {
+	// Re-broadcast EDD's legacy cart events as the native edd:cart-updated event.
+	initCartEventsBridge();
+
+	// Single checkout loading overlay.
+	initCartLoading();
+
 	// Hide unneeded elements. These are things that are required in case JS breaks or isn't present
 	$( '.edd-add-to-cart:not(.edd-no-js)' ).addClass( 'edd-has-js' );
 
@@ -400,16 +408,19 @@ jQuery( document ).ready( function( $ ) {
 
 		$( this ).prop( 'disabled', true );
 
-		$( this ).after( '<span class="edd-loading-ajax edd-loading"></span>' );
+		// The single loading overlay provides the spinner; the button is disabled to prevent double-submit.
+		const loadingToken = beginLoading( 'purchase' );
 
 		$.post( edd_global_vars.ajaxurl, $( '#edd_purchase_form' ).serialize() + '&action=edd_process_checkout&edd_ajax=true', function( data ) {
 			if ( data.trim() === 'success' ) {
 				$( '.edd_errors' ).remove();
 				$( '.edd-error' ).hide();
+
+				// Leave the overlay up: the form submit navigates away to the receipt.
 				$( eddPurchaseform ).submit();
 			} else {
+				endLoading( loadingToken );
 				$( '#edd-purchase-button' ).val( complete_purchase_val );
-				$( '.edd-loading-ajax' ).remove();
 				$( '.edd_errors' ).remove();
 				$( '.edd-error' ).hide();
 				$( edd_global_vars.checkout_error_anchor ).before( data );
@@ -502,9 +513,12 @@ jQuery( document ).ready( function( $ ) {
 
 // Load a payment gateway
 function edd_load_gateway( payment_mode ) {
-	// Show the ajax loader
+	// Show the single loading overlay while the gateway form is fetched and rendered.
+	const loadingToken = beginLoading( 'gateway-load' );
+
+	// Clear the previous gateway's fields; the overlay provides the spinner.
 	jQuery( '.edd-cart-ajax' ).show();
-	jQuery( '#edd_purchase_form_wrap' ).html( '<span class="edd-loading-ajax edd-loading"></span>' );
+	jQuery( '#edd_purchase_form_wrap' ).html( '' );
 
 	const nonce = document.getElementById( 'edd-gateway-' + payment_mode ).getAttribute( 'data-' + payment_mode + '-nonce' );
 	let url = edd_scripts.ajaxurl;
@@ -522,7 +536,9 @@ function edd_load_gateway( payment_mode ) {
 			jQuery( '#edd_purchase_form_wrap' ).html( response );
 			jQuery( 'body' ).trigger( 'edd_gateway_loaded', [ payment_mode ] );
 		}
-	);
+	).always( function() {
+		endLoading( loadingToken );
+	} );
 }
 
 // Backwards compatibility. Assign function to global namespace.

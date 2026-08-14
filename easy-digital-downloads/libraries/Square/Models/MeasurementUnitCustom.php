@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The information needed to define a custom unit, provided by the seller.
  */
@@ -15,12 +13,10 @@ class MeasurementUnitCustom implements \JsonSerializable
      * @var string
      */
     private $name;
-
     /**
      * @var string
      */
     private $abbreviation;
-
     /**
      * @param string $name
      * @param string $abbreviation
@@ -30,7 +26,6 @@ class MeasurementUnitCustom implements \JsonSerializable
         $this->name = $name;
         $this->abbreviation = $abbreviation;
     }
-
     /**
      * Returns Name.
      * The name of the custom unit, for example "bushel".
@@ -39,7 +34,6 @@ class MeasurementUnitCustom implements \JsonSerializable
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * The name of the custom unit, for example "bushel".
@@ -51,7 +45,6 @@ class MeasurementUnitCustom implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Abbreviation.
      * The abbreviation of the custom unit, such as "bsh" (bushel). This appears
@@ -61,7 +54,6 @@ class MeasurementUnitCustom implements \JsonSerializable
     {
         return $this->abbreviation;
     }
-
     /**
      * Sets Abbreviation.
      * The abbreviation of the custom unit, such as "bsh" (bushel). This appears
@@ -74,7 +66,6 @@ class MeasurementUnitCustom implements \JsonSerializable
     {
         $this->abbreviation = $abbreviation;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -83,16 +74,15 @@ class MeasurementUnitCustom implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']         = $this->name;
+        $json['name'] = $this->name;
         $json['abbreviation'] = $this->abbreviation;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

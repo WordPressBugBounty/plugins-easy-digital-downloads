@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a business that sells with Square.
  */
@@ -15,42 +13,34 @@ class Merchant implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $businessName = [];
-
     /**
      * @var string
      */
     private $country;
-
     /**
      * @var array
      */
     private $languageCode = [];
-
     /**
      * @var string|null
      */
     private $currency;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var array
      */
     private $mainLocationId = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @param string $country
      */
@@ -58,7 +48,6 @@ class Merchant implements \JsonSerializable
     {
         $this->country = $country;
     }
-
     /**
      * Returns Id.
      * The Square-issued ID of the merchant.
@@ -67,7 +56,6 @@ class Merchant implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The Square-issued ID of the merchant.
@@ -78,7 +66,6 @@ class Merchant implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Business Name.
      * The name of the merchant's overall business.
@@ -90,7 +77,6 @@ class Merchant implements \JsonSerializable
         }
         return $this->businessName['value'];
     }
-
     /**
      * Sets Business Name.
      * The name of the merchant's overall business.
@@ -101,7 +87,6 @@ class Merchant implements \JsonSerializable
     {
         $this->businessName['value'] = $businessName;
     }
-
     /**
      * Unsets Business Name.
      * The name of the merchant's overall business.
@@ -110,7 +95,6 @@ class Merchant implements \JsonSerializable
     {
         $this->businessName = [];
     }
-
     /**
      * Returns Country.
      * Indicates the country associated with another entity, such as a business.
@@ -120,7 +104,6 @@ class Merchant implements \JsonSerializable
     {
         return $this->country;
     }
-
     /**
      * Sets Country.
      * Indicates the country associated with another entity, such as a business.
@@ -133,7 +116,6 @@ class Merchant implements \JsonSerializable
     {
         $this->country = $country;
     }
-
     /**
      * Returns Language Code.
      * The code indicating the [language preferences](https://developer.squareup.com/docs/build-
@@ -147,7 +129,6 @@ class Merchant implements \JsonSerializable
         }
         return $this->languageCode['value'];
     }
-
     /**
      * Sets Language Code.
      * The code indicating the [language preferences](https://developer.squareup.com/docs/build-
@@ -160,7 +141,6 @@ class Merchant implements \JsonSerializable
     {
         $this->languageCode['value'] = $languageCode;
     }
-
     /**
      * Unsets Language Code.
      * The code indicating the [language preferences](https://developer.squareup.com/docs/build-
@@ -171,7 +151,6 @@ class Merchant implements \JsonSerializable
     {
         $this->languageCode = [];
     }
-
     /**
      * Returns Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -181,7 +160,6 @@ class Merchant implements \JsonSerializable
     {
         return $this->currency;
     }
-
     /**
      * Sets Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -193,7 +171,6 @@ class Merchant implements \JsonSerializable
     {
         $this->currency = $currency;
     }
-
     /**
      * Returns Status.
      */
@@ -201,7 +178,6 @@ class Merchant implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      *
@@ -211,7 +187,6 @@ class Merchant implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Main Location Id.
      * The ID of the [main `Location`](https://developer.squareup.com/docs/locations-api#about-the-main-
@@ -224,7 +199,6 @@ class Merchant implements \JsonSerializable
         }
         return $this->mainLocationId['value'];
     }
-
     /**
      * Sets Main Location Id.
      * The ID of the [main `Location`](https://developer.squareup.com/docs/locations-api#about-the-main-
@@ -236,7 +210,6 @@ class Merchant implements \JsonSerializable
     {
         $this->mainLocationId['value'] = $mainLocationId;
     }
-
     /**
      * Unsets Main Location Id.
      * The ID of the [main `Location`](https://developer.squareup.com/docs/locations-api#about-the-main-
@@ -246,7 +219,6 @@ class Merchant implements \JsonSerializable
     {
         $this->mainLocationId = [];
     }
-
     /**
      * Returns Created At.
      * The time when the merchant was created, in RFC 3339 format.
@@ -257,7 +229,6 @@ class Merchant implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The time when the merchant was created, in RFC 3339 format.
@@ -270,7 +241,6 @@ class Merchant implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -279,36 +249,35 @@ class Merchant implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']               = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->businessName)) {
-            $json['business_name']    = $this->businessName['value'];
+            $json['business_name'] = $this->businessName['value'];
         }
-        $json['country']              = $this->country;
+        $json['country'] = $this->country;
         if (!empty($this->languageCode)) {
-            $json['language_code']    = $this->languageCode['value'];
+            $json['language_code'] = $this->languageCode['value'];
         }
         if (isset($this->currency)) {
-            $json['currency']         = $this->currency;
+            $json['currency'] = $this->currency;
         }
         if (isset($this->status)) {
-            $json['status']           = $this->status;
+            $json['status'] = $this->status;
         }
         if (!empty($this->mainLocationId)) {
             $json['main_location_id'] = $this->mainLocationId['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']       = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

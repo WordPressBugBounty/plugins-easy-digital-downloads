@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A tax applicable to an item.
  */
@@ -15,37 +13,30 @@ class CatalogTax implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var string|null
      */
     private $calculationPhase;
-
     /**
      * @var string|null
      */
     private $inclusionType;
-
     /**
      * @var array
      */
     private $percentage = [];
-
     /**
      * @var array
      */
     private $appliesToCustomAmounts = [];
-
     /**
      * @var array
      */
     private $enabled = [];
-
     /**
      * @var array
      */
     private $appliesToProductSetId = [];
-
     /**
      * Returns Name.
      * The tax's name. This is a searchable attribute for use in applicable query filters, and its value
@@ -58,7 +49,6 @@ class CatalogTax implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The tax's name. This is a searchable attribute for use in applicable query filters, and its value
@@ -70,7 +60,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The tax's name. This is a searchable attribute for use in applicable query filters, and its value
@@ -80,7 +69,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Calculation Phase.
      * When to calculate the taxes due on a cart.
@@ -89,7 +77,6 @@ class CatalogTax implements \JsonSerializable
     {
         return $this->calculationPhase;
     }
-
     /**
      * Sets Calculation Phase.
      * When to calculate the taxes due on a cart.
@@ -100,7 +87,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->calculationPhase = $calculationPhase;
     }
-
     /**
      * Returns Inclusion Type.
      * Whether to the tax amount should be additional to or included in the CatalogItem price.
@@ -109,7 +95,6 @@ class CatalogTax implements \JsonSerializable
     {
         return $this->inclusionType;
     }
-
     /**
      * Sets Inclusion Type.
      * Whether to the tax amount should be additional to or included in the CatalogItem price.
@@ -120,7 +105,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->inclusionType = $inclusionType;
     }
-
     /**
      * Returns Percentage.
      * The percentage of the tax in decimal form, using a `'.'` as the decimal separator and without a
@@ -135,7 +119,6 @@ class CatalogTax implements \JsonSerializable
         }
         return $this->percentage['value'];
     }
-
     /**
      * Sets Percentage.
      * The percentage of the tax in decimal form, using a `'.'` as the decimal separator and without a
@@ -149,7 +132,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->percentage['value'] = $percentage;
     }
-
     /**
      * Unsets Percentage.
      * The percentage of the tax in decimal form, using a `'.'` as the decimal separator and without a
@@ -161,10 +143,9 @@ class CatalogTax implements \JsonSerializable
     {
         $this->percentage = [];
     }
-
     /**
      * Returns Applies to Custom Amounts.
-     * If `true`, the fee applies to custom amounts entered into the EDD\Vendor\Square Point of Sale
+     * If `true`, the fee applies to custom amounts entered into the Square Point of Sale
      * app that are not associated with a particular `CatalogItem`.
      */
     public function getAppliesToCustomAmounts(): ?bool
@@ -174,10 +155,9 @@ class CatalogTax implements \JsonSerializable
         }
         return $this->appliesToCustomAmounts['value'];
     }
-
     /**
      * Sets Applies to Custom Amounts.
-     * If `true`, the fee applies to custom amounts entered into the EDD\Vendor\Square Point of Sale
+     * If `true`, the fee applies to custom amounts entered into the Square Point of Sale
      * app that are not associated with a particular `CatalogItem`.
      *
      * @maps applies_to_custom_amounts
@@ -186,20 +166,18 @@ class CatalogTax implements \JsonSerializable
     {
         $this->appliesToCustomAmounts['value'] = $appliesToCustomAmounts;
     }
-
     /**
      * Unsets Applies to Custom Amounts.
-     * If `true`, the fee applies to custom amounts entered into the EDD\Vendor\Square Point of Sale
+     * If `true`, the fee applies to custom amounts entered into the Square Point of Sale
      * app that are not associated with a particular `CatalogItem`.
      */
     public function unsetAppliesToCustomAmounts(): void
     {
         $this->appliesToCustomAmounts = [];
     }
-
     /**
      * Returns Enabled.
-     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the EDD\Vendor\Square Point of
+     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the Square Point of
      * Sale app or not (`false`).
      */
     public function getEnabled(): ?bool
@@ -209,10 +187,9 @@ class CatalogTax implements \JsonSerializable
         }
         return $this->enabled['value'];
     }
-
     /**
      * Sets Enabled.
-     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the EDD\Vendor\Square Point of
+     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the Square Point of
      * Sale app or not (`false`).
      *
      * @maps enabled
@@ -221,17 +198,15 @@ class CatalogTax implements \JsonSerializable
     {
         $this->enabled['value'] = $enabled;
     }
-
     /**
      * Unsets Enabled.
-     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the EDD\Vendor\Square Point of
+     * A Boolean flag to indicate whether the tax is displayed as enabled (`true`) in the Square Point of
      * Sale app or not (`false`).
      */
     public function unsetEnabled(): void
     {
         $this->enabled = [];
     }
-
     /**
      * Returns Applies to Product Set Id.
      * The ID of a `CatalogProductSet` object. If set, the tax is applicable to all products in the product
@@ -244,7 +219,6 @@ class CatalogTax implements \JsonSerializable
         }
         return $this->appliesToProductSetId['value'];
     }
-
     /**
      * Sets Applies to Product Set Id.
      * The ID of a `CatalogProductSet` object. If set, the tax is applicable to all products in the product
@@ -256,7 +230,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->appliesToProductSetId['value'] = $appliesToProductSetId;
     }
-
     /**
      * Unsets Applies to Product Set Id.
      * The ID of a `CatalogProductSet` object. If set, the tax is applicable to all products in the product
@@ -266,7 +239,6 @@ class CatalogTax implements \JsonSerializable
     {
         $this->appliesToProductSetId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -275,27 +247,27 @@ class CatalogTax implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']                      = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->calculationPhase)) {
-            $json['calculation_phase']         = $this->calculationPhase;
+            $json['calculation_phase'] = $this->calculationPhase;
         }
         if (isset($this->inclusionType)) {
-            $json['inclusion_type']            = $this->inclusionType;
+            $json['inclusion_type'] = $this->inclusionType;
         }
         if (!empty($this->percentage)) {
-            $json['percentage']                = $this->percentage['value'];
+            $json['percentage'] = $this->percentage['value'];
         }
         if (!empty($this->appliesToCustomAmounts)) {
             $json['applies_to_custom_amounts'] = $this->appliesToCustomAmounts['value'];
         }
         if (!empty($this->enabled)) {
-            $json['enabled']                   = $this->enabled['value'];
+            $json['enabled'] = $this->enabled['value'];
         }
         if (!empty($this->appliesToProductSetId)) {
             $json['applies_to_product_set_id'] = $this->appliesToProductSetId['value'];
@@ -303,7 +275,6 @@ class CatalogTax implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

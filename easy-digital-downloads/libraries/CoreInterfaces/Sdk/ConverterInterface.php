@@ -5,7 +5,6 @@ namespace EDD\Vendor\CoreInterfaces\Sdk;
 use EDD\Vendor\CoreInterfaces\Core\ContextInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestInterface;
 use EDD\Vendor\CoreInterfaces\Core\Response\ResponseInterface;
-
 interface ConverterInterface
 {
     public function createApiException(string $message, RequestInterface $request, ?ResponseInterface $response);

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Treasury;
 
 /**
@@ -26,14 +25,11 @@ namespace EDD\Vendor\Stripe\Treasury;
 class DebitReversal extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'treasury.debit_reversal';
-
     const NETWORK_ACH = 'ach';
     const NETWORK_CARD = 'card';
-
     const STATUS_FAILED = 'failed';
     const STATUS_PROCESSING = 'processing';
     const STATUS_SUCCEEDED = 'succeeded';
-
     /**
      * Reverses a ReceivedDebit and creates a DebitReversal object.
      *
@@ -48,14 +44,11 @@ class DebitReversal extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of DebitReversals.
      *
@@ -69,10 +62,8 @@ class DebitReversal extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a DebitReversal object.
      *
@@ -88,7 +79,6 @@ class DebitReversal extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

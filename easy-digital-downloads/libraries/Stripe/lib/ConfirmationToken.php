@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * ConfirmationTokens help transport client side data collected by EDD\Vendor\Stripe JS over
+ * ConfirmationTokens help transport client side data collected by Stripe JS over
  * to your server for confirming a PaymentIntent or SetupIntent. If the confirmation
  * is successful, values present on the ConfirmationToken are written onto the Intent.
  *
@@ -26,15 +25,13 @@ namespace EDD\Vendor\Stripe;
  * @property null|string $setup_future_usage <p>Indicates that you intend to make future payments with this ConfirmationToken's payment method.</p><p>The presence of this property will <a href="https://stripe.com/docs/payments/save-during-payment">attach the payment method</a> to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.</p>
  * @property null|string $setup_intent ID of the SetupIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.
  * @property null|\EDD\Vendor\Stripe\StripeObject $shipping Shipping information collected on this ConfirmationToken.
- * @property bool $use_stripe_sdk Indicates whether the EDD\Vendor\Stripe SDK is used to handle confirmation flow. Defaults to <code>true</code> on ConfirmationToken.
+ * @property bool $use_stripe_sdk Indicates whether the Stripe SDK is used to handle confirmation flow. Defaults to <code>true</code> on ConfirmationToken.
  */
 class ConfirmationToken extends ApiResource
 {
     const OBJECT_NAME = 'confirmation_token';
-
     const SETUP_FUTURE_USAGE_OFF_SESSION = 'off_session';
     const SETUP_FUTURE_USAGE_ON_SESSION = 'on_session';
-
     /**
      * Retrieves an existing ConfirmationToken object.
      *
@@ -50,7 +47,6 @@ class ConfirmationToken extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

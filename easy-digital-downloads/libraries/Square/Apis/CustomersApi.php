@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\BodyParam;
@@ -32,11 +31,10 @@ use EDD\Vendor\Square\Models\SearchCustomersRequest;
 use EDD\Vendor\Square\Models\SearchCustomersResponse;
 use EDD\Vendor\Square\Models\UpdateCustomerRequest;
 use EDD\Vendor\Square\Models\UpdateCustomerResponse;
-
 class CustomersApi extends BaseApi
 {
     /**
-     * Lists customer profiles associated with a EDD\Vendor\Square account.
+     * Lists customer profiles associated with a Square account.
      *
      * Under normal operating conditions, newly created or updated customer profiles become available
      * for the listing operation in well under 30 seconds. Occasionally, propagation of the new or updated
@@ -49,7 +47,7 @@ class CustomersApi extends BaseApi
      *        basics/common-api-patterns/pagination).
      * @param int|null $limit The maximum number of results to return in a single page. This limit
      *        is advisory. The response might contain more or fewer results.
-     *        If the specified limit is less than 1 or greater than 100, EDD\Vendor\Square returns a `400
+     *        If the specified limit is less than 1 or greater than 100, Square returns a `400
      *        VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH` error. The default value is 100.
      *
      *        For more information, see [Pagination](https://developer.squareup.com/docs/build-
@@ -68,28 +66,12 @@ class CustomersApi extends BaseApi
      *
      * @return ApiResponse Response from the API call
      */
-    public function listCustomers(
-        ?string $cursor = null,
-        ?int $limit = null,
-        ?string $sortField = null,
-        ?string $sortOrder = null,
-        ?bool $count = false
-    ): ApiResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/customers')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('cursor', $cursor),
-                QueryParam::init('limit', $limit),
-                QueryParam::init('sort_field', $sortField),
-                QueryParam::init('sort_order', $sortOrder),
-                QueryParam::init('count', $count)
-            );
-
+    public function listCustomers(?string $cursor = null, ?int $limit = null, ?string $sortField = null, ?string $sortOrder = null, ?bool $count = false): ApiResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/customers')->auth('global')->parameters(QueryParam::init('cursor', $cursor), QueryParam::init('limit', $limit), QueryParam::init('sort_field', $sortField), QueryParam::init('sort_order', $sortOrder), QueryParam::init('count', $count));
         $_resHandler = $this->responseHandler()->type(ListCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Creates a new customer for a business.
      *
@@ -109,15 +91,10 @@ class CustomersApi extends BaseApi
      */
     public function createCustomer(CreateCustomerRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CreateCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Creates multiple [customer profiles]($m/Customer) for a business.
      *
@@ -140,15 +117,10 @@ class CustomersApi extends BaseApi
      */
     public function bulkCreateCustomers(BulkCreateCustomersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-create')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-create')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(BulkCreateCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Deletes multiple customer profiles.
      *
@@ -163,15 +135,10 @@ class CustomersApi extends BaseApi
      */
     public function bulkDeleteCustomers(BulkDeleteCustomersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-delete')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-delete')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(BulkDeleteCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves multiple customer profiles.
      *
@@ -186,15 +153,10 @@ class CustomersApi extends BaseApi
      */
     public function bulkRetrieveCustomers(BulkRetrieveCustomersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-retrieve')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-retrieve')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(BulkRetrieveCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates multiple customer profiles.
      *
@@ -212,17 +174,12 @@ class CustomersApi extends BaseApi
      */
     public function bulkUpdateCustomers(BulkUpdateCustomersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-update')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/bulk-update')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(BulkUpdateCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
-     * Searches the customer profiles associated with a EDD\Vendor\Square account using one or more supported query
+     * Searches the customer profiles associated with a Square account using one or more supported query
      * filters.
      *
      * Calling `SearchCustomers` without any explicit query filter returns all
@@ -240,15 +197,10 @@ class CustomersApi extends BaseApi
      */
     public function searchCustomers(SearchCustomersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/search')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/search')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(SearchCustomersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Deletes a customer profile from a business. This operation also unlinks any associated cards on file.
      *
@@ -266,15 +218,10 @@ class CustomersApi extends BaseApi
      */
     public function deleteCustomer(string $customerId, ?int $version = null): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/customers/{customer_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('customer_id', $customerId), QueryParam::init('version', $version));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/customers/{customer_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), QueryParam::init('version', $version));
         $_resHandler = $this->responseHandler()->type(DeleteCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Returns details for a single customer.
      *
@@ -284,15 +231,10 @@ class CustomersApi extends BaseApi
      */
     public function retrieveCustomer(string $customerId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/customers/{customer_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('customer_id', $customerId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/customers/{customer_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId));
         $_resHandler = $this->responseHandler()->type(RetrieveCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates a customer profile. This endpoint supports sparse updates, so only new or changed fields are
      * required in the request.
@@ -312,19 +254,10 @@ class CustomersApi extends BaseApi
      */
     public function updateCustomer(string $customerId, UpdateCustomerRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/customers/{customer_id}')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('customer_id', $customerId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/customers/{customer_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(UpdateCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Adds a card on file to an existing customer.
      *
@@ -334,7 +267,7 @@ class CustomersApi extends BaseApi
      *
      * @deprecated
      *
-     * @param string $customerId The EDD\Vendor\Square ID of the customer profile the card is linked to.
+     * @param string $customerId The Square ID of the customer profile the card is linked to.
      * @param CreateCustomerCardRequest $body An object containing the fields to POST for the
      *        request.
      *
@@ -345,20 +278,10 @@ class CustomersApi extends BaseApi
     public function createCustomerCard(string $customerId, CreateCustomerCardRequest $body): ApiResponse
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
-
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/{customer_id}/cards')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('customer_id', $customerId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/customers/{customer_id}/cards')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CreateCustomerCardResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Removes a card on file from a customer.
      *
@@ -372,16 +295,10 @@ class CustomersApi extends BaseApi
     public function deleteCustomerCard(string $customerId, string $cardId): ApiResponse
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
-
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/customers/{customer_id}/cards/{card_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('customer_id', $customerId), TemplateParam::init('card_id', $cardId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/customers/{customer_id}/cards/{card_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), TemplateParam::init('card_id', $cardId));
         $_resHandler = $this->responseHandler()->type(DeleteCustomerCardResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Removes a group membership from a customer.
      *
@@ -395,21 +312,10 @@ class CustomersApi extends BaseApi
      */
     public function removeGroupFromCustomer(string $customerId, string $groupId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/v2/customers/{customer_id}/groups/{group_id}'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('customer_id', $customerId),
-                TemplateParam::init('group_id', $groupId)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/v2/customers/{customer_id}/groups/{group_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), TemplateParam::init('group_id', $groupId));
         $_resHandler = $this->responseHandler()->type(RemoveGroupFromCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Adds a group membership to a customer.
      *
@@ -423,15 +329,8 @@ class CustomersApi extends BaseApi
      */
     public function addGroupToCustomer(string $customerId, string $groupId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/customers/{customer_id}/groups/{group_id}')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('customer_id', $customerId),
-                TemplateParam::init('group_id', $groupId)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/customers/{customer_id}/groups/{group_id}')->auth('global')->parameters(TemplateParam::init('customer_id', $customerId), TemplateParam::init('group_id', $groupId));
         $_resHandler = $this->responseHandler()->type(AddGroupToCustomerResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

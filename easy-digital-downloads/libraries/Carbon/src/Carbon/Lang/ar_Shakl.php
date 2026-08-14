@@ -1,14 +1,13 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 /*
  * Authors:
  * - Abdellah Chadidi
@@ -31,7 +30,6 @@ $months = [
     'نوفمبر',
     'ديسمبر',
 ];
-
 return [
     'year' => implode('|', ['{0}:count سَنَة', '{1}سَنَة', '{2}سَنَتَيْن', ']2,11[:count سَنَوَات', ']10,Inf[:count سَنَة']),
     'a_year' => implode('|', ['{0}:count سَنَة', '{1}سَنَة', '{2}سَنَتَيْن', ']2,11[:count سَنَوَات', ']10,Inf[:count سَنَة']),
@@ -51,15 +49,14 @@ return [
     'from_now' => 'مِنَ الْآن :time',
     'after' => 'بَعْدَ :time',
     'before' => 'قَبْلَ :time',
-
     // @TODO add shakl to translations below
     'diff_now' => 'الآن',
     'diff_today' => 'اليوم',
-    'diff_today_regexp' => 'اليوم(?:\\s+عند)?(?:\\s+الساعة)?',
+    'diff_today_regexp' => 'اليوم(?:\s+عند)?(?:\s+الساعة)?',
     'diff_yesterday' => 'أمس',
-    'diff_yesterday_regexp' => 'أمس(?:\\s+عند)?(?:\\s+الساعة)?',
+    'diff_yesterday_regexp' => 'أمس(?:\s+عند)?(?:\s+الساعة)?',
     'diff_tomorrow' => 'غداً',
-    'diff_tomorrow_regexp' => 'غدًا(?:\\s+عند)?(?:\\s+الساعة)?',
+    'diff_tomorrow_regexp' => 'غدًا(?:\s+عند)?(?:\s+الساعة)?',
     'diff_before_yesterday' => 'قبل الأمس',
     'diff_after_tomorrow' => 'بعد غد',
     'period_recurrences' => implode('|', ['{0}مرة', '{1}مرة', '{2}:count مرتين', ']2,11[:count مرات', ']10,Inf[:count مرة']),
@@ -74,22 +71,8 @@ return [
     'list' => ['، ', ' و '],
     'first_day_of_week' => 6,
     'day_of_first_week_of_year' => 1,
-    'formats' => [
-        'LT' => 'HH:mm',
-        'LTS' => 'HH:mm:ss',
-        'L' => 'D/M/YYYY',
-        'LL' => 'D MMMM YYYY',
-        'LLL' => 'D MMMM YYYY HH:mm',
-        'LLLL' => 'dddd D MMMM YYYY HH:mm',
-    ],
-    'calendar' => [
-        'sameDay' => '[اليوم عند الساعة] LT',
-        'nextDay' => '[غدًا عند الساعة] LT',
-        'nextWeek' => 'dddd [عند الساعة] LT',
-        'lastDay' => '[أمس عند الساعة] LT',
-        'lastWeek' => 'dddd [عند الساعة] LT',
-        'sameElse' => 'L',
-    ],
+    'formats' => ['LT' => 'HH:mm', 'LTS' => 'HH:mm:ss', 'L' => 'D/M/YYYY', 'LL' => 'D MMMM YYYY', 'LLL' => 'D MMMM YYYY HH:mm', 'LLLL' => 'dddd D MMMM YYYY HH:mm'],
+    'calendar' => ['sameDay' => '[اليوم عند الساعة] LT', 'nextDay' => '[غدًا عند الساعة] LT', 'nextWeek' => 'dddd [عند الساعة] LT', 'lastDay' => '[أمس عند الساعة] LT', 'lastWeek' => 'dddd [عند الساعة] LT', 'sameElse' => 'L'],
     'meridiem' => ['ص', 'م'],
     'weekend' => [5, 6],
 ];

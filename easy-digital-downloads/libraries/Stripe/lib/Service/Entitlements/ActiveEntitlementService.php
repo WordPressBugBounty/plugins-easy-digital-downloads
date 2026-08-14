@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Entitlements;
 
 /**
@@ -24,7 +23,6 @@ class ActiveEntitlementService extends \EDD\Vendor\Stripe\Service\AbstractServic
     {
         return $this->requestCollection('get', '/v1/entitlements/active_entitlements', $params, $opts);
     }
-
     /**
      * Retrieve an active entitlement.
      *

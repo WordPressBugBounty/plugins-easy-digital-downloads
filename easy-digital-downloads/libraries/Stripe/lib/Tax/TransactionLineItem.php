@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Tax;
 
 /**
@@ -22,10 +21,8 @@ namespace EDD\Vendor\Stripe\Tax;
 class TransactionLineItem extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'tax.transaction_line_item';
-
     const TAX_BEHAVIOR_EXCLUSIVE = 'exclusive';
     const TAX_BEHAVIOR_INCLUSIVE = 'inclusive';
-
     const TYPE_REVERSAL = 'reversal';
     const TYPE_TRANSACTION = 'transaction';
 }

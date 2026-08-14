@@ -117,7 +117,7 @@ class Pages {
 
 		return array(
 			'page_title' => __( 'EDD Cart Recovery', 'easy-digital-downloads' ),
-			'menu_title' => self::mark_new( __( 'Cart Recovery', 'easy-digital-downloads' ) ),
+			'menu_title' => self::mark_pro( __( 'Cart Recovery', 'easy-digital-downloads' ) ),
 			'capability' => 'manage_shop_settings',
 			'callback'   => array( '\\EDD\\Admin\\CartRecovery\\Screen', 'render' ),
 		);
@@ -192,6 +192,10 @@ class Pages {
 	 * @return string
 	 */
 	private static function mark_pro( $title ) {
+		if ( edd_is_pro() ) {
+			return $title;
+		}
+
 		return sprintf(
 			'%s&nbsp;<span class="edd-admin-menu__pro">%s</span>',
 			$title,

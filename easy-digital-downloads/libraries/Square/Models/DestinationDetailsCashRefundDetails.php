@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Stores details about a cash refund. Contains only non-confidential information.
  */
@@ -15,12 +13,10 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
      * @var Money
      */
     private $sellerSuppliedMoney;
-
     /**
      * @var Money|null
      */
     private $changeBackMoney;
-
     /**
      * @param Money $sellerSuppliedMoney
      */
@@ -28,7 +24,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
     {
         $this->sellerSuppliedMoney = $sellerSuppliedMoney;
     }
-
     /**
      * Returns Seller Supplied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -43,7 +38,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
     {
         return $this->sellerSuppliedMoney;
     }
-
     /**
      * Sets Seller Supplied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -61,7 +55,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
     {
         $this->sellerSuppliedMoney = $sellerSuppliedMoney;
     }
-
     /**
      * Returns Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -76,7 +69,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
     {
         return $this->changeBackMoney;
     }
-
     /**
      * Sets Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -93,7 +85,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
     {
         $this->changeBackMoney = $changeBackMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -102,7 +93,7 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -113,7 +104,6 @@ class DestinationDetailsCashRefundDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

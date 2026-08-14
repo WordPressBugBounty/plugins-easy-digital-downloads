@@ -8,21 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Response;
-
 final class ResponseHasHeader extends Constraint
 {
     private $headerName;
-
     public function __construct(string $headerName)
     {
         $this->headerName = $headerName;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -30,7 +26,6 @@ final class ResponseHasHeader extends Constraint
     {
         return sprintf('has header "%s"', $this->headerName);
     }
-
     /**
      * @param Response $response
      *
@@ -40,7 +35,6 @@ final class ResponseHasHeader extends Constraint
     {
         return $response->headers->has($this->headerName);
     }
-
     /**
      * @param Response $response
      *
@@ -48,6 +42,6 @@ final class ResponseHasHeader extends Constraint
      */
     protected function failureDescription($response): string
     {
-        return 'the Response '.$this->toString();
+        return 'the Response ' . $this->toString();
     }
 }

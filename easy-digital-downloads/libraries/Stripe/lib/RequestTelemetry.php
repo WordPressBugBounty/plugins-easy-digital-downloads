@@ -15,7 +15,6 @@ class RequestTelemetry
     public $requestDuration;
     /** @var string[] */
     public $usage;
-
     /**
      * Initialize a new telemetry object.
      *

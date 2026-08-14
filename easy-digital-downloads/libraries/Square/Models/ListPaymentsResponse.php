@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the response returned by [ListPayments]($e/Payments/ListPayments).
  */
@@ -15,17 +13,14 @@ class ListPaymentsResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Payment[]|null
      */
     private $payments;
-
     /**
      * @var string|null
      */
     private $cursor;
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -36,7 +31,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -49,7 +43,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Payments.
      * The requested list of payments.
@@ -60,7 +53,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         return $this->payments;
     }
-
     /**
      * Sets Payments.
      * The requested list of payments.
@@ -73,7 +65,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         $this->payments = $payments;
     }
-
     /**
      * Returns Cursor.
      * The pagination cursor to be used in a subsequent request. If empty,
@@ -86,7 +77,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * The pagination cursor to be used in a subsequent request. If empty,
@@ -101,7 +91,6 @@ class ListPaymentsResponse implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -110,23 +99,22 @@ class ListPaymentsResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']   = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->payments)) {
             $json['payments'] = $this->payments;
         }
         if (isset($this->cursor)) {
-            $json['cursor']   = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

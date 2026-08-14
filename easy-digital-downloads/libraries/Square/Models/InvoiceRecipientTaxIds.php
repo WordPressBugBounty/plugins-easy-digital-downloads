@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the tax IDs for an invoice recipient. The country of the seller account determines
  * whether the corresponding `tax_ids` field is available for the customer. For more information,
@@ -18,7 +16,6 @@ class InvoiceRecipientTaxIds implements \JsonSerializable
      * @var string|null
      */
     private $euVat;
-
     /**
      * Returns Eu Vat.
      * The EU VAT identification number for the invoice recipient. For example, `IE3426675K`.
@@ -27,7 +24,6 @@ class InvoiceRecipientTaxIds implements \JsonSerializable
     {
         return $this->euVat;
     }
-
     /**
      * Sets Eu Vat.
      * The EU VAT identification number for the invoice recipient. For example, `IE3426675K`.
@@ -38,7 +34,6 @@ class InvoiceRecipientTaxIds implements \JsonSerializable
     {
         $this->euVat = $euVat;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -47,7 +42,7 @@ class InvoiceRecipientTaxIds implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -57,7 +52,6 @@ class InvoiceRecipientTaxIds implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

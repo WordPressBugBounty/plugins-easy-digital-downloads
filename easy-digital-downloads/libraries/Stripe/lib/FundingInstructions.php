@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -20,6 +19,5 @@ namespace EDD\Vendor\Stripe;
 class FundingInstructions extends ApiResource
 {
     const OBJECT_NAME = 'funding_instructions';
-
     const FUNDING_TYPE_BANK_TRANSFER = 'bank_transfer';
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -37,13 +36,10 @@ namespace EDD\Vendor\Stripe;
 class Product extends ApiResource
 {
     const OBJECT_NAME = 'product';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     const TYPE_GOOD = 'good';
     const TYPE_SERVICE = 'service';
-
     /**
      * Creates a new product object.
      *
@@ -58,14 +54,11 @@ class Product extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Delete a product. Deleting a product is only possible if it has no prices
      * associated with it. Additionally, deleting a product with <code>type=good</code>
@@ -81,14 +74,11 @@ class Product extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your products. The products are returned sorted by creation
      * date, with the most recently created products appearing first.
@@ -103,13 +93,11 @@ class Product extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing product. Supply the unique product ID from
-     * either a product creation request or the product list, and EDD\Vendor\Stripe will return
+     * either a product creation request or the product list, and Stripe will return
      * the corresponding product information.
      *
      * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
@@ -124,10 +112,8 @@ class Product extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specific product by setting the values of the parameters passed. Any
      * parameters not provided will be left unchanged.
@@ -144,14 +130,11 @@ class Product extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -163,12 +146,9 @@ class Product extends ApiResource
     public static function search($params = null, $opts = null)
     {
         $url = '/v1/products/search';
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\SearchResult::class, $params, $opts);
     }
-
     const PATH_FEATURES = '/features';
-
     /**
      * @param string $id the ID of the product on which to retrieve the product features
      * @param null|array $params
@@ -182,7 +162,6 @@ class Product extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_FEATURES, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the product on which to create the product feature
      * @param null|array $params
@@ -196,7 +175,6 @@ class Product extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_FEATURES, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the product to which the product feature belongs
      * @param string $featureId the ID of the product feature to delete
@@ -211,7 +189,6 @@ class Product extends ApiResource
     {
         return self::_deleteNestedResource($id, static::PATH_FEATURES, $featureId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the product to which the product feature belongs
      * @param string $featureId the ID of the product feature to retrieve

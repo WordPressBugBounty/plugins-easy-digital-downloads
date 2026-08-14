@@ -1,12 +1,11 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * You can configure <a href="https://docs.stripe.com/webhooks/">webhook endpoints</a> via the API to be
- * notified about events that happen in your EDD\Vendor\Stripe account or connected
+ * notified about events that happen in your Stripe account or connected
  * accounts.
  *
  * Most users configure webhooks from <a href="https://dashboard.stripe.com/webhooks">the dashboard</a>, which provides a user interface for registering and testing your webhook endpoints.
@@ -29,9 +28,7 @@ namespace EDD\Vendor\Stripe;
 class WebhookEndpoint extends ApiResource
 {
     const OBJECT_NAME = 'webhook_endpoint';
-
     use ApiOperations\Update;
-
     /**
      * A webhook endpoint must have a <code>url</code> and a list of
      * <code>enabled_events</code>. You may optionally specify the Boolean
@@ -54,18 +51,15 @@ class WebhookEndpoint extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * You can also delete webhook endpoints via the <a
      * href="https://dashboard.stripe.com/account/webhooks">webhook endpoint
-     * management</a> page of the EDD\Vendor\Stripe dashboard.
+     * management</a> page of the Stripe dashboard.
      *
      * @param null|array $params
      * @param null|array|string $opts
@@ -77,14 +71,11 @@ class WebhookEndpoint extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your webhook endpoints.
      *
@@ -98,10 +89,8 @@ class WebhookEndpoint extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the webhook endpoint with the given ID.
      *
@@ -117,10 +106,8 @@ class WebhookEndpoint extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the webhook endpoint. You may edit the <code>url</code>, the list of
      * <code>enabled_events</code>, and the status of your endpoint.
@@ -137,11 +124,9 @@ class WebhookEndpoint extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

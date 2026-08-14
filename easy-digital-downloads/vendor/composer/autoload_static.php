@@ -8,11 +8,16 @@ class ComposerStaticInita51916d72519a168a4af9d7f8fb28222
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'df9547068186d5bd9161c63e6cc8097a' => __DIR__ . '/../..' . '/src/Globals/Polyfills/PHP.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'E' => 
+        'S' =>
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
+        ),
+        'E' =>
         array (
             'EDD\\Vendor\\Symfony\\Polyfill\\Mbstring\\' => 37,
             'EDD\\Vendor\\Stripe\\' => 18,
@@ -24,34 +29,43 @@ class ComposerStaticInita51916d72519a168a4af9d7f8fb28222
     );
 
     public static $prefixDirsPsr4 = array (
-        'EDD\\Vendor\\Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
+        'EDD\\Vendor\\Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/../..' . '/libraries/Symfony/Polyfill/Mbstring',
         ),
-        'EDD\\Vendor\\Stripe\\' => 
+        'EDD\\Vendor\\Stripe\\' =>
         array (
             0 => __DIR__ . '/../..' . '/libraries/Stripe/lib',
         ),
-        'EDD\\Vendor\\Square\\' => 
+        'EDD\\Vendor\\Square\\' =>
         array (
             0 => __DIR__ . '/../..' . '/libraries/Square',
         ),
-        'EDD\\Vendor\\Carbon\\' => 
+        'EDD\\Vendor\\Carbon\\' =>
         array (
             0 => __DIR__ . '/../..' . '/libraries/Carbon/src/Carbon',
         ),
-        'EDD\\Vendor\\' => 
+        'EDD\\Vendor\\' =>
         array (
             0 => __DIR__ . '/../..' . '/libraries',
         ),
-        'EDD\\' => 
+        'EDD\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

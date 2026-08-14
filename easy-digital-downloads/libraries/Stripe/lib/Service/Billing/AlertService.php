@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Billing;
 
 /**
@@ -25,7 +24,6 @@ class AlertService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/billing/alerts/%s/activate', $id), $params, $opts);
     }
-
     /**
      * Lists billing active and inactive alerts.
      *
@@ -40,7 +38,6 @@ class AlertService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/billing/alerts', $params, $opts);
     }
-
     /**
      * Archives this alert, removing it from the list view and APIs. This is
      * non-reversible.
@@ -57,7 +54,6 @@ class AlertService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/billing/alerts/%s/archive', $id), $params, $opts);
     }
-
     /**
      * Creates a billing alert.
      *
@@ -72,7 +68,6 @@ class AlertService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/billing/alerts', $params, $opts);
     }
-
     /**
      * Deactivates this alert, preventing it from triggering.
      *
@@ -88,7 +83,6 @@ class AlertService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/billing/alerts/%s/deactivate', $id), $params, $opts);
     }
-
     /**
      * Retrieves a billing alert given an ID.
      *

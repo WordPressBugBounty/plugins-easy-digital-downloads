@@ -8,20 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Cookie;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Response;
-
 final class ResponseCookieValueSame extends Constraint
 {
     private $name;
     private $value;
     private $path;
     private $domain;
-
     public function __construct(string $name, string $value, string $path = '/', ?string $domain = null)
     {
         $this->name = $name;
@@ -29,7 +26,6 @@ final class ResponseCookieValueSame extends Constraint
         $this->path = $path;
         $this->domain = $domain;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -43,10 +39,8 @@ final class ResponseCookieValueSame extends Constraint
             $str .= sprintf(' for domain "%s"', $this->domain);
         }
         $str .= sprintf(' with value "%s"', $this->value);
-
         return $str;
     }
-
     /**
      * @param Response $response
      *
@@ -58,10 +52,8 @@ final class ResponseCookieValueSame extends Constraint
         if (!$cookie) {
             return false;
         }
-
         return $this->value === (string) $cookie->getValue();
     }
-
     /**
      * @param Response $response
      *
@@ -69,17 +61,14 @@ final class ResponseCookieValueSame extends Constraint
      */
     protected function failureDescription($response): string
     {
-        return 'the Response '.$this->toString();
+        return 'the Response ' . $this->toString();
     }
-
     protected function getCookie(Response $response): ?Cookie
     {
         $cookies = $response->headers->getCookies();
-
         $filteredCookies = array_filter($cookies, function (Cookie $cookie) {
             return $cookie->getName() === $this->name && $cookie->getPath() === $this->path && $cookie->getDomain() === $this->domain;
         });
-
         return reset($filteredCookies) ?: null;
     }
 }

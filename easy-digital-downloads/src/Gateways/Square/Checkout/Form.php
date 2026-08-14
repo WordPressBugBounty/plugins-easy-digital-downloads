@@ -150,18 +150,18 @@ class Form {
 			}
 
 			$purchase_data = PurchaseData::start( false );
-			if ( empty( $purchase_data ) ) {
-				edd_debug_log( 'EDD Square: Purchase data is empty.' );
-				throw new \Exception( esc_html__( 'Error processing purchase. Please reload the page and try again.', 'easy-digital-downloads' ) );
+
+			// Surface any validation errors (e.g. an account is required for the items in
+			// the cart) before falling back to the generic message. Otherwise an empty
+			// $purchase_data masks the real reason the purchase was rejected.
+			$errors = edd_get_errors();
+			if ( ! empty( $errors ) ) {
+				edd_debug_log( 'EDD Square: Validation errors present: ' . wp_json_encode( $errors ) );
+				throw new \Exception( esc_html( current( $errors ) ) );
 			}
 
-			$errors = edd_get_errors();
-			if ( empty( $purchase_data['user_info'] ) || ! empty( $errors ) ) {
-				edd_debug_log( 'EDD Square: Purchase data is empty or errors are present.' );
-				if ( is_array( $errors ) ) {
-					throw new \Exception( current( $errors ) );
-				}
-
+			if ( empty( $purchase_data ) || empty( $purchase_data['user_info'] ) ) {
+				edd_debug_log( 'EDD Square: Purchase data is empty.' );
 				throw new \Exception( esc_html__( 'Error processing purchase. Please reload the page and try again.', 'easy-digital-downloads' ) );
 			}
 

@@ -2,12 +2,11 @@
 /**
  * Checkout Template
  *
- * @package     EDD
- * @subpackage  Checkout
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package     EDD\Checkout
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
-*/
+ */
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
@@ -23,9 +22,9 @@ function edd_checkout_form() {
 	$form_action  = edd_get_checkout_uri( 'payment-mode=' . $payment_mode );
 
 	ob_start();
-		echo '<div id="edd_checkout_wrap">';
-		if ( edd_get_cart_contents() || edd_cart_has_fees() ) :
-			edd_checkout_cart(); ?>
+	echo '<div id="edd_checkout_wrap">';
+	if ( edd_get_cart_contents() || edd_cart_has_fees() ) :
+		edd_checkout_cart(); ?>
 			<div id="edd_checkout_form_wrap" class="edd_clearfix">
 				<?php do_action( 'edd_before_purchase_form' ); ?>
 				<form id="edd_purchase_form" class="edd_form" action="<?php echo esc_url( $form_action ); ?>" method="POST">
@@ -40,7 +39,7 @@ function edd_checkout_form() {
 					if ( edd_is_ajax_disabled() && ! empty( $_REQUEST['payment-mode'] ) ) {
 						do_action( 'edd_purchase_form' );
 					} elseif ( edd_show_gateways() ) {
-						do_action( 'edd_payment_mode_select'  );
+						do_action( 'edd_payment_mode_select' );
 					} else {
 						do_action( 'edd_purchase_form' );
 					}
@@ -56,15 +55,15 @@ function edd_checkout_form() {
 				<?php do_action( 'edd_after_purchase_form' ); ?>
 			</div><!--end #edd_checkout_form_wrap-->
 		<?php
-		else:
-			/**
-			 * Fires off when there is nothing in the cart
-			 *
-			 * @since 1.0
-			 */
-			do_action( 'edd_cart_empty' );
-		endif;
-		echo '</div><!--end #edd_checkout_wrap-->';
+	else :
+		/**
+		 * Fires off when there is nothing in the cart
+		 *
+		 * @since 1.0
+		 */
+		do_action( 'edd_cart_empty' );
+	endif;
+	echo '</div><!--end #edd_checkout_wrap-->';
 	return ob_get_clean();
 }
 
@@ -98,6 +97,12 @@ function edd_show_purchase_form() {
 		do_action( 'edd_purchase_form_before_register_login' );
 
 		$show_register_form = edd_get_option( 'show_register_form', 'none' );
+
+		// If guest checkout is disabled (e.g. a subscription is in the cart) and no register/login form is configured to display, force the registration form so guests can create the required account. The checkout block renders its own registration form via PersonalInfo (and pins this option to 'none'), so this legacy fallback only applies to the shortcode checkout.
+		if ( edd_no_guest_checkout() && ! is_user_logged_in() && in_array( $show_register_form, array( 'none', '' ), true ) && ! \EDD\Checkout\Validator::has_block() ) {
+			$show_register_form = 'registration';
+		}
+
 		if ( ( 'registration' === $show_register_form || ( 'both' === $show_register_form && ! isset( $_GET['login'] ) ) ) && ! is_user_logged_in() ) : ?>
 			<div id="edd_checkout_login_register">
 				<?php do_action( 'edd_purchase_form_register_fields' ); ?>
@@ -137,7 +142,7 @@ function edd_show_purchase_form() {
 		 */
 		do_action( 'edd_purchase_form_after_cc_form' );
 
-	// Can't checkout.
+		// Can't checkout.
 	} else {
 		do_action( 'edd_purchase_form_no_access' );
 	}
@@ -156,47 +161,28 @@ add_action( 'edd_purchase_form', 'edd_show_purchase_form' );
  * via the hooks provided.
  *
  * @since 1.3.3
+ * @since 3.7.0 Updated to use `EDD\Forms\Handler::render_fields()`.
  * @return void
  */
 function edd_user_info_fields() {
-	$customer = \EDD\Sessions\Customer::get();
+	$customer             = \EDD\Sessions\Customer::get();
+	$customer['is_block'] = false;
 	?>
 	<fieldset id="edd_checkout_user_info">
 		<legend><?php echo apply_filters( 'edd_checkout_personal_info_text', esc_html__( 'Personal info', 'easy-digital-downloads' ) ); ?></legend>
-		<?php do_action( 'edd_purchase_form_before_email' ); ?>
-		<p id="edd-email-wrap">
-			<label class="edd-label" for="edd-email">
-				<?php esc_html_e( 'Email address', 'easy-digital-downloads' ); ?>
-				<?php if ( edd_field_is_required( 'edd_email' ) ) : ?>
-					<span class="edd-required-indicator">*</span>
-				<?php endif; ?>
-			</label>
-			<span class="edd-description" id="edd-email-description"><?php esc_html_e( 'We will send the purchase receipt to this address.', 'easy-digital-downloads' ); ?></span>
-			<input class="edd-input required" type="email" name="edd_email" placeholder="<?php esc_html_e( 'Email address', 'easy-digital-downloads' ); ?>" id="edd-email" value="<?php echo esc_attr( $customer['email'] ); ?>" aria-describedby="edd-email-description"<?php if( edd_field_is_required( 'edd_email' ) ) {  echo ' required '; } ?>/>
-		</p>
-		<?php do_action( 'edd_purchase_form_after_email' ); ?>
-		<p id="edd-first-name-wrap">
-			<label class="edd-label" for="edd-first">
-				<?php esc_html_e( 'First name', 'easy-digital-downloads' ); ?>
-				<?php if ( edd_field_is_required( 'edd_first' ) ) : ?>
-					<span class="edd-required-indicator">*</span>
-				<?php endif; ?>
-			</label>
-			<span class="edd-description" id="edd-first-description"><?php esc_html_e( 'We will use this to personalize your account experience.', 'easy-digital-downloads' ); ?></span>
-			<input class="edd-input required" type="text" name="edd_first" placeholder="<?php esc_html_e( 'First name', 'easy-digital-downloads' ); ?>" id="edd-first" value="<?php echo esc_attr( $customer['first_name'] ); ?>"<?php if( edd_field_is_required( 'edd_first' ) ) {  echo ' required '; } ?> aria-describedby="edd-first-description" />
-		</p>
-		<p id="edd-last-name-wrap">
-			<label class="edd-label" for="edd-last">
-				<?php esc_html_e( 'Last name', 'easy-digital-downloads' ); ?>
-				<?php if ( edd_field_is_required( 'edd_last' ) ) : ?>
-					<span class="edd-required-indicator">*</span>
-				<?php endif; ?>
-			</label>
-			<span class="edd-description" id="edd-last-description"><?php esc_html_e( 'We will use this as well to personalize your account experience.', 'easy-digital-downloads' ); ?></span>
-			<input class="edd-input<?php if( edd_field_is_required( 'edd_last' ) ) { echo ' required'; } ?>" type="text" name="edd_last" id="edd-last" placeholder="<?php esc_html_e( 'Last name', 'easy-digital-downloads' ); ?>" value="<?php echo esc_attr( $customer['last_name'] ); ?>"<?php if( edd_field_is_required( 'edd_last' ) ) {  echo ' required '; } ?> aria-describedby="edd-last-description"/>
-		</p>
-		<?php do_action( 'edd_purchase_form_user_info' ); ?>
-		<?php do_action( 'edd_purchase_form_user_info_fields' ); ?>
+		<?php
+		do_action( 'edd_purchase_form_before_email' );
+		EDD\Forms\Handler::render_fields(
+			array(
+				'\\EDD\\Forms\\Checkout\\PersonalInfo\\Email',
+				'\\EDD\\Forms\\Checkout\\PersonalInfo\\FirstName',
+				'\\EDD\\Forms\\Checkout\\PersonalInfo\\LastName',
+			),
+			$customer
+		);
+		do_action( 'edd_purchase_form_user_info' );
+		do_action( 'edd_purchase_form_user_info_fields' );
+		?>
 	</fieldset>
 	<?php
 }
@@ -212,13 +198,15 @@ add_action( 'edd_register_fields_before', 'edd_user_info_fields' );
 function edd_get_cc_form() {
 	/**
 	 * Allow the credit card fields to be replaced.
+	 *
 	 * @since 3.1
 	 */
 	if ( null !== apply_filters( 'edd_pre_cc_fields', null ) ) {
 		do_action( 'edd_cc_fields' );
 		return;
 	}
-	ob_start(); ?>
+	ob_start();
+	?>
 
 	<?php do_action( 'edd_before_cc_fields' ); ?>
 
@@ -233,7 +221,7 @@ function edd_get_cc_form() {
 							'width'   => 16,
 							'height'  => 16,
 							'title'   => __( 'Secure SSL encrypted payment', 'easy-digital-downloads' ),
-							'classes' => array( 'edd-icon', 'edd-icon-lock' )
+							'classes' => array( 'edd-icon', 'edd-icon-lock' ),
 						)
 					);
 				?>
@@ -273,11 +261,19 @@ function edd_get_cc_form() {
 			</label>
 			<span class="edd-description"><?php _e( 'The date your credit card expires, typically on the front of the card.', 'easy-digital-downloads' ); ?></span>
 			<select id="card_exp_month" name="card_exp_month" class="card-expiry-month edd-select edd-select-small required">
-				<?php for( $i = 1; $i <= 12; $i++ ) { echo '<option value="' . absint( $i ) . '">' . sprintf ('%02d', absint( $i ) ) . '</option>'; } ?>
+				<?php
+				for ( $i = 1; $i <= 12; $i++ ) {
+					echo '<option value="' . absint( $i ) . '">' . sprintf( '%02d', absint( $i ) ) . '</option>';
+				}
+				?>
 			</select>
 			<span class="exp-divider">/</span>
 			<select id="card_exp_year" name="card_exp_year" class="card-expiry-year edd-select edd-select-small required">
-				<?php for( $i = date('Y'); $i <= date('Y') + 30; $i++ ) { echo '<option value="' . absint( $i ) . '">' . substr( $i, 2 ) . '</option>'; } ?>
+				<?php
+				for ( $i = date( 'Y' ); $i <= date( 'Y' ) + 30; $i++ ) {
+					echo '<option value="' . absint( $i ) . '">' . substr( $i, 2 ) . '</option>';
+				}
+				?>
 			</select>
 		</p>
 		<?php do_action( 'edd_after_cc_expiration' ); ?>
@@ -338,13 +334,13 @@ add_action( 'edd_purchase_form_after_cc_form', 'edd_checkout_tax_fields', 999 );
  * create an account.
  *
  * @since 1.0
- *
- * @return string
+ * @since 3.7.0 Updated to use `EDD\Forms\Handler::render_fields()`.
  */
 function edd_get_register_fields() {
 	$show_register_form = edd_get_option( 'show_register_form', 'none' );
 
-	ob_start(); ?>
+	ob_start();
+	?>
 	<fieldset id="edd_register_fields">
 
 		<?php if ( 'both' === $show_register_form ) { ?>
@@ -356,49 +352,31 @@ function edd_get_register_fields() {
 		<?php do_action( 'edd_register_fields_before' ); ?>
 
 		<fieldset id="edd_register_account_fields">
-			<legend><?php _e( 'Create an account', 'easy-digital-downloads' ); if( !edd_no_guest_checkout() ) { echo ' ' . __( '(optional)', 'easy-digital-downloads' ); } ?></legend>
-			<?php do_action( 'edd_register_account_fields_before' ); ?>
-			<p id="edd-user-login-wrap">
-				<label for="edd_user_login">
-					<?php esc_html_e( 'Username', 'easy-digital-downloads' ); ?>
-					<?php
-					$require_login = edd_no_guest_checkout();
-					if ( $require_login ) {
-						echo EDD()->html->show_required();
-					}
-					?>
-				</label>
-				<span class="edd-description"><?php _e( 'The username you will use to log into your account.', 'easy-digital-downloads' ); ?></span>
-				<input name="edd_user_login" id="edd_user_login" class="<?php if ( $require_login ) { echo sanitize_html_class( 'required' ) . ' '; } ?>edd-input" type="text" placeholder="<?php esc_html_e( 'Username', 'easy-digital-downloads' ); ?>" <?php echo esc_attr( $require_login ? 'required' : '' ); ?> />
-			</p>
-			<p id="edd-user-pass-wrap">
-				<label for="edd_user_pass">
-					<?php
-					esc_html_e( 'Password', 'easy-digital-downloads' );
-					if ( $require_login ) {
-						echo EDD()->html->show_required();
-					}
-					?>
-				</label>
-				<span class="edd-description"><?php esc_html_e( 'The password used to access your account.', 'easy-digital-downloads' ); ?></span>
-				<input name="edd_user_pass" id="edd_user_pass" class="<?php if ( $require_login ) { echo sanitize_html_class( 'required' ) . ' '; } ?>edd-input" placeholder="<?php esc_html_e( 'Password', 'easy-digital-downloads' ); ?>" type="password" <?php echo esc_attr( $require_login ? 'required' : '' ); ?>/>
-			</p>
-			<p id="edd-user-pass-confirm-wrap" class="edd_register_password">
-				<label for="edd_user_pass_confirm">
-					<?php
-					esc_html_e( 'Password again', 'easy-digital-downloads' );
-					if ( $require_login ) {
-						echo EDD()->html->show_required();
-					}
-					?>
-				</label>
-				<span class="edd-description"><?php esc_html_e( 'Confirm your password.', 'easy-digital-downloads' ); ?></span>
-				<input name="edd_user_pass_confirm" id="edd_user_pass_confirm" class="<?php if ( $require_login ) { echo sanitize_html_class( 'required' ) . ' '; } ?>edd-input" placeholder="<?php esc_html_e( 'Confirm password', 'easy-digital-downloads' ); ?>" type="password" <?php echo esc_attr( $require_login ? 'required' : '' ); ?>/>
-			</p>
-			<?php do_action( 'edd_register_account_fields_after' ); ?>
+			<legend>
+				<?php
+				esc_html_e( 'Create an account', 'easy-digital-downloads' );
+				if ( ! edd_no_guest_checkout() ) {
+					echo ' ' . __( '(optional)', 'easy-digital-downloads' ); }
+				?>
+			</legend>
+			<?php
+			do_action( 'edd_register_account_fields_before' );
+			EDD\Forms\Handler::render_fields(
+				array(
+					'\\EDD\\Forms\\Register\\Username',
+					'\\EDD\\Forms\\Register\\Password',
+					'\\EDD\\Forms\\Register\\PasswordConfirm',
+				),
+				array(
+					'no_wp_scripts' => true,
+					'is_block'      => false,
+				)
+			);
+			do_action( 'edd_register_account_fields_after' );
+			?>
 		</fieldset>
 
-		<?php do_action('edd_register_fields_after'); ?>
+		<?php do_action( 'edd_register_fields_after' ); ?>
 
 		<input type="hidden" name="edd-purchase-var" value="needs-to-register"/>
 
@@ -417,7 +395,7 @@ add_action( 'edd_purchase_form_register_fields', 'edd_get_register_fields' );
  * had an account.
  *
  * @since 1.0
- * @return string
+ * @since 3.7.0 Updated to use `EDD\Forms\Handler::render_fields()`.
  */
 function edd_get_login_fields() {
 	$color = edd_get_button_color_class( 'gray' );
@@ -427,51 +405,44 @@ function edd_get_login_fields() {
 	$show_register_form = edd_get_option( 'show_register_form', 'none' );
 	$require_login      = edd_no_guest_checkout();
 
-	ob_start(); ?>
-		<fieldset id="edd_login_fields">
-			<?php if ( 'both' === $show_register_form ) : ?>
-				<p id="edd-new-account-wrap">
-					<?php esc_html_e( 'Need to create an account?', 'easy-digital-downloads' ); ?>
-					<a href="<?php echo esc_url( remove_query_arg( 'login' ) ); ?>" class="edd_checkout_register_login" data-action="checkout_register"  data-nonce="<?php echo wp_create_nonce( 'edd_checkout_register' ); ?>">
-						<?php esc_html_e( 'Register', 'easy-digital-downloads' ); if ( ! $require_login ) { echo esc_html( ' ' . __( 'or checkout as a guest', 'easy-digital-downloads' ) ); } ?>
-					</a>
-				</p>
-			<?php endif; ?>
-
-			<?php do_action( 'edd_checkout_login_fields_before' ); ?>
-
-			<p id="edd-user-login-wrap">
-				<label class="edd-label" for="edd_user_login">
+	ob_start();
+	?>
+	<fieldset id="edd_login_fields">
+		<?php if ( 'both' === $show_register_form ) : ?>
+			<p id="edd-new-account-wrap">
+				<?php esc_html_e( 'Need to create an account?', 'easy-digital-downloads' ); ?>
+				<a href="<?php echo esc_url( remove_query_arg( 'login' ) ); ?>" class="edd_checkout_register_login" data-action="checkout_register"  data-nonce="<?php echo wp_create_nonce( 'edd_checkout_register' ); ?>">
 					<?php
-					esc_html_e( 'Username or email', 'easy-digital-downloads' );
-					if ( $require_login ) {
-						echo ' ' . EDD()->html->show_required();
-					}
+					esc_html_e( 'Register', 'easy-digital-downloads' );
+					if ( ! $require_login ) {
+						echo esc_html( ' ' . __( 'or checkout as a guest', 'easy-digital-downloads' ) ); }
 					?>
-				</label>
-				<input class="<?php if( $require_login ) { echo sanitize_html_class( 'required' ) . ' '; } ?>edd-input" type="text" name="edd_user_login" id="edd_user_login" value="" placeholder="<?php _e( 'Your username or email address', 'easy-digital-downloads' ); ?>" <?php echo esc_attr( $require_login ? 'required' : '' ); ?>/>
+				</a>
 			</p>
-			<p id="edd-user-pass-wrap" class="edd_login_password">
-				<label class="edd-label" for="edd_user_pass">
-					<?php
-					esc_html_e( 'Password', 'easy-digital-downloads' );
-					if ( $require_login ) {
-						echo ' ' . EDD()->html->show_required();
-					}
-					?>
-				</label>
-				<input class="<?php if ( $require_login ) { echo sanitize_html_class( 'required') . ' '; } ?>edd-input" type="password" name="edd_user_pass" id="edd_user_pass" placeholder="<?php esc_html_e( 'Your password', 'easy-digital-downloads' ); ?>" <?php echo esc_attr( $require_login ? 'required' : '' ); ?>/>
-				<?php if ( $require_login ) : ?>
-					<input type="hidden" name="edd-purchase-var" value="needs-to-login"/>
-				<?php endif; ?>
-			</p>
-			<p id="edd-user-login-submit">
-				<input type="submit" class="edd-submit <?php echo sanitize_html_class( $color ); ?> <?php echo sanitize_html_class( $style ); ?>" name="edd_login_submit" value="<?php esc_html_e( 'Log in', 'easy-digital-downloads' ); ?>"/>
-				<?php wp_nonce_field( 'edd-login-form', 'edd_login_nonce', false, true ); ?>
-			</p>
+		<?php endif; ?>
 
-			<?php do_action( 'edd_checkout_login_fields_after' ); ?>
-		</fieldset><!--end #edd_login_fields-->
+		<?php
+		do_action( 'edd_checkout_login_fields_before' );
+		EDD\Forms\Handler::render_fields(
+			array(
+				'\\EDD\\Forms\\Login\\Username',
+				'\\EDD\\Forms\\Login\\Password',
+			),
+			array(
+				'is_block' => false,
+			)
+		);
+		if ( $require_login ) :
+			?>
+			<input type="hidden" name="edd-purchase-var" value="needs-to-login"/>
+		<?php endif; ?>
+		<p id="edd-user-login-submit">
+			<input type="submit" class="edd-submit <?php echo sanitize_html_class( $color ); ?> <?php echo sanitize_html_class( $style ); ?>" name="edd_login_submit" value="<?php esc_html_e( 'Log in', 'easy-digital-downloads' ); ?>"/>
+			<?php wp_nonce_field( 'edd-login-form', 'edd_login_nonce', false, true ); ?>
+		</p>
+
+		<?php do_action( 'edd_checkout_login_fields_after' ); ?>
+	</fieldset><!--end #edd_login_fields-->
 	<?php
 	echo ob_get_clean();
 }
@@ -486,15 +457,15 @@ add_action( 'edd_purchase_form_login_fields', 'edd_get_login_fields' );
  * @since 1.2.2
  */
 function edd_payment_mode_select() {
-	$gateways = edd_get_enabled_payment_gateways( true );
-	$page_URL = edd_get_current_page_url();
+	$gateways       = edd_get_enabled_payment_gateways( true );
+	$page_url       = edd_get_current_page_url();
 	$chosen_gateway = edd_get_chosen_gateway();
 	?>
 	<div id="edd_payment_mode_select_wrap">
-		<?php do_action('edd_payment_mode_top'); ?>
+		<?php do_action( 'edd_payment_mode_top' ); ?>
 
-		<?php if( edd_is_ajax_disabled() ) { ?>
-		<form id="edd_payment_mode" action="<?php echo esc_url( $page_URL ); ?>" method="GET">
+		<?php if ( edd_is_ajax_disabled() ) { ?>
+			<form id="edd_payment_mode" action="<?php echo esc_url( $page_url ); ?>" method="GET">
 		<?php } ?>
 
 			<fieldset id="edd_payment_mode_select">
@@ -508,7 +479,7 @@ function edd_payment_mode_select() {
 						$label         = apply_filters( 'edd_gateway_checkout_label_' . $gateway_id, $gateway['checkout_label'] );
 						$checked       = checked( $gateway_id, $chosen_gateway, false );
 						$checked_class = $checked ? 'edd-gateway-option-selected' : '';
-						$nonce         = ' data-' . esc_attr( $gateway_id ) . '-nonce="' . wp_create_nonce( 'edd-gateway-selected-' . esc_attr( $gateway_id ) ) .'"';
+						$nonce         = ' data-' . esc_attr( $gateway_id ) . '-nonce="' . wp_create_nonce( 'edd-gateway-selected-' . esc_attr( $gateway_id ) ) . '"';
 
 						echo '<label for="edd-gateway-' . esc_attr( $gateway_id ) . '" class="edd-gateway-option ' . esc_attr( $checked_class ) . '" id="edd-gateway-option-' . esc_attr( $gateway_id ) . '">';
 							echo '<input autocomplete="off" type="radio" name="payment-mode" class="edd-gateway" id="edd-gateway-' . esc_attr( $gateway_id ) . '" value="' . esc_attr( $gateway_id ) . '"' . $checked . $nonce . '>' . esc_html( $label );
@@ -535,7 +506,8 @@ function edd_payment_mode_select() {
 	</div>
 	<div id="edd_purchase_form_wrap"></div><!-- the checkout fields are loaded into this-->
 
-	<?php do_action( 'edd_payment_mode_bottom' );
+	<?php
+	do_action( 'edd_payment_mode_bottom' );
 }
 add_action( 'edd_payment_mode_select', 'edd_payment_mode_select' );
 
@@ -545,7 +517,7 @@ add_action( 'edd_payment_mode_select', 'edd_payment_mode_select' );
  *
  * @since 1.0
  * @return void
-*/
+ */
 function edd_show_payment_icons() {
 
 	if ( edd_show_gateways() && did_action( 'edd_payment_mode_top' ) ) {
@@ -558,10 +530,10 @@ function edd_show_payment_icons() {
 		return;
 	}
 
-	// Get the icon order option
+	// Get the icon order option.
 	$order = edd_get_option( 'payment_icons_order', '' );
 
-	// If order is set, enforce it
+	// If order is set, enforce it.
 	if ( ! empty( $order ) ) {
 		$order           = array_flip( explode( ',', $order ) );
 		$order           = array_intersect_key( $order, $payment_methods );
@@ -598,7 +570,8 @@ function edd_discount_field() {
 
 	if ( edd_has_active_discounts() && edd_get_cart_total() ) :
 		$color = edd_get_button_color_class();
-		$style = edd_get_option( 'button_style', 'button' ); ?>
+		$style = edd_get_option( 'button_style', 'button' );
+		?>
 		<fieldset id="edd_discount_code">
 			<p id="edd_show_discount" style="display:none;">
 				<?php _e( 'Have a discount code?', 'easy-digital-downloads' ); ?> <a href="#" class="edd_discount_link"><?php echo _x( 'Click to enter it', 'Entering a discount code', 'easy-digital-downloads' ); ?></a>
@@ -612,10 +585,10 @@ function edd_discount_field() {
 					<input class="edd-input" type="text" id="edd-discount" name="edd-discount" placeholder="<?php _e( 'Enter discount', 'easy-digital-downloads' ); ?>"/>
 					<input type="submit" class="edd-apply-discount edd-submit <?php echo sanitize_html_class( $color ); ?> <?php echo sanitize_html_class( $style ); ?>" value="<?php echo _x( 'Apply', 'Apply discount at checkout', 'easy-digital-downloads' ); ?>"/>
 				</span>
-				<span class="edd-discount-loader edd-loading" id="edd-discount-loader" style="display:none;"></span>
 				<span id="edd-discount-error-wrap" class="edd_error edd-alert edd-alert-error" aria-hidden="true" style="display:none;"></span>
 			</p>
-		</fieldset><?php
+		</fieldset>
+		<?php
 	endif;
 }
 add_action( 'edd_checkout_form_top', 'edd_discount_field', -1 );
@@ -730,9 +703,9 @@ function edd_privacy_agreement() {
 				</div>
 				<div id="edd-show-privacy-policy" class="edd-show-terms">
 					<a href="#"
-					   class="edd_terms_links"><?php _e( 'Show Privacy Policy', 'easy-digital-downloads' ); ?></a>
+						class="edd_terms_links"><?php _e( 'Show Privacy Policy', 'easy-digital-downloads' ); ?></a>
 					<a href="#" class="edd_terms_links"
-					   style="display:none;"><?php _e( 'Hide Privacy Policy', 'easy-digital-downloads' ); ?></a>
+						style="display:none;"><?php _e( 'Hide Privacy Policy', 'easy-digital-downloads' ); ?></a>
 				</div>
 				<?php
 			}
@@ -764,12 +737,12 @@ add_action( 'edd_purchase_form_before_submit', 'edd_privacy_agreement' );
  * @since 1.5
  */
 function edd_checkout_final_total() {
-?>
+	?>
 <p id="edd_final_total_wrap">
 	<strong><?php _e( 'Purchase Total:', 'easy-digital-downloads' ); ?></strong>
 	<span class="edd_cart_amount" data-subtotal="<?php echo esc_attr( edd_get_cart_subtotal() ); ?>" data-total="<?php echo esc_attr( edd_get_cart_total() ); ?>"><?php edd_cart_total(); // Escaped ?></span>
 </p>
-<?php
+	<?php
 }
 add_action( 'edd_purchase_form_before_submit', 'edd_checkout_final_total', 999 );
 
@@ -779,7 +752,7 @@ add_action( 'edd_purchase_form_before_submit', 'edd_checkout_final_total', 999 )
  * @since 1.3.3
  */
 function edd_checkout_submit() {
-?>
+	?>
 	<fieldset id="edd_purchase_submit">
 		<?php do_action( 'edd_purchase_form_before_submit' ); ?>
 
@@ -793,7 +766,7 @@ function edd_checkout_submit() {
 			<p class="edd-cancel"><a href="<?php echo esc_url( edd_get_checkout_uri() ); ?>"><?php esc_html_e( 'Go back', 'easy-digital-downloads' ); ?></a></p>
 		<?php endif; ?>
 	</fieldset>
-<?php
+	<?php
 }
 add_action( 'edd_purchase_form_after_cc_form', 'edd_checkout_submit', 9999 );
 
@@ -808,7 +781,8 @@ function edd_checkout_button_next() {
 	$style         = edd_get_option( 'button_style', 'button' );
 	$purchase_page = edd_get_option( 'purchase_page', '0' );
 
-	ob_start(); ?>
+	ob_start();
+	?>
 	<input type="hidden" name="edd_action" value="gateway_select" />
 	<input type="hidden" name="page_id" value="<?php echo absint( $purchase_page ); ?>"/>
 	<input type="submit" name="gateway_submit" id="edd_next_button" class="edd-submit <?php echo sanitize_html_class( $color ); ?> <?php echo sanitize_html_class( $style ); ?>" value="<?php esc_html_e( 'Next', 'easy-digital-downloads' ); ?>"/>
@@ -873,12 +847,14 @@ function edd_get_checkout_button_purchase_label() {
  * @since 1.3.2
  */
 function edd_checkout_hidden_fields() {
-	if ( is_user_logged_in() ) : ?>
+	if ( is_user_logged_in() ) :
+		?>
 		<input type="hidden" name="edd-user-id" value="<?php echo esc_attr( get_current_user_id() ); ?>"/>
 	<?php endif; ?>
 	<input type="hidden" name="edd_action" value="purchase"/>
 	<input type="hidden" name="edd-gateway" value="<?php echo esc_attr( edd_get_chosen_gateway() ); ?>" />
-	<?php wp_nonce_field( 'edd-process-checkout', 'edd-process-checkout-nonce', false, true );
+	<?php
+	wp_nonce_field( 'edd-process-checkout', 'edd-process-checkout-nonce', false, true );
 }
 
 /**
@@ -934,7 +910,7 @@ function edd_receipt_show_download_files( $item_id, $receipt_args, $order_item =
 		if ( ! empty( $key ) && ! empty( $session ) && $key != $session['purchase_key'] ) {
 			$ret = false;
 
-		// No session data is present but a key has been provided.
+			// No session data is present but a key has been provided.
 		} elseif ( empty( $session ) ) {
 			$ret = false;
 		}

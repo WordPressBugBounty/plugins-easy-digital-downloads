@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 /**
@@ -14,14 +13,12 @@ class OrderLineItemTaxType
      * The original transaction tax type is currently not supported by the API.
      */
     public const UNKNOWN_TAX = 'UNKNOWN_TAX';
-
     /**
      * The tax is an additive tax. The tax amount is added on top of the price.
      * For example, an item with a cost of 1.00 USD and a 10% additive tax has a total
      * cost to the buyer of 1.10 USD.
      */
     public const ADDITIVE = 'ADDITIVE';
-
     /**
      * The tax is an inclusive tax. Inclusive taxes are already included
      * in the line item price or order total. For example, an item with a cost of

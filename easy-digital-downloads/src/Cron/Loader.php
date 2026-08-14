@@ -180,6 +180,7 @@ class Loader implements SubscriberInterface {
 			new Events\WeeklyEvents(),
 			new Events\StripeRateLimitingCleanup(),
 			new Events\LogPruning(),
+			new Events\PayPalConnectSync(),
 		);
 
 		/**

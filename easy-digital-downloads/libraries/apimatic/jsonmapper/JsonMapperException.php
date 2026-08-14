@@ -11,11 +11,9 @@
  * @license  OSL-3.0 http://opensource.org/licenses/osl-3.0
  * @link     http://www.netresearch.de/
  */
-
 namespace EDD\Vendor\apimatic\jsonmapper;
 
 use RuntimeException;
-
 /**
  * Simple exception
  *
@@ -36,14 +34,8 @@ class JsonMapperException extends RuntimeException
      */
     static function commentsDisabledInConfigurationException($concernedKeys)
     {
-        return new self(
-            "Comments cannot be discarded in the configuration file i.e." .
-            " the php.ini file; doc comments are a requirement for JsonMapper." .
-            " Following configuration keys must have a value set to \"1\": " .
-            implode(", ", $concernedKeys) . "."
-        );
+        return new self("Comments cannot be discarded in the configuration file i.e." . " the php.ini file; doc comments are a requirement for JsonMapper." . " Following configuration keys must have a value set to \"1\": " . implode(", ", $concernedKeys) . ".");
     }
-
     /**
      * Exception for non-existent key in an object.
      * 
@@ -55,15 +47,11 @@ class JsonMapperException extends RuntimeException
      * 
      * @return JsonMapperException
      */
-    static function undefinedPropertyException(
-        $key,
-        $class,
-        $setterException = false
-    ) {
+    static function undefinedPropertyException($key, $class, $setterException = false)
+    {
         $err = $setterException ? 'has no public setter method' : 'does not exist';
-        return new self("JSON property '$key' $err in object of type '$class'");
+        return new self("JSON property '{$key}' {$err} in object of type '{$class}'");
     }
-
     /**
      * Exception for non-existent key in an object.
      * 
@@ -74,9 +62,8 @@ class JsonMapperException extends RuntimeException
      */
     static function missingTypePropertyException($key, $strClassName)
     {
-        return new self("Empty type at property '$strClassName::$$key'");
+        return new self("Empty type at property '{$strClassName}::\${$key}'");
     }
-
     /**
      * Exception for an unCallable Factory Method.
      *
@@ -87,12 +74,8 @@ class JsonMapperException extends RuntimeException
      */
     static function unCallableFactoryMethodException($factoryMethod, $strClassName)
     {
-        return new self(
-            "Factory method '$factoryMethod' referenced by " .
-            "'$strClassName' is not callable."
-        );
+        return new self("Factory method '{$factoryMethod}' referenced by " . "'{$strClassName}' is not callable.");
     }
-
     /**
      * Exception for not able to call factory method with the given value.
      *
@@ -103,12 +86,8 @@ class JsonMapperException extends RuntimeException
      */
     static function invalidArgumentFactoryMethodException($argType, $reasons)
     {
-        return new self(
-            "Provided factory methods are not callable with " .
-             "the value of Type: $argType\n$reasons"
-        );
+        return new self("Provided factory methods are not callable with " . "the value of Type: {$argType}\n{$reasons}");
     }
-
     /**
      * Exception when it is not possible to map an object to a specific type.
      * 
@@ -121,9 +100,8 @@ class JsonMapperException extends RuntimeException
      */
     static function unableToMapException($typeName, $typeGroup, $value)
     {
-        return new self("Unable to map $typeName: $typeGroup on: $value");
+        return new self("Unable to map {$typeName}: {$typeGroup} on: {$value}");
     }
-
     /**
      * A property marked as required was missing in the object provided.
      * 
@@ -134,12 +112,8 @@ class JsonMapperException extends RuntimeException
      */
     static function requiredPropertyMissingException($propertyName, $className)
     {
-        return new self(
-            "Required property '$propertyName' of class " .
-            "'$className' is missing in JSON data"
-        );
+        return new self("Required property '{$propertyName}' of class " . "'{$className}' is missing in JSON data");
     }
-
     /**
      * No required arguments were provided.
      *
@@ -150,12 +124,8 @@ class JsonMapperException extends RuntimeException
      */
     static function noArgumentsException($class, $ctorReqParamNumber)
     {
-        return new self(
-            "$class class requires $ctorReqParamNumber "
-            . "arguments in constructor but none provided"
-        );
+        return new self("{$class} class requires {$ctorReqParamNumber} " . "arguments in constructor but none provided");
     }
-
     /**
      * Provided arguments were less than required.
      *
@@ -166,12 +136,8 @@ class JsonMapperException extends RuntimeException
      */
     static function fewerArgumentsException($class, $ctorRequiredParamsName)
     {
-        return new self(
-            "Could not find required constructor arguments for $class: "
-            . implode(", ", $ctorRequiredParamsName)
-        );
+        return new self("Could not find required constructor arguments for {$class}: " . implode(", ", $ctorRequiredParamsName));
     }
-
     /**
      * Provided type was not applicable on the given value.
      *
@@ -182,6 +148,6 @@ class JsonMapperException extends RuntimeException
      */
     static function unableToSetTypeException($type, $value)
     {
-        return new self("Could not set type '$type' on value: $value");
+        return new self("Could not set type '{$type}' on value: {$value}");
     }
 }

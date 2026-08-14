@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
@@ -24,14 +23,11 @@ namespace EDD\Vendor\Stripe\Issuing;
 class PersonalizationDesign extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.personalization_design';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
     const STATUS_REJECTED = 'rejected';
     const STATUS_REVIEW = 'review';
-
     /**
      * Creates a personalization design object.
      *
@@ -46,14 +42,11 @@ class PersonalizationDesign extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of personalization design objects. The objects are sorted in
      * descending order by creation date, with the most recently created object
@@ -69,10 +62,8 @@ class PersonalizationDesign extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a personalization design object.
      *
@@ -88,10 +79,8 @@ class PersonalizationDesign extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a card personalization object.
      *
@@ -107,11 +96,9 @@ class PersonalizationDesign extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

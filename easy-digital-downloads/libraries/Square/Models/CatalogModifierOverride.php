@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Options to control how to override the default behavior of the specified modifier.
  */
@@ -15,12 +13,10 @@ class CatalogModifierOverride implements \JsonSerializable
      * @var string
      */
     private $modifierId;
-
     /**
      * @var array
      */
     private $onByDefault = [];
-
     /**
      * @param string $modifierId
      */
@@ -28,7 +24,6 @@ class CatalogModifierOverride implements \JsonSerializable
     {
         $this->modifierId = $modifierId;
     }
-
     /**
      * Returns Modifier Id.
      * The ID of the `CatalogModifier` whose default behavior is being overridden.
@@ -37,7 +32,6 @@ class CatalogModifierOverride implements \JsonSerializable
     {
         return $this->modifierId;
     }
-
     /**
      * Sets Modifier Id.
      * The ID of the `CatalogModifier` whose default behavior is being overridden.
@@ -49,7 +43,6 @@ class CatalogModifierOverride implements \JsonSerializable
     {
         $this->modifierId = $modifierId;
     }
-
     /**
      * Returns On by Default.
      * If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
@@ -61,7 +54,6 @@ class CatalogModifierOverride implements \JsonSerializable
         }
         return $this->onByDefault['value'];
     }
-
     /**
      * Sets On by Default.
      * If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
@@ -72,7 +64,6 @@ class CatalogModifierOverride implements \JsonSerializable
     {
         $this->onByDefault['value'] = $onByDefault;
     }
-
     /**
      * Unsets On by Default.
      * If `true`, this `CatalogModifier` should be selected by default for this `CatalogItem`.
@@ -81,7 +72,6 @@ class CatalogModifierOverride implements \JsonSerializable
     {
         $this->onByDefault = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -90,18 +80,17 @@ class CatalogModifierOverride implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['modifier_id']       = $this->modifierId;
+        $json['modifier_id'] = $this->modifierId;
         if (!empty($this->onByDefault)) {
             $json['on_by_default'] = $this->onByDefault['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

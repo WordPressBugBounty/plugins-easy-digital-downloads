@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the body parameters that can be included in a request to the
  * `CreateCustomer` endpoint.
@@ -16,62 +14,50 @@ class CreateCustomerRequest implements \JsonSerializable
      * @var string|null
      */
     private $idempotencyKey;
-
     /**
      * @var string|null
      */
     private $givenName;
-
     /**
      * @var string|null
      */
     private $familyName;
-
     /**
      * @var string|null
      */
     private $companyName;
-
     /**
      * @var string|null
      */
     private $nickname;
-
     /**
      * @var string|null
      */
     private $emailAddress;
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * @var string|null
      */
     private $phoneNumber;
-
     /**
      * @var string|null
      */
     private $referenceId;
-
     /**
      * @var string|null
      */
     private $note;
-
     /**
      * @var string|null
      */
     private $birthday;
-
     /**
      * @var CustomerTaxIds|null
      */
     private $taxIds;
-
     /**
      * Returns Idempotency Key.
      * The idempotency key for the request. For more information, see
@@ -81,7 +67,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * The idempotency key for the request. For more information, see
@@ -93,7 +78,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -104,7 +88,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->givenName;
     }
-
     /**
      * Sets Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -117,7 +100,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->givenName = $givenName;
     }
-
     /**
      * Returns Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -128,7 +110,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->familyName;
     }
-
     /**
      * Sets Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -141,7 +122,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->familyName = $familyName;
     }
-
     /**
      * Returns Company Name.
      * A business name associated with the customer profile.
@@ -152,7 +132,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->companyName;
     }
-
     /**
      * Sets Company Name.
      * A business name associated with the customer profile.
@@ -165,7 +144,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->companyName = $companyName;
     }
-
     /**
      * Returns Nickname.
      * A nickname for the customer profile.
@@ -176,7 +154,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->nickname;
     }
-
     /**
      * Sets Nickname.
      * A nickname for the customer profile.
@@ -189,7 +166,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->nickname = $nickname;
     }
-
     /**
      * Returns Email Address.
      * The email address associated with the customer profile.
@@ -200,7 +176,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->emailAddress;
     }
-
     /**
      * Sets Email Address.
      * The email address associated with the customer profile.
@@ -213,7 +188,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->emailAddress = $emailAddress;
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -224,7 +198,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -237,7 +210,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Returns Phone Number.
      * The phone number associated with the customer profile. The phone number must be valid and can
@@ -250,7 +222,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->phoneNumber;
     }
-
     /**
      * Sets Phone Number.
      * The phone number associated with the customer profile. The phone number must be valid and can
@@ -265,7 +236,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->phoneNumber = $phoneNumber;
     }
-
     /**
      * Returns Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -277,7 +247,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->referenceId;
     }
-
     /**
      * Sets Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -291,7 +260,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->referenceId = $referenceId;
     }
-
     /**
      * Returns Note.
      * A custom note associated with the customer profile.
@@ -300,7 +268,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->note;
     }
-
     /**
      * Sets Note.
      * A custom note associated with the customer profile.
@@ -311,7 +278,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->note = $note;
     }
-
     /**
      * Returns Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example,
@@ -323,7 +289,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->birthday;
     }
-
     /**
      * Sets Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format. For example,
@@ -337,7 +302,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->birthday = $birthday;
     }
-
     /**
      * Returns Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -349,7 +313,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         return $this->taxIds;
     }
-
     /**
      * Sets Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -363,7 +326,6 @@ class CreateCustomerRequest implements \JsonSerializable
     {
         $this->taxIds = $taxIds;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -372,7 +334,7 @@ class CreateCustomerRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -380,42 +342,41 @@ class CreateCustomerRequest implements \JsonSerializable
             $json['idempotency_key'] = $this->idempotencyKey;
         }
         if (isset($this->givenName)) {
-            $json['given_name']      = $this->givenName;
+            $json['given_name'] = $this->givenName;
         }
         if (isset($this->familyName)) {
-            $json['family_name']     = $this->familyName;
+            $json['family_name'] = $this->familyName;
         }
         if (isset($this->companyName)) {
-            $json['company_name']    = $this->companyName;
+            $json['company_name'] = $this->companyName;
         }
         if (isset($this->nickname)) {
-            $json['nickname']        = $this->nickname;
+            $json['nickname'] = $this->nickname;
         }
         if (isset($this->emailAddress)) {
-            $json['email_address']   = $this->emailAddress;
+            $json['email_address'] = $this->emailAddress;
         }
         if (isset($this->address)) {
-            $json['address']         = $this->address;
+            $json['address'] = $this->address;
         }
         if (isset($this->phoneNumber)) {
-            $json['phone_number']    = $this->phoneNumber;
+            $json['phone_number'] = $this->phoneNumber;
         }
         if (isset($this->referenceId)) {
-            $json['reference_id']    = $this->referenceId;
+            $json['reference_id'] = $this->referenceId;
         }
         if (isset($this->note)) {
-            $json['note']            = $this->note;
+            $json['note'] = $this->note;
         }
         if (isset($this->birthday)) {
-            $json['birthday']        = $this->birthday;
+            $json['birthday'] = $this->birthday;
         }
         if (isset($this->taxIds)) {
-            $json['tax_ids']         = $this->taxIds;
+            $json['tax_ids'] = $this->taxIds;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

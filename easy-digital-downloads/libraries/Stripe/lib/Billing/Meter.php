@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Billing;
 
 /**
@@ -24,16 +23,12 @@ namespace EDD\Vendor\Stripe\Billing;
 class Meter extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'billing.meter';
-
     use \EDD\Vendor\Stripe\ApiOperations\NestedResource;
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const EVENT_TIME_WINDOW_DAY = 'day';
     const EVENT_TIME_WINDOW_HOUR = 'hour';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
-
     /**
      * Creates a billing meter.
      *
@@ -48,14 +43,11 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieve a list of billing meters.
      *
@@ -69,10 +61,8 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a billing meter given an ID.
      *
@@ -88,10 +78,8 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a billing meter.
      *
@@ -107,14 +95,11 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -128,10 +113,8 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/deactivate';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -145,12 +128,9 @@ class Meter extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/reactivate';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     const PATH_EVENT_SUMMARIES = '/event_summaries';
-
     /**
      * @param string $id the ID of the meter on which to retrieve the meter event summaries
      * @param null|array $params

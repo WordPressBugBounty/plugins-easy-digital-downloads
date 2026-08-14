@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Radar;
 
 /**
@@ -22,7 +21,6 @@ namespace EDD\Vendor\Stripe\Radar;
 class EarlyFraudWarning extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'radar.early_fraud_warning';
-
     const FRAUD_TYPE_CARD_NEVER_RECEIVED = 'card_never_received';
     const FRAUD_TYPE_FRAUDULENT_CARD_APPLICATION = 'fraudulent_card_application';
     const FRAUD_TYPE_MADE_WITH_COUNTERFEIT_CARD = 'made_with_counterfeit_card';
@@ -30,7 +28,6 @@ class EarlyFraudWarning extends \EDD\Vendor\Stripe\ApiResource
     const FRAUD_TYPE_MADE_WITH_STOLEN_CARD = 'made_with_stolen_card';
     const FRAUD_TYPE_MISC = 'misc';
     const FRAUD_TYPE_UNAUTHORIZED_USE_OF_CARD = 'unauthorized_use_of_card';
-
     /**
      * Returns a list of early fraud warnings.
      *
@@ -44,10 +41,8 @@ class EarlyFraudWarning extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an early fraud warning that has previously been
      * created.
@@ -67,7 +62,6 @@ class EarlyFraudWarning extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

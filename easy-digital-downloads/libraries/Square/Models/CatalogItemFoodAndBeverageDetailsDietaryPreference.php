@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Dietary preferences that can be assigned to an `FOOD_AND_BEV` item and its ingredients.
  */
@@ -15,17 +13,14 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
      * @var string|null
      */
     private $type;
-
     /**
      * @var string|null
      */
     private $standardName;
-
     /**
      * @var array
      */
     private $customName = [];
-
     /**
      * Returns Type.
      * The type of dietary preference for the `FOOD_AND_BEV` type of items and integredients.
@@ -34,7 +29,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * The type of dietary preference for the `FOOD_AND_BEV` type of items and integredients.
@@ -45,7 +39,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         $this->type = $type;
     }
-
     /**
      * Returns Standard Name.
      * Standard dietary preferences for food and beverage items that are recommended on item creation.
@@ -54,7 +47,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         return $this->standardName;
     }
-
     /**
      * Sets Standard Name.
      * Standard dietary preferences for food and beverage items that are recommended on item creation.
@@ -65,7 +57,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         $this->standardName = $standardName;
     }
-
     /**
      * Returns Custom Name.
      * The name of a user-defined custom dietary preference. This should be null if it's a standard dietary
@@ -78,7 +69,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
         }
         return $this->customName['value'];
     }
-
     /**
      * Sets Custom Name.
      * The name of a user-defined custom dietary preference. This should be null if it's a standard dietary
@@ -90,7 +80,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         $this->customName['value'] = $customName;
     }
-
     /**
      * Unsets Custom Name.
      * The name of a user-defined custom dietary preference. This should be null if it's a standard dietary
@@ -100,7 +89,6 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
     {
         $this->customName = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -109,23 +97,22 @@ class CatalogItemFoodAndBeverageDetailsDietaryPreference implements \JsonSeriali
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->type)) {
-            $json['type']          = $this->type;
+            $json['type'] = $this->type;
         }
         if (isset($this->standardName)) {
             $json['standard_name'] = $this->standardName;
         }
         if (!empty($this->customName)) {
-            $json['custom_name']   = $this->customName['value'];
+            $json['custom_name'] = $this->customName['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

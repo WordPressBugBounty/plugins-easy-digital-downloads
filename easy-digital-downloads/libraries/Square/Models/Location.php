@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents one of a business' [locations](https://developer.squareup.com/docs/locations-api).
  */
@@ -15,137 +13,110 @@ class Location implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * @var array
      */
     private $timezone = [];
-
     /**
      * @var string[]|null
      */
     private $capabilities;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $merchantId;
-
     /**
      * @var string|null
      */
     private $country;
-
     /**
      * @var array
      */
     private $languageCode = [];
-
     /**
      * @var string|null
      */
     private $currency;
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var array
      */
     private $businessName = [];
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var array
      */
     private $websiteUrl = [];
-
     /**
      * @var BusinessHours|null
      */
     private $businessHours;
-
     /**
      * @var array
      */
     private $businessEmail = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var array
      */
     private $twitterUsername = [];
-
     /**
      * @var array
      */
     private $instagramUsername = [];
-
     /**
      * @var array
      */
     private $facebookUrl = [];
-
     /**
      * @var Coordinates|null
      */
     private $coordinates;
-
     /**
      * @var string|null
      */
     private $logoUrl;
-
     /**
      * @var string|null
      */
     private $posBackgroundUrl;
-
     /**
      * @var array
      */
     private $mcc = [];
-
     /**
      * @var string|null
      */
     private $fullFormatLogoUrl;
-
     /**
      * @var TaxIds|null
      */
     private $taxIds;
-
     /**
      * Returns Id.
      * A short generated string of letters and numbers that uniquely identifies this location instance.
@@ -154,7 +125,6 @@ class Location implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A short generated string of letters and numbers that uniquely identifies this location instance.
@@ -165,7 +135,6 @@ class Location implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Name.
      * The name of the location.
@@ -179,7 +148,6 @@ class Location implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the location.
@@ -192,7 +160,6 @@ class Location implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the location.
@@ -203,7 +170,6 @@ class Location implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -214,7 +180,6 @@ class Location implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -227,7 +192,6 @@ class Location implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Returns Timezone.
      * The [IANA time zone](https://www.iana.org/time-zones) identifier for
@@ -240,7 +204,6 @@ class Location implements \JsonSerializable
         }
         return $this->timezone['value'];
     }
-
     /**
      * Sets Timezone.
      * The [IANA time zone](https://www.iana.org/time-zones) identifier for
@@ -252,7 +215,6 @@ class Location implements \JsonSerializable
     {
         $this->timezone['value'] = $timezone;
     }
-
     /**
      * Unsets Timezone.
      * The [IANA time zone](https://www.iana.org/time-zones) identifier for
@@ -262,10 +224,9 @@ class Location implements \JsonSerializable
     {
         $this->timezone = [];
     }
-
     /**
      * Returns Capabilities.
-     * The EDD\Vendor\Square features that are enabled for the location.
+     * The Square features that are enabled for the location.
      * See [LocationCapability](entity:LocationCapability) for possible values.
      * See [LocationCapability](#type-locationcapability) for possible values
      *
@@ -275,10 +236,9 @@ class Location implements \JsonSerializable
     {
         return $this->capabilities;
     }
-
     /**
      * Sets Capabilities.
-     * The EDD\Vendor\Square features that are enabled for the location.
+     * The Square features that are enabled for the location.
      * See [LocationCapability](entity:LocationCapability) for possible values.
      * See [LocationCapability](#type-locationcapability) for possible values
      *
@@ -290,7 +250,6 @@ class Location implements \JsonSerializable
     {
         $this->capabilities = $capabilities;
     }
-
     /**
      * Returns Status.
      * A location's status.
@@ -299,7 +258,6 @@ class Location implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * A location's status.
@@ -310,7 +268,6 @@ class Location implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Created At.
      * The time when the location was created, in RFC 3339 format.
@@ -321,7 +278,6 @@ class Location implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The time when the location was created, in RFC 3339 format.
@@ -334,7 +290,6 @@ class Location implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Merchant Id.
      * The ID of the merchant that owns the location.
@@ -343,7 +298,6 @@ class Location implements \JsonSerializable
     {
         return $this->merchantId;
     }
-
     /**
      * Sets Merchant Id.
      * The ID of the merchant that owns the location.
@@ -354,7 +308,6 @@ class Location implements \JsonSerializable
     {
         $this->merchantId = $merchantId;
     }
-
     /**
      * Returns Country.
      * Indicates the country associated with another entity, such as a business.
@@ -364,7 +317,6 @@ class Location implements \JsonSerializable
     {
         return $this->country;
     }
-
     /**
      * Sets Country.
      * Indicates the country associated with another entity, such as a business.
@@ -376,7 +328,6 @@ class Location implements \JsonSerializable
     {
         $this->country = $country;
     }
-
     /**
      * Returns Language Code.
      * The language associated with the location, in
@@ -391,7 +342,6 @@ class Location implements \JsonSerializable
         }
         return $this->languageCode['value'];
     }
-
     /**
      * Sets Language Code.
      * The language associated with the location, in
@@ -405,7 +355,6 @@ class Location implements \JsonSerializable
     {
         $this->languageCode['value'] = $languageCode;
     }
-
     /**
      * Unsets Language Code.
      * The language associated with the location, in
@@ -417,7 +366,6 @@ class Location implements \JsonSerializable
     {
         $this->languageCode = [];
     }
-
     /**
      * Returns Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -427,7 +375,6 @@ class Location implements \JsonSerializable
     {
         return $this->currency;
     }
-
     /**
      * Sets Currency.
      * Indicates the associated currency for an amount of money. Values correspond
@@ -439,7 +386,6 @@ class Location implements \JsonSerializable
     {
         $this->currency = $currency;
     }
-
     /**
      * Returns Phone Number.
      * The phone number of the location. For example, `+1 855-700-6000`.
@@ -451,7 +397,6 @@ class Location implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The phone number of the location. For example, `+1 855-700-6000`.
@@ -462,7 +407,6 @@ class Location implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The phone number of the location. For example, `+1 855-700-6000`.
@@ -471,7 +415,6 @@ class Location implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Business Name.
      * The name of the location's overall business. This name is present on receipts and other customer-
@@ -484,7 +427,6 @@ class Location implements \JsonSerializable
         }
         return $this->businessName['value'];
     }
-
     /**
      * Sets Business Name.
      * The name of the location's overall business. This name is present on receipts and other customer-
@@ -496,7 +438,6 @@ class Location implements \JsonSerializable
     {
         $this->businessName['value'] = $businessName;
     }
-
     /**
      * Unsets Business Name.
      * The name of the location's overall business. This name is present on receipts and other customer-
@@ -506,7 +447,6 @@ class Location implements \JsonSerializable
     {
         $this->businessName = [];
     }
-
     /**
      * Returns Type.
      * A location's type.
@@ -515,7 +455,6 @@ class Location implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * A location's type.
@@ -526,7 +465,6 @@ class Location implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Website Url.
      * The website URL of the location.  For example, `https://squareup.com`.
@@ -538,7 +476,6 @@ class Location implements \JsonSerializable
         }
         return $this->websiteUrl['value'];
     }
-
     /**
      * Sets Website Url.
      * The website URL of the location.  For example, `https://squareup.com`.
@@ -549,7 +486,6 @@ class Location implements \JsonSerializable
     {
         $this->websiteUrl['value'] = $websiteUrl;
     }
-
     /**
      * Unsets Website Url.
      * The website URL of the location.  For example, `https://squareup.com`.
@@ -558,7 +494,6 @@ class Location implements \JsonSerializable
     {
         $this->websiteUrl = [];
     }
-
     /**
      * Returns Business Hours.
      * The hours of operation for a location.
@@ -567,7 +502,6 @@ class Location implements \JsonSerializable
     {
         return $this->businessHours;
     }
-
     /**
      * Sets Business Hours.
      * The hours of operation for a location.
@@ -578,7 +512,6 @@ class Location implements \JsonSerializable
     {
         $this->businessHours = $businessHours;
     }
-
     /**
      * Returns Business Email.
      * The email address of the location. This can be unique to the location and is not always the email
@@ -591,7 +524,6 @@ class Location implements \JsonSerializable
         }
         return $this->businessEmail['value'];
     }
-
     /**
      * Sets Business Email.
      * The email address of the location. This can be unique to the location and is not always the email
@@ -603,7 +535,6 @@ class Location implements \JsonSerializable
     {
         $this->businessEmail['value'] = $businessEmail;
     }
-
     /**
      * Unsets Business Email.
      * The email address of the location. This can be unique to the location and is not always the email
@@ -613,7 +544,6 @@ class Location implements \JsonSerializable
     {
         $this->businessEmail = [];
     }
-
     /**
      * Returns Description.
      * The description of the location. For example, `Main Street location`.
@@ -625,7 +555,6 @@ class Location implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
      * The description of the location. For example, `Main Street location`.
@@ -636,7 +565,6 @@ class Location implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
      * The description of the location. For example, `Main Street location`.
@@ -645,7 +573,6 @@ class Location implements \JsonSerializable
     {
         $this->description = [];
     }
-
     /**
      * Returns Twitter Username.
      * The Twitter username of the location without the '@' symbol. For example, `Square`.
@@ -657,7 +584,6 @@ class Location implements \JsonSerializable
         }
         return $this->twitterUsername['value'];
     }
-
     /**
      * Sets Twitter Username.
      * The Twitter username of the location without the '@' symbol. For example, `Square`.
@@ -668,7 +594,6 @@ class Location implements \JsonSerializable
     {
         $this->twitterUsername['value'] = $twitterUsername;
     }
-
     /**
      * Unsets Twitter Username.
      * The Twitter username of the location without the '@' symbol. For example, `Square`.
@@ -677,7 +602,6 @@ class Location implements \JsonSerializable
     {
         $this->twitterUsername = [];
     }
-
     /**
      * Returns Instagram Username.
      * The Instagram username of the location without the '@' symbol. For example, `square`.
@@ -689,7 +613,6 @@ class Location implements \JsonSerializable
         }
         return $this->instagramUsername['value'];
     }
-
     /**
      * Sets Instagram Username.
      * The Instagram username of the location without the '@' symbol. For example, `square`.
@@ -700,7 +623,6 @@ class Location implements \JsonSerializable
     {
         $this->instagramUsername['value'] = $instagramUsername;
     }
-
     /**
      * Unsets Instagram Username.
      * The Instagram username of the location without the '@' symbol. For example, `square`.
@@ -709,7 +631,6 @@ class Location implements \JsonSerializable
     {
         $this->instagramUsername = [];
     }
-
     /**
      * Returns Facebook Url.
      * The Facebook profile URL of the location. The URL should begin with 'facebook.com/'. For example,
@@ -722,7 +643,6 @@ class Location implements \JsonSerializable
         }
         return $this->facebookUrl['value'];
     }
-
     /**
      * Sets Facebook Url.
      * The Facebook profile URL of the location. The URL should begin with 'facebook.com/'. For example,
@@ -734,7 +654,6 @@ class Location implements \JsonSerializable
     {
         $this->facebookUrl['value'] = $facebookUrl;
     }
-
     /**
      * Unsets Facebook Url.
      * The Facebook profile URL of the location. The URL should begin with 'facebook.com/'. For example,
@@ -744,7 +663,6 @@ class Location implements \JsonSerializable
     {
         $this->facebookUrl = [];
     }
-
     /**
      * Returns Coordinates.
      * Latitude and longitude coordinates.
@@ -753,7 +671,6 @@ class Location implements \JsonSerializable
     {
         return $this->coordinates;
     }
-
     /**
      * Sets Coordinates.
      * Latitude and longitude coordinates.
@@ -764,24 +681,22 @@ class Location implements \JsonSerializable
     {
         $this->coordinates = $coordinates;
     }
-
     /**
      * Returns Logo Url.
      * The URL of the logo image for the location. When configured in the Seller
      * Dashboard (Receipts section), the logo appears on transactions (such as receipts and invoices) that
-     * EDD\Vendor\Square generates on behalf of the seller.
+     * Square generates on behalf of the seller.
      * This image should have a roughly square (1:1) aspect ratio and should be at least 200x200 pixels.
      */
     public function getLogoUrl(): ?string
     {
         return $this->logoUrl;
     }
-
     /**
      * Sets Logo Url.
      * The URL of the logo image for the location. When configured in the Seller
      * Dashboard (Receipts section), the logo appears on transactions (such as receipts and invoices) that
-     * EDD\Vendor\Square generates on behalf of the seller.
+     * Square generates on behalf of the seller.
      * This image should have a roughly square (1:1) aspect ratio and should be at least 200x200 pixels.
      *
      * @maps logo_url
@@ -790,7 +705,6 @@ class Location implements \JsonSerializable
     {
         $this->logoUrl = $logoUrl;
     }
-
     /**
      * Returns Pos Background Url.
      * The URL of the Point of Sale background image for the location.
@@ -799,7 +713,6 @@ class Location implements \JsonSerializable
     {
         return $this->posBackgroundUrl;
     }
-
     /**
      * Sets Pos Background Url.
      * The URL of the Point of Sale background image for the location.
@@ -810,7 +723,6 @@ class Location implements \JsonSerializable
     {
         $this->posBackgroundUrl = $posBackgroundUrl;
     }
-
     /**
      * Returns Mcc.
      * A four-digit number that describes the kind of goods or services sold at the location.
@@ -825,7 +737,6 @@ class Location implements \JsonSerializable
         }
         return $this->mcc['value'];
     }
-
     /**
      * Sets Mcc.
      * A four-digit number that describes the kind of goods or services sold at the location.
@@ -839,7 +750,6 @@ class Location implements \JsonSerializable
     {
         $this->mcc['value'] = $mcc;
     }
-
     /**
      * Unsets Mcc.
      * A four-digit number that describes the kind of goods or services sold at the location.
@@ -851,24 +761,22 @@ class Location implements \JsonSerializable
     {
         $this->mcc = [];
     }
-
     /**
      * Returns Full Format Logo Url.
      * The URL of a full-format logo image for the location. When configured in the Seller
      * Dashboard (Receipts section), the logo appears on transactions (such as receipts and invoices) that
-     * EDD\Vendor\Square generates on behalf of the seller.
+     * Square generates on behalf of the seller.
      * This image can be wider than it is tall and should be at least 1280x648 pixels.
      */
     public function getFullFormatLogoUrl(): ?string
     {
         return $this->fullFormatLogoUrl;
     }
-
     /**
      * Sets Full Format Logo Url.
      * The URL of a full-format logo image for the location. When configured in the Seller
      * Dashboard (Receipts section), the logo appears on transactions (such as receipts and invoices) that
-     * EDD\Vendor\Square generates on behalf of the seller.
+     * Square generates on behalf of the seller.
      * This image can be wider than it is tall and should be at least 1280x648 pixels.
      *
      * @maps full_format_logo_url
@@ -877,7 +785,6 @@ class Location implements \JsonSerializable
     {
         $this->fullFormatLogoUrl = $fullFormatLogoUrl;
     }
-
     /**
      * Returns Tax Ids.
      * Identifiers for the location used by various governments for tax purposes.
@@ -886,7 +793,6 @@ class Location implements \JsonSerializable
     {
         return $this->taxIds;
     }
-
     /**
      * Sets Tax Ids.
      * Identifiers for the location used by various governments for tax purposes.
@@ -897,7 +803,6 @@ class Location implements \JsonSerializable
     {
         $this->taxIds = $taxIds;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -906,95 +811,94 @@ class Location implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                   = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->name)) {
-            $json['name']                 = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->address)) {
-            $json['address']              = $this->address;
+            $json['address'] = $this->address;
         }
         if (!empty($this->timezone)) {
-            $json['timezone']             = $this->timezone['value'];
+            $json['timezone'] = $this->timezone['value'];
         }
         if (isset($this->capabilities)) {
-            $json['capabilities']         = $this->capabilities;
+            $json['capabilities'] = $this->capabilities;
         }
         if (isset($this->status)) {
-            $json['status']               = $this->status;
+            $json['status'] = $this->status;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']           = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->merchantId)) {
-            $json['merchant_id']          = $this->merchantId;
+            $json['merchant_id'] = $this->merchantId;
         }
         if (isset($this->country)) {
-            $json['country']              = $this->country;
+            $json['country'] = $this->country;
         }
         if (!empty($this->languageCode)) {
-            $json['language_code']        = $this->languageCode['value'];
+            $json['language_code'] = $this->languageCode['value'];
         }
         if (isset($this->currency)) {
-            $json['currency']             = $this->currency;
+            $json['currency'] = $this->currency;
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']         = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (!empty($this->businessName)) {
-            $json['business_name']        = $this->businessName['value'];
+            $json['business_name'] = $this->businessName['value'];
         }
         if (isset($this->type)) {
-            $json['type']                 = $this->type;
+            $json['type'] = $this->type;
         }
         if (!empty($this->websiteUrl)) {
-            $json['website_url']          = $this->websiteUrl['value'];
+            $json['website_url'] = $this->websiteUrl['value'];
         }
         if (isset($this->businessHours)) {
-            $json['business_hours']       = $this->businessHours;
+            $json['business_hours'] = $this->businessHours;
         }
         if (!empty($this->businessEmail)) {
-            $json['business_email']       = $this->businessEmail['value'];
+            $json['business_email'] = $this->businessEmail['value'];
         }
         if (!empty($this->description)) {
-            $json['description']          = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (!empty($this->twitterUsername)) {
-            $json['twitter_username']     = $this->twitterUsername['value'];
+            $json['twitter_username'] = $this->twitterUsername['value'];
         }
         if (!empty($this->instagramUsername)) {
-            $json['instagram_username']   = $this->instagramUsername['value'];
+            $json['instagram_username'] = $this->instagramUsername['value'];
         }
         if (!empty($this->facebookUrl)) {
-            $json['facebook_url']         = $this->facebookUrl['value'];
+            $json['facebook_url'] = $this->facebookUrl['value'];
         }
         if (isset($this->coordinates)) {
-            $json['coordinates']          = $this->coordinates;
+            $json['coordinates'] = $this->coordinates;
         }
         if (isset($this->logoUrl)) {
-            $json['logo_url']             = $this->logoUrl;
+            $json['logo_url'] = $this->logoUrl;
         }
         if (isset($this->posBackgroundUrl)) {
-            $json['pos_background_url']   = $this->posBackgroundUrl;
+            $json['pos_background_url'] = $this->posBackgroundUrl;
         }
         if (!empty($this->mcc)) {
-            $json['mcc']                  = $this->mcc['value'];
+            $json['mcc'] = $this->mcc['value'];
         }
         if (isset($this->fullFormatLogoUrl)) {
             $json['full_format_logo_url'] = $this->fullFormatLogoUrl;
         }
         if (isset($this->taxIds)) {
-            $json['tax_ids']              = $this->taxIds;
+            $json['tax_ids'] = $this->taxIds;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

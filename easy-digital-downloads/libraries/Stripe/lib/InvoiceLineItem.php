@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -38,9 +37,7 @@ namespace EDD\Vendor\Stripe;
 class InvoiceLineItem extends ApiResource
 {
     const OBJECT_NAME = 'line_item';
-
     use ApiOperations\Update;
-
     /**
      * Updates an invoice’s line item. Some fields, such as <code>tax_amounts</code>,
      * only live on the invoice line item, so they can only be updated through this
@@ -61,11 +58,9 @@ class InvoiceLineItem extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

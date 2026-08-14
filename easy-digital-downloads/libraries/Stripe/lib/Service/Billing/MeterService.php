@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Billing;
 
 /**
@@ -24,7 +23,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/billing/meters', $params, $opts);
     }
-
     /**
      * Retrieve a list of billing meter event summaries.
      *
@@ -40,7 +38,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/billing/meters/%s/event_summaries', $parentId), $params, $opts);
     }
-
     /**
      * Creates a billing meter.
      *
@@ -55,7 +52,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/billing/meters', $params, $opts);
     }
-
     /**
      * Deactivates a billing meter.
      *
@@ -71,7 +67,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/billing/meters/%s/deactivate', $id), $params, $opts);
     }
-
     /**
      * Reactivates a billing meter.
      *
@@ -87,7 +82,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/billing/meters/%s/reactivate', $id), $params, $opts);
     }
-
     /**
      * Retrieves a billing meter given an ID.
      *
@@ -103,7 +97,6 @@ class MeterService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/billing/meters/%s', $id), $params, $opts);
     }
-
     /**
      * Updates a billing meter.
      *

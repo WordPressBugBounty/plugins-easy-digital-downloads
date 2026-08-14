@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square;
 
 /**
@@ -13,7 +12,6 @@ interface BearerAuthCredentials
      * String value for accessToken.
      */
     public function getAccessToken(): string;
-
     /**
      * Checks if provided credentials match with existing ones.
      *

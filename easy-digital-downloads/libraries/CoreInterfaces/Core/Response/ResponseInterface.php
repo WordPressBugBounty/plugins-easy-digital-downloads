@@ -3,7 +3,6 @@
 namespace EDD\Vendor\CoreInterfaces\Core\Response;
 
 use EDD\Vendor\CoreInterfaces\Sdk\ConverterInterface;
-
 interface ResponseInterface
 {
     public function getStatusCode(): int;

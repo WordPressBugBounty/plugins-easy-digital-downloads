@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
@@ -26,9 +25,7 @@ namespace EDD\Vendor\Stripe\Issuing;
 class Dispute extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.dispute';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const LOSS_REASON_CARDHOLDER_AUTHENTICATION_ISSUER_LIABILITY = 'cardholder_authentication_issuer_liability';
     const LOSS_REASON_ECI5_TOKEN_TRANSACTION_WITH_TAVV = 'eci5_token_transaction_with_tavv';
     const LOSS_REASON_EXCESS_DISPUTES_IN_TIMEFRAME = 'excess_disputes_in_timeframe';
@@ -49,16 +46,14 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
     const LOSS_REASON_TRANSACTION_ELECTRONICALLY_READ = 'transaction_electronically_read';
     const LOSS_REASON_TRANSACTION_QUALIFIES_FOR_VISA_EASY_PAYMENT_SERVICE = 'transaction_qualifies_for_visa_easy_payment_service';
     const LOSS_REASON_TRANSACTION_UNATTENDED = 'transaction_unattended';
-
     const STATUS_EXPIRED = 'expired';
     const STATUS_LOST = 'lost';
     const STATUS_SUBMITTED = 'submitted';
     const STATUS_UNSUBMITTED = 'unsubmitted';
     const STATUS_WON = 'won';
-
     /**
      * Creates an Issuing <code>Dispute</code> object. Individual pieces of evidence
-     * within the <code>evidence</code> object are optional at this point. EDD\Vendor\Stripe only
+     * within the <code>evidence</code> object are optional at this point. Stripe only
      * validates that required evidence is present during submission. Refer to <a
      * href="/docs/issuing/purchases/disputes#dispute-reasons-and-evidence">Dispute
      * reasons and evidence</a> for more details about evidence requirements.
@@ -74,14 +69,11 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of Issuing <code>Dispute</code> objects. The objects are sorted
      * in descending order by creation date, with the most recently created object
@@ -97,10 +89,8 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Dispute</code> object.
      *
@@ -116,10 +106,8 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified Issuing <code>Dispute</code> object by setting the values
      * of the parameters passed. Any parameters not provided will be left unchanged.
@@ -138,14 +126,11 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -159,7 +144,6 @@ class Dispute extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/submit';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

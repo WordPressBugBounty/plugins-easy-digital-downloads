@@ -1,13 +1,12 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * A <code>Payout</code> object is created when you receive funds from Stripe, or when you
  * initiate a payout to either a bank account or debit card of a <a href="/docs/connect/bank-debit-card-payouts">connected
- * EDD\Vendor\Stripe account</a>. You can retrieve individual payouts,
+ * Stripe account</a>. You can retrieve individual payouts,
  * and list all payouts. Payouts are made on <a href="/docs/connect/manage-payout-schedule">varying
  * schedules</a>, depending on your country and
  * industry.
@@ -43,34 +42,28 @@ namespace EDD\Vendor\Stripe;
 class Payout extends ApiResource
 {
     const OBJECT_NAME = 'payout';
-
     use ApiOperations\Update;
-
     const METHOD_INSTANT = 'instant';
     const METHOD_STANDARD = 'standard';
-
     const RECONCILIATION_STATUS_COMPLETED = 'completed';
     const RECONCILIATION_STATUS_IN_PROGRESS = 'in_progress';
     const RECONCILIATION_STATUS_NOT_APPLICABLE = 'not_applicable';
-
     const STATUS_CANCELED = 'canceled';
     const STATUS_FAILED = 'failed';
     const STATUS_IN_TRANSIT = 'in_transit';
     const STATUS_PAID = 'paid';
     const STATUS_PENDING = 'pending';
-
     const TYPE_BANK_ACCOUNT = 'bank_account';
     const TYPE_CARD = 'card';
-
     /**
      * To send funds to your own bank account, create a new payout object. Your <a
-     * href="#balance">EDD\Vendor\Stripe balance</a> must cover the payout amount. If it doesn’t,
+     * href="#balance">Stripe balance</a> must cover the payout amount. If it doesn’t,
      * you receive an “Insufficient Funds” error.
      *
      * If your API key is in test mode, money won’t actually be sent, though every
      * other action occurs as if you’re in live mode.
      *
-     * If you create a manual payout on a EDD\Vendor\Stripe account that uses multiple payment
+     * If you create a manual payout on a Stripe account that uses multiple payment
      * source types, you need to specify the source type balance that the payout draws
      * from. The <a href="#balance_object">balance object</a> details available and
      * pending amounts by source type.
@@ -86,17 +79,14 @@ class Payout extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of existing payouts sent to third-party bank accounts or payouts
-     * that EDD\Vendor\Stripe sent to you. The payouts return in sorted order, with the most
+     * that Stripe sent to you. The payouts return in sorted order, with the most
      * recently created payouts appearing first.
      *
      * @param null|array $params
@@ -109,13 +99,11 @@ class Payout extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing payout. Supply the unique payout ID from
-     * either a payout creation request or the payout list. EDD\Vendor\Stripe returns the
+     * either a payout creation request or the payout list. Stripe returns the
      * corresponding payout information.
      *
      * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
@@ -130,10 +118,8 @@ class Payout extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified payout by setting the values of the parameters you pass.
      * We don’t change parameters that you don’t provide. This request only accepts the
@@ -151,14 +137,11 @@ class Payout extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     const FAILURE_ACCOUNT_CLOSED = 'account_closed';
     const FAILURE_ACCOUNT_FROZEN = 'account_frozen';
     const FAILURE_BANK_ACCOUNT_RESTRICTED = 'bank_account_restricted';
@@ -174,7 +157,6 @@ class Payout extends ApiResource
     const FAILURE_INVALID_CURRENCY = 'invalid_currency';
     const FAILURE_NO_ACCOUNT = 'no_account';
     const FAILURE_UNSUPPORTED_CARD = 'unsupported_card';
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -188,10 +170,8 @@ class Payout extends ApiResource
         $url = $this->instanceUrl() . '/cancel';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -205,7 +185,6 @@ class Payout extends ApiResource
         $url = $this->instanceUrl() . '/reverse';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

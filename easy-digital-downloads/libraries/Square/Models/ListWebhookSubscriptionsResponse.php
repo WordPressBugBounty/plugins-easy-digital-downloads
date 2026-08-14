@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of
  * a request to the [ListWebhookSubscriptions]($e/WebhookSubscriptions/ListWebhookSubscriptions)
@@ -20,17 +18,14 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var WebhookSubscription[]|null
      */
     private $subscriptions;
-
     /**
      * @var string|null
      */
     private $cursor;
-
     /**
      * Returns Errors.
      * Information on errors encountered during the request.
@@ -41,7 +36,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information on errors encountered during the request.
@@ -54,7 +48,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Subscriptions.
      * The requested list of [Subscription](entity:WebhookSubscription)s.
@@ -65,7 +58,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         return $this->subscriptions;
     }
-
     /**
      * Sets Subscriptions.
      * The requested list of [Subscription](entity:WebhookSubscription)s.
@@ -78,7 +70,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         $this->subscriptions = $subscriptions;
     }
-
     /**
      * Returns Cursor.
      * The pagination cursor to be used in a subsequent request. If empty,
@@ -91,7 +82,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * The pagination cursor to be used in a subsequent request. If empty,
@@ -106,7 +96,6 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -115,23 +104,22 @@ class ListWebhookSubscriptionsResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']        = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->subscriptions)) {
             $json['subscriptions'] = $this->subscriptions;
         }
         if (isset($this->cursor)) {
-            $json['cursor']        = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

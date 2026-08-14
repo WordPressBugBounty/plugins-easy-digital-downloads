@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The custom attribute filter. Use this filter in a set of [custom attribute
  * filters]($m/CustomerCustomAttributeFilters) to search
@@ -17,17 +15,14 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
      * @var string
      */
     private $key;
-
     /**
      * @var CustomerCustomAttributeFilterValue|null
      */
     private $filter;
-
     /**
      * @var TimeRange|null
      */
     private $updatedAt;
-
     /**
      * @param string $key
      */
@@ -35,7 +30,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         $this->key = $key;
     }
-
     /**
      * Returns Key.
      * The `key` of the [custom attribute](entity:CustomAttribute) to filter by. The key is the identifier
@@ -47,7 +41,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         return $this->key;
     }
-
     /**
      * Sets Key.
      * The `key` of the [custom attribute](entity:CustomAttribute) to filter by. The key is the identifier
@@ -62,7 +55,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         $this->key = $key;
     }
-
     /**
      * Returns Filter.
      * A type-specific filter used in a [custom attribute filter]($m/CustomerCustomAttributeFilter) to
@@ -73,7 +65,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         return $this->filter;
     }
-
     /**
      * Sets Filter.
      * A type-specific filter used in a [custom attribute filter]($m/CustomerCustomAttributeFilter) to
@@ -86,7 +77,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         $this->filter = $filter;
     }
-
     /**
      * Returns Updated At.
      * Represents a generic time range. The start and end values are
@@ -99,7 +89,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * Represents a generic time range. The start and end values are
@@ -114,7 +103,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -123,13 +111,13 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['key']            = $this->key;
+        $json['key'] = $this->key;
         if (isset($this->filter)) {
-            $json['filter']     = $this->filter;
+            $json['filter'] = $this->filter;
         }
         if (isset($this->updatedAt)) {
             $json['updated_at'] = $this->updatedAt;
@@ -137,7 +125,6 @@ class CustomerCustomAttributeFilter implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

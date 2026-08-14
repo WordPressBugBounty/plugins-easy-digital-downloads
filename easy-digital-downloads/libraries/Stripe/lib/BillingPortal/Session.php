@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\BillingPortal;
 
 /**
@@ -35,7 +34,6 @@ namespace EDD\Vendor\Stripe\BillingPortal;
 class Session extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'billing_portal.session';
-
     /**
      * Creates a session of the customer portal.
      *
@@ -50,11 +48,9 @@ class Session extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -27,7 +27,7 @@ class Scripts {
 		$js_dir     = edd_get_assets_url( 'js/admin' );
 		$vendor_dir = edd_get_assets_url( 'vendor/js' );
 		$version    = edd_admin_get_script_version();
-		$admin_deps = array( 'jquery', 'jquery-form', 'underscore' );
+		$admin_deps = array( 'jquery', 'jquery-form', 'underscore', 'edd-tom-select' );
 
 		// Register vendor scripts from assets/vendor/js.
 		wp_register_script( 'edd-tom-select', $vendor_dir . 'tom-select.complete.min.js', array(), $version, true );

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase\BodyMatchers;
 
 class NativeBodyMatcher extends BodyMatcher
@@ -18,10 +17,9 @@ class NativeBodyMatcher extends BodyMatcher
         }
         $type = getType($expectedBody);
         $strategy = self::getMatchingStrategy($matchArrayOrder, $matchArrayCount);
-        $matcher->defaultMessage = "Response $type values does not match$strategy";
+        $matcher->defaultMessage = "Response {$type} values does not match{$strategy}";
         return $matcher;
     }
-
     private static function getMatchingStrategy(bool $matchArrayOrder, bool $matchArrayCount): string
     {
         if (!$matchArrayOrder) {
@@ -35,7 +33,6 @@ class NativeBodyMatcher extends BodyMatcher
         }
         return ' in order or size';
     }
-
     /**
      * Asserts if rawBody matches the criteria set within NativeBodyMatcher while initialization,
      * and if expectedBody is a subset of rawBody.
@@ -43,9 +40,6 @@ class NativeBodyMatcher extends BodyMatcher
     public function assert(string $rawBody)
     {
         parent::assert($rawBody);
-        $this->testCase->assertTrue(
-            $this->bodyComparator->compare($this->expectedBody, $this->result),
-            $this->defaultMessage
-        );
+        $this->testCase->assertTrue($this->bodyComparator->compare($this->expectedBody, $this->result), $this->defaultMessage);
     }
 }

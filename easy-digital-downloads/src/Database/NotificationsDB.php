@@ -54,7 +54,7 @@ class NotificationsDB {
 		$version    = edd_admin_get_script_version();
 		$css_suffix = is_rtl() ? '-rtl.min.css' : '.min.css';
 
-		wp_enqueue_script( 'edd-admin-notifications', edd_get_assets_url( 'js/admin' ) . 'notifications.js', array( 'wp-element', 'edd-admin-scripts' ), $version, true );
+		wp_enqueue_script( 'edd-admin-notifications', edd_get_assets_url( 'js/admin' ) . 'notifications.js', array( 'react-jsx-runtime', 'wp-element', 'edd-admin-scripts' ), $version, true );
 		wp_localize_script(
 			'edd-admin-notifications',
 			'eddNotificationStrings',

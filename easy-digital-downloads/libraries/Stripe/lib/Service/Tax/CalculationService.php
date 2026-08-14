@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Tax;
 
 /**
@@ -26,7 +25,6 @@ class CalculationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/tax/calculations/%s/line_items', $id), $params, $opts);
     }
-
     /**
      * Calculates tax based on the input and returns a Tax <code>Calculation</code>
      * object.
@@ -42,7 +40,6 @@ class CalculationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/tax/calculations', $params, $opts);
     }
-
     /**
      * Retrieves a Tax <code>Calculation</code> object, if the calculation hasn’t
      * expired.

@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class RetrieveOrderResponse implements \JsonSerializable
 {
     /**
      * @var Order|null
      */
     private $order;
-
     /**
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * Returns Order.
      * Contains all information related to a single order to process with Square,
@@ -31,7 +27,6 @@ class RetrieveOrderResponse implements \JsonSerializable
     {
         return $this->order;
     }
-
     /**
      * Sets Order.
      * Contains all information related to a single order to process with Square,
@@ -47,7 +42,6 @@ class RetrieveOrderResponse implements \JsonSerializable
     {
         $this->order = $order;
     }
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -58,7 +52,6 @@ class RetrieveOrderResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -71,7 +64,6 @@ class RetrieveOrderResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -80,12 +72,12 @@ class RetrieveOrderResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->order)) {
-            $json['order']  = $this->order;
+            $json['order'] = $this->order;
         }
         if (isset($this->errors)) {
             $json['errors'] = $this->errors;
@@ -93,7 +85,6 @@ class RetrieveOrderResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

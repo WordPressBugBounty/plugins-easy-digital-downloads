@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A [CatalogObject]($m/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the
  * catalog.
@@ -16,127 +14,102 @@ class CatalogItem implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var array
      */
     private $abbreviation = [];
-
     /**
      * @var array
      */
     private $labelColor = [];
-
     /**
      * @var array
      */
     private $isTaxable = [];
-
     /**
      * @var array
      */
     private $availableOnline = [];
-
     /**
      * @var array
      */
     private $availableForPickup = [];
-
     /**
      * @var array
      */
     private $availableElectronically = [];
-
     /**
      * @var array
      */
     private $categoryId = [];
-
     /**
      * @var array
      */
     private $taxIds = [];
-
     /**
      * @var array
      */
     private $modifierListInfo = [];
-
     /**
      * @var array
      */
     private $variations = [];
-
     /**
      * @var string|null
      */
     private $productType;
-
     /**
      * @var array
      */
     private $skipModifierScreen = [];
-
     /**
      * @var array
      */
     private $itemOptions = [];
-
     /**
      * @var array
      */
     private $imageIds = [];
-
     /**
      * @var array
      */
     private $sortName = [];
-
     /**
      * @var array
      */
     private $categories = [];
-
     /**
      * @var array
      */
     private $descriptionHtml = [];
-
     /**
      * @var string|null
      */
     private $descriptionPlaintext;
-
     /**
      * @var array
      */
     private $channels = [];
-
     /**
      * @var array
      */
     private $isArchived = [];
-
     /**
      * @var CatalogEcomSeoData|null
      */
     private $ecomSeoData;
-
     /**
      * @var CatalogItemFoodAndBeverageDetails|null
      */
     private $foodAndBeverageDetails;
-
     /**
      * @var CatalogObjectCategory|null
      */
     private $reportingCategory;
-
     /**
      * Returns Name.
      * The item's name. This is a searchable attribute for use in applicable query filters, its value must
@@ -149,7 +122,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The item's name. This is a searchable attribute for use in applicable query filters, its value must
@@ -161,7 +133,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The item's name. This is a searchable attribute for use in applicable query filters, its value must
@@ -171,7 +142,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Description.
      * The item's description. This is a searchable attribute for use in applicable query filters, and its
@@ -183,7 +153,7 @@ class CatalogItem implements \JsonSerializable
      * values are kept in sync. If you try to
      * set the both fields, the `description_html` text value overwrites the `description` value. Updates
      * in one field are also reflected in the other,
-     * except for when you use an early version before EDD\Vendor\Square API 2022-07-20 and `description_html` is set
+     * except for when you use an early version before Square API 2022-07-20 and `description_html` is set
      * to blank, setting the `description` value to null
      * does not nullify `description_html`.
      */
@@ -194,7 +164,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
      * The item's description. This is a searchable attribute for use in applicable query filters, and its
@@ -206,7 +175,7 @@ class CatalogItem implements \JsonSerializable
      * values are kept in sync. If you try to
      * set the both fields, the `description_html` text value overwrites the `description` value. Updates
      * in one field are also reflected in the other,
-     * except for when you use an early version before EDD\Vendor\Square API 2022-07-20 and `description_html` is set
+     * except for when you use an early version before Square API 2022-07-20 and `description_html` is set
      * to blank, setting the `description` value to null
      * does not nullify `description_html`.
      *
@@ -216,7 +185,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
      * The item's description. This is a searchable attribute for use in applicable query filters, and its
@@ -228,7 +196,7 @@ class CatalogItem implements \JsonSerializable
      * values are kept in sync. If you try to
      * set the both fields, the `description_html` text value overwrites the `description` value. Updates
      * in one field are also reflected in the other,
-     * except for when you use an early version before EDD\Vendor\Square API 2022-07-20 and `description_html` is set
+     * except for when you use an early version before Square API 2022-07-20 and `description_html` is set
      * to blank, setting the `description` value to null
      * does not nullify `description_html`.
      */
@@ -236,10 +204,9 @@ class CatalogItem implements \JsonSerializable
     {
         $this->description = [];
     }
-
     /**
      * Returns Abbreviation.
-     * The text of the item's display label in the EDD\Vendor\Square Point of Sale app. Only up to the first five
+     * The text of the item's display label in the Square Point of Sale app. Only up to the first five
      * characters of the string are used.
      * This attribute is searchable, and its value length is of Unicode code points.
      */
@@ -250,10 +217,9 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->abbreviation['value'];
     }
-
     /**
      * Sets Abbreviation.
-     * The text of the item's display label in the EDD\Vendor\Square Point of Sale app. Only up to the first five
+     * The text of the item's display label in the Square Point of Sale app. Only up to the first five
      * characters of the string are used.
      * This attribute is searchable, and its value length is of Unicode code points.
      *
@@ -263,10 +229,9 @@ class CatalogItem implements \JsonSerializable
     {
         $this->abbreviation['value'] = $abbreviation;
     }
-
     /**
      * Unsets Abbreviation.
-     * The text of the item's display label in the EDD\Vendor\Square Point of Sale app. Only up to the first five
+     * The text of the item's display label in the Square Point of Sale app. Only up to the first five
      * characters of the string are used.
      * This attribute is searchable, and its value length is of Unicode code points.
      */
@@ -274,10 +239,9 @@ class CatalogItem implements \JsonSerializable
     {
         $this->abbreviation = [];
     }
-
     /**
      * Returns Label Color.
-     * The color of the item's display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the item's display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      */
     public function getLabelColor(): ?string
@@ -287,10 +251,9 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->labelColor['value'];
     }
-
     /**
      * Sets Label Color.
-     * The color of the item's display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the item's display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      *
      * @maps label_color
@@ -299,17 +262,15 @@ class CatalogItem implements \JsonSerializable
     {
         $this->labelColor['value'] = $labelColor;
     }
-
     /**
      * Unsets Label Color.
-     * The color of the item's display label in the EDD\Vendor\Square Point of Sale app. This must be a valid hex
+     * The color of the item's display label in the Square Point of Sale app. This must be a valid hex
      * color code.
      */
     public function unsetLabelColor(): void
     {
         $this->labelColor = [];
     }
-
     /**
      * Returns Is Taxable.
      * Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
@@ -321,7 +282,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->isTaxable['value'];
     }
-
     /**
      * Sets Is Taxable.
      * Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
@@ -332,7 +292,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->isTaxable['value'] = $isTaxable;
     }
-
     /**
      * Unsets Is Taxable.
      * Indicates whether the item is taxable (`true`) or non-taxable (`false`). Default is `true`.
@@ -341,7 +300,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->isTaxable = [];
     }
-
     /**
      * Returns Available Online.
      * If `true`, the item can be added to shipping orders from the merchant's online store.
@@ -353,7 +311,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->availableOnline['value'];
     }
-
     /**
      * Sets Available Online.
      * If `true`, the item can be added to shipping orders from the merchant's online store.
@@ -364,7 +321,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableOnline['value'] = $availableOnline;
     }
-
     /**
      * Unsets Available Online.
      * If `true`, the item can be added to shipping orders from the merchant's online store.
@@ -373,7 +329,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableOnline = [];
     }
-
     /**
      * Returns Available for Pickup.
      * If `true`, the item can be added to pickup orders from the merchant's online store.
@@ -385,7 +340,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->availableForPickup['value'];
     }
-
     /**
      * Sets Available for Pickup.
      * If `true`, the item can be added to pickup orders from the merchant's online store.
@@ -396,7 +350,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableForPickup['value'] = $availableForPickup;
     }
-
     /**
      * Unsets Available for Pickup.
      * If `true`, the item can be added to pickup orders from the merchant's online store.
@@ -405,7 +358,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableForPickup = [];
     }
-
     /**
      * Returns Available Electronically.
      * If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
@@ -417,7 +369,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->availableElectronically['value'];
     }
-
     /**
      * Sets Available Electronically.
      * If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
@@ -428,7 +379,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableElectronically['value'] = $availableElectronically;
     }
-
     /**
      * Unsets Available Electronically.
      * If `true`, the item can be added to electronically fulfilled orders from the merchant's online store.
@@ -437,7 +387,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->availableElectronically = [];
     }
-
     /**
      * Returns Category Id.
      * The ID of the item's category, if any. Deprecated since 2023-12-13. Use `CatalogItem.categories`,
@@ -450,7 +399,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->categoryId['value'];
     }
-
     /**
      * Sets Category Id.
      * The ID of the item's category, if any. Deprecated since 2023-12-13. Use `CatalogItem.categories`,
@@ -462,7 +410,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->categoryId['value'] = $categoryId;
     }
-
     /**
      * Unsets Category Id.
      * The ID of the item's category, if any. Deprecated since 2023-12-13. Use `CatalogItem.categories`,
@@ -472,7 +419,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->categoryId = [];
     }
-
     /**
      * Returns Tax Ids.
      * A set of IDs indicating the taxes enabled for
@@ -488,7 +434,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->taxIds['value'];
     }
-
     /**
      * Sets Tax Ids.
      * A set of IDs indicating the taxes enabled for
@@ -503,7 +448,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->taxIds['value'] = $taxIds;
     }
-
     /**
      * Unsets Tax Ids.
      * A set of IDs indicating the taxes enabled for
@@ -514,7 +458,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->taxIds = [];
     }
-
     /**
      * Returns Modifier List Info.
      * A set of `CatalogItemModifierListInfo` objects
@@ -531,7 +474,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->modifierListInfo['value'];
     }
-
     /**
      * Sets Modifier List Info.
      * A set of `CatalogItemModifierListInfo` objects
@@ -547,7 +489,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->modifierListInfo['value'] = $modifierListInfo;
     }
-
     /**
      * Unsets Modifier List Info.
      * A set of `CatalogItemModifierListInfo` objects
@@ -559,7 +500,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->modifierListInfo = [];
     }
-
     /**
      * Returns Variations.
      * A list of [CatalogItemVariation](entity:CatalogItemVariation) objects for this item. An item must
@@ -575,7 +515,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->variations['value'];
     }
-
     /**
      * Sets Variations.
      * A list of [CatalogItemVariation](entity:CatalogItemVariation) objects for this item. An item must
@@ -590,7 +529,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->variations['value'] = $variations;
     }
-
     /**
      * Unsets Variations.
      * A list of [CatalogItemVariation](entity:CatalogItemVariation) objects for this item. An item must
@@ -601,7 +539,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->variations = [];
     }
-
     /**
      * Returns Product Type.
      * The type of a CatalogItem. Connect V2 only allows the creation of `REGULAR` or
@@ -611,7 +548,6 @@ class CatalogItem implements \JsonSerializable
     {
         return $this->productType;
     }
-
     /**
      * Sets Product Type.
      * The type of a CatalogItem. Connect V2 only allows the creation of `REGULAR` or
@@ -623,14 +559,13 @@ class CatalogItem implements \JsonSerializable
     {
         $this->productType = $productType;
     }
-
     /**
      * Returns Skip Modifier Screen.
-     * If `false`, the EDD\Vendor\Square Point of Sale app will present the `CatalogItem`'s
+     * If `false`, the Square Point of Sale app will present the `CatalogItem`'s
      * details screen immediately, allowing the merchant to choose `CatalogModifier`s
      * before adding the item to the cart.  This is the default behavior.
      *
-     * If `true`, the EDD\Vendor\Square Point of Sale app will immediately add the item to the cart with the pre-
+     * If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-
      * selected
      * modifiers, and merchants can edit modifiers by drilling down onto the item's details.
      *
@@ -643,14 +578,13 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->skipModifierScreen['value'];
     }
-
     /**
      * Sets Skip Modifier Screen.
-     * If `false`, the EDD\Vendor\Square Point of Sale app will present the `CatalogItem`'s
+     * If `false`, the Square Point of Sale app will present the `CatalogItem`'s
      * details screen immediately, allowing the merchant to choose `CatalogModifier`s
      * before adding the item to the cart.  This is the default behavior.
      *
-     * If `true`, the EDD\Vendor\Square Point of Sale app will immediately add the item to the cart with the pre-
+     * If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-
      * selected
      * modifiers, and merchants can edit modifiers by drilling down onto the item's details.
      *
@@ -662,14 +596,13 @@ class CatalogItem implements \JsonSerializable
     {
         $this->skipModifierScreen['value'] = $skipModifierScreen;
     }
-
     /**
      * Unsets Skip Modifier Screen.
-     * If `false`, the EDD\Vendor\Square Point of Sale app will present the `CatalogItem`'s
+     * If `false`, the Square Point of Sale app will present the `CatalogItem`'s
      * details screen immediately, allowing the merchant to choose `CatalogModifier`s
      * before adding the item to the cart.  This is the default behavior.
      *
-     * If `true`, the EDD\Vendor\Square Point of Sale app will immediately add the item to the cart with the pre-
+     * If `true`, the Square Point of Sale app will immediately add the item to the cart with the pre-
      * selected
      * modifiers, and merchants can edit modifiers by drilling down onto the item's details.
      *
@@ -679,7 +612,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->skipModifierScreen = [];
     }
-
     /**
      * Returns Item Options.
      * List of item options IDs for this item. Used to manage and group item
@@ -696,7 +628,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->itemOptions['value'];
     }
-
     /**
      * Sets Item Options.
      * List of item options IDs for this item. Used to manage and group item
@@ -712,7 +643,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->itemOptions['value'] = $itemOptions;
     }
-
     /**
      * Unsets Item Options.
      * List of item options IDs for this item. Used to manage and group item
@@ -724,11 +654,10 @@ class CatalogItem implements \JsonSerializable
     {
         $this->itemOptions = [];
     }
-
     /**
      * Returns Image Ids.
      * The IDs of images associated with this `CatalogItem` instance.
-     * These images will be shown to customers in EDD\Vendor\Square Online Store.
+     * These images will be shown to customers in Square Online Store.
      * The first image will show up as the icon for this item in POS.
      *
      * @return string[]|null
@@ -740,11 +669,10 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->imageIds['value'];
     }
-
     /**
      * Sets Image Ids.
      * The IDs of images associated with this `CatalogItem` instance.
-     * These images will be shown to customers in EDD\Vendor\Square Online Store.
+     * These images will be shown to customers in Square Online Store.
      * The first image will show up as the icon for this item in POS.
      *
      * @maps image_ids
@@ -755,18 +683,16 @@ class CatalogItem implements \JsonSerializable
     {
         $this->imageIds['value'] = $imageIds;
     }
-
     /**
      * Unsets Image Ids.
      * The IDs of images associated with this `CatalogItem` instance.
-     * These images will be shown to customers in EDD\Vendor\Square Online Store.
+     * These images will be shown to customers in Square Online Store.
      * The first image will show up as the icon for this item in POS.
      */
     public function unsetImageIds(): void
     {
         $this->imageIds = [];
     }
-
     /**
      * Returns Sort Name.
      * A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent,
@@ -782,7 +708,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->sortName['value'];
     }
-
     /**
      * Sets Sort Name.
      * A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent,
@@ -797,7 +722,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->sortName['value'] = $sortName;
     }
-
     /**
      * Unsets Sort Name.
      * A name to sort the item by. If this name is unspecified, namely, the `sort_name` field is absent,
@@ -810,7 +734,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->sortName = [];
     }
-
     /**
      * Returns Categories.
      * The list of categories.
@@ -824,7 +747,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->categories['value'];
     }
-
     /**
      * Sets Categories.
      * The list of categories.
@@ -837,7 +759,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->categories['value'] = $categories;
     }
-
     /**
      * Unsets Categories.
      * The list of categories.
@@ -846,7 +767,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->categories = [];
     }
-
     /**
      * Returns Description Html.
      * The item's description as expressed in valid HTML elements. The length of this field value,
@@ -883,7 +803,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->descriptionHtml['value'];
     }
-
     /**
      * Sets Description Html.
      * The item's description as expressed in valid HTML elements. The length of this field value,
@@ -919,7 +838,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->descriptionHtml['value'] = $descriptionHtml;
     }
-
     /**
      * Unsets Description Html.
      * The item's description as expressed in valid HTML elements. The length of this field value,
@@ -953,7 +871,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->descriptionHtml = [];
     }
-
     /**
      * Returns Description Plaintext.
      * A server-generated plaintext version of the `description_html` field, without formatting tags.
@@ -962,7 +879,6 @@ class CatalogItem implements \JsonSerializable
     {
         return $this->descriptionPlaintext;
     }
-
     /**
      * Sets Description Plaintext.
      * A server-generated plaintext version of the `description_html` field, without formatting tags.
@@ -973,10 +889,9 @@ class CatalogItem implements \JsonSerializable
     {
         $this->descriptionPlaintext = $descriptionPlaintext;
     }
-
     /**
      * Returns Channels.
-     * A list of IDs representing channels, such as a EDD\Vendor\Square Online site, where the item can be made
+     * A list of IDs representing channels, such as a Square Online site, where the item can be made
      * visible or available.
      *
      * @return string[]|null
@@ -988,10 +903,9 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->channels['value'];
     }
-
     /**
      * Sets Channels.
-     * A list of IDs representing channels, such as a EDD\Vendor\Square Online site, where the item can be made
+     * A list of IDs representing channels, such as a Square Online site, where the item can be made
      * visible or available.
      *
      * @maps channels
@@ -1002,17 +916,15 @@ class CatalogItem implements \JsonSerializable
     {
         $this->channels['value'] = $channels;
     }
-
     /**
      * Unsets Channels.
-     * A list of IDs representing channels, such as a EDD\Vendor\Square Online site, where the item can be made
+     * A list of IDs representing channels, such as a Square Online site, where the item can be made
      * visible or available.
      */
     public function unsetChannels(): void
     {
         $this->channels = [];
     }
-
     /**
      * Returns Is Archived.
      * Indicates whether this item is archived (`true`) or not (`false`).
@@ -1024,7 +936,6 @@ class CatalogItem implements \JsonSerializable
         }
         return $this->isArchived['value'];
     }
-
     /**
      * Sets Is Archived.
      * Indicates whether this item is archived (`true`) or not (`false`).
@@ -1035,7 +946,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->isArchived['value'] = $isArchived;
     }
-
     /**
      * Unsets Is Archived.
      * Indicates whether this item is archived (`true`) or not (`false`).
@@ -1044,19 +954,17 @@ class CatalogItem implements \JsonSerializable
     {
         $this->isArchived = [];
     }
-
     /**
      * Returns Ecom Seo Data.
-     * SEO data for for a seller's EDD\Vendor\Square Online store.
+     * SEO data for for a seller's Square Online store.
      */
     public function getEcomSeoData(): ?CatalogEcomSeoData
     {
         return $this->ecomSeoData;
     }
-
     /**
      * Sets Ecom Seo Data.
-     * SEO data for for a seller's EDD\Vendor\Square Online store.
+     * SEO data for for a seller's Square Online store.
      *
      * @maps ecom_seo_data
      */
@@ -1064,7 +972,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->ecomSeoData = $ecomSeoData;
     }
-
     /**
      * Returns Food and Beverage Details.
      * The food and beverage-specific details of a `FOOD_AND_BEV` item.
@@ -1073,7 +980,6 @@ class CatalogItem implements \JsonSerializable
     {
         return $this->foodAndBeverageDetails;
     }
-
     /**
      * Sets Food and Beverage Details.
      * The food and beverage-specific details of a `FOOD_AND_BEV` item.
@@ -1084,7 +990,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->foodAndBeverageDetails = $foodAndBeverageDetails;
     }
-
     /**
      * Returns Reporting Category.
      * A category that can be assigned to an item or a parent category that can be assigned
@@ -1095,7 +1000,6 @@ class CatalogItem implements \JsonSerializable
     {
         return $this->reportingCategory;
     }
-
     /**
      * Sets Reporting Category.
      * A category that can be assigned to an item or a parent category that can be assigned
@@ -1108,7 +1012,6 @@ class CatalogItem implements \JsonSerializable
     {
         $this->reportingCategory = $reportingCategory;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -1117,89 +1020,88 @@ class CatalogItem implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']                      = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->description)) {
-            $json['description']               = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (!empty($this->abbreviation)) {
-            $json['abbreviation']              = $this->abbreviation['value'];
+            $json['abbreviation'] = $this->abbreviation['value'];
         }
         if (!empty($this->labelColor)) {
-            $json['label_color']               = $this->labelColor['value'];
+            $json['label_color'] = $this->labelColor['value'];
         }
         if (!empty($this->isTaxable)) {
-            $json['is_taxable']                = $this->isTaxable['value'];
+            $json['is_taxable'] = $this->isTaxable['value'];
         }
         if (!empty($this->availableOnline)) {
-            $json['available_online']          = $this->availableOnline['value'];
+            $json['available_online'] = $this->availableOnline['value'];
         }
         if (!empty($this->availableForPickup)) {
-            $json['available_for_pickup']      = $this->availableForPickup['value'];
+            $json['available_for_pickup'] = $this->availableForPickup['value'];
         }
         if (!empty($this->availableElectronically)) {
-            $json['available_electronically']  = $this->availableElectronically['value'];
+            $json['available_electronically'] = $this->availableElectronically['value'];
         }
         if (!empty($this->categoryId)) {
-            $json['category_id']               = $this->categoryId['value'];
+            $json['category_id'] = $this->categoryId['value'];
         }
         if (!empty($this->taxIds)) {
-            $json['tax_ids']                   = $this->taxIds['value'];
+            $json['tax_ids'] = $this->taxIds['value'];
         }
         if (!empty($this->modifierListInfo)) {
-            $json['modifier_list_info']        = $this->modifierListInfo['value'];
+            $json['modifier_list_info'] = $this->modifierListInfo['value'];
         }
         if (!empty($this->variations)) {
-            $json['variations']                = $this->variations['value'];
+            $json['variations'] = $this->variations['value'];
         }
         if (isset($this->productType)) {
-            $json['product_type']              = $this->productType;
+            $json['product_type'] = $this->productType;
         }
         if (!empty($this->skipModifierScreen)) {
-            $json['skip_modifier_screen']      = $this->skipModifierScreen['value'];
+            $json['skip_modifier_screen'] = $this->skipModifierScreen['value'];
         }
         if (!empty($this->itemOptions)) {
-            $json['item_options']              = $this->itemOptions['value'];
+            $json['item_options'] = $this->itemOptions['value'];
         }
         if (!empty($this->imageIds)) {
-            $json['image_ids']                 = $this->imageIds['value'];
+            $json['image_ids'] = $this->imageIds['value'];
         }
         if (!empty($this->sortName)) {
-            $json['sort_name']                 = $this->sortName['value'];
+            $json['sort_name'] = $this->sortName['value'];
         }
         if (!empty($this->categories)) {
-            $json['categories']                = $this->categories['value'];
+            $json['categories'] = $this->categories['value'];
         }
         if (!empty($this->descriptionHtml)) {
-            $json['description_html']          = $this->descriptionHtml['value'];
+            $json['description_html'] = $this->descriptionHtml['value'];
         }
         if (isset($this->descriptionPlaintext)) {
-            $json['description_plaintext']     = $this->descriptionPlaintext;
+            $json['description_plaintext'] = $this->descriptionPlaintext;
         }
         if (!empty($this->channels)) {
-            $json['channels']                  = $this->channels['value'];
+            $json['channels'] = $this->channels['value'];
         }
         if (!empty($this->isArchived)) {
-            $json['is_archived']               = $this->isArchived['value'];
+            $json['is_archived'] = $this->isArchived['value'];
         }
         if (isset($this->ecomSeoData)) {
-            $json['ecom_seo_data']             = $this->ecomSeoData;
+            $json['ecom_seo_data'] = $this->ecomSeoData;
         }
         if (isset($this->foodAndBeverageDetails)) {
             $json['food_and_beverage_details'] = $this->foodAndBeverageDetails;
         }
         if (isset($this->reportingCategory)) {
-            $json['reporting_category']        = $this->reportingCategory;
+            $json['reporting_category'] = $this->reportingCategory;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

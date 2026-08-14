@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\PHPStan;
 
 use Closure;
@@ -29,7 +27,6 @@ use ReflectionParameter;
 use ReflectionType;
 use stdClass;
 use Throwable;
-
 abstract class AbstractMacro implements BuiltinMethodReflection
 {
     /**
@@ -38,35 +35,30 @@ abstract class AbstractMacro implements BuiltinMethodReflection
      * @var ReflectionFunction|ReflectionMethod
      */
     protected $reflectionFunction;
-
     /**
      * The class name.
      *
      * @var class-string
      */
     private $className;
-
     /**
      * The method name.
      *
      * @var string
      */
     private $methodName;
-
     /**
      * The parameters.
      *
      * @var ReflectionParameter[]
      */
     private $parameters;
-
     /**
      * The is static.
      *
      * @var bool
      */
     private $static = false;
-
     /**
      * Macro constructor.
      *
@@ -78,59 +70,44 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         $this->className = $className;
         $this->methodName = $methodName;
-        $rawReflectionFunction = \is_array($macro)
-            ? new ReflectionMethod($macro[0], $macro[1])
-            : new ReflectionFunction($macro);
-        $this->reflectionFunction = self::hasModernParser()
-            ? $this->getReflectionFunction($macro)
-            : $rawReflectionFunction; // @codeCoverageIgnore
-        $this->parameters = array_map(
-            function ($parameter) {
-                if ($parameter instanceof BetterReflectionParameter) {
-                    return new AdapterReflectionParameter($parameter);
-                }
-
-                return $parameter; // @codeCoverageIgnore
-            },
-            $this->reflectionFunction->getParameters()
-        );
-
+        $rawReflectionFunction = \is_array($macro) ? new ReflectionMethod($macro[0], $macro[1]) : new ReflectionFunction($macro);
+        $this->reflectionFunction = self::hasModernParser() ? $this->getReflectionFunction($macro) : $rawReflectionFunction;
+        // @codeCoverageIgnore
+        $this->parameters = array_map(function ($parameter) {
+            if ($parameter instanceof BetterReflectionParameter) {
+                return new AdapterReflectionParameter($parameter);
+            }
+            return $parameter;
+            // @codeCoverageIgnore
+        }, $this->reflectionFunction->getParameters());
         if ($rawReflectionFunction->isClosure()) {
             try {
                 $closure = $rawReflectionFunction->getClosure();
                 $boundClosure = Closure::bind($closure, new stdClass());
-                $this->static = (!$boundClosure || (new ReflectionFunction($boundClosure))->getClosureThis() === null);
+                $this->static = !$boundClosure || (new ReflectionFunction($boundClosure))->getClosureThis() === null;
             } catch (Throwable $e) {
                 $this->static = true;
             }
         }
     }
-
     private function getReflectionFunction($spec)
     {
         if (\is_array($spec) && \count($spec) === 2 && \is_string($spec[1])) {
             \assert($spec[1] !== '');
-
             if (\is_object($spec[0])) {
-                return BetterReflectionClass::createFromInstance($spec[0])
-                    ->getMethod($spec[1]);
+                return BetterReflectionClass::createFromInstance($spec[0])->getMethod($spec[1]);
             }
-
-            return BetterReflectionClass::createFromName($spec[0])
-                ->getMethod($spec[1]);
+            return BetterReflectionClass::createFromName($spec[0])->getMethod($spec[1]);
         }
-
         if (\is_string($spec)) {
             return BetterReflectionFunction::createFromName($spec);
         }
-
         if ($spec instanceof Closure) {
             return BetterReflectionFunction::createFromClosure($spec);
         }
-
-        throw new InvalidArgumentException('Could not create reflection from the spec given'); // @codeCoverageIgnore
+        throw new InvalidArgumentException('Could not create reflection from the spec given');
+        // @codeCoverageIgnore
     }
-
     /**
      * {@inheritdoc}
      */
@@ -138,7 +115,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return new ReflectionClass($this->className);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -146,7 +122,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return false;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -154,7 +129,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -162,7 +136,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return false;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -170,7 +143,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return false;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -178,7 +150,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return false;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -186,7 +157,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this->static;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -194,7 +164,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this->reflectionFunction->getDocComment() ?: null;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -202,7 +171,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this->methodName;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -210,32 +178,25 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this->parameters;
     }
-
     /**
      * {@inheritdoc}
      */
     public function getReturnType(): ?ReflectionType
     {
         $type = $this->reflectionFunction->getReturnType();
-
         if ($type instanceof ReflectionType) {
-            return $type; // @codeCoverageIgnore
+            return $type;
+            // @codeCoverageIgnore
         }
-
         return self::adaptType($type);
     }
-
     /**
      * {@inheritdoc}
      */
     public function isDeprecated(): TrinaryLogic
     {
-        return TrinaryLogic::createFromBoolean(
-            $this->reflectionFunction->isDeprecated() ||
-            preg_match('/@deprecated/i', $this->getDocComment() ?: '')
-        );
+        return TrinaryLogic::createFromBoolean($this->reflectionFunction->isDeprecated() || preg_match('/@deprecated/i', $this->getDocComment() ?: ''));
     }
-
     /**
      * {@inheritdoc}
      */
@@ -243,7 +204,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this->reflectionFunction->isVariadic();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -251,36 +211,27 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return $this;
     }
-
     public function getTentativeReturnType(): ?ReflectionType
     {
         return null;
     }
-
     public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-
     private static function adaptType($type)
     {
-        $method = method_exists(AdapterReflectionType::class, 'fromTypeOrNull')
-            ? 'fromTypeOrNull'
-            : 'fromReturnTypeOrNull'; // @codeCoverageIgnore
-
+        $method = method_exists(AdapterReflectionType::class, 'fromTypeOrNull') ? 'fromTypeOrNull' : 'fromReturnTypeOrNull';
+        // @codeCoverageIgnore
         return AdapterReflectionType::$method($type);
     }
-
     private static function hasModernParser(): bool
     {
         static $modernParser = null;
-
         if ($modernParser !== null) {
             return $modernParser;
         }
-
         $modernParser = method_exists(AdapterReflectionType::class, 'fromTypeOrNull');
-
         return $modernParser;
     }
 }

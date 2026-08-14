@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/customers', $params, $opts);
     }
-
     /**
      * Returns a list of transactions that updated the customer’s <a
      * href="/docs/billing/customer/balance">balances</a>.
@@ -42,7 +40,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/customers/%s/balance_transactions', $parentId), $params, $opts);
     }
-
     /**
      * Returns a list of transactions that modified the customer’s <a
      * href="/docs/payments/customer-balance">cash balance</a>.
@@ -59,7 +56,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/customers/%s/cash_balance_transactions', $parentId), $params, $opts);
     }
-
     /**
      * Returns a list of PaymentMethods for a given Customer.
      *
@@ -75,7 +71,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/customers/%s/payment_methods', $id), $params, $opts);
     }
-
     /**
      * List sources for a specified customer.
      *
@@ -91,7 +86,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/customers/%s/sources', $parentId), $params, $opts);
     }
-
     /**
      * Returns a list of tax IDs for a customer.
      *
@@ -107,7 +101,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/customers/%s/tax_ids', $parentId), $params, $opts);
     }
-
     /**
      * Creates a new customer object.
      *
@@ -122,7 +115,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/customers', $params, $opts);
     }
-
     /**
      * Creates an immutable transaction that updates the customer’s credit <a
      * href="/docs/billing/customer/balance">balance</a>.
@@ -139,7 +131,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/balance_transactions', $parentId), $params, $opts);
     }
-
     /**
      * Retrieve funding instructions for a customer cash balance. If funding
      * instructions do not yet exist for the customer, new funding instructions will be
@@ -159,7 +150,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/funding_instructions', $id), $params, $opts);
     }
-
     /**
      * When you create a new credit card, you must specify a customer or recipient on
      * which to create it.
@@ -181,7 +171,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/sources', $parentId), $params, $opts);
     }
-
     /**
      * Creates a new <code>tax_id</code> object for a customer.
      *
@@ -197,7 +186,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/tax_ids', $parentId), $params, $opts);
     }
-
     /**
      * Permanently deletes a customer. It cannot be undone. Also immediately cancels
      * any active subscriptions on the customer.
@@ -214,7 +202,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/customers/%s', $id), $params, $opts);
     }
-
     /**
      * Removes the currently applied discount on a customer.
      *
@@ -230,7 +217,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/customers/%s/discount', $id), $params, $opts);
     }
-
     /**
      * Delete a specified source for a given customer.
      *
@@ -247,7 +233,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/customers/%s/sources/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Deletes an existing <code>tax_id</code> object.
      *
@@ -264,7 +249,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/customers/%s/tax_ids/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves a Customer object.
      *
@@ -280,7 +264,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieves a specific customer balance transaction that updated the customer’s <a
      * href="/docs/billing/customer/balance">balances</a>.
@@ -298,7 +281,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/balance_transactions/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves a customer’s cash balance.
      *
@@ -314,7 +296,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/cash_balance', $parentId), $params, $opts);
     }
-
     /**
      * Retrieves a specific cash balance transaction, which updated the customer’s <a
      * href="/docs/payments/customer-balance">cash balance</a>.
@@ -332,7 +313,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/cash_balance_transactions/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves a PaymentMethod object for a given Customer.
      *
@@ -349,7 +329,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/payment_methods/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieve a specified source for a given customer.
      *
@@ -366,7 +345,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/sources/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves the <code>tax_id</code> object with the given identifier.
      *
@@ -383,7 +361,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/customers/%s/tax_ids/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Search for customers you’ve previously created using Stripe’s <a
      * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
@@ -403,7 +380,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestSearchResult('get', '/v1/customers/search', $params, $opts);
     }
-
     /**
      * Updates the specified customer by setting the values of the parameters passed.
      * Any parameters not provided will be left unchanged. For example, if you pass the
@@ -431,7 +407,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s', $id), $params, $opts);
     }
-
     /**
      * Most credit balance transaction fields are immutable, but you may update its
      * <code>description</code> and <code>metadata</code>.
@@ -449,7 +424,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/balance_transactions/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Changes the settings on a customer’s cash balance.
      *
@@ -465,7 +439,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/cash_balance', $parentId), $params, $opts);
     }
-
     /**
      * Update a specified source for a given customer.
      *
@@ -482,7 +455,6 @@ class CustomerService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/customers/%s/sources/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Verify a specified bank account for a given customer.
      *

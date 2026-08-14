@@ -110,6 +110,95 @@ class Connect {
 	}
 
 	/**
+	 * Gets the "Connect with Stripe" button markup.
+	 *
+	 * This is the canonical way to output the Stripe Connect button anywhere
+	 * in the admin. It enqueues the required stylesheet and returns single-line
+	 * markup so the button survives `wpautop()` in notice/AJAX contexts.
+	 *
+	 * @since 3.7.0
+	 * @param array $args {
+	 *     Optional. Button arguments.
+	 *
+	 *     @type string $text            Button text. Default 'Connect with Stripe'.
+	 *     @type array  $classes         Additional CSS classes added to the base `edd-stripe-connect` class.
+	 *     @type string $redirect_screen Identifier appended to the OAuth return URL so the completion
+	 *                                   handler can route the user back. Must be registered via the
+	 *                                   `edds_stripe_connect_redirect_screens` filter. Default empty.
+	 * }
+	 * @return string Button HTML, or an empty string if the user lacks permission.
+	 */
+	public static function get_connect_button( array $args = array() ): string {
+		if ( ! current_user_can( 'manage_shop_settings' ) ) {
+			return '';
+		}
+
+		// The connect URL helper is only loaded in admin requests.
+		if ( ! function_exists( 'edds_stripe_connect_url' ) ) {
+			return '';
+		}
+
+		$args = wp_parse_args(
+			$args,
+			array(
+				'text'            => __( 'Connect with Stripe', 'easy-digital-downloads' ),
+				'classes'         => array(),
+				'redirect_screen' => '',
+			)
+		);
+
+		// Ensure the button is styled wherever it is printed.
+		edd_stripe_connect_admin_style();
+
+		$classes = array_merge( array( 'edd-stripe-connect' ), (array) $args['classes'] );
+
+		return sprintf(
+			'<a href="%s" class="%s"><span>%s</span></a>',
+			esc_url( edds_stripe_connect_url( $args['redirect_screen'] ) ),
+			esc_attr( implode( ' ', array_map( 'sanitize_html_class', $classes ) ) ),
+			esc_html( $args['text'] )
+		);
+	}
+
+	/**
+	 * Gets the registered redirect screens for the Stripe Connect OAuth flow.
+	 *
+	 * After the OAuth round-trip, the completion handler only redirects to
+	 * screens registered here — the `redirect_screen` request value is a label
+	 * looked up in this allowlist, never a URL.
+	 *
+	 * @since 3.7.0
+	 * @return array
+	 */
+	public static function get_redirect_screens(): array {
+		/**
+		 * Filters the registered redirect screens for the Stripe Connect OAuth flow.
+		 *
+		 * Each key is a `redirect_screen` label; each value is an array with:
+		 * - `url` (string)          Admin URL the user is redirected to after the OAuth flow
+		 *                           completes or is cancelled.
+		 * - `enable_gateway` (bool) Whether to enable the Stripe gateway after a successful connection.
+		 *
+		 * @since 3.7.0
+		 * @param array $screens The registered redirect screens.
+		 */
+		return apply_filters(
+			'edds_stripe_connect_redirect_screens',
+			array(
+				'onboarding-wizard' => array(
+					'url'            => edd_get_admin_url(
+						array(
+							'page'         => 'edd-onboarding-wizard',
+							'current_step' => 'payment_methods',
+						)
+					),
+					'enable_gateway' => true,
+				),
+			)
+		);
+	}
+
+	/**
 	 * Render the connect field.
 	 *
 	 * @since 3.3.8
@@ -120,7 +209,6 @@ class Connect {
 			return '';
 		}
 
-		$stripe_connect_url    = edds_stripe_connect_url();
 		$stripe_disconnect_url = edds_stripe_connect_disconnect_url();
 
 		$stripe_connect_account_id = edd_stripe()->connect()->get_connect_id();
@@ -134,9 +222,7 @@ class Connect {
 
 		<?php if ( empty( $api_key ) ) : ?>
 
-			<a href="<?php echo esc_url( $stripe_connect_url ); ?>" class="edd-stripe-connect">
-				<span><?php esc_html_e( 'Connect with Stripe', 'easy-digital-downloads' ); ?></span>
-			</a>
+			<?php echo self::get_connect_button(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during generation. ?>
 
 			<p>
 				<?php

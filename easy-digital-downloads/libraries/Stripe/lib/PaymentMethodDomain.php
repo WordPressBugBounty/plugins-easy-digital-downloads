@@ -1,12 +1,11 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * A payment method domain represents a web domain that you have registered with Stripe.
- * EDD\Vendor\Stripe Elements use registered payment method domains to control where certain payment methods are shown.
+ * Stripe Elements use registered payment method domains to control where certain payment methods are shown.
  *
  * Related guide: <a href="https://stripe.com/docs/payments/payment-methods/pmd-registration">Payment method domains</a>.
  *
@@ -24,9 +23,7 @@ namespace EDD\Vendor\Stripe;
 class PaymentMethodDomain extends ApiResource
 {
     const OBJECT_NAME = 'payment_method_domain';
-
     use ApiOperations\Update;
-
     /**
      * Creates a payment method domain.
      *
@@ -41,14 +38,11 @@ class PaymentMethodDomain extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Lists the details of existing payment method domains.
      *
@@ -62,10 +56,8 @@ class PaymentMethodDomain extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing payment method domain.
      *
@@ -81,10 +73,8 @@ class PaymentMethodDomain extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates an existing payment method domain.
      *
@@ -100,14 +90,11 @@ class PaymentMethodDomain extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -121,7 +108,6 @@ class PaymentMethodDomain extends ApiResource
         $url = $this->instanceUrl() . '/validate';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

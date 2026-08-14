@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\FinancialConnections;
 
 /**
@@ -24,7 +23,6 @@ class TransactionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/financial_connections/transactions', $params, $opts);
     }
-
     /**
      * Retrieves the details of a Financial Connections <code>Transaction</code>.
      *

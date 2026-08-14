@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * An option that can be assigned to an item.
  * For example, a t-shirt item may offer a color option or a size option.
@@ -16,7 +14,6 @@ class CatalogItemOptionForItem implements \JsonSerializable
      * @var array
      */
     private $itemOptionId = [];
-
     /**
      * Returns Item Option Id.
      * The unique id of the item option, used to form the dimensions of the item option matrix in a
@@ -29,7 +26,6 @@ class CatalogItemOptionForItem implements \JsonSerializable
         }
         return $this->itemOptionId['value'];
     }
-
     /**
      * Sets Item Option Id.
      * The unique id of the item option, used to form the dimensions of the item option matrix in a
@@ -41,7 +37,6 @@ class CatalogItemOptionForItem implements \JsonSerializable
     {
         $this->itemOptionId['value'] = $itemOptionId;
     }
-
     /**
      * Unsets Item Option Id.
      * The unique id of the item option, used to form the dimensions of the item option matrix in a
@@ -51,7 +46,6 @@ class CatalogItemOptionForItem implements \JsonSerializable
     {
         $this->itemOptionId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -60,7 +54,7 @@ class CatalogItemOptionForItem implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -70,7 +64,6 @@ class CatalogItemOptionForItem implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

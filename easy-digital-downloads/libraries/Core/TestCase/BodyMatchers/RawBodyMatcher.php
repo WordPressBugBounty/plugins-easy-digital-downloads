@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase\BodyMatchers;
 
 use EDD\Vendor\Core\Types\Sdk\CoreFileWrapper;
-
 class RawBodyMatcher extends BodyMatcher
 {
     /**
@@ -17,7 +15,6 @@ class RawBodyMatcher extends BodyMatcher
         $matcher->defaultMessage = 'Response body does not match exactly';
         return $matcher;
     }
-
     /**
      * Asserts if rawBody matches expectedBody.
      */

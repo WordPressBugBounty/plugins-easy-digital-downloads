@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Updates a [Subscription]($m/WebhookSubscription) by replacing the existing signature key with a new
  * one.
@@ -16,7 +14,6 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
      * @var array
      */
     private $idempotencyKey = [];
-
     /**
      * Returns Idempotency Key.
      * A unique string that identifies the [UpdateWebhookSubscriptionSignatureKey](api-endpoint:
@@ -29,7 +26,6 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
         }
         return $this->idempotencyKey['value'];
     }
-
     /**
      * Sets Idempotency Key.
      * A unique string that identifies the [UpdateWebhookSubscriptionSignatureKey](api-endpoint:
@@ -41,7 +37,6 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
     {
         $this->idempotencyKey['value'] = $idempotencyKey;
     }
-
     /**
      * Unsets Idempotency Key.
      * A unique string that identifies the [UpdateWebhookSubscriptionSignatureKey](api-endpoint:
@@ -51,7 +46,6 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
     {
         $this->idempotencyKey = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -60,7 +54,7 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -70,7 +64,6 @@ class UpdateWebhookSubscriptionSignatureKeyRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

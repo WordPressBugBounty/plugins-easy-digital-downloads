@@ -3,7 +3,7 @@
  * Registration Password Confirm Field.
  *
  * @package     EDD\Forms\Register
- * @copyright   Copyright (c) 2025, Sandhills Development, LLC
+ * @copyright   Copyright (c) 2026, Sandhills Development, LLC
  * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       3.3.9
  */
@@ -23,13 +23,27 @@ use EDD\Forms\Fields\Field;
 class PasswordConfirm extends Field {
 
 	/**
+	 * Render the field.
+	 *
+	 * @since 3.3.9
+	 * @return void
+	 */
+	public function render(): void {
+		if ( ! $this->is_block() ) {
+			$this->render_shortcode();
+			return;
+		}
+		parent::render();
+	}
+
+	/**
 	 * Get the field ID.
 	 *
 	 * @since 3.3.9
 	 * @return string
 	 */
 	public function get_id(): string {
-		return 'pass2';
+		return $this->is_block() ? 'pass2' : 'edd_user_pass_confirm';
 	}
 
 	/** Get the field label.
@@ -72,7 +86,7 @@ class PasswordConfirm extends Field {
 	 * @return string
 	 */
 	public function get_description(): string {
-		return '';
+		return $this->is_block() ? '' : __( 'Confirm your password.', 'easy-digital-downloads' );
 	}
 
 	/**
@@ -82,7 +96,10 @@ class PasswordConfirm extends Field {
 	 * @return bool
 	 */
 	protected function is_required(): bool {
-		return true;
+		if ( $this->is_block() ) {
+			return true;
+		}
+		return edd_no_guest_checkout();
 	}
 
 	/**
@@ -106,5 +123,34 @@ class PasswordConfirm extends Field {
 		$classes[] = 'user-pass2-wrap';
 
 		return $classes;
+	}
+
+	/**
+	 * Renders the field for the shortcode checkout, using legacy wrapper IDs and field names.
+	 *
+	 * @since 3.7.0
+	 */
+	private function render_shortcode(): void {
+		$required = $this->is_required();
+		?>
+		<div id="edd-user-pass-confirm-wrap" class="edd_register_password">
+			<?php
+			$this->do_label();
+			$this->do_description();
+			$password_confirm = new \EDD\HTML\Text(
+				array(
+					'type'         => 'password',
+					'name'         => 'edd_user_pass_confirm',
+					'id'           => 'edd_user_pass_confirm',
+					'class'        => $this->get_field_classes(),
+					'placeholder'  => esc_html__( 'Confirm password', 'easy-digital-downloads' ),
+					'required'     => $required,
+					'include_span' => false,
+				)
+			);
+			$password_confirm->output();
+			?>
+		</div>
+		<?php
 	}
 }

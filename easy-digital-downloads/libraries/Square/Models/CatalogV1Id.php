@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * A EDD\Vendor\Square API V1 identifier of an item, including the object ID and its associated location ID.
+ * A Square API V1 identifier of an item, including the object ID and its associated location ID.
  */
 class CatalogV1Id implements \JsonSerializable
 {
@@ -15,15 +13,13 @@ class CatalogV1Id implements \JsonSerializable
      * @var array
      */
     private $catalogV1Id = [];
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * Returns Catalog V1 Id.
-     * The ID for an object used in the EDD\Vendor\Square API V1, if the object ID differs from the EDD\Vendor\Square API V2
+     * The ID for an object used in the Square API V1, if the object ID differs from the Square API V2
      * object ID.
      */
     public function getCatalogV1Id(): ?string
@@ -33,10 +29,9 @@ class CatalogV1Id implements \JsonSerializable
         }
         return $this->catalogV1Id['value'];
     }
-
     /**
      * Sets Catalog V1 Id.
-     * The ID for an object used in the EDD\Vendor\Square API V1, if the object ID differs from the EDD\Vendor\Square API V2
+     * The ID for an object used in the Square API V1, if the object ID differs from the Square API V2
      * object ID.
      *
      * @maps catalog_v1_id
@@ -45,17 +40,15 @@ class CatalogV1Id implements \JsonSerializable
     {
         $this->catalogV1Id['value'] = $catalogV1Id;
     }
-
     /**
      * Unsets Catalog V1 Id.
-     * The ID for an object used in the EDD\Vendor\Square API V1, if the object ID differs from the EDD\Vendor\Square API V2
+     * The ID for an object used in the Square API V1, if the object ID differs from the Square API V2
      * object ID.
      */
     public function unsetCatalogV1Id(): void
     {
         $this->catalogV1Id = [];
     }
-
     /**
      * Returns Location Id.
      * The ID of the `Location` this Connect V1 ID is associated with.
@@ -67,7 +60,6 @@ class CatalogV1Id implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the `Location` this Connect V1 ID is associated with.
@@ -78,7 +70,6 @@ class CatalogV1Id implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the `Location` this Connect V1 ID is associated with.
@@ -87,7 +78,6 @@ class CatalogV1Id implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -96,7 +86,7 @@ class CatalogV1Id implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -104,12 +94,11 @@ class CatalogV1Id implements \JsonSerializable
             $json['catalog_v1_id'] = $this->catalogV1Id['value'];
         }
         if (!empty($this->locationId)) {
-            $json['location_id']   = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

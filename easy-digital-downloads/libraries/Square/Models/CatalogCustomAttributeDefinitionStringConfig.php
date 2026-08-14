@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Configuration associated with Custom EDD_EDD_Attribute Definitions of type `STRING`.
+ * Configuration associated with Custom Attribute Definitions of type `STRING`.
  */
 class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
 {
@@ -15,10 +13,9 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
      * @var array
      */
     private $enforceUniqueness = [];
-
     /**
      * Returns Enforce Uniqueness.
-     * If true, each Custom EDD_EDD_Attribute instance associated with this Custom EDD_EDD_Attribute
+     * If true, each Custom Attribute instance associated with this Custom Attribute
      * Definition must have a unique value within the seller's catalog. For
      * example, this may be used for a value like a SKU that should not be
      * duplicated within a seller's catalog. May not be modified after the
@@ -31,10 +28,9 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
         }
         return $this->enforceUniqueness['value'];
     }
-
     /**
      * Sets Enforce Uniqueness.
-     * If true, each Custom EDD_EDD_Attribute instance associated with this Custom EDD_EDD_Attribute
+     * If true, each Custom Attribute instance associated with this Custom Attribute
      * Definition must have a unique value within the seller's catalog. For
      * example, this may be used for a value like a SKU that should not be
      * duplicated within a seller's catalog. May not be modified after the
@@ -46,10 +42,9 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
     {
         $this->enforceUniqueness['value'] = $enforceUniqueness;
     }
-
     /**
      * Unsets Enforce Uniqueness.
-     * If true, each Custom EDD_EDD_Attribute instance associated with this Custom EDD_EDD_Attribute
+     * If true, each Custom Attribute instance associated with this Custom Attribute
      * Definition must have a unique value within the seller's catalog. For
      * example, this may be used for a value like a SKU that should not be
      * duplicated within a seller's catalog. May not be modified after the
@@ -59,7 +54,6 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
     {
         $this->enforceUniqueness = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -68,7 +62,7 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -78,7 +72,6 @@ class CatalogCustomAttributeDefinitionStringConfig implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Apis;
 
 use EDD\Vendor\Core\Request\Parameters\BodyParam;
@@ -24,7 +23,6 @@ use EDD\Vendor\Square\Models\SearchOrdersRequest;
 use EDD\Vendor\Square\Models\SearchOrdersResponse;
 use EDD\Vendor\Square\Models\UpdateOrderRequest;
 use EDD\Vendor\Square\Models\UpdateOrderResponse;
-
 class OrdersApi extends BaseApi
 {
     /**
@@ -43,15 +41,10 @@ class OrdersApi extends BaseApi
      */
     public function createOrder(CreateOrderRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CreateOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves a set of [orders]($m/Order) by their IDs.
      *
@@ -66,15 +59,10 @@ class OrdersApi extends BaseApi
      */
     public function batchRetrieveOrders(BatchRetrieveOrdersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/batch-retrieve')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/batch-retrieve')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(BatchRetrieveOrdersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Enables applications to preview order pricing without creating an order.
      *
@@ -85,15 +73,10 @@ class OrdersApi extends BaseApi
      */
     public function calculateOrder(CalculateOrderRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/calculate')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/calculate')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CalculateOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Creates a new order, in the `DRAFT` state, by duplicating an existing order. The newly created order
      * has
@@ -106,18 +89,13 @@ class OrdersApi extends BaseApi
      */
     public function cloneOrder(CloneOrderRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/clone')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/clone')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(CloneOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Search all orders for one or more locations. Orders include all sales,
-     * returns, and exchanges regardless of how or when they entered the EDD\Vendor\Square
+     * returns, and exchanges regardless of how or when they entered the Square
      * ecosystem (such as Point of Sale, Invoices, and Connect APIs).
      *
      * `SearchOrders` requests need to specify which locations to search and define a
@@ -129,8 +107,8 @@ class OrdersApi extends BaseApi
      * Determine whether to return results as complete `Order` objects or as
      * [OrderEntry]($m/OrderEntry) objects.
      *
-     * Note that details for orders processed with EDD\Vendor\Square Point of Sale while in
-     * offline mode might not be transmitted to EDD\Vendor\Square for up to 72 hours. Offline
+     * Note that details for orders processed with Square Point of Sale while in
+     * offline mode might not be transmitted to Square for up to 72 hours. Offline
      * orders have a `created_at` value that reflects the time the order was created,
      * not the time it was subsequently transmitted to Square.
      *
@@ -141,15 +119,10 @@ class OrdersApi extends BaseApi
      */
     public function searchOrders(SearchOrdersRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/search')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/search')->auth('global')->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(SearchOrdersResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Retrieves an [Order]($m/Order) by ID.
      *
@@ -159,15 +132,10 @@ class OrdersApi extends BaseApi
      */
     public function retrieveOrder(string $orderId): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/orders/{order_id}')
-            ->auth('global')
-            ->parameters(TemplateParam::init('order_id', $orderId));
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/v2/orders/{order_id}')->auth('global')->parameters(TemplateParam::init('order_id', $orderId));
         $_resHandler = $this->responseHandler()->type(RetrieveOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Updates an open [order]($m/Order) by adding, replacing, or deleting
      * fields. Orders with a `COMPLETED` or `CANCELED` state cannot be updated.
@@ -195,19 +163,10 @@ class OrdersApi extends BaseApi
      */
     public function updateOrder(string $orderId, UpdateOrderRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/orders/{order_id}')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('order_id', $orderId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/v2/orders/{order_id}')->auth('global')->parameters(TemplateParam::init('order_id', $orderId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(UpdateOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
-
     /**
      * Pay for an [order]($m/Order) using one or more approved [payments]($m/Payment)
      * or settle an order with a total of `0`.
@@ -234,16 +193,8 @@ class OrdersApi extends BaseApi
      */
     public function payOrder(string $orderId, PayOrderRequest $body): ApiResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/{order_id}/pay')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('order_id', $orderId),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/v2/orders/{order_id}/pay')->auth('global')->parameters(TemplateParam::init('order_id', $orderId), HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
         $_resHandler = $this->responseHandler()->type(PayOrderResponse::class)->returnApiResponse();
-
         return $this->execute($_reqBuilder, $_resHandler);
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the details of a tender with `type` `CASH`.
  */
@@ -15,12 +13,10 @@ class TenderCashDetails implements \JsonSerializable
      * @var Money|null
      */
     private $buyerTenderedMoney;
-
     /**
      * @var Money|null
      */
     private $changeBackMoney;
-
     /**
      * Returns Buyer Tendered Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -35,7 +31,6 @@ class TenderCashDetails implements \JsonSerializable
     {
         return $this->buyerTenderedMoney;
     }
-
     /**
      * Sets Buyer Tendered Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -52,7 +47,6 @@ class TenderCashDetails implements \JsonSerializable
     {
         $this->buyerTenderedMoney = $buyerTenderedMoney;
     }
-
     /**
      * Returns Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -67,7 +61,6 @@ class TenderCashDetails implements \JsonSerializable
     {
         return $this->changeBackMoney;
     }
-
     /**
      * Sets Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -84,7 +77,6 @@ class TenderCashDetails implements \JsonSerializable
     {
         $this->changeBackMoney = $changeBackMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -93,7 +85,7 @@ class TenderCashDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -101,12 +93,11 @@ class TenderCashDetails implements \JsonSerializable
             $json['buyer_tendered_money'] = $this->buyerTenderedMoney;
         }
         if (isset($this->changeBackMoney)) {
-            $json['change_back_money']    = $this->changeBackMoney;
+            $json['change_back_money'] = $this->changeBackMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

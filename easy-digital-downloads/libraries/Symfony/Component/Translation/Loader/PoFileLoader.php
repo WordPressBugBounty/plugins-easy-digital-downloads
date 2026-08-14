@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Loader;
 
 /**
@@ -63,19 +62,12 @@ class PoFileLoader extends FileLoader
     protected function loadResource(string $resource)
     {
         $stream = fopen($resource, 'r');
-
-        $defaults = [
-            'ids' => [],
-            'translated' => null,
-        ];
-
+        $defaults = ['ids' => [], 'translated' => null];
         $messages = [];
         $item = $defaults;
         $flags = [];
-
         while ($line = fgets($stream)) {
             $line = trim($line);
-
             if ('' === $line) {
                 // Whitespace indicated current item is done
                 if (!\in_array('fuzzy', $flags)) {
@@ -95,7 +87,6 @@ class PoFileLoader extends FileLoader
                 $item['translated'] = substr($line, 8, -1);
             } elseif ('"' === $line[0]) {
                 $continues = isset($item['translated']) ? 'translated' : 'ids';
-
                 if (\is_array($item[$continues])) {
                     end($item[$continues]);
                     $item[$continues][key($item[$continues])] .= substr($line, 1, -1);
@@ -114,10 +105,8 @@ class PoFileLoader extends FileLoader
             $this->addMessage($messages, $item);
         }
         fclose($stream);
-
         return $messages;
     }
-
     /**
      * Save a translation item to the messages.
      *
@@ -129,9 +118,8 @@ class PoFileLoader extends FileLoader
         if (!empty($item['ids']['singular'])) {
             $id = stripcslashes($item['ids']['singular']);
             if (isset($item['ids']['plural'])) {
-                $id .= '|'.stripcslashes($item['ids']['plural']);
+                $id .= '|' . stripcslashes($item['ids']['plural']);
             }
-
             $translated = (array) $item['translated'];
             // PO are by definition indexed so sort by index.
             ksort($translated);
@@ -142,7 +130,6 @@ class PoFileLoader extends FileLoader
             $empties = array_fill(0, $count + 1, '-');
             $translated += $empties;
             ksort($translated);
-
             $messages[$id] = stripcslashes(implode('|', $translated));
         }
     }

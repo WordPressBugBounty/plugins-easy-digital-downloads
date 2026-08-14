@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 class AdditionalHeaderParams extends MultipleParams
@@ -10,7 +9,6 @@ class AdditionalHeaderParams extends MultipleParams
     {
         return new self($values ?? []);
     }
-
     private function __construct(array $values)
     {
         parent::__construct('additional header');

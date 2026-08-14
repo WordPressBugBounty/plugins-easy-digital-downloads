@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 /**
@@ -13,7 +12,6 @@ class TeamMemberStatus
      * The team member can sign in to Point of Sale and the Seller Dashboard.
      */
     public const ACTIVE = 'ACTIVE';
-
     /**
      * The team member can no longer sign in to Point of Sale or the Seller Dashboard,
      * but the team member's sales reports remain available.

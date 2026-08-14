@@ -241,7 +241,7 @@ function create_order( $purchase_data ) {
 			'purchase_units'      => get_order_purchase_units( $payment_id, $purchase_data, $payment_args ),
 			'application_context' => array(
 				// 'locale'              => get_locale(), // PayPal doesn't like this. Might be able to replace `_` with `-`
-				'brand_name'          => substr( get_bloginfo( 'name' ), 0, 127 ),
+				'brand_name'          => BrandName::get(),
 				'shipping_preference' => 'NO_SHIPPING',
 				'user_action'         => 'PAY_NOW',
 				'return_url'          => edd_get_checkout_uri(),

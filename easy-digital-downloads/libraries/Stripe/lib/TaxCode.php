@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -15,7 +14,6 @@ namespace EDD\Vendor\Stripe;
 class TaxCode extends ApiResource
 {
     const OBJECT_NAME = 'tax_code';
-
     /**
      * A list of <a href="https://stripe.com/docs/tax/tax-categories">all tax codes
      * available</a> to add to Products in order to allow specific tax calculations.
@@ -30,13 +28,11 @@ class TaxCode extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing tax code. Supply the unique tax code ID and
-     * EDD\Vendor\Stripe will return the corresponding tax code information.
+     * Stripe will return the corresponding tax code information.
      *
      * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
      * @param null|array|string $opts
@@ -50,7 +46,6 @@ class TaxCode extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

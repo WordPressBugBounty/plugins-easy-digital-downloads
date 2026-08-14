@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Specific details for curbside pickup.
  */
@@ -15,12 +13,10 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
      * @var array
      */
     private $curbsideDetails = [];
-
     /**
      * @var array
      */
     private $buyerArrivedAt = [];
-
     /**
      * Returns Curbside Details.
      * Specific details for curbside pickup, such as parking number and vehicle model.
@@ -32,7 +28,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
         }
         return $this->curbsideDetails['value'];
     }
-
     /**
      * Sets Curbside Details.
      * Specific details for curbside pickup, such as parking number and vehicle model.
@@ -43,7 +38,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
     {
         $this->curbsideDetails['value'] = $curbsideDetails;
     }
-
     /**
      * Unsets Curbside Details.
      * Specific details for curbside pickup, such as parking number and vehicle model.
@@ -52,7 +46,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
     {
         $this->curbsideDetails = [];
     }
-
     /**
      * Returns Buyer Arrived At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -67,7 +60,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
         }
         return $this->buyerArrivedAt['value'];
     }
-
     /**
      * Sets Buyer Arrived At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -81,7 +73,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
     {
         $this->buyerArrivedAt['value'] = $buyerArrivedAt;
     }
-
     /**
      * Unsets Buyer Arrived At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -93,7 +84,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
     {
         $this->buyerArrivedAt = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -102,7 +92,7 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -115,7 +105,6 @@ class FulfillmentPickupDetailsCurbsidePickupDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

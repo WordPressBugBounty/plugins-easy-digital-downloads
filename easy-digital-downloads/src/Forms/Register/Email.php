@@ -52,11 +52,12 @@ class Email extends Field {
 			<?php
 			$email = new \EDD\HTML\Text(
 				array(
-					'name'     => 'edd_user_email',
-					'id'       => 'edd-user-email',
-					'class'    => $this->get_field_classes(),
-					'type'     => 'email',
-					'required' => true,
+					'name'         => 'edd_user_email',
+					'id'           => 'edd-user-email',
+					'class'        => $this->get_field_classes(),
+					'type'         => 'email',
+					'required'     => true,
+					'include_span' => false,
 				)
 			);
 			$email->output();

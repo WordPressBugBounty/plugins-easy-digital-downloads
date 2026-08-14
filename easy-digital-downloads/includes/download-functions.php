@@ -720,11 +720,7 @@ function edd_record_download_in_log( $download_id = 0, $file_id = 0, $user_info 
 	$order = edd_get_order( $order_id );
 
 	if ( empty( $user_agent ) ) {
-		if ( ! class_exists( 'Browser' ) ) {
-			require_once EDD_PLUGIN_DIR . 'includes/libraries/browser.php';
-		}
-		$browser    = new Browser();
-		$user_agent = $browser->getBrowser() . ' ' . $browser->getVersion() . '/' . $browser->getPlatform();
+		$user_agent = \EDD\Utils\Browser::get_user_agent( 200 );
 	}
 
 	if ( empty( $ip ) ) {
@@ -1481,11 +1477,7 @@ function edd_get_download_token( $url = '' ) {
 			}
 
 			if ( in_array( 'ua', $options, true ) ) {
-				$ua = isset( $_SERVER['HTTP_USER_AGENT'] )
-					? $_SERVER['HTTP_USER_AGENT']
-					: '';
-
-				$args['user_agent'] = rawurlencode( $ua );
+				$args['user_agent'] = rawurlencode( \EDD\Utils\Browser::get_user_agent() );
 			}
 		}
 	}

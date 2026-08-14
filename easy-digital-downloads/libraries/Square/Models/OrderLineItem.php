@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a line item in an order. Each line item describes a different
  * product to purchase, with its own quantity and price details.
@@ -16,112 +14,90 @@ class OrderLineItem implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var string
      */
     private $quantity;
-
     /**
      * @var OrderQuantityUnit|null
      */
     private $quantityUnit;
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * @var array
      */
     private $variationName = [];
-
     /**
      * @var string|null
      */
     private $itemType;
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var array
      */
     private $modifiers = [];
-
     /**
      * @var array
      */
     private $appliedTaxes = [];
-
     /**
      * @var array
      */
     private $appliedDiscounts = [];
-
     /**
      * @var array
      */
     private $appliedServiceCharges = [];
-
     /**
      * @var Money|null
      */
     private $basePriceMoney;
-
     /**
      * @var Money|null
      */
     private $variationTotalPriceMoney;
-
     /**
      * @var Money|null
      */
     private $grossSalesMoney;
-
     /**
      * @var Money|null
      */
     private $totalTaxMoney;
-
     /**
      * @var Money|null
      */
     private $totalDiscountMoney;
-
     /**
      * @var Money|null
      */
     private $totalMoney;
-
     /**
      * @var OrderLineItemPricingBlocklists|null
      */
     private $pricingBlocklists;
-
     /**
      * @var Money|null
      */
     private $totalServiceChargeMoney;
-
     /**
      * @param string $quantity
      */
@@ -129,7 +105,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->quantity = $quantity;
     }
-
     /**
      * Returns Uid.
      * A unique ID that identifies the line item only within this order.
@@ -141,7 +116,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the line item only within this order.
@@ -152,7 +126,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the line item only within this order.
@@ -161,7 +134,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Name.
      * The name of the line item.
@@ -173,7 +145,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the line item.
@@ -184,7 +155,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the line item.
@@ -193,7 +163,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Quantity.
      * The count, or measurement, of a line item being purchased:
@@ -214,7 +183,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->quantity;
     }
-
     /**
      * Sets Quantity.
      * The count, or measurement, of a line item being purchased:
@@ -238,7 +206,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->quantity = $quantity;
     }
-
     /**
      * Returns Quantity Unit.
      * Contains the measurement unit for a quantity and a precision that
@@ -248,7 +215,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->quantityUnit;
     }
-
     /**
      * Sets Quantity Unit.
      * Contains the measurement unit for a quantity and a precision that
@@ -260,7 +226,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->quantityUnit = $quantityUnit;
     }
-
     /**
      * Returns Note.
      * An optional note associated with the line item.
@@ -272,7 +237,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * An optional note associated with the line item.
@@ -283,7 +247,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * An optional note associated with the line item.
@@ -292,7 +255,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->note = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The [CatalogItemVariation](entity:CatalogItemVariation) ID applied to this line item.
@@ -304,7 +266,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The [CatalogItemVariation](entity:CatalogItemVariation) ID applied to this line item.
@@ -315,7 +276,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The [CatalogItemVariation](entity:CatalogItemVariation) ID applied to this line item.
@@ -324,7 +284,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this line item references.
@@ -336,7 +295,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this line item references.
@@ -347,7 +305,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this line item references.
@@ -356,7 +313,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Returns Variation Name.
      * The name of the variation applied to this line item.
@@ -368,7 +324,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->variationName['value'];
     }
-
     /**
      * Sets Variation Name.
      * The name of the variation applied to this line item.
@@ -379,7 +334,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->variationName['value'] = $variationName;
     }
-
     /**
      * Unsets Variation Name.
      * The name of the variation applied to this line item.
@@ -388,7 +342,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->variationName = [];
     }
-
     /**
      * Returns Item Type.
      * Represents the line item type.
@@ -397,7 +350,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->itemType;
     }
-
     /**
      * Sets Item Type.
      * Represents the line item type.
@@ -408,12 +360,11 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->itemType = $itemType;
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this line item. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -439,12 +390,11 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this line item. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -469,12 +419,11 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this line item. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -495,7 +444,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Modifiers.
      * The [CatalogModifier](entity:CatalogModifier)s applied to this line item.
@@ -509,7 +457,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->modifiers['value'];
     }
-
     /**
      * Sets Modifiers.
      * The [CatalogModifier](entity:CatalogModifier)s applied to this line item.
@@ -522,7 +469,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->modifiers['value'] = $modifiers;
     }
-
     /**
      * Unsets Modifiers.
      * The [CatalogModifier](entity:CatalogModifier)s applied to this line item.
@@ -531,7 +477,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->modifiers = [];
     }
-
     /**
      * Returns Applied Taxes.
      * The list of references to taxes applied to this line item. Each
@@ -555,7 +500,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->appliedTaxes['value'];
     }
-
     /**
      * Sets Applied Taxes.
      * The list of references to taxes applied to this line item. Each
@@ -578,7 +522,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedTaxes['value'] = $appliedTaxes;
     }
-
     /**
      * Unsets Applied Taxes.
      * The list of references to taxes applied to this line item. Each
@@ -597,7 +540,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedTaxes = [];
     }
-
     /**
      * Returns Applied Discounts.
      * The list of references to discounts applied to this line item. Each
@@ -621,7 +563,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->appliedDiscounts['value'];
     }
-
     /**
      * Sets Applied Discounts.
      * The list of references to discounts applied to this line item. Each
@@ -644,7 +585,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedDiscounts['value'] = $appliedDiscounts;
     }
-
     /**
      * Unsets Applied Discounts.
      * The list of references to discounts applied to this line item. Each
@@ -663,7 +603,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedDiscounts = [];
     }
-
     /**
      * Returns Applied Service Charges.
      * The list of references to service charges applied to this line item. Each
@@ -682,7 +621,6 @@ class OrderLineItem implements \JsonSerializable
         }
         return $this->appliedServiceCharges['value'];
     }
-
     /**
      * Sets Applied Service Charges.
      * The list of references to service charges applied to this line item. Each
@@ -700,7 +638,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedServiceCharges['value'] = $appliedServiceCharges;
     }
-
     /**
      * Unsets Applied Service Charges.
      * The list of references to service charges applied to this line item. Each
@@ -714,7 +651,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->appliedServiceCharges = [];
     }
-
     /**
      * Returns Base Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -729,7 +665,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->basePriceMoney;
     }
-
     /**
      * Sets Base Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -746,7 +681,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->basePriceMoney = $basePriceMoney;
     }
-
     /**
      * Returns Variation Total Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -761,7 +695,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->variationTotalPriceMoney;
     }
-
     /**
      * Sets Variation Total Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -778,7 +711,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->variationTotalPriceMoney = $variationTotalPriceMoney;
     }
-
     /**
      * Returns Gross Sales Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -793,7 +725,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->grossSalesMoney;
     }
-
     /**
      * Sets Gross Sales Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -810,7 +741,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->grossSalesMoney = $grossSalesMoney;
     }
-
     /**
      * Returns Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -825,7 +755,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->totalTaxMoney;
     }
-
     /**
      * Sets Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -842,7 +771,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->totalTaxMoney = $totalTaxMoney;
     }
-
     /**
      * Returns Total Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -857,7 +785,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->totalDiscountMoney;
     }
-
     /**
      * Sets Total Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -874,7 +801,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->totalDiscountMoney = $totalDiscountMoney;
     }
-
     /**
      * Returns Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -889,7 +815,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->totalMoney;
     }
-
     /**
      * Sets Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -906,7 +831,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->totalMoney = $totalMoney;
     }
-
     /**
      * Returns Pricing Blocklists.
      * Describes pricing adjustments that are blocked from automatic
@@ -918,7 +842,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->pricingBlocklists;
     }
-
     /**
      * Sets Pricing Blocklists.
      * Describes pricing adjustments that are blocked from automatic
@@ -932,7 +855,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->pricingBlocklists = $pricingBlocklists;
     }
-
     /**
      * Returns Total Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -947,7 +869,6 @@ class OrderLineItem implements \JsonSerializable
     {
         return $this->totalServiceChargeMoney;
     }
-
     /**
      * Sets Total Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -964,7 +885,6 @@ class OrderLineItem implements \JsonSerializable
     {
         $this->totalServiceChargeMoney = $totalServiceChargeMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -973,78 +893,77 @@ class OrderLineItem implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                         = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->name)) {
-            $json['name']                        = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
-        $json['quantity']                        = $this->quantity;
+        $json['quantity'] = $this->quantity;
         if (isset($this->quantityUnit)) {
-            $json['quantity_unit']               = $this->quantityUnit;
+            $json['quantity_unit'] = $this->quantityUnit;
         }
         if (!empty($this->note)) {
-            $json['note']                        = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (!empty($this->catalogObjectId)) {
-            $json['catalog_object_id']           = $this->catalogObjectId['value'];
+            $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']             = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         if (!empty($this->variationName)) {
-            $json['variation_name']              = $this->variationName['value'];
+            $json['variation_name'] = $this->variationName['value'];
         }
         if (isset($this->itemType)) {
-            $json['item_type']                   = $this->itemType;
+            $json['item_type'] = $this->itemType;
         }
         if (!empty($this->metadata)) {
-            $json['metadata']                    = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (!empty($this->modifiers)) {
-            $json['modifiers']                   = $this->modifiers['value'];
+            $json['modifiers'] = $this->modifiers['value'];
         }
         if (!empty($this->appliedTaxes)) {
-            $json['applied_taxes']               = $this->appliedTaxes['value'];
+            $json['applied_taxes'] = $this->appliedTaxes['value'];
         }
         if (!empty($this->appliedDiscounts)) {
-            $json['applied_discounts']           = $this->appliedDiscounts['value'];
+            $json['applied_discounts'] = $this->appliedDiscounts['value'];
         }
         if (!empty($this->appliedServiceCharges)) {
-            $json['applied_service_charges']     = $this->appliedServiceCharges['value'];
+            $json['applied_service_charges'] = $this->appliedServiceCharges['value'];
         }
         if (isset($this->basePriceMoney)) {
-            $json['base_price_money']            = $this->basePriceMoney;
+            $json['base_price_money'] = $this->basePriceMoney;
         }
         if (isset($this->variationTotalPriceMoney)) {
             $json['variation_total_price_money'] = $this->variationTotalPriceMoney;
         }
         if (isset($this->grossSalesMoney)) {
-            $json['gross_sales_money']           = $this->grossSalesMoney;
+            $json['gross_sales_money'] = $this->grossSalesMoney;
         }
         if (isset($this->totalTaxMoney)) {
-            $json['total_tax_money']             = $this->totalTaxMoney;
+            $json['total_tax_money'] = $this->totalTaxMoney;
         }
         if (isset($this->totalDiscountMoney)) {
-            $json['total_discount_money']        = $this->totalDiscountMoney;
+            $json['total_discount_money'] = $this->totalDiscountMoney;
         }
         if (isset($this->totalMoney)) {
-            $json['total_money']                 = $this->totalMoney;
+            $json['total_money'] = $this->totalMoney;
         }
         if (isset($this->pricingBlocklists)) {
-            $json['pricing_blocklists']          = $this->pricingBlocklists;
+            $json['pricing_blocklists'] = $this->pricingBlocklists;
         }
         if (isset($this->totalServiceChargeMoney)) {
-            $json['total_service_charge_money']  = $this->totalServiceChargeMoney;
+            $json['total_service_charge_money'] = $this->totalServiceChargeMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

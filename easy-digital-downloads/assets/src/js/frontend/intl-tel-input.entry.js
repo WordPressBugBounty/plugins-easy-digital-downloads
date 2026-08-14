@@ -6,13 +6,24 @@
 		initIntlTelInput( input );
 	}
 
-	// Initialize phone input when gateway loads.
+	// The gateway reload replaces #edd_purchase_form_wrap, so a phone field inside it is a fresh
+	// element and must re-init; skip one that survived the swap, since re-wrapping nests a second .iti.
 	$( document.body ).on( 'edd_gateway_loaded', function () {
 		const input = document.querySelector( '.edd-input__phone' );
-		if ( input ) {
+		if ( input && ! isInitialized( input ) ) {
 			initIntlTelInput( input );
 		}
 	} );
+
+	/**
+	 * Whether intl-tel-input has already wrapped this field.
+	 *
+	 * @param {HTMLElement} input The phone input.
+	 * @return {boolean} True when the field is already initialized.
+	 */
+	function isInitialized ( input ) {
+		return input.classList.contains( 'iti__tel-input' ) || null !== input.closest( '.iti' );
+	}
 
 	function initIntlTelInput ( input ) {
 		var data = {

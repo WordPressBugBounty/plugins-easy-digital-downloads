@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the customer data provided in individual update requests for a
  * [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) operation.
@@ -16,62 +14,50 @@ class BulkUpdateCustomerData implements \JsonSerializable
      * @var array
      */
     private $givenName = [];
-
     /**
      * @var array
      */
     private $familyName = [];
-
     /**
      * @var array
      */
     private $companyName = [];
-
     /**
      * @var array
      */
     private $nickname = [];
-
     /**
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * @var Address|null
      */
     private $address;
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var array
      */
     private $referenceId = [];
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var array
      */
     private $birthday = [];
-
     /**
      * @var CustomerTaxIds|null
      */
     private $taxIds;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * Returns Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -83,7 +69,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->givenName['value'];
     }
-
     /**
      * Sets Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -94,7 +79,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->givenName['value'] = $givenName;
     }
-
     /**
      * Unsets Given Name.
      * The given name (that is, the first name) associated with the customer profile.
@@ -103,7 +87,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->givenName = [];
     }
-
     /**
      * Returns Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -115,7 +98,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->familyName['value'];
     }
-
     /**
      * Sets Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -126,7 +108,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->familyName['value'] = $familyName;
     }
-
     /**
      * Unsets Family Name.
      * The family name (that is, the last name) associated with the customer profile.
@@ -135,7 +116,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->familyName = [];
     }
-
     /**
      * Returns Company Name.
      * A business name associated with the customer profile.
@@ -147,7 +127,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->companyName['value'];
     }
-
     /**
      * Sets Company Name.
      * A business name associated with the customer profile.
@@ -158,7 +137,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->companyName['value'] = $companyName;
     }
-
     /**
      * Unsets Company Name.
      * A business name associated with the customer profile.
@@ -167,7 +145,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->companyName = [];
     }
-
     /**
      * Returns Nickname.
      * A nickname for the customer profile.
@@ -179,7 +156,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->nickname['value'];
     }
-
     /**
      * Sets Nickname.
      * A nickname for the customer profile.
@@ -190,7 +166,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->nickname['value'] = $nickname;
     }
-
     /**
      * Unsets Nickname.
      * A nickname for the customer profile.
@@ -199,7 +174,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->nickname = [];
     }
-
     /**
      * Returns Email Address.
      * The email address associated with the customer profile.
@@ -211,7 +185,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * The email address associated with the customer profile.
@@ -222,7 +195,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * The email address associated with the customer profile.
@@ -231,7 +203,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Returns Address.
      * Represents a postal address in a country.
@@ -242,7 +213,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         return $this->address;
     }
-
     /**
      * Sets Address.
      * Represents a postal address in a country.
@@ -255,7 +225,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->address = $address;
     }
-
     /**
      * Returns Phone Number.
      * The phone number associated with the customer profile. The phone number must be valid
@@ -270,7 +239,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The phone number associated with the customer profile. The phone number must be valid
@@ -284,7 +252,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The phone number associated with the customer profile. The phone number must be valid
@@ -296,7 +263,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -309,7 +275,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->referenceId['value'];
     }
-
     /**
      * Sets Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -321,7 +286,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->referenceId['value'] = $referenceId;
     }
-
     /**
      * Unsets Reference Id.
      * An optional second ID used to associate the customer profile with an
@@ -331,7 +295,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->referenceId = [];
     }
-
     /**
      * Returns Note.
      * An custom note associates with the customer profile.
@@ -343,7 +306,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * An custom note associates with the customer profile.
@@ -354,7 +316,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * An custom note associates with the customer profile.
@@ -363,7 +324,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->note = [];
     }
-
     /**
      * Returns Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format.
@@ -378,7 +338,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
         }
         return $this->birthday['value'];
     }
-
     /**
      * Sets Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format.
@@ -392,7 +351,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->birthday['value'] = $birthday;
     }
-
     /**
      * Unsets Birthday.
      * The birthday associated with the customer profile, in `YYYY-MM-DD` or `MM-DD` format.
@@ -404,7 +362,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->birthday = [];
     }
-
     /**
      * Returns Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -416,7 +373,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         return $this->taxIds;
     }
-
     /**
      * Sets Tax Ids.
      * Represents the tax ID associated with a [customer profile]($m/Customer). The corresponding `tax_ids`
@@ -430,7 +386,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->taxIds = $taxIds;
     }
-
     /**
      * Returns Version.
      * The current version of the customer profile.
@@ -444,7 +399,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The current version of the customer profile.
@@ -460,7 +414,6 @@ class BulkUpdateCustomerData implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -469,50 +422,49 @@ class BulkUpdateCustomerData implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->givenName)) {
-            $json['given_name']    = $this->givenName['value'];
+            $json['given_name'] = $this->givenName['value'];
         }
         if (!empty($this->familyName)) {
-            $json['family_name']   = $this->familyName['value'];
+            $json['family_name'] = $this->familyName['value'];
         }
         if (!empty($this->companyName)) {
-            $json['company_name']  = $this->companyName['value'];
+            $json['company_name'] = $this->companyName['value'];
         }
         if (!empty($this->nickname)) {
-            $json['nickname']      = $this->nickname['value'];
+            $json['nickname'] = $this->nickname['value'];
         }
         if (!empty($this->emailAddress)) {
             $json['email_address'] = $this->emailAddress['value'];
         }
         if (isset($this->address)) {
-            $json['address']       = $this->address;
+            $json['address'] = $this->address;
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']  = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (!empty($this->referenceId)) {
-            $json['reference_id']  = $this->referenceId['value'];
+            $json['reference_id'] = $this->referenceId['value'];
         }
         if (!empty($this->note)) {
-            $json['note']          = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (!empty($this->birthday)) {
-            $json['birthday']      = $this->birthday['value'];
+            $json['birthday'] = $this->birthday['value'];
         }
         if (isset($this->taxIds)) {
-            $json['tax_ids']       = $this->taxIds;
+            $json['tax_ids'] = $this->taxIds;
         }
         if (isset($this->version)) {
-            $json['version']       = $this->version;
+            $json['version'] = $this->version;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

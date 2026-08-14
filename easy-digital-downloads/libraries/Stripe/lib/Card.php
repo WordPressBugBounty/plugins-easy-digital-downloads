@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -44,7 +43,6 @@ namespace EDD\Vendor\Stripe;
 class Card extends ApiResource
 {
     const OBJECT_NAME = 'card';
-
     /**
      * Delete a specified external account for a given account.
      *
@@ -58,14 +56,11 @@ class Card extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Possible string representations of the CVC check status.
      *
@@ -75,7 +70,6 @@ class Card extends ApiResource
     const CVC_CHECK_PASS = 'pass';
     const CVC_CHECK_UNAVAILABLE = 'unavailable';
     const CVC_CHECK_UNCHECKED = 'unchecked';
-
     /**
      * Possible string representations of the funding of the card.
      *
@@ -85,7 +79,6 @@ class Card extends ApiResource
     const FUNDING_DEBIT = 'debit';
     const FUNDING_PREPAID = 'prepaid';
     const FUNDING_UNKNOWN = 'unknown';
-
     /**
      * Possible string representations of the tokenization method when using Apple Pay or Google Pay.
      *
@@ -93,7 +86,6 @@ class Card extends ApiResource
      */
     const TOKENIZATION_METHOD_APPLE_PAY = 'apple_pay';
     const TOKENIZATION_METHOD_GOOGLE_PAY = 'google_pay';
-
     /**
      * @return string The instance URL for this resource. It needs to be special
      *    cased because cards are nested resources that may belong to different
@@ -111,15 +103,12 @@ class Card extends ApiResource
             $path = 'external_accounts';
         } else {
             $msg = 'Cards cannot be accessed without a customer ID, or account ID.';
-
             throw new Exception\UnexpectedValueException($msg);
         }
         $parentExtn = \urlencode(Util\Util::utf8($parent));
         $extn = \urlencode(Util\Util::utf8($this['id']));
-
         return "{$base}/{$parentExtn}/{$path}/{$extn}";
     }
-
     /**
      * @param array|string $_id
      * @param null|array|string $_opts
@@ -128,14 +117,9 @@ class Card extends ApiResource
      */
     public static function retrieve($_id, $_opts = null)
     {
-        $msg = 'Cards cannot be retrieved without a customer ID or an ' .
-               'account ID. Retrieve a card using ' .
-               "`Customer::retrieveSource('customer_id', 'card_id')` or " .
-               "`Account::retrieveExternalAccount('account_id', 'card_id')`.";
-
+        $msg = 'Cards cannot be retrieved without a customer ID or an ' . 'account ID. Retrieve a card using ' . "`Customer::retrieveSource('customer_id', 'card_id')` or " . "`Account::retrieveExternalAccount('account_id', 'card_id')`.";
         throw new Exception\BadMethodCallException($msg);
     }
-
     /**
      * @param string $_id
      * @param null|array $_params
@@ -145,15 +129,9 @@ class Card extends ApiResource
      */
     public static function update($_id, $_params = null, $_options = null)
     {
-        $msg = 'Cards cannot be updated without a customer ID or an ' .
-               'account ID. Update a card using ' .
-               "`Customer::updateSource('customer_id', 'card_id', " .
-               '$updateParams)` or `Account::updateExternalAccount(' .
-               "'account_id', 'card_id', \$updateParams)`.";
-
+        $msg = 'Cards cannot be updated without a customer ID or an ' . 'account ID. Update a card using ' . "`Customer::updateSource('customer_id', 'card_id', " . '$updateParams)` or `Account::updateExternalAccount(' . "'account_id', 'card_id', \$updateParams)`.";
         throw new Exception\BadMethodCallException($msg);
     }
-
     /**
      * @param null|array|string $opts
      *
@@ -173,7 +151,6 @@ class Card extends ApiResource
             list($response, $opts) = $this->_request('post', $url, $params, $opts, ['save']);
             $this->refreshFrom($response, $opts);
         }
-
         return $this;
     }
 }

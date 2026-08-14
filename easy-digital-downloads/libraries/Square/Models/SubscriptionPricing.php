@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes the pricing for the subscription.
  */
@@ -15,17 +13,14 @@ class SubscriptionPricing implements \JsonSerializable
      * @var string|null
      */
     private $type;
-
     /**
      * @var array
      */
     private $discountIds = [];
-
     /**
      * @var Money|null
      */
     private $priceMoney;
-
     /**
      * Returns Type.
      * Determines the pricing of a [Subscription]($m/Subscription)
@@ -34,7 +29,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Determines the pricing of a [Subscription]($m/Subscription)
@@ -45,7 +39,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Discount Ids.
      * The ids of the discount catalog objects
@@ -59,7 +52,6 @@ class SubscriptionPricing implements \JsonSerializable
         }
         return $this->discountIds['value'];
     }
-
     /**
      * Sets Discount Ids.
      * The ids of the discount catalog objects
@@ -72,7 +64,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         $this->discountIds['value'] = $discountIds;
     }
-
     /**
      * Unsets Discount Ids.
      * The ids of the discount catalog objects
@@ -81,7 +72,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         $this->discountIds = [];
     }
-
     /**
      * Returns Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -96,7 +86,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         return $this->priceMoney;
     }
-
     /**
      * Sets Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -113,7 +102,6 @@ class SubscriptionPricing implements \JsonSerializable
     {
         $this->priceMoney = $priceMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -122,23 +110,22 @@ class SubscriptionPricing implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->type)) {
-            $json['type']         = $this->type;
+            $json['type'] = $this->type;
         }
         if (!empty($this->discountIds)) {
             $json['discount_ids'] = $this->discountIds['value'];
         }
         if (isset($this->priceMoney)) {
-            $json['price_money']  = $this->priceMoney;
+            $json['price_money'] = $this->priceMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

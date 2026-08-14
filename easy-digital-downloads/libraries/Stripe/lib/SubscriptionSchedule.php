@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -31,20 +30,16 @@ namespace EDD\Vendor\Stripe;
 class SubscriptionSchedule extends ApiResource
 {
     const OBJECT_NAME = 'subscription_schedule';
-
     use ApiOperations\Update;
-
     const END_BEHAVIOR_CANCEL = 'cancel';
     const END_BEHAVIOR_NONE = 'none';
     const END_BEHAVIOR_RELEASE = 'release';
     const END_BEHAVIOR_RENEW = 'renew';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_CANCELED = 'canceled';
     const STATUS_COMPLETED = 'completed';
     const STATUS_NOT_STARTED = 'not_started';
     const STATUS_RELEASED = 'released';
-
     /**
      * Creates a new subscription schedule object. Each customer can have up to 500
      * active or scheduled subscriptions.
@@ -60,14 +55,11 @@ class SubscriptionSchedule extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieves the list of your subscription schedules.
      *
@@ -81,10 +73,8 @@ class SubscriptionSchedule extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing subscription schedule. You only need to
      * supply the unique subscription schedule identifier that was returned upon
@@ -102,10 +92,8 @@ class SubscriptionSchedule extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates an existing subscription schedule.
      *
@@ -121,14 +109,11 @@ class SubscriptionSchedule extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -142,10 +127,8 @@ class SubscriptionSchedule extends ApiResource
         $url = $this->instanceUrl() . '/cancel';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -159,7 +142,6 @@ class SubscriptionSchedule extends ApiResource
         $url = $this->instanceUrl() . '/release';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

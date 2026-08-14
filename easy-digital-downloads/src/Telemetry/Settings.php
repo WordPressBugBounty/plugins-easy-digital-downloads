@@ -96,6 +96,12 @@ class Settings {
 			$data['paypal_commerce_version'] = $paypal_commerce_version;
 		}
 
+		// Always report the Stripe elements mode. The setting is only registered for stores with
+		// legacy card elements access, so otherwise it would be missing from the telemetry data.
+		if ( ! isset( $data['stripe_elements_mode'] ) && function_exists( 'edds_get_elements_mode' ) ) {
+			$data['stripe_elements_mode'] = edds_get_elements_mode();
+		}
+
 		return $data;
 	}
 
@@ -129,6 +135,10 @@ class Settings {
 		// Use the helper function for stripe_elements_mode as it contains business logic for the default.
 		if ( 'stripe_elements_mode' === $setting['id'] && function_exists( 'edds_get_elements_mode' ) ) {
 			return edds_get_elements_mode();
+		}
+		// Use the helper function for default_gateway, which falls back to the first enabled gateway when no default is set.
+		if ( 'default_gateway' === $setting['id'] ) {
+			return edd_get_default_gateway();
 		}
 		if ( in_array( $setting['type'], $this->text_settings(), true ) ) {
 			return $this->anonymize( $value );

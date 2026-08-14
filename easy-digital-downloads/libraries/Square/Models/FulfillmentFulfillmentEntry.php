@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Links an order line item to a fulfillment. Each entry must reference
  * a valid `uid` for an order line item in the `line_item_uid` field, as well as a `quantity` to
@@ -17,22 +15,18 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string
      */
     private $lineItemUid;
-
     /**
      * @var string
      */
     private $quantity;
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @param string $lineItemUid
      * @param string $quantity
@@ -42,7 +36,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
         $this->lineItemUid = $lineItemUid;
         $this->quantity = $quantity;
     }
-
     /**
      * Returns Uid.
      * A unique ID that identifies the fulfillment entry only within this order.
@@ -54,7 +47,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the fulfillment entry only within this order.
@@ -65,7 +57,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the fulfillment entry only within this order.
@@ -74,7 +65,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Line Item Uid.
      * The `uid` from the order line item.
@@ -83,7 +73,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         return $this->lineItemUid;
     }
-
     /**
      * Sets Line Item Uid.
      * The `uid` from the order line item.
@@ -95,7 +84,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->lineItemUid = $lineItemUid;
     }
-
     /**
      * Returns Quantity.
      * The quantity of the line item being fulfilled, formatted as a decimal number.
@@ -108,7 +96,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         return $this->quantity;
     }
-
     /**
      * Sets Quantity.
      * The quantity of the line item being fulfilled, formatted as a decimal number.
@@ -124,12 +111,11 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->quantity = $quantity;
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this fulfillment entry. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -155,12 +141,11 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this fulfillment entry. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -185,12 +170,11 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this fulfillment entry. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -211,7 +195,6 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -220,22 +203,21 @@ class FulfillmentFulfillmentEntry implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']       = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         $json['line_item_uid'] = $this->lineItemUid;
-        $json['quantity']      = $this->quantity;
+        $json['quantity'] = $this->quantity;
         if (!empty($this->metadata)) {
-            $json['metadata']  = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

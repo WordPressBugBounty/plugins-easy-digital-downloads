@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,10 +24,9 @@ class TaxCodeService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/tax_codes', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing tax code. Supply the unique tax code ID and
-     * EDD\Vendor\Stripe will return the corresponding tax code information.
+     * Stripe will return the corresponding tax code information.
      *
      * @param string $id
      * @param null|array $params

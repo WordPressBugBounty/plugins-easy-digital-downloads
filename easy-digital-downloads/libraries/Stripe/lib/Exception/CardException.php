@@ -10,7 +10,6 @@ class CardException extends ApiErrorException
 {
     protected $declineCode;
     protected $stripeParam;
-
     /**
      * Creates a new CardException exception.
      *
@@ -19,29 +18,19 @@ class CardException extends ApiErrorException
      * @param null|string $httpBody the HTTP body as a string
      * @param null|array $jsonBody the JSON deserialized body
      * @param null|array|\EDD\Vendor\Stripe\Util\CaseInsensitiveArray $httpHeaders the HTTP headers array
-     * @param null|string $stripeCode the EDD\Vendor\Stripe error code
+     * @param null|string $stripeCode the Stripe error code
      * @param null|string $declineCode the decline code
      * @param null|string $stripeParam the parameter related to the error
      *
      * @return CardException
      */
-    public static function factory(
-        $message,
-        $httpStatus = null,
-        $httpBody = null,
-        $jsonBody = null,
-        $httpHeaders = null,
-        $stripeCode = null,
-        $declineCode = null,
-        $stripeParam = null
-    ) {
+    public static function factory($message, $httpStatus = null, $httpBody = null, $jsonBody = null, $httpHeaders = null, $stripeCode = null, $declineCode = null, $stripeParam = null)
+    {
         $instance = parent::factory($message, $httpStatus, $httpBody, $jsonBody, $httpHeaders, $stripeCode);
         $instance->setDeclineCode($declineCode);
         $instance->setStripeParam($stripeParam);
-
         return $instance;
     }
-
     /**
      * Gets the decline code.
      *
@@ -51,7 +40,6 @@ class CardException extends ApiErrorException
     {
         return $this->declineCode;
     }
-
     /**
      * Sets the decline code.
      *
@@ -61,7 +49,6 @@ class CardException extends ApiErrorException
     {
         $this->declineCode = $declineCode;
     }
-
     /**
      * Gets the parameter related to the error.
      *
@@ -71,7 +58,6 @@ class CardException extends ApiErrorException
     {
         return $this->stripeParam;
     }
-
     /**
      * Sets the parameter related to the error.
      *

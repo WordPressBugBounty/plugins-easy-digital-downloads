@@ -1,34 +1,28 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use EDD\Vendor\Square\ApiHelper;
 use stdClass;
-
 class EventData implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $type = [];
-
     /**
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $deleted = [];
-
     /**
      * @var array
      */
     private $object = [];
-
     /**
      * Returns Type.
      * The name of the affected object’s type.
@@ -40,7 +34,6 @@ class EventData implements \JsonSerializable
         }
         return $this->type['value'];
     }
-
     /**
      * Sets Type.
      * The name of the affected object’s type.
@@ -51,7 +44,6 @@ class EventData implements \JsonSerializable
     {
         $this->type['value'] = $type;
     }
-
     /**
      * Unsets Type.
      * The name of the affected object’s type.
@@ -60,7 +52,6 @@ class EventData implements \JsonSerializable
     {
         $this->type = [];
     }
-
     /**
      * Returns Id.
      * The ID of the affected object.
@@ -69,7 +60,6 @@ class EventData implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The ID of the affected object.
@@ -80,7 +70,6 @@ class EventData implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Deleted.
      * This is true if the affected object has been deleted; otherwise, it's absent.
@@ -92,7 +81,6 @@ class EventData implements \JsonSerializable
         }
         return $this->deleted['value'];
     }
-
     /**
      * Sets Deleted.
      * This is true if the affected object has been deleted; otherwise, it's absent.
@@ -103,7 +91,6 @@ class EventData implements \JsonSerializable
     {
         $this->deleted['value'] = $deleted;
     }
-
     /**
      * Unsets Deleted.
      * This is true if the affected object has been deleted; otherwise, it's absent.
@@ -112,7 +99,6 @@ class EventData implements \JsonSerializable
     {
         $this->deleted = [];
     }
-
     /**
      * Returns Object.
      * An object containing fields and values relevant to the event. It is absent if the affected object
@@ -127,7 +113,6 @@ class EventData implements \JsonSerializable
         }
         return $this->object['value'];
     }
-
     /**
      * Sets Object.
      * An object containing fields and values relevant to the event. It is absent if the affected object
@@ -141,7 +126,6 @@ class EventData implements \JsonSerializable
     {
         $this->object['value'] = $object;
     }
-
     /**
      * Unsets Object.
      * An object containing fields and values relevant to the event. It is absent if the affected object
@@ -151,7 +135,6 @@ class EventData implements \JsonSerializable
     {
         $this->object = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -160,26 +143,25 @@ class EventData implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->type)) {
-            $json['type']    = $this->type['value'];
+            $json['type'] = $this->type['value'];
         }
         if (isset($this->id)) {
-            $json['id']      = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->deleted)) {
             $json['deleted'] = $this->deleted['value'];
         }
         if (!empty($this->object)) {
-            $json['object']  = ApiHelper::decodeJson($this->object['value'], 'object');
+            $json['object'] = ApiHelper::decodeJson($this->object['value'], 'object');
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

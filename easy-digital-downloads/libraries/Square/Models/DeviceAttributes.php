@@ -1,53 +1,43 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DeviceAttributes implements \JsonSerializable
 {
     /**
      * @var string
      */
     private $type;
-
     /**
      * @var string
      */
     private $manufacturer;
-
     /**
      * @var array
      */
     private $model = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $manufacturersId = [];
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var string|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $merchantToken = [];
-
     /**
      * @param string $manufacturer
      */
@@ -55,7 +45,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->manufacturer = $manufacturer;
     }
-
     /**
      * Returns Type.
      * An enum identifier of the device type.
@@ -64,7 +53,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * An enum identifier of the device type.
@@ -75,7 +63,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Manufacturer.
      * The maker of the device.
@@ -84,7 +71,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         return $this->manufacturer;
     }
-
     /**
      * Sets Manufacturer.
      * The maker of the device.
@@ -96,7 +82,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->manufacturer = $manufacturer;
     }
-
     /**
      * Returns Model.
      * The specific model of the device.
@@ -108,7 +93,6 @@ class DeviceAttributes implements \JsonSerializable
         }
         return $this->model['value'];
     }
-
     /**
      * Sets Model.
      * The specific model of the device.
@@ -119,7 +103,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->model['value'] = $model;
     }
-
     /**
      * Unsets Model.
      * The specific model of the device.
@@ -128,7 +111,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->model = [];
     }
-
     /**
      * Returns Name.
      * A seller-specified name for the device.
@@ -140,7 +122,6 @@ class DeviceAttributes implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * A seller-specified name for the device.
@@ -151,7 +132,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * A seller-specified name for the device.
@@ -160,7 +140,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Manufacturers Id.
      * The manufacturer-supplied identifier for the device (where available). In many cases,
@@ -173,7 +152,6 @@ class DeviceAttributes implements \JsonSerializable
         }
         return $this->manufacturersId['value'];
     }
-
     /**
      * Sets Manufacturers Id.
      * The manufacturer-supplied identifier for the device (where available). In many cases,
@@ -185,7 +163,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->manufacturersId['value'] = $manufacturersId;
     }
-
     /**
      * Unsets Manufacturers Id.
      * The manufacturer-supplied identifier for the device (where available). In many cases,
@@ -195,7 +172,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->manufacturersId = [];
     }
-
     /**
      * Returns Updated At.
      * The RFC 3339-formatted value of the most recent update to the device information.
@@ -205,7 +181,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The RFC 3339-formatted value of the most recent update to the device information.
@@ -217,7 +192,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Version.
      * The current version of software installed on the device.
@@ -226,7 +200,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The current version of software installed on the device.
@@ -237,7 +210,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Merchant Token.
      * The merchant_token identifying the merchant controlling the device.
@@ -249,7 +221,6 @@ class DeviceAttributes implements \JsonSerializable
         }
         return $this->merchantToken['value'];
     }
-
     /**
      * Sets Merchant Token.
      * The merchant_token identifying the merchant controlling the device.
@@ -260,7 +231,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->merchantToken['value'] = $merchantToken;
     }
-
     /**
      * Unsets Merchant Token.
      * The merchant_token identifying the merchant controlling the device.
@@ -269,7 +239,6 @@ class DeviceAttributes implements \JsonSerializable
     {
         $this->merchantToken = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -278,34 +247,33 @@ class DeviceAttributes implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['type']                 = $this->type;
-        $json['manufacturer']         = $this->manufacturer;
+        $json['type'] = $this->type;
+        $json['manufacturer'] = $this->manufacturer;
         if (!empty($this->model)) {
-            $json['model']            = $this->model['value'];
+            $json['model'] = $this->model['value'];
         }
         if (!empty($this->name)) {
-            $json['name']             = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->manufacturersId)) {
             $json['manufacturers_id'] = $this->manufacturersId['value'];
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']       = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->version)) {
-            $json['version']          = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->merchantToken)) {
-            $json['merchant_token']   = $this->merchantToken['value'];
+            $json['merchant_token'] = $this->merchantToken['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

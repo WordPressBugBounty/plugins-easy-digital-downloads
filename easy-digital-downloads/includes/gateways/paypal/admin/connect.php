@@ -18,6 +18,7 @@ use EDD\Gateways\PayPal\AccountStatusValidator;
 use EDD\Gateways\PayPal\API;
 use EDD\Gateways\PayPal\V3\Credentials;
 use EDD\Gateways\PayPal\V3\Merchant;
+use EDD\Utils\URL;
 
 if ( ! defined( 'EDD_PAYPAL_PARTNER_CONNECT_URL' ) ) {
 	define( 'EDD_PAYPAL_PARTNER_CONNECT_URL', 'https://easydigitaldownloads.com/wp-json/paypal-connect/v1/' );
@@ -30,6 +31,10 @@ if ( ! defined( 'EDD_PAYPAL_PARTNER_CONNECT_URL' ) ) {
  * If they are connected, their account details are shown instead.
  *
  * @since 2.11
+ * @since 3.7.0 Limits the "disconnect and reconnect" notice to genuine
+ *        production key-rotation failures. A staging/local host intentionally
+ *        skips recovery and needs no admin action, so no notice is shown there.
+ *
  * @return void
  */
 function connect_settings_field() {
@@ -72,8 +77,9 @@ function connect_settings_field() {
 		<div id="edd-paypal-commerce-errors"></div>
 		<?php
 	} else {
-		// For v3 stores, ensure the credentials are readable; if not, prompt to re-establish.
-		if ( 'v3' === $commerce_version && ! PayPal\V3\KeyRotation::ensure( PayPal\Gateway::get_paypal_mode() ) ) {
+		// Prompt to re-establish only on a genuine production failure; a
+		// staging/local host intentionally skips recovery and needs no action.
+		if ( 'v3' === $commerce_version && ! PayPal\V3\KeyRotation::ensure( PayPal\Gateway::get_paypal_mode() ) && URL::is_production_url( home_url() ) ) {
 			?>
 			<div class="notice edd-notice notice-warning inline">
 				<p>
@@ -172,7 +178,7 @@ function connect_settings_field_v2( $mode ) {
 		<?php
 	} else {
 		?>
-		<a type="button" target="_blank" id="edd-paypal-commerce-link" class="button button-secondary" href="<?php echo $onboarding_data['body']->signupLink; ?>&displayMode=minibrowser" data-paypal-onboard-complete="eddPayPalOnboardingCallback" data-paypal-button="true" data-paypal-onboard-button="true" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_process_paypal_connect' ) ); ?>">
+		<a type="button" target="_blank" id="edd-paypal-commerce-link" class="edd-paypal-connect" href="<?php echo $onboarding_data['body']->signupLink; ?>&displayMode=minibrowser" data-paypal-onboard-complete="eddPayPalOnboardingCallback" data-paypal-button="true" data-paypal-onboard-button="true" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_process_paypal_connect' ) ); ?>">
 			<?php
 			/* translators: %s: the store mode, either `sandbox` or `live` */
 			printf( esc_html__( 'Connect with PayPal in %s mode', 'easy-digital-downloads' ), esc_html( $mode ) );
@@ -190,10 +196,12 @@ function connect_settings_field_v2( $mode ) {
  * opens for merchant onboarding.
  *
  * @since 3.6.9
+ * @since 3.7.0 The button markup is built by ConnectButton::get().
  *
- * @param string $mode Translated mode label.
+ * @param string $mode Translated mode label. Unused — kept for back-compat; the
+ *                     button renderer derives the mode itself.
  */
-function connect_settings_field_v3( $mode ) {
+function connect_settings_field_v3( $mode ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- kept for back-compat.
 	if ( ! \EDD\Utils\Validators\Salts::are_secure() ) {
 		?>
 		<div class="notice edd-notice notice-warning inline">
@@ -246,14 +254,8 @@ function connect_settings_field_v3( $mode ) {
 		</div>
 		<?php
 	}
-	?>
-	<button type="button" id="edd-paypal-commerce-v3-connect" class="button button-primary" data-nonce="<?php echo esc_attr( wp_create_nonce( 'edd_paypal_v3_onboarding' ) ); ?>">
-		<?php
-		/* translators: %s: the store mode, either `sandbox` or `live` */
-		printf( esc_html__( 'Connect with PayPal in %s mode', 'easy-digital-downloads' ), esc_html( $mode ) );
-		?>
-	</button>
-	<?php
+
+	echo ConnectButton::get(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during generation.
 }
 
 /**

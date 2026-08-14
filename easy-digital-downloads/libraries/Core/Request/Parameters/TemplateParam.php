@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
-
 class TemplateParam extends Parameter
 {
     /**
@@ -15,13 +13,11 @@ class TemplateParam extends Parameter
     {
         return new self($key, $value);
     }
-
     private $encode = true;
     private function __construct(string $key, $value)
     {
         parent::__construct($key, $value, 'template');
     }
-
     /**
      * Disables http encoding for the parameter.
      */
@@ -30,7 +26,6 @@ class TemplateParam extends Parameter
         $this->encode = false;
         return $this;
     }
-
     private function getReplacerValue($value): string
     {
         if (is_null($value)) {
@@ -47,18 +42,15 @@ class TemplateParam extends Parameter
         }
         return $this->getEncodedReplacer($value);
     }
-
     private function getReplacerForArray(array $value): string
     {
         return implode("/", array_map([$this, 'getReplacerValue'], $value));
     }
-
     private function getEncodedReplacer($value): string
     {
         $value = strval($value);
         return $this->encode ? urlencode($value) : $value;
     }
-
     /**
      * Adds the parameter to the request provided.
      *

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Authentication;
 
 use EDD\Vendor\Core\Exceptions\AuthValidationException;
@@ -10,7 +9,6 @@ use EDD\Vendor\CoreInterfaces\Core\Authentication\AuthInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\TypeValidatorInterface;
 use InvalidArgumentException;
-
 /**
  * Use to group multiple Auth schemes with either `AND` or `OR`
  */
@@ -23,7 +21,6 @@ class Auth implements AuthInterface
     {
         return new self($auths, AuthGroup::AND);
     }
-
     /**
      * @param self|string ...$auths
      */
@@ -31,27 +28,22 @@ class Auth implements AuthInterface
     {
         return new self($auths, AuthGroup::OR);
     }
-
     /**
      * @var array<Auth|string>
      */
     private $auths;
-
     /**
      * @var AuthInterface[]
      */
     private $selectedAuthGroups = [];
-
     /**
      * @var AuthInterface[]
      */
     private $validatedAuthGroups = [];
-
     /**
      * @var string
      */
     private $groupType;
-
     /**
      * @param array $auths
      * @param string $groupType
@@ -61,7 +53,6 @@ class Auth implements AuthInterface
         $this->auths = $auths;
         $this->groupType = $groupType;
     }
-
     /**
      * @param array<string,AuthInterface> $authManagers
      */
@@ -77,7 +68,6 @@ class Auth implements AuthInterface
         }, $this->auths);
         return $this;
     }
-
     /**
      * @throws AuthValidationException
      */
@@ -97,16 +87,13 @@ class Auth implements AuthInterface
                 return $e->getMessage();
             }
         }, $this->selectedAuthGroups));
-
-        if (empty($errors) || ($this->groupType == AuthGroup::OR && !empty($this->validatedAuthGroups))) {
+        if (empty($errors) || $this->groupType == AuthGroup::OR && !empty($this->validatedAuthGroups)) {
             return;
         }
-
         // throw exception if unable to apply Any Single authentication in AND group
         // OR if unable to apply All authentication in OR group
         throw AuthValidationException::init($errors);
     }
-
     /**
      * @throws InvalidArgumentException
      */

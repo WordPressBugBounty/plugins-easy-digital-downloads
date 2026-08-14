@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\BillingPortal;
 
 /**
@@ -25,7 +24,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/billing_portal/configurations', $params, $opts);
     }
-
     /**
      * Creates a configuration that describes the functionality and behavior of a
      * PortalSession.
@@ -41,7 +39,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/billing_portal/configurations', $params, $opts);
     }
-
     /**
      * Retrieves a configuration that describes the functionality of the customer
      * portal.
@@ -58,7 +55,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/billing_portal/configurations/%s', $id), $params, $opts);
     }
-
     /**
      * Updates a configuration that describes the functionality of the customer portal.
      *

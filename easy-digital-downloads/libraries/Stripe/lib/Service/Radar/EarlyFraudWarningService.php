@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Radar;
 
 /**
@@ -24,7 +23,6 @@ class EarlyFraudWarningService extends \EDD\Vendor\Stripe\Service\AbstractServic
     {
         return $this->requestCollection('get', '/v1/radar/early_fraud_warnings', $params, $opts);
     }
-
     /**
      * Retrieves the details of an early fraud warning that has previously been
      * created.

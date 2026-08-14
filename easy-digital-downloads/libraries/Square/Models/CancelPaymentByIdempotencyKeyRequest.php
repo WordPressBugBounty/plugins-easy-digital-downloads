@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a request to cancel a payment using
  * [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey).
@@ -16,7 +14,6 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
      * @var string
      */
     private $idempotencyKey;
-
     /**
      * @param string $idempotencyKey
      */
@@ -24,7 +21,6 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Idempotency Key.
      * The `idempotency_key` identifying the payment to be canceled.
@@ -33,7 +29,6 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * The `idempotency_key` identifying the payment to be canceled.
@@ -45,7 +40,6 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -54,7 +48,7 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -62,7 +56,6 @@ class CancelPaymentByIdempotencyKeyRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

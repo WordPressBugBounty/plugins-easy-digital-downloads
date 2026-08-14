@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Traits;
 
 use EDD\Vendor\Carbon\Carbon;
 use EDD\Vendor\Carbon\CarbonImmutable;
-
 /**
  * Trait Mutability.
  *
@@ -22,7 +20,6 @@ use EDD\Vendor\Carbon\CarbonImmutable;
 trait Mutability
 {
     use Cast;
-
     /**
      * Returns true if the current class/instance is mutable.
      *
@@ -32,7 +29,6 @@ trait Mutability
     {
         return false;
     }
-
     /**
      * Returns true if the current class/instance is immutable.
      *
@@ -42,20 +38,17 @@ trait Mutability
     {
         return !static::isMutable();
     }
-
     /**
      * Return a mutable copy of the instance.
      *
-     * @return EDD\Vendor\Carbon
+     * @return Carbon
      */
     public function toMutable()
     {
-        /** @var EDD\Vendor\Carbon $date */
+        /** @var Carbon $date */
         $date = $this->cast(Carbon::class);
-
         return $date;
     }
-
     /**
      * Return a immutable copy of the instance.
      *
@@ -65,7 +58,6 @@ trait Mutability
     {
         /** @var CarbonImmutable $date */
         $date = $this->cast(CarbonImmutable::class);
-
         return $date;
     }
 }

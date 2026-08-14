@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use EDD\Vendor\Square\ApiHelper;
 use stdClass;
-
 /**
  * Represents a definition for custom attribute values. A custom attribute definition
  * specifies the key, visibility, schema, and other properties for a custom attribute.
@@ -17,42 +15,34 @@ class CustomAttributeDefinition implements \JsonSerializable
      * @var array
      */
     private $key = [];
-
     /**
      * @var array
      */
     private $schema = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var string|null
      */
     private $visibility;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * Returns Key.
      * The identifier
@@ -78,7 +68,6 @@ class CustomAttributeDefinition implements \JsonSerializable
         }
         return $this->key['value'];
     }
-
     /**
      * Sets Key.
      * The identifier
@@ -103,7 +92,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->key['value'] = $key;
     }
-
     /**
      * Unsets Key.
      * The identifier
@@ -126,7 +114,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->key = [];
     }
-
     /**
      * Returns Schema.
      * The JSON schema for the custom attribute definition, which determines the data type of the
@@ -143,7 +130,6 @@ class CustomAttributeDefinition implements \JsonSerializable
         }
         return $this->schema['value'];
     }
-
     /**
      * Sets Schema.
      * The JSON schema for the custom attribute definition, which determines the data type of the
@@ -159,7 +145,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->schema['value'] = $schema;
     }
-
     /**
      * Unsets Schema.
      * The JSON schema for the custom attribute definition, which determines the data type of the
@@ -171,7 +156,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->schema = [];
     }
-
     /**
      * Returns Name.
      * The name of the custom attribute definition for API and seller-facing UI purposes. The name must
@@ -185,7 +169,6 @@ class CustomAttributeDefinition implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the custom attribute definition for API and seller-facing UI purposes. The name must
@@ -198,7 +181,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the custom attribute definition for API and seller-facing UI purposes. The name must
@@ -209,11 +191,10 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Description.
      * Seller-oriented description of the custom attribute definition, including any constraints
-     * that the seller should observe. May be displayed as a tooltip in EDD\Vendor\Square UIs. This field is
+     * that the seller should observe. May be displayed as a tooltip in Square UIs. This field is
      * required if the `visibility` field is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
      */
     public function getDescription(): ?string
@@ -223,11 +204,10 @@ class CustomAttributeDefinition implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
      * Seller-oriented description of the custom attribute definition, including any constraints
-     * that the seller should observe. May be displayed as a tooltip in EDD\Vendor\Square UIs. This field is
+     * that the seller should observe. May be displayed as a tooltip in Square UIs. This field is
      * required if the `visibility` field is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
      *
      * @maps description
@@ -236,18 +216,16 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
      * Seller-oriented description of the custom attribute definition, including any constraints
-     * that the seller should observe. May be displayed as a tooltip in EDD\Vendor\Square UIs. This field is
+     * that the seller should observe. May be displayed as a tooltip in Square UIs. This field is
      * required if the `visibility` field is `VISIBILITY_READ_ONLY` or `VISIBILITY_READ_WRITE_VALUES`.
      */
     public function unsetDescription(): void
     {
         $this->description = [];
     }
-
     /**
      * Returns Visibility.
      * The level of permission that a seller or other applications requires to
@@ -259,7 +237,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         return $this->visibility;
     }
-
     /**
      * Sets Visibility.
      * The level of permission that a seller or other applications requires to
@@ -273,7 +250,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->visibility = $visibility;
     }
-
     /**
      * Returns Version.
      * Read only. The current version of the custom attribute definition.
@@ -294,7 +270,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * Read only. The current version of the custom attribute definition.
@@ -317,7 +292,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Updated At.
      * The timestamp that indicates when the custom attribute definition was created or most recently
@@ -328,7 +302,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp that indicates when the custom attribute definition was created or most recently
@@ -341,7 +314,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Created At.
      * The timestamp that indicates when the custom attribute definition was created, in RFC 3339 format.
@@ -350,7 +322,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp that indicates when the custom attribute definition was created, in RFC 3339 format.
@@ -361,7 +332,6 @@ class CustomAttributeDefinition implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -370,38 +340,37 @@ class CustomAttributeDefinition implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->key)) {
-            $json['key']         = $this->key['value'];
+            $json['key'] = $this->key['value'];
         }
         if (!empty($this->schema)) {
-            $json['schema']      = ApiHelper::decodeJson($this->schema['value'], 'schema');
+            $json['schema'] = ApiHelper::decodeJson($this->schema['value'], 'schema');
         }
         if (!empty($this->name)) {
-            $json['name']        = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->description)) {
             $json['description'] = $this->description['value'];
         }
         if (isset($this->visibility)) {
-            $json['visibility']  = $this->visibility;
+            $json['visibility'] = $this->visibility;
         }
         if (isset($this->version)) {
-            $json['version']     = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']  = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']  = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

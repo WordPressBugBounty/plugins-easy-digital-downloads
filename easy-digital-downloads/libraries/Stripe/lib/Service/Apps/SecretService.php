@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Apps;
 
 /**
@@ -24,7 +23,6 @@ class SecretService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/apps/secrets', $params, $opts);
     }
-
     /**
      * Create or replace a secret in the secret store.
      *
@@ -39,7 +37,6 @@ class SecretService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/apps/secrets', $params, $opts);
     }
-
     /**
      * Deletes a secret from the secret store by name and scope.
      *
@@ -54,7 +51,6 @@ class SecretService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/apps/secrets/delete', $params, $opts);
     }
-
     /**
      * Finds a secret in the secret store by name and scope.
      *

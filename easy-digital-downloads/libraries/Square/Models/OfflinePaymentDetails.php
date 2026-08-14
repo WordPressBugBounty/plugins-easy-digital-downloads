@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Details specific to offline payments.
  */
@@ -15,7 +13,6 @@ class OfflinePaymentDetails implements \JsonSerializable
      * @var string|null
      */
     private $clientCreatedAt;
-
     /**
      * Returns Client Created At.
      * The client-side timestamp of when the offline payment was created, in RFC 3339 format.
@@ -24,7 +21,6 @@ class OfflinePaymentDetails implements \JsonSerializable
     {
         return $this->clientCreatedAt;
     }
-
     /**
      * Sets Client Created At.
      * The client-side timestamp of when the offline payment was created, in RFC 3339 format.
@@ -35,7 +31,6 @@ class OfflinePaymentDetails implements \JsonSerializable
     {
         $this->clientCreatedAt = $clientCreatedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -44,7 +39,7 @@ class OfflinePaymentDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -54,7 +49,6 @@ class OfflinePaymentDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

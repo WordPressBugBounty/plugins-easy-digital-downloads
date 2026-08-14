@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the details of a webhook subscription, including notification URL,
  * event types, and signature key.
@@ -16,47 +14,38 @@ class WebhookSubscription implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $enabled = [];
-
     /**
      * @var array
      */
     private $eventTypes = [];
-
     /**
      * @var array
      */
     private $notificationUrl = [];
-
     /**
      * @var array
      */
     private $apiVersion = [];
-
     /**
      * @var string|null
      */
     private $signatureKey;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * Returns Id.
      * A Square-generated unique ID for the subscription.
@@ -65,7 +54,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A Square-generated unique ID for the subscription.
@@ -76,7 +64,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Name.
      * The name of this subscription.
@@ -88,7 +75,6 @@ class WebhookSubscription implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of this subscription.
@@ -99,7 +85,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of this subscription.
@@ -108,7 +93,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Enabled.
      * Indicates whether the subscription is enabled (`true`) or not (`false`).
@@ -120,7 +104,6 @@ class WebhookSubscription implements \JsonSerializable
         }
         return $this->enabled['value'];
     }
-
     /**
      * Sets Enabled.
      * Indicates whether the subscription is enabled (`true`) or not (`false`).
@@ -131,7 +114,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->enabled['value'] = $enabled;
     }
-
     /**
      * Unsets Enabled.
      * Indicates whether the subscription is enabled (`true`) or not (`false`).
@@ -140,7 +122,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->enabled = [];
     }
-
     /**
      * Returns Event Types.
      * The event types associated with this subscription.
@@ -154,7 +135,6 @@ class WebhookSubscription implements \JsonSerializable
         }
         return $this->eventTypes['value'];
     }
-
     /**
      * Sets Event Types.
      * The event types associated with this subscription.
@@ -167,7 +147,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->eventTypes['value'] = $eventTypes;
     }
-
     /**
      * Unsets Event Types.
      * The event types associated with this subscription.
@@ -176,7 +155,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->eventTypes = [];
     }
-
     /**
      * Returns Notification Url.
      * The URL to which webhooks are sent.
@@ -188,7 +166,6 @@ class WebhookSubscription implements \JsonSerializable
         }
         return $this->notificationUrl['value'];
     }
-
     /**
      * Sets Notification Url.
      * The URL to which webhooks are sent.
@@ -199,7 +176,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->notificationUrl['value'] = $notificationUrl;
     }
-
     /**
      * Unsets Notification Url.
      * The URL to which webhooks are sent.
@@ -208,7 +184,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->notificationUrl = [];
     }
-
     /**
      * Returns Api Version.
      * The API version of the subscription.
@@ -222,7 +197,6 @@ class WebhookSubscription implements \JsonSerializable
         }
         return $this->apiVersion['value'];
     }
-
     /**
      * Sets Api Version.
      * The API version of the subscription.
@@ -235,7 +209,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->apiVersion['value'] = $apiVersion;
     }
-
     /**
      * Unsets Api Version.
      * The API version of the subscription.
@@ -246,7 +219,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->apiVersion = [];
     }
-
     /**
      * Returns Signature Key.
      * The Square-generated signature key used to validate the origin of the webhook event.
@@ -255,7 +227,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         return $this->signatureKey;
     }
-
     /**
      * Sets Signature Key.
      * The Square-generated signature key used to validate the origin of the webhook event.
@@ -266,7 +237,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->signatureKey = $signatureKey;
     }
-
     /**
      * Returns Created At.
      * The timestamp of when the subscription was created, in RFC 3339 format. For example, "2016-09-04T23:
@@ -276,7 +246,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp of when the subscription was created, in RFC 3339 format. For example, "2016-09-04T23:
@@ -288,7 +257,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp of when the subscription was last updated, in RFC 3339 format.
@@ -298,7 +266,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp of when the subscription was last updated, in RFC 3339 format.
@@ -310,7 +277,6 @@ class WebhookSubscription implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -319,41 +285,40 @@ class WebhookSubscription implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']               = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->name)) {
-            $json['name']             = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->enabled)) {
-            $json['enabled']          = $this->enabled['value'];
+            $json['enabled'] = $this->enabled['value'];
         }
         if (!empty($this->eventTypes)) {
-            $json['event_types']      = $this->eventTypes['value'];
+            $json['event_types'] = $this->eventTypes['value'];
         }
         if (!empty($this->notificationUrl)) {
             $json['notification_url'] = $this->notificationUrl['value'];
         }
         if (!empty($this->apiVersion)) {
-            $json['api_version']      = $this->apiVersion['value'];
+            $json['api_version'] = $this->apiVersion['value'];
         }
         if (isset($this->signatureKey)) {
-            $json['signature_key']    = $this->signatureKey;
+            $json['signature_key'] = $this->signatureKey;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']       = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']       = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

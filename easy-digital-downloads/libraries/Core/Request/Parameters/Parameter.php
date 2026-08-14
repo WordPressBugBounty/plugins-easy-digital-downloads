@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use Closure;
@@ -10,7 +9,6 @@ use EDD\Vendor\CoreInterfaces\Core\Request\NonEmptyParamInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\TypeValidatorInterface;
 use InvalidArgumentException;
 use Throwable;
-
 abstract class Parameter implements NonEmptyParamInterface
 {
     protected $key;
@@ -24,19 +22,16 @@ abstract class Parameter implements NonEmptyParamInterface
     private $paramStrictType;
     private $typeGroupSerializers = [];
     private $typeName;
-
     protected function __construct(string $key, $value, string $typeName)
     {
         $this->key = $key;
         $this->value = $value;
         $this->typeName = $typeName;
     }
-
     private function getName(): string
     {
         return $this->key == '' ? $this->typeName : $this->key;
     }
-
     /**
      * Extracting inner value using a `key` only if the current value is a collection i.e. array/object,
      * If key is not found in the value array then defaultValue will be used.
@@ -52,7 +47,6 @@ abstract class Parameter implements NonEmptyParamInterface
         }
         return $this;
     }
-
     private function extractFromArray(string $key, $defaultValue): self
     {
         if (isset($this->value[$key])) {
@@ -62,7 +56,6 @@ abstract class Parameter implements NonEmptyParamInterface
         $this->value = $defaultValue;
         return $this;
     }
-
     /**
      * Marks the value of the parameter as required and
      * throws an exception on validate if the value is missing.
@@ -74,7 +67,6 @@ abstract class Parameter implements NonEmptyParamInterface
         }
         return $this;
     }
-
     /**
      * Marks the value of the parameter as required + non-empty and
      * throws an exception on validate if the value is missing.
@@ -86,7 +78,6 @@ abstract class Parameter implements NonEmptyParamInterface
         }
         return $this;
     }
-
     /**
      * Serializes the parameter using the method provided.
      *
@@ -97,12 +88,10 @@ abstract class Parameter implements NonEmptyParamInterface
         try {
             $this->value = Closure::fromCallable($serializerMethod)($this->value);
         } catch (Throwable $e) {
-            $this->serializationError = new InvalidArgumentException("Unable to serialize field: " .
-                "{$this->getName()}, Due to:\n{$e->getMessage()}");
+            $this->serializationError = new InvalidArgumentException("Unable to serialize field: " . "{$this->getName()}, Due to:\n{$e->getMessage()}");
         }
         return $this;
     }
-
     /**
      * @param string   $strictType        Strict single type i.e. string, ModelName, etc. or group of types
      *                                    in string format i.e. oneOf(...), anyOf(...)
@@ -116,7 +105,6 @@ abstract class Parameter implements NonEmptyParamInterface
         $this->typeGroupSerializers = $serializerMethods;
         return $this;
     }
-
     /**
      * Validates if the parameter is in a valid state i.e. checks for missing value, serialization errors
      * and strict types.
@@ -129,17 +117,13 @@ abstract class Parameter implements NonEmptyParamInterface
             return;
         }
         if ($this->valueMissing) {
-            throw new InvalidArgumentException("Missing required $this->typeName field: {$this->getName()}");
+            throw new InvalidArgumentException("Missing required {$this->typeName} field: {$this->getName()}");
         }
         if (isset($this->serializationError)) {
             throw $this->serializationError;
         }
         if (isset($this->paramStrictType)) {
-            $this->value = $validator->verifyTypes(
-                $this->value,
-                $this->paramStrictType,
-                $this->typeGroupSerializers
-            );
+            $this->value = $validator->verifyTypes($this->value, $this->paramStrictType, $this->typeGroupSerializers);
         }
         $this->validated = true;
     }

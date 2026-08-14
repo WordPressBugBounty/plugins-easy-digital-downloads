@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A record representing an individual team member for a business.
  */
@@ -15,62 +13,50 @@ class TeamMember implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $referenceId = [];
-
     /**
      * @var bool|null
      */
     private $isOwner;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var array
      */
     private $givenName = [];
-
     /**
      * @var array
      */
     private $familyName = [];
-
     /**
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var TeamMemberAssignedLocations|null
      */
     private $assignedLocations;
-
     /**
      * @var WageSetting|null
      */
     private $wageSetting;
-
     /**
      * Returns Id.
      * The unique ID for the team member.
@@ -79,7 +65,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The unique ID for the team member.
@@ -90,7 +75,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Reference Id.
      * A second ID used to associate the team member with an entity in another system.
@@ -102,7 +86,6 @@ class TeamMember implements \JsonSerializable
         }
         return $this->referenceId['value'];
     }
-
     /**
      * Sets Reference Id.
      * A second ID used to associate the team member with an entity in another system.
@@ -113,7 +96,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->referenceId['value'] = $referenceId;
     }
-
     /**
      * Unsets Reference Id.
      * A second ID used to associate the team member with an entity in another system.
@@ -122,19 +104,17 @@ class TeamMember implements \JsonSerializable
     {
         $this->referenceId = [];
     }
-
     /**
      * Returns Is Owner.
-     * Whether the team member is the owner of the EDD\Vendor\Square account.
+     * Whether the team member is the owner of the Square account.
      */
     public function getIsOwner(): ?bool
     {
         return $this->isOwner;
     }
-
     /**
      * Sets Is Owner.
-     * Whether the team member is the owner of the EDD\Vendor\Square account.
+     * Whether the team member is the owner of the Square account.
      *
      * @maps is_owner
      */
@@ -142,7 +122,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->isOwner = $isOwner;
     }
-
     /**
      * Returns Status.
      * Enumerates the possible statuses the team member can have within a business.
@@ -151,7 +130,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Enumerates the possible statuses the team member can have within a business.
@@ -162,7 +140,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Given Name.
      * The given name (that is, the first name) associated with the team member.
@@ -174,7 +151,6 @@ class TeamMember implements \JsonSerializable
         }
         return $this->givenName['value'];
     }
-
     /**
      * Sets Given Name.
      * The given name (that is, the first name) associated with the team member.
@@ -185,7 +161,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->givenName['value'] = $givenName;
     }
-
     /**
      * Unsets Given Name.
      * The given name (that is, the first name) associated with the team member.
@@ -194,7 +169,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->givenName = [];
     }
-
     /**
      * Returns Family Name.
      * The family name (that is, the last name) associated with the team member.
@@ -206,7 +180,6 @@ class TeamMember implements \JsonSerializable
         }
         return $this->familyName['value'];
     }
-
     /**
      * Sets Family Name.
      * The family name (that is, the last name) associated with the team member.
@@ -217,7 +190,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->familyName['value'] = $familyName;
     }
-
     /**
      * Unsets Family Name.
      * The family name (that is, the last name) associated with the team member.
@@ -226,7 +198,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->familyName = [];
     }
-
     /**
      * Returns Email Address.
      * The email address associated with the team member. After accepting the invitation
@@ -239,7 +210,6 @@ class TeamMember implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * The email address associated with the team member. After accepting the invitation
@@ -251,7 +221,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * The email address associated with the team member. After accepting the invitation
@@ -261,7 +230,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Returns Phone Number.
      * The team member's phone number, in E.164 format. For example:
@@ -275,7 +243,6 @@ class TeamMember implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The team member's phone number, in E.164 format. For example:
@@ -288,7 +255,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The team member's phone number, in E.164 format. For example:
@@ -299,7 +265,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Created At.
      * The timestamp when the team member was created, in RFC 3339 format.
@@ -308,7 +273,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the team member was created, in RFC 3339 format.
@@ -319,7 +283,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp when the team member was last updated, in RFC 3339 format.
@@ -328,7 +291,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp when the team member was last updated, in RFC 3339 format.
@@ -339,7 +301,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Assigned Locations.
      * An object that represents a team member's assignment to locations.
@@ -348,7 +309,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->assignedLocations;
     }
-
     /**
      * Sets Assigned Locations.
      * An object that represents a team member's assignment to locations.
@@ -359,7 +319,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->assignedLocations = $assignedLocations;
     }
-
     /**
      * Returns Wage Setting.
      * Represents information about the overtime exemption status, job assignments, and compensation
@@ -369,7 +328,6 @@ class TeamMember implements \JsonSerializable
     {
         return $this->wageSetting;
     }
-
     /**
      * Sets Wage Setting.
      * Represents information about the overtime exemption status, job assignments, and compensation
@@ -381,7 +339,6 @@ class TeamMember implements \JsonSerializable
     {
         $this->wageSetting = $wageSetting;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -390,50 +347,49 @@ class TeamMember implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                 = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->referenceId)) {
-            $json['reference_id']       = $this->referenceId['value'];
+            $json['reference_id'] = $this->referenceId['value'];
         }
         if (isset($this->isOwner)) {
-            $json['is_owner']           = $this->isOwner;
+            $json['is_owner'] = $this->isOwner;
         }
         if (isset($this->status)) {
-            $json['status']             = $this->status;
+            $json['status'] = $this->status;
         }
         if (!empty($this->givenName)) {
-            $json['given_name']         = $this->givenName['value'];
+            $json['given_name'] = $this->givenName['value'];
         }
         if (!empty($this->familyName)) {
-            $json['family_name']        = $this->familyName['value'];
+            $json['family_name'] = $this->familyName['value'];
         }
         if (!empty($this->emailAddress)) {
-            $json['email_address']      = $this->emailAddress['value'];
+            $json['email_address'] = $this->emailAddress['value'];
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']       = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']         = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']         = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->assignedLocations)) {
             $json['assigned_locations'] = $this->assignedLocations;
         }
         if (isset($this->wageSetting)) {
-            $json['wage_setting']       = $this->wageSetting;
+            $json['wage_setting'] = $this->wageSetting;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

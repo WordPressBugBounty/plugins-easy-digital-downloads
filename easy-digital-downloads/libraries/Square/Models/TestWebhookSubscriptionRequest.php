@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Tests a [Subscription]($m/WebhookSubscription) by sending a test event to its notification URL.
  */
@@ -15,7 +13,6 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
      * @var array
      */
     private $eventType = [];
-
     /**
      * Returns Event Type.
      * The event type that will be used to test the [Subscription](entity:WebhookSubscription). The event
@@ -29,7 +26,6 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
         }
         return $this->eventType['value'];
     }
-
     /**
      * Sets Event Type.
      * The event type that will be used to test the [Subscription](entity:WebhookSubscription). The event
@@ -42,7 +38,6 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->eventType['value'] = $eventType;
     }
-
     /**
      * Unsets Event Type.
      * The event type that will be used to test the [Subscription](entity:WebhookSubscription). The event
@@ -53,7 +48,6 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->eventType = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -62,7 +56,7 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -72,7 +66,6 @@ class TestWebhookSubscriptionRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

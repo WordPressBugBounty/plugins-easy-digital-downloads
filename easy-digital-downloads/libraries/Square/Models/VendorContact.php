@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a contact of a [Vendor]($m/Vendor).
  */
@@ -15,32 +13,26 @@ class VendorContact implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * @var array
      */
     private $phoneNumber = [];
-
     /**
      * @var array
      */
     private $removed = [];
-
     /**
      * @var int
      */
     private $ordinal;
-
     /**
      * @param int $ordinal
      */
@@ -48,7 +40,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->ordinal = $ordinal;
     }
-
     /**
      * Returns Id.
      * A unique Square-generated ID for the [VendorContact](entity:VendorContact).
@@ -58,7 +49,6 @@ class VendorContact implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * A unique Square-generated ID for the [VendorContact](entity:VendorContact).
@@ -70,7 +60,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Name.
      * The name of the [VendorContact](entity:VendorContact).
@@ -83,7 +72,6 @@ class VendorContact implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the [VendorContact](entity:VendorContact).
@@ -95,7 +83,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the [VendorContact](entity:VendorContact).
@@ -105,7 +92,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Email Address.
      * The email address of the [VendorContact](entity:VendorContact).
@@ -117,7 +103,6 @@ class VendorContact implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * The email address of the [VendorContact](entity:VendorContact).
@@ -128,7 +113,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * The email address of the [VendorContact](entity:VendorContact).
@@ -137,7 +121,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Returns Phone Number.
      * The phone number of the [VendorContact](entity:VendorContact).
@@ -149,7 +132,6 @@ class VendorContact implements \JsonSerializable
         }
         return $this->phoneNumber['value'];
     }
-
     /**
      * Sets Phone Number.
      * The phone number of the [VendorContact](entity:VendorContact).
@@ -160,7 +142,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->phoneNumber['value'] = $phoneNumber;
     }
-
     /**
      * Unsets Phone Number.
      * The phone number of the [VendorContact](entity:VendorContact).
@@ -169,7 +150,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->phoneNumber = [];
     }
-
     /**
      * Returns Removed.
      * The state of the [VendorContact](entity:VendorContact).
@@ -181,7 +161,6 @@ class VendorContact implements \JsonSerializable
         }
         return $this->removed['value'];
     }
-
     /**
      * Sets Removed.
      * The state of the [VendorContact](entity:VendorContact).
@@ -192,7 +171,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->removed['value'] = $removed;
     }
-
     /**
      * Unsets Removed.
      * The state of the [VendorContact](entity:VendorContact).
@@ -201,7 +179,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->removed = [];
     }
-
     /**
      * Returns Ordinal.
      * The ordinal of the [VendorContact](entity:VendorContact).
@@ -210,7 +187,6 @@ class VendorContact implements \JsonSerializable
     {
         return $this->ordinal;
     }
-
     /**
      * Sets Ordinal.
      * The ordinal of the [VendorContact](entity:VendorContact).
@@ -222,7 +198,6 @@ class VendorContact implements \JsonSerializable
     {
         $this->ordinal = $ordinal;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -231,30 +206,29 @@ class VendorContact implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']            = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->name)) {
-            $json['name']          = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->emailAddress)) {
             $json['email_address'] = $this->emailAddress['value'];
         }
         if (!empty($this->phoneNumber)) {
-            $json['phone_number']  = $this->phoneNumber['value'];
+            $json['phone_number'] = $this->phoneNumber['value'];
         }
         if (!empty($this->removed)) {
-            $json['removed']       = $this->removed['value'];
+            $json['removed'] = $this->removed['value'];
         }
-        $json['ordinal']           = $this->ordinal;
+        $json['ordinal'] = $this->ordinal;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

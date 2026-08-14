@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in requests to the
  * [CloneOrder]($e/Orders/CloneOrder) endpoint.
@@ -16,17 +14,14 @@ class CloneOrderRequest implements \JsonSerializable
      * @var string
      */
     private $orderId;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $idempotencyKey = [];
-
     /**
      * @param string $orderId
      */
@@ -34,7 +29,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         $this->orderId = $orderId;
     }
-
     /**
      * Returns Order Id.
      * The ID of the order to clone.
@@ -43,7 +37,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         return $this->orderId;
     }
-
     /**
      * Sets Order Id.
      * The ID of the order to clone.
@@ -55,7 +48,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         $this->orderId = $orderId;
     }
-
     /**
      * Returns Version.
      * An optional order version for concurrency protection.
@@ -67,7 +59,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * An optional order version for concurrency protection.
@@ -81,7 +72,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Idempotency Key.
      * A value you specify that uniquely identifies this clone request.
@@ -101,7 +91,6 @@ class CloneOrderRequest implements \JsonSerializable
         }
         return $this->idempotencyKey['value'];
     }
-
     /**
      * Sets Idempotency Key.
      * A value you specify that uniquely identifies this clone request.
@@ -120,7 +109,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey['value'] = $idempotencyKey;
     }
-
     /**
      * Unsets Idempotency Key.
      * A value you specify that uniquely identifies this clone request.
@@ -137,7 +125,6 @@ class CloneOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -146,13 +133,13 @@ class CloneOrderRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['order_id']            = $this->orderId;
+        $json['order_id'] = $this->orderId;
         if (isset($this->version)) {
-            $json['version']         = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->idempotencyKey)) {
             $json['idempotency_key'] = $this->idempotencyKey['value'];
@@ -160,7 +147,6 @@ class CloneOrderRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

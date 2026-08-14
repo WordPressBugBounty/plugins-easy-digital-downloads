@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The origination details of the subscription.
  */
@@ -15,7 +13,6 @@ class SubscriptionSource implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * Returns Name.
      * The name used to identify the place (physical or digital) that
@@ -29,7 +26,6 @@ class SubscriptionSource implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name used to identify the place (physical or digital) that
@@ -42,7 +38,6 @@ class SubscriptionSource implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name used to identify the place (physical or digital) that
@@ -53,7 +48,6 @@ class SubscriptionSource implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -62,7 +56,7 @@ class SubscriptionSource implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -72,7 +66,6 @@ class SubscriptionSource implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -18,6 +18,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Database\Queries\PaymentToken as PaymentTokenQuery;
 use EDD\Database\Rows\PaymentToken;
+use EDD\Gateways\PayPal\BrandName;
 use EDD\Gateways\PayPal\CommerceVersion;
 use EDD\Gateways\PayPal\Gateway;
 
@@ -76,13 +77,9 @@ class Vault {
 			),
 		);
 
-		// Display the store name on the PayPal approval popup. Without this
-		// PayPal falls back to the merchant account's display name from
-		// PayPal settings, which can differ from the WP site name and looks
-		// inconsistent next to the vault-with-purchase flow.
-		if ( ! empty( $args['brand_name'] ) ) {
-			$body['payment_source']['paypal']['experience_context']['brand_name'] = sanitize_text_field( $args['brand_name'] );
-		}
+		// Always required — PayPal rejects an empty string with INVALID_STRING_LENGTH.
+		$brand_name = ! empty( $args['brand_name'] ) ? $args['brand_name'] : BrandName::get();
+		$body['payment_source']['paypal']['experience_context']['brand_name'] = sanitize_text_field( $brand_name );
 
 		// Attach a billing_plan so the buyer sees what they're agreeing to
 		// (trial period + future recurring amount). Mirrors the same field

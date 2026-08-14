@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A collection of various money amounts.
  */
@@ -15,27 +13,22 @@ class OrderMoneyAmounts implements \JsonSerializable
      * @var Money|null
      */
     private $totalMoney;
-
     /**
      * @var Money|null
      */
     private $taxMoney;
-
     /**
      * @var Money|null
      */
     private $discountMoney;
-
     /**
      * @var Money|null
      */
     private $tipMoney;
-
     /**
      * @var Money|null
      */
     private $serviceChargeMoney;
-
     /**
      * Returns Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -50,7 +43,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         return $this->totalMoney;
     }
-
     /**
      * Sets Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -67,7 +59,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         $this->totalMoney = $totalMoney;
     }
-
     /**
      * Returns Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -82,7 +73,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         return $this->taxMoney;
     }
-
     /**
      * Sets Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -99,7 +89,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         $this->taxMoney = $taxMoney;
     }
-
     /**
      * Returns Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -114,7 +103,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         return $this->discountMoney;
     }
-
     /**
      * Sets Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -131,7 +119,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         $this->discountMoney = $discountMoney;
     }
-
     /**
      * Returns Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -146,7 +133,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         return $this->tipMoney;
     }
-
     /**
      * Sets Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -163,7 +149,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         $this->tipMoney = $tipMoney;
     }
-
     /**
      * Returns Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -178,7 +163,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         return $this->serviceChargeMoney;
     }
-
     /**
      * Sets Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -195,7 +179,6 @@ class OrderMoneyAmounts implements \JsonSerializable
     {
         $this->serviceChargeMoney = $serviceChargeMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -204,21 +187,21 @@ class OrderMoneyAmounts implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->totalMoney)) {
-            $json['total_money']          = $this->totalMoney;
+            $json['total_money'] = $this->totalMoney;
         }
         if (isset($this->taxMoney)) {
-            $json['tax_money']            = $this->taxMoney;
+            $json['tax_money'] = $this->taxMoney;
         }
         if (isset($this->discountMoney)) {
-            $json['discount_money']       = $this->discountMoney;
+            $json['discount_money'] = $this->discountMoney;
         }
         if (isset($this->tipMoney)) {
-            $json['tip_money']            = $this->tipMoney;
+            $json['tip_money'] = $this->tipMoney;
         }
         if (isset($this->serviceChargeMoney)) {
             $json['service_charge_money'] = $this->serviceChargeMoney;
@@ -226,7 +209,6 @@ class OrderMoneyAmounts implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

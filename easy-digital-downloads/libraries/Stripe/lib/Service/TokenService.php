@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -29,7 +28,6 @@ class TokenService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/tokens', $params, $opts);
     }
-
     /**
      * Retrieves the token with the given ID.
      *

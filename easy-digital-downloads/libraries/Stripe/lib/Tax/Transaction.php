@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Tax;
 
 /**
@@ -29,10 +28,8 @@ namespace EDD\Vendor\Stripe\Tax;
 class Transaction extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'tax.transaction';
-
     const TYPE_REVERSAL = 'reversal';
     const TYPE_TRANSACTION = 'transaction';
-
     /**
      * Retrieves a Tax <code>Transaction</code> object.
      *
@@ -48,10 +45,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -66,10 +61,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -84,10 +77,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param string $id
      * @param null|array $params
@@ -103,7 +94,6 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

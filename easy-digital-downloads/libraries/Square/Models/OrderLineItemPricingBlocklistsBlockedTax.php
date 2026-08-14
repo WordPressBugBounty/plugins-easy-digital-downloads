@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A tax to block from applying to a line item. The tax must be
  * identified by either `tax_uid` or `tax_catalog_object_id`, but not both.
@@ -16,17 +14,14 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $taxUid = [];
-
     /**
      * @var array
      */
     private $taxCatalogObjectId = [];
-
     /**
      * Returns Uid.
      * A unique ID of the `BlockedTax` within the order.
@@ -38,7 +33,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID of the `BlockedTax` within the order.
@@ -49,7 +43,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID of the `BlockedTax` within the order.
@@ -58,7 +51,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Tax Uid.
      * The `uid` of the tax that should be blocked. Use this field to block
@@ -71,7 +63,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
         }
         return $this->taxUid['value'];
     }
-
     /**
      * Sets Tax Uid.
      * The `uid` of the tax that should be blocked. Use this field to block
@@ -83,7 +74,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->taxUid['value'] = $taxUid;
     }
-
     /**
      * Unsets Tax Uid.
      * The `uid` of the tax that should be blocked. Use this field to block
@@ -93,7 +83,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->taxUid = [];
     }
-
     /**
      * Returns Tax Catalog Object Id.
      * The `catalog_object_id` of the tax that should be blocked.
@@ -107,7 +96,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
         }
         return $this->taxCatalogObjectId['value'];
     }
-
     /**
      * Sets Tax Catalog Object Id.
      * The `catalog_object_id` of the tax that should be blocked.
@@ -120,7 +108,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->taxCatalogObjectId['value'] = $taxCatalogObjectId;
     }
-
     /**
      * Unsets Tax Catalog Object Id.
      * The `catalog_object_id` of the tax that should be blocked.
@@ -131,7 +118,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
     {
         $this->taxCatalogObjectId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -140,15 +126,15 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                   = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->taxUid)) {
-            $json['tax_uid']               = $this->taxUid['value'];
+            $json['tax_uid'] = $this->taxUid['value'];
         }
         if (!empty($this->taxCatalogObjectId)) {
             $json['tax_catalog_object_id'] = $this->taxCatalogObjectId['value'];
@@ -156,7 +142,6 @@ class OrderLineItemPricingBlocklistsBlockedTax implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

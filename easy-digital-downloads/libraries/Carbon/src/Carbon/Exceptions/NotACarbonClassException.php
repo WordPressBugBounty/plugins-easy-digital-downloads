@@ -1,20 +1,18 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Exceptions;
 
 use EDD\Vendor\Carbon\CarbonInterface;
 use InvalidArgumentException as BaseInvalidArgumentException;
 use Throwable;
-
 class NotACarbonClassException extends BaseInvalidArgumentException implements InvalidArgumentException
 {
     /**
@@ -23,7 +21,6 @@ class NotACarbonClassException extends BaseInvalidArgumentException implements I
      * @var string
      */
     protected $className;
-
     /**
      * Constructor.
      *
@@ -34,10 +31,8 @@ class NotACarbonClassException extends BaseInvalidArgumentException implements I
     public function __construct($className, $code = 0, ?Throwable $previous = null)
     {
         $this->className = $className;
-
         parent::__construct(\sprintf('Given class does not implement %s: %s', CarbonInterface::class, $className), $code, $previous);
     }
-
     /**
      * Get the className.
      *

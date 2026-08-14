@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * SEO data for for a seller's EDD\Vendor\Square Online store.
+ * SEO data for for a seller's Square Online store.
  */
 class CatalogEcomSeoData implements \JsonSerializable
 {
@@ -15,20 +13,17 @@ class CatalogEcomSeoData implements \JsonSerializable
      * @var array
      */
     private $pageTitle = [];
-
     /**
      * @var array
      */
     private $pageDescription = [];
-
     /**
      * @var array
      */
     private $permalink = [];
-
     /**
      * Returns Page Title.
-     * The SEO title used for the EDD\Vendor\Square Online store.
+     * The SEO title used for the Square Online store.
      */
     public function getPageTitle(): ?string
     {
@@ -37,10 +32,9 @@ class CatalogEcomSeoData implements \JsonSerializable
         }
         return $this->pageTitle['value'];
     }
-
     /**
      * Sets Page Title.
-     * The SEO title used for the EDD\Vendor\Square Online store.
+     * The SEO title used for the Square Online store.
      *
      * @maps page_title
      */
@@ -48,19 +42,17 @@ class CatalogEcomSeoData implements \JsonSerializable
     {
         $this->pageTitle['value'] = $pageTitle;
     }
-
     /**
      * Unsets Page Title.
-     * The SEO title used for the EDD\Vendor\Square Online store.
+     * The SEO title used for the Square Online store.
      */
     public function unsetPageTitle(): void
     {
         $this->pageTitle = [];
     }
-
     /**
      * Returns Page Description.
-     * The SEO description used for the EDD\Vendor\Square Online store.
+     * The SEO description used for the Square Online store.
      */
     public function getPageDescription(): ?string
     {
@@ -69,10 +61,9 @@ class CatalogEcomSeoData implements \JsonSerializable
         }
         return $this->pageDescription['value'];
     }
-
     /**
      * Sets Page Description.
-     * The SEO description used for the EDD\Vendor\Square Online store.
+     * The SEO description used for the Square Online store.
      *
      * @maps page_description
      */
@@ -80,19 +71,17 @@ class CatalogEcomSeoData implements \JsonSerializable
     {
         $this->pageDescription['value'] = $pageDescription;
     }
-
     /**
      * Unsets Page Description.
-     * The SEO description used for the EDD\Vendor\Square Online store.
+     * The SEO description used for the Square Online store.
      */
     public function unsetPageDescription(): void
     {
         $this->pageDescription = [];
     }
-
     /**
      * Returns Permalink.
-     * The SEO permalink used for the EDD\Vendor\Square Online store.
+     * The SEO permalink used for the Square Online store.
      */
     public function getPermalink(): ?string
     {
@@ -101,10 +90,9 @@ class CatalogEcomSeoData implements \JsonSerializable
         }
         return $this->permalink['value'];
     }
-
     /**
      * Sets Permalink.
-     * The SEO permalink used for the EDD\Vendor\Square Online store.
+     * The SEO permalink used for the Square Online store.
      *
      * @maps permalink
      */
@@ -112,16 +100,14 @@ class CatalogEcomSeoData implements \JsonSerializable
     {
         $this->permalink['value'] = $permalink;
     }
-
     /**
      * Unsets Permalink.
-     * The SEO permalink used for the EDD\Vendor\Square Online store.
+     * The SEO permalink used for the Square Online store.
      */
     public function unsetPermalink(): void
     {
         $this->permalink = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -130,23 +116,22 @@ class CatalogEcomSeoData implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->pageTitle)) {
-            $json['page_title']       = $this->pageTitle['value'];
+            $json['page_title'] = $this->pageTitle['value'];
         }
         if (!empty($this->pageDescription)) {
             $json['page_description'] = $this->pageDescription['value'];
         }
         if (!empty($this->permalink)) {
-            $json['permalink']        = $this->permalink['value'];
+            $json['permalink'] = $this->permalink['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

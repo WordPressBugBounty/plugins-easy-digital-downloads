@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class ReceivedDebitService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/received_debits', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing ReceivedDebit by passing the unique
      * ReceivedDebit ID from the ReceivedDebit list.

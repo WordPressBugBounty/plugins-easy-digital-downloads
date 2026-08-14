@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Terminal;
 
 /**
@@ -11,7 +10,7 @@ namespace EDD\Vendor\Stripe\Service\Terminal;
 class ConnectionTokenService extends \EDD\Vendor\Stripe\Service\AbstractService
 {
     /**
-     * To connect to a reader the EDD\Vendor\Stripe Terminal SDK needs to retrieve a short-lived
+     * To connect to a reader the Stripe Terminal SDK needs to retrieve a short-lived
      * connection token from Stripe, proxied through your server. On your backend, add
      * an endpoint that creates and returns a connection token.
      *

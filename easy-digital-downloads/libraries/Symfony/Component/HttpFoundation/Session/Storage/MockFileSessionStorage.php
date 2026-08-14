@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage;
 
 /**
@@ -26,7 +25,6 @@ namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage;
 class MockFileSessionStorage extends MockArraySessionStorage
 {
     private $savePath;
-
     /**
      * @param string|null $savePath Path of directory to save session files
      */
@@ -35,16 +33,12 @@ class MockFileSessionStorage extends MockArraySessionStorage
         if (null === $savePath) {
             $savePath = sys_get_temp_dir();
         }
-
         if (!is_dir($savePath) && !@mkdir($savePath, 0777, true) && !is_dir($savePath)) {
             throw new \RuntimeException(sprintf('Session Storage was not able to create directory "%s".', $savePath));
         }
-
         $this->savePath = $savePath;
-
         parent::__construct($name, $metaBag);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -53,18 +47,13 @@ class MockFileSessionStorage extends MockArraySessionStorage
         if ($this->started) {
             return true;
         }
-
         if (!$this->id) {
             $this->id = $this->generateId();
         }
-
         $this->read();
-
         $this->started = true;
-
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -73,14 +62,11 @@ class MockFileSessionStorage extends MockArraySessionStorage
         if (!$this->started) {
             $this->start();
         }
-
         if ($destroy) {
             $this->destroy();
         }
-
         return parent::regenerate($destroy, $lifetime);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -89,9 +75,7 @@ class MockFileSessionStorage extends MockArraySessionStorage
         if (!$this->started) {
             throw new \RuntimeException('Trying to save a session that was not started yet or was already closed.');
         }
-
         $data = $this->data;
-
         foreach ($this->bags as $bag) {
             if (empty($data[$key = $bag->getStorageKey()])) {
                 unset($data[$key]);
@@ -100,11 +84,10 @@ class MockFileSessionStorage extends MockArraySessionStorage
         if ([$key = $this->metadataBag->getStorageKey()] === array_keys($data)) {
             unset($data[$key]);
         }
-
         try {
             if ($data) {
                 $path = $this->getFilePath();
-                $tmp = $path.bin2hex(random_bytes(6));
+                $tmp = $path . bin2hex(random_bytes(6));
                 file_put_contents($tmp, serialize($data));
                 rename($tmp, $path);
             } else {
@@ -113,48 +96,44 @@ class MockFileSessionStorage extends MockArraySessionStorage
         } finally {
             $this->data = $data;
         }
-
         // this is needed when the session object is re-used across multiple requests
         // in functional tests.
         $this->started = false;
     }
-
     /**
      * Deletes a session from persistent storage.
      * Deliberately leaves session data in memory intact.
      */
     private function destroy(): void
     {
-        set_error_handler(static function () {});
+        set_error_handler(static function () {
+        });
         try {
             unlink($this->getFilePath());
         } finally {
             restore_error_handler();
         }
     }
-
     /**
      * Calculate path to file.
      */
     private function getFilePath(): string
     {
-        return $this->savePath.'/'.$this->id.'.mocksess';
+        return $this->savePath . '/' . $this->id . '.mocksess';
     }
-
     /**
      * Reads session from storage and loads session.
      */
     private function read(): void
     {
-        set_error_handler(static function () {});
+        set_error_handler(static function () {
+        });
         try {
             $data = file_get_contents($this->getFilePath());
         } finally {
             restore_error_handler();
         }
-
         $this->data = $data ? unserialize($data) : [];
-
         $this->loadSession();
     }
 }

@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Represents a refund processed for a EDD\Vendor\Square transaction.
+ * Represents a refund processed for a Square transaction.
  */
 class Refund implements \JsonSerializable
 {
@@ -15,52 +13,42 @@ class Refund implements \JsonSerializable
      * @var string
      */
     private $id;
-
     /**
      * @var string
      */
     private $locationId;
-
     /**
      * @var array
      */
     private $transactionId = [];
-
     /**
      * @var string
      */
     private $tenderId;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string
      */
     private $reason;
-
     /**
      * @var Money
      */
     private $amountMoney;
-
     /**
      * @var string
      */
     private $status;
-
     /**
      * @var Money|null
      */
     private $processingFeeMoney;
-
     /**
      * @var array
      */
     private $additionalRecipients = [];
-
     /**
      * @param string $id
      * @param string $locationId
@@ -69,14 +57,8 @@ class Refund implements \JsonSerializable
      * @param Money $amountMoney
      * @param string $status
      */
-    public function __construct(
-        string $id,
-        string $locationId,
-        string $tenderId,
-        string $reason,
-        Money $amountMoney,
-        string $status
-    ) {
+    public function __construct(string $id, string $locationId, string $tenderId, string $reason, Money $amountMoney, string $status)
+    {
         $this->id = $id;
         $this->locationId = $locationId;
         $this->tenderId = $tenderId;
@@ -84,7 +66,6 @@ class Refund implements \JsonSerializable
         $this->amountMoney = $amountMoney;
         $this->status = $status;
     }
-
     /**
      * Returns Id.
      * The refund's unique ID.
@@ -93,7 +74,6 @@ class Refund implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The refund's unique ID.
@@ -105,7 +85,6 @@ class Refund implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Location Id.
      * The ID of the refund's associated location.
@@ -114,7 +93,6 @@ class Refund implements \JsonSerializable
     {
         return $this->locationId;
     }
-
     /**
      * Sets Location Id.
      * The ID of the refund's associated location.
@@ -126,7 +104,6 @@ class Refund implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Transaction Id.
      * The ID of the transaction that the refunded tender is part of.
@@ -138,7 +115,6 @@ class Refund implements \JsonSerializable
         }
         return $this->transactionId['value'];
     }
-
     /**
      * Sets Transaction Id.
      * The ID of the transaction that the refunded tender is part of.
@@ -149,7 +125,6 @@ class Refund implements \JsonSerializable
     {
         $this->transactionId['value'] = $transactionId;
     }
-
     /**
      * Unsets Transaction Id.
      * The ID of the transaction that the refunded tender is part of.
@@ -158,7 +133,6 @@ class Refund implements \JsonSerializable
     {
         $this->transactionId = [];
     }
-
     /**
      * Returns Tender Id.
      * The ID of the refunded tender.
@@ -167,7 +141,6 @@ class Refund implements \JsonSerializable
     {
         return $this->tenderId;
     }
-
     /**
      * Sets Tender Id.
      * The ID of the refunded tender.
@@ -179,7 +152,6 @@ class Refund implements \JsonSerializable
     {
         $this->tenderId = $tenderId;
     }
-
     /**
      * Returns Created At.
      * The timestamp for when the refund was created, in RFC 3339 format.
@@ -188,7 +160,6 @@ class Refund implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp for when the refund was created, in RFC 3339 format.
@@ -199,7 +170,6 @@ class Refund implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Reason.
      * The reason for the refund being issued.
@@ -208,7 +178,6 @@ class Refund implements \JsonSerializable
     {
         return $this->reason;
     }
-
     /**
      * Sets Reason.
      * The reason for the refund being issued.
@@ -220,7 +189,6 @@ class Refund implements \JsonSerializable
     {
         $this->reason = $reason;
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -235,7 +203,6 @@ class Refund implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -253,7 +220,6 @@ class Refund implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Status.
      * Indicates a refund's current status.
@@ -262,7 +228,6 @@ class Refund implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Indicates a refund's current status.
@@ -274,7 +239,6 @@ class Refund implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Processing Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -289,7 +253,6 @@ class Refund implements \JsonSerializable
     {
         return $this->processingFeeMoney;
     }
-
     /**
      * Sets Processing Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -306,7 +269,6 @@ class Refund implements \JsonSerializable
     {
         $this->processingFeeMoney = $processingFeeMoney;
     }
-
     /**
      * Returns Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this refund.
@@ -321,7 +283,6 @@ class Refund implements \JsonSerializable
         }
         return $this->additionalRecipients['value'];
     }
-
     /**
      * Sets Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this refund.
@@ -335,7 +296,6 @@ class Refund implements \JsonSerializable
     {
         $this->additionalRecipients['value'] = $additionalRecipients;
     }
-
     /**
      * Unsets Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this refund.
@@ -345,7 +305,6 @@ class Refund implements \JsonSerializable
     {
         $this->additionalRecipients = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -354,24 +313,24 @@ class Refund implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['id']                        = $this->id;
-        $json['location_id']               = $this->locationId;
+        $json['id'] = $this->id;
+        $json['location_id'] = $this->locationId;
         if (!empty($this->transactionId)) {
-            $json['transaction_id']        = $this->transactionId['value'];
+            $json['transaction_id'] = $this->transactionId['value'];
         }
-        $json['tender_id']                 = $this->tenderId;
+        $json['tender_id'] = $this->tenderId;
         if (isset($this->createdAt)) {
-            $json['created_at']            = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
-        $json['reason']                    = $this->reason;
-        $json['amount_money']              = $this->amountMoney;
-        $json['status']                    = $this->status;
+        $json['reason'] = $this->reason;
+        $json['amount_money'] = $this->amountMoney;
+        $json['status'] = $this->status;
         if (isset($this->processingFeeMoney)) {
-            $json['processing_fee_money']  = $this->processingFeeMoney;
+            $json['processing_fee_money'] = $this->processingFeeMoney;
         }
         if (!empty($this->additionalRecipients)) {
             $json['additional_recipients'] = $this->additionalRecipients['value'];
@@ -379,7 +338,6 @@ class Refund implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,26 +1,23 @@
 <?php
+
 namespace EDD\Vendor\Rs\Json;
 
 use EDD\Vendor\Rs\Json\Pointer\InvalidJsonException;
 use EDD\Vendor\Rs\Json\Pointer\InvalidPointerException;
 use EDD\Vendor\Rs\Json\Pointer\NonexistentValueReferencedException;
 use EDD\Vendor\Rs\Json\Pointer\NonWalkableJsonException;
-
 class Pointer
 {
     const POINTER_CHAR = '/';
     const LAST_ARRAY_ELEMENT_CHAR = '-';
-
     /**
      * @var array
      */
     private $json;
-
     /**
      * @var string
      */
     private $pointer;
-
     /**
      * @param  string $json The Json structure to point through.
      * @throws \EDD\Vendor\Rs\Json\Pointer\InvalidJsonException
@@ -29,16 +26,13 @@ class Pointer
     public function __construct($json)
     {
         $this->json = json_decode($json);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidJsonException('Cannot operate on invalid Json.');
         }
-
         if (!$this->isWalkableJson()) {
             throw new NonWalkableJsonException('Non walkable Json to point through');
         }
     }
-
     /**
      * @param  string $pointer The Json Pointer.
      * @throws \EDD\Vendor\Rs\Json\Pointer\InvalidPointerException
@@ -53,18 +47,11 @@ class Pointer
             // workaround for https://bugs.php.net/bug.php?id=46600
             return str_replace('"_empty_"', '""', $output);
         }
-
         $this->validatePointer($pointer);
-
         $this->pointer = $pointer;
-
-        $plainPointerParts = array_slice(
-            array_map('urldecode', explode('/', $pointer)),
-            1
-        );
+        $plainPointerParts = array_slice(array_map('urldecode', explode('/', $pointer)), 1);
         return $this->traverse($this->json, $this->evaluatePointerParts($plainPointerParts));
     }
-
     /**
      * @return string
      */
@@ -72,7 +59,6 @@ class Pointer
     {
         return $this->pointer;
     }
-
     /**
      * @param  array|\stdClass $json The json_decoded Json structure.
      * @param  array $pointerParts   The parts of the fed pointer.
@@ -84,7 +70,6 @@ class Pointer
     private function traverse(&$json, array $pointerParts)
     {
         $pointerPart = array_shift($pointerParts);
-
         if (is_array($json) && isset($json[$pointerPart])) {
             if (count($pointerParts) === 0) {
                 return $json[$pointerPart];
@@ -114,13 +99,9 @@ class Pointer
         } elseif (is_array($json) && array_key_exists($pointerPart, $json) && $json[$pointerPart] === null) {
             return $json[$pointerPart];
         }
-        $exceptionMessage = sprintf(
-            "Json Pointer '%s' references a nonexistent value",
-            $this->getPointer()
-        );
+        $exceptionMessage = sprintf("Json Pointer '%s' references a nonexistent value", $this->getPointer());
         throw new NonexistentValueReferencedException($exceptionMessage);
     }
-
     /**
      * @return boolean
      */
@@ -131,7 +112,6 @@ class Pointer
         }
         return false;
     }
-
     /**
      * @param  string $pointer The Json Pointer to validate.
      * @throws \EDD\Vendor\Rs\Json\Pointer\InvalidPointerException
@@ -141,14 +121,11 @@ class Pointer
         if ($pointer !== '' && !is_string($pointer)) {
             throw new InvalidPointerException('Pointer is not a string');
         }
-
         $firstPointerCharacter = substr($pointer, 0, 1);
-
         if ($firstPointerCharacter !== self::POINTER_CHAR) {
             throw new InvalidPointerException('Pointer starts with invalid character');
         }
     }
-
     /**
      * @param  array $pointerParts The Json Pointer parts to evaluate.
      *
@@ -158,7 +135,6 @@ class Pointer
     {
         $searchables = array('~1', '~0');
         $evaluations = array('/', '~');
-
         $parts = array();
         array_filter($pointerParts, function ($v) use (&$parts, &$searchables, &$evaluations) {
             return $parts[] = str_replace($searchables, $evaluations, $v);

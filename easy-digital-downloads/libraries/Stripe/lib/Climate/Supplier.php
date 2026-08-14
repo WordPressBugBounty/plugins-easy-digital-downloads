@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Climate;
 
 /**
@@ -18,11 +17,9 @@ namespace EDD\Vendor\Stripe\Climate;
 class Supplier extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'climate.supplier';
-
     const REMOVAL_PATHWAY_BIOMASS_CARBON_REMOVAL_AND_STORAGE = 'biomass_carbon_removal_and_storage';
     const REMOVAL_PATHWAY_DIRECT_AIR_CAPTURE = 'direct_air_capture';
     const REMOVAL_PATHWAY_ENHANCED_WEATHERING = 'enhanced_weathering';
-
     /**
      * Lists all available Climate supplier objects.
      *
@@ -36,10 +33,8 @@ class Supplier extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a Climate supplier object.
      *
@@ -55,7 +50,6 @@ class Supplier extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

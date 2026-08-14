@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * <code>ExchangeRate</code> objects allow you to determine the rates that EDD\Vendor\Stripe is currently
+ * <code>ExchangeRate</code> objects allow you to determine the rates that Stripe is currently
  * using to convert from one currency to another. Since this number is variable
  * throughout the day, there are various reasons why you might want to know the current
  * rate (for example, to dynamically price an item for a user with a default
@@ -26,11 +25,11 @@ namespace EDD\Vendor\Stripe;
  * <em>This Exchange Rates API is a Beta Service and is subject to Stripe's terms of service. You may use the API solely for the purpose of transacting on Stripe. For example, the API may be queried in order to:</em>
  *
  * - <em>localize prices for processing payments on Stripe</em>
- * - <em>reconcile EDD\Vendor\Stripe transactions</em>
+ * - <em>reconcile Stripe transactions</em>
  * - <em>determine how much money to send to a connected account</em>
  * - <em>determine app fees to charge a connected account</em>
  *
- * <em>Using this Exchange Rates API beta for any purpose other than to transact on EDD\Vendor\Stripe is strictly prohibited and constitutes a violation of Stripe's terms of service.</em>
+ * <em>Using this Exchange Rates API beta for any purpose other than to transact on Stripe is strictly prohibited and constitutes a violation of Stripe's terms of service.</em>
  *
  * @property string $id Unique identifier for the object. Represented as the three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a> in lowercase.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -39,10 +38,9 @@ namespace EDD\Vendor\Stripe;
 class ExchangeRate extends ApiResource
 {
     const OBJECT_NAME = 'exchange_rate';
-
     /**
      * Returns a list of objects that contain the rates at which foreign currencies are
-     * converted to one another. Only shows the currencies for which EDD\Vendor\Stripe supports.
+     * converted to one another. Only shows the currencies for which Stripe supports.
      *
      * @param null|array $params
      * @param null|array|string $opts
@@ -54,10 +52,8 @@ class ExchangeRate extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the exchange rates from the given currency to every supported
      * currency.
@@ -74,7 +70,6 @@ class ExchangeRate extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

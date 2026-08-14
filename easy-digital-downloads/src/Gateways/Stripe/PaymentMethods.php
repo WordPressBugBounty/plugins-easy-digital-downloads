@@ -54,7 +54,7 @@ class PaymentMethods {
 	public static function get_legacy_methods() {
 		return array(
 			// Sofort was deprecated by Stripe and replaced with Klarna.
-			// @see https://docs.stripe.com/payments/sofort/replace
+			// @see https://docs.stripe.com/payments/sofort/replace.
 			'sofort' => __( 'Sofort (Legacy)', 'easy-digital-downloads' ),
 		);
 	}
@@ -167,36 +167,32 @@ class PaymentMethods {
 	}
 
 	/**
-	 * Checks if the Affirm payment method is supported.
+	 * Checks whether any available payment method requires a billing address.
 	 *
-	 * @since 3.3.5
-	 * @return bool True if the Affirm payment method is supported, false otherwise.
+	 * Any payment method that declares $requires_billing_address forces the billing
+	 * address fields on checkout when it reports itself as available for the current
+	 * checkout (see Method::is_available()).
+	 *
+	 * @since 3.7.0
+	 * @return bool True if an available, eligible payment method requires a billing address.
 	 */
-	public static function affirm_requires_support() {
+	public static function requires_billing_address() {
 		if ( 'payment-elements' !== edds_get_elements_mode() ) {
 			return false;
 		}
 
-		$affirm = self::get_payment_method( 'affirm' );
-		if ( ! $affirm ) {
-			return false;
+		foreach ( self::get_registered_methods() as $method ) {
+			$payment_method = self::get_payment_method( $method );
+			if ( ! $payment_method || ! $payment_method::$requires_billing_address ) {
+				continue;
+			}
+
+			if ( $payment_method::is_available() ) {
+				return true;
+			}
 		}
 
-		if ( ! in_array( edd_get_currency(), $affirm::$currencies, true ) ) {
-			return false;
-		}
-
-		if ( edd_get_cart_total() < 50 ) {
-			return false;
-		}
-
-		if ( function_exists( 'edd_recurring' ) && edd_recurring()->cart_contains_recurring() ) {
-			return false;
-		}
-
-		$payment_configuration = self::get_base_configuration();
-
-		return $payment_configuration && ! empty( $payment_configuration['affirm']['available'] );
+		return false;
 	}
 
 	/**
@@ -290,6 +286,7 @@ class PaymentMethods {
 			'twint',
 			'us_bank_account',
 			'wechat_pay',
+			'upi',
 		);
 	}
 
@@ -324,5 +321,24 @@ class PaymentMethods {
 		}
 
 		return $configurations;
+	}
+
+	/**
+	 * Checks if the Affirm payment method is supported.
+	 *
+	 * @since 3.3.5
+	 * @deprecated 3.7.0 Use PaymentMethods::requires_billing_address() instead.
+	 * @return bool True if the Affirm payment method is supported, false otherwise.
+	 */
+	public static function affirm_requires_support() {
+		_edd_deprecated_function( __METHOD__, '3.7.0', __CLASS__ . '::requires_billing_address' );
+
+		if ( 'payment-elements' !== edds_get_elements_mode() ) {
+			return false;
+		}
+
+		$affirm = self::get_payment_method( 'affirm' );
+
+		return $affirm && $affirm::is_available();
 	}
 }

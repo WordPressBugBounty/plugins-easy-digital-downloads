@@ -121,13 +121,50 @@ class Attributes {
 	private static function parse_attributes( $post_id ) {
 		$post   = get_post( $post_id );
 		$blocks = parse_blocks( $post->post_content );
+
+		$checkout_block = self::find_block( $blocks, 'edd/checkout' );
+		if ( ! $checkout_block ) {
+			return self::get_defaults();
+		}
+
+		$attributes = wp_parse_args( $checkout_block['attrs'] ?? array(), self::get_defaults() );
+
+		/**
+		 * Cart display attributes (show_discount_form, show_header, etc.) live on the
+		 * inner checkout-cart block, not the parent. Overlay them so AJAX re-renders
+		 * honor the cart's settings.
+		 */
+		$cart_block = self::find_block( $checkout_block['innerBlocks'] ?? array(), 'edd/checkout-cart' );
+		if ( $cart_block && ! empty( $cart_block['attrs'] ) ) {
+			return wp_parse_args( $cart_block['attrs'], $attributes );
+		}
+
+		return $attributes;
+	}
+
+	/**
+	 * Recursively locates a block by name within a list of parsed blocks.
+	 *
+	 * @since 3.7.0
+	 * @param array  $blocks     The parsed blocks to search.
+	 * @param string $block_name The block name to find.
+	 * @return array|null The matching block, or null if not found.
+	 */
+	private static function find_block( $blocks, $block_name ) {
 		foreach ( $blocks as $block ) {
-			if ( 'edd/checkout' === $block['blockName'] ) {
-				return wp_parse_args( $block['attrs'] ?? array(), self::get_defaults() );
+			if ( $block_name === $block['blockName'] ) {
+				return $block;
+			}
+
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$found = self::find_block( $block['innerBlocks'], $block_name );
+				if ( $found ) {
+					return $found;
+				}
 			}
 		}
 
-		return self::get_defaults();
+		return null;
 	}
 
 	/**

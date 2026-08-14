@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Billing;
 
 /**
@@ -19,7 +18,6 @@ namespace EDD\Vendor\Stripe\Billing;
 class MeterEvent extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'billing.meter_event';
-
     /**
      * Creates a billing meter event.
      *
@@ -34,11 +32,9 @@ class MeterEvent extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

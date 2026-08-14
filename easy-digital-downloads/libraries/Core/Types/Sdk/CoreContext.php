@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 abstract class CoreContext
 {
     protected $request;
     protected $response;
-
     /**
      * Create an instance of HttpContext for a Http Call
      *
@@ -20,12 +18,10 @@ abstract class CoreContext
         $this->request = $request;
         $this->response = $response;
     }
-
     /**
      * Returns the HTTP request
      */
     abstract public function getRequest();
-
     /**
      * Returns the HTTP response
      */

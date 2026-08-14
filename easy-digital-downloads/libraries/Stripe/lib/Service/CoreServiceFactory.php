@@ -153,9 +153,7 @@ class CoreServiceFactory extends \EDD\Vendor\Stripe\Service\AbstractServiceFacto
         'transfers' => TransferService::class,
         'treasury' => Treasury\TreasuryServiceFactory::class,
         'webhookEndpoints' => WebhookEndpointService::class,
-        // Class Map: The end of the section generated from our OpenAPI spec
     ];
-
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

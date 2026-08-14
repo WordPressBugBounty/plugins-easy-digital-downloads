@@ -97,6 +97,16 @@ class Email extends Field {
 	}
 
 	/**
+	 * Get the wrapper element ID for the shortcode context.
+	 *
+	 * @since 3.7.0
+	 * @return string
+	 */
+	protected function get_wrapper_id(): string {
+		return 'email';
+	}
+
+	/**
 	 * Whether the field is required.
 	 *
 	 * @since 3.3.9

@@ -8,14 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation;
 
 use Psr\Log\LoggerInterface;
 use EDD\Vendor\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use EDD\Vendor\Symfony\Contracts\Translation\LocaleAwareInterface;
 use EDD\Vendor\Symfony\Contracts\Translation\TranslatorInterface;
-
 /**
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
@@ -23,7 +21,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
 {
     private $translator;
     private $logger;
-
     /**
      * @param TranslatorInterface&TranslatorBagInterface&LocaleAwareInterface $translator The translator must implement TranslatorBagInterface
      */
@@ -32,11 +29,9 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
         if (!$translator instanceof TranslatorBagInterface || !$translator instanceof LocaleAwareInterface) {
             throw new InvalidArgumentException(sprintf('The Translator "%s" must implement TranslatorInterface, TranslatorBagInterface and LocaleAwareInterface.', get_debug_type($translator)));
         }
-
         $this->translator = $translator;
         $this->logger = $logger;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -44,10 +39,8 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
     {
         $trans = $this->translator->trans($id = (string) $id, $parameters, $domain, $locale);
         $this->log($id, $domain, $locale);
-
         return $trans;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -58,10 +51,8 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
         if ($prev === $locale) {
             return;
         }
-
         $this->logger->debug(sprintf('The locale of the translator has changed from "%s" to "%s".', $prev, $locale));
     }
-
     /**
      * {@inheritdoc}
      */
@@ -69,7 +60,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
     {
         return $this->translator->getLocale();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -77,7 +67,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
     {
         return $this->translator->getCatalogue($locale);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -85,7 +74,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
     {
         return $this->translator->getCatalogues();
     }
-
     /**
      * Gets the fallback locales.
      *
@@ -96,10 +84,8 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
         if ($this->translator instanceof Translator || method_exists($this->translator, 'getFallbackLocales')) {
             return $this->translator->getFallbackLocales();
         }
-
         return [];
     }
-
     /**
      * Passes through all unknown calls onto the translator object.
      */
@@ -107,7 +93,6 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
     {
         return $this->translator->{$method}(...$args);
     }
-
     /**
      * Logs for missing translations.
      */
@@ -116,12 +101,10 @@ class LoggingTranslator implements TranslatorInterface, TranslatorBagInterface, 
         if (null === $domain) {
             $domain = 'messages';
         }
-
         $catalogue = $this->translator->getCatalogue($locale);
         if ($catalogue->defines($id, $domain)) {
             return;
         }
-
         if ($catalogue->has($id, $domain)) {
             $this->logger->debug('Translation use fallback catalogue.', ['id' => $id, 'domain' => $domain, 'locale' => $catalogue->getLocale()]);
         } else {

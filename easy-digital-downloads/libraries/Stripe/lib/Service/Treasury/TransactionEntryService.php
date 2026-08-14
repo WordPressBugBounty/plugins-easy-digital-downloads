@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class TransactionEntryService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/transaction_entries', $params, $opts);
     }
-
     /**
      * Retrieves a TransactionEntry object.
      *

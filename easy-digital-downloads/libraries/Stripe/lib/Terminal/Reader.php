@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Terminal;
 
 /**
@@ -25,9 +24,7 @@ namespace EDD\Vendor\Stripe\Terminal;
 class Reader extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'terminal.reader';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const DEVICE_TYPE_BBPOS_CHIPPER2X = 'bbpos_chipper2x';
     const DEVICE_TYPE_BBPOS_WISEPAD3 = 'bbpos_wisepad3';
     const DEVICE_TYPE_BBPOS_WISEPOS_E = 'bbpos_wisepos_e';
@@ -36,10 +33,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
     const DEVICE_TYPE_STRIPE_M2 = 'stripe_m2';
     const DEVICE_TYPE_STRIPE_S700 = 'stripe_s700';
     const DEVICE_TYPE_VERIFONE_P400 = 'verifone_P400';
-
     const STATUS_OFFLINE = 'offline';
     const STATUS_ONLINE = 'online';
-
     /**
      * Creates a new <code>Reader</code> object.
      *
@@ -54,14 +49,11 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes a <code>Reader</code> object.
      *
@@ -75,14 +67,11 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of <code>Reader</code> objects.
      *
@@ -96,10 +85,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a <code>Reader</code> object.
      *
@@ -115,10 +102,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a <code>Reader</code> object by setting the values of the parameters
      * passed. Any parameters not provided will be left unchanged.
@@ -135,14 +120,11 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -156,10 +138,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/cancel_action';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -173,10 +153,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/process_payment_intent';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -190,10 +168,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/process_setup_intent';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -207,10 +183,8 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/refund_payment';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -224,7 +198,6 @@ class Reader extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/set_reader_display';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -23,7 +22,6 @@ namespace EDD\Vendor\Stripe;
 class CustomerSession extends ApiResource
 {
     const OBJECT_NAME = 'customer_session';
-
     /**
      * Creates a Customer Session object that includes a single-use client secret that
      * you can use on your front-end to grant client-side API access for certain
@@ -40,11 +38,9 @@ class CustomerSession extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Traits;
 
 use EDD\Vendor\Carbon\CarbonInterface;
@@ -18,29 +17,25 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use InvalidArgumentException;
 use Throwable;
-
 trait Test
 {
     ///////////////////////////////////////////////////////////////////
     ///////////////////////// TESTING AIDS ////////////////////////////
     ///////////////////////////////////////////////////////////////////
-
     /**
-     * A test EDD\Vendor\Carbon instance to be returned when now instances are created.
+     * A test Carbon instance to be returned when now instances are created.
      *
      * @var Closure|static|null
      */
     protected static $testNow;
-
     /**
      * The timezone to resto to when clearing the time mock.
      *
      * @var string|null
      */
     protected static $testDefaultTimezone;
-
     /**
-     * Set a EDD\Vendor\Carbon instance (real or mock) to be returned when a "now"
+     * Set a Carbon instance (real or mock) to be returned when a "now"
      * instance is created.  The provided instance will be returned
      * specifically under the following conditions:
      *   - A call to the static now() method, ex. Carbon::now()
@@ -59,17 +54,14 @@ trait Test
      *
      * /!\ Use this method for unit tests only.
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock EDD\Vendor\Carbon instance
+     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
      */
     public static function setTestNow($testNow = null)
     {
-        static::$testNow = $testNow instanceof self || $testNow instanceof Closure
-            ? $testNow
-            : static::make($testNow);
+        static::$testNow = $testNow instanceof self || $testNow instanceof Closure ? $testNow : static::make($testNow);
     }
-
     /**
-     * Set a EDD\Vendor\Carbon instance (real or mock) to be returned when a "now"
+     * Set a Carbon instance (real or mock) to be returned when a "now"
      * instance is created.  The provided instance will be returned
      * specifically under the following conditions:
      *   - A call to the static now() method, ex. Carbon::now()
@@ -85,33 +77,27 @@ trait Test
      *
      * /!\ Use this method for unit tests only.
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock EDD\Vendor\Carbon instance
+     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
      */
     public static function setTestNowAndTimezone($testNow = null, $tz = null)
     {
         if ($testNow) {
             self::$testDefaultTimezone = self::$testDefaultTimezone ?? date_default_timezone_get();
         }
-
         $useDateInstanceTimezone = $testNow instanceof DateTimeInterface;
-
         if ($useDateInstanceTimezone) {
             self::setDefaultTimezone($testNow->getTimezone()->getName(), $testNow);
         }
-
         static::setTestNow($testNow);
-
         if (!$useDateInstanceTimezone) {
             $now = static::getMockedTestNow(\func_num_args() === 1 ? null : $tz);
             $tzName = $now ? $now->tzName : null;
             self::setDefaultTimezone($tzName ?? self::$testDefaultTimezone ?? 'UTC', $now);
         }
-
         if (!$testNow) {
             self::$testDefaultTimezone = null;
         }
     }
-
     /**
      * Temporarily sets a static date to be used within the callback.
      * Using setTestNow to set the date, executing the callback, then
@@ -121,7 +107,7 @@ trait Test
      *
      * @template T
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow  real or mock EDD\Vendor\Carbon instance
+     * @param DateTimeInterface|Closure|static|string|false|null $testNow  real or mock Carbon instance
      * @param Closure(): T                                       $callback
      *
      * @return T
@@ -129,18 +115,15 @@ trait Test
     public static function withTestNow($testNow, $callback)
     {
         static::setTestNow($testNow);
-
         try {
             $result = $callback();
         } finally {
             static::setTestNow();
         }
-
         return $result;
     }
-
     /**
-     * Get the EDD\Vendor\Carbon instance (real or mock) to be returned when a "now"
+     * Get the Carbon instance (real or mock) to be returned when a "now"
      * instance is created.
      *
      * @return Closure|static the current instance used for testing
@@ -149,7 +132,6 @@ trait Test
     {
         return static::$testNow;
     }
-
     /**
      * Determine if there is a valid test instance set. A valid test instance
      * is anything that is not null.
@@ -160,7 +142,6 @@ trait Test
     {
         return static::getTestNow() !== null;
     }
-
     /**
      * Get the mocked date passed in setTestNow() and if it's a Closure, execute it.
      *
@@ -171,58 +152,34 @@ trait Test
     protected static function getMockedTestNow($tz)
     {
         $testNow = static::getTestNow();
-
         if ($testNow instanceof Closure) {
             $realNow = new DateTimeImmutable('now');
-            $testNow = $testNow(static::parse(
-                $realNow->format('Y-m-d H:i:s.u'),
-                $tz ?: $realNow->getTimezone()
-            ));
+            $testNow = $testNow(static::parse($realNow->format('Y-m-d H:i:s.u'), $tz ?: $realNow->getTimezone()));
         }
-        /* @var \EDD\Vendor\Carbon\CarbonImmutable|\EDD\Vendor\Carbon\Carbon|null $testNow */
-
-        return $testNow instanceof CarbonInterface
-            ? $testNow->avoidMutation()->tz($tz)
-            : $testNow;
+        /* @var \Carbon\CarbonImmutable|\Carbon\Carbon|null $testNow */
+        return $testNow instanceof CarbonInterface ? $testNow->avoidMutation()->tz($tz) : $testNow;
     }
-
     protected static function mockConstructorParameters(&$time, $tz)
     {
         /** @var \EDD\Vendor\Carbon\CarbonImmutable|\EDD\Vendor\Carbon\Carbon $testInstance */
         $testInstance = clone static::getMockedTestNow($tz);
-
         if (static::hasRelativeKeywords($time)) {
             $testInstance = $testInstance->modify($time);
         }
-
-        $time = $testInstance instanceof self
-            ? $testInstance->rawFormat(static::MOCK_DATETIME_FORMAT)
-            : $testInstance->format(static::MOCK_DATETIME_FORMAT);
+        $time = $testInstance instanceof self ? $testInstance->rawFormat(static::MOCK_DATETIME_FORMAT) : $testInstance->format(static::MOCK_DATETIME_FORMAT);
     }
-
     private static function setDefaultTimezone($timezone, ?DateTimeInterface $date = null)
     {
         $previous = null;
         $success = false;
-
         try {
             $success = date_default_timezone_set($timezone);
         } catch (Throwable $exception) {
             $previous = $exception;
         }
-
         if (!$success) {
             $suggestion = @CarbonTimeZone::create($timezone)->toRegionName($date);
-
-            throw new InvalidArgumentException(
-                "Timezone ID '$timezone' is invalid".
-                ($suggestion && $suggestion !== $timezone ? ", did you mean '$suggestion'?" : '.')."\n".
-                "It must be one of the IDs from DateTimeZone::listIdentifiers(),\n".
-                'For the record, hours/minutes offset are relevant only for a particular moment, '.
-                'but not as a default timezone.',
-                0,
-                $previous
-            );
+            throw new InvalidArgumentException("Timezone ID '{$timezone}' is invalid" . ($suggestion && $suggestion !== $timezone ? ", did you mean '{$suggestion}'?" : '.') . "\n" . "It must be one of the IDs from DateTimeZone::listIdentifiers(),\n" . 'For the record, hours/minutes offset are relevant only for a particular moment, ' . 'but not as a default timezone.', 0, $previous);
         }
     }
 }

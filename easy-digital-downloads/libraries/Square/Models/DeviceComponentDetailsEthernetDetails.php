@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $active = [];
-
     /**
      * @var array
      */
     private $ipAddressV4 = [];
-
     /**
      * Returns Active.
      * A boolean to represent whether the Ethernet interface is currently active.
@@ -29,7 +25,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
         }
         return $this->active['value'];
     }
-
     /**
      * Sets Active.
      * A boolean to represent whether the Ethernet interface is currently active.
@@ -40,7 +35,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
     {
         $this->active['value'] = $active;
     }
-
     /**
      * Unsets Active.
      * A boolean to represent whether the Ethernet interface is currently active.
@@ -49,7 +43,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
     {
         $this->active = [];
     }
-
     /**
      * Returns Ip Address V4.
      * The string representation of the device’s IPv4 address.
@@ -61,7 +54,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
         }
         return $this->ipAddressV4['value'];
     }
-
     /**
      * Sets Ip Address V4.
      * The string representation of the device’s IPv4 address.
@@ -72,7 +64,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
     {
         $this->ipAddressV4['value'] = $ipAddressV4;
     }
-
     /**
      * Unsets Ip Address V4.
      * The string representation of the device’s IPv4 address.
@@ -81,7 +72,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
     {
         $this->ipAddressV4 = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -90,12 +80,12 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->active)) {
-            $json['active']        = $this->active['value'];
+            $json['active'] = $this->active['value'];
         }
         if (!empty($this->ipAddressV4)) {
             $json['ip_address_v4'] = $this->ipAddressV4['value'];
@@ -103,7 +93,6 @@ class DeviceComponentDetailsEthernetDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

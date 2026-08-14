@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in requests to the
  * [PayOrder]($e/Orders/PayOrder) endpoint.
@@ -16,17 +14,14 @@ class PayOrderRequest implements \JsonSerializable
      * @var string
      */
     private $idempotencyKey;
-
     /**
      * @var array
      */
     private $orderVersion = [];
-
     /**
      * @var array
      */
     private $paymentIds = [];
-
     /**
      * @param string $idempotencyKey
      */
@@ -34,7 +29,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Idempotency Key.
      * A value you specify that uniquely identifies this request among requests you have sent. If
@@ -48,7 +42,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * A value you specify that uniquely identifies this request among requests you have sent. If
@@ -65,7 +58,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Order Version.
      * The version of the order being paid. If not supplied, the latest version will be paid.
@@ -77,7 +69,6 @@ class PayOrderRequest implements \JsonSerializable
         }
         return $this->orderVersion['value'];
     }
-
     /**
      * Sets Order Version.
      * The version of the order being paid. If not supplied, the latest version will be paid.
@@ -88,7 +79,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->orderVersion['value'] = $orderVersion;
     }
-
     /**
      * Unsets Order Version.
      * The version of the order being paid. If not supplied, the latest version will be paid.
@@ -97,7 +87,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->orderVersion = [];
     }
-
     /**
      * Returns Payment Ids.
      * The IDs of the [payments](entity:Payment) to collect.
@@ -112,7 +101,6 @@ class PayOrderRequest implements \JsonSerializable
         }
         return $this->paymentIds['value'];
     }
-
     /**
      * Sets Payment Ids.
      * The IDs of the [payments](entity:Payment) to collect.
@@ -126,7 +114,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->paymentIds['value'] = $paymentIds;
     }
-
     /**
      * Unsets Payment Ids.
      * The IDs of the [payments](entity:Payment) to collect.
@@ -136,7 +123,6 @@ class PayOrderRequest implements \JsonSerializable
     {
         $this->paymentIds = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -145,21 +131,20 @@ class PayOrderRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['idempotency_key']   = $this->idempotencyKey;
+        $json['idempotency_key'] = $this->idempotencyKey;
         if (!empty($this->orderVersion)) {
             $json['order_version'] = $this->orderVersion['value'];
         }
         if (!empty($this->paymentIds)) {
-            $json['payment_ids']   = $this->paymentIds['value'];
+            $json['payment_ids'] = $this->paymentIds['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

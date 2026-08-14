@@ -1,26 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\CoreInterfaces\Core\Request\ParamInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\TypeValidatorInterface;
 use InvalidArgumentException;
-
 class MultipleParams extends Parameter
 {
     /**
      * @var ParamInterface[]
      */
     protected $parameters;
-
     public function __construct(string $typeName)
     {
         parent::__construct('', null, $typeName);
     }
-
     /**
      * @param ParamInterface[] $parameters
      */
@@ -29,7 +25,6 @@ class MultipleParams extends Parameter
         $this->parameters = $parameters;
         return $this;
     }
-
     /**
      * Validates all parameters of the object.
      *
@@ -45,7 +40,6 @@ class MultipleParams extends Parameter
         });
         $this->validated = true;
     }
-
     /**
      * Applies all parameters to the request provided.
      */

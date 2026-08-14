@@ -76,10 +76,10 @@ class Validator {
 	 *
 	 * @since 3.3.8
 	 * @param int|null $post_id The ID of the post to check. Added in 3.5.0.
+	 * @param string   $block   The block name to check for.
 	 * @return bool
 	 */
-	public static function has_block( $post_id = null ) {
-		$block = 'edd/checkout';
+	public static function has_block( $post_id = null, $block = 'edd/checkout' ) {
 		if ( $post_id ) {
 			return has_block( $block, absint( $post_id ) );
 		}
@@ -92,9 +92,30 @@ class Validator {
 			return true;
 		}
 
+		if ( self::has_block_in_current_template( $block ) ) {
+			return true;
+		}
+
 		$post_id = absint( edd_is_checkout() ? get_the_ID() : edd_get_option( 'purchase_page' ) );
 
 		return ! empty( $post_id ) && has_block( $block, $post_id );
+	}
+
+	/**
+	 * Checks whether a block exists in the block template currently rendering the page.
+	 *
+	 * @since 3.7.0
+	 * @param string $block The block name to check for.
+	 * @return bool
+	 */
+	private static function has_block_in_current_template( $block ): bool {
+		global $_wp_current_template_content;
+
+		if ( empty( $_wp_current_template_content ) ) {
+			return false;
+		}
+
+		return has_block( $block, $_wp_current_template_content );
 	}
 
 	/**

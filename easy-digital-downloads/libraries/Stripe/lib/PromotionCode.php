@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -25,9 +24,7 @@ namespace EDD\Vendor\Stripe;
 class PromotionCode extends ApiResource
 {
     const OBJECT_NAME = 'promotion_code';
-
     use ApiOperations\Update;
-
     /**
      * A promotion code points to a coupon. You can optionally restrict the code to a
      * specific customer, redemption limit, and expiration date.
@@ -43,14 +40,11 @@ class PromotionCode extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of your promotion codes.
      *
@@ -64,10 +58,8 @@ class PromotionCode extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the promotion code with the given ID. In order to retrieve a promotion
      * code by the customer-facing <code>code</code> use <a
@@ -86,10 +78,8 @@ class PromotionCode extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified promotion code by setting the values of the parameters
      * passed. Most fields are, by design, not editable.
@@ -106,11 +96,9 @@ class PromotionCode extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -51,7 +51,7 @@ final class RequirementsCheck {
 
 		// PHP.
 		'php' => array(
-			'minimum' => '7.4',
+			'minimum' => '8.0',
 			'name'    => 'PHP',
 			'exists'  => true,
 			'current' => false,
@@ -61,7 +61,7 @@ final class RequirementsCheck {
 
 		// WordPress.
 		'wp'  => array(
-			'minimum' => '6.2',
+			'minimum' => '6.7',
 			'name'    => 'WordPress',
 			'exists'  => true,
 			'current' => false,
@@ -229,6 +229,9 @@ final class RequirementsCheck {
 	/**
 	 * Plugin agnostic method to output the additional plugin row
 	 *
+	 * The checkbox cell is a `td` to match the plugins list table, which moved the row
+	 * header from the checkbox column to the primary column in WordPress 7.1.
+	 *
 	 * @since 3.0
 	 */
 	public function plugin_row_notice() {
@@ -236,9 +239,9 @@ final class RequirementsCheck {
 		$colspan = function_exists( 'wp_is_auto_update_enabled_for_type' ) && wp_is_auto_update_enabled_for_type( 'plugin' ) ? 2 : 1;
 		?>
 		<tr class="active <?php echo esc_attr( $this->unmet_requirements_name() ); ?>-row">
-			<th class="check-column">
+			<td class="check-column">
 				<span class="dashicons dashicons-warning"></span>
-			</th>
+			</td>
 			<td class="column-primary">
 				<?php $this->unmet_requirements_text(); ?>
 			</td>
@@ -310,15 +313,15 @@ final class RequirementsCheck {
 			.plugins .<?php echo esc_html( $name ); ?>-row td {
 				background: #fff5f5;
 			}
-			.plugins tr[data-plugin="<?php echo esc_html( $this->base ); ?>"] th {
+			.plugins tr[data-plugin="<?php echo esc_html( $this->base ); ?>"] .check-column {
 				box-shadow: none;
 			}
-			.plugins .<?php echo esc_html( $name ); ?>-row th span {
+			.plugins .<?php echo esc_html( $name ); ?>-row .check-column span {
 				margin-left: 6px;
 				color: #dc3232;
 			}
-			.plugins tr[data-plugin="<?php echo esc_html( $this->base ); ?>"] th,
-			.plugins .<?php echo esc_html( $name ); ?>-row th.check-column {
+			.plugins tr[data-plugin="<?php echo esc_html( $this->base ); ?>"] .check-column,
+			.plugins .<?php echo esc_html( $name ); ?>-row .check-column {
 				border-left: 4px solid #dc3232 !important;
 			}
 			.plugins .<?php echo esc_html( $name ); ?>-row .column-description p {

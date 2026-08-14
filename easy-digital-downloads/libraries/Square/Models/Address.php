@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a postal address in a country.
  * For more information, see [Working with Addresses](https://developer.squareup.com/docs/build-
@@ -17,72 +15,58 @@ class Address implements \JsonSerializable
      * @var array
      */
     private $addressLine1 = [];
-
     /**
      * @var array
      */
     private $addressLine2 = [];
-
     /**
      * @var array
      */
     private $addressLine3 = [];
-
     /**
      * @var array
      */
     private $locality = [];
-
     /**
      * @var array
      */
     private $sublocality = [];
-
     /**
      * @var array
      */
     private $sublocality2 = [];
-
     /**
      * @var array
      */
     private $sublocality3 = [];
-
     /**
      * @var array
      */
     private $administrativeDistrictLevel1 = [];
-
     /**
      * @var array
      */
     private $administrativeDistrictLevel2 = [];
-
     /**
      * @var array
      */
     private $administrativeDistrictLevel3 = [];
-
     /**
      * @var array
      */
     private $postalCode = [];
-
     /**
      * @var string|null
      */
     private $country;
-
     /**
      * @var array
      */
     private $firstName = [];
-
     /**
      * @var array
      */
     private $lastName = [];
-
     /**
      * Returns Address Line 1.
      * The first line of the address.
@@ -99,7 +83,6 @@ class Address implements \JsonSerializable
         }
         return $this->addressLine1['value'];
     }
-
     /**
      * Sets Address Line 1.
      * The first line of the address.
@@ -115,7 +98,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine1['value'] = $addressLine1;
     }
-
     /**
      * Unsets Address Line 1.
      * The first line of the address.
@@ -129,7 +111,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine1 = [];
     }
-
     /**
      * Returns Address Line 2.
      * The second line of the address, if any.
@@ -141,7 +122,6 @@ class Address implements \JsonSerializable
         }
         return $this->addressLine2['value'];
     }
-
     /**
      * Sets Address Line 2.
      * The second line of the address, if any.
@@ -152,7 +132,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine2['value'] = $addressLine2;
     }
-
     /**
      * Unsets Address Line 2.
      * The second line of the address, if any.
@@ -161,7 +140,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine2 = [];
     }
-
     /**
      * Returns Address Line 3.
      * The third line of the address, if any.
@@ -173,7 +151,6 @@ class Address implements \JsonSerializable
         }
         return $this->addressLine3['value'];
     }
-
     /**
      * Sets Address Line 3.
      * The third line of the address, if any.
@@ -184,7 +161,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine3['value'] = $addressLine3;
     }
-
     /**
      * Unsets Address Line 3.
      * The third line of the address, if any.
@@ -193,7 +169,6 @@ class Address implements \JsonSerializable
     {
         $this->addressLine3 = [];
     }
-
     /**
      * Returns Locality.
      * The city or town of the address. For a full list of field meanings by country, see [Working with
@@ -206,7 +181,6 @@ class Address implements \JsonSerializable
         }
         return $this->locality['value'];
     }
-
     /**
      * Sets Locality.
      * The city or town of the address. For a full list of field meanings by country, see [Working with
@@ -218,7 +192,6 @@ class Address implements \JsonSerializable
     {
         $this->locality['value'] = $locality;
     }
-
     /**
      * Unsets Locality.
      * The city or town of the address. For a full list of field meanings by country, see [Working with
@@ -228,7 +201,6 @@ class Address implements \JsonSerializable
     {
         $this->locality = [];
     }
-
     /**
      * Returns Sublocality.
      * A civil region within the address's `locality`, if any.
@@ -240,7 +212,6 @@ class Address implements \JsonSerializable
         }
         return $this->sublocality['value'];
     }
-
     /**
      * Sets Sublocality.
      * A civil region within the address's `locality`, if any.
@@ -251,7 +222,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality['value'] = $sublocality;
     }
-
     /**
      * Unsets Sublocality.
      * A civil region within the address's `locality`, if any.
@@ -260,7 +230,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality = [];
     }
-
     /**
      * Returns Sublocality 2.
      * A civil region within the address's `sublocality`, if any.
@@ -272,7 +241,6 @@ class Address implements \JsonSerializable
         }
         return $this->sublocality2['value'];
     }
-
     /**
      * Sets Sublocality 2.
      * A civil region within the address's `sublocality`, if any.
@@ -283,7 +251,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality2['value'] = $sublocality2;
     }
-
     /**
      * Unsets Sublocality 2.
      * A civil region within the address's `sublocality`, if any.
@@ -292,7 +259,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality2 = [];
     }
-
     /**
      * Returns Sublocality 3.
      * A civil region within the address's `sublocality_2`, if any.
@@ -304,7 +270,6 @@ class Address implements \JsonSerializable
         }
         return $this->sublocality3['value'];
     }
-
     /**
      * Sets Sublocality 3.
      * A civil region within the address's `sublocality_2`, if any.
@@ -315,7 +280,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality3['value'] = $sublocality3;
     }
-
     /**
      * Unsets Sublocality 3.
      * A civil region within the address's `sublocality_2`, if any.
@@ -324,7 +288,6 @@ class Address implements \JsonSerializable
     {
         $this->sublocality3 = [];
     }
-
     /**
      * Returns Administrative District Level 1.
      * A civil entity within the address's country. In the US, this
@@ -338,7 +301,6 @@ class Address implements \JsonSerializable
         }
         return $this->administrativeDistrictLevel1['value'];
     }
-
     /**
      * Sets Administrative District Level 1.
      * A civil entity within the address's country. In the US, this
@@ -351,7 +313,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel1['value'] = $administrativeDistrictLevel1;
     }
-
     /**
      * Unsets Administrative District Level 1.
      * A civil entity within the address's country. In the US, this
@@ -362,7 +323,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel1 = [];
     }
-
     /**
      * Returns Administrative District Level 2.
      * A civil entity within the address's `administrative_district_level_1`.
@@ -375,7 +335,6 @@ class Address implements \JsonSerializable
         }
         return $this->administrativeDistrictLevel2['value'];
     }
-
     /**
      * Sets Administrative District Level 2.
      * A civil entity within the address's `administrative_district_level_1`.
@@ -387,7 +346,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel2['value'] = $administrativeDistrictLevel2;
     }
-
     /**
      * Unsets Administrative District Level 2.
      * A civil entity within the address's `administrative_district_level_1`.
@@ -397,7 +355,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel2 = [];
     }
-
     /**
      * Returns Administrative District Level 3.
      * A civil entity within the address's `administrative_district_level_2`,
@@ -410,7 +367,6 @@ class Address implements \JsonSerializable
         }
         return $this->administrativeDistrictLevel3['value'];
     }
-
     /**
      * Sets Administrative District Level 3.
      * A civil entity within the address's `administrative_district_level_2`,
@@ -422,7 +378,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel3['value'] = $administrativeDistrictLevel3;
     }
-
     /**
      * Unsets Administrative District Level 3.
      * A civil entity within the address's `administrative_district_level_2`,
@@ -432,7 +387,6 @@ class Address implements \JsonSerializable
     {
         $this->administrativeDistrictLevel3 = [];
     }
-
     /**
      * Returns Postal Code.
      * The address's postal code. For a full list of field meanings by country, see [Working with
@@ -445,7 +399,6 @@ class Address implements \JsonSerializable
         }
         return $this->postalCode['value'];
     }
-
     /**
      * Sets Postal Code.
      * The address's postal code. For a full list of field meanings by country, see [Working with
@@ -457,7 +410,6 @@ class Address implements \JsonSerializable
     {
         $this->postalCode['value'] = $postalCode;
     }
-
     /**
      * Unsets Postal Code.
      * The address's postal code. For a full list of field meanings by country, see [Working with
@@ -467,7 +419,6 @@ class Address implements \JsonSerializable
     {
         $this->postalCode = [];
     }
-
     /**
      * Returns Country.
      * Indicates the country associated with another entity, such as a business.
@@ -477,7 +428,6 @@ class Address implements \JsonSerializable
     {
         return $this->country;
     }
-
     /**
      * Sets Country.
      * Indicates the country associated with another entity, such as a business.
@@ -489,7 +439,6 @@ class Address implements \JsonSerializable
     {
         $this->country = $country;
     }
-
     /**
      * Returns First Name.
      * Optional first name when it's representing recipient.
@@ -501,7 +450,6 @@ class Address implements \JsonSerializable
         }
         return $this->firstName['value'];
     }
-
     /**
      * Sets First Name.
      * Optional first name when it's representing recipient.
@@ -512,7 +460,6 @@ class Address implements \JsonSerializable
     {
         $this->firstName['value'] = $firstName;
     }
-
     /**
      * Unsets First Name.
      * Optional first name when it's representing recipient.
@@ -521,7 +468,6 @@ class Address implements \JsonSerializable
     {
         $this->firstName = [];
     }
-
     /**
      * Returns Last Name.
      * Optional last name when it's representing recipient.
@@ -533,7 +479,6 @@ class Address implements \JsonSerializable
         }
         return $this->lastName['value'];
     }
-
     /**
      * Sets Last Name.
      * Optional last name when it's representing recipient.
@@ -544,7 +489,6 @@ class Address implements \JsonSerializable
     {
         $this->lastName['value'] = $lastName;
     }
-
     /**
      * Unsets Last Name.
      * Optional last name when it's representing recipient.
@@ -553,7 +497,6 @@ class Address implements \JsonSerializable
     {
         $this->lastName = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -562,30 +505,30 @@ class Address implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->addressLine1)) {
-            $json['address_line_1']                  = $this->addressLine1['value'];
+            $json['address_line_1'] = $this->addressLine1['value'];
         }
         if (!empty($this->addressLine2)) {
-            $json['address_line_2']                  = $this->addressLine2['value'];
+            $json['address_line_2'] = $this->addressLine2['value'];
         }
         if (!empty($this->addressLine3)) {
-            $json['address_line_3']                  = $this->addressLine3['value'];
+            $json['address_line_3'] = $this->addressLine3['value'];
         }
         if (!empty($this->locality)) {
-            $json['locality']                        = $this->locality['value'];
+            $json['locality'] = $this->locality['value'];
         }
         if (!empty($this->sublocality)) {
-            $json['sublocality']                     = $this->sublocality['value'];
+            $json['sublocality'] = $this->sublocality['value'];
         }
         if (!empty($this->sublocality2)) {
-            $json['sublocality_2']                   = $this->sublocality2['value'];
+            $json['sublocality_2'] = $this->sublocality2['value'];
         }
         if (!empty($this->sublocality3)) {
-            $json['sublocality_3']                   = $this->sublocality3['value'];
+            $json['sublocality_3'] = $this->sublocality3['value'];
         }
         if (!empty($this->administrativeDistrictLevel1)) {
             $json['administrative_district_level_1'] = $this->administrativeDistrictLevel1['value'];
@@ -597,21 +540,20 @@ class Address implements \JsonSerializable
             $json['administrative_district_level_3'] = $this->administrativeDistrictLevel3['value'];
         }
         if (!empty($this->postalCode)) {
-            $json['postal_code']                     = $this->postalCode['value'];
+            $json['postal_code'] = $this->postalCode['value'];
         }
         if (isset($this->country)) {
-            $json['country']                         = $this->country;
+            $json['country'] = $this->country;
         }
         if (!empty($this->firstName)) {
-            $json['first_name']                      = $this->firstName['value'];
+            $json['first_name'] = $this->firstName['value'];
         }
         if (!empty($this->lastName)) {
-            $json['last_name']                       = $this->lastName['value'];
+            $json['last_name'] = $this->lastName['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

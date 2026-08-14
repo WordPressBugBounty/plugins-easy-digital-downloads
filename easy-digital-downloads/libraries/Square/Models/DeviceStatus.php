@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DeviceStatus implements \JsonSerializable
 {
     /**
      * @var string|null
      */
     private $category;
-
     /**
      * Returns Category.
      */
@@ -20,7 +17,6 @@ class DeviceStatus implements \JsonSerializable
     {
         return $this->category;
     }
-
     /**
      * Sets Category.
      *
@@ -30,7 +26,6 @@ class DeviceStatus implements \JsonSerializable
     {
         $this->category = $category;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -39,7 +34,7 @@ class DeviceStatus implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -49,7 +44,6 @@ class DeviceStatus implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

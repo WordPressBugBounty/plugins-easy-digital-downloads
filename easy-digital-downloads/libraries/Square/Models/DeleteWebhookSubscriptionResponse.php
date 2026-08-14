@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of
  * a request to the [DeleteWebhookSubscription]($e/WebhookSubscriptions/DeleteWebhookSubscription)
@@ -17,7 +15,6 @@ class DeleteWebhookSubscriptionResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * Returns Errors.
      * Information on errors encountered during the request.
@@ -28,7 +25,6 @@ class DeleteWebhookSubscriptionResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information on errors encountered during the request.
@@ -41,7 +37,6 @@ class DeleteWebhookSubscriptionResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -50,7 +45,7 @@ class DeleteWebhookSubscriptionResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -60,7 +55,6 @@ class DeleteWebhookSubscriptionResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

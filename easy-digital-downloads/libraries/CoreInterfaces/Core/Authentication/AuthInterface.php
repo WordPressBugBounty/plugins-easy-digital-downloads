@@ -5,7 +5,6 @@ namespace EDD\Vendor\CoreInterfaces\Core\Authentication;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\TypeValidatorInterface;
 use InvalidArgumentException;
-
 interface AuthInterface
 {
     /**

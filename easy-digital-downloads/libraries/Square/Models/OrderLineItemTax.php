@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a tax that applies to one or more line item in the order.
  *
@@ -19,52 +17,42 @@ class OrderLineItemTax implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var string|null
      */
     private $type;
-
     /**
      * @var array
      */
     private $percentage = [];
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @var string|null
      */
     private $scope;
-
     /**
      * @var bool|null
      */
     private $autoApplied;
-
     /**
      * Returns Uid.
      * A unique ID that identifies the tax only within this order.
@@ -76,7 +64,6 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the tax only within this order.
@@ -87,7 +74,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the tax only within this order.
@@ -96,7 +82,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The catalog object ID referencing [CatalogTax](entity:CatalogTax).
@@ -108,7 +93,6 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The catalog object ID referencing [CatalogTax](entity:CatalogTax).
@@ -119,7 +103,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The catalog object ID referencing [CatalogTax](entity:CatalogTax).
@@ -128,7 +111,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this tax references.
@@ -140,7 +122,6 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this tax references.
@@ -151,7 +132,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this tax references.
@@ -160,7 +140,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Returns Name.
      * The tax's name.
@@ -172,7 +151,6 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The tax's name.
@@ -183,7 +161,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The tax's name.
@@ -192,7 +169,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Type.
      * Indicates how the tax is applied to the associated line item or order.
@@ -201,7 +177,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Indicates how the tax is applied to the associated line item or order.
@@ -212,7 +187,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Percentage.
      * The percentage of the tax, as a string representation of a decimal
@@ -226,7 +200,6 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->percentage['value'];
     }
-
     /**
      * Sets Percentage.
      * The percentage of the tax, as a string representation of a decimal
@@ -239,7 +212,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->percentage['value'] = $percentage;
     }
-
     /**
      * Unsets Percentage.
      * The percentage of the tax, as a string representation of a decimal
@@ -250,12 +222,11 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->percentage = [];
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this tax. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -281,12 +252,11 @@ class OrderLineItemTax implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this tax. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -311,12 +281,11 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this tax. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -337,7 +306,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -352,7 +320,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -369,7 +336,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Returns Scope.
      * Indicates whether this is a line-item or order-level tax.
@@ -378,7 +344,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         return $this->scope;
     }
-
     /**
      * Sets Scope.
      * Indicates whether this is a line-item or order-level tax.
@@ -389,7 +354,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->scope = $scope;
     }
-
     /**
      * Returns Auto Applied.
      * Determines whether the tax was automatically applied to the order based on
@@ -401,7 +365,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         return $this->autoApplied;
     }
-
     /**
      * Sets Auto Applied.
      * Determines whether the tax was automatically applied to the order based on
@@ -415,7 +378,6 @@ class OrderLineItemTax implements \JsonSerializable
     {
         $this->autoApplied = $autoApplied;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -424,44 +386,43 @@ class OrderLineItemTax implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']               = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->catalogObjectId)) {
             $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']   = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         if (!empty($this->name)) {
-            $json['name']              = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->type)) {
-            $json['type']              = $this->type;
+            $json['type'] = $this->type;
         }
         if (!empty($this->percentage)) {
-            $json['percentage']        = $this->percentage['value'];
+            $json['percentage'] = $this->percentage['value'];
         }
         if (!empty($this->metadata)) {
-            $json['metadata']          = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (isset($this->appliedMoney)) {
-            $json['applied_money']     = $this->appliedMoney;
+            $json['applied_money'] = $this->appliedMoney;
         }
         if (isset($this->scope)) {
-            $json['scope']             = $this->scope;
+            $json['scope'] = $this->scope;
         }
         if (isset($this->autoApplied)) {
-            $json['auto_applied']      = $this->autoApplied;
+            $json['auto_applied'] = $this->autoApplied;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

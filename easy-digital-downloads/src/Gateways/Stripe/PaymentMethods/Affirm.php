@@ -41,6 +41,14 @@ class Affirm extends Method {
 	public static $countries = array( 'us', 'ca' );
 
 	/**
+	 * Whether the payment method requires a billing address at checkout.
+	 *
+	 * @since 3.7.0
+	 * @var bool
+	 */
+	public static $requires_billing_address = true;
+
+	/**
 	 * Gets the label for the payment method.
 	 *
 	 * @since 3.3.5
@@ -48,6 +56,27 @@ class Affirm extends Method {
 	 */
 	public static function get_label() {
 		return __( 'Affirm', 'easy-digital-downloads' );
+	}
+
+	/**
+	 * Whether Affirm is available for the current checkout context.
+	 *
+	 * In addition to the base currency and configuration checks, Affirm requires a
+	 * minimum cart total and is not available for recurring purchases.
+	 *
+	 * @since 3.7.0
+	 * @return bool True if Affirm is available for the current checkout.
+	 */
+	public static function is_available(): bool {
+		if ( edd_get_cart_total() < 50 ) {
+			return false;
+		}
+
+		if ( function_exists( 'edd_recurring' ) && edd_recurring()->cart_contains_recurring() ) {
+			return false;
+		}
+
+		return parent::is_available();
 	}
 
 	/**

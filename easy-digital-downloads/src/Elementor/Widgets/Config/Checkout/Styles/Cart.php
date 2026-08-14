@@ -23,6 +23,23 @@ use EDD\Elementor\Widgets\Config\Base;
 class Cart extends Base {
 
 	/**
+	 * The composable box's row-divider variant of the cart item border.
+	 *
+	 * Scoped to all but the last item so a divider and the container's own border never stack into a
+	 * double line. Composable-only (registered by CheckoutInner\Controls) so the shipped monolithic
+	 * widget's "Border" control keeps its 3.6.0 definition and existing saved values.
+	 *
+	 * @since 3.7.0
+	 * @return array
+	 */
+	public static function get_row_divider_control(): array {
+		return self::create_border_group(
+			__( 'Row Divider', 'easy-digital-downloads' ),
+			'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item:not(:last-child)'
+		);
+	}
+
+	/**
 	 * Get cart style controls configuration.
 	 *
 	 * @since 3.6.0
@@ -150,12 +167,12 @@ class Cart extends Base {
 	 */
 	private static function get_cart_items_controls(): array {
 		return array(
-			'cart_items_heading'       => array(
+			'cart_items_heading'          => array(
 				'label'     => __( 'Cart Items', 'easy-digital-downloads' ),
 				'type'      => 'heading',
 				'separator' => 'before',
 			),
-			'cart_items_alignment'     => array(
+			'cart_items_alignment'        => array(
 				'label'     => __( 'Alignment', 'easy-digital-downloads' ),
 				'type'      => 'choose',
 				'options'   => self::get_cart_items_alignment_options(),
@@ -164,26 +181,30 @@ class Cart extends Base {
 					'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item, form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item .edd_checkout_cart_item_title' => 'align-items: {{VALUE}};',
 				),
 			),
-			'cart_items_typography'    => self::create_typography_group(
+			'cart_items_typography'       => self::create_typography_group(
 				__( 'Typography', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item'
 			),
-			'cart_items_border'        => self::create_border_group(
+			'cart_items_border'           => self::create_border_group(
 				__( 'Border', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item'
 			),
-			'cart_items_border_radius' => self::create_dimensions_control(
+			'cart_items_container_border' => self::create_border_group(
+				__( 'Container Border', 'easy-digital-downloads' ),
+				'form #edd_checkout_cart .edd-blocks-cart__items'
+			),
+			'cart_items_border_radius'    => self::create_dimensions_control(
 				__( 'Border Radius', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item',
 				'border-radius',
 				array( 'size_units' => array( 'px', '%' ) )
 			),
-			'cart_items_padding'       => self::create_dimensions_control(
+			'cart_items_padding'          => self::create_dimensions_control(
 				__( 'Padding', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item',
 				'padding'
 			),
-			'cart_items_margin'        => self::create_dimensions_control(
+			'cart_items_margin'           => self::create_dimensions_control(
 				__( 'Margin', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd-blocks-cart__items .edd_cart_item',
 				'margin'
@@ -252,12 +273,12 @@ class Cart extends Base {
 	 */
 	private static function get_cart_footer_controls(): array {
 		return array(
-			'cart_footer_rows_heading'   => array(
+			'cart_footer_rows_heading'    => array(
 				'label'     => __( 'Footer Rows', 'easy-digital-downloads' ),
 				'type'      => 'heading',
 				'separator' => 'before',
 			),
-			'cart_footer_rows_alignment' => array(
+			'cart_footer_rows_alignment'  => array(
 				'label'     => __( 'Alignment', 'easy-digital-downloads' ),
 				'type'      => 'choose',
 				'options'   => self::get_cart_footer_alignment_options(),
@@ -266,12 +287,24 @@ class Cart extends Base {
 					'form #edd_checkout_cart .edd_cart_footer_row:not(.edd_cart_apply_discount_row) > div' => 'display: flex; justify-content: {{VALUE}};',
 				),
 			),
-			'cart_footer_rows_padding'   => self::create_dimensions_control(
+			'cart_footer_rows_typography' => self::create_typography_group(
+				__( 'Typography', 'easy-digital-downloads' ),
+				'form #edd_checkout_cart .edd_cart_footer_row'
+			),
+			'cart_footer_rows_color'      => self::create_color_control(
+				__( 'Text Color', 'easy-digital-downloads' ),
+				'form #edd_checkout_cart .edd_cart_footer_row'
+			),
+			'cart_footer_rows_border'     => self::create_border_group(
+				__( 'Border', 'easy-digital-downloads' ),
+				'form #edd_checkout_cart .edd_cart_footer_row'
+			),
+			'cart_footer_rows_padding'    => self::create_dimensions_control(
 				__( 'Padding', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd_cart_footer_row',
 				'padding'
 			),
-			'cart_footer_rows_margin'    => self::create_dimensions_control(
+			'cart_footer_rows_margin'     => self::create_dimensions_control(
 				__( 'Margin', 'easy-digital-downloads' ),
 				'form #edd_checkout_cart .edd_cart_footer_row',
 				'margin'

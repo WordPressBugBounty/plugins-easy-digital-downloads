@@ -3,7 +3,7 @@
  * Login Username Field.
  *
  * @package     EDD\Forms\Login
- * @copyright   Copyright (c) 2025, Sandhills Development, LLC
+ * @copyright   Copyright (c) 2026, Sandhills Development, LLC
  * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       3.3.8
  */
@@ -21,6 +21,20 @@ use EDD\Forms\Fields\Field;
  * @since 3.3.8
  */
 class Username extends Field {
+
+	/**
+	 * Render the field.
+	 *
+	 * @since 3.3.8
+	 * @return void
+	 */
+	public function render(): void {
+		if ( ! $this->is_block() ) {
+			$this->render_shortcode();
+			return;
+		}
+		parent::render();
+	}
 
 	/**
 	 * Get the field ID.
@@ -82,5 +96,26 @@ class Username extends Field {
 	 */
 	protected function get_key(): string {
 		return 'username';
+	}
+
+	/**
+	 * Renders the field for the shortcode checkout, using legacy wrapper IDs.
+	 *
+	 * @since 3.7.0
+	 */
+	private function render_shortcode(): void {
+		?>
+		<div id="edd-user-login-wrap">
+			<?php $this->do_label(); ?>
+			<input
+				name="edd_user_login"
+				id="edd_user_login"
+				class="edd-required edd-input"
+				type="text"
+				placeholder="<?php esc_attr_e( 'Your username or email address', 'easy-digital-downloads' ); ?>"
+				required
+			/>
+		</div>
+		<?php
 	}
 }

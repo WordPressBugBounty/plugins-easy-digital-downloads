@@ -13,7 +13,7 @@ namespace EDD\Elementor\Widgets\Controls;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
-use EDD\Elementor\Widgets\Base;
+use Elementor\Controls_Stack;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
@@ -31,10 +31,10 @@ use Elementor\Group_Control_Css_Filter;
 class Registry {
 
 	/**
-	 * The widget instance.
+	 * The widget or container element instance.
 	 *
 	 * @since 3.6.0
-	 * @var Base
+	 * @var Controls_Stack
 	 */
 	private $widget;
 
@@ -58,11 +58,11 @@ class Registry {
 	 * Constructor.
 	 *
 	 * @since 3.6.0
-	 * @param Base   $widget The widget instance.
-	 * @param string $selector_prefix Optional. Selector prefix. Default '{{WRAPPER}}'.
-	 * @param array  $selector_mappings Optional. Widget-specific selector mappings. Default empty array.
+	 * @param Controls_Stack $widget The widget or container element instance (any Controls_Stack).
+	 * @param string         $selector_prefix Optional. Selector prefix. Default '{{WRAPPER}}'.
+	 * @param array          $selector_mappings Optional. Widget-specific selector mappings. Default empty array.
 	 */
-	public function __construct( Base $widget, string $selector_prefix = '{{WRAPPER}}', array $selector_mappings = array() ) {
+	public function __construct( Controls_Stack $widget, string $selector_prefix = '{{WRAPPER}}', array $selector_mappings = array() ) {
 		$this->widget            = $widget;
 		$this->selector_prefix   = $selector_prefix;
 		$this->selector_mappings = $selector_mappings;
@@ -239,12 +239,50 @@ class Registry {
 		// Apply any selector mapping first.
 		$selector = $this->map_selector( $selector );
 
-		// Don't double-prefix if already prefixed.
-		if ( strpos( $selector, $this->selector_prefix ) === 0 ) {
-			return $selector;
+		// A comma-joined value is a selector list: prefix each part, or the rest emit bare and lose
+		// to the defaults they exist to override.
+		$prefixed = array();
+		foreach ( $this->split_selector_list( $selector ) as $part ) {
+			// Don't double-prefix if already prefixed.
+			$prefixed[] = 0 === strpos( $part, $this->selector_prefix )
+				? $part
+				: $this->selector_prefix . ' ' . $part;
 		}
 
-		return $this->selector_prefix . ' ' . $selector;
+		return implode( ', ', $prefixed );
+	}
+
+	/**
+	 * Split a selector list on its top-level commas.
+	 *
+	 * Commas inside `:not(.a, .b)` belong to that selector and must not split the list.
+	 *
+	 * @since 3.7.0
+	 * @param string $selector Selector or comma-joined selector list.
+	 * @return array Individual selectors, trimmed, empties dropped.
+	 */
+	private function split_selector_list( string $selector ): array {
+		$parts = array();
+		$depth = 0;
+		$part  = '';
+
+		foreach ( str_split( $selector ) as $char ) {
+			if ( '(' === $char ) {
+				++$depth;
+			} elseif ( ')' === $char ) {
+				$depth = max( 0, $depth - 1 );
+			} elseif ( ',' === $char && 0 === $depth ) {
+				$parts[] = $part;
+				$part    = '';
+				continue;
+			}
+
+			$part .= $char;
+		}
+
+		$parts[] = $part;
+
+		return array_values( array_filter( array_map( 'trim', $parts ), 'strlen' ) );
 	}
 
 	/**

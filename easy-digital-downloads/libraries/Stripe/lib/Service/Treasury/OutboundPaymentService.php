@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class OutboundPaymentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/outbound_payments', $params, $opts);
     }
-
     /**
      * Cancel an OutboundPayment.
      *
@@ -40,7 +38,6 @@ class OutboundPaymentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/treasury/outbound_payments/%s/cancel', $id), $params, $opts);
     }
-
     /**
      * Creates an OutboundPayment.
      *
@@ -55,7 +52,6 @@ class OutboundPaymentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/treasury/outbound_payments', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing OutboundPayment by passing the unique
      * OutboundPayment ID from either the OutboundPayment creation request or

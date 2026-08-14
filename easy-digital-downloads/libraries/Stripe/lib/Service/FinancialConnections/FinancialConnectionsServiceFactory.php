@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\FinancialConnections;
 
 /**
@@ -16,12 +15,7 @@ class FinancialConnectionsServiceFactory extends \EDD\Vendor\Stripe\Service\Abst
     /**
      * @var array<string, string>
      */
-    private static $classMap = [
-        'accounts' => AccountService::class,
-        'sessions' => SessionService::class,
-        'transactions' => TransactionService::class,
-    ];
-
+    private static $classMap = ['accounts' => AccountService::class, 'sessions' => SessionService::class, 'transactions' => TransactionService::class];
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

@@ -33,18 +33,38 @@ abstract class Field extends BaseField {
 		$classes = $this->get_form_group_classes();
 		?>
 		<div
-			id="edd-<?php echo esc_attr( $this->get_key() ); ?>-wrap"
+			id="edd-<?php echo esc_attr( $this->get_wrapper_id() ); ?>-wrap"
 			<?php if ( ! empty( $classes ) ) : ?>
 				class="<?php echo esc_attr( $this->get_css_class_string( $classes ) ); ?>"
 			<?php endif; ?>
 		>
 			<?php
 			$this->do_label();
+			if ( ! $this->is_block() ) {
+				$this->do_description();
+			}
+
 			$this->do_input();
-			$this->do_description();
+
+			// Block context only: the classic layout has already printed it above, and it has no
+			// paired-name layout for the description to crowd.
+			if ( $this->is_block() && empty( $this->data['name_single_line'] ) ) {
+				$this->do_description();
+			}
 			?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get the wrapper element ID (without the edd- prefix and -wrap suffix).
+	 * Subclasses override this to match the legacy shortcode wrapper IDs.
+	 *
+	 * @since 3.7.0
+	 * @return string
+	 */
+	protected function get_wrapper_id(): string {
+		return $this->get_key();
 	}
 
 	/**
@@ -77,12 +97,12 @@ abstract class Field extends BaseField {
 	 * @return array
 	 */
 	protected function get_defaults(): array {
-		return array(
-			'name'         => $this->get_key(),
-			'id'           => $this->get_id(),
-			'class'        => $this->get_css_class_string( $this->get_field_classes() ),
-			'required'     => $this->is_required(),
-			'include_span' => false,
+		return wp_parse_args(
+			array(
+				'name'         => $this->get_key(),
+				'include_span' => false,
+			),
+			parent::get_defaults()
 		);
 	}
 }

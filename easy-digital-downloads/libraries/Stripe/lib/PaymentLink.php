@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -17,8 +16,8 @@ namespace EDD\Vendor\Stripe;
  * @property \EDD\Vendor\Stripe\StripeObject $after_completion
  * @property bool $allow_promotion_codes Whether user redeemable promotion codes are enabled.
  * @property null|string|\EDD\Vendor\Stripe\Application $application The ID of the Connect application that created the Payment Link.
- * @property null|int $application_fee_amount The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's EDD\Vendor\Stripe account.
- * @property null|float $application_fee_percent This represents the percentage of the subscription invoice total that will be transferred to the application owner's EDD\Vendor\Stripe account.
+ * @property null|int $application_fee_amount The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account.
+ * @property null|float $application_fee_percent This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account.
  * @property \EDD\Vendor\Stripe\StripeObject $automatic_tax
  * @property string $billing_address_collection Configuration for collecting the customer's billing address. Defaults to <code>auto</code>.
  * @property null|\EDD\Vendor\Stripe\StripeObject $consent_collection When set, provides configuration to gather active consent from customers.
@@ -34,7 +33,7 @@ namespace EDD\Vendor\Stripe;
  * @property null|string|\EDD\Vendor\Stripe\Account $on_behalf_of The account on behalf of which to charge. See the <a href="https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts">Connect documentation</a> for details.
  * @property null|\EDD\Vendor\Stripe\StripeObject $payment_intent_data Indicates the parameters to be passed to PaymentIntent creation during checkout.
  * @property string $payment_method_collection Configuration for collecting a payment method during checkout. Defaults to <code>always</code>.
- * @property null|string[] $payment_method_types The list of payment method types that customers can use. When <code>null</code>, EDD\Vendor\Stripe will dynamically show relevant payment methods you've enabled in your <a href="https://dashboard.stripe.com/settings/payment_methods">payment method settings</a>.
+ * @property null|string[] $payment_method_types The list of payment method types that customers can use. When <code>null</code>, Stripe will dynamically show relevant payment methods you've enabled in your <a href="https://dashboard.stripe.com/settings/payment_methods">payment method settings</a>.
  * @property \EDD\Vendor\Stripe\StripeObject $phone_number_collection
  * @property null|\EDD\Vendor\Stripe\StripeObject $restrictions Settings that restrict the usage of a payment link.
  * @property null|\EDD\Vendor\Stripe\StripeObject $shipping_address_collection Configuration for collecting the customer's shipping address.
@@ -48,23 +47,17 @@ namespace EDD\Vendor\Stripe;
 class PaymentLink extends ApiResource
 {
     const OBJECT_NAME = 'payment_link';
-
     use ApiOperations\Update;
-
     const BILLING_ADDRESS_COLLECTION_AUTO = 'auto';
     const BILLING_ADDRESS_COLLECTION_REQUIRED = 'required';
-
     const CUSTOMER_CREATION_ALWAYS = 'always';
     const CUSTOMER_CREATION_IF_REQUIRED = 'if_required';
-
     const PAYMENT_METHOD_COLLECTION_ALWAYS = 'always';
     const PAYMENT_METHOD_COLLECTION_IF_REQUIRED = 'if_required';
-
     const SUBMIT_TYPE_AUTO = 'auto';
     const SUBMIT_TYPE_BOOK = 'book';
     const SUBMIT_TYPE_DONATE = 'donate';
     const SUBMIT_TYPE_PAY = 'pay';
-
     /**
      * Creates a payment link.
      *
@@ -79,14 +72,11 @@ class PaymentLink extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of your payment links.
      *
@@ -100,10 +90,8 @@ class PaymentLink extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieve a payment link.
      *
@@ -119,10 +107,8 @@ class PaymentLink extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a payment link.
      *
@@ -138,14 +124,11 @@ class PaymentLink extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param string $id
      * @param null|array $params
@@ -161,7 +144,6 @@ class PaymentLink extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

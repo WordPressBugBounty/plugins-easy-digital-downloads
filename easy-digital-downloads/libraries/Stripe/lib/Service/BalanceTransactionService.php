@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -11,7 +10,7 @@ namespace EDD\Vendor\Stripe\Service;
 class BalanceTransactionService extends \EDD\Vendor\Stripe\Service\AbstractService
 {
     /**
-     * Returns a list of transactions that have contributed to the EDD\Vendor\Stripe account
+     * Returns a list of transactions that have contributed to the Stripe account
      * balance (e.g., charges, transfers, and so forth). The transactions are returned
      * in sorted order, with the most recent transactions appearing first.
      *
@@ -29,7 +28,6 @@ class BalanceTransactionService extends \EDD\Vendor\Stripe\Service\AbstractServi
     {
         return $this->requestCollection('get', '/v1/balance_transactions', $params, $opts);
     }
-
     /**
      * Retrieves the balance transaction with the given ID.
      *

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -29,7 +28,6 @@ namespace EDD\Vendor\Stripe;
 class CustomerCashBalanceTransaction extends ApiResource
 {
     const OBJECT_NAME = 'customer_cash_balance_transaction';
-
     const TYPE_ADJUSTED_FOR_OVERDRAFT = 'adjusted_for_overdraft';
     const TYPE_APPLIED_TO_PAYMENT = 'applied_to_payment';
     const TYPE_FUNDED = 'funded';

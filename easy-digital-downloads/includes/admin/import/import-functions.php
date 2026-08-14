@@ -88,7 +88,7 @@ function edd_do_ajax_import_file_upload() {
 
 	// Upload to the protected exports directory under a single validated
 	// extension, so a crafted name like "shell.php.csv" cannot persist as-is.
-	$file_name   = $csv->sanitize_filename( $_FILES['edd-import-file']['name'] );
+	$file_name   = CSV::sanitize_filename( $_FILES['edd-import-file']['name'] );
 	$exports_dir = edd_get_exports_dir();
 	$file_path   = trailingslashit( $exports_dir ) . wp_unique_filename( $exports_dir, $file_name );
 

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Site Health
  *
  * @package EDD_Stripe\Admin\SiteHealth
@@ -88,15 +88,9 @@ function edds_get_test_stripe_connect() {
 			'<p>%s</p>',
 			esc_html__( 'By securely connecting your Easy Digital Downloads store with Stripe Connect, you\'ll get access to more reliable payments and use managed API keys which are more secure.', 'easy-digital-downloads' )
 		);
-		$result['actions']        = sprintf(
-			'<a href="%s" class="edd-stripe-connect"><span>%s</span></a>',
-			esc_url( edds_stripe_connect_url() ),
-			esc_html__( 'Connect with Stripe', 'easy-digital-downloads' )
-		);
+		$result['actions']        = \EDD\Gateways\Stripe\Admin\Connect::get_connect_button();
 
 	}
-
-	edd_stripe_connect_admin_style();
 
 	return $result;
 }

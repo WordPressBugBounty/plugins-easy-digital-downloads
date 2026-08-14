@@ -70,9 +70,10 @@ class Page {
 	 * Get the widget data.
 	 *
 	 * @since 3.6.0
+	 * @since 3.7.0 Added elType match for container elements (e.g. edd-checkout-box).
 	 *
-	 * @param string $widget_type Widget type.
-	 * @param array  $elements Page elements data.
+	 * @param string $widget_type Widget type (widgetType) or container element type (elType).
+	 * @param array  $elements    Page elements data.
 	 * @param int    $occurrence  Occurrence number.
 	 * @return array
 	 */
@@ -85,7 +86,11 @@ class Page {
 
 		$found = 0;
 		foreach ( $elements as $element ) {
-			if ( isset( $element['widgetType'] ) && $widget_type === $element['widgetType'] ) {
+			// Match widget by widgetType, or a container element by elType.
+			$matches_widget    = isset( $element['widgetType'] ) && $widget_type === $element['widgetType'];
+			$matches_container = isset( $element['elType'] ) && $widget_type === $element['elType'];
+
+			if ( $matches_widget || $matches_container ) {
 				++$found;
 				if ( $found === $occurrence ) {
 					return $element;
@@ -110,17 +115,19 @@ class Page {
 	 * @return bool
 	 */
 	public static function is_edit_mode(): bool {
-		$editor = ElementorPlugin::$instance->editor;
+		$editor = ElementorPlugin::$instance->editor ?? null;
 		if ( $editor && $editor->is_edit_mode() ) {
 			return true;
 		}
 
-		$request_uri = $_SERVER['REQUEST_URI'];
-		if ( false !== strpos( $request_uri, 'elementor-preview' ) ) {
+		// is_preview_mode() validates the ?elementor-preview=<id> param, User::is_current_user_can_edit() and a post-id match, so a forged URL from a user without edit rights returns false.
+		$preview = ElementorPlugin::$instance->preview ?? null;
+		if ( $preview && $preview->is_preview_mode() ) {
 			return true;
 		}
 
-		if ( edd_doing_ajax() && strpos( wp_get_referer(), 'elementor-preview' ) !== false ) {
+		// The edit_posts capability check keeps an unauthenticated ajax request from forging edit mode through the referer.
+		if ( edd_doing_ajax() && current_user_can( 'edit_posts' ) && false !== strpos( (string) wp_get_referer(), 'elementor-preview' ) ) {
 			return true;
 		}
 
@@ -128,9 +135,30 @@ class Page {
 	}
 
 	/**
+	 * Check if Elementor's Container experiment is active.
+	 *
+	 * The composable checkout (edd-checkout-box container and its section
+	 * widgets) requires Elementor containers. When the experiment is
+	 * unreachable we default to true, because containers are the norm on
+	 * current Elementor installs and the composable path is the default.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return bool
+	 */
+	public static function is_container_active(): bool {
+		if ( is_null( ElementorPlugin::$instance ) || empty( ElementorPlugin::$instance->experiments ) ) {
+			return true;
+		}
+
+		return ElementorPlugin::$instance->experiments->is_feature_active( 'container' );
+	}
+
+	/**
 	 * Get the current page ID.
 	 *
 	 * @since 3.6.0
+	 * @since 3.7.0 Added a singular queried-post fallback so suppression engages on a normal front-end pageview.
 	 * @return int The page ID, or 0 if not found.
 	 */
 	private static function get_id(): int {
@@ -141,6 +169,11 @@ class Page {
 
 		if ( edd_doing_ajax() && ! empty( $_POST['current_page'] ) ) {
 			return absint( $_POST['current_page'] );
+		}
+
+		// On a normal front-end pageview no Elementor request or ajax params exist, so fall back to the queried post. The is_singular() guard keeps an archive or taxonomy term id from reaching get_post().
+		if ( is_singular() ) {
+			return get_queried_object_id();
 		}
 
 		return 0;

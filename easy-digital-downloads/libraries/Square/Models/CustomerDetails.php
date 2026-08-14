@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Details about the customer making the payment.
  */
@@ -15,12 +13,10 @@ class CustomerDetails implements \JsonSerializable
      * @var array
      */
     private $customerInitiated = [];
-
     /**
      * @var array
      */
     private $sellerKeyedIn = [];
-
     /**
      * Returns Customer Initiated.
      * Indicates whether the customer initiated the payment.
@@ -32,7 +28,6 @@ class CustomerDetails implements \JsonSerializable
         }
         return $this->customerInitiated['value'];
     }
-
     /**
      * Sets Customer Initiated.
      * Indicates whether the customer initiated the payment.
@@ -43,7 +38,6 @@ class CustomerDetails implements \JsonSerializable
     {
         $this->customerInitiated['value'] = $customerInitiated;
     }
-
     /**
      * Unsets Customer Initiated.
      * Indicates whether the customer initiated the payment.
@@ -52,7 +46,6 @@ class CustomerDetails implements \JsonSerializable
     {
         $this->customerInitiated = [];
     }
-
     /**
      * Returns Seller Keyed In.
      * Indicates that the seller keyed in payment details on behalf of the customer.
@@ -65,7 +58,6 @@ class CustomerDetails implements \JsonSerializable
         }
         return $this->sellerKeyedIn['value'];
     }
-
     /**
      * Sets Seller Keyed In.
      * Indicates that the seller keyed in payment details on behalf of the customer.
@@ -77,7 +69,6 @@ class CustomerDetails implements \JsonSerializable
     {
         $this->sellerKeyedIn['value'] = $sellerKeyedIn;
     }
-
     /**
      * Unsets Seller Keyed In.
      * Indicates that the seller keyed in payment details on behalf of the customer.
@@ -87,7 +78,6 @@ class CustomerDetails implements \JsonSerializable
     {
         $this->sellerKeyedIn = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -96,7 +86,7 @@ class CustomerDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -104,12 +94,11 @@ class CustomerDetails implements \JsonSerializable
             $json['customer_initiated'] = $this->customerInitiated['value'];
         }
         if (!empty($this->sellerKeyedIn)) {
-            $json['seller_keyed_in']    = $this->sellerKeyedIn['value'];
+            $json['seller_keyed_in'] = $this->sellerKeyedIn['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

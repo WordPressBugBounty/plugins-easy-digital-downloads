@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Apps;
 
 /**
- * Secret Store is an API that allows EDD\Vendor\Stripe Apps developers to securely persist secrets for use by UI Extensions and app backends.
+ * Secret Store is an API that allows Stripe Apps developers to securely persist secrets for use by UI Extensions and app backends.
  *
  * The primary resource in Secret Store is a <code>secret</code>. Other apps can't view secrets created by an app. Additionally, secrets are scoped to provide further permission control.
  *
@@ -28,7 +27,6 @@ namespace EDD\Vendor\Stripe\Apps;
 class Secret extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'apps.secret';
-
     /**
      * Create or replace a secret in the secret store.
      *
@@ -43,14 +41,11 @@ class Secret extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * List all secrets stored on the given scope.
      *
@@ -64,10 +59,8 @@ class Secret extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -82,10 +75,8 @@ class Secret extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -100,7 +91,6 @@ class Secret extends \EDD\Vendor\Stripe\ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

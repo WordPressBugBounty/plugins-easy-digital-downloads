@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/products', $params, $opts);
     }
-
     /**
      * Retrieve a list of features for a product.
      *
@@ -41,7 +39,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/products/%s/features', $parentId), $params, $opts);
     }
-
     /**
      * Creates a new product object.
      *
@@ -56,7 +53,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/products', $params, $opts);
     }
-
     /**
      * Creates a product_feature, which represents a feature attachment to a product.
      *
@@ -72,7 +68,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/products/%s/features', $parentId), $params, $opts);
     }
-
     /**
      * Delete a product. Deleting a product is only possible if it has no prices
      * associated with it. Additionally, deleting a product with <code>type=good</code>
@@ -90,7 +85,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/products/%s', $id), $params, $opts);
     }
-
     /**
      * Deletes the feature attachment to a product.
      *
@@ -107,10 +101,9 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/products/%s/features/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing product. Supply the unique product ID from
-     * either a product creation request or the product list, and EDD\Vendor\Stripe will return
+     * either a product creation request or the product list, and Stripe will return
      * the corresponding product information.
      *
      * @param string $id
@@ -125,7 +118,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/products/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieves a product_feature, which represents a feature attachment to a product.
      *
@@ -142,7 +134,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/products/%s/features/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Search for products you’ve previously created using Stripe’s <a
      * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
@@ -162,7 +153,6 @@ class ProductService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestSearchResult('get', '/v1/products/search', $params, $opts);
     }
-
     /**
      * Updates the specific product by setting the values of the parameters passed. Any
      * parameters not provided will be left unchanged.

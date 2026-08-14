@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestSetterInterface;
-
 class HeaderParam extends Parameter
 {
     /**
@@ -15,12 +13,10 @@ class HeaderParam extends Parameter
     {
         return new self($key, $value);
     }
-
     private function __construct(string $key, $value)
     {
         parent::__construct($key, $value, 'header');
     }
-
     /**
      * Adds the parameter to the request provided.
      *

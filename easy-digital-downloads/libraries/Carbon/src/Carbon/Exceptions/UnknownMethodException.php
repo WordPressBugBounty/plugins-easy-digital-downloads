@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Exceptions;
 
 use BadMethodCallException as BaseBadMethodCallException;
 use Throwable;
-
 class UnknownMethodException extends BaseBadMethodCallException implements BadMethodCallException
 {
     /**
@@ -22,7 +20,6 @@ class UnknownMethodException extends BaseBadMethodCallException implements BadMe
      * @var string
      */
     protected $method;
-
     /**
      * Constructor.
      *
@@ -33,10 +30,8 @@ class UnknownMethodException extends BaseBadMethodCallException implements BadMe
     public function __construct($method, $code = 0, ?Throwable $previous = null)
     {
         $this->method = $method;
-
-        parent::__construct("Method $method does not exist.", $code, $previous);
+        parent::__construct("Method {$method} does not exist.", $code, $previous);
     }
-
     /**
      * Get the method.
      *

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The response object returned by the [ListMerchant]($e/Merchants/ListMerchants) endpoint.
  */
@@ -15,17 +13,14 @@ class ListMerchantsResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Merchant[]|null
      */
     private $merchant;
-
     /**
      * @var int|null
      */
     private $cursor;
-
     /**
      * Returns Errors.
      * Information on errors encountered during the request.
@@ -36,7 +31,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information on errors encountered during the request.
@@ -49,7 +43,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Merchant.
      * The requested `Merchant` entities.
@@ -60,7 +53,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         return $this->merchant;
     }
-
     /**
      * Sets Merchant.
      * The requested `Merchant` entities.
@@ -73,7 +65,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         $this->merchant = $merchant;
     }
-
     /**
      * Returns Cursor.
      * If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
@@ -82,7 +73,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * If the  response is truncated, the cursor to use in next  request to fetch next set of objects.
@@ -93,7 +83,6 @@ class ListMerchantsResponse implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -102,23 +91,22 @@ class ListMerchantsResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']   = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->merchant)) {
             $json['merchant'] = $this->merchant;
         }
         if (isset($this->cursor)) {
-            $json['cursor']   = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

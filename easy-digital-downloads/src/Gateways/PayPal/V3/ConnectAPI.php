@@ -217,6 +217,14 @@ class ConnectAPI {
 		}
 
 		if ( $this->last_response_code >= 400 ) {
+			// The Connect API returns structured `{ error: { code, message } }` bodies
+			// on 4xx (e.g. 403 applepay_not_available). Surface that array so
+			// callers can branch on the error code instead of a generic WP_Error.
+			$decoded = json_decode( $response_body, true );
+			if ( is_array( $decoded ) && isset( $decoded['error'] ) ) {
+				return $decoded;
+			}
+
 			return new WP_Error(
 				'proxy_http_error',
 				wp_remote_retrieve_response_message( $response ),

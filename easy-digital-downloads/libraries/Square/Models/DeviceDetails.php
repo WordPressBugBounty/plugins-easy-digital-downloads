@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Details about the device that took the payment.
  */
@@ -15,17 +13,14 @@ class DeviceDetails implements \JsonSerializable
      * @var array
      */
     private $deviceId = [];
-
     /**
      * @var array
      */
     private $deviceInstallationId = [];
-
     /**
      * @var array
      */
     private $deviceName = [];
-
     /**
      * Returns Device Id.
      * The Square-issued ID of the device.
@@ -37,7 +32,6 @@ class DeviceDetails implements \JsonSerializable
         }
         return $this->deviceId['value'];
     }
-
     /**
      * Sets Device Id.
      * The Square-issued ID of the device.
@@ -48,7 +42,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceId['value'] = $deviceId;
     }
-
     /**
      * Unsets Device Id.
      * The Square-issued ID of the device.
@@ -57,7 +50,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceId = [];
     }
-
     /**
      * Returns Device Installation Id.
      * The Square-issued installation ID for the device.
@@ -69,7 +61,6 @@ class DeviceDetails implements \JsonSerializable
         }
         return $this->deviceInstallationId['value'];
     }
-
     /**
      * Sets Device Installation Id.
      * The Square-issued installation ID for the device.
@@ -80,7 +71,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceInstallationId['value'] = $deviceInstallationId;
     }
-
     /**
      * Unsets Device Installation Id.
      * The Square-issued installation ID for the device.
@@ -89,7 +79,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceInstallationId = [];
     }
-
     /**
      * Returns Device Name.
      * The name of the device set by the seller.
@@ -101,7 +90,6 @@ class DeviceDetails implements \JsonSerializable
         }
         return $this->deviceName['value'];
     }
-
     /**
      * Sets Device Name.
      * The name of the device set by the seller.
@@ -112,7 +100,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceName['value'] = $deviceName;
     }
-
     /**
      * Unsets Device Name.
      * The name of the device set by the seller.
@@ -121,7 +108,6 @@ class DeviceDetails implements \JsonSerializable
     {
         $this->deviceName = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -130,23 +116,22 @@ class DeviceDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->deviceId)) {
-            $json['device_id']              = $this->deviceId['value'];
+            $json['device_id'] = $this->deviceId['value'];
         }
         if (!empty($this->deviceInstallationId)) {
             $json['device_installation_id'] = $this->deviceInstallationId['value'];
         }
         if (!empty($this->deviceName)) {
-            $json['device_name']            = $this->deviceName['value'];
+            $json['device_name'] = $this->deviceName['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

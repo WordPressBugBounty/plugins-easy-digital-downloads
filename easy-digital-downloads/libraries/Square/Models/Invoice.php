@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Stores information about an invoice. You use the Invoices API to create and manage
  * invoices. For more information, see [Invoices API Overview](https://developer.squareup.
@@ -17,122 +15,98 @@ class Invoice implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var array
      */
     private $orderId = [];
-
     /**
      * @var InvoiceRecipient|null
      */
     private $primaryRecipient;
-
     /**
      * @var array
      */
     private $paymentRequests = [];
-
     /**
      * @var string|null
      */
     private $deliveryMethod;
-
     /**
      * @var array
      */
     private $invoiceNumber = [];
-
     /**
      * @var array
      */
     private $title = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var array
      */
     private $scheduledAt = [];
-
     /**
      * @var string|null
      */
     private $publicUrl;
-
     /**
      * @var Money|null
      */
     private $nextPaymentAmountMoney;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var string|null
      */
     private $timezone;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var InvoiceAcceptedPaymentMethods|null
      */
     private $acceptedPaymentMethods;
-
     /**
      * @var array
      */
     private $customFields = [];
-
     /**
      * @var string|null
      */
     private $subscriptionId;
-
     /**
      * @var array
      */
     private $saleOrServiceDate = [];
-
     /**
      * @var array
      */
     private $paymentConditions = [];
-
     /**
      * @var array
      */
     private $storePaymentMethodEnabled = [];
-
     /**
      * @var InvoiceAttachment[]|null
      */
     private $attachments;
-
     /**
      * Returns Id.
      * The Square-assigned ID of the invoice.
@@ -141,7 +115,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The Square-assigned ID of the invoice.
@@ -152,7 +125,6 @@ class Invoice implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Version.
      * The Square-assigned version number, which is incremented each time an update is committed to the
@@ -162,7 +134,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The Square-assigned version number, which is incremented each time an update is committed to the
@@ -174,7 +145,6 @@ class Invoice implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Location Id.
      * The ID of the location that this invoice is associated with.
@@ -189,7 +159,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the location that this invoice is associated with.
@@ -203,7 +172,6 @@ class Invoice implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the location that this invoice is associated with.
@@ -215,7 +183,6 @@ class Invoice implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Order Id.
      * The ID of the [order](entity:Order) for which the invoice is created.
@@ -231,7 +198,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->orderId['value'];
     }
-
     /**
      * Sets Order Id.
      * The ID of the [order](entity:Order) for which the invoice is created.
@@ -246,7 +212,6 @@ class Invoice implements \JsonSerializable
     {
         $this->orderId['value'] = $orderId;
     }
-
     /**
      * Unsets Order Id.
      * The ID of the [order](entity:Order) for which the invoice is created.
@@ -259,35 +224,33 @@ class Invoice implements \JsonSerializable
     {
         $this->orderId = [];
     }
-
     /**
      * Returns Primary Recipient.
      * Represents a snapshot of customer data. This object stores customer data that is displayed on the
      * invoice
-     * and that EDD\Vendor\Square uses to deliver the invoice.
+     * and that Square uses to deliver the invoice.
      *
-     * When you provide a customer ID for a draft invoice, EDD\Vendor\Square retrieves the associated customer profile
+     * When you provide a customer ID for a draft invoice, Square retrieves the associated customer profile
      * and populates
      * the remaining `InvoiceRecipient` fields. You cannot update these fields after the invoice is
      * published.
-     * EDD\Vendor\Square updates the customer ID in response to a merge operation, but does not update other fields.
+     * Square updates the customer ID in response to a merge operation, but does not update other fields.
      */
     public function getPrimaryRecipient(): ?InvoiceRecipient
     {
         return $this->primaryRecipient;
     }
-
     /**
      * Sets Primary Recipient.
      * Represents a snapshot of customer data. This object stores customer data that is displayed on the
      * invoice
-     * and that EDD\Vendor\Square uses to deliver the invoice.
+     * and that Square uses to deliver the invoice.
      *
-     * When you provide a customer ID for a draft invoice, EDD\Vendor\Square retrieves the associated customer profile
+     * When you provide a customer ID for a draft invoice, Square retrieves the associated customer profile
      * and populates
      * the remaining `InvoiceRecipient` fields. You cannot update these fields after the invoice is
      * published.
-     * EDD\Vendor\Square updates the customer ID in response to a merge operation, but does not update other fields.
+     * Square updates the customer ID in response to a merge operation, but does not update other fields.
      *
      * @maps primary_recipient
      */
@@ -295,7 +258,6 @@ class Invoice implements \JsonSerializable
     {
         $this->primaryRecipient = $primaryRecipient;
     }
-
     /**
      * Returns Payment Requests.
      * The payment schedule for the invoice, represented by one or more payment requests that
@@ -324,7 +286,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->paymentRequests['value'];
     }
-
     /**
      * Sets Payment Requests.
      * The payment schedule for the invoice, represented by one or more payment requests that
@@ -352,7 +313,6 @@ class Invoice implements \JsonSerializable
     {
         $this->paymentRequests['value'] = $paymentRequests;
     }
-
     /**
      * Unsets Payment Requests.
      * The payment schedule for the invoice, represented by one or more payment requests that
@@ -376,19 +336,17 @@ class Invoice implements \JsonSerializable
     {
         $this->paymentRequests = [];
     }
-
     /**
      * Returns Delivery Method.
-     * Indicates how EDD\Vendor\Square delivers the [invoice]($m/Invoice) to the customer.
+     * Indicates how Square delivers the [invoice]($m/Invoice) to the customer.
      */
     public function getDeliveryMethod(): ?string
     {
         return $this->deliveryMethod;
     }
-
     /**
      * Sets Delivery Method.
-     * Indicates how EDD\Vendor\Square delivers the [invoice]($m/Invoice) to the customer.
+     * Indicates how Square delivers the [invoice]($m/Invoice) to the customer.
      *
      * @maps delivery_method
      */
@@ -396,12 +354,11 @@ class Invoice implements \JsonSerializable
     {
         $this->deliveryMethod = $deliveryMethod;
     }
-
     /**
      * Returns Invoice Number.
      * A user-friendly invoice number that is displayed on the invoice. The value is unique within a
      * location.
-     * If not provided when creating an invoice, EDD\Vendor\Square assigns a value.
+     * If not provided when creating an invoice, Square assigns a value.
      * It increments from 1 and is padded with zeros making it 7 characters long
      * (for example, 0000001 and 0000002).
      */
@@ -412,12 +369,11 @@ class Invoice implements \JsonSerializable
         }
         return $this->invoiceNumber['value'];
     }
-
     /**
      * Sets Invoice Number.
      * A user-friendly invoice number that is displayed on the invoice. The value is unique within a
      * location.
-     * If not provided when creating an invoice, EDD\Vendor\Square assigns a value.
+     * If not provided when creating an invoice, Square assigns a value.
      * It increments from 1 and is padded with zeros making it 7 characters long
      * (for example, 0000001 and 0000002).
      *
@@ -427,12 +383,11 @@ class Invoice implements \JsonSerializable
     {
         $this->invoiceNumber['value'] = $invoiceNumber;
     }
-
     /**
      * Unsets Invoice Number.
      * A user-friendly invoice number that is displayed on the invoice. The value is unique within a
      * location.
-     * If not provided when creating an invoice, EDD\Vendor\Square assigns a value.
+     * If not provided when creating an invoice, Square assigns a value.
      * It increments from 1 and is padded with zeros making it 7 characters long
      * (for example, 0000001 and 0000002).
      */
@@ -440,7 +395,6 @@ class Invoice implements \JsonSerializable
     {
         $this->invoiceNumber = [];
     }
-
     /**
      * Returns Title.
      * The title of the invoice, which is displayed on the invoice.
@@ -452,7 +406,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->title['value'];
     }
-
     /**
      * Sets Title.
      * The title of the invoice, which is displayed on the invoice.
@@ -463,7 +416,6 @@ class Invoice implements \JsonSerializable
     {
         $this->title['value'] = $title;
     }
-
     /**
      * Unsets Title.
      * The title of the invoice, which is displayed on the invoice.
@@ -472,7 +424,6 @@ class Invoice implements \JsonSerializable
     {
         $this->title = [];
     }
-
     /**
      * Returns Description.
      * The description of the invoice, which is displayed on the invoice.
@@ -484,7 +435,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
      * The description of the invoice, which is displayed on the invoice.
@@ -495,7 +445,6 @@ class Invoice implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
      * The description of the invoice, which is displayed on the invoice.
@@ -504,14 +453,13 @@ class Invoice implements \JsonSerializable
     {
         $this->description = [];
     }
-
     /**
      * Returns Scheduled At.
      * The timestamp when the invoice is scheduled for processing, in RFC 3339 format.
-     * After the invoice is published, EDD\Vendor\Square processes the invoice on the specified date,
+     * After the invoice is published, Square processes the invoice on the specified date,
      * according to the delivery method and payment request settings.
      *
-     * If the field is not set, EDD\Vendor\Square processes the invoice immediately after it is published.
+     * If the field is not set, Square processes the invoice immediately after it is published.
      */
     public function getScheduledAt(): ?string
     {
@@ -520,14 +468,13 @@ class Invoice implements \JsonSerializable
         }
         return $this->scheduledAt['value'];
     }
-
     /**
      * Sets Scheduled At.
      * The timestamp when the invoice is scheduled for processing, in RFC 3339 format.
-     * After the invoice is published, EDD\Vendor\Square processes the invoice on the specified date,
+     * After the invoice is published, Square processes the invoice on the specified date,
      * according to the delivery method and payment request settings.
      *
-     * If the field is not set, EDD\Vendor\Square processes the invoice immediately after it is published.
+     * If the field is not set, Square processes the invoice immediately after it is published.
      *
      * @maps scheduled_at
      */
@@ -535,35 +482,32 @@ class Invoice implements \JsonSerializable
     {
         $this->scheduledAt['value'] = $scheduledAt;
     }
-
     /**
      * Unsets Scheduled At.
      * The timestamp when the invoice is scheduled for processing, in RFC 3339 format.
-     * After the invoice is published, EDD\Vendor\Square processes the invoice on the specified date,
+     * After the invoice is published, Square processes the invoice on the specified date,
      * according to the delivery method and payment request settings.
      *
-     * If the field is not set, EDD\Vendor\Square processes the invoice immediately after it is published.
+     * If the field is not set, Square processes the invoice immediately after it is published.
      */
     public function unsetScheduledAt(): void
     {
         $this->scheduledAt = [];
     }
-
     /**
      * Returns Public Url.
      * The URL of the Square-hosted invoice page.
-     * After you publish the invoice using the `PublishInvoice` endpoint, EDD\Vendor\Square hosts the invoice
+     * After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice
      * page and returns the page URL in the response.
      */
     public function getPublicUrl(): ?string
     {
         return $this->publicUrl;
     }
-
     /**
      * Sets Public Url.
      * The URL of the Square-hosted invoice page.
-     * After you publish the invoice using the `PublishInvoice` endpoint, EDD\Vendor\Square hosts the invoice
+     * After you publish the invoice using the `PublishInvoice` endpoint, Square hosts the invoice
      * page and returns the page URL in the response.
      *
      * @maps public_url
@@ -572,7 +516,6 @@ class Invoice implements \JsonSerializable
     {
         $this->publicUrl = $publicUrl;
     }
-
     /**
      * Returns Next Payment Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -587,7 +530,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->nextPaymentAmountMoney;
     }
-
     /**
      * Sets Next Payment Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -604,7 +546,6 @@ class Invoice implements \JsonSerializable
     {
         $this->nextPaymentAmountMoney = $nextPaymentAmountMoney;
     }
-
     /**
      * Returns Status.
      * Indicates the status of an invoice.
@@ -613,7 +554,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Indicates the status of an invoice.
@@ -624,7 +564,6 @@ class Invoice implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Timezone.
      * The time zone used to interpret calendar dates on the invoice, such as `due_date`.
@@ -639,7 +578,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->timezone;
     }
-
     /**
      * Sets Timezone.
      * The time zone used to interpret calendar dates on the invoice, such as `due_date`.
@@ -656,7 +594,6 @@ class Invoice implements \JsonSerializable
     {
         $this->timezone = $timezone;
     }
-
     /**
      * Returns Created At.
      * The timestamp when the invoice was created, in RFC 3339 format.
@@ -665,7 +602,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the invoice was created, in RFC 3339 format.
@@ -676,7 +612,6 @@ class Invoice implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp when the invoice was last updated, in RFC 3339 format.
@@ -685,7 +620,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp when the invoice was last updated, in RFC 3339 format.
@@ -696,7 +630,6 @@ class Invoice implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Accepted Payment Methods.
      * The payment methods that customers can use to pay an [invoice]($m/Invoice) on the Square-hosted
@@ -706,7 +639,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->acceptedPaymentMethods;
     }
-
     /**
      * Sets Accepted Payment Methods.
      * The payment methods that customers can use to pay an [invoice]($m/Invoice) on the Square-hosted
@@ -718,7 +650,6 @@ class Invoice implements \JsonSerializable
     {
         $this->acceptedPaymentMethods = $acceptedPaymentMethods;
     }
-
     /**
      * Returns Custom Fields.
      * Additional seller-defined fields that are displayed on the invoice. For more information, see
@@ -739,7 +670,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->customFields['value'];
     }
-
     /**
      * Sets Custom Fields.
      * Additional seller-defined fields that are displayed on the invoice. For more information, see
@@ -759,7 +689,6 @@ class Invoice implements \JsonSerializable
     {
         $this->customFields['value'] = $customFields;
     }
-
     /**
      * Unsets Custom Fields.
      * Additional seller-defined fields that are displayed on the invoice. For more information, see
@@ -775,7 +704,6 @@ class Invoice implements \JsonSerializable
     {
         $this->customFields = [];
     }
-
     /**
      * Returns Subscription Id.
      * The ID of the [subscription](entity:Subscription) associated with the invoice.
@@ -785,7 +713,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->subscriptionId;
     }
-
     /**
      * Sets Subscription Id.
      * The ID of the [subscription](entity:Subscription) associated with the invoice.
@@ -797,7 +724,6 @@ class Invoice implements \JsonSerializable
     {
         $this->subscriptionId = $subscriptionId;
     }
-
     /**
      * Returns Sale or Service Date.
      * The date of the sale or the date that the service is rendered, in `YYYY-MM-DD` format.
@@ -810,7 +736,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->saleOrServiceDate['value'];
     }
-
     /**
      * Sets Sale or Service Date.
      * The date of the sale or the date that the service is rendered, in `YYYY-MM-DD` format.
@@ -822,7 +747,6 @@ class Invoice implements \JsonSerializable
     {
         $this->saleOrServiceDate['value'] = $saleOrServiceDate;
     }
-
     /**
      * Unsets Sale or Service Date.
      * The date of the sale or the date that the service is rendered, in `YYYY-MM-DD` format.
@@ -832,7 +756,6 @@ class Invoice implements \JsonSerializable
     {
         $this->saleOrServiceDate = [];
     }
-
     /**
      * Returns Payment Conditions.
      * **France only.** The payment terms and conditions that are displayed on the invoice. For more
@@ -840,7 +763,7 @@ class Invoice implements \JsonSerializable
      * see [Payment conditions](https://developer.squareup.com/docs/invoices-api/overview#payment-
      * conditions).
      *
-     * For countries other than France, EDD\Vendor\Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
+     * For countries other than France, Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
      * and
      * "Payment conditions are not supported for this location's country" detail if this field is included
      * in `CreateInvoice` or `UpdateInvoice` requests.
@@ -852,7 +775,6 @@ class Invoice implements \JsonSerializable
         }
         return $this->paymentConditions['value'];
     }
-
     /**
      * Sets Payment Conditions.
      * **France only.** The payment terms and conditions that are displayed on the invoice. For more
@@ -860,7 +782,7 @@ class Invoice implements \JsonSerializable
      * see [Payment conditions](https://developer.squareup.com/docs/invoices-api/overview#payment-
      * conditions).
      *
-     * For countries other than France, EDD\Vendor\Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
+     * For countries other than France, Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
      * and
      * "Payment conditions are not supported for this location's country" detail if this field is included
      * in `CreateInvoice` or `UpdateInvoice` requests.
@@ -871,7 +793,6 @@ class Invoice implements \JsonSerializable
     {
         $this->paymentConditions['value'] = $paymentConditions;
     }
-
     /**
      * Unsets Payment Conditions.
      * **France only.** The payment terms and conditions that are displayed on the invoice. For more
@@ -879,7 +800,7 @@ class Invoice implements \JsonSerializable
      * see [Payment conditions](https://developer.squareup.com/docs/invoices-api/overview#payment-
      * conditions).
      *
-     * For countries other than France, EDD\Vendor\Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
+     * For countries other than France, Square returns an `INVALID_REQUEST_ERROR` with a `BAD_REQUEST` code
      * and
      * "Payment conditions are not supported for this location's country" detail if this field is included
      * in `CreateInvoice` or `UpdateInvoice` requests.
@@ -888,12 +809,11 @@ class Invoice implements \JsonSerializable
     {
         $this->paymentConditions = [];
     }
-
     /**
      * Returns Store Payment Method Enabled.
      * Indicates whether to allow a customer to save a credit or debit card as a card on file or a bank
      * transfer as a
-     * bank account on file. If `true`, EDD\Vendor\Square displays a __Save my card on file__ or __Save my bank on
+     * bank account on file. If `true`, Square displays a __Save my card on file__ or __Save my bank on
      * file__ checkbox on the
      * invoice payment page. Stored payment information can be used for future automatic payments. The
      * default value is `false`.
@@ -905,12 +825,11 @@ class Invoice implements \JsonSerializable
         }
         return $this->storePaymentMethodEnabled['value'];
     }
-
     /**
      * Sets Store Payment Method Enabled.
      * Indicates whether to allow a customer to save a credit or debit card as a card on file or a bank
      * transfer as a
-     * bank account on file. If `true`, EDD\Vendor\Square displays a __Save my card on file__ or __Save my bank on
+     * bank account on file. If `true`, Square displays a __Save my card on file__ or __Save my bank on
      * file__ checkbox on the
      * invoice payment page. Stored payment information can be used for future automatic payments. The
      * default value is `false`.
@@ -921,12 +840,11 @@ class Invoice implements \JsonSerializable
     {
         $this->storePaymentMethodEnabled['value'] = $storePaymentMethodEnabled;
     }
-
     /**
      * Unsets Store Payment Method Enabled.
      * Indicates whether to allow a customer to save a credit or debit card as a card on file or a bank
      * transfer as a
-     * bank account on file. If `true`, EDD\Vendor\Square displays a __Save my card on file__ or __Save my bank on
+     * bank account on file. If `true`, Square displays a __Save my card on file__ or __Save my bank on
      * file__ checkbox on the
      * invoice payment page. Stored payment information can be used for future automatic payments. The
      * default value is `false`.
@@ -935,7 +853,6 @@ class Invoice implements \JsonSerializable
     {
         $this->storePaymentMethodEnabled = [];
     }
-
     /**
      * Returns Attachments.
      * Metadata about the attachments on the invoice. Invoice attachments are managed using the
@@ -948,7 +865,6 @@ class Invoice implements \JsonSerializable
     {
         return $this->attachments;
     }
-
     /**
      * Sets Attachments.
      * Metadata about the attachments on the invoice. Invoice attachments are managed using the
@@ -963,7 +879,6 @@ class Invoice implements \JsonSerializable
     {
         $this->attachments = $attachments;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -972,86 +887,85 @@ class Invoice implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                           = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->version)) {
-            $json['version']                      = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->locationId)) {
-            $json['location_id']                  = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (!empty($this->orderId)) {
-            $json['order_id']                     = $this->orderId['value'];
+            $json['order_id'] = $this->orderId['value'];
         }
         if (isset($this->primaryRecipient)) {
-            $json['primary_recipient']            = $this->primaryRecipient;
+            $json['primary_recipient'] = $this->primaryRecipient;
         }
         if (!empty($this->paymentRequests)) {
-            $json['payment_requests']             = $this->paymentRequests['value'];
+            $json['payment_requests'] = $this->paymentRequests['value'];
         }
         if (isset($this->deliveryMethod)) {
-            $json['delivery_method']              = $this->deliveryMethod;
+            $json['delivery_method'] = $this->deliveryMethod;
         }
         if (!empty($this->invoiceNumber)) {
-            $json['invoice_number']               = $this->invoiceNumber['value'];
+            $json['invoice_number'] = $this->invoiceNumber['value'];
         }
         if (!empty($this->title)) {
-            $json['title']                        = $this->title['value'];
+            $json['title'] = $this->title['value'];
         }
         if (!empty($this->description)) {
-            $json['description']                  = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (!empty($this->scheduledAt)) {
-            $json['scheduled_at']                 = $this->scheduledAt['value'];
+            $json['scheduled_at'] = $this->scheduledAt['value'];
         }
         if (isset($this->publicUrl)) {
-            $json['public_url']                   = $this->publicUrl;
+            $json['public_url'] = $this->publicUrl;
         }
         if (isset($this->nextPaymentAmountMoney)) {
-            $json['next_payment_amount_money']    = $this->nextPaymentAmountMoney;
+            $json['next_payment_amount_money'] = $this->nextPaymentAmountMoney;
         }
         if (isset($this->status)) {
-            $json['status']                       = $this->status;
+            $json['status'] = $this->status;
         }
         if (isset($this->timezone)) {
-            $json['timezone']                     = $this->timezone;
+            $json['timezone'] = $this->timezone;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                   = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                   = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->acceptedPaymentMethods)) {
-            $json['accepted_payment_methods']     = $this->acceptedPaymentMethods;
+            $json['accepted_payment_methods'] = $this->acceptedPaymentMethods;
         }
         if (!empty($this->customFields)) {
-            $json['custom_fields']                = $this->customFields['value'];
+            $json['custom_fields'] = $this->customFields['value'];
         }
         if (isset($this->subscriptionId)) {
-            $json['subscription_id']              = $this->subscriptionId;
+            $json['subscription_id'] = $this->subscriptionId;
         }
         if (!empty($this->saleOrServiceDate)) {
-            $json['sale_or_service_date']         = $this->saleOrServiceDate['value'];
+            $json['sale_or_service_date'] = $this->saleOrServiceDate['value'];
         }
         if (!empty($this->paymentConditions)) {
-            $json['payment_conditions']           = $this->paymentConditions['value'];
+            $json['payment_conditions'] = $this->paymentConditions['value'];
         }
         if (!empty($this->storePaymentMethodEnabled)) {
             $json['store_payment_method_enabled'] = $this->storePaymentMethodEnabled['value'];
         }
         if (isset($this->attachments)) {
-            $json['attachments']                  = $this->attachments;
+            $json['attachments'] = $this->attachments;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

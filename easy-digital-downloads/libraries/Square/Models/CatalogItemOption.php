@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A group of variations for a `CatalogItem`.
  */
@@ -15,27 +13,22 @@ class CatalogItemOption implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $displayName = [];
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var array
      */
     private $showColors = [];
-
     /**
      * @var array
      */
     private $values = [];
-
     /**
      * Returns Name.
      * The item option's display name for the seller. Must be unique across
@@ -48,7 +41,6 @@ class CatalogItemOption implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The item option's display name for the seller. Must be unique across
@@ -60,7 +52,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The item option's display name for the seller. Must be unique across
@@ -70,7 +61,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Display Name.
      * The item option's display name for the customer. This is a searchable attribute for use in
@@ -83,7 +73,6 @@ class CatalogItemOption implements \JsonSerializable
         }
         return $this->displayName['value'];
     }
-
     /**
      * Sets Display Name.
      * The item option's display name for the customer. This is a searchable attribute for use in
@@ -95,7 +84,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->displayName['value'] = $displayName;
     }
-
     /**
      * Unsets Display Name.
      * The item option's display name for the customer. This is a searchable attribute for use in
@@ -105,10 +93,9 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->displayName = [];
     }
-
     /**
      * Returns Description.
-     * The item option's human-readable description. Displayed in the EDD\Vendor\Square
+     * The item option's human-readable description. Displayed in the Square
      * Point of Sale app for the seller and in the Online Store or on receipts for
      * the buyer. This is a searchable attribute for use in applicable query filters.
      */
@@ -119,10 +106,9 @@ class CatalogItemOption implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
-     * The item option's human-readable description. Displayed in the EDD\Vendor\Square
+     * The item option's human-readable description. Displayed in the Square
      * Point of Sale app for the seller and in the Online Store or on receipts for
      * the buyer. This is a searchable attribute for use in applicable query filters.
      *
@@ -132,10 +118,9 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
-     * The item option's human-readable description. Displayed in the EDD\Vendor\Square
+     * The item option's human-readable description. Displayed in the Square
      * Point of Sale app for the seller and in the Online Store or on receipts for
      * the buyer. This is a searchable attribute for use in applicable query filters.
      */
@@ -143,7 +128,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->description = [];
     }
-
     /**
      * Returns Show Colors.
      * If true, display colors for entries in `values` when present.
@@ -155,7 +139,6 @@ class CatalogItemOption implements \JsonSerializable
         }
         return $this->showColors['value'];
     }
-
     /**
      * Sets Show Colors.
      * If true, display colors for entries in `values` when present.
@@ -166,7 +149,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->showColors['value'] = $showColors;
     }
-
     /**
      * Unsets Show Colors.
      * If true, display colors for entries in `values` when present.
@@ -175,7 +157,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->showColors = [];
     }
-
     /**
      * Returns Values.
      * A list of CatalogObjects containing the
@@ -190,7 +171,6 @@ class CatalogItemOption implements \JsonSerializable
         }
         return $this->values['value'];
     }
-
     /**
      * Sets Values.
      * A list of CatalogObjects containing the
@@ -204,7 +184,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->values['value'] = $values;
     }
-
     /**
      * Unsets Values.
      * A list of CatalogObjects containing the
@@ -214,7 +193,6 @@ class CatalogItemOption implements \JsonSerializable
     {
         $this->values = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -223,29 +201,28 @@ class CatalogItemOption implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']         = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->displayName)) {
             $json['display_name'] = $this->displayName['value'];
         }
         if (!empty($this->description)) {
-            $json['description']  = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (!empty($this->showColors)) {
-            $json['show_colors']  = $this->showColors['value'];
+            $json['show_colors'] = $this->showColors['value'];
         }
         if (!empty($this->values)) {
-            $json['values']       = $this->values['value'];
+            $json['values'] = $this->values['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

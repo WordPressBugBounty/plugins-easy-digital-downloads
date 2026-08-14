@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a job assigned to a [team member]($m/TeamMember), including the compensation the team
  * member earns for the job. Job assignments are listed in the team member's [wage
@@ -17,32 +15,26 @@ class JobAssignment implements \JsonSerializable
      * @var array
      */
     private $jobTitle = [];
-
     /**
      * @var string
      */
     private $payType;
-
     /**
      * @var Money|null
      */
     private $hourlyRate;
-
     /**
      * @var Money|null
      */
     private $annualRate;
-
     /**
      * @var array
      */
     private $weeklyHours = [];
-
     /**
      * @var array
      */
     private $jobId = [];
-
     /**
      * @param string $payType
      */
@@ -50,7 +42,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->payType = $payType;
     }
-
     /**
      * Returns Job Title.
      * The title of the job.
@@ -62,7 +53,6 @@ class JobAssignment implements \JsonSerializable
         }
         return $this->jobTitle['value'];
     }
-
     /**
      * Sets Job Title.
      * The title of the job.
@@ -73,7 +63,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->jobTitle['value'] = $jobTitle;
     }
-
     /**
      * Unsets Job Title.
      * The title of the job.
@@ -82,7 +71,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->jobTitle = [];
     }
-
     /**
      * Returns Pay Type.
      * Enumerates the possible pay types that a job can be assigned.
@@ -91,7 +79,6 @@ class JobAssignment implements \JsonSerializable
     {
         return $this->payType;
     }
-
     /**
      * Sets Pay Type.
      * Enumerates the possible pay types that a job can be assigned.
@@ -103,7 +90,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->payType = $payType;
     }
-
     /**
      * Returns Hourly Rate.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -118,7 +104,6 @@ class JobAssignment implements \JsonSerializable
     {
         return $this->hourlyRate;
     }
-
     /**
      * Sets Hourly Rate.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -135,7 +120,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->hourlyRate = $hourlyRate;
     }
-
     /**
      * Returns Annual Rate.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -150,7 +134,6 @@ class JobAssignment implements \JsonSerializable
     {
         return $this->annualRate;
     }
-
     /**
      * Sets Annual Rate.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -167,7 +150,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->annualRate = $annualRate;
     }
-
     /**
      * Returns Weekly Hours.
      * The planned hours per week for the job. Set if the job `PayType` is `SALARY`.
@@ -179,7 +161,6 @@ class JobAssignment implements \JsonSerializable
         }
         return $this->weeklyHours['value'];
     }
-
     /**
      * Sets Weekly Hours.
      * The planned hours per week for the job. Set if the job `PayType` is `SALARY`.
@@ -190,7 +171,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->weeklyHours['value'] = $weeklyHours;
     }
-
     /**
      * Unsets Weekly Hours.
      * The planned hours per week for the job. Set if the job `PayType` is `SALARY`.
@@ -199,7 +179,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->weeklyHours = [];
     }
-
     /**
      * Returns Job Id.
      * The ID of the [job]($m/Job).
@@ -211,7 +190,6 @@ class JobAssignment implements \JsonSerializable
         }
         return $this->jobId['value'];
     }
-
     /**
      * Sets Job Id.
      * The ID of the [job]($m/Job).
@@ -222,7 +200,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->jobId['value'] = $jobId;
     }
-
     /**
      * Unsets Job Id.
      * The ID of the [job]($m/Job).
@@ -231,7 +208,6 @@ class JobAssignment implements \JsonSerializable
     {
         $this->jobId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -240,30 +216,29 @@ class JobAssignment implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->jobTitle)) {
-            $json['job_title']    = $this->jobTitle['value'];
+            $json['job_title'] = $this->jobTitle['value'];
         }
-        $json['pay_type']         = $this->payType;
+        $json['pay_type'] = $this->payType;
         if (isset($this->hourlyRate)) {
-            $json['hourly_rate']  = $this->hourlyRate;
+            $json['hourly_rate'] = $this->hourlyRate;
         }
         if (isset($this->annualRate)) {
-            $json['annual_rate']  = $this->annualRate;
+            $json['annual_rate'] = $this->annualRate;
         }
         if (!empty($this->weeklyHours)) {
             $json['weekly_hours'] = $this->weeklyHours['value'];
         }
         if (!empty($this->jobId)) {
-            $json['job_id']       = $this->jobId['value'];
+            $json['job_id'] = $this->jobId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

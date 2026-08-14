@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\TestHelpers\Treasury;
 
 /**
@@ -27,7 +26,6 @@ class InboundTransferService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/treasury/inbound_transfers/%s/fail', $id), $params, $opts);
     }
-
     /**
      * Marks the test mode InboundTransfer object as returned and links the
      * InboundTransfer to a ReceivedDebit. The InboundTransfer must already be in the
@@ -45,7 +43,6 @@ class InboundTransferService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/treasury/inbound_transfers/%s/return', $id), $params, $opts);
     }
-
     /**
      * Transitions a test mode created InboundTransfer to the <code>succeeded</code>
      * status. The InboundTransfer must already be in the <code>processing</code>

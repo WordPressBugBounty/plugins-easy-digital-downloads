@@ -22,7 +22,7 @@ class Request {
 	 * What type of request is this?
 	 *
 	 * @since 3.3.0
-	 * @param  string|array $type admin, ajax, cron, frontend, json, API, rest.
+	 * @param  string|array $type admin, ajax, cron, cli, frontend, json, API, rest.
 	 * @return bool
 	 */
 	public static function is_request( $type ) {
@@ -45,7 +45,7 @@ class Request {
 	 * Check if the request is of a certain type.
 	 *
 	 * @since 3.3.0
-	 * @param  string $type admin, ajax, cron, frontend, json, API, rest.
+	 * @param  string $type admin, ajax, cron, cli, frontend, json, API, rest.
 	 * @return bool
 	 */
 	private static function is_type( string $type ) {
@@ -56,6 +56,8 @@ class Request {
 				return self::is_ajax_request();
 			case 'cron':
 				return self::is_cron_request();
+			case 'cli':
+				return self::is_cli_request();
 			case 'rest':
 				return self::is_rest_api_request();
 			case 'frontend':
@@ -78,7 +80,7 @@ class Request {
 	 * @return bool
 	 */
 	private static function is_frontend_request() {
-		if ( self::is_cron_request() || self::is_rest_api_request() || self::is_api_request() ) {
+		if ( self::is_cron_request() || self::is_cli_request() || self::is_rest_api_request() || self::is_api_request() ) {
 			return false;
 		}
 		if ( self::is_ajax_request() ) {
@@ -95,17 +97,40 @@ class Request {
 	 * @return bool
 	 */
 	private static function is_ajax_request() {
-		return defined( 'DOING_AJAX' ) && DOING_AJAX;
+		return wp_doing_ajax();
 	}
 
 	/**
 	 * Returns true if the request is a cron request.
+	 * Abstraction for cron context checking, covering both WP-Cron and Action Scheduler.
 	 *
 	 * @since 3.3.0
 	 * @return bool
 	 */
 	private static function is_cron_request() {
-		return defined( 'DOING_CRON' ) && DOING_CRON;
+		// Bail if doing WordPress cron.
+		if ( wp_doing_cron() ) {
+			return true;
+		}
+
+		// Action Scheduler fires action_scheduler_before_execute before a job and
+		// action_scheduler_after_execute after. More befores than afters means we
+		// are currently inside an AS job.
+		if ( did_action( 'action_scheduler_before_execute' ) > did_action( 'action_scheduler_after_execute' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns true if the request is a WP-CLI request.
+	 *
+	 * @since 3.7.0
+	 * @return bool
+	 */
+	private static function is_cli_request() {
+		return defined( 'WP_CLI' ) && WP_CLI;
 	}
 
 	/**

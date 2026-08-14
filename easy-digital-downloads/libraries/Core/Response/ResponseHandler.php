@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Response;
 
 use EDD\Vendor\Core\Response\Types\DeserializableType;
@@ -10,7 +9,6 @@ use EDD\Vendor\Core\Response\Types\ResponseMultiType;
 use EDD\Vendor\Core\Response\Types\ResponseType;
 use EDD\Vendor\Core\Utils\XmlDeserializer;
 use EDD\Vendor\CoreInterfaces\Core\Format;
-
 class ResponseHandler
 {
     private $format = Format::SCALAR;
@@ -20,7 +18,6 @@ class ResponseHandler
     private $responseError;
     private $useApiResponse = false;
     private $nullableType = false;
-
     public function __construct()
     {
         $this->responseError = new ResponseError();
@@ -28,7 +25,6 @@ class ResponseHandler
         $this->responseType = new ResponseType();
         $this->responseMultiType = new ResponseMultiType();
     }
-
     /**
      * Associates an ErrorType object to the statusCode provided.
      */
@@ -37,7 +33,6 @@ class ResponseHandler
         $this->responseError->addError($statusCode, $error);
         return $this;
     }
-
     /**
      * Wrap the actual success/failure response in ApiResponse
      */
@@ -47,7 +42,6 @@ class ResponseHandler
         $this->responseError->returnApiResponse();
         return $this;
     }
-
     /**
      * Map the types for the failure response body in ApiResponse
      */
@@ -56,7 +50,6 @@ class ResponseHandler
         $this->responseError->mapErrorTypesInApiResponse();
         return $this;
     }
-
     /**
      * Sets the nullOn404 flag in ResponseError.
      */
@@ -65,7 +58,6 @@ class ResponseHandler
         $this->responseError->nullOn404();
         return $this;
     }
-
     /**
      * Sets the return type as nullable.
      */
@@ -74,7 +66,6 @@ class ResponseHandler
         $this->nullableType = true;
         return $this;
     }
-
     /**
      * Sets the deserializer method to the one provided, for deserializableType.
      */
@@ -83,7 +74,6 @@ class ResponseHandler
         $this->deserializableType->setDeserializerMethod($deserializerMethod);
         return $this;
     }
-
     /**
      * Sets response type to the one provided and format to JSON.
      *
@@ -97,7 +87,6 @@ class ResponseHandler
         $this->responseType->setDimensions($dimensions);
         return $this;
     }
-
     /**
      * Sets response type to the one provided and format to XML.
      *
@@ -113,7 +102,6 @@ class ResponseHandler
         });
         return $this;
     }
-
     /**
      * Sets response type to the one provided and format to XML.
      *
@@ -129,7 +117,6 @@ class ResponseHandler
         });
         return $this;
     }
-
     /**
      * Sets response type to the one provided and format to XML.
      *
@@ -146,7 +133,6 @@ class ResponseHandler
         });
         return $this;
     }
-
     /**
      * @param string $typeGroup                Group of types in string format i.e. oneOf(...), anyOf(...)
      * @param string[] $typeGroupDeserializers Methods required for deserialization of specific types in
@@ -160,7 +146,6 @@ class ResponseHandler
         $this->responseMultiType->setDeserializers($typeGroupDeserializers);
         return $this;
     }
-
     /**
      * Returns current set format.
      */
@@ -168,7 +153,6 @@ class ResponseHandler
     {
         return $this->format;
     }
-
     /**
      * Returns response from the context provided.
      *
@@ -187,10 +171,8 @@ class ResponseHandler
         $result = $result ?? $this->responseType->getFrom($context);
         $result = $result ?? $this->responseMultiType->getFrom($context);
         $result = $result ?? $context->getResponseBody();
-
         return $this->getResponse($context, $result);
     }
-
     private function getResponse(Context $context, $result)
     {
         if ($this->useApiResponse) {

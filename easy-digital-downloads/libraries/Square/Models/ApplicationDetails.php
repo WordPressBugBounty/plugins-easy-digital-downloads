@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Details about the application that took the payment.
  */
@@ -15,23 +13,20 @@ class ApplicationDetails implements \JsonSerializable
      * @var string|null
      */
     private $squareProduct;
-
     /**
      * @var array
      */
     private $applicationId = [];
-
     /**
-     * Returns EDD\Vendor\Square Product.
+     * Returns Square Product.
      * A list of products to return to external callers.
      */
     public function getSquareProduct(): ?string
     {
         return $this->squareProduct;
     }
-
     /**
-     * Sets EDD\Vendor\Square Product.
+     * Sets Square Product.
      * A list of products to return to external callers.
      *
      * @maps square_product
@@ -40,15 +35,14 @@ class ApplicationDetails implements \JsonSerializable
     {
         $this->squareProduct = $squareProduct;
     }
-
     /**
      * Returns Application Id.
-     * The EDD\Vendor\Square ID assigned to the application used to take the payment.
+     * The Square ID assigned to the application used to take the payment.
      * Application developers can use this information to identify payments that
      * their application processed.
      * For example, if a developer uses a custom application to process payments,
      * this field contains the application ID from the Developer Dashboard.
-     * If a seller uses a [EDD\Vendor\Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
+     * If a seller uses a [Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
      * application to process payments, the field contains the corresponding application ID.
      */
     public function getApplicationId(): ?string
@@ -58,15 +52,14 @@ class ApplicationDetails implements \JsonSerializable
         }
         return $this->applicationId['value'];
     }
-
     /**
      * Sets Application Id.
-     * The EDD\Vendor\Square ID assigned to the application used to take the payment.
+     * The Square ID assigned to the application used to take the payment.
      * Application developers can use this information to identify payments that
      * their application processed.
      * For example, if a developer uses a custom application to process payments,
      * this field contains the application ID from the Developer Dashboard.
-     * If a seller uses a [EDD\Vendor\Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
+     * If a seller uses a [Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
      * application to process payments, the field contains the corresponding application ID.
      *
      * @maps application_id
@@ -75,22 +68,20 @@ class ApplicationDetails implements \JsonSerializable
     {
         $this->applicationId['value'] = $applicationId;
     }
-
     /**
      * Unsets Application Id.
-     * The EDD\Vendor\Square ID assigned to the application used to take the payment.
+     * The Square ID assigned to the application used to take the payment.
      * Application developers can use this information to identify payments that
      * their application processed.
      * For example, if a developer uses a custom application to process payments,
      * this field contains the application ID from the Developer Dashboard.
-     * If a seller uses a [EDD\Vendor\Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
+     * If a seller uses a [Square App Marketplace](https://developer.squareup.com/docs/app-marketplace)
      * application to process payments, the field contains the corresponding application ID.
      */
     public function unsetApplicationId(): void
     {
         $this->applicationId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -99,7 +90,7 @@ class ApplicationDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -112,7 +103,6 @@ class ApplicationDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

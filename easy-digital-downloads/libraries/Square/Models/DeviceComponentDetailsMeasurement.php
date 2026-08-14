@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A value qualified by unit of measure.
  */
@@ -15,7 +13,6 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
      * @var array
      */
     private $value = [];
-
     /**
      * Returns Value.
      */
@@ -26,7 +23,6 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
         }
         return $this->value['value'];
     }
-
     /**
      * Sets Value.
      *
@@ -36,7 +32,6 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
     {
         $this->value['value'] = $value;
     }
-
     /**
      * Unsets Value.
      */
@@ -44,7 +39,6 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
     {
         $this->value = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -53,7 +47,7 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -63,7 +57,6 @@ class DeviceComponentDetailsMeasurement implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

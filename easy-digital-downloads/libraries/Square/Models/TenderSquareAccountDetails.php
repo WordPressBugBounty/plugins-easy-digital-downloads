@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the details of a tender with `type` `SQUARE_ACCOUNT`.
  */
@@ -15,7 +13,6 @@ class TenderSquareAccountDetails implements \JsonSerializable
      * @var string|null
      */
     private $status;
-
     /**
      * Returns Status.
      */
@@ -23,7 +20,6 @@ class TenderSquareAccountDetails implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      *
@@ -33,7 +29,6 @@ class TenderSquareAccountDetails implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -42,7 +37,7 @@ class TenderSquareAccountDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -52,7 +47,6 @@ class TenderSquareAccountDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

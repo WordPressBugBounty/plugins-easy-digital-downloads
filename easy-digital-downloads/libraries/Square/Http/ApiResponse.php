@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Http;
 
 use EDD\Vendor\Core\Types\Sdk\CoreApiResponse;
 use EDD\Vendor\Square\ApiHelper;
 use EDD\Vendor\Square\Models\Error;
-
 /**
  * Holds the result of an API call.
  */
@@ -24,10 +22,10 @@ class ApiResponse extends CoreApiResponse
     {
         $request = $context->getRequest();
         $statusCode = $context->getResponse()->getStatusCode();
-        $reasonPhrase = null; // TODO
+        $reasonPhrase = null;
+        // TODO
         $headers = $context->getResponse()->getHeaders();
         $body = $context->getResponse()->getRawBody();
-
         if (!is_array($decodedBody)) {
             $decodedBody = (array) $decodedBody;
         }
@@ -45,17 +43,14 @@ class ApiResponse extends CoreApiResponse
         }
         return new self($request, $statusCode, $reasonPhrase, $headers, $result, $body, $errors, $cursor);
     }
-
     /**
      * @var Error[]
      */
     private $errors;
-
     /**
      * @var mixed
      */
     private $cursor;
-
     /**
      * @param HttpRequest $request
      * @param int|null $statusCode
@@ -66,21 +61,12 @@ class ApiResponse extends CoreApiResponse
      * @param Error[] $errors
      * @param mixed $cursor
      */
-    public function __construct(
-        HttpRequest $request,
-        ?int $statusCode,
-        ?string $reasonPhrase,
-        ?array $headers,
-        $result,
-        $body,
-        array $errors,
-        $cursor
-    ) {
+    public function __construct(HttpRequest $request, ?int $statusCode, ?string $reasonPhrase, ?array $headers, $result, $body, array $errors, $cursor)
+    {
         parent::__construct($request, $statusCode, $reasonPhrase, $headers, $result, $body);
         $this->errors = $errors;
         $this->cursor = $cursor;
     }
-
     /**
      * Returns the errors if any.
      *
@@ -90,7 +76,6 @@ class ApiResponse extends CoreApiResponse
     {
         return $this->errors;
     }
-
     /**
      * Returns the pagination cursor.
      *
@@ -100,7 +85,6 @@ class ApiResponse extends CoreApiResponse
     {
         return $this->cursor;
     }
-
     /**
      * Returns the original request that resulted in this response.
      */

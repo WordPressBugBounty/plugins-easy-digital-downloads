@@ -31,6 +31,9 @@
 		display: block;
 		padding: 4px 6px;
 		width: 100%;
+		// A <select> takes its min-content from its longest option, which floors the whole form's
+		// width; width:100% already sets the real size.
+		min-width: 0;
 	}
 
 	.edd-blocks-form__halves {

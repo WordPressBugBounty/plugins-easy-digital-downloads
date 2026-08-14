@@ -1,79 +1,66 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square;
 
 use EDD\Vendor\Core\Types\Sdk\CoreCallback;
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\Square\Authentication\BearerAuthCredentialsBuilder;
-
 class SquareClientBuilder
 {
     /**
      * @var array
      */
     private $config = [];
-
     /**
      * @phan-suppress PhanEmptyPrivateMethod
      */
     private function __construct()
     {
     }
-
     public static function init(): self
     {
         return new self();
     }
-
     public function getConfiguration(): array
     {
         return CoreHelper::clone($this->config);
     }
-
     public function timeout(int $timeout): self
     {
         $this->config['timeout'] = $timeout;
         return $this;
     }
-
     public function enableRetries(bool $enableRetries): self
     {
         $this->config['enableRetries'] = $enableRetries;
         return $this;
     }
-
     public function numberOfRetries(int $numberOfRetries): self
     {
         $this->config['numberOfRetries'] = $numberOfRetries;
         return $this;
     }
-
     public function retryInterval(float $retryInterval): self
     {
         $this->config['retryInterval'] = $retryInterval;
         return $this;
     }
-
     public function backOffFactor(float $backOffFactor): self
     {
         $this->config['backOffFactor'] = $backOffFactor;
         return $this;
     }
-
     public function maximumRetryWaitTime(int $maximumRetryWaitTime): self
     {
         $this->config['maximumRetryWaitTime'] = $maximumRetryWaitTime;
         return $this;
     }
-
     public function retryOnTimeout(bool $retryOnTimeout): self
     {
         $this->config['retryOnTimeout'] = $retryOnTimeout;
         return $this;
     }
-
     /**
      * @param int[] $httpStatusCodesToRetry
      *
@@ -84,7 +71,6 @@ class SquareClientBuilder
         $this->config['httpStatusCodesToRetry'] = $httpStatusCodesToRetry;
         return $this;
     }
-
     /**
      * @param string[] $httpMethodsToRetry
      *
@@ -95,43 +81,35 @@ class SquareClientBuilder
         $this->config['httpMethodsToRetry'] = $httpMethodsToRetry;
         return $this;
     }
-
     public function squareVersion(string $squareVersion): self
     {
         $this->config['squareVersion'] = $squareVersion;
         return $this;
     }
-
     public function additionalHeaders(array $additionalHeaders): self
     {
         ApiHelper::assertHeaders($additionalHeaders);
         $this->config['additionalHeaders'] = $additionalHeaders;
         return $this;
     }
-
     public function userAgentDetail(string $userAgentDetail): self
     {
         if (strlen($userAgentDetail) > 128) {
-            throw new \InvalidArgumentException(
-                'The length of user-agent detail should not exceed 128 characters.'
-            );
+            throw new \InvalidArgumentException('The length of user-agent detail should not exceed 128 characters.');
         }
         $this->config['userAgentDetail'] = $userAgentDetail;
         return $this;
     }
-
     public function environment(string $environment): self
     {
         $this->config['environment'] = $environment;
         return $this;
     }
-
     public function customUrl(string $customUrl): self
     {
         $this->config['customUrl'] = $customUrl;
         return $this;
     }
-
     /**
      * @see SquareClientBuilder::bearerAuthCredentials
      *
@@ -147,13 +125,11 @@ class SquareClientBuilder
         $this->config['accessToken'] = $accessToken;
         return $this;
     }
-
     public function bearerAuthCredentials(BearerAuthCredentialsBuilder $bearerAuth): self
     {
         $this->config = array_merge($this->config, $bearerAuth->getConfiguration());
         return $this;
     }
-
     public function httpCallback($httpCallback): self
     {
         if (!$httpCallback instanceof CoreCallback) {
@@ -162,7 +138,6 @@ class SquareClientBuilder
         $this->config['httpCallback'] = $httpCallback;
         return $this;
     }
-
     public function build(): SquareClient
     {
         return new SquareClient($this->config);

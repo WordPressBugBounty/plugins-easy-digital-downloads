@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Specifies a decimal number range.
  */
@@ -15,12 +13,10 @@ class FloatNumberRange implements \JsonSerializable
      * @var array
      */
     private $startAt = [];
-
     /**
      * @var array
      */
     private $endAt = [];
-
     /**
      * Returns Start At.
      * A decimal value indicating where the range starts.
@@ -32,7 +28,6 @@ class FloatNumberRange implements \JsonSerializable
         }
         return $this->startAt['value'];
     }
-
     /**
      * Sets Start At.
      * A decimal value indicating where the range starts.
@@ -43,7 +38,6 @@ class FloatNumberRange implements \JsonSerializable
     {
         $this->startAt['value'] = $startAt;
     }
-
     /**
      * Unsets Start At.
      * A decimal value indicating where the range starts.
@@ -52,7 +46,6 @@ class FloatNumberRange implements \JsonSerializable
     {
         $this->startAt = [];
     }
-
     /**
      * Returns End At.
      * A decimal value indicating where the range ends.
@@ -64,7 +57,6 @@ class FloatNumberRange implements \JsonSerializable
         }
         return $this->endAt['value'];
     }
-
     /**
      * Sets End At.
      * A decimal value indicating where the range ends.
@@ -75,7 +67,6 @@ class FloatNumberRange implements \JsonSerializable
     {
         $this->endAt['value'] = $endAt;
     }
-
     /**
      * Unsets End At.
      * A decimal value indicating where the range ends.
@@ -84,7 +75,6 @@ class FloatNumberRange implements \JsonSerializable
     {
         $this->endAt = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -93,7 +83,7 @@ class FloatNumberRange implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -101,12 +91,11 @@ class FloatNumberRange implements \JsonSerializable
             $json['start_at'] = $this->startAt['value'];
         }
         if (!empty($this->endAt)) {
-            $json['end_at']   = $this->endAt['value'];
+            $json['end_at'] = $this->endAt['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

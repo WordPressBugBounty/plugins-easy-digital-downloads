@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Climate;
 
 /**
@@ -16,12 +15,7 @@ class ClimateServiceFactory extends \EDD\Vendor\Stripe\Service\AbstractServiceFa
     /**
      * @var array<string, string>
      */
-    private static $classMap = [
-        'orders' => OrderService::class,
-        'products' => ProductService::class,
-        'suppliers' => SupplierService::class,
-    ];
-
+    private static $classMap = ['orders' => OrderService::class, 'products' => ProductService::class, 'suppliers' => SupplierService::class];
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

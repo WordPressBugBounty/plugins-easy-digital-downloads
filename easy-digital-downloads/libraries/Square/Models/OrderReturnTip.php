@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A tip being returned.
  */
@@ -15,22 +13,18 @@ class OrderReturnTip implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var Money|null
      */
     private $appliedMoney;
-
     /**
      * @var array
      */
     private $sourceTenderUid = [];
-
     /**
      * @var array
      */
     private $sourceTenderId = [];
-
     /**
      * Returns Uid.
      * A unique ID that identifies the tip only within this order.
@@ -42,7 +36,6 @@ class OrderReturnTip implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the tip only within this order.
@@ -53,7 +46,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the tip only within this order.
@@ -62,7 +54,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -77,7 +68,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         return $this->appliedMoney;
     }
-
     /**
      * Sets Applied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -94,7 +84,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->appliedMoney = $appliedMoney;
     }
-
     /**
      * Returns Source Tender Uid.
      * The tender `uid` from the order that contains the original application of this tip.
@@ -106,7 +95,6 @@ class OrderReturnTip implements \JsonSerializable
         }
         return $this->sourceTenderUid['value'];
     }
-
     /**
      * Sets Source Tender Uid.
      * The tender `uid` from the order that contains the original application of this tip.
@@ -117,7 +105,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->sourceTenderUid['value'] = $sourceTenderUid;
     }
-
     /**
      * Unsets Source Tender Uid.
      * The tender `uid` from the order that contains the original application of this tip.
@@ -126,7 +113,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->sourceTenderUid = [];
     }
-
     /**
      * Returns Source Tender Id.
      * The tender `id` from the order that contains the original application of this tip.
@@ -138,7 +124,6 @@ class OrderReturnTip implements \JsonSerializable
         }
         return $this->sourceTenderId['value'];
     }
-
     /**
      * Sets Source Tender Id.
      * The tender `id` from the order that contains the original application of this tip.
@@ -149,7 +134,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->sourceTenderId['value'] = $sourceTenderId;
     }
-
     /**
      * Unsets Source Tender Id.
      * The tender `id` from the order that contains the original application of this tip.
@@ -158,7 +142,6 @@ class OrderReturnTip implements \JsonSerializable
     {
         $this->sourceTenderId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -167,26 +150,25 @@ class OrderReturnTip implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']               = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (isset($this->appliedMoney)) {
-            $json['applied_money']     = $this->appliedMoney;
+            $json['applied_money'] = $this->appliedMoney;
         }
         if (!empty($this->sourceTenderUid)) {
             $json['source_tender_uid'] = $this->sourceTenderUid['value'];
         }
         if (!empty($this->sourceTenderId)) {
-            $json['source_tender_id']  = $this->sourceTenderId['value'];
+            $json['source_tender_id'] = $this->sourceTenderId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

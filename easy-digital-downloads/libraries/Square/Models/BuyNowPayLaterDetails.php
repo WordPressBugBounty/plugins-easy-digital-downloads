@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Additional details about a Buy Now Pay Later payment type.
  */
@@ -15,17 +13,14 @@ class BuyNowPayLaterDetails implements \JsonSerializable
      * @var array
      */
     private $brand = [];
-
     /**
      * @var AfterpayDetails|null
      */
     private $afterpayDetails;
-
     /**
      * @var ClearpayDetails|null
      */
     private $clearpayDetails;
-
     /**
      * Returns Brand.
      * The brand used for the Buy Now Pay Later payment.
@@ -38,7 +33,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
         }
         return $this->brand['value'];
     }
-
     /**
      * Sets Brand.
      * The brand used for the Buy Now Pay Later payment.
@@ -50,7 +44,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->brand['value'] = $brand;
     }
-
     /**
      * Unsets Brand.
      * The brand used for the Buy Now Pay Later payment.
@@ -60,7 +53,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->brand = [];
     }
-
     /**
      * Returns Afterpay Details.
      * Additional details about Afterpay payments.
@@ -69,7 +61,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         return $this->afterpayDetails;
     }
-
     /**
      * Sets Afterpay Details.
      * Additional details about Afterpay payments.
@@ -80,7 +71,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->afterpayDetails = $afterpayDetails;
     }
-
     /**
      * Returns Clearpay Details.
      * Additional details about Clearpay payments.
@@ -89,7 +79,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         return $this->clearpayDetails;
     }
-
     /**
      * Sets Clearpay Details.
      * Additional details about Clearpay payments.
@@ -100,7 +89,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
     {
         $this->clearpayDetails = $clearpayDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -109,12 +97,12 @@ class BuyNowPayLaterDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->brand)) {
-            $json['brand']            = $this->brand['value'];
+            $json['brand'] = $this->brand['value'];
         }
         if (isset($this->afterpayDetails)) {
             $json['afterpay_details'] = $this->afterpayDetails;
@@ -125,7 +113,6 @@ class BuyNowPayLaterDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

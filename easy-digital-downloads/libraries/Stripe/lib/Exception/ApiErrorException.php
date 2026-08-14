@@ -3,7 +3,7 @@
 namespace EDD\Vendor\Stripe\Exception;
 
 /**
- * Implements properties and methods common to all (non-SPL) EDD\Vendor\Stripe exceptions.
+ * Implements properties and methods common to all (non-SPL) Stripe exceptions.
  */
 abstract class ApiErrorException extends \Exception implements ExceptionInterface
 {
@@ -14,7 +14,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     protected $jsonBody;
     protected $requestId;
     protected $stripeCode;
-
     /**
      * Creates a new API error exception.
      *
@@ -23,37 +22,27 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
      * @param null|string $httpBody the HTTP body as a string
      * @param null|array $jsonBody the JSON deserialized body
      * @param null|array|\EDD\Vendor\Stripe\Util\CaseInsensitiveArray $httpHeaders the HTTP headers array
-     * @param null|string $stripeCode the EDD\Vendor\Stripe error code
+     * @param null|string $stripeCode the Stripe error code
      *
      * @return static
      */
-    public static function factory(
-        $message,
-        $httpStatus = null,
-        $httpBody = null,
-        $jsonBody = null,
-        $httpHeaders = null,
-        $stripeCode = null
-    ) {
+    public static function factory($message, $httpStatus = null, $httpBody = null, $jsonBody = null, $httpHeaders = null, $stripeCode = null)
+    {
         $instance = new static($message);
         $instance->setHttpStatus($httpStatus);
         $instance->setHttpBody($httpBody);
         $instance->setJsonBody($jsonBody);
         $instance->setHttpHeaders($httpHeaders);
         $instance->setStripeCode($stripeCode);
-
         $instance->setRequestId(null);
         if ($httpHeaders && isset($httpHeaders['Request-Id'])) {
             $instance->setRequestId($httpHeaders['Request-Id']);
         }
-
         $instance->setError($instance->constructErrorObject());
-
         return $instance;
     }
-
     /**
-     * Gets the EDD\Vendor\Stripe error object.
+     * Gets the Stripe error object.
      *
      * @return null|\EDD\Vendor\Stripe\ErrorObject
      */
@@ -61,9 +50,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->error;
     }
-
     /**
-     * Sets the EDD\Vendor\Stripe error object.
+     * Sets the Stripe error object.
      *
      * @param null|\EDD\Vendor\Stripe\ErrorObject $error
      */
@@ -71,7 +59,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->error = $error;
     }
-
     /**
      * Gets the HTTP body as a string.
      *
@@ -81,7 +68,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->httpBody;
     }
-
     /**
      * Sets the HTTP body as a string.
      *
@@ -91,7 +77,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->httpBody = $httpBody;
     }
-
     /**
      * Gets the HTTP headers array.
      *
@@ -101,7 +86,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->httpHeaders;
     }
-
     /**
      * Sets the HTTP headers array.
      *
@@ -111,7 +95,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->httpHeaders = $httpHeaders;
     }
-
     /**
      * Gets the HTTP status code.
      *
@@ -121,7 +104,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->httpStatus;
     }
-
     /**
      * Sets the HTTP status code.
      *
@@ -131,7 +113,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->httpStatus = $httpStatus;
     }
-
     /**
      * Gets the JSON deserialized body.
      *
@@ -141,7 +122,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->jsonBody;
     }
-
     /**
      * Sets the JSON deserialized body.
      *
@@ -151,9 +131,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->jsonBody = $jsonBody;
     }
-
     /**
-     * Gets the EDD\Vendor\Stripe request ID.
+     * Gets the Stripe request ID.
      *
      * @return null|string
      */
@@ -161,9 +140,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->requestId;
     }
-
     /**
-     * Sets the EDD\Vendor\Stripe request ID.
+     * Sets the Stripe request ID.
      *
      * @param null|string $requestId
      */
@@ -171,9 +149,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->requestId = $requestId;
     }
-
     /**
-     * Gets the EDD\Vendor\Stripe error code.
+     * Gets the Stripe error code.
      *
      * Cf. the `CODE_*` constants on {@see \EDD\Vendor\Stripe\ErrorObject} for possible
      * values.
@@ -184,9 +161,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         return $this->stripeCode;
     }
-
     /**
-     * Sets the EDD\Vendor\Stripe error code.
+     * Sets the Stripe error code.
      *
      * @param null|string $stripeCode
      */
@@ -194,7 +170,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     {
         $this->stripeCode = $stripeCode;
     }
-
     /**
      * Returns the string representation of the exception.
      *
@@ -203,18 +178,15 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     public function __toString()
     {
         $parentStr = parent::__toString();
-        $statusStr = (null === $this->getHttpStatus()) ? '' : "(Status {$this->getHttpStatus()}) ";
-        $idStr = (null === $this->getRequestId()) ? '' : "(Request {$this->getRequestId()}) ";
-
+        $statusStr = null === $this->getHttpStatus() ? '' : "(Status {$this->getHttpStatus()}) ";
+        $idStr = null === $this->getRequestId() ? '' : "(Request {$this->getRequestId()}) ";
         return "Error sending request to Stripe: {$statusStr}{$idStr}{$this->getMessage()}\n{$parentStr}";
     }
-
     protected function constructErrorObject()
     {
         if (null === $this->jsonBody || !\array_key_exists('error', $this->jsonBody)) {
             return null;
         }
-
         return \EDD\Vendor\Stripe\ErrorObject::constructFrom($this->jsonBody['error']);
     }
 }

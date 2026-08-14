@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 class AdditionalFormParams extends MultipleParams
@@ -13,7 +12,6 @@ class AdditionalFormParams extends MultipleParams
     {
         return new self($values ?? []);
     }
-
     private function __construct(array $values)
     {
         parent::__construct('additional form');
@@ -21,7 +19,6 @@ class AdditionalFormParams extends MultipleParams
             return FormParam::init($key, $val);
         }, array_keys($values), $values);
     }
-
     /**
      * Turns all parameters of the object to unIndexed.
      */
@@ -32,7 +29,6 @@ class AdditionalFormParams extends MultipleParams
         }, $this->parameters);
         return $this;
     }
-
     /**
      * Turns all parameters of the object to plain.
      */

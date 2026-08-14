@@ -158,8 +158,7 @@ class EDD_License {
 	 */
 	public function auto_updater() {
 
-		$doing_cron = EDD\Utils\Request::is_request( 'cron' );
-		if ( ! current_user_can( 'manage_options' ) && ! $doing_cron ) {
+		if ( ! current_user_can( 'manage_options' ) && ! EDD\Utils\Request::is_request( array( 'cron', 'cli' ) ) ) {
 			return;
 		}
 

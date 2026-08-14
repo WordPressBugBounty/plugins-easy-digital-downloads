@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains the measurement unit for a quantity and a precision that
  * specifies the number of digits after the decimal point for decimal quantities.
@@ -16,22 +14,18 @@ class OrderQuantityUnit implements \JsonSerializable
      * @var MeasurementUnit|null
      */
     private $measurementUnit;
-
     /**
      * @var array
      */
     private $precision = [];
-
     /**
      * @var array
      */
     private $catalogObjectId = [];
-
     /**
      * @var array
      */
     private $catalogVersion = [];
-
     /**
      * Returns Measurement Unit.
      * Represents a unit of measurement to use with a quantity, such as ounces
@@ -42,7 +36,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         return $this->measurementUnit;
     }
-
     /**
      * Sets Measurement Unit.
      * Represents a unit of measurement to use with a quantity, such as ounces
@@ -55,7 +48,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->measurementUnit = $measurementUnit;
     }
-
     /**
      * Returns Precision.
      * For non-integer quantities, represents the number of digits after the decimal point that are
@@ -72,7 +64,6 @@ class OrderQuantityUnit implements \JsonSerializable
         }
         return $this->precision['value'];
     }
-
     /**
      * Sets Precision.
      * For non-integer quantities, represents the number of digits after the decimal point that are
@@ -88,7 +79,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->precision['value'] = $precision;
     }
-
     /**
      * Unsets Precision.
      * For non-integer quantities, represents the number of digits after the decimal point that are
@@ -102,7 +92,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->precision = [];
     }
-
     /**
      * Returns Catalog Object Id.
      * The catalog object ID referencing the
@@ -117,7 +106,6 @@ class OrderQuantityUnit implements \JsonSerializable
         }
         return $this->catalogObjectId['value'];
     }
-
     /**
      * Sets Catalog Object Id.
      * The catalog object ID referencing the
@@ -131,7 +119,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->catalogObjectId['value'] = $catalogObjectId;
     }
-
     /**
      * Unsets Catalog Object Id.
      * The catalog object ID referencing the
@@ -143,7 +130,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->catalogObjectId = [];
     }
-
     /**
      * Returns Catalog Version.
      * The version of the catalog object that this measurement unit references.
@@ -157,7 +143,6 @@ class OrderQuantityUnit implements \JsonSerializable
         }
         return $this->catalogVersion['value'];
     }
-
     /**
      * Sets Catalog Version.
      * The version of the catalog object that this measurement unit references.
@@ -170,7 +155,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->catalogVersion['value'] = $catalogVersion;
     }
-
     /**
      * Unsets Catalog Version.
      * The version of the catalog object that this measurement unit references.
@@ -181,7 +165,6 @@ class OrderQuantityUnit implements \JsonSerializable
     {
         $this->catalogVersion = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -190,26 +173,25 @@ class OrderQuantityUnit implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->measurementUnit)) {
-            $json['measurement_unit']  = $this->measurementUnit;
+            $json['measurement_unit'] = $this->measurementUnit;
         }
         if (!empty($this->precision)) {
-            $json['precision']         = $this->precision['value'];
+            $json['precision'] = $this->precision['value'];
         }
         if (!empty($this->catalogObjectId)) {
             $json['catalog_object_id'] = $this->catalogObjectId['value'];
         }
         if (!empty($this->catalogVersion)) {
-            $json['catalog_version']   = $this->catalogVersion['value'];
+            $json['catalog_version'] = $this->catalogVersion['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * This is an object representing a EDD\Vendor\Stripe account. You can retrieve it to see
+ * This is an object representing a Stripe account. You can retrieve it to see
  * properties on the account like its current requirements or if the account is
  * enabled to make live charges or receive payouts.
  *
@@ -28,38 +27,34 @@ namespace EDD\Vendor\Stripe;
  * @property null|\EDD\Vendor\Stripe\StripeObject $controller
  * @property null|string $country The account's country.
  * @property null|int $created Time at which the account was connected. Measured in seconds since the Unix epoch.
- * @property null|string $default_currency Three-letter ISO currency code representing the default currency for the account. This must be a currency that <a href="https://stripe.com/docs/payouts">EDD\Vendor\Stripe supports in the account's country</a>.
- * @property null|bool $details_submitted Whether account details have been submitted. Accounts with EDD\Vendor\Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true. Accounts where this is false should be directed to <a href="/connect/onboarding">an onboarding flow</a> to finish submitting account details.
- * @property null|string $email An email address associated with the account. It's not used for authentication and EDD\Vendor\Stripe doesn't market to this field without explicit approval from the platform.
+ * @property null|string $default_currency Three-letter ISO currency code representing the default currency for the account. This must be a currency that <a href="https://stripe.com/docs/payouts">Stripe supports in the account's country</a>.
+ * @property null|bool $details_submitted Whether account details have been submitted. Accounts with Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true. Accounts where this is false should be directed to <a href="/connect/onboarding">an onboarding flow</a> to finish submitting account details.
+ * @property null|string $email An email address associated with the account. It's not used for authentication and Stripe doesn't market to this field without explicit approval from the platform.
  * @property null|\EDD\Vendor\Stripe\Collection<\EDD\Vendor\Stripe\BankAccount|\EDD\Vendor\Stripe\Card> $external_accounts External accounts (bank accounts and debit cards) currently attached to this account. External accounts are only returned for requests where <code>controller[is_controller]</code> is true.
  * @property null|\EDD\Vendor\Stripe\StripeObject $future_requirements
- * @property null|\EDD\Vendor\Stripe\Person $individual <p>This is an object representing a person associated with a EDD\Vendor\Stripe account.</p><p>A platform cannot access a person for an account where <a href="/api/accounts/object#account_object-controller-requirement_collection">account.controller.requirement_collection</a> is <code>stripe</code>, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.</p><p>See the <a href="/connect/standard-accounts">Standard onboarding</a> or <a href="/connect/express-accounts">Express onboarding</a> documentation for information about prefilling information and account onboarding steps. Learn more about <a href="/connect/handling-api-verification#person-information">handling identity verification with the API</a>.</p>
+ * @property null|\EDD\Vendor\Stripe\Person $individual <p>This is an object representing a person associated with a Stripe account.</p><p>A platform cannot access a person for an account where <a href="/api/accounts/object#account_object-controller-requirement_collection">account.controller.requirement_collection</a> is <code>stripe</code>, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.</p><p>See the <a href="/connect/standard-accounts">Standard onboarding</a> or <a href="/connect/express-accounts">Express onboarding</a> documentation for information about prefilling information and account onboarding steps. Learn more about <a href="/connect/handling-api-verification#person-information">handling identity verification with the API</a>.</p>
  * @property null|\EDD\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
- * @property null|bool $payouts_enabled Whether EDD\Vendor\Stripe can send payouts to this account.
+ * @property null|bool $payouts_enabled Whether Stripe can send payouts to this account.
  * @property null|\EDD\Vendor\Stripe\StripeObject $requirements
  * @property null|\EDD\Vendor\Stripe\StripeObject $settings Options for customizing how the account functions within Stripe.
  * @property null|\EDD\Vendor\Stripe\StripeObject $tos_acceptance
- * @property null|string $type The EDD\Vendor\Stripe account type. Can be <code>standard</code>, <code>express</code>, <code>custom</code>, or <code>none</code>.
+ * @property null|string $type The Stripe account type. Can be <code>standard</code>, <code>express</code>, <code>custom</code>, or <code>none</code>.
  */
 class Account extends ApiResource
 {
     const OBJECT_NAME = 'account';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     const BUSINESS_TYPE_COMPANY = 'company';
     const BUSINESS_TYPE_GOVERNMENT_ENTITY = 'government_entity';
     const BUSINESS_TYPE_INDIVIDUAL = 'individual';
     const BUSINESS_TYPE_NON_PROFIT = 'non_profit';
-
     const TYPE_CUSTOM = 'custom';
     const TYPE_EXPRESS = 'express';
     const TYPE_NONE = 'none';
     const TYPE_STANDARD = 'standard';
-
     /**
-     * With <a href="/docs/connect">Connect</a>, you can create EDD\Vendor\Stripe accounts for
+     * With <a href="/docs/connect">Connect</a>, you can create Stripe accounts for
      * your users. To do this, you’ll first need to <a
      * href="https://dashboard.stripe.com/account/applications/settings">register your
      * platform</a>.
@@ -81,20 +76,17 @@ class Account extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * With <a href="/connect">Connect</a>, you can delete accounts you manage.
      *
      * Test-mode accounts can be deleted at any time.
      *
-     * Live-mode accounts where EDD\Vendor\Stripe is responsible for negative account balances
+     * Live-mode accounts where Stripe is responsible for negative account balances
      * cannot be deleted, which includes Standard accounts. Live-mode accounts where
      * your platform is liable for negative account balances, which includes Custom and
      * Express accounts, can be deleted when all <a
@@ -114,14 +106,11 @@ class Account extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of accounts connected to your platform via <a
      * href="/docs/connect">Connect</a>. If you’re not a platform, the list is empty.
@@ -136,10 +125,8 @@ class Account extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Updates a <a href="/connect/accounts">connected account</a> by setting the
      * values of the parameters passed. Any parameters not provided are left unchanged.
@@ -173,40 +160,29 @@ class Account extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     use ApiOperations\Retrieve {
         retrieve as protected _retrieve;
     }
-
     public static function getSavedNestedResources()
     {
         static $savedNestedResources = null;
         if (null === $savedNestedResources) {
-            $savedNestedResources = new Util\Set([
-                'external_account',
-                'bank_account',
-            ]);
+            $savedNestedResources = new Util\Set(['external_account', 'bank_account']);
         }
-
         return $savedNestedResources;
     }
-
     public function instanceUrl()
     {
         if (null === $this['id']) {
             return '/v1/account';
         }
-
         return parent::instanceUrl();
     }
-
     /**
      * @param null|array|string $id the ID of the account to retrieve, or an
      *     options array containing an `id` key
@@ -222,10 +198,8 @@ class Account extends ApiResource
             $opts = $id;
             $id = null;
         }
-
         return self::_retrieve($id, $opts);
     }
-
     public function serializeParameters($force = false)
     {
         $update = parent::serializeParameters($force);
@@ -240,14 +214,12 @@ class Account extends ApiResource
         }
         if (isset($this->_values['individual'])) {
             $individual = $this['individual'];
-            if (($individual instanceof Person) && !isset($update['individual'])) {
+            if ($individual instanceof Person && !isset($update['individual'])) {
                 $update['individual'] = $individual->serializeParameters($force);
             }
         }
-
         return $update;
     }
-
     private function serializeAdditionalOwners($legalEntity, $additionalOwners)
     {
         if (isset($legalEntity->_originalValues['additional_owners'])) {
@@ -255,28 +227,20 @@ class Account extends ApiResource
         } else {
             $originalValue = [];
         }
-        if (($originalValue) && (\count($originalValue) > \count($additionalOwners))) {
-            throw new Exception\InvalidArgumentException(
-                'You cannot delete an item from an array, you must instead set a new array'
-            );
+        if ($originalValue && \count($originalValue) > \count($additionalOwners)) {
+            throw new Exception\InvalidArgumentException('You cannot delete an item from an array, you must instead set a new array');
         }
-
         $updateArr = [];
         foreach ($additionalOwners as $i => $v) {
-            $update = ($v instanceof StripeObject) ? $v->serializeParameters() : $v;
-
+            $update = $v instanceof StripeObject ? $v->serializeParameters() : $v;
             if ([] !== $update) {
-                if (!$originalValue
-                    || !\array_key_exists($i, $originalValue)
-                    || ($update !== $legalEntity->serializeParamsValue($originalValue[$i], null, false, true))) {
+                if (!$originalValue || !\array_key_exists($i, $originalValue) || $update !== $legalEntity->serializeParamsValue($originalValue[$i], null, false, true)) {
                     $updateArr[$i] = $update;
                 }
             }
         }
-
         return $updateArr;
     }
-
     /**
      * @param null|array $clientId
      * @param null|array|string $opts
@@ -287,14 +251,9 @@ class Account extends ApiResource
      */
     public function deauthorize($clientId = null, $opts = null)
     {
-        $params = [
-            'client_id' => $clientId,
-            'stripe_user_id' => $this->id,
-        ];
-
+        $params = ['client_id' => $clientId, 'stripe_user_id' => $this->id];
         return OAuth::deauthorize($params, $opts);
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -308,12 +267,9 @@ class Account extends ApiResource
         $url = $this->instanceUrl() . '/reject';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     const PATH_CAPABILITIES = '/capabilities';
-
     /**
      * @param string $id the ID of the account on which to retrieve the capabilities
      * @param null|array $params
@@ -327,7 +283,6 @@ class Account extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_CAPABILITIES, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the capability belongs
      * @param string $capabilityId the ID of the capability to retrieve
@@ -342,7 +297,6 @@ class Account extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_CAPABILITIES, $capabilityId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the capability belongs
      * @param string $capabilityId the ID of the capability to update
@@ -358,7 +312,6 @@ class Account extends ApiResource
         return self::_updateNestedResource($id, static::PATH_CAPABILITIES, $capabilityId, $params, $opts);
     }
     const PATH_EXTERNAL_ACCOUNTS = '/external_accounts';
-
     /**
      * @param string $id the ID of the account on which to retrieve the external accounts
      * @param null|array $params
@@ -372,7 +325,6 @@ class Account extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_EXTERNAL_ACCOUNTS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account on which to create the external account
      * @param null|array $params
@@ -386,7 +338,6 @@ class Account extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the external account belongs
      * @param string $externalAccountId the ID of the external account to delete
@@ -401,7 +352,6 @@ class Account extends ApiResource
     {
         return self::_deleteNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the external account belongs
      * @param string $externalAccountId the ID of the external account to retrieve
@@ -416,7 +366,6 @@ class Account extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the external account belongs
      * @param string $externalAccountId the ID of the external account to update
@@ -432,7 +381,6 @@ class Account extends ApiResource
         return self::_updateNestedResource($id, static::PATH_EXTERNAL_ACCOUNTS, $externalAccountId, $params, $opts);
     }
     const PATH_LOGIN_LINKS = '/login_links';
-
     /**
      * @param string $id the ID of the account on which to create the login link
      * @param null|array $params
@@ -447,7 +395,6 @@ class Account extends ApiResource
         return self::_createNestedResource($id, static::PATH_LOGIN_LINKS, $params, $opts);
     }
     const PATH_PERSONS = '/persons';
-
     /**
      * @param string $id the ID of the account on which to retrieve the persons
      * @param null|array $params
@@ -461,7 +408,6 @@ class Account extends ApiResource
     {
         return self::_allNestedResources($id, static::PATH_PERSONS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account on which to create the person
      * @param null|array $params
@@ -475,7 +421,6 @@ class Account extends ApiResource
     {
         return self::_createNestedResource($id, static::PATH_PERSONS, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the person belongs
      * @param string $personId the ID of the person to delete
@@ -490,7 +435,6 @@ class Account extends ApiResource
     {
         return self::_deleteNestedResource($id, static::PATH_PERSONS, $personId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the person belongs
      * @param string $personId the ID of the person to retrieve
@@ -505,7 +449,6 @@ class Account extends ApiResource
     {
         return self::_retrieveNestedResource($id, static::PATH_PERSONS, $personId, $params, $opts);
     }
-
     /**
      * @param string $id the ID of the account to which the person belongs
      * @param string $personId the ID of the person to update

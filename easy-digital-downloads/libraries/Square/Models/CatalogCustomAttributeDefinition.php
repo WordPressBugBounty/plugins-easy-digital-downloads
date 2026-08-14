@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains information defining a custom attribute. Custom attributes are
  * intended to store additional information about a catalog object or to associate a
@@ -20,62 +18,50 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
      * @var string
      */
     private $type;
-
     /**
      * @var string
      */
     private $name;
-
     /**
      * @var array
      */
     private $description = [];
-
     /**
      * @var SourceApplication|null
      */
     private $sourceApplication;
-
     /**
      * @var string[]
      */
     private $allowedObjectTypes;
-
     /**
      * @var string|null
      */
     private $sellerVisibility;
-
     /**
      * @var string|null
      */
     private $appVisibility;
-
     /**
      * @var CatalogCustomAttributeDefinitionStringConfig|null
      */
     private $stringConfig;
-
     /**
      * @var CatalogCustomAttributeDefinitionNumberConfig|null
      */
     private $numberConfig;
-
     /**
      * @var CatalogCustomAttributeDefinitionSelectionConfig|null
      */
     private $selectionConfig;
-
     /**
      * @var int|null
      */
     private $customAttributeUsageCount;
-
     /**
      * @var array
      */
     private $key = [];
-
     /**
      * @param string $type
      * @param string $name
@@ -87,7 +73,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
         $this->name = $name;
         $this->allowedObjectTypes = $allowedObjectTypes;
     }
-
     /**
      * Returns Type.
      * Defines the possible types for a custom attribute.
@@ -96,7 +81,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Defines the possible types for a custom attribute.
@@ -108,7 +92,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Name.
      * The name of this definition for API and seller-facing UI purposes.
@@ -119,7 +102,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * The name of this definition for API and seller-facing UI purposes.
@@ -133,11 +115,10 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Description.
-     * Seller-oriented description of the meaning of this Custom EDD_EDD_Attribute,
-     * any constraints that the seller should observe, etc. May be displayed as a tooltip in EDD\Vendor\Square UIs.
+     * Seller-oriented description of the meaning of this Custom Attribute,
+     * any constraints that the seller should observe, etc. May be displayed as a tooltip in Square UIs.
      */
     public function getDescription(): ?string
     {
@@ -146,11 +127,10 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
         }
         return $this->description['value'];
     }
-
     /**
      * Sets Description.
-     * Seller-oriented description of the meaning of this Custom EDD_EDD_Attribute,
-     * any constraints that the seller should observe, etc. May be displayed as a tooltip in EDD\Vendor\Square UIs.
+     * Seller-oriented description of the meaning of this Custom Attribute,
+     * any constraints that the seller should observe, etc. May be displayed as a tooltip in Square UIs.
      *
      * @maps description
      */
@@ -158,17 +138,15 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->description['value'] = $description;
     }
-
     /**
      * Unsets Description.
-     * Seller-oriented description of the meaning of this Custom EDD_EDD_Attribute,
-     * any constraints that the seller should observe, etc. May be displayed as a tooltip in EDD\Vendor\Square UIs.
+     * Seller-oriented description of the meaning of this Custom Attribute,
+     * any constraints that the seller should observe, etc. May be displayed as a tooltip in Square UIs.
      */
     public function unsetDescription(): void
     {
         $this->description = [];
     }
-
     /**
      * Returns Source Application.
      * Represents information about the application used to generate a change.
@@ -177,7 +155,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->sourceApplication;
     }
-
     /**
      * Sets Source Application.
      * Represents information about the application used to generate a change.
@@ -188,7 +165,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->sourceApplication = $sourceApplication;
     }
-
     /**
      * Returns Allowed Object Types.
      * The set of `CatalogObject` types that this custom atttribute may be applied to.
@@ -202,7 +178,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->allowedObjectTypes;
     }
-
     /**
      * Sets Allowed Object Types.
      * The set of `CatalogObject` types that this custom atttribute may be applied to.
@@ -219,23 +194,21 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->allowedObjectTypes = $allowedObjectTypes;
     }
-
     /**
      * Returns Seller Visibility.
-     * Defines the visibility of a custom attribute to sellers in EDD\Vendor\Square
-     * client applications, EDD\Vendor\Square APIs or in EDD\Vendor\Square UIs (including EDD\Vendor\Square Point
-     * of Sale applications and EDD\Vendor\Square Dashboard).
+     * Defines the visibility of a custom attribute to sellers in Square
+     * client applications, Square APIs or in Square UIs (including Square Point
+     * of Sale applications and Square Dashboard).
      */
     public function getSellerVisibility(): ?string
     {
         return $this->sellerVisibility;
     }
-
     /**
      * Sets Seller Visibility.
-     * Defines the visibility of a custom attribute to sellers in EDD\Vendor\Square
-     * client applications, EDD\Vendor\Square APIs or in EDD\Vendor\Square UIs (including EDD\Vendor\Square Point
-     * of Sale applications and EDD\Vendor\Square Dashboard).
+     * Defines the visibility of a custom attribute to sellers in Square
+     * client applications, Square APIs or in Square UIs (including Square Point
+     * of Sale applications and Square Dashboard).
      *
      * @maps seller_visibility
      */
@@ -243,7 +216,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->sellerVisibility = $sellerVisibility;
     }
-
     /**
      * Returns App Visibility.
      * Defines the visibility of a custom attribute to applications other than their
@@ -253,7 +225,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->appVisibility;
     }
-
     /**
      * Sets App Visibility.
      * Defines the visibility of a custom attribute to applications other than their
@@ -265,19 +236,17 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->appVisibility = $appVisibility;
     }
-
     /**
      * Returns String Config.
-     * Configuration associated with Custom EDD_EDD_Attribute Definitions of type `STRING`.
+     * Configuration associated with Custom Attribute Definitions of type `STRING`.
      */
     public function getStringConfig(): ?CatalogCustomAttributeDefinitionStringConfig
     {
         return $this->stringConfig;
     }
-
     /**
      * Sets String Config.
-     * Configuration associated with Custom EDD_EDD_Attribute Definitions of type `STRING`.
+     * Configuration associated with Custom Attribute Definitions of type `STRING`.
      *
      * @maps string_config
      */
@@ -285,7 +254,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->stringConfig = $stringConfig;
     }
-
     /**
      * Returns Number Config.
      */
@@ -293,7 +261,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->numberConfig;
     }
-
     /**
      * Sets Number Config.
      *
@@ -303,7 +270,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->numberConfig = $numberConfig;
     }
-
     /**
      * Returns Selection Config.
      * Configuration associated with `SELECTION`-type custom attribute definitions.
@@ -312,7 +278,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->selectionConfig;
     }
-
     /**
      * Sets Selection Config.
      * Configuration associated with `SELECTION`-type custom attribute definitions.
@@ -323,9 +288,8 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->selectionConfig = $selectionConfig;
     }
-
     /**
-     * Returns Custom EDD_EDD_Attribute Usage Count.
+     * Returns Custom Attribute Usage Count.
      * The number of custom attributes that reference this
      * custom attribute definition. Set by the server in response to a ListCatalog
      * request with `include_counts` set to `true`.  If the actual count is greater
@@ -335,9 +299,8 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         return $this->customAttributeUsageCount;
     }
-
     /**
-     * Sets Custom EDD_EDD_Attribute Usage Count.
+     * Sets Custom Attribute Usage Count.
      * The number of custom attributes that reference this
      * custom attribute definition. Set by the server in response to a ListCatalog
      * request with `include_counts` set to `true`.  If the actual count is greater
@@ -349,7 +312,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->customAttributeUsageCount = $customAttributeUsageCount;
     }
-
     /**
      * Returns Key.
      * The name of the desired custom attribute key that can be used to access
@@ -364,7 +326,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
         }
         return $this->key['value'];
     }
-
     /**
      * Sets Key.
      * The name of the desired custom attribute key that can be used to access
@@ -378,7 +339,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->key['value'] = $key;
     }
-
     /**
      * Unsets Key.
      * The name of the desired custom attribute key that can be used to access
@@ -390,7 +350,6 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
     {
         $this->key = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -399,44 +358,43 @@ class CatalogCustomAttributeDefinition implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['type']                             = $this->type;
-        $json['name']                             = $this->name;
+        $json['type'] = $this->type;
+        $json['name'] = $this->name;
         if (!empty($this->description)) {
-            $json['description']                  = $this->description['value'];
+            $json['description'] = $this->description['value'];
         }
         if (isset($this->sourceApplication)) {
-            $json['source_application']           = $this->sourceApplication;
+            $json['source_application'] = $this->sourceApplication;
         }
-        $json['allowed_object_types']             = $this->allowedObjectTypes;
+        $json['allowed_object_types'] = $this->allowedObjectTypes;
         if (isset($this->sellerVisibility)) {
-            $json['seller_visibility']            = $this->sellerVisibility;
+            $json['seller_visibility'] = $this->sellerVisibility;
         }
         if (isset($this->appVisibility)) {
-            $json['app_visibility']               = $this->appVisibility;
+            $json['app_visibility'] = $this->appVisibility;
         }
         if (isset($this->stringConfig)) {
-            $json['string_config']                = $this->stringConfig;
+            $json['string_config'] = $this->stringConfig;
         }
         if (isset($this->numberConfig)) {
-            $json['number_config']                = $this->numberConfig;
+            $json['number_config'] = $this->numberConfig;
         }
         if (isset($this->selectionConfig)) {
-            $json['selection_config']             = $this->selectionConfig;
+            $json['selection_config'] = $this->selectionConfig;
         }
         if (isset($this->customAttributeUsageCount)) {
             $json['custom_attribute_usage_count'] = $this->customAttributeUsageCount;
         }
         if (!empty($this->key)) {
-            $json['key']                          = $this->key['value'];
+            $json['key'] = $this->key['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

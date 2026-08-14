@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\TestHelpers;
 
 /**
@@ -22,11 +21,9 @@ namespace EDD\Vendor\Stripe\TestHelpers;
 class TestClock extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'test_helpers.test_clock';
-
     const STATUS_ADVANCING = 'advancing';
     const STATUS_INTERNAL_FAILURE = 'internal_failure';
     const STATUS_READY = 'ready';
-
     /**
      * Creates a new test clock that can be attached to new customers and quotes.
      *
@@ -41,14 +38,11 @@ class TestClock extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes a test clock.
      *
@@ -62,14 +56,11 @@ class TestClock extends \EDD\Vendor\Stripe\ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your test clocks.
      *
@@ -83,10 +74,8 @@ class TestClock extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a test clock.
      *
@@ -102,10 +91,8 @@ class TestClock extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -119,7 +106,6 @@ class TestClock extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/advance';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Tax;
 
 /**
@@ -24,7 +23,6 @@ class SettingsService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', '/v1/tax/settings', $params, $opts);
     }
-
     /**
      * Updates Tax <code>Settings</code> parameters used in tax calculations. All
      * parameters are editable but none can be removed once set.

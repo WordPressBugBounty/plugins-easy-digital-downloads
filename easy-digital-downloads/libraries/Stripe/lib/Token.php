@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * Tokenization is the process EDD\Vendor\Stripe uses to collect sensitive card or bank
+ * Tokenization is the process Stripe uses to collect sensitive card or bank
  * account details, or personally identifiable information (PII), directly from
  * your customers in a secure manner. A token representing this information is
  * returned to your server to use. Use our
@@ -39,12 +38,10 @@ namespace EDD\Vendor\Stripe;
 class Token extends ApiResource
 {
     const OBJECT_NAME = 'token';
-
     const TYPE_ACCOUNT = 'account';
     const TYPE_BANK_ACCOUNT = 'bank_account';
     const TYPE_CARD = 'card';
     const TYPE_PII = 'pii';
-
     /**
      * Creates a single-use token that represents a bank account’s details. You can use
      * this token with any API method in place of a bank account dictionary. You can
@@ -64,14 +61,11 @@ class Token extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieves the token with the given ID.
      *
@@ -87,7 +81,6 @@ class Token extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

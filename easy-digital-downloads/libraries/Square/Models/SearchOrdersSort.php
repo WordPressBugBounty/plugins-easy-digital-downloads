@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Sorting criteria for a `SearchOrders` request. Results can only be sorted
  * by a timestamp field.
@@ -16,12 +14,10 @@ class SearchOrdersSort implements \JsonSerializable
      * @var string
      */
     private $sortField;
-
     /**
      * @var string|null
      */
     private $sortOrder;
-
     /**
      * @param string $sortField
      */
@@ -29,7 +25,6 @@ class SearchOrdersSort implements \JsonSerializable
     {
         $this->sortField = $sortField;
     }
-
     /**
      * Returns Sort Field.
      * Specifies which timestamp to use to sort `SearchOrder` results.
@@ -38,7 +33,6 @@ class SearchOrdersSort implements \JsonSerializable
     {
         return $this->sortField;
     }
-
     /**
      * Sets Sort Field.
      * Specifies which timestamp to use to sort `SearchOrder` results.
@@ -50,7 +44,6 @@ class SearchOrdersSort implements \JsonSerializable
     {
         $this->sortField = $sortField;
     }
-
     /**
      * Returns Sort Order.
      * The order (e.g., chronological or alphabetical) in which results from a request are returned.
@@ -59,7 +52,6 @@ class SearchOrdersSort implements \JsonSerializable
     {
         return $this->sortOrder;
     }
-
     /**
      * Sets Sort Order.
      * The order (e.g., chronological or alphabetical) in which results from a request are returned.
@@ -70,7 +62,6 @@ class SearchOrdersSort implements \JsonSerializable
     {
         $this->sortOrder = $sortOrder;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -79,18 +70,17 @@ class SearchOrdersSort implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['sort_field']     = $this->sortField;
+        $json['sort_field'] = $this->sortField;
         if (isset($this->sortOrder)) {
             $json['sort_order'] = $this->sortOrder;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

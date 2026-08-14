@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class CountrySpecService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/country_specs', $params, $opts);
     }
-
     /**
      * Returns a Country Spec for a given Country code.
      *

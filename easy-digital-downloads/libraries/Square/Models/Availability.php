@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines an appointment slot that encapsulates the appointment segments, location and starting time
  * available for booking.
@@ -16,17 +14,14 @@ class Availability implements \JsonSerializable
      * @var array
      */
     private $startAt = [];
-
     /**
      * @var string|null
      */
     private $locationId;
-
     /**
      * @var array
      */
     private $appointmentSegments = [];
-
     /**
      * Returns Start At.
      * The RFC 3339 timestamp specifying the beginning time of the slot available for booking.
@@ -38,7 +33,6 @@ class Availability implements \JsonSerializable
         }
         return $this->startAt['value'];
     }
-
     /**
      * Sets Start At.
      * The RFC 3339 timestamp specifying the beginning time of the slot available for booking.
@@ -49,7 +43,6 @@ class Availability implements \JsonSerializable
     {
         $this->startAt['value'] = $startAt;
     }
-
     /**
      * Unsets Start At.
      * The RFC 3339 timestamp specifying the beginning time of the slot available for booking.
@@ -58,7 +51,6 @@ class Availability implements \JsonSerializable
     {
         $this->startAt = [];
     }
-
     /**
      * Returns Location Id.
      * The ID of the location available for booking.
@@ -67,7 +59,6 @@ class Availability implements \JsonSerializable
     {
         return $this->locationId;
     }
-
     /**
      * Sets Location Id.
      * The ID of the location available for booking.
@@ -78,7 +69,6 @@ class Availability implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Appointment Segments.
      * The list of appointment segments available for booking
@@ -92,7 +82,6 @@ class Availability implements \JsonSerializable
         }
         return $this->appointmentSegments['value'];
     }
-
     /**
      * Sets Appointment Segments.
      * The list of appointment segments available for booking
@@ -105,7 +94,6 @@ class Availability implements \JsonSerializable
     {
         $this->appointmentSegments['value'] = $appointmentSegments;
     }
-
     /**
      * Unsets Appointment Segments.
      * The list of appointment segments available for booking
@@ -114,7 +102,6 @@ class Availability implements \JsonSerializable
     {
         $this->appointmentSegments = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -123,15 +110,15 @@ class Availability implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->startAt)) {
-            $json['start_at']             = $this->startAt['value'];
+            $json['start_at'] = $this->startAt['value'];
         }
         if (isset($this->locationId)) {
-            $json['location_id']          = $this->locationId;
+            $json['location_id'] = $this->locationId;
         }
         if (!empty($this->appointmentSegments)) {
             $json['appointment_segments'] = $this->appointmentSegments['value'];
@@ -139,7 +126,6 @@ class Availability implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

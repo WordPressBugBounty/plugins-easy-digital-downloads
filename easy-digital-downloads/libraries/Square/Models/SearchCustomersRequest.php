@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the request body of a request to the
  * `SearchCustomers` endpoint.
@@ -16,22 +14,18 @@ class SearchCustomersRequest implements \JsonSerializable
      * @var string|null
      */
     private $cursor;
-
     /**
      * @var int|null
      */
     private $limit;
-
     /**
      * @var CustomerQuery|null
      */
     private $query;
-
     /**
      * @var bool|null
      */
     private $count;
-
     /**
      * Returns Cursor.
      * Include the pagination cursor in subsequent calls to this endpoint to retrieve
@@ -44,7 +38,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * Include the pagination cursor in subsequent calls to this endpoint to retrieve
@@ -59,12 +52,11 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Returns Limit.
      * The maximum number of results to return in a single page. This limit is advisory. The response might
      * contain more or fewer results.
-     * If the specified limit is invalid, EDD\Vendor\Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH`
+     * If the specified limit is invalid, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH`
      * error. The default value is 100.
      *
      * For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-
@@ -74,12 +66,11 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         return $this->limit;
     }
-
     /**
      * Sets Limit.
      * The maximum number of results to return in a single page. This limit is advisory. The response might
      * contain more or fewer results.
-     * If the specified limit is invalid, EDD\Vendor\Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH`
+     * If the specified limit is invalid, Square returns a `400 VALUE_TOO_LOW` or `400 VALUE_TOO_HIGH`
      * error. The default value is 100.
      *
      * For more information, see [Pagination](https://developer.squareup.com/docs/build-basics/common-api-
@@ -91,7 +82,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         $this->limit = $limit;
     }
-
     /**
      * Returns Query.
      * Represents filtering and sorting criteria for a [SearchCustomers]($e/Customers/SearchCustomers)
@@ -101,7 +91,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         return $this->query;
     }
-
     /**
      * Sets Query.
      * Represents filtering and sorting criteria for a [SearchCustomers]($e/Customers/SearchCustomers)
@@ -113,7 +102,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         $this->query = $query;
     }
-
     /**
      * Returns Count.
      * Indicates whether to return the total count of matching customers in the `count` field of the
@@ -125,7 +113,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         return $this->count;
     }
-
     /**
      * Sets Count.
      * Indicates whether to return the total count of matching customers in the `count` field of the
@@ -139,7 +126,6 @@ class SearchCustomersRequest implements \JsonSerializable
     {
         $this->count = $count;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -148,7 +134,7 @@ class SearchCustomersRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -156,18 +142,17 @@ class SearchCustomersRequest implements \JsonSerializable
             $json['cursor'] = $this->cursor;
         }
         if (isset($this->limit)) {
-            $json['limit']  = $this->limit;
+            $json['limit'] = $this->limit;
         }
         if (isset($this->query)) {
-            $json['query']  = $this->query;
+            $json['query'] = $this->query;
         }
         if (isset($this->count)) {
-            $json['count']  = $this->count;
+            $json['count'] = $this->count;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

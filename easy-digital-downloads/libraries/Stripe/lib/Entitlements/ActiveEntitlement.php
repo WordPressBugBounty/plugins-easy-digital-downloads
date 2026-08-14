@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Entitlements;
 
 /**
@@ -16,7 +15,6 @@ namespace EDD\Vendor\Stripe\Entitlements;
 class ActiveEntitlement extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'entitlements.active_entitlement';
-
     /**
      * Retrieve a list of active entitlements for a customer.
      *
@@ -30,10 +28,8 @@ class ActiveEntitlement extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieve an active entitlement.
      *
@@ -49,7 +45,6 @@ class ActiveEntitlement extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Treasury;
 
 /**
@@ -24,7 +23,6 @@ class DebitReversalService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/treasury/debit_reversals', $params, $opts);
     }
-
     /**
      * Reverses a ReceivedDebit and creates a DebitReversal object.
      *
@@ -39,7 +37,6 @@ class DebitReversalService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/treasury/debit_reversals', $params, $opts);
     }
-
     /**
      * Retrieves a DebitReversal object.
      *

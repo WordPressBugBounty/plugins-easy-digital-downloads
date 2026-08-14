@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Identity;
 
 /**
@@ -24,7 +23,6 @@ class VerificationReportService extends \EDD\Vendor\Stripe\Service\AbstractServi
     {
         return $this->requestCollection('get', '/v1/identity/verification_reports', $params, $opts);
     }
-
     /**
      * Retrieves an existing VerificationReport.
      *

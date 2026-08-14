@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Forwarding;
 
 /**
@@ -24,7 +23,6 @@ class RequestService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/forwarding/requests', $params, $opts);
     }
-
     /**
      * Creates a ForwardingRequest object.
      *
@@ -39,7 +37,6 @@ class RequestService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/forwarding/requests', $params, $opts);
     }
-
     /**
      * Retrieves a ForwardingRequest object.
      *

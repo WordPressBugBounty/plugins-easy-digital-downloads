@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Climate;
 
 /**
@@ -21,7 +20,6 @@ namespace EDD\Vendor\Stripe\Climate;
 class Product extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'climate.product';
-
     /**
      * Lists all available Climate product objects.
      *
@@ -35,10 +33,8 @@ class Product extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of a Climate product with the given ID.
      *
@@ -54,7 +50,6 @@ class Product extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

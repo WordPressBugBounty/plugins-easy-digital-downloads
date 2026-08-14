@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Stores details about a cash payment. Contains only non-confidential information. For more
  * information, see
@@ -17,12 +15,10 @@ class CashPaymentDetails implements \JsonSerializable
      * @var Money
      */
     private $buyerSuppliedMoney;
-
     /**
      * @var Money|null
      */
     private $changeBackMoney;
-
     /**
      * @param Money $buyerSuppliedMoney
      */
@@ -30,7 +26,6 @@ class CashPaymentDetails implements \JsonSerializable
     {
         $this->buyerSuppliedMoney = $buyerSuppliedMoney;
     }
-
     /**
      * Returns Buyer Supplied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -45,7 +40,6 @@ class CashPaymentDetails implements \JsonSerializable
     {
         return $this->buyerSuppliedMoney;
     }
-
     /**
      * Sets Buyer Supplied Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -63,7 +57,6 @@ class CashPaymentDetails implements \JsonSerializable
     {
         $this->buyerSuppliedMoney = $buyerSuppliedMoney;
     }
-
     /**
      * Returns Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -78,7 +71,6 @@ class CashPaymentDetails implements \JsonSerializable
     {
         return $this->changeBackMoney;
     }
-
     /**
      * Sets Change Back Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -95,7 +87,6 @@ class CashPaymentDetails implements \JsonSerializable
     {
         $this->changeBackMoney = $changeBackMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -104,18 +95,17 @@ class CashPaymentDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['buyer_supplied_money']  = $this->buyerSuppliedMoney;
+        $json['buyer_supplied_money'] = $this->buyerSuppliedMoney;
         if (isset($this->changeBackMoney)) {
             $json['change_back_money'] = $this->changeBackMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

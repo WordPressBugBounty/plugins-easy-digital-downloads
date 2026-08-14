@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Request\Parameters;
 
 class AdditionalQueryParams extends MultipleParams
@@ -13,7 +12,6 @@ class AdditionalQueryParams extends MultipleParams
     {
         return new self($values ?? []);
     }
-
     private function __construct(array $values)
     {
         parent::__construct('additional query');
@@ -21,7 +19,6 @@ class AdditionalQueryParams extends MultipleParams
             return QueryParam::init($key, $val);
         }, array_keys($values), $values);
     }
-
     /**
      * Turns all parameters of the object to unIndexed.
      */
@@ -32,7 +29,6 @@ class AdditionalQueryParams extends MultipleParams
         }, $this->parameters);
         return $this;
     }
-
     /**
      * Turns all parameters of the object to plain.
      */
@@ -43,7 +39,6 @@ class AdditionalQueryParams extends MultipleParams
         }, $this->parameters);
         return $this;
     }
-
     /**
      * Turns all parameters of the object to comma separated.
      */
@@ -54,7 +49,6 @@ class AdditionalQueryParams extends MultipleParams
         }, $this->parameters);
         return $this;
     }
-
     /**
      * Turns all parameters of the object to tab separated.
      */
@@ -65,7 +59,6 @@ class AdditionalQueryParams extends MultipleParams
         }, $this->parameters);
         return $this;
     }
-
     /**
      * Turns all parameters of the object to pipe separated.
      */

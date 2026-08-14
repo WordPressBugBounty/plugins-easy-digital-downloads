@@ -78,6 +78,7 @@ class Elementor implements Integration {
 			return false;
 		}
 
-		return \EDD\Elementor\Utils\Page::has_widget( 'edd-checkout', $elements );
+		return \EDD\Elementor\Utils\Page::has_widget( 'edd-checkout', $elements )
+			|| \EDD\Elementor\Utils\Page::has_widget( 'edd-checkout-box', $elements );
 	}
 }

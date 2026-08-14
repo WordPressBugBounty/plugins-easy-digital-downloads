@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the body parameters that can be included in requests to the
  * [BulkUpdateCustomers]($e/Customers/BulkUpdateCustomers) endpoint.
@@ -16,7 +14,6 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
      * @var array<string,BulkUpdateCustomerData>
      */
     private $customers;
-
     /**
      * @param array<string,BulkUpdateCustomerData> $customers
      */
@@ -24,7 +21,6 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
     {
         $this->customers = $customers;
     }
-
     /**
      * Returns Customers.
      * A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }`
@@ -43,7 +39,6 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
     {
         return $this->customers;
     }
-
     /**
      * Sets Customers.
      * A map of 1 to 100 individual update requests, represented by `customer ID: { customer data }`
@@ -65,7 +60,6 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
     {
         $this->customers = $customers;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -74,7 +68,7 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -82,7 +76,6 @@ class BulkUpdateCustomersRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

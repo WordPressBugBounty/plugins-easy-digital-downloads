@@ -31,7 +31,6 @@ if ( ! \EDD\Blocks\Utility::is_block_editor() ) {
 			<input class="edd-input" type="text" id="edd-discount" name="edd-discount" placeholder="<?php esc_html_e( 'Enter discount code', 'easy-digital-downloads' ); ?>"/>
 			<input type="submit" class="edd-apply-discount edd-submit wp-block-button__link" value="<?php echo esc_html( _x( 'Apply', 'Apply discount at checkout', 'easy-digital-downloads' ) ); ?>"/>
 		</span>
-		<span class="edd-discount-loader edd-loading" id="edd-discount-loader" style="display:none;"></span>
 		<span id="edd-discount-error-wrap" class="edd_error edd-alert edd-alert-error" aria-hidden="true" style="display:none;"></span>
 	</div>
 </div>

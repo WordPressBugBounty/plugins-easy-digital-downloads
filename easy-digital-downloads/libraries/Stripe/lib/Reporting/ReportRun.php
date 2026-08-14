@@ -1,12 +1,11 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Reporting;
 
 /**
  * The Report Run object represents an instance of a report type generated with
- * specific run parameters. Once the object is created, EDD\Vendor\Stripe begins processing the report.
+ * specific run parameters. Once the object is created, Stripe begins processing the report.
  * When the report has finished running, it will give you a reference to a file
  * where you can retrieve your results. For an overview, see
  * <a href="https://stripe.com/docs/reporting/statements/api">API Access to Reports</a>.
@@ -28,7 +27,6 @@ namespace EDD\Vendor\Stripe\Reporting;
 class ReportRun extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'reporting.report_run';
-
     /**
      * Creates a new object and begin running the report. (Certain report types require
      * a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.).
@@ -44,14 +42,11 @@ class ReportRun extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of Report Runs, with the most recent appearing first.
      *
@@ -65,10 +60,8 @@ class ReportRun extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing Report Run.
      *
@@ -84,7 +77,6 @@ class ReportRun extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

@@ -60,6 +60,27 @@ class DomainAssociation {
 	const ERROR_OPTION = 'edd_paypal_applepay_domain_error';
 
 	/**
+	 * Option flag marking the PayPal account as terminally ineligible for
+	 * Apple Pay (the Connect API returned `applepay_not_available`).
+	 *
+	 * Once set, verification stops retrying until the merchant reconnects or
+	 * re-verifies — there is nothing the store can do per-request to change a
+	 * missing PAYMENT_METHODS subscription, so retrying on every admin page
+	 * load just burns Connect API calls and error logs.
+	 *
+	 * @since 3.7.0
+	 */
+	const INELIGIBLE_OPTION = 'edd_paypal_applepay_ineligible';
+
+	/**
+	 * Option storing the earliest Unix timestamp the next registration retry
+	 * is allowed, used to back off after a transient (non-terminal) failure.
+	 *
+	 * @since 3.7.0
+	 */
+	const RETRY_OPTION = 'edd_paypal_applepay_next_retry';
+
+	/**
 	 * Transient storing the file contents fetched from the Connect service.
 	 *
 	 * Used as a fallback when the docroot copy isn't readable (PHP serving
@@ -120,18 +141,26 @@ class DomainAssociation {
 	 * @return void
 	 */
 	public static function install(): void {
-		$content = self::fetch_content();
+		try {
+			$content = self::fetch_content();
 
-		if ( empty( $content ) ) {
-			throw new \RuntimeException( __( 'Empty Apple Pay domain-association file returned from proxy.', 'easy-digital-downloads' ) );
+			if ( empty( $content ) ) {
+				throw new \RuntimeException( __( 'Empty Apple Pay domain-association file returned from proxy.', 'easy-digital-downloads' ) );
+			}
+
+			self::cache_content( $content );
+			self::write_to_docroot( $content );
+			self::register_with_paypal( self::get_current_host() );
+		} catch ( \RuntimeException $e ) {
+			if ( ! get_option( self::INELIGIBLE_OPTION, '' ) ) {
+				update_option( self::RETRY_OPTION, time() + 4 * HOUR_IN_SECONDS, false );
+			}
+			throw $e;
 		}
-
-		self::cache_content( $content );
-		self::write_to_docroot( $content );
-		self::register_with_paypal( self::get_current_host() );
 
 		update_option( self::HOST_OPTION, self::get_current_host() );
 		delete_option( self::ERROR_OPTION );
+		delete_option( self::RETRY_OPTION );
 	}
 
 	/**
@@ -149,13 +178,19 @@ class DomainAssociation {
 	 * intentionally leave the CONTENT_TRANSIENT alone — re-installing
 	 * after a fresh connect doesn't need a fresh fetch.
 	 *
+	 * Also clears the ineligible and retry-backoff guards so a reconnecting
+	 * merchant (whose account may now be approved) gets a fresh attempt.
+	 *
 	 * @since 3.6.9
+	 * @since 3.7.0 Clears the ineligible and retry-backoff guards.
 	 *
 	 * @return void
 	 */
 	public static function uninstall(): void {
 		delete_option( self::HOST_OPTION );
 		delete_option( self::ERROR_OPTION );
+		delete_option( self::INELIGIBLE_OPTION );
+		delete_option( self::RETRY_OPTION );
 
 		$path = self::get_docroot_file_path();
 		if ( '' !== $path && file_exists( $path ) ) {
@@ -195,6 +230,12 @@ class DomainAssociation {
 	 * @return void
 	 */
 	public static function reverify(): void {
+		// Clear the retry/ineligible guards up front so the admin re-verify
+		// action always attempts a fresh registration, even if deregister
+		// throws before uninstall() runs.
+		delete_option( self::INELIGIBLE_OPTION );
+		delete_option( self::RETRY_OPTION );
+
 		self::deregister_with_paypal( self::get_current_host() );
 		self::uninstall();
 		self::install();
@@ -365,6 +406,12 @@ class DomainAssociation {
 		}
 
 		if ( ConnectAPI::is_error( $response ) ) {
+			// A missing PAYMENT_METHODS subscription is terminal — the Connect API
+			// returns the same `applepay_not_available` on every retry, so flag
+			// the account ineligible and stop attempting until it reconnects.
+			if ( 'applepay_not_available' === ConnectAPI::get_error_code( $response ) ) {
+				update_option( self::INELIGIBLE_OPTION, '1', false );
+			}
 			throw new \RuntimeException( ConnectAPI::get_error_message( $response ) );
 		}
 	}

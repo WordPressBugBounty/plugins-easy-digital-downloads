@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -20,10 +19,8 @@ namespace EDD\Vendor\Stripe;
 class InvoiceRenderingTemplate extends ApiResource
 {
     const OBJECT_NAME = 'invoice_rendering_template';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_ARCHIVED = 'archived';
-
     /**
      * List all templates, ordered by creation date, with the most recently created
      * template appearing first.
@@ -38,10 +35,8 @@ class InvoiceRenderingTemplate extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an invoice rendering template with the given ID. It by default returns
      * the latest version of the template. Optionally, specify a version to see
@@ -59,10 +54,8 @@ class InvoiceRenderingTemplate extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -76,10 +69,8 @@ class InvoiceRenderingTemplate extends ApiResource
         $url = $this->instanceUrl() . '/archive';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -93,7 +84,6 @@ class InvoiceRenderingTemplate extends ApiResource
         $url = $this->instanceUrl() . '/unarchive';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

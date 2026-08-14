@@ -1,33 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
 {
     /**
      * @var string|null
      */
     private $applicationType;
-
     /**
      * @var string|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $sessionLocation = [];
-
     /**
      * @var array
      */
     private $deviceCodeId = [];
-
     /**
      * Returns Application Type.
      */
@@ -35,7 +29,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         return $this->applicationType;
     }
-
     /**
      * Sets Application Type.
      *
@@ -45,7 +38,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->applicationType = $applicationType;
     }
-
     /**
      * Returns Version.
      * The version of the application.
@@ -54,7 +46,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version of the application.
@@ -65,7 +56,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Session Location.
      * The location_id of the session for the application.
@@ -77,7 +67,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
         }
         return $this->sessionLocation['value'];
     }
-
     /**
      * Sets Session Location.
      * The location_id of the session for the application.
@@ -88,7 +77,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->sessionLocation['value'] = $sessionLocation;
     }
-
     /**
      * Unsets Session Location.
      * The location_id of the session for the application.
@@ -97,7 +85,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->sessionLocation = [];
     }
-
     /**
      * Returns Device Code Id.
      * The id of the device code that was used to log in to the device.
@@ -109,7 +96,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
         }
         return $this->deviceCodeId['value'];
     }
-
     /**
      * Sets Device Code Id.
      * The id of the device code that was used to log in to the device.
@@ -120,7 +106,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->deviceCodeId['value'] = $deviceCodeId;
     }
-
     /**
      * Unsets Device Code Id.
      * The id of the device code that was used to log in to the device.
@@ -129,7 +114,6 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
     {
         $this->deviceCodeId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -138,7 +122,7 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -146,18 +130,17 @@ class DeviceComponentDetailsApplicationDetails implements \JsonSerializable
             $json['application_type'] = $this->applicationType;
         }
         if (isset($this->version)) {
-            $json['version']          = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->sessionLocation)) {
             $json['session_location'] = $this->sessionLocation['value'];
         }
         if (!empty($this->deviceCodeId)) {
-            $json['device_code_id']   = $this->deviceCodeId['value'];
+            $json['device_code_id'] = $this->deviceCodeId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

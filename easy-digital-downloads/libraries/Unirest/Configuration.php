@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Unirest;
 
 use EDD\Vendor\CoreInterfaces\Http\HttpConfigurations;
-
 class Configuration
 {
     /**
@@ -19,57 +17,36 @@ class Configuration
     private $curlOpts = [];
     private $jsonOpts = [];
     private $socketTimeout = 0;
-    private $enableRetries = false;       // should we enable retries feature
-    private $maxNumberOfRetries = 3;      // total number of allowed retries
-    private $retryOnTimeout = false;      // Should we retry on timeout?
-    private $retryInterval = 1.0;         // Initial retry interval in seconds, to be increased by backoffFactor
-    private $maximumRetryWaitTime = 120;  // maximum retry wait time (commutative)
-    private $backoffFactor = 2.0;         // backoff factor to be used to increase retry interval
+    private $enableRetries = false;
+    // should we enable retries feature
+    private $maxNumberOfRetries = 3;
+    // total number of allowed retries
+    private $retryOnTimeout = false;
+    // Should we retry on timeout?
+    private $retryInterval = 1.0;
+    // Initial retry interval in seconds, to be increased by backoffFactor
+    private $maximumRetryWaitTime = 120;
+    // maximum retry wait time (commutative)
+    private $backoffFactor = 2.0;
+    // backoff factor to be used to increase retry interval
     private $httpStatusCodesToRetry = [408, 413, 429, 500, 502, 503, 504, 521, 522, 524];
     private $httpMethodsToRetry = ["GET", "PUT"];
     private $verifyPeer = true;
     private $verifyHost = true;
     private $defaultHeaders = [];
-
-    private $auth =  [
-        'user' => '',
-        'pass' => '',
-        'method' => CURLAUTH_BASIC
-    ];
-
-    private $proxy = [
-        'port' => false,
-        'tunnel' => false,
-        'address' => false,
-        'type' => CURLPROXY_HTTP,
-        'auth' =>  [
-            'user' => '',
-            'pass' => '',
-            'method' => CURLAUTH_BASIC
-        ]
-    ];
-
+    private $auth = ['user' => '', 'pass' => '', 'method' => CURLAUTH_BASIC];
+    private $proxy = ['port' => false, 'tunnel' => false, 'address' => false, 'type' => CURLPROXY_HTTP, 'auth' => ['user' => '', 'pass' => '', 'method' => CURLAUTH_BASIC]];
     public static function init(?HttpConfigurations $httpConfigurations = null): self
     {
         return new self($httpConfigurations);
     }
-
     private function __construct(?HttpConfigurations $httpConfigurations)
     {
         if (is_null($httpConfigurations)) {
             return;
         }
-        $this->timeout($httpConfigurations->getTimeout())
-            ->enableRetries($httpConfigurations->shouldEnableRetries())
-            ->maxNumberOfRetries($httpConfigurations->getNumberOfRetries())
-            ->retryOnTimeout($httpConfigurations->shouldRetryOnTimeout())
-            ->retryInterval($httpConfigurations->getRetryInterval())
-            ->maximumRetryWaitTime($httpConfigurations->getMaximumRetryWaitTime())
-            ->backoffFactor($httpConfigurations->getBackOffFactor())
-            ->httpStatusCodesToRetry($httpConfigurations->getHttpStatusCodesToRetry())
-            ->httpMethodsToRetry($httpConfigurations->getHttpMethodsToRetry());
+        $this->timeout($httpConfigurations->getTimeout())->enableRetries($httpConfigurations->shouldEnableRetries())->maxNumberOfRetries($httpConfigurations->getNumberOfRetries())->retryOnTimeout($httpConfigurations->shouldRetryOnTimeout())->retryInterval($httpConfigurations->getRetryInterval())->maximumRetryWaitTime($httpConfigurations->getMaximumRetryWaitTime())->backoffFactor($httpConfigurations->getBackOffFactor())->httpStatusCodesToRetry($httpConfigurations->getHttpStatusCodesToRetry())->httpMethodsToRetry($httpConfigurations->getHttpMethodsToRetry());
     }
-
     /**
      * @param int $socketTimeout Timeout for API calls in seconds.
      */
@@ -78,7 +55,6 @@ class Configuration
         $this->socketTimeout = $socketTimeout;
         return $this;
     }
-
     /**
      * @param bool $enableRetries Whether to enable retries and backoff feature.
      */
@@ -87,7 +63,6 @@ class Configuration
         $this->enableRetries = $enableRetries;
         return $this;
     }
-
     /**
      * @param int $maxNumberOfRetries The number of retries to make.
      */
@@ -96,7 +71,6 @@ class Configuration
         $this->maxNumberOfRetries = $maxNumberOfRetries;
         return $this;
     }
-
     /**
      * @param bool $retryOnTimeout Whether to retry on timeout
      */
@@ -105,7 +79,6 @@ class Configuration
         $this->retryOnTimeout = $retryOnTimeout;
         return $this;
     }
-
     /**
      * @param float $retryInterval The retry time interval between the endpoint calls.
      */
@@ -114,7 +87,6 @@ class Configuration
         $this->retryInterval = $retryInterval;
         return $this;
     }
-
     /**
      * @param int $maximumRetryWaitTime The maximum wait time in seconds for overall retrying requests.
      */
@@ -123,7 +95,6 @@ class Configuration
         $this->maximumRetryWaitTime = $maximumRetryWaitTime;
         return $this;
     }
-
     /**
      * @param float $backoffFactor Exponential backoff factor to increase interval between retries.
      */
@@ -132,7 +103,6 @@ class Configuration
         $this->backoffFactor = $backoffFactor;
         return $this;
     }
-
     /**
      * @param int[] $httpStatusCodesToRetry Http status codes to retry against.
      */
@@ -141,7 +111,6 @@ class Configuration
         $this->httpStatusCodesToRetry = $httpStatusCodesToRetry;
         return $this;
     }
-
     /**
      * @param string[] $httpMethodsToRetry Http methods to retry against.
      */
@@ -150,7 +119,6 @@ class Configuration
         $this->httpMethodsToRetry = $httpMethodsToRetry;
         return $this;
     }
-
     /**
      * Set JSON decode mode
      *
@@ -164,7 +132,6 @@ class Configuration
         $this->jsonOpts = [$assoc, $depth, $options];
         return $this;
     }
-
     /**
      * Verify SSL peer
      *
@@ -175,7 +142,6 @@ class Configuration
         $this->verifyPeer = $enabled;
         return $this;
     }
-
     /**
      * Verify SSL host
      *
@@ -186,7 +152,6 @@ class Configuration
         $this->verifyHost = $enabled;
         return $this;
     }
-
     /**
      * Set default headers to send on every request
      *
@@ -197,7 +162,6 @@ class Configuration
         $this->defaultHeaders = array_merge($this->defaultHeaders, $headers);
         return $this;
     }
-
     /**
      * Set a new default header to send on every request
      *
@@ -209,7 +173,6 @@ class Configuration
         $this->defaultHeaders[$name] = $value;
         return $this;
     }
-
     /**
      * Set curl options to send on every request
      *
@@ -220,7 +183,6 @@ class Configuration
         $this->curlOpts = array_merge($this->curlOpts, $options);
         return $this;
     }
-
     /**
      * Set a new default header to send on every request
      *
@@ -232,7 +194,6 @@ class Configuration
         $this->curlOpts[$name] = $value;
         return $this;
     }
-
     /**
      * Set a cookie string for enabling cookie handling
      *
@@ -243,7 +204,6 @@ class Configuration
         $this->cookie = $cookie;
         return $this;
     }
-
     /**
      * Set a cookie file path for enabling cookie handling
      *
@@ -256,7 +216,6 @@ class Configuration
         $this->cookieFile = $cookieFile;
         return $this;
     }
-
     /**
      * Set authentication method to use
      *
@@ -271,7 +230,6 @@ class Configuration
         $this->auth['method'] = $method;
         return $this;
     }
-
     /**
      * Set proxy to use
      *
@@ -289,7 +247,6 @@ class Configuration
         $this->proxy['address'] = $address;
         return $this;
     }
-
     public function proxyConfiguration(array $proxyConfiguration): self
     {
         $this->proxy = array_merge($this->proxy, $proxyConfiguration);
@@ -309,92 +266,74 @@ class Configuration
         $this->proxy['auth']['method'] = $method;
         return $this;
     }
-
     public function getTimeout(): int
     {
         return $this->socketTimeout;
     }
-
     public function shouldEnableRetries(): bool
     {
         return $this->enableRetries;
     }
-
     public function getNumberOfRetries(): int
     {
         return $this->maxNumberOfRetries;
     }
-
     public function getRetryInterval(): float
     {
         return $this->retryInterval;
     }
-
     public function getBackOffFactor(): float
     {
         return $this->backoffFactor;
     }
-
     public function getMaximumRetryWaitTime(): int
     {
         return $this->maximumRetryWaitTime;
     }
-
     public function shouldRetryOnTimeout(): bool
     {
         return $this->retryOnTimeout;
     }
-
     public function getHttpStatusCodesToRetry(): array
     {
         return $this->httpStatusCodesToRetry;
     }
-
     public function getHttpMethodsToRetry(): array
     {
         return $this->httpMethodsToRetry;
     }
-
     public function getCookie(): ?string
     {
         return $this->cookie;
     }
-
     public function getCookieFile(): ?string
     {
         return $this->cookieFile;
     }
-
     public function getCurlOpts(): array
     {
         return $this->curlOpts;
     }
-
     public function getJsonOpts(): array
     {
         return $this->jsonOpts;
     }
-
     public function shouldVerifyPeer(): bool
     {
         return $this->verifyPeer;
     }
-
     public function shouldVerifyHost(): bool
     {
         return $this->verifyHost;
     }
-
     public function getDefaultHeaders(): array
     {
         return $this->defaultHeaders;
     }
-
     public function getAuth(): array
     {
         return $this->auth;
     }
-
     public function getProxy(): array
     {
         return $this->proxy;

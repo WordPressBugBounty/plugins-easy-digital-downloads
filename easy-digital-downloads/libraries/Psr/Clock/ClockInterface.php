@@ -3,7 +3,6 @@
 namespace EDD\Vendor\Psr\Clock;
 
 use DateTimeImmutable;
-
 interface ClockInterface
 {
     /**

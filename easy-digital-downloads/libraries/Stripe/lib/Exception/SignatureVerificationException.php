@@ -10,7 +10,6 @@ class SignatureVerificationException extends \Exception implements ExceptionInte
 {
     protected $httpBody;
     protected $sigHeader;
-
     /**
      * Creates a new SignatureVerificationException exception.
      *
@@ -20,18 +19,13 @@ class SignatureVerificationException extends \Exception implements ExceptionInte
      *
      * @return SignatureVerificationException
      */
-    public static function factory(
-        $message,
-        $httpBody = null,
-        $sigHeader = null
-    ) {
+    public static function factory($message, $httpBody = null, $sigHeader = null)
+    {
         $instance = new static($message);
         $instance->setHttpBody($httpBody);
         $instance->setSigHeader($sigHeader);
-
         return $instance;
     }
-
     /**
      * Gets the HTTP body as a string.
      *
@@ -41,7 +35,6 @@ class SignatureVerificationException extends \Exception implements ExceptionInte
     {
         return $this->httpBody;
     }
-
     /**
      * Sets the HTTP body as a string.
      *
@@ -51,7 +44,6 @@ class SignatureVerificationException extends \Exception implements ExceptionInte
     {
         $this->httpBody = $httpBody;
     }
-
     /**
      * Gets the `Stripe-Signature` HTTP header.
      *
@@ -61,7 +53,6 @@ class SignatureVerificationException extends \Exception implements ExceptionInte
     {
         return $this->sigHeader;
     }
-
     /**
      * Sets the `Stripe-Signature` HTTP header.
      *

@@ -3,7 +3,6 @@
 namespace EDD\Vendor\CoreInterfaces\Core\Request;
 
 use InvalidArgumentException;
-
 interface TypeValidatorInterface
 {
     /**

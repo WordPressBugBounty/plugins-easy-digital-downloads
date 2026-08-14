@@ -109,12 +109,31 @@ class Phone extends Base {
 		wp_enqueue_script( 'intl-tel-input', $vendor_url . 'intl-tel-input/js/intlTelInput.min.js', array(), edd_admin_get_script_version(), true );
 		wp_enqueue_script( 'edd-intl-tel-input', edd_get_assets_url( 'js/frontend/' ) . 'intl-tel-input.js', array( 'intl-tel-input' ), edd_admin_get_script_version(), true );
 		wp_enqueue_style( 'intl-tel-input', $vendor_url . 'intl-tel-input/css/intlTelInput.min.css', array(), edd_admin_get_script_version() );
+		self::add_country_button_reset();
 		wp_localize_script(
 			'intl-tel-input',
 			'EDDIntlTelInput',
 			array(
 				'utils' => $vendor_url . 'intl-tel-input/js/intlTelInput.min.js',
 			)
+		);
+	}
+
+	/**
+	 * Neutralize theme button styling on the country selector.
+	 *
+	 * The country selector is a <button> that intl-tel-input does not reset, so a theme that styles
+	 * buttons draws a box around the flag. Scoped to two classes to outrank a bare `button` theme
+	 * rule without `!important`.
+	 *
+	 * @since 3.7.0
+	 * @return void
+	 */
+	private static function add_country_button_reset(): void {
+		wp_add_inline_style(
+			'intl-tel-input',
+			'.iti .iti__selected-country,.iti .iti__selected-country:hover,.iti .iti__selected-country:focus{'
+			. 'background:none;border:0;border-radius:0;padding:0;box-shadow:none;transform:none;min-height:0;}'
 		);
 	}
 

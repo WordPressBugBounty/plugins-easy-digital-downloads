@@ -4,7 +4,6 @@ namespace EDD\Vendor\Core\Utils;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
 use EDD\Vendor\Rs\Json\Pointer;
-
 class JsonPointerValue
 {
     /**
@@ -19,15 +18,12 @@ class JsonPointerValue
         if (trim($jsonObj) === '' || trim($pointer) === '') {
             return "";
         }
-
         try {
             $jsonPointer = new Pointer($jsonObj);
             $pointerValue = $jsonPointer->get($pointer);
-
             if (is_object($pointerValue)) {
                 $pointerValue = CoreHelper::serialize($pointerValue);
             }
-
             return $pointerValue;
         } catch (\Exception $ex) {
             return "";

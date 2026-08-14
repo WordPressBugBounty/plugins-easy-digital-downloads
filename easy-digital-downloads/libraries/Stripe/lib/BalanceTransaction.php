@@ -1,35 +1,33 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * Balance transactions represent funds moving through your EDD\Vendor\Stripe account.
- * EDD\Vendor\Stripe creates them for every type of transaction that enters or leaves your EDD\Vendor\Stripe account balance.
+ * Balance transactions represent funds moving through your Stripe account.
+ * Stripe creates them for every type of transaction that enters or leaves your Stripe account balance.
  *
  * Related guide: <a href="https://stripe.com/docs/reports/balance-transaction-types">Balance transaction types</a>
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property int $amount Gross amount of this transaction (in cents (or local equivalent)). A positive value represents funds charged to another party, and a negative value represents funds sent to another party.
- * @property int $available_on The date that the transaction's net funds become available in the EDD\Vendor\Stripe balance.
+ * @property int $available_on The date that the transaction's net funds become available in the Stripe balance.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.
- * @property null|float $exchange_rate If applicable, this transaction uses an exchange rate. If money converts from currency A to currency B, then the <code>amount</code> in currency A, multipled by the <code>exchange_rate</code>, equals the <code>amount</code> in currency B. For example, if you charge a customer 10.00 EUR, the PaymentIntent's <code>amount</code> is <code>1000</code> and <code>currency</code> is <code>eur</code>. If this converts to 12.34 USD in your EDD\Vendor\Stripe account, the BalanceTransaction's <code>amount</code> is <code>1234</code>, its <code>currency</code> is <code>usd</code>, and the <code>exchange_rate</code> is <code>1.234</code>.
+ * @property null|float $exchange_rate If applicable, this transaction uses an exchange rate. If money converts from currency A to currency B, then the <code>amount</code> in currency A, multipled by the <code>exchange_rate</code>, equals the <code>amount</code> in currency B. For example, if you charge a customer 10.00 EUR, the PaymentIntent's <code>amount</code> is <code>1000</code> and <code>currency</code> is <code>eur</code>. If this converts to 12.34 USD in your Stripe account, the BalanceTransaction's <code>amount</code> is <code>1234</code>, its <code>currency</code> is <code>usd</code>, and the <code>exchange_rate</code> is <code>1.234</code>.
  * @property int $fee Fees (in cents (or local equivalent)) paid for this transaction. Represented as a positive integer when assessed.
  * @property \EDD\Vendor\Stripe\StripeObject[] $fee_details Detailed breakdown of fees (in cents (or local equivalent)) paid for this transaction.
- * @property int $net Net impact to a EDD\Vendor\Stripe balance (in cents (or local equivalent)). A positive value represents incrementing a EDD\Vendor\Stripe balance, and a negative value decrementing a EDD\Vendor\Stripe balance. You can calculate the net impact of a transaction on a balance by <code>amount</code> - <code>fee</code>
+ * @property int $net Net impact to a Stripe balance (in cents (or local equivalent)). A positive value represents incrementing a Stripe balance, and a negative value decrementing a Stripe balance. You can calculate the net impact of a transaction on a balance by <code>amount</code> - <code>fee</code>
  * @property string $reporting_category Learn more about how <a href="https://stripe.com/docs/reports/reporting-categories">reporting categories</a> can help you understand balance transactions from an accounting perspective.
- * @property null|string|\EDD\Vendor\Stripe\ApplicationFee|\EDD\Vendor\Stripe\ApplicationFeeRefund|\EDD\Vendor\Stripe\Charge|\EDD\Vendor\Stripe\ConnectCollectionTransfer|\EDD\Vendor\Stripe\CustomerCashBalanceTransaction|\EDD\Vendor\Stripe\Dispute|\EDD\Vendor\Stripe\Issuing\Authorization|\EDD\Vendor\Stripe\Issuing\Dispute|\EDD\Vendor\Stripe\Issuing\Transaction|\EDD\Vendor\Stripe\Payout|\EDD\Vendor\Stripe\Refund|\EDD\Vendor\Stripe\ReserveTransaction|\EDD\Vendor\Stripe\TaxDeductedAtSource|\EDD\Vendor\Stripe\Topup|\EDD\Vendor\Stripe\Transfer|\EDD\Vendor\Stripe\TransferReversal $source This transaction relates to the EDD\Vendor\Stripe object.
- * @property string $status The transaction's net funds status in the EDD\Vendor\Stripe balance, which are either <code>available</code> or <code>pending</code>.
+ * @property null|string|\EDD\Vendor\Stripe\ApplicationFee|\EDD\Vendor\Stripe\ApplicationFeeRefund|\EDD\Vendor\Stripe\Charge|\EDD\Vendor\Stripe\ConnectCollectionTransfer|\EDD\Vendor\Stripe\CustomerCashBalanceTransaction|\EDD\Vendor\Stripe\Dispute|\EDD\Vendor\Stripe\Issuing\Authorization|\EDD\Vendor\Stripe\Issuing\Dispute|\EDD\Vendor\Stripe\Issuing\Transaction|\EDD\Vendor\Stripe\Payout|\EDD\Vendor\Stripe\Refund|\EDD\Vendor\Stripe\ReserveTransaction|\EDD\Vendor\Stripe\TaxDeductedAtSource|\EDD\Vendor\Stripe\Topup|\EDD\Vendor\Stripe\Transfer|\EDD\Vendor\Stripe\TransferReversal $source This transaction relates to the Stripe object.
+ * @property string $status The transaction's net funds status in the Stripe balance, which are either <code>available</code> or <code>pending</code>.
  * @property string $type Transaction type: <code>adjustment</code>, <code>advance</code>, <code>advance_funding</code>, <code>anticipation_repayment</code>, <code>application_fee</code>, <code>application_fee_refund</code>, <code>charge</code>, <code>climate_order_purchase</code>, <code>climate_order_refund</code>, <code>connect_collection_transfer</code>, <code>contribution</code>, <code>issuing_authorization_hold</code>, <code>issuing_authorization_release</code>, <code>issuing_dispute</code>, <code>issuing_transaction</code>, <code>obligation_outbound</code>, <code>obligation_reversal_inbound</code>, <code>payment</code>, <code>payment_failure_refund</code>, <code>payment_network_reserve_hold</code>, <code>payment_network_reserve_release</code>, <code>payment_refund</code>, <code>payment_reversal</code>, <code>payment_unreconciled</code>, <code>payout</code>, <code>payout_cancel</code>, <code>payout_failure</code>, <code>refund</code>, <code>refund_failure</code>, <code>reserve_transaction</code>, <code>reserved_funds</code>, <code>stripe_fee</code>, <code>stripe_fx_fee</code>, <code>tax_fee</code>, <code>topup</code>, <code>topup_reversal</code>, <code>transfer</code>, <code>transfer_cancel</code>, <code>transfer_failure</code>, or <code>transfer_refund</code>. Learn more about <a href="https://stripe.com/docs/reports/balance-transaction-types">balance transaction types and what they represent</a>. To classify transactions for accounting purposes, consider <code>reporting_category</code> instead.
  */
 class BalanceTransaction extends ApiResource
 {
     const OBJECT_NAME = 'balance_transaction';
-
     const TYPE_ADJUSTMENT = 'adjustment';
     const TYPE_ADVANCE = 'advance';
     const TYPE_ADVANCE_FUNDING = 'advance_funding';
@@ -70,9 +68,8 @@ class BalanceTransaction extends ApiResource
     const TYPE_TRANSFER_CANCEL = 'transfer_cancel';
     const TYPE_TRANSFER_FAILURE = 'transfer_failure';
     const TYPE_TRANSFER_REFUND = 'transfer_refund';
-
     /**
-     * Returns a list of transactions that have contributed to the EDD\Vendor\Stripe account
+     * Returns a list of transactions that have contributed to the Stripe account
      * balance (e.g., charges, transfers, and so forth). The transactions are returned
      * in sorted order, with the most recent transactions appearing first.
      *
@@ -89,10 +86,8 @@ class BalanceTransaction extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the balance transaction with the given ID.
      *
@@ -111,7 +106,6 @@ class BalanceTransaction extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

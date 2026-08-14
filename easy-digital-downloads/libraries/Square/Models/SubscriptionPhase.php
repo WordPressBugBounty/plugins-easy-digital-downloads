@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a phase in a subscription plan variation. For more information, see [Subscription Plans
  * and Variations](https://developer.squareup.com/docs/subscriptions-api/plans-and-variations).
@@ -16,32 +14,26 @@ class SubscriptionPhase implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var string
      */
     private $cadence;
-
     /**
      * @var array
      */
     private $periods = [];
-
     /**
      * @var Money|null
      */
     private $recurringPriceMoney;
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * @var SubscriptionPricing|null
      */
     private $pricing;
-
     /**
      * @param string $cadence
      */
@@ -49,7 +41,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->cadence = $cadence;
     }
-
     /**
      * Returns Uid.
      * The Square-assigned ID of the subscription phase. This field cannot be changed after a
@@ -62,7 +53,6 @@ class SubscriptionPhase implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * The Square-assigned ID of the subscription phase. This field cannot be changed after a
@@ -74,7 +64,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * The Square-assigned ID of the subscription phase. This field cannot be changed after a
@@ -84,7 +73,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Cadence.
      * Determines the billing cadence of a [Subscription]($m/Subscription)
@@ -93,7 +81,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         return $this->cadence;
     }
-
     /**
      * Sets Cadence.
      * Determines the billing cadence of a [Subscription]($m/Subscription)
@@ -105,7 +92,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->cadence = $cadence;
     }
-
     /**
      * Returns Periods.
      * The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can
@@ -118,7 +104,6 @@ class SubscriptionPhase implements \JsonSerializable
         }
         return $this->periods['value'];
     }
-
     /**
      * Sets Periods.
      * The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can
@@ -130,7 +115,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->periods['value'] = $periods;
     }
-
     /**
      * Unsets Periods.
      * The number of `cadence`s the phase lasts. If not set, the phase never ends. Only the last phase can
@@ -140,7 +124,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->periods = [];
     }
-
     /**
      * Returns Recurring Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -155,7 +138,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         return $this->recurringPriceMoney;
     }
-
     /**
      * Sets Recurring Price Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -172,7 +154,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->recurringPriceMoney = $recurringPriceMoney;
     }
-
     /**
      * Returns Ordinal.
      * The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This
@@ -185,7 +166,6 @@ class SubscriptionPhase implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This
@@ -197,7 +177,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * The position this phase appears in the sequence of phases defined for the plan, indexed from 0. This
@@ -207,7 +186,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Returns Pricing.
      * Describes the pricing for the subscription.
@@ -216,7 +194,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         return $this->pricing;
     }
-
     /**
      * Sets Pricing.
      * Describes the pricing for the subscription.
@@ -227,7 +204,6 @@ class SubscriptionPhase implements \JsonSerializable
     {
         $this->pricing = $pricing;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -236,30 +212,29 @@ class SubscriptionPhase implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                   = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
-        $json['cadence']                   = $this->cadence;
+        $json['cadence'] = $this->cadence;
         if (!empty($this->periods)) {
-            $json['periods']               = $this->periods['value'];
+            $json['periods'] = $this->periods['value'];
         }
         if (isset($this->recurringPriceMoney)) {
             $json['recurring_price_money'] = $this->recurringPriceMoney;
         }
         if (!empty($this->ordinal)) {
-            $json['ordinal']               = $this->ordinal['value'];
+            $json['ordinal'] = $this->ordinal['value'];
         }
         if (isset($this->pricing)) {
-            $json['pricing']               = $this->pricing;
+            $json['pricing'] = $this->pricing;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

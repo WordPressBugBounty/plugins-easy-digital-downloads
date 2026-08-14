@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Types\Sdk;
 
 use EDD\Vendor\Core\Utils\CoreHelper;
 use CURLFile;
 use SplFileObject;
-
 class CoreFileWrapper
 {
     /**
@@ -25,29 +23,24 @@ class CoreFileWrapper
         }
         return $realFilePath;
     }
-
     /**
      * @var string
      */
     private $realFilePath;
-
     /**
      * @var string|null
      */
     private $mimeType;
-
     /**
      * @var string|null
      */
     private $filename;
-
     public function __construct(string $realFilePath, ?string $mimeType, ?string $filename)
     {
         $this->realFilePath = $realFilePath;
         $this->mimeType = $mimeType;
         $this->filename = $filename;
     }
-
     /**
      * Get mime-type to be sent with the file
      */
@@ -55,7 +48,6 @@ class CoreFileWrapper
     {
         return $this->mimeType;
     }
-
     /**
      * Get name of the file to be used in the upload data
      */
@@ -63,7 +55,6 @@ class CoreFileWrapper
     {
         return $this->filename;
     }
-
     /**
      * Converts the CoreFileWrapper object to a human-readable string representation.
      *
@@ -71,16 +62,8 @@ class CoreFileWrapper
      */
     public function __toString(): string
     {
-        return CoreHelper::stringify(
-            'CoreFileWrapper',
-            [
-                'realFilePath' => $this->realFilePath,
-                'mimeType' => $this->mimeType,
-                'filename' => $this->filename
-            ]
-        );
+        return CoreHelper::stringify('CoreFileWrapper', ['realFilePath' => $this->realFilePath, 'mimeType' => $this->mimeType, 'filename' => $this->filename]);
     }
-
     /**
      * Internal method: Do not use directly!
      */
@@ -89,7 +72,6 @@ class CoreFileWrapper
         $mimeType = $this->mimeType ?? $defaultMimeType;
         return new CURLFile($this->realFilePath, $mimeType, $this->filename);
     }
-
     /**
      * Internal method: Do not use directly!
      */

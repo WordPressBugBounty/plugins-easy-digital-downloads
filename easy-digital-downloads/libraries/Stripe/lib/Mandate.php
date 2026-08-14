@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -22,14 +21,11 @@ namespace EDD\Vendor\Stripe;
 class Mandate extends ApiResource
 {
     const OBJECT_NAME = 'mandate';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
     const STATUS_PENDING = 'pending';
-
     const TYPE_MULTI_USE = 'multi_use';
     const TYPE_SINGLE_USE = 'single_use';
-
     /**
      * Retrieves a Mandate object.
      *
@@ -45,7 +41,6 @@ class Mandate extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

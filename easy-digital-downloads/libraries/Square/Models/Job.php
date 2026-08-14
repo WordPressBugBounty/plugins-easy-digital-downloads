@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a job that can be assigned to [team members]($m/TeamMember). This object defines the
  * job's title and tip eligibility. Compensation is defined in a [job assignment]($m/JobAssignment)
@@ -17,32 +15,26 @@ class Job implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $title = [];
-
     /**
      * @var array
      */
     private $isTipEligible = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * Returns Id.
      * **Read only** The unique Square-assigned ID of the job. If you need a job ID for an API request,
@@ -53,7 +45,6 @@ class Job implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * **Read only** The unique Square-assigned ID of the job. If you need a job ID for an API request,
@@ -66,7 +57,6 @@ class Job implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Title.
      * The title of the job.
@@ -78,7 +68,6 @@ class Job implements \JsonSerializable
         }
         return $this->title['value'];
     }
-
     /**
      * Sets Title.
      * The title of the job.
@@ -89,7 +78,6 @@ class Job implements \JsonSerializable
     {
         $this->title['value'] = $title;
     }
-
     /**
      * Unsets Title.
      * The title of the job.
@@ -98,7 +86,6 @@ class Job implements \JsonSerializable
     {
         $this->title = [];
     }
-
     /**
      * Returns Is Tip Eligible.
      * Indicates whether team members can earn tips for the job.
@@ -110,7 +97,6 @@ class Job implements \JsonSerializable
         }
         return $this->isTipEligible['value'];
     }
-
     /**
      * Sets Is Tip Eligible.
      * Indicates whether team members can earn tips for the job.
@@ -121,7 +107,6 @@ class Job implements \JsonSerializable
     {
         $this->isTipEligible['value'] = $isTipEligible;
     }
-
     /**
      * Unsets Is Tip Eligible.
      * Indicates whether team members can earn tips for the job.
@@ -130,7 +115,6 @@ class Job implements \JsonSerializable
     {
         $this->isTipEligible = [];
     }
-
     /**
      * Returns Created At.
      * The timestamp when the job was created, in RFC 3339 format.
@@ -139,7 +123,6 @@ class Job implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the job was created, in RFC 3339 format.
@@ -150,7 +133,6 @@ class Job implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp when the job was last updated, in RFC 3339 format.
@@ -159,7 +141,6 @@ class Job implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp when the job was last updated, in RFC 3339 format.
@@ -170,7 +151,6 @@ class Job implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Version.
      * **Read only** The current version of the job. Include this field in `UpdateJob` requests to enable
@@ -184,7 +164,6 @@ class Job implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * **Read only** The current version of the job. Include this field in `UpdateJob` requests to enable
@@ -200,7 +179,6 @@ class Job implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -209,32 +187,31 @@ class Job implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']              = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->title)) {
-            $json['title']           = $this->title['value'];
+            $json['title'] = $this->title['value'];
         }
         if (!empty($this->isTipEligible)) {
             $json['is_tip_eligible'] = $this->isTipEligible['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']      = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']      = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->version)) {
-            $json['version']         = $this->version;
+            $json['version'] = $this->version;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

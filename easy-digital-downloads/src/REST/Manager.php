@@ -56,7 +56,7 @@ class Manager implements SubscriberInterface {
 	 * @since 3.6.2
 	 * @return array
 	 */
-	private function get_routes() {
+	protected function get_routes() {
 		return array(
 			new Routes\Cart(),
 			new Routes\Fastlane(),
@@ -64,6 +64,7 @@ class Manager implements SubscriberInterface {
 			new Routes\LogPruning(),
 			new Routes\BounceWebhook(),
 			new Routes\Notifications(),
+			new Routes\CheckoutTemplates(),
 		);
 	}
 }

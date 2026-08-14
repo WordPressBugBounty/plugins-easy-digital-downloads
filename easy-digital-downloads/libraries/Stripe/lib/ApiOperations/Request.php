@@ -17,15 +17,10 @@ trait Request
     protected static function _validateParams($params = null)
     {
         if ($params && !\is_array($params)) {
-            $message = 'You must pass an array as the first argument to EDD\Vendor\Stripe API '
-                . 'method calls.  (HINT: an example call to create a charge '
-                . "would be: \"EDD\Vendor\Stripe\\Charge::create(['amount' => 100, "
-                . "'currency' => 'usd', 'source' => 'tok_1234'])\")";
-
+            $message = 'You must pass an array as the first argument to Stripe API ' . 'method calls.  (HINT: an example call to create a charge ' . "would be: \"Stripe\\Charge::create(['amount' => 100, " . "'currency' => 'usd', 'source' => 'tok_1234'])\")";
             throw new \EDD\Vendor\Stripe\Exception\InvalidArgumentException($message);
         }
     }
-
     /**
      * @param 'delete'|'get'|'post' $method HTTP method ('get', 'post', etc.)
      * @param string $url URL for the request
@@ -42,10 +37,8 @@ trait Request
         $opts = $this->_opts->merge($options);
         list($resp, $options) = static::_staticRequest($method, $url, $params, $opts, $usage);
         $this->setLastResponse($resp);
-
         return [$resp->json, $options];
     }
-
     /**
      * @param string $url URL for the request
      * @param class-string< \EDD\Vendor\Stripe\SearchResult|\EDD\Vendor\Stripe\Collection > $resultClass indicating what type of paginated result is returned
@@ -60,20 +53,15 @@ trait Request
     protected static function _requestPage($url, $resultClass, $params = null, $options = null, $usage = [])
     {
         self::_validateParams($params);
-
         list($response, $opts) = static::_staticRequest('get', $url, $params, $options, $usage);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
-        if (!($obj instanceof $resultClass)) {
-            throw new \EDD\Vendor\Stripe\Exception\UnexpectedValueException(
-                'Expected type ' . $resultClass . ', got "' . \get_class($obj) . '" instead.'
-            );
+        if (!$obj instanceof $resultClass) {
+            throw new \EDD\Vendor\Stripe\Exception\UnexpectedValueException('Expected type ' . $resultClass . ', got "' . \get_class($obj) . '" instead.');
         }
         $obj->setLastResponse($response);
         $obj->setFilters($params);
-
         return $obj;
     }
-
     /**
      * @param 'delete'|'get'|'post' $method HTTP method ('get', 'post', etc.)
      * @param string $url URL for the request
@@ -89,7 +77,6 @@ trait Request
         $opts = $this->_opts->merge($options);
         static::_staticStreamingRequest($method, $url, $readBodyChunk, $params, $opts, $usage);
     }
-
     /**
      * @param 'delete'|'get'|'post' $method HTTP method ('get', 'post', etc.)
      * @param string $url URL for the request
@@ -108,10 +95,8 @@ trait Request
         $requestor = new \EDD\Vendor\Stripe\ApiRequestor($opts->apiKey, $baseUrl);
         list($response, $opts->apiKey) = $requestor->request($method, $url, $params, $opts->headers, $usage);
         $opts->discardNonPersistentHeaders();
-
         return [$response, $opts];
     }
-
     /**
      * @param 'delete'|'get'|'post' $method HTTP method ('get', 'post', etc.)
      * @param string $url URL for the request

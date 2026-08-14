@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of
  * a request to the `CreateCustomerCard` endpoint.
@@ -18,12 +16,10 @@ class CreateCustomerCardResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Card|null
      */
     private $card;
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -34,7 +30,6 @@ class CreateCustomerCardResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -47,7 +42,6 @@ class CreateCustomerCardResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Card.
      * Represents the payment details of a card to be used for payments. These
@@ -57,7 +51,6 @@ class CreateCustomerCardResponse implements \JsonSerializable
     {
         return $this->card;
     }
-
     /**
      * Sets Card.
      * Represents the payment details of a card to be used for payments. These
@@ -69,7 +62,6 @@ class CreateCustomerCardResponse implements \JsonSerializable
     {
         $this->card = $card;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -78,7 +70,7 @@ class CreateCustomerCardResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -86,12 +78,11 @@ class CreateCustomerCardResponse implements \JsonSerializable
             $json['errors'] = $this->errors;
         }
         if (isset($this->card)) {
-            $json['card']   = $this->card;
+            $json['card'] = $this->card;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

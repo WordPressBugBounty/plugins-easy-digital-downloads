@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Configuration associated with `SELECTION`-type custom attribute definitions.
  */
@@ -15,12 +13,10 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
      * @var array
      */
     private $maxAllowedSelections = [];
-
     /**
      * @var array
      */
     private $allowedSelections = [];
-
     /**
      * Returns Max Allowed Selections.
      * The maximum number of selections that can be set. The maximum value for this
@@ -36,7 +32,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
         }
         return $this->maxAllowedSelections['value'];
     }
-
     /**
      * Sets Max Allowed Selections.
      * The maximum number of selections that can be set. The maximum value for this
@@ -51,7 +46,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
     {
         $this->maxAllowedSelections['value'] = $maxAllowedSelections;
     }
-
     /**
      * Unsets Max Allowed Selections.
      * The maximum number of selections that can be set. The maximum value for this
@@ -64,7 +58,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
     {
         $this->maxAllowedSelections = [];
     }
-
     /**
      * Returns Allowed Selections.
      * The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100
@@ -79,7 +72,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
         }
         return $this->allowedSelections['value'];
     }
-
     /**
      * Sets Allowed Selections.
      * The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100
@@ -93,7 +85,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
     {
         $this->allowedSelections['value'] = $allowedSelections;
     }
-
     /**
      * Unsets Allowed Selections.
      * The set of valid `CatalogCustomAttributeSelections`. Up to a maximum of 100
@@ -103,7 +94,6 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
     {
         $this->allowedSelections = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -112,7 +102,7 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -120,12 +110,11 @@ class CatalogCustomAttributeDefinitionSelectionConfig implements \JsonSerializab
             $json['max_allowed_selections'] = $this->maxAllowedSelections['value'];
         }
         if (!empty($this->allowedSelections)) {
-            $json['allowed_selections']     = $this->allowedSelections['value'];
+            $json['allowed_selections'] = $this->allowedSelections['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

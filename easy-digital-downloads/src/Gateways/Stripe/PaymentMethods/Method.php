@@ -57,6 +57,14 @@ abstract class Method {
 	public static $trials = false;
 
 	/**
+	 * Whether the payment method requires a billing address at checkout.
+	 *
+	 * @since 3.7.0
+	 * @var bool
+	 */
+	public static $requires_billing_address = false;
+
+	/**
 	 * The scope of the payment method.
 	 *
 	 * @since 3.3.5
@@ -80,5 +88,25 @@ abstract class Method {
 	 */
 	public static function get_icon(): string {
 		return '<span class="edd-icon__placeholder"></span>';
+	}
+
+	/**
+	 * Whether the payment method is available for the current checkout context.
+	 *
+	 * Defaults to checking that the store currency is supported and the method is
+	 * enabled in the Stripe payment method configuration. Override in a child class
+	 * to add method-specific eligibility rules (for example a minimum cart total).
+	 *
+	 * @since 3.7.0
+	 * @return bool True if the payment method is available for the current checkout.
+	 */
+	public static function is_available(): bool {
+		if ( ! empty( static::$currencies ) && ! in_array( edd_get_currency(), static::$currencies, true ) ) {
+			return false;
+		}
+
+		$configuration = \EDD\Gateways\Stripe\PaymentMethods::get_base_configuration();
+
+		return ! empty( $configuration[ static::$id ]['available'] );
 	}
 }

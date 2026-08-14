@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * Usage records allow you to report customer usage and metrics to EDD\Vendor\Stripe for
+ * Usage records allow you to report customer usage and metrics to Stripe for
  * metered billing of subscription prices.
  *
  * Related guide: <a href="https://stripe.com/docs/billing/subscriptions/metered-billing">Metered billing</a>

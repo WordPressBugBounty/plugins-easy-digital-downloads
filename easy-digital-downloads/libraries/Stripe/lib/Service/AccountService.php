@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -25,7 +24,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/accounts', $params, $opts);
     }
-
     /**
      * Returns a list of capabilities associated with the account. The capabilities are
      * returned sorted by creation date, with the most recent capability appearing
@@ -43,7 +41,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/accounts/%s/capabilities', $parentId), $params, $opts);
     }
-
     /**
      * List external accounts for an account.
      *
@@ -59,7 +56,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/accounts/%s/external_accounts', $parentId), $params, $opts);
     }
-
     /**
      * Returns a list of people associated with the account’s legal entity. The people
      * are returned sorted by creation date, with the most recent people appearing
@@ -77,9 +73,8 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', $this->buildPath('/v1/accounts/%s/persons', $parentId), $params, $opts);
     }
-
     /**
-     * With <a href="/docs/connect">Connect</a>, you can create EDD\Vendor\Stripe accounts for
+     * With <a href="/docs/connect">Connect</a>, you can create Stripe accounts for
      * your users. To do this, you’ll first need to <a
      * href="https://dashboard.stripe.com/account/applications/settings">register your
      * platform</a>.
@@ -101,7 +96,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/accounts', $params, $opts);
     }
-
     /**
      * Create an external account for a given account.
      *
@@ -117,7 +111,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/external_accounts', $parentId), $params, $opts);
     }
-
     /**
      * Creates a single-use login link for a connected account to access the Express
      * Dashboard.
@@ -138,7 +131,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/login_links', $parentId), $params, $opts);
     }
-
     /**
      * Creates a new person.
      *
@@ -154,13 +146,12 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/persons', $parentId), $params, $opts);
     }
-
     /**
      * With <a href="/connect">Connect</a>, you can delete accounts you manage.
      *
      * Test-mode accounts can be deleted at any time.
      *
-     * Live-mode accounts where EDD\Vendor\Stripe is responsible for negative account balances
+     * Live-mode accounts where Stripe is responsible for negative account balances
      * cannot be deleted, which includes Standard accounts. Live-mode accounts where
      * your platform is liable for negative account balances, which includes Custom and
      * Express accounts, can be deleted when all <a
@@ -182,7 +173,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/accounts/%s', $id), $params, $opts);
     }
-
     /**
      * Delete a specified external account for a given account.
      *
@@ -199,7 +189,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/accounts/%s/external_accounts/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Deletes an existing person’s relationship to the account’s legal entity. Any
      * person with a relationship for an account can be deleted through the API, except
@@ -220,7 +209,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/accounts/%s/persons/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * With <a href="/connect">Connect</a>, you can reject accounts that you have
      * flagged as suspicious.
@@ -242,7 +230,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/reject', $id), $params, $opts);
     }
-
     /**
      * Retrieves information about the specified Account Capability.
      *
@@ -259,7 +246,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/accounts/%s/capabilities/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieve a specified external account for a given account.
      *
@@ -276,7 +262,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/accounts/%s/external_accounts/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves an existing person.
      *
@@ -293,7 +278,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/accounts/%s/persons/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Updates a <a href="/connect/accounts">connected account</a> by setting the
      * values of the parameters passed. Any parameters not provided are left unchanged.
@@ -327,7 +311,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s', $id), $params, $opts);
     }
-
     /**
      * Updates an existing Account Capability. Request or remove a capability by
      * updating its <code>requested</code> parameter.
@@ -345,7 +328,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/capabilities/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Updates the metadata, account holder name, account holder type of a bank account
      * belonging to a connected account and optionally sets it as the default for its
@@ -372,7 +354,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/external_accounts/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Updates an existing person.
      *
@@ -389,7 +370,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/accounts/%s/persons/%s', $parentId, $id), $params, $opts);
     }
-
     /**
      * Retrieves the details of an account.
      *
@@ -406,7 +386,6 @@ class AccountService extends \EDD\Vendor\Stripe\Service\AbstractService
         if (null === $id) {
             return $this->request('get', '/v1/account', $params, $opts);
         }
-
         return $this->request('get', $this->buildPath('/v1/accounts/%s', $id), $params, $opts);
     }
 }

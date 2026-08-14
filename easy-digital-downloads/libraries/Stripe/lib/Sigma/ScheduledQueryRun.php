@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Sigma;
 
 /**
@@ -13,7 +12,7 @@ namespace EDD\Vendor\Stripe\Sigma;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
- * @property int $data_load_time When the query was run, Sigma contained a snapshot of your EDD\Vendor\Stripe data at this time.
+ * @property int $data_load_time When the query was run, Sigma contained a snapshot of your Stripe data at this time.
  * @property null|\EDD\Vendor\Stripe\StripeObject $error
  * @property null|\EDD\Vendor\Stripe\File $file The file object representing the results of the query.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -25,7 +24,6 @@ namespace EDD\Vendor\Stripe\Sigma;
 class ScheduledQueryRun extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'scheduled_query_run';
-
     /**
      * Returns a list of scheduled query runs.
      *
@@ -39,10 +37,8 @@ class ScheduledQueryRun extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an scheduled query run.
      *
@@ -58,10 +54,8 @@ class ScheduledQueryRun extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     public static function classUrl()
     {
         return '/v1/sigma/scheduled_query_runs';

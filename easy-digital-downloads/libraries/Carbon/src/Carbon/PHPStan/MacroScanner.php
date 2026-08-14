@@ -1,28 +1,25 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\PHPStan;
 
 use EDD\Vendor\Carbon\CarbonInterface;
 use PHPStan\Reflection\ReflectionProvider;
 use ReflectionClass;
 use ReflectionException;
-
 final class MacroScanner
 {
     /**
      * @var \PHPStan\Reflection\ReflectionProvider
      */
     private $reflectionProvider;
-
     /**
      * MacroScanner constructor.
      *
@@ -32,9 +29,8 @@ final class MacroScanner
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-
     /**
-     * Return true if the given pair class-method is a EDD\Vendor\Carbon macro.
+     * Return true if the given pair class-method is a Carbon macro.
      *
      * @param class-string $className
      * @param string       $methodName
@@ -44,18 +40,11 @@ final class MacroScanner
     public function hasMethod(string $className, string $methodName): bool
     {
         $classReflection = $this->reflectionProvider->getClass($className);
-
-        if (
-            $classReflection->getName() !== CarbonInterface::class &&
-            !$classReflection->isSubclassOf(CarbonInterface::class)
-        ) {
+        if ($classReflection->getName() !== CarbonInterface::class && !$classReflection->isSubclassOf(CarbonInterface::class)) {
             return false;
         }
-
-        return \is_callable([$className, 'hasMacro']) &&
-            $className::hasMacro($methodName);
+        return \is_callable([$className, 'hasMacro']) && $className::hasMacro($methodName);
     }
-
     /**
      * Return the Macro for a given pair class-method.
      *
@@ -70,14 +59,8 @@ final class MacroScanner
     {
         $reflectionClass = new ReflectionClass($className);
         $property = $reflectionClass->getProperty('globalMacros');
-
         $property->setAccessible(true);
         $macro = $property->getValue()[$methodName];
-
-        return new Macro(
-            $className,
-            $methodName,
-            $macro
-        );
+        return new Macro($className, $methodName, $macro);
     }
 }

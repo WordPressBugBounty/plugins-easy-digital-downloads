@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -23,10 +22,8 @@ namespace EDD\Vendor\Stripe;
 class SubscriptionItem extends ApiResource
 {
     const OBJECT_NAME = 'subscription_item';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     /**
      * Adds a new item to an existing subscription. No existing items will be changed
      * or replaced.
@@ -42,14 +39,11 @@ class SubscriptionItem extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes an item from the subscription. Removing a subscription item from a
      * subscription will not cancel the subscription.
@@ -64,14 +58,11 @@ class SubscriptionItem extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of your subscription items for a given subscription.
      *
@@ -85,10 +76,8 @@ class SubscriptionItem extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the subscription item with the given ID.
      *
@@ -104,10 +93,8 @@ class SubscriptionItem extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the plan or quantity of an item on a current subscription.
      *
@@ -123,16 +110,12 @@ class SubscriptionItem extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     const PATH_USAGE_RECORDS = '/usage_records';
-
     /**
      * @param string $id the ID of the subscription item on which to create the usage record
      * @param null|array $params
@@ -147,7 +130,6 @@ class SubscriptionItem extends ApiResource
         return self::_createNestedResource($id, static::PATH_USAGE_RECORDS, $params, $opts);
     }
     const PATH_USAGE_RECORD_SUMMARIES = '/usage_record_summaries';
-
     /**
      * @param string $id the ID of the subscription item on which to retrieve the usage record summaries
      * @param null|array $params

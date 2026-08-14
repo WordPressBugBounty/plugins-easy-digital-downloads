@@ -1,12 +1,11 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Entitlements;
 
 /**
  * A feature represents a monetizable ability or functionality in your system.
- * Features can be assigned to products, and when those products are purchased, EDD\Vendor\Stripe will create an entitlement to the feature for the purchasing customer.
+ * Features can be assigned to products, and when those products are purchased, Stripe will create an entitlement to the feature for the purchasing customer.
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -19,9 +18,7 @@ namespace EDD\Vendor\Stripe\Entitlements;
 class Feature extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'entitlements.feature';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     /**
      * Creates a feature.
      *
@@ -36,14 +33,11 @@ class Feature extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Retrieve a list of features.
      *
@@ -57,10 +51,8 @@ class Feature extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a feature.
      *
@@ -76,10 +68,8 @@ class Feature extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Update a feature’s metadata or permanently deactivate it.
      *
@@ -95,11 +85,9 @@ class Feature extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

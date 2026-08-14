@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines how discounts are automatically applied to a set of items that match the pricing rule
  * during the active time period.
@@ -16,67 +14,54 @@ class CatalogPricingRule implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $timePeriodIds = [];
-
     /**
      * @var array
      */
     private $discountId = [];
-
     /**
      * @var array
      */
     private $matchProductsId = [];
-
     /**
      * @var array
      */
     private $applyProductsId = [];
-
     /**
      * @var array
      */
     private $excludeProductsId = [];
-
     /**
      * @var array
      */
     private $validFromDate = [];
-
     /**
      * @var array
      */
     private $validFromLocalTime = [];
-
     /**
      * @var array
      */
     private $validUntilDate = [];
-
     /**
      * @var array
      */
     private $validUntilLocalTime = [];
-
     /**
      * @var string|null
      */
     private $excludeStrategy;
-
     /**
      * @var Money|null
      */
     private $minimumOrderSubtotalMoney;
-
     /**
      * @var array
      */
     private $customerGroupIdsAny = [];
-
     /**
      * Returns Name.
      * User-defined name for the pricing rule. For example, "Buy one get one
@@ -89,7 +74,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * User-defined name for the pricing rule. For example, "Buy one get one
@@ -101,7 +85,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * User-defined name for the pricing rule. For example, "Buy one get one
@@ -111,7 +94,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Time Period Ids.
      * A list of unique IDs for the catalog time periods when
@@ -127,7 +109,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->timePeriodIds['value'];
     }
-
     /**
      * Sets Time Period Ids.
      * A list of unique IDs for the catalog time periods when
@@ -142,7 +123,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->timePeriodIds['value'] = $timePeriodIds;
     }
-
     /**
      * Unsets Time Period Ids.
      * A list of unique IDs for the catalog time periods when
@@ -153,7 +133,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->timePeriodIds = [];
     }
-
     /**
      * Returns Discount Id.
      * Unique ID for the `CatalogDiscount` to take off
@@ -166,7 +145,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->discountId['value'];
     }
-
     /**
      * Sets Discount Id.
      * Unique ID for the `CatalogDiscount` to take off
@@ -178,7 +156,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->discountId['value'] = $discountId;
     }
-
     /**
      * Unsets Discount Id.
      * Unique ID for the `CatalogDiscount` to take off
@@ -188,7 +165,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->discountId = [];
     }
-
     /**
      * Returns Match Products Id.
      * Unique ID for the `CatalogProductSet` that will be matched by this rule. A match rule
@@ -201,7 +177,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->matchProductsId['value'];
     }
-
     /**
      * Sets Match Products Id.
      * Unique ID for the `CatalogProductSet` that will be matched by this rule. A match rule
@@ -213,7 +188,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->matchProductsId['value'] = $matchProductsId;
     }
-
     /**
      * Unsets Match Products Id.
      * Unique ID for the `CatalogProductSet` that will be matched by this rule. A match rule
@@ -223,7 +197,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->matchProductsId = [];
     }
-
     /**
      * Returns Apply Products Id.
      * __Deprecated__: Please use the `exclude_products_id` field to apply
@@ -243,7 +216,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->applyProductsId['value'];
     }
-
     /**
      * Sets Apply Products Id.
      * __Deprecated__: Please use the `exclude_products_id` field to apply
@@ -262,7 +234,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->applyProductsId['value'] = $applyProductsId;
     }
-
     /**
      * Unsets Apply Products Id.
      * __Deprecated__: Please use the `exclude_products_id` field to apply
@@ -279,7 +250,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->applyProductsId = [];
     }
-
     /**
      * Returns Exclude Products Id.
      * `CatalogProductSet` to exclude from the pricing rule.
@@ -295,7 +265,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->excludeProductsId['value'];
     }
-
     /**
      * Sets Exclude Products Id.
      * `CatalogProductSet` to exclude from the pricing rule.
@@ -310,7 +279,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->excludeProductsId['value'] = $excludeProductsId;
     }
-
     /**
      * Unsets Exclude Products Id.
      * `CatalogProductSet` to exclude from the pricing rule.
@@ -323,7 +291,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->excludeProductsId = [];
     }
-
     /**
      * Returns Valid From Date.
      * Represents the date the Pricing Rule is valid from. Represented in RFC 3339 full-date format (YYYY-
@@ -336,7 +303,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->validFromDate['value'];
     }
-
     /**
      * Sets Valid From Date.
      * Represents the date the Pricing Rule is valid from. Represented in RFC 3339 full-date format (YYYY-
@@ -348,7 +314,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validFromDate['value'] = $validFromDate;
     }
-
     /**
      * Unsets Valid From Date.
      * Represents the date the Pricing Rule is valid from. Represented in RFC 3339 full-date format (YYYY-
@@ -358,7 +323,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validFromDate = [];
     }
-
     /**
      * Returns Valid From Local Time.
      * Represents the local time the pricing rule should be valid from. Represented in RFC 3339 partial-
@@ -372,7 +336,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->validFromLocalTime['value'];
     }
-
     /**
      * Sets Valid From Local Time.
      * Represents the local time the pricing rule should be valid from. Represented in RFC 3339 partial-
@@ -385,7 +348,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validFromLocalTime['value'] = $validFromLocalTime;
     }
-
     /**
      * Unsets Valid From Local Time.
      * Represents the local time the pricing rule should be valid from. Represented in RFC 3339 partial-
@@ -396,7 +358,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validFromLocalTime = [];
     }
-
     /**
      * Returns Valid Until Date.
      * Represents the date the Pricing Rule is valid until. Represented in RFC 3339 full-date format (YYYY-
@@ -409,7 +370,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->validUntilDate['value'];
     }
-
     /**
      * Sets Valid Until Date.
      * Represents the date the Pricing Rule is valid until. Represented in RFC 3339 full-date format (YYYY-
@@ -421,7 +381,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validUntilDate['value'] = $validUntilDate;
     }
-
     /**
      * Unsets Valid Until Date.
      * Represents the date the Pricing Rule is valid until. Represented in RFC 3339 full-date format (YYYY-
@@ -431,7 +390,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validUntilDate = [];
     }
-
     /**
      * Returns Valid Until Local Time.
      * Represents the local time the pricing rule should be valid until. Represented in RFC 3339 partial-
@@ -445,7 +403,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->validUntilLocalTime['value'];
     }
-
     /**
      * Sets Valid Until Local Time.
      * Represents the local time the pricing rule should be valid until. Represented in RFC 3339 partial-
@@ -458,7 +415,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validUntilLocalTime['value'] = $validUntilLocalTime;
     }
-
     /**
      * Unsets Valid Until Local Time.
      * Represents the local time the pricing rule should be valid until. Represented in RFC 3339 partial-
@@ -469,7 +425,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->validUntilLocalTime = [];
     }
-
     /**
      * Returns Exclude Strategy.
      * Indicates which products matched by a CatalogPricingRule
@@ -479,7 +434,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         return $this->excludeStrategy;
     }
-
     /**
      * Sets Exclude Strategy.
      * Indicates which products matched by a CatalogPricingRule
@@ -491,7 +445,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->excludeStrategy = $excludeStrategy;
     }
-
     /**
      * Returns Minimum Order Subtotal Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -506,7 +459,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         return $this->minimumOrderSubtotalMoney;
     }
-
     /**
      * Sets Minimum Order Subtotal Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -523,7 +475,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->minimumOrderSubtotalMoney = $minimumOrderSubtotalMoney;
     }
-
     /**
      * Returns Customer Group Ids Any.
      * A list of IDs of customer groups, the members of which are eligible for discounts specified in this
@@ -544,7 +495,6 @@ class CatalogPricingRule implements \JsonSerializable
         }
         return $this->customerGroupIdsAny['value'];
     }
-
     /**
      * Sets Customer Group Ids Any.
      * A list of IDs of customer groups, the members of which are eligible for discounts specified in this
@@ -564,7 +514,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->customerGroupIdsAny['value'] = $customerGroupIdsAny;
     }
-
     /**
      * Unsets Customer Group Ids Any.
      * A list of IDs of customer groups, the members of which are eligible for discounts specified in this
@@ -580,7 +529,6 @@ class CatalogPricingRule implements \JsonSerializable
     {
         $this->customerGroupIdsAny = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -589,53 +537,52 @@ class CatalogPricingRule implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']                         = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->timePeriodIds)) {
-            $json['time_period_ids']              = $this->timePeriodIds['value'];
+            $json['time_period_ids'] = $this->timePeriodIds['value'];
         }
         if (!empty($this->discountId)) {
-            $json['discount_id']                  = $this->discountId['value'];
+            $json['discount_id'] = $this->discountId['value'];
         }
         if (!empty($this->matchProductsId)) {
-            $json['match_products_id']            = $this->matchProductsId['value'];
+            $json['match_products_id'] = $this->matchProductsId['value'];
         }
         if (!empty($this->applyProductsId)) {
-            $json['apply_products_id']            = $this->applyProductsId['value'];
+            $json['apply_products_id'] = $this->applyProductsId['value'];
         }
         if (!empty($this->excludeProductsId)) {
-            $json['exclude_products_id']          = $this->excludeProductsId['value'];
+            $json['exclude_products_id'] = $this->excludeProductsId['value'];
         }
         if (!empty($this->validFromDate)) {
-            $json['valid_from_date']              = $this->validFromDate['value'];
+            $json['valid_from_date'] = $this->validFromDate['value'];
         }
         if (!empty($this->validFromLocalTime)) {
-            $json['valid_from_local_time']        = $this->validFromLocalTime['value'];
+            $json['valid_from_local_time'] = $this->validFromLocalTime['value'];
         }
         if (!empty($this->validUntilDate)) {
-            $json['valid_until_date']             = $this->validUntilDate['value'];
+            $json['valid_until_date'] = $this->validUntilDate['value'];
         }
         if (!empty($this->validUntilLocalTime)) {
-            $json['valid_until_local_time']       = $this->validUntilLocalTime['value'];
+            $json['valid_until_local_time'] = $this->validUntilLocalTime['value'];
         }
         if (isset($this->excludeStrategy)) {
-            $json['exclude_strategy']             = $this->excludeStrategy;
+            $json['exclude_strategy'] = $this->excludeStrategy;
         }
         if (isset($this->minimumOrderSubtotalMoney)) {
             $json['minimum_order_subtotal_money'] = $this->minimumOrderSubtotalMoney;
         }
         if (!empty($this->customerGroupIdsAny)) {
-            $json['customer_group_ids_any']       = $this->customerGroupIdsAny['value'];
+            $json['customer_group_ids_any'] = $this->customerGroupIdsAny['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

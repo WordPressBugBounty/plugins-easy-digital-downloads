@@ -4,12 +4,10 @@ namespace EDD\Vendor\Carbon\Doctrine;
 
 use EDD\Vendor\Carbon\CarbonImmutable;
 use Doctrine\DBAL\Types\VarDateTimeImmutableType;
-
 class DateTimeImmutableType extends VarDateTimeImmutableType implements CarbonDoctrineType
 {
     /** @use CarbonTypeConverter<CarbonImmutable> */
     use CarbonTypeConverter;
-
     /**
      * @return class-string<CarbonImmutable>
      */

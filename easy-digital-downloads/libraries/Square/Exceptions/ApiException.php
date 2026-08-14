@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Exceptions;
 
 use EDD\Vendor\CoreInterfaces\Sdk\ExceptionInterface;
 use EDD\Vendor\Square\Http\HttpResponse;
 use EDD\Vendor\Square\Http\HttpRequest;
-
 /**
  * Thrown when there is a network error or HTTP response status code is not okay.
  */
@@ -19,14 +17,12 @@ class ApiException extends \Exception implements ExceptionInterface
      * @var HttpRequest
      */
     private $request;
-
     /**
      * HTTP response
      *
      * @var HttpResponse|null
      */
     private $response;
-
     /**
      * @param string $reason the reason for raising an exception
      * @param HttpRequest $request
@@ -38,7 +34,6 @@ class ApiException extends \Exception implements ExceptionInterface
         $this->request = $request;
         $this->response = $response;
     }
-
     /**
      * Returns the HTTP request
      */
@@ -46,7 +41,6 @@ class ApiException extends \Exception implements ExceptionInterface
     {
         return $this->request;
     }
-
     /**
      * Returns the HTTP response
      */
@@ -54,7 +48,6 @@ class ApiException extends \Exception implements ExceptionInterface
     {
         return $this->response;
     }
-
     /**
      * Is the response available?
      */

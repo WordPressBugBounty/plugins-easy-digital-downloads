@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Treasury;
 
 /**
@@ -25,14 +24,11 @@ namespace EDD\Vendor\Stripe\Treasury;
 class CreditReversal extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'treasury.credit_reversal';
-
     const NETWORK_ACH = 'ach';
     const NETWORK_STRIPE = 'stripe';
-
     const STATUS_CANCELED = 'canceled';
     const STATUS_POSTED = 'posted';
     const STATUS_PROCESSING = 'processing';
-
     /**
      * Reverses a ReceivedCredit and creates a CreditReversal object.
      *
@@ -47,14 +43,11 @@ class CreditReversal extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of CreditReversals.
      *
@@ -68,10 +61,8 @@ class CreditReversal extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing CreditReversal by passing the unique
      * CreditReversal ID from either the CreditReversal creation request or
@@ -89,7 +80,6 @@ class CreditReversal extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

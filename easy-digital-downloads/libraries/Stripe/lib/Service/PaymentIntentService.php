@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/payment_intents', $params, $opts);
     }
-
     /**
      * Manually reconcile the remaining amount for a <code>customer_balance</code>
      * PaymentIntent.
@@ -41,7 +39,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s/apply_customer_balance', $id), $params, $opts);
     }
-
     /**
      * You can cancel a PaymentIntent object when it’s in one of these statuses:
      * <code>requires_payment_method</code>, <code>requires_capture</code>,
@@ -69,7 +66,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s/cancel', $id), $params, $opts);
     }
-
     /**
      * Capture the funds of an existing uncaptured PaymentIntent when its status is
      * <code>requires_capture</code>.
@@ -92,7 +88,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s/capture', $id), $params, $opts);
     }
-
     /**
      * Confirm that your customer intends to pay with current or provided payment
      * method. Upon confirmation, the PaymentIntent will attempt to initiate a payment.
@@ -132,7 +127,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s/confirm', $id), $params, $opts);
     }
-
     /**
      * Creates a PaymentIntent object.
      *
@@ -157,7 +151,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/payment_intents', $params, $opts);
     }
-
     /**
      * Perform an incremental authorization on an eligible <a
      * href="/docs/api/payment_intents/object">PaymentIntent</a>. To be eligible, the
@@ -199,7 +192,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s/increment_authorization', $id), $params, $opts);
     }
-
     /**
      * Retrieves the details of a PaymentIntent that has previously been created.
      *
@@ -222,7 +214,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/payment_intents/%s', $id), $params, $opts);
     }
-
     /**
      * Search for PaymentIntents you’ve previously created using Stripe’s <a
      * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
@@ -242,7 +233,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestSearchResult('get', '/v1/payment_intents/search', $params, $opts);
     }
-
     /**
      * Updates properties on a PaymentIntent object without confirming.
      *
@@ -264,7 +254,6 @@ class PaymentIntentService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/payment_intents/%s', $id), $params, $opts);
     }
-
     /**
      * Verifies microdeposits on a PaymentIntent object.
      *

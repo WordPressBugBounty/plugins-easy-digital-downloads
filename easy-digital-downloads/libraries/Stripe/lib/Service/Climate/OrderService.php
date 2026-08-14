@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Climate;
 
 /**
@@ -25,13 +24,12 @@ class OrderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/climate/orders', $params, $opts);
     }
-
     /**
      * Cancels a Climate order. You can cancel an order within 24 hours of creation.
-     * EDD\Vendor\Stripe refunds the reservation <code>amount_subtotal</code>, but not the
+     * Stripe refunds the reservation <code>amount_subtotal</code>, but not the
      * <code>amount_fees</code> for user-triggered cancellations. Frontier might cancel
      * reservations if suppliers fail to deliver. If Frontier cancels the reservation,
-     * EDD\Vendor\Stripe provides 90 days advance notice and refunds the
+     * Stripe provides 90 days advance notice and refunds the
      * <code>amount_total</code>.
      *
      * @param string $id
@@ -46,10 +44,9 @@ class OrderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/climate/orders/%s/cancel', $id), $params, $opts);
     }
-
     /**
      * Creates a Climate order object for a given Climate product. The order will be
-     * processed immediately after creation and payment will be deducted your EDD\Vendor\Stripe
+     * processed immediately after creation and payment will be deducted your Stripe
      * balance.
      *
      * @param null|array $params
@@ -63,7 +60,6 @@ class OrderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/climate/orders', $params, $opts);
     }
-
     /**
      * Retrieves the details of a Climate order object with the given ID.
      *
@@ -79,7 +75,6 @@ class OrderService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/climate/orders/%s', $id), $params, $opts);
     }
-
     /**
      * Updates the specified order by setting the values of the parameters passed.
      *

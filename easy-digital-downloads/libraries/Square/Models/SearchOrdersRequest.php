@@ -1,38 +1,31 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class SearchOrdersRequest implements \JsonSerializable
 {
     /**
      * @var string[]|null
      */
     private $locationIds;
-
     /**
      * @var string|null
      */
     private $cursor;
-
     /**
      * @var SearchOrdersQuery|null
      */
     private $query;
-
     /**
      * @var int|null
      */
     private $limit;
-
     /**
      * @var bool|null
      */
     private $returnEntries;
-
     /**
      * Returns Location Ids.
      * The location IDs for the orders to query. All locations must belong to
@@ -46,7 +39,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         return $this->locationIds;
     }
-
     /**
      * Sets Location Ids.
      * The location IDs for the orders to query. All locations must belong to
@@ -62,7 +54,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         $this->locationIds = $locationIds;
     }
-
     /**
      * Returns Cursor.
      * A pagination cursor returned by a previous call to this endpoint.
@@ -74,7 +65,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * A pagination cursor returned by a previous call to this endpoint.
@@ -88,7 +78,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Returns Query.
      * Contains query criteria for the search.
@@ -97,7 +86,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         return $this->query;
     }
-
     /**
      * Sets Query.
      * Contains query criteria for the search.
@@ -108,7 +96,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         $this->query = $query;
     }
-
     /**
      * Returns Limit.
      * The maximum number of results to be returned in a single page.
@@ -120,7 +107,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         return $this->limit;
     }
-
     /**
      * Sets Limit.
      * The maximum number of results to be returned in a single page.
@@ -134,7 +120,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         $this->limit = $limit;
     }
-
     /**
      * Returns Return Entries.
      * A Boolean that controls the format of the search results. If `true`,
@@ -147,7 +132,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         return $this->returnEntries;
     }
-
     /**
      * Sets Return Entries.
      * A Boolean that controls the format of the search results. If `true`,
@@ -162,7 +146,6 @@ class SearchOrdersRequest implements \JsonSerializable
     {
         $this->returnEntries = $returnEntries;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -171,21 +154,21 @@ class SearchOrdersRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->locationIds)) {
-            $json['location_ids']   = $this->locationIds;
+            $json['location_ids'] = $this->locationIds;
         }
         if (isset($this->cursor)) {
-            $json['cursor']         = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         if (isset($this->query)) {
-            $json['query']          = $this->query;
+            $json['query'] = $this->query;
         }
         if (isset($this->limit)) {
-            $json['limit']          = $this->limit;
+            $json['limit'] = $this->limit;
         }
         if (isset($this->returnEntries)) {
             $json['return_entries'] = $this->returnEntries;
@@ -193,7 +176,6 @@ class SearchOrdersRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

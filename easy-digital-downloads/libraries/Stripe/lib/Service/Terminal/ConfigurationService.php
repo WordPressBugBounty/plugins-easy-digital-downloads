@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Terminal;
 
 /**
@@ -24,7 +23,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/terminal/configurations', $params, $opts);
     }
-
     /**
      * Creates a new <code>Configuration</code> object.
      *
@@ -39,7 +37,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/terminal/configurations', $params, $opts);
     }
-
     /**
      * Deletes a <code>Configuration</code> object.
      *
@@ -55,7 +52,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('delete', $this->buildPath('/v1/terminal/configurations/%s', $id), $params, $opts);
     }
-
     /**
      * Retrieves a <code>Configuration</code> object.
      *
@@ -71,7 +67,6 @@ class ConfigurationService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/terminal/configurations/%s', $id), $params, $opts);
     }
-
     /**
      * Updates a new <code>Configuration</code> object.
      *

@@ -1171,21 +1171,24 @@ function edd_redirect_file_download_after_login() {
 
 	// No nonce provided, redirect to the homepage.
 	if ( empty( $token ) ) {
-		wp_safe_redirect( home_url() );
+		edd_redirect( home_url() );
+		return;
 	}
 
 	$redirect_session_data = EDD()->session->get( 'edd_require_login_to_download_redirect' );
 
 	// Nonce verification failed, redirect to the homepage.
 	if ( ! \EDD\Utils\Tokenizer::is_token_valid( $token, $redirect_session_data ) ) {
-		wp_safe_redirect( home_url() );
+		edd_redirect( home_url() );
+		return;
 	}
 
 	EDD()->session->set( 'edd_require_login_to_download_redirect', '' );
 
 	// No file download session data, redirect to the homepage.
 	if ( empty( $redirect_session_data ) ) {
-		wp_safe_redirect( home_url() );
+		edd_redirect( home_url() );
+		return;
 	}
 
 	// Add some Javascript to download the file and then clear the query args from the page.
@@ -1194,7 +1197,7 @@ function edd_redirect_file_download_after_login() {
 			<script type="text/javascript">
 			(function(){
 				var download_link = document.createElement("a");
-				download_link.href = "' . add_query_arg( $redirect_session_data, home_url( 'index.php' ) ) . '";
+				download_link.href = "' . esc_url_raw( add_query_arg( $redirect_session_data, home_url( 'index.php' ) ) ) . '";
 				download_link.setAttribute("download", "");
 				document.body.appendChild(download_link);
 				download_link.click();

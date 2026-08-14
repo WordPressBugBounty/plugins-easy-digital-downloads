@@ -117,7 +117,7 @@ add_action( 'admin_notices', function () {
  * @since 3.6.9
  */
 add_action( 'edd_dismiss_paypal_v3_legacy_ipn_notice', function () {
-	if ( ! check_admin_referer( 'edd_paypal_v3_legacy_ipn_dismiss' ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'edd_paypal_v3_legacy_ipn_dismiss' ) ) {
 		return;
 	}
 	update_user_meta( get_current_user_id(), '_edd_paypal_v3_legacy_ipn_dismissed', true );

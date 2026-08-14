@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.
  * For example, to sell T-shirts with custom prints, a text-based modifier can be used to capture the
@@ -30,47 +28,38 @@ class CatalogModifierList implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * @var string|null
      */
     private $selectionType;
-
     /**
      * @var array
      */
     private $modifiers = [];
-
     /**
      * @var array
      */
     private $imageIds = [];
-
     /**
      * @var string|null
      */
     private $modifierType;
-
     /**
      * @var array
      */
     private $maxLength = [];
-
     /**
      * @var array
      */
     private $textRequired = [];
-
     /**
      * @var array
      */
     private $internalName = [];
-
     /**
      * Returns Name.
      * The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable
@@ -84,7 +73,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable
@@ -97,7 +85,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the `CatalogModifierList` instance. This is a searchable attribute for use in applicable
@@ -108,7 +95,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Ordinal.
      * The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
@@ -120,7 +106,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
@@ -131,7 +116,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * The position of this `CatalogModifierList` within a list of `CatalogModifierList` instances.
@@ -140,7 +124,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Returns Selection Type.
      * Indicates whether a CatalogModifierList supports multiple selections.
@@ -149,7 +132,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         return $this->selectionType;
     }
-
     /**
      * Sets Selection Type.
      * Indicates whether a CatalogModifierList supports multiple selections.
@@ -160,7 +142,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->selectionType = $selectionType;
     }
-
     /**
      * Returns Modifiers.
      * A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,
@@ -183,7 +164,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->modifiers['value'];
     }
-
     /**
      * Sets Modifiers.
      * A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,
@@ -205,7 +185,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->modifiers['value'] = $modifiers;
     }
-
     /**
      * Unsets Modifiers.
      * A non-empty list of `CatalogModifier` objects to be included in the `CatalogModifierList`,
@@ -223,11 +202,10 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->modifiers = [];
     }
-
     /**
      * Returns Image Ids.
      * The IDs of images associated with this `CatalogModifierList` instance.
-     * Currently these images are not displayed on EDD\Vendor\Square products, but may be displayed in 3rd-party
+     * Currently these images are not displayed on Square products, but may be displayed in 3rd-party
      * applications.
      *
      * @return string[]|null
@@ -239,11 +217,10 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->imageIds['value'];
     }
-
     /**
      * Sets Image Ids.
      * The IDs of images associated with this `CatalogModifierList` instance.
-     * Currently these images are not displayed on EDD\Vendor\Square products, but may be displayed in 3rd-party
+     * Currently these images are not displayed on Square products, but may be displayed in 3rd-party
      * applications.
      *
      * @maps image_ids
@@ -254,18 +231,16 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->imageIds['value'] = $imageIds;
     }
-
     /**
      * Unsets Image Ids.
      * The IDs of images associated with this `CatalogModifierList` instance.
-     * Currently these images are not displayed on EDD\Vendor\Square products, but may be displayed in 3rd-party
+     * Currently these images are not displayed on Square products, but may be displayed in 3rd-party
      * applications.
      */
     public function unsetImageIds(): void
     {
         $this->imageIds = [];
     }
-
     /**
      * Returns Modifier Type.
      * Defines the type of `CatalogModifierList`.
@@ -274,7 +249,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         return $this->modifierType;
     }
-
     /**
      * Sets Modifier Type.
      * Defines the type of `CatalogModifierList`.
@@ -285,7 +259,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->modifierType = $modifierType;
     }
-
     /**
      * Returns Max Length.
      * The maximum length, in Unicode points, of the text string of the text-based modifier as represented
@@ -299,7 +272,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->maxLength['value'];
     }
-
     /**
      * Sets Max Length.
      * The maximum length, in Unicode points, of the text string of the text-based modifier as represented
@@ -312,7 +284,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->maxLength['value'] = $maxLength;
     }
-
     /**
      * Unsets Max Length.
      * The maximum length, in Unicode points, of the text string of the text-based modifier as represented
@@ -323,7 +294,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->maxLength = [];
     }
-
     /**
      * Returns Text Required.
      * Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based
@@ -337,7 +307,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->textRequired['value'];
     }
-
     /**
      * Sets Text Required.
      * Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based
@@ -350,7 +319,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->textRequired['value'] = $textRequired;
     }
-
     /**
      * Unsets Text Required.
      * Whether the text string must be a non-empty string (`true`) or not (`false`) for a text-based
@@ -361,7 +329,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->textRequired = [];
     }
-
     /**
      * Returns Internal Name.
      * A note for internal use by the business.
@@ -381,7 +348,6 @@ class CatalogModifierList implements \JsonSerializable
         }
         return $this->internalName['value'];
     }
-
     /**
      * Sets Internal Name.
      * A note for internal use by the business.
@@ -400,7 +366,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->internalName['value'] = $internalName;
     }
-
     /**
      * Unsets Internal Name.
      * A note for internal use by the business.
@@ -417,7 +382,6 @@ class CatalogModifierList implements \JsonSerializable
     {
         $this->internalName = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -426,41 +390,40 @@ class CatalogModifierList implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->name)) {
-            $json['name']           = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (!empty($this->ordinal)) {
-            $json['ordinal']        = $this->ordinal['value'];
+            $json['ordinal'] = $this->ordinal['value'];
         }
         if (isset($this->selectionType)) {
             $json['selection_type'] = $this->selectionType;
         }
         if (!empty($this->modifiers)) {
-            $json['modifiers']      = $this->modifiers['value'];
+            $json['modifiers'] = $this->modifiers['value'];
         }
         if (!empty($this->imageIds)) {
-            $json['image_ids']      = $this->imageIds['value'];
+            $json['image_ids'] = $this->imageIds['value'];
         }
         if (isset($this->modifierType)) {
-            $json['modifier_type']  = $this->modifierType;
+            $json['modifier_type'] = $this->modifierType;
         }
         if (!empty($this->maxLength)) {
-            $json['max_length']     = $this->maxLength['value'];
+            $json['max_length'] = $this->maxLength['value'];
         }
         if (!empty($this->textRequired)) {
-            $json['text_required']  = $this->textRequired['value'];
+            $json['text_required'] = $this->textRequired['value'];
         }
         if (!empty($this->internalName)) {
-            $json['internal_name']  = $this->internalName['value'];
+            $json['internal_name'] = $this->internalName['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

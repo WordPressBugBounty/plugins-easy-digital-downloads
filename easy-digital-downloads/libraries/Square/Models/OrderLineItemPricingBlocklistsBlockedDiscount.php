@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A discount to block from applying to a line item. The discount must be
  * identified by either `discount_uid` or `discount_catalog_object_id`, but not both.
@@ -16,17 +14,14 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $discountUid = [];
-
     /**
      * @var array
      */
     private $discountCatalogObjectId = [];
-
     /**
      * Returns Uid.
      * A unique ID of the `BlockedDiscount` within the order.
@@ -38,7 +33,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID of the `BlockedDiscount` within the order.
@@ -49,7 +43,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID of the `BlockedDiscount` within the order.
@@ -58,7 +51,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Discount Uid.
      * The `uid` of the discount that should be blocked. Use this field to block
@@ -71,7 +63,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
         }
         return $this->discountUid['value'];
     }
-
     /**
      * Sets Discount Uid.
      * The `uid` of the discount that should be blocked. Use this field to block
@@ -83,7 +74,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->discountUid['value'] = $discountUid;
     }
-
     /**
      * Unsets Discount Uid.
      * The `uid` of the discount that should be blocked. Use this field to block
@@ -93,7 +83,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->discountUid = [];
     }
-
     /**
      * Returns Discount Catalog Object Id.
      * The `catalog_object_id` of the discount that should be blocked.
@@ -107,7 +96,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
         }
         return $this->discountCatalogObjectId['value'];
     }
-
     /**
      * Sets Discount Catalog Object Id.
      * The `catalog_object_id` of the discount that should be blocked.
@@ -120,7 +108,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->discountCatalogObjectId['value'] = $discountCatalogObjectId;
     }
-
     /**
      * Unsets Discount Catalog Object Id.
      * The `catalog_object_id` of the discount that should be blocked.
@@ -131,7 +118,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
     {
         $this->discountCatalogObjectId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -140,15 +126,15 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']                        = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->discountUid)) {
-            $json['discount_uid']               = $this->discountUid['value'];
+            $json['discount_uid'] = $this->discountUid['value'];
         }
         if (!empty($this->discountCatalogObjectId)) {
             $json['discount_catalog_object_id'] = $this->discountCatalogObjectId['value'];
@@ -156,7 +142,6 @@ class OrderLineItemPricingBlocklistsBlockedDiscount implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

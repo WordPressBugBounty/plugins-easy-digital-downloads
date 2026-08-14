@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation;
 
 use EDD\Vendor\Symfony\Component\HttpFoundation\File\Exception\FileException;
 use EDD\Vendor\Symfony\Component\HttpFoundation\File\File;
-
 /**
  * BinaryFileResponse represents an HTTP response delivering a file.
  *
@@ -26,7 +24,6 @@ use EDD\Vendor\Symfony\Component\HttpFoundation\File\File;
 class BinaryFileResponse extends Response
 {
     protected static $trustXSendfileTypeHeader = false;
-
     /**
      * @var File
      */
@@ -35,7 +32,6 @@ class BinaryFileResponse extends Response
     protected $maxlen = -1;
     protected $deleteFileAfterSend = false;
     protected $chunkSize = 16 * 1024;
-
     /**
      * @param \SplFileInfo|string $file               The file to stream
      * @param int                 $status             The response status code
@@ -48,14 +44,11 @@ class BinaryFileResponse extends Response
     public function __construct($file, int $status = 200, array $headers = [], bool $public = true, ?string $contentDisposition = null, bool $autoEtag = false, bool $autoLastModified = true)
     {
         parent::__construct(null, $status, $headers);
-
         $this->setFile($file, $contentDisposition, $autoEtag, $autoLastModified);
-
         if ($public) {
             $this->setPublic();
         }
     }
-
     /**
      * @param \SplFileInfo|string $file               The file to stream
      * @param int                 $status             The response status code
@@ -72,10 +65,8 @@ class BinaryFileResponse extends Response
     public static function create($file = null, int $status = 200, array $headers = [], bool $public = true, ?string $contentDisposition = null, bool $autoEtag = false, bool $autoLastModified = true)
     {
         trigger_deprecation('symfony/http-foundation', '5.2', 'The "%s()" method is deprecated, use "new %s()" instead.', __METHOD__, static::class);
-
         return new static($file, $status, $headers, $public, $contentDisposition, $autoEtag, $autoLastModified);
     }
-
     /**
      * Sets the file to stream.
      *
@@ -94,28 +85,21 @@ class BinaryFileResponse extends Response
                 $file = new File((string) $file);
             }
         }
-
         if (!$file->isReadable()) {
             throw new FileException('File must be readable.');
         }
-
         $this->file = $file;
-
         if ($autoEtag) {
             $this->setAutoEtag();
         }
-
         if ($autoLastModified) {
             $this->setAutoLastModified();
         }
-
         if ($contentDisposition) {
             $this->setContentDisposition($contentDisposition);
         }
-
         return $this;
     }
-
     /**
      * Gets the file.
      *
@@ -125,7 +109,6 @@ class BinaryFileResponse extends Response
     {
         return $this->file;
     }
-
     /**
      * Sets the response stream chunk size.
      *
@@ -136,12 +119,9 @@ class BinaryFileResponse extends Response
         if ($chunkSize < 1 || $chunkSize > \PHP_INT_MAX) {
             throw new \LogicException('The chunk size of a BinaryFileResponse cannot be less than 1 or greater than PHP_INT_MAX.');
         }
-
         $this->chunkSize = $chunkSize;
-
         return $this;
     }
-
     /**
      * Automatically sets the Last-Modified header according the file modification date.
      *
@@ -150,10 +130,8 @@ class BinaryFileResponse extends Response
     public function setAutoLastModified()
     {
         $this->setLastModified(\DateTime::createFromFormat('U', $this->file->getMTime()));
-
         return $this;
     }
-
     /**
      * Automatically sets the ETag header according to the checksum of the file.
      *
@@ -162,10 +140,8 @@ class BinaryFileResponse extends Response
     public function setAutoEtag()
     {
         $this->setEtag(base64_encode(hash_file('sha256', $this->file->getPathname(), true)));
-
         return $this;
     }
-
     /**
      * Sets the Content-Disposition header with the given filename.
      *
@@ -180,13 +156,10 @@ class BinaryFileResponse extends Response
         if ('' === $filename) {
             $filename = $this->file->getFilename();
         }
-
         if ('' === $filenameFallback && (!preg_match('/^[\x20-\x7e]*$/', $filename) || str_contains($filename, '%'))) {
             $encoding = mb_detect_encoding($filename, null, true) ?: '8bit';
-
             for ($i = 0, $filenameLength = mb_strlen($filename, $encoding); $i < $filenameLength; ++$i) {
                 $char = mb_substr($filename, $i, 1, $encoding);
-
                 if ('%' === $char || \ord($char) < 32 || \ord($char) > 126) {
                     $filenameFallback .= '_';
                 } else {
@@ -194,13 +167,10 @@ class BinaryFileResponse extends Response
                 }
             }
         }
-
         $dispositionHeader = $this->headers->makeDisposition($disposition, $filename, $filenameFallback);
         $this->headers->set('Content-Disposition', $dispositionHeader);
-
         return $this;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -208,32 +178,24 @@ class BinaryFileResponse extends Response
     {
         if ($this->isInformational() || $this->isEmpty()) {
             parent::prepare($request);
-
             $this->maxlen = 0;
-
             return $this;
         }
-
         if (!$this->headers->has('Content-Type')) {
             $this->headers->set('Content-Type', $this->file->getMimeType() ?: 'application/octet-stream');
         }
-
         parent::prepare($request);
-
         $this->offset = 0;
         $this->maxlen = -1;
-
         if (false === $fileSize = $this->file->getSize()) {
             return $this;
         }
         $this->headers->remove('Transfer-Encoding');
         $this->headers->set('Content-Length', $fileSize);
-
         if (!$this->headers->has('Accept-Ranges')) {
             // Only accept ranges on safe HTTP methods
             $this->headers->set('Accept-Ranges', $request->isMethodSafe() ? 'bytes' : 'none');
         }
-
         if (self::$trustXSendfileTypeHeader && $request->headers->has('X-Sendfile-Type')) {
             // Use X-Sendfile, do not send any content.
             $type = $request->headers->get('X-Sendfile-Type');
@@ -253,7 +215,7 @@ class BinaryFileResponse extends Response
                 foreach ($parts as $part) {
                     [$pathPrefix, $location] = $part;
                     if (substr($path, 0, \strlen($pathPrefix)) === $pathPrefix) {
-                        $path = $location.substr($path, \strlen($pathPrefix));
+                        $path = $location . substr($path, \strlen($pathPrefix));
                         // Only set X-Accel-Redirect header if a valid URI can be produced
                         // as nginx does not serve arbitrary file paths.
                         $this->headers->set($type, $path);
@@ -269,19 +231,15 @@ class BinaryFileResponse extends Response
             // Process the range headers.
             if (!$request->headers->has('If-Range') || $this->hasValidIfRangeHeader($request->headers->get('If-Range'))) {
                 $range = $request->headers->get('Range');
-
                 if (str_starts_with($range, 'bytes=')) {
                     [$start, $end] = explode('-', substr($range, 6), 2) + [1 => 0];
-
-                    $end = ('' === $end) ? $fileSize - 1 : (int) $end;
-
+                    $end = '' === $end ? $fileSize - 1 : (int) $end;
                     if ('' === $start) {
                         $start = $fileSize - $end;
                         $end = $fileSize - 1;
                     } else {
                         $start = (int) $start;
                     }
-
                     if ($start <= $end) {
                         $end = min($end, $fileSize - 1);
                         if ($start < 0 || $start > $end) {
@@ -290,7 +248,6 @@ class BinaryFileResponse extends Response
                         } elseif ($end - $start < $fileSize - 1) {
                             $this->maxlen = $end < $fileSize ? $end - $start + 1 : -1;
                             $this->offset = $start;
-
                             $this->setStatusCode(206);
                             $this->headers->set('Content-Range', sprintf('bytes %s-%s/%s', $start, $end, $fileSize));
                             $this->headers->set('Content-Length', $end - $start + 1);
@@ -299,27 +256,21 @@ class BinaryFileResponse extends Response
                 }
             }
         }
-
         if ($request->isMethod('HEAD')) {
             $this->maxlen = 0;
         }
-
         return $this;
     }
-
     private function hasValidIfRangeHeader(?string $header): bool
     {
         if ($this->getEtag() === $header) {
             return true;
         }
-
         if (null === $lastModified = $this->getLastModified()) {
             return false;
         }
-
-        return $lastModified->format('D, d M Y H:i:s').' GMT' === $header;
+        return $lastModified->format('D, d M Y H:i:s') . ' GMT' === $header;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -329,24 +280,18 @@ class BinaryFileResponse extends Response
             if (!$this->isSuccessful()) {
                 return parent::sendContent();
             }
-
             if (0 === $this->maxlen) {
                 return $this;
             }
-
             $out = fopen('php://output', 'w');
             $file = fopen($this->file->getPathname(), 'r');
-
             ignore_user_abort(true);
-
             if (0 !== $this->offset) {
                 fseek($file, $this->offset);
             }
-
             $length = $this->maxlen;
             while ($length && !feof($file)) {
                 $read = $length > $this->chunkSize || 0 > $length ? $this->chunkSize : $length;
-
                 if (false === $data = fread($file, $read)) {
                     break;
                 }
@@ -361,7 +306,6 @@ class BinaryFileResponse extends Response
                     $data = substr($data, $read);
                 }
             }
-
             fclose($out);
             fclose($file);
         } finally {
@@ -369,10 +313,8 @@ class BinaryFileResponse extends Response
                 unlink($this->file->getPathname());
             }
         }
-
         return $this;
     }
-
     /**
      * {@inheritdoc}
      *
@@ -383,10 +325,8 @@ class BinaryFileResponse extends Response
         if (null !== $content) {
             throw new \LogicException('The content cannot be set on a BinaryFileResponse instance.');
         }
-
         return $this;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -394,7 +334,6 @@ class BinaryFileResponse extends Response
     {
         return false;
     }
-
     /**
      * Trust X-Sendfile-Type header.
      */
@@ -402,7 +341,6 @@ class BinaryFileResponse extends Response
     {
         self::$trustXSendfileTypeHeader = true;
     }
-
     /**
      * If this is set to true, the file will be unlinked after the request is sent
      * Note: If the X-Sendfile header is used, the deleteFileAfterSend setting will not be used.
@@ -412,7 +350,6 @@ class BinaryFileResponse extends Response
     public function deleteFileAfterSend(bool $shouldDelete = true)
     {
         $this->deleteFileAfterSend = $shouldDelete;
-
         return $this;
     }
 }

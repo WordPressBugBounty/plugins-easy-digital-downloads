@@ -3,7 +3,7 @@
 namespace EDD\Vendor\Stripe\Exception\OAuth;
 
 /**
- * Implements properties and methods common to all (non-SPL) EDD\Vendor\Stripe OAuth
+ * Implements properties and methods common to all (non-SPL) Stripe OAuth
  * exceptions.
  */
 abstract class OAuthErrorException extends \EDD\Vendor\Stripe\Exception\ApiErrorException
@@ -13,7 +13,6 @@ abstract class OAuthErrorException extends \EDD\Vendor\Stripe\Exception\ApiError
         if (null === $this->jsonBody) {
             return null;
         }
-
         return \EDD\Vendor\Stripe\OAuthErrorObject::constructFrom($this->jsonBody);
     }
 }

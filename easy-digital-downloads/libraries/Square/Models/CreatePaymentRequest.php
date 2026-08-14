@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a request to create a payment using
  * [CreatePayment]($e/Payments/CreatePayment).
@@ -16,127 +14,102 @@ class CreatePaymentRequest implements \JsonSerializable
      * @var string
      */
     private $sourceId;
-
     /**
      * @var string
      */
     private $idempotencyKey;
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * @var Money|null
      */
     private $tipMoney;
-
     /**
      * @var Money|null
      */
     private $appFeeMoney;
-
     /**
      * @var string|null
      */
     private $delayDuration;
-
     /**
      * @var string|null
      */
     private $delayAction;
-
     /**
      * @var bool|null
      */
     private $autocomplete;
-
     /**
      * @var string|null
      */
     private $orderId;
-
     /**
      * @var string|null
      */
     private $customerId;
-
     /**
      * @var string|null
      */
     private $locationId;
-
     /**
      * @var string|null
      */
     private $teamMemberId;
-
     /**
      * @var string|null
      */
     private $referenceId;
-
     /**
      * @var string|null
      */
     private $verificationToken;
-
     /**
      * @var bool|null
      */
     private $acceptPartialAuthorization;
-
     /**
      * @var string|null
      */
     private $buyerEmailAddress;
-
     /**
      * @var string|null
      */
     private $buyerPhoneNumber;
-
     /**
      * @var Address|null
      */
     private $billingAddress;
-
     /**
      * @var Address|null
      */
     private $shippingAddress;
-
     /**
      * @var string|null
      */
     private $note;
-
     /**
      * @var string|null
      */
     private $statementDescriptionIdentifier;
-
     /**
      * @var CashPaymentDetails|null
      */
     private $cashDetails;
-
     /**
      * @var ExternalPaymentDetails|null
      */
     private $externalDetails;
-
     /**
      * @var CustomerDetails|null
      */
     private $customerDetails;
-
     /**
      * @var OfflinePaymentDetails|null
      */
     private $offlinePaymentDetails;
-
     /**
      * @param string $sourceId
      * @param string $idempotencyKey
@@ -146,7 +119,6 @@ class CreatePaymentRequest implements \JsonSerializable
         $this->sourceId = $sourceId;
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Source Id.
      * The ID for the source of funds for this payment.
@@ -162,7 +134,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->sourceId;
     }
-
     /**
      * Sets Source Id.
      * The ID for the source of funds for this payment.
@@ -181,7 +152,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->sourceId = $sourceId;
     }
-
     /**
      * Returns Idempotency Key.
      * A unique string that identifies this `CreatePayment` request. Keys can be any valid string
@@ -197,7 +167,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * A unique string that identifies this `CreatePayment` request. Keys can be any valid string
@@ -216,7 +185,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -231,7 +199,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -248,7 +215,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -263,7 +229,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->tipMoney;
     }
-
     /**
      * Sets Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -280,7 +245,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->tipMoney = $tipMoney;
     }
-
     /**
      * Returns App Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -295,7 +259,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->appFeeMoney;
     }
-
     /**
      * Sets App Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -312,10 +275,9 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->appFeeMoney = $appFeeMoney;
     }
-
     /**
      * Returns Delay Duration.
-     * The duration of time after the payment's creation when EDD\Vendor\Square automatically
+     * The duration of time after the payment's creation when Square automatically
      * either completes or cancels the payment depending on the `delay_action` field value.
      * For more information, see
      * [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-
@@ -336,10 +298,9 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->delayDuration;
     }
-
     /**
      * Sets Delay Duration.
-     * The duration of time after the payment's creation when EDD\Vendor\Square automatically
+     * The duration of time after the payment's creation when Square automatically
      * either completes or cancels the payment depending on the `delay_action` field value.
      * For more information, see
      * [Time threshold](https://developer.squareup.com/docs/payments-api/take-payments/card-
@@ -362,7 +323,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->delayDuration = $delayDuration;
     }
-
     /**
      * Returns Delay Action.
      * The action to be applied to the payment when the `delay_duration` has elapsed. The action must be
@@ -376,7 +336,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->delayAction;
     }
-
     /**
      * Sets Delay Action.
      * The action to be applied to the payment when the `delay_duration` has elapsed. The action must be
@@ -392,7 +351,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->delayAction = $delayAction;
     }
-
     /**
      * Returns Autocomplete.
      * If set to `true`, this payment will be completed when possible. If
@@ -407,7 +365,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->autocomplete;
     }
-
     /**
      * Sets Autocomplete.
      * If set to `true`, this payment will be completed when possible. If
@@ -424,7 +381,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->autocomplete = $autocomplete;
     }
-
     /**
      * Returns Order Id.
      * Associates a previously created order with this payment.
@@ -433,7 +389,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->orderId;
     }
-
     /**
      * Sets Order Id.
      * Associates a previously created order with this payment.
@@ -444,7 +399,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->orderId = $orderId;
     }
-
     /**
      * Returns Customer Id.
      * The [Customer](entity:Customer) ID of the customer associated with the payment.
@@ -455,7 +409,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->customerId;
     }
-
     /**
      * Sets Customer Id.
      * The [Customer](entity:Customer) ID of the customer associated with the payment.
@@ -468,7 +421,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->customerId = $customerId;
     }
-
     /**
      * Returns Location Id.
      * The location ID to associate with the payment. If not specified, the [main location](https:
@@ -479,7 +431,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->locationId;
     }
-
     /**
      * Sets Location Id.
      * The location ID to associate with the payment. If not specified, the [main location](https:
@@ -492,7 +443,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Team Member Id.
      * An optional [TeamMember](entity:TeamMember) ID to associate with
@@ -502,7 +452,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->teamMemberId;
     }
-
     /**
      * Sets Team Member Id.
      * An optional [TeamMember](entity:TeamMember) ID to associate with
@@ -514,7 +463,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->teamMemberId = $teamMemberId;
     }
-
     /**
      * Returns Reference Id.
      * A user-defined ID to associate with the payment.
@@ -526,7 +474,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->referenceId;
     }
-
     /**
      * Sets Reference Id.
      * A user-defined ID to associate with the payment.
@@ -540,13 +487,12 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->referenceId = $referenceId;
     }
-
     /**
      * Returns Verification Token.
      * An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.
      * com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer).
      * Verification tokens encapsulate customer device information and 3-D Secure
-     * challenge results to indicate that EDD\Vendor\Square has verified the buyer identity.
+     * challenge results to indicate that Square has verified the buyer identity.
      *
      * For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
      */
@@ -554,13 +500,12 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->verificationToken;
     }
-
     /**
      * Sets Verification Token.
      * An identifying token generated by [payments.verifyBuyer()](https://developer.squareup.
      * com/reference/sdks/web/payments/objects/Payments#Payments.verifyBuyer).
      * Verification tokens encapsulate customer device information and 3-D Secure
-     * challenge results to indicate that EDD\Vendor\Square has verified the buyer identity.
+     * challenge results to indicate that Square has verified the buyer identity.
      *
      * For more information, see [SCA Overview](https://developer.squareup.com/docs/sca-overview).
      *
@@ -570,17 +515,16 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->verificationToken = $verificationToken;
     }
-
     /**
      * Returns Accept Partial Authorization.
-     * If set to `true` and charging a EDD\Vendor\Square Gift Card, a payment might be returned with
+     * If set to `true` and charging a Square Gift Card, a payment might be returned with
      * `amount_money` equal to less than what was requested. For example, a request for $20 when charging
-     * a EDD\Vendor\Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose
+     * a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose
      * to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card
      * payment. This field cannot be `true` when `autocomplete = true`.
      *
      * For more information, see
-     * [Partial amount with EDD\Vendor\Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-
+     * [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-
      * payments#partial-payment-gift-card).
      *
      * Default: false
@@ -589,17 +533,16 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->acceptPartialAuthorization;
     }
-
     /**
      * Sets Accept Partial Authorization.
-     * If set to `true` and charging a EDD\Vendor\Square Gift Card, a payment might be returned with
+     * If set to `true` and charging a Square Gift Card, a payment might be returned with
      * `amount_money` equal to less than what was requested. For example, a request for $20 when charging
-     * a EDD\Vendor\Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose
+     * a Square Gift Card with a balance of $5 results in an APPROVED payment of $5. You might choose
      * to prompt the buyer for an additional payment to cover the remainder or cancel the Gift Card
      * payment. This field cannot be `true` when `autocomplete = true`.
      *
      * For more information, see
-     * [Partial amount with EDD\Vendor\Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-
+     * [Partial amount with Square Gift Cards](https://developer.squareup.com/docs/payments-api/take-
      * payments#partial-payment-gift-card).
      *
      * Default: false
@@ -610,7 +553,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->acceptPartialAuthorization = $acceptPartialAuthorization;
     }
-
     /**
      * Returns Buyer Email Address.
      * The buyer's email address.
@@ -619,7 +561,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->buyerEmailAddress;
     }
-
     /**
      * Sets Buyer Email Address.
      * The buyer's email address.
@@ -630,7 +571,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->buyerEmailAddress = $buyerEmailAddress;
     }
-
     /**
      * Returns Buyer Phone Number.
      * The buyer's phone number.
@@ -644,7 +584,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->buyerPhoneNumber;
     }
-
     /**
      * Sets Buyer Phone Number.
      * The buyer's phone number.
@@ -660,7 +599,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->buyerPhoneNumber = $buyerPhoneNumber;
     }
-
     /**
      * Returns Billing Address.
      * Represents a postal address in a country.
@@ -671,7 +609,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->billingAddress;
     }
-
     /**
      * Sets Billing Address.
      * Represents a postal address in a country.
@@ -684,7 +621,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->billingAddress = $billingAddress;
     }
-
     /**
      * Returns Shipping Address.
      * Represents a postal address in a country.
@@ -695,7 +631,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->shippingAddress;
     }
-
     /**
      * Sets Shipping Address.
      * Represents a postal address in a country.
@@ -708,7 +643,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->shippingAddress = $shippingAddress;
     }
-
     /**
      * Returns Note.
      * An optional note to be entered by the developer when creating a payment.
@@ -717,7 +651,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->note;
     }
-
     /**
      * Sets Note.
      * An optional note to be entered by the developer when creating a payment.
@@ -728,7 +661,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->note = $note;
     }
-
     /**
      * Returns Statement Description Identifier.
      * Optional additional payment information to include on the customer's card statement
@@ -736,14 +668,13 @@ class CreatePaymentRequest implements \JsonSerializable
      * or short description that uniquely identifies the purchase.
      *
      * Note that the `statement_description_identifier` might get truncated on the statement description
-     * to fit the required information including the EDD\Vendor\Square identifier (SQ *) and name of the
+     * to fit the required information including the Square identifier (SQ *) and name of the
      * seller taking the payment.
      */
     public function getStatementDescriptionIdentifier(): ?string
     {
         return $this->statementDescriptionIdentifier;
     }
-
     /**
      * Sets Statement Description Identifier.
      * Optional additional payment information to include on the customer's card statement
@@ -751,7 +682,7 @@ class CreatePaymentRequest implements \JsonSerializable
      * or short description that uniquely identifies the purchase.
      *
      * Note that the `statement_description_identifier` might get truncated on the statement description
-     * to fit the required information including the EDD\Vendor\Square identifier (SQ *) and name of the
+     * to fit the required information including the Square identifier (SQ *) and name of the
      * seller taking the payment.
      *
      * @maps statement_description_identifier
@@ -760,7 +691,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->statementDescriptionIdentifier = $statementDescriptionIdentifier;
     }
-
     /**
      * Returns Cash Details.
      * Stores details about a cash payment. Contains only non-confidential information. For more
@@ -771,7 +701,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->cashDetails;
     }
-
     /**
      * Sets Cash Details.
      * Stores details about a cash payment. Contains only non-confidential information. For more
@@ -784,7 +713,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->cashDetails = $cashDetails;
     }
-
     /**
      * Returns External Details.
      * Stores details about an external payment. Contains only non-confidential information.
@@ -796,7 +724,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->externalDetails;
     }
-
     /**
      * Sets External Details.
      * Stores details about an external payment. Contains only non-confidential information.
@@ -810,7 +737,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->externalDetails = $externalDetails;
     }
-
     /**
      * Returns Customer Details.
      * Details about the customer making the payment.
@@ -819,7 +745,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->customerDetails;
     }
-
     /**
      * Sets Customer Details.
      * Details about the customer making the payment.
@@ -830,7 +755,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->customerDetails = $customerDetails;
     }
-
     /**
      * Returns Offline Payment Details.
      * Details specific to offline payments.
@@ -839,7 +763,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         return $this->offlinePaymentDetails;
     }
-
     /**
      * Sets Offline Payment Details.
      * Details specific to offline payments.
@@ -850,7 +773,6 @@ class CreatePaymentRequest implements \JsonSerializable
     {
         $this->offlinePaymentDetails = $offlinePaymentDetails;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -859,85 +781,84 @@ class CreatePaymentRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['source_id']                            = $this->sourceId;
-        $json['idempotency_key']                      = $this->idempotencyKey;
+        $json['source_id'] = $this->sourceId;
+        $json['idempotency_key'] = $this->idempotencyKey;
         if (isset($this->amountMoney)) {
-            $json['amount_money']                     = $this->amountMoney;
+            $json['amount_money'] = $this->amountMoney;
         }
         if (isset($this->tipMoney)) {
-            $json['tip_money']                        = $this->tipMoney;
+            $json['tip_money'] = $this->tipMoney;
         }
         if (isset($this->appFeeMoney)) {
-            $json['app_fee_money']                    = $this->appFeeMoney;
+            $json['app_fee_money'] = $this->appFeeMoney;
         }
         if (isset($this->delayDuration)) {
-            $json['delay_duration']                   = $this->delayDuration;
+            $json['delay_duration'] = $this->delayDuration;
         }
         if (isset($this->delayAction)) {
-            $json['delay_action']                     = $this->delayAction;
+            $json['delay_action'] = $this->delayAction;
         }
         if (isset($this->autocomplete)) {
-            $json['autocomplete']                     = $this->autocomplete;
+            $json['autocomplete'] = $this->autocomplete;
         }
         if (isset($this->orderId)) {
-            $json['order_id']                         = $this->orderId;
+            $json['order_id'] = $this->orderId;
         }
         if (isset($this->customerId)) {
-            $json['customer_id']                      = $this->customerId;
+            $json['customer_id'] = $this->customerId;
         }
         if (isset($this->locationId)) {
-            $json['location_id']                      = $this->locationId;
+            $json['location_id'] = $this->locationId;
         }
         if (isset($this->teamMemberId)) {
-            $json['team_member_id']                   = $this->teamMemberId;
+            $json['team_member_id'] = $this->teamMemberId;
         }
         if (isset($this->referenceId)) {
-            $json['reference_id']                     = $this->referenceId;
+            $json['reference_id'] = $this->referenceId;
         }
         if (isset($this->verificationToken)) {
-            $json['verification_token']               = $this->verificationToken;
+            $json['verification_token'] = $this->verificationToken;
         }
         if (isset($this->acceptPartialAuthorization)) {
-            $json['accept_partial_authorization']     = $this->acceptPartialAuthorization;
+            $json['accept_partial_authorization'] = $this->acceptPartialAuthorization;
         }
         if (isset($this->buyerEmailAddress)) {
-            $json['buyer_email_address']              = $this->buyerEmailAddress;
+            $json['buyer_email_address'] = $this->buyerEmailAddress;
         }
         if (isset($this->buyerPhoneNumber)) {
-            $json['buyer_phone_number']               = $this->buyerPhoneNumber;
+            $json['buyer_phone_number'] = $this->buyerPhoneNumber;
         }
         if (isset($this->billingAddress)) {
-            $json['billing_address']                  = $this->billingAddress;
+            $json['billing_address'] = $this->billingAddress;
         }
         if (isset($this->shippingAddress)) {
-            $json['shipping_address']                 = $this->shippingAddress;
+            $json['shipping_address'] = $this->shippingAddress;
         }
         if (isset($this->note)) {
-            $json['note']                             = $this->note;
+            $json['note'] = $this->note;
         }
         if (isset($this->statementDescriptionIdentifier)) {
             $json['statement_description_identifier'] = $this->statementDescriptionIdentifier;
         }
         if (isset($this->cashDetails)) {
-            $json['cash_details']                     = $this->cashDetails;
+            $json['cash_details'] = $this->cashDetails;
         }
         if (isset($this->externalDetails)) {
-            $json['external_details']                 = $this->externalDetails;
+            $json['external_details'] = $this->externalDetails;
         }
         if (isset($this->customerDetails)) {
-            $json['customer_details']                 = $this->customerDetails;
+            $json['customer_details'] = $this->customerDetails;
         }
         if (isset($this->offlinePaymentDetails)) {
-            $json['offline_payment_details']          = $this->offlinePaymentDetails;
+            $json['offline_payment_details'] = $this->offlinePaymentDetails;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

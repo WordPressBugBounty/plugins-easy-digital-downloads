@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Utils;
 
 use EDD\Vendor\Core\Types\Sdk\CoreFileWrapper;
-
 /**
  * Wraps file with mime-type and filename to be sent as part of an HTTP request.
  */

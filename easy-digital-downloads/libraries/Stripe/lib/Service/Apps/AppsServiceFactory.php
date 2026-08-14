@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Apps;
 
 /**
@@ -14,10 +13,7 @@ class AppsServiceFactory extends \EDD\Vendor\Stripe\Service\AbstractServiceFacto
     /**
      * @var array<string, string>
      */
-    private static $classMap = [
-        'secrets' => SecretService::class,
-    ];
-
+    private static $classMap = ['secrets' => SecretService::class];
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

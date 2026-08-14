@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Logger\Configuration;
 
 use EDD\Vendor\Core\Logger\ConsoleLogger;
 use EDD\Vendor\Psr\Log\LoggerInterface;
-
 class LoggingConfiguration
 {
     private $logger;
@@ -14,21 +12,14 @@ class LoggingConfiguration
     private $maskSensitiveHeaders;
     private $requestConfig;
     private $responseConfig;
-
-    public function __construct(
-        ?LoggerInterface $logger,
-        string $level,
-        bool $maskSensitiveHeaders,
-        RequestConfiguration $requestConfig,
-        ResponseConfiguration $responseConfig
-    ) {
+    public function __construct(?LoggerInterface $logger, string $level, bool $maskSensitiveHeaders, RequestConfiguration $requestConfig, ResponseConfiguration $responseConfig)
+    {
         $this->logger = $logger ?? new ConsoleLogger('printf');
         $this->level = $level;
         $this->maskSensitiveHeaders = $maskSensitiveHeaders;
         $this->requestConfig = $requestConfig;
         $this->responseConfig = $responseConfig;
     }
-
     /**
      * Log the given message using the context array. This function uses the
      * LogLevel and Logger instance set via constructor of this class.
@@ -37,7 +28,6 @@ class LoggingConfiguration
     {
         $this->logger->log($this->level, $message, $context);
     }
-
     /**
      * Indicates whether sensitive headers should be masked in logs.
      *
@@ -47,7 +37,6 @@ class LoggingConfiguration
     {
         return $this->maskSensitiveHeaders;
     }
-
     /**
      * Gets the request configuration for logging.
      *
@@ -57,7 +46,6 @@ class LoggingConfiguration
     {
         return $this->requestConfig;
     }
-
     /**
      * Gets the response configuration for logging.
      *

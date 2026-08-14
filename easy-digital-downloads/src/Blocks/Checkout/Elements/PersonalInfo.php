@@ -21,6 +21,17 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 class PersonalInfo {
 
 	/**
+	 * Wrapper modifier that pairs the first and last name fields on one line.
+	 *
+	 * The checkout block stylesheet and the Elementor editor-preview fidelity CSS both key their
+	 * paired-name geometry off this class, so it is the single source for the string in PHP.
+	 *
+	 * @since 3.7.0
+	 * @var string
+	 */
+	public const CLASS_NAME_SINGLE_LINE = 'edd-checkout-block__personal-info--name-single-line';
+
+	/**
 	 * Shows the login and/or registration form for guest users in checkout.
 	 *
 	 * @since 3.6.0
@@ -61,7 +72,7 @@ class PersonalInfo {
 				if ( $count < 3 ) {
 					$class .= ' edd-blocks__checkout-forms--inline';
 				}
-				echo '<div class="' . esc_attr( $class ) . '">';
+				echo '<div id="edd-account-forms" class="' . esc_attr( $class ) . '">';
 				foreach ( $forms as $id => $form ) {
 					printf(
 						'<button type="button" class="edd-button-secondary edd-blocks__checkout-%1$s link" data-attr="%1$s"%2$s>%3$s</button>',
@@ -74,7 +85,10 @@ class PersonalInfo {
 				echo '</div>';
 			}
 			$form = reset( $forms );
-			echo '<div class="edd-checkout-block__personal-info">';
+			// Not every caller carries the attribute: the parent checkout block does not declare
+			// it, and the Elementor widget passes it down from its own control.
+			$customer['name_single_line'] = ! empty( $block_attributes['name_single_line'] );
+			echo '<div class="' . esc_attr( self::get_wrapper_class( $block_attributes ) ) . '">';
 			if ( $form && ! empty( $form['view'] ) ) {
 				if ( is_callable( $form['view'] ) ) {
 					echo call_user_func( $form['view'], array( 'current' => true ) );
@@ -88,6 +102,26 @@ class PersonalInfo {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get the classes for the personal info wrapper.
+	 *
+	 * The single-line name modifier lives here rather than on the fieldset because the
+	 * AJAX form swap re-renders the fieldset without the block attributes, and this
+	 * wrapper is outside the swapped markup.
+	 *
+	 * @since 3.7.0
+	 * @param array $block_attributes The block attributes.
+	 * @return string
+	 */
+	private static function get_wrapper_class( $block_attributes ) {
+		$classes = array( 'edd-checkout-block__personal-info' );
+		if ( ! empty( $block_attributes['name_single_line'] ) ) {
+			$classes[] = self::CLASS_NAME_SINGLE_LINE;
+		}
+
+		return implode( ' ', $classes );
 	}
 
 	/**

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents communication preferences for the customer profile.
  */
@@ -15,12 +13,11 @@ class CustomerPreferences implements \JsonSerializable
      * @var array
      */
     private $emailUnsubscribed = [];
-
     /**
      * Returns Email Unsubscribed.
      * Indicates whether the customer has unsubscribed from marketing campaign emails. A value of `true`
-     * means that the customer chose to opt out of email marketing from the current EDD\Vendor\Square seller or from
-     * all EDD\Vendor\Square sellers. This value is read-only from the Customers API.
+     * means that the customer chose to opt out of email marketing from the current Square seller or from
+     * all Square sellers. This value is read-only from the Customers API.
      */
     public function getEmailUnsubscribed(): ?bool
     {
@@ -29,12 +26,11 @@ class CustomerPreferences implements \JsonSerializable
         }
         return $this->emailUnsubscribed['value'];
     }
-
     /**
      * Sets Email Unsubscribed.
      * Indicates whether the customer has unsubscribed from marketing campaign emails. A value of `true`
-     * means that the customer chose to opt out of email marketing from the current EDD\Vendor\Square seller or from
-     * all EDD\Vendor\Square sellers. This value is read-only from the Customers API.
+     * means that the customer chose to opt out of email marketing from the current Square seller or from
+     * all Square sellers. This value is read-only from the Customers API.
      *
      * @maps email_unsubscribed
      */
@@ -42,18 +38,16 @@ class CustomerPreferences implements \JsonSerializable
     {
         $this->emailUnsubscribed['value'] = $emailUnsubscribed;
     }
-
     /**
      * Unsets Email Unsubscribed.
      * Indicates whether the customer has unsubscribed from marketing campaign emails. A value of `true`
-     * means that the customer chose to opt out of email marketing from the current EDD\Vendor\Square seller or from
-     * all EDD\Vendor\Square sellers. This value is read-only from the Customers API.
+     * means that the customer chose to opt out of email marketing from the current Square seller or from
+     * all Square sellers. This value is read-only from the Customers API.
      */
     public function unsetEmailUnsubscribed(): void
     {
         $this->emailUnsubscribed = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -62,7 +56,7 @@ class CustomerPreferences implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -72,7 +66,6 @@ class CustomerPreferences implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

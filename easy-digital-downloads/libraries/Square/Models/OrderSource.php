@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the origination details of an order.
  */
@@ -15,7 +13,6 @@ class OrderSource implements \JsonSerializable
      * @var array
      */
     private $name = [];
-
     /**
      * Returns Name.
      * The name used to identify the place (physical or digital) that an order originates.
@@ -28,7 +25,6 @@ class OrderSource implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name used to identify the place (physical or digital) that an order originates.
@@ -40,7 +36,6 @@ class OrderSource implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name used to identify the place (physical or digital) that an order originates.
@@ -50,7 +45,6 @@ class OrderSource implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -59,7 +53,7 @@ class OrderSource implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -69,7 +63,6 @@ class OrderSource implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

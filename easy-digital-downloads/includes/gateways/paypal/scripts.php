@@ -103,7 +103,10 @@ function register_js( $force_load = false ) {
 		$active_methods[] = 'fastlane';
 	}
 
-	if ( $is_checkout && ! empty( PaymentMethods::methods_requiring_client_token( $active_methods ) ) ) {
+	// Gate the client-token fetch on a real checkout only, never on $force_load.
+	// Buy Now buttons force the SDK to load but never use Fastlane or the
+	// on-checkout card fields, so they must not trigger the blocking Connect API call.
+	if ( edd_is_checkout() && ! empty( PaymentMethods::methods_requiring_client_token( $active_methods ) ) ) {
 		$paypal_customer_id = '';
 		if ( is_user_logged_in() ) {
 			$customer           = edd_get_customer_by( 'user_id', get_current_user_id() );
@@ -137,40 +140,7 @@ function register_js( $force_load = false ) {
 		}
 
 		if ( $is_public ) {
-			$proxy          = new ConnectAPI( $mode );
-			$token_response = $proxy->post(
-				'/v3/paypal/sdk-token',
-				array_filter(
-					array(
-						'mode'        => $mode,
-						'customer_id' => $paypal_customer_id,
-						'domains'     => array( $domain ),
-					)
-				)
-			);
-
-			if ( ! is_wp_error( $token_response ) && ! empty( $token_response['client_token'] ) ) {
-				$client_token = $token_response['client_token'];
-				edd_debug_log( 'Fastlane: client token retrieved (' . strlen( $client_token ) . ' chars)' );
-			} else {
-				$last_code = $proxy->get_last_response_code();
-
-				// Capture the 422 reason for diagnostics.
-				if ( 422 === $last_code ) {
-					edd_record_gateway_error(
-						__( 'PayPal Fastlane SDK token request rejected', 'easy-digital-downloads' ),
-						sprintf(
-							/* translators: 1: HTTP response code, 2: domain sent, 3: JSON-encoded Connect response */
-							__( 'Proxy returned %1$d. Domain sent: %2$s. Response: %3$s', 'easy-digital-downloads' ),
-							$last_code,
-							$domain,
-							wp_json_encode( $token_response )
-						)
-					);
-				}
-
-				edd_debug_log( 'Fastlane: no client token received from proxy. Response: ' . wp_json_encode( $token_response ) );
-			}
+			$client_token = SdkToken::fetch( $mode, $paypal_customer_id, $domain );
 		}
 	}
 
@@ -358,7 +328,7 @@ function register_js( $force_load = false ) {
 			'enabledFundingSources'   => PaymentMethods::get_button_funding_sources( $active_methods ),
 			'fundingSlugMap'          => PaymentMethods::get_funding_slug_map(),
 			'isSandbox'               => 'sandbox' === $mode,
-			'storeName'               => get_bloginfo( 'name' ),
+			'storeName'               => BrandName::get(),
 		);
 
 		// Unbranded card (Advanced Card Processing) config for the on-checkout

@@ -61,6 +61,33 @@ function edd_add_to_cart( $download_id, $options = array() ) {
 }
 
 /**
+ * Query args stripped from the URL after an add-to-cart request.
+ *
+ * Deliberately excludes `discount`: a preset discount from a `?discount=CODE`
+ * buy link is applied on `init`, before the delayed add-to-cart runs. If a
+ * cart-mutation hook (e.g. `edd_pre_add_to_cart`) drops that discount during
+ * the add, keeping `discount` in the redirect lets it be re-applied on the
+ * resulting page load. See https://github.com/awesomemotive/easy-digital-downloads-pro/issues/2609.
+ *
+ * @since 3.7.0
+ *
+ * @return string[] Query args to remove from the post-add redirect.
+ */
+function edd_cart_removable_query_args() {
+	/**
+	 * Filters the query args removed from the URL after an add-to-cart request.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param string[] $query_args Query args to strip from the post-add redirect.
+	 */
+	return apply_filters(
+		'edd_cart_removable_query_args',
+		array( 'edd_action', 'download_id', 'edd_options', 'edd_download_quantity' )
+	);
+}
+
+/**
  * Removes a Download from the Cart
  *
  * @since 1.0

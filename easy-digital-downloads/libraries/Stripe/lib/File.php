@@ -1,13 +1,12 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
  * This object represents files hosted on Stripe's servers. You can upload
  * files with the <a href="https://stripe.com/docs/api#create_file">create file</a> request
- * (for example, when uploading dispute evidence). EDD\Vendor\Stripe also
+ * (for example, when uploading dispute evidence). Stripe also
  * creates files independently (for example, the results of a <a href="#scheduled_queries">Sigma scheduled
  * query</a>).
  *
@@ -28,7 +27,6 @@ namespace EDD\Vendor\Stripe;
 class File extends ApiResource
 {
     const OBJECT_NAME = 'file';
-
     const PURPOSE_ACCOUNT_REQUIREMENT = 'account_requirement';
     const PURPOSE_ADDITIONAL_VERIFICATION = 'additional_verification';
     const PURPOSE_BUSINESS_ICON = 'business_icon';
@@ -45,9 +43,8 @@ class File extends ApiResource
     const PURPOSE_SIGMA_SCHEDULED_QUERY = 'sigma_scheduled_query';
     const PURPOSE_TAX_DOCUMENT_USER_UPLOAD = 'tax_document_user_upload';
     const PURPOSE_TERMINAL_READER_SPLASHSCREEN = 'terminal_reader_splashscreen';
-
     /**
-     * Returns a list of the files that your account has access to. EDD\Vendor\Stripe sorts and
+     * Returns a list of the files that your account has access to. Stripe sorts and
      * returns the files by their creation dates, placing the most recently created
      * files at the top.
      *
@@ -61,13 +58,11 @@ class File extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing file object. After you supply a unique file
-     * ID, EDD\Vendor\Stripe returns the corresponding file object. Learn how to <a
+     * ID, Stripe returns the corresponding file object. Learn how to <a
      * href="/docs/file-upload#download-file-contents">access file contents</a>.
      *
      * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
@@ -82,20 +77,16 @@ class File extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     // This resource can have two different object names. In latter API
     // versions, only `file` is used, but since stripe-php may be used with
     // any API version, we need to support deserializing the older
     // `file_upload` object into the same class.
     const OBJECT_NAME_ALT = 'file_upload';
-
     use ApiOperations\Create {
         create as protected _create;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -113,7 +104,6 @@ class File extends ApiResource
         // Manually flatten params, otherwise curl's multipart encoder will
         // choke on nested arrays.
         $flatParams = \array_column(\EDD\Vendor\Stripe\Util\Util::flattenParams($params), 1, 0);
-
         return static::_create($flatParams, $opts);
     }
 }

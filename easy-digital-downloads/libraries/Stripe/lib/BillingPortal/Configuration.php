@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\BillingPortal;
 
 /**
@@ -24,9 +23,7 @@ namespace EDD\Vendor\Stripe\BillingPortal;
 class Configuration extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'billing_portal.configuration';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     /**
      * Creates a configuration that describes the functionality and behavior of a
      * PortalSession.
@@ -42,14 +39,11 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Returns a list of configurations that describe the functionality of the customer
      * portal.
@@ -64,10 +58,8 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a configuration that describes the functionality of the customer
      * portal.
@@ -84,10 +76,8 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a configuration that describes the functionality of the customer portal.
      *
@@ -103,11 +93,9 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the response returned by
  * [CancelPaymentByIdempotencyKey]($e/Payments/CancelPaymentByIdempotencyKey).
@@ -17,7 +15,6 @@ class CancelPaymentByIdempotencyKeyResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -28,7 +25,6 @@ class CancelPaymentByIdempotencyKeyResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -41,7 +37,6 @@ class CancelPaymentByIdempotencyKeyResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -50,7 +45,7 @@ class CancelPaymentByIdempotencyKeyResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -60,7 +55,6 @@ class CancelPaymentByIdempotencyKeyResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

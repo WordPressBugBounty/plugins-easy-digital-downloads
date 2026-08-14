@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
@@ -31,7 +30,7 @@ namespace EDD\Vendor\Stripe\Issuing;
  * @property \EDD\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|\EDD\Vendor\Stripe\StripeObject $network_data Details about the authorization, such as identifiers, set by the card network.
  * @property null|\EDD\Vendor\Stripe\StripeObject $pending_request The pending authorization request. This field will only be non-null during an <code>issuing_authorization.request</code> webhook.
- * @property \EDD\Vendor\Stripe\StripeObject[] $request_history History of every time a <code>pending_request</code> authorization was approved/declined, either by you directly or by EDD\Vendor\Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
+ * @property \EDD\Vendor\Stripe\StripeObject[] $request_history History of every time a <code>pending_request</code> authorization was approved/declined, either by you directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
  * @property string $status The current status of the authorization in its lifecycle.
  * @property null|string|\EDD\Vendor\Stripe\Issuing\Token $token <a href="https://stripe.com/docs/api/issuing/tokens/object">Token</a> object used for this authorization. If a network token was not used for this authorization, this field will be null.
  * @property \EDD\Vendor\Stripe\Issuing\Transaction[] $transactions List of <a href="https://stripe.com/docs/api/issuing/transactions">transactions</a> associated with this authorization.
@@ -42,19 +41,15 @@ namespace EDD\Vendor\Stripe\Issuing;
 class Authorization extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.authorization';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const AUTHORIZATION_METHOD_CHIP = 'chip';
     const AUTHORIZATION_METHOD_CONTACTLESS = 'contactless';
     const AUTHORIZATION_METHOD_KEYED_IN = 'keyed_in';
     const AUTHORIZATION_METHOD_ONLINE = 'online';
     const AUTHORIZATION_METHOD_SWIPE = 'swipe';
-
     const STATUS_CLOSED = 'closed';
     const STATUS_PENDING = 'pending';
     const STATUS_REVERSED = 'reversed';
-
     /**
      * Returns a list of Issuing <code>Authorization</code> objects. The objects are
      * sorted in descending order by creation date, with the most recently created
@@ -70,10 +65,8 @@ class Authorization extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Authorization</code> object.
      *
@@ -89,10 +82,8 @@ class Authorization extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified Issuing <code>Authorization</code> object by setting the
      * values of the parameters passed. Any parameters not provided will be left
@@ -110,14 +101,11 @@ class Authorization extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -131,10 +119,8 @@ class Authorization extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/approve';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -148,7 +134,6 @@ class Authorization extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/decline';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

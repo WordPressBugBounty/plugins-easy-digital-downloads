@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Filter for `Order` objects based on whether their `CREATED_AT`,
  * `CLOSED_AT`, or `UPDATED_AT` timestamps fall within a specified time range.
@@ -29,17 +27,14 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
      * @var TimeRange|null
      */
     private $createdAt;
-
     /**
      * @var TimeRange|null
      */
     private $updatedAt;
-
     /**
      * @var TimeRange|null
      */
     private $closedAt;
-
     /**
      * Returns Created At.
      * Represents a generic time range. The start and end values are
@@ -52,7 +47,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * Represents a generic time range. The start and end values are
@@ -67,7 +61,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * Represents a generic time range. The start and end values are
@@ -80,7 +73,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * Represents a generic time range. The start and end values are
@@ -95,7 +87,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Closed At.
      * Represents a generic time range. The start and end values are
@@ -108,7 +99,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         return $this->closedAt;
     }
-
     /**
      * Sets Closed At.
      * Represents a generic time range. The start and end values are
@@ -123,7 +113,6 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
     {
         $this->closedAt = $closedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -132,7 +121,7 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -143,12 +132,11 @@ class SearchOrdersDateTimeFilter implements \JsonSerializable
             $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->closedAt)) {
-            $json['closed_at']  = $this->closedAt;
+            $json['closed_at'] = $this->closedAt;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

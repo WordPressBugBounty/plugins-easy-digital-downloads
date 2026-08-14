@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\FinancialConnections;
 
 /**
@@ -26,7 +25,6 @@ class SessionService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/financial_connections/sessions', $params, $opts);
     }
-
     /**
      * Retrieves the details of a Financial Connections <code>Session</code>.
      *

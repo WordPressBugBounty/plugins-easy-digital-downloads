@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Exceptions;
 
 use BadMethodCallException as BaseBadMethodCallException;
 use Throwable;
-
 class BadFluentSetterException extends BaseBadMethodCallException implements BadMethodCallException
 {
     /**
@@ -22,7 +20,6 @@ class BadFluentSetterException extends BaseBadMethodCallException implements Bad
      * @var string
      */
     protected $setter;
-
     /**
      * Constructor.
      *
@@ -33,10 +30,8 @@ class BadFluentSetterException extends BaseBadMethodCallException implements Bad
     public function __construct($setter, $code = 0, ?Throwable $previous = null)
     {
         $this->setter = $setter;
-
         parent::__construct(\sprintf("Unknown fluent setter '%s'", $setter), $code, $previous);
     }
-
     /**
      * Get the setter.
      *

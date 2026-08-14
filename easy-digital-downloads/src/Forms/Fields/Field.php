@@ -142,7 +142,7 @@ abstract class Field implements FieldInterface {
 			return;
 		}
 		?>
-		<p class="edd-description"><?php echo esc_html( $this->get_description() ); ?></p>
+		<p class="edd-description" id="<?php echo esc_attr( $this->get_id() . '-description' ); ?>"><?php echo esc_html( $this->get_description() ); ?></p>
 		<?php
 	}
 
@@ -163,12 +163,18 @@ abstract class Field implements FieldInterface {
 	 * @return array
 	 */
 	protected function get_defaults(): array {
-		return array(
+		$defaults = array(
 			'name'     => $this->get_id(),
 			'id'       => $this->get_id(),
 			'class'    => $this->get_css_class_string( $this->get_field_classes() ),
 			'required' => $this->is_required(),
 		);
+
+		if ( ! empty( $this->get_description() ) && ! $this->is_block() ) {
+			$defaults['aria-describedby'] = $this->get_id() . '-description';
+		}
+
+		return $defaults;
 	}
 
 	/**

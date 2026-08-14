@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A rounding adjustment of the money being returned. Commonly used to apply cash rounding
  * when the minimum unit of the account is smaller than the lowest physical denomination of the
@@ -17,17 +15,14 @@ class OrderRoundingAdjustment implements \JsonSerializable
      * @var array
      */
     private $uid = [];
-
     /**
      * @var array
      */
     private $name = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * Returns Uid.
      * A unique ID that identifies the rounding adjustment only within this order.
@@ -39,7 +34,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
         }
         return $this->uid['value'];
     }
-
     /**
      * Sets Uid.
      * A unique ID that identifies the rounding adjustment only within this order.
@@ -50,7 +44,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         $this->uid['value'] = $uid;
     }
-
     /**
      * Unsets Uid.
      * A unique ID that identifies the rounding adjustment only within this order.
@@ -59,7 +52,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         $this->uid = [];
     }
-
     /**
      * Returns Name.
      * The name of the rounding adjustment from the original sale order.
@@ -71,7 +63,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
         }
         return $this->name['value'];
     }
-
     /**
      * Sets Name.
      * The name of the rounding adjustment from the original sale order.
@@ -82,7 +73,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         $this->name['value'] = $name;
     }
-
     /**
      * Unsets Name.
      * The name of the rounding adjustment from the original sale order.
@@ -91,7 +81,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         $this->name = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -106,7 +95,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -123,7 +111,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -132,15 +119,15 @@ class OrderRoundingAdjustment implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->uid)) {
-            $json['uid']          = $this->uid['value'];
+            $json['uid'] = $this->uid['value'];
         }
         if (!empty($this->name)) {
-            $json['name']         = $this->name['value'];
+            $json['name'] = $this->name['value'];
         }
         if (isset($this->amountMoney)) {
             $json['amount_money'] = $this->amountMoney;
@@ -148,7 +135,6 @@ class OrderRoundingAdjustment implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
@@ -23,21 +22,16 @@ namespace EDD\Vendor\Stripe\Issuing;
 class Token extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.token';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const NETWORK_MASTERCARD = 'mastercard';
     const NETWORK_VISA = 'visa';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_DELETED = 'deleted';
     const STATUS_REQUESTED = 'requested';
     const STATUS_SUSPENDED = 'suspended';
-
     const WALLET_PROVIDER_APPLE_PAY = 'apple_pay';
     const WALLET_PROVIDER_GOOGLE_PAY = 'google_pay';
     const WALLET_PROVIDER_SAMSUNG_PAY = 'samsung_pay';
-
     /**
      * Lists all Issuing <code>Token</code> objects for a given card.
      *
@@ -51,10 +45,8 @@ class Token extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Token</code> object.
      *
@@ -70,10 +62,8 @@ class Token extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Attempts to update the specified Issuing <code>Token</code> object to the status
      * specified.
@@ -90,11 +80,9 @@ class Token extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

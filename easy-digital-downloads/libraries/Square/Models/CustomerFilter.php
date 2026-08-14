@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the filtering criteria in a [search query]($m/CustomerQuery) that defines how to filter
  * customer profiles returned in [SearchCustomers]($e/Customers/SearchCustomers) results.
@@ -16,47 +14,38 @@ class CustomerFilter implements \JsonSerializable
      * @var CustomerCreationSourceFilter|null
      */
     private $creationSource;
-
     /**
      * @var TimeRange|null
      */
     private $createdAt;
-
     /**
      * @var TimeRange|null
      */
     private $updatedAt;
-
     /**
      * @var CustomerTextFilter|null
      */
     private $emailAddress;
-
     /**
      * @var CustomerTextFilter|null
      */
     private $phoneNumber;
-
     /**
      * @var CustomerTextFilter|null
      */
     private $referenceId;
-
     /**
      * @var FilterValue|null
      */
     private $groupIds;
-
     /**
      * @var CustomerCustomAttributeFilters|null
      */
     private $customAttribute;
-
     /**
      * @var FilterValue|null
      */
     private $segmentIds;
-
     /**
      * Returns Creation Source.
      * The creation source filter.
@@ -68,7 +57,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->creationSource;
     }
-
     /**
      * Sets Creation Source.
      * The creation source filter.
@@ -82,7 +70,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->creationSource = $creationSource;
     }
-
     /**
      * Returns Created At.
      * Represents a generic time range. The start and end values are
@@ -95,7 +82,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * Represents a generic time range. The start and end values are
@@ -110,7 +96,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * Represents a generic time range. The start and end values are
@@ -123,7 +108,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * Represents a generic time range. The start and end values are
@@ -138,7 +122,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Email Address.
      * A filter to select customers based on exact or fuzzy matching of
@@ -149,7 +132,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->emailAddress;
     }
-
     /**
      * Sets Email Address.
      * A filter to select customers based on exact or fuzzy matching of
@@ -162,7 +144,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->emailAddress = $emailAddress;
     }
-
     /**
      * Returns Phone Number.
      * A filter to select customers based on exact or fuzzy matching of
@@ -173,7 +154,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->phoneNumber;
     }
-
     /**
      * Sets Phone Number.
      * A filter to select customers based on exact or fuzzy matching of
@@ -186,7 +166,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->phoneNumber = $phoneNumber;
     }
-
     /**
      * Returns Reference Id.
      * A filter to select customers based on exact or fuzzy matching of
@@ -197,7 +176,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->referenceId;
     }
-
     /**
      * Sets Reference Id.
      * A filter to select customers based on exact or fuzzy matching of
@@ -210,7 +188,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->referenceId = $referenceId;
     }
-
     /**
      * Returns Group Ids.
      * A filter to select resources based on an exact field value. For any given
@@ -223,7 +200,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->groupIds;
     }
-
     /**
      * Sets Group Ids.
      * A filter to select resources based on an exact field value. For any given
@@ -238,9 +214,8 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->groupIds = $groupIds;
     }
-
     /**
-     * Returns Custom EDD_EDD_Attribute.
+     * Returns Custom Attribute.
      * The custom attribute filters in a set of [customer filters]($m/CustomerFilter) used in a search
      * query. Use this filter
      * to search based on [custom attributes]($m/CustomAttribute) that are assigned to customer profiles.
@@ -252,9 +227,8 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->customAttribute;
     }
-
     /**
-     * Sets Custom EDD_EDD_Attribute.
+     * Sets Custom Attribute.
      * The custom attribute filters in a set of [customer filters]($m/CustomerFilter) used in a search
      * query. Use this filter
      * to search based on [custom attributes]($m/CustomAttribute) that are assigned to customer profiles.
@@ -268,7 +242,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->customAttribute = $customAttribute;
     }
-
     /**
      * Returns Segment Ids.
      * A filter to select resources based on an exact field value. For any given
@@ -281,7 +254,6 @@ class CustomerFilter implements \JsonSerializable
     {
         return $this->segmentIds;
     }
-
     /**
      * Sets Segment Ids.
      * A filter to select resources based on an exact field value. For any given
@@ -296,7 +268,6 @@ class CustomerFilter implements \JsonSerializable
     {
         $this->segmentIds = $segmentIds;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -305,41 +276,40 @@ class CustomerFilter implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->creationSource)) {
-            $json['creation_source']  = $this->creationSource;
+            $json['creation_source'] = $this->creationSource;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']       = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']       = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->emailAddress)) {
-            $json['email_address']    = $this->emailAddress;
+            $json['email_address'] = $this->emailAddress;
         }
         if (isset($this->phoneNumber)) {
-            $json['phone_number']     = $this->phoneNumber;
+            $json['phone_number'] = $this->phoneNumber;
         }
         if (isset($this->referenceId)) {
-            $json['reference_id']     = $this->referenceId;
+            $json['reference_id'] = $this->referenceId;
         }
         if (isset($this->groupIds)) {
-            $json['group_ids']        = $this->groupIds;
+            $json['group_ids'] = $this->groupIds;
         }
         if (isset($this->customAttribute)) {
             $json['custom_attribute'] = $this->customAttribute;
         }
         if (isset($this->segmentIds)) {
-            $json['segment_ids']      = $this->segmentIds;
+            $json['segment_ids'] = $this->segmentIds;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

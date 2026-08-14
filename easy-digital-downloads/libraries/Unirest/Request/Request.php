@@ -7,7 +7,6 @@ use EDD\Vendor\CoreInterfaces\Core\Request\RequestMethod;
 use EDD\Vendor\CoreInterfaces\Http\RetryOption;
 use Exception;
 use InvalidArgumentException;
-
 class Request implements RequestInterface
 {
     /**
@@ -19,18 +18,15 @@ class Request implements RequestInterface
     public static function buildHTTPCurlQuery($data, $parent = false): array
     {
         $result = [];
-
         if (is_object($data)) {
             $data = get_object_vars($data);
         }
-
         foreach ($data as $key => $value) {
             if (!empty($parent)) {
                 $new_key = sprintf('%s[%s]', $parent, $key);
             } else {
                 $new_key = $key;
             }
-
             if (!$value instanceof \CURLFile and (is_array($value) or is_object($value))) {
                 $result = array_merge($result, self::buildHTTPCurlQuery($value, $new_key));
             } else {
@@ -39,13 +35,11 @@ class Request implements RequestInterface
         }
         return $result;
     }
-
     private $httpMethod;
     private $queryUrl;
     private $headers;
     private $body;
     private $retryOption;
-
     /**
      * @param string $url         Query url
      * @param string $method      Http method
@@ -53,20 +47,14 @@ class Request implements RequestInterface
      * @param mixed  $body        Http request body
      * @param string $retryOption To enable/disable httpMethods whitelist while retrying Api call
      */
-    public function __construct(
-        string $url,
-        string $method = RequestMethod::GET,
-        array $headers = [],
-        $body = null,
-        string $retryOption = RetryOption::USE_GLOBAL_SETTINGS
-    ) {
+    public function __construct(string $url, string $method = RequestMethod::GET, array $headers = [], $body = null, string $retryOption = RetryOption::USE_GLOBAL_SETTINGS)
+    {
         $this->queryUrl = $this->validateUrl($url);
         $this->httpMethod = $method;
         $this->headers = $headers;
         $this->body = $body;
         $this->retryOption = $retryOption;
     }
-
     /**
      * Validates and processes the given Url to ensure safe usage with cURL.
      * @param string $url The given Url to process
@@ -82,60 +70,48 @@ class Request implements RequestInterface
         }
         //get the http protocol match
         $protocol = $matches[1];
-
         //remove redundant forward slashes
         $query = substr($url, strlen($protocol));
         $query = preg_replace("#//+#", "/", $query);
-
         //return process url
         return $protocol . $query;
     }
-
     public function getHttpMethod(): string
     {
         return $this->httpMethod;
     }
-
     public function getQueryUrl(): string
     {
         return $this->queryUrl;
     }
-
     public function getHeaders(): array
     {
         return $this->headers;
     }
-
     public function getParameters(): array
     {
         return [];
     }
-
     public function getEncodedParameters(): array
     {
         return [];
     }
-
     public function getMultipartParameters(): array
     {
         return [];
     }
-
     public function getBody()
     {
         return $this->body;
     }
-
     public function getRetryOption(): string
     {
         return $this->retryOption;
     }
-
     public function convert(): Request
     {
         return $this;
     }
-
     public function toApiException(string $message): Exception
     {
         return new Exception($message);

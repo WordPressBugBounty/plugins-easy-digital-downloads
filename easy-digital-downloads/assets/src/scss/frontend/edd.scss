@@ -91,12 +91,6 @@
 	margin-bottom: 15px;
 }
 
-/* Left align the loading on taxes */
-.edd_cart_tax .edd-loading-ajax.edd-loading {
-	margin: 0px 0px 0px auto;
-	display: inline-block;
-}
-
 /* Desktop and tablet */
 @media only screen and (min-width: 768px) {
 	#edd-amazon-address-box,
@@ -151,7 +145,6 @@
 	transform: translateZ(0);
 }
 a.edd-add-to-cart.white .edd-loading,
-.edd-discount-loader.edd-loading,
 .edd-loading-ajax.edd-loading {
 	border-top-color: rgba(0, 0, 0, 0.2);
 	border-right-color: rgba(0, 0, 0, 0.2);
@@ -164,15 +157,6 @@ a.edd-add-to-cart.white .edd-loading,
 	top: 0;
 	left: 0.25em;
 	vertical-align: middle;
-}
-
-.edd-discount-loader.edd-loading {
-	display: inline-block;
-	position: relative;
-	left: auto;
-	vertical-align: middle;
-	width: 1.25em;
-	height: 1.25em;
 }
 
 .edd-loading-ajax.edd-loading {
@@ -195,8 +179,7 @@ a.edd-add-to-cart .edd-add-to-cart-label,
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
-.edd-add-to-cart[data-edd-loading] .edd-loading,
-.edd-discount-loader.edd-loading {
+.edd-add-to-cart[data-edd-loading] .edd-loading {
 	opacity: 1;
 	filter: alpha(opacity=100);
 }
@@ -205,7 +188,6 @@ a.edd-add-to-cart .edd-add-to-cart-label,
 	display: block;
 	position: absolute;
 }
-
 
 /* =Theme Specific styling
 -------------------------------------------------------------- */

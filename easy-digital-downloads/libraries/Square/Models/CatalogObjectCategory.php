@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A category that can be assigned to an item or a parent category that can be assigned
  * to another category. For example, a clothing category can be assigned to a t-shirt item or
@@ -17,12 +15,10 @@ class CatalogObjectCategory implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $ordinal = [];
-
     /**
      * Returns Id.
      * The ID of the object's category.
@@ -31,7 +27,6 @@ class CatalogObjectCategory implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The ID of the object's category.
@@ -42,7 +37,6 @@ class CatalogObjectCategory implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Ordinal.
      * The order of the object within the context of the category.
@@ -54,7 +48,6 @@ class CatalogObjectCategory implements \JsonSerializable
         }
         return $this->ordinal['value'];
     }
-
     /**
      * Sets Ordinal.
      * The order of the object within the context of the category.
@@ -65,7 +58,6 @@ class CatalogObjectCategory implements \JsonSerializable
     {
         $this->ordinal['value'] = $ordinal;
     }
-
     /**
      * Unsets Ordinal.
      * The order of the object within the context of the category.
@@ -74,7 +66,6 @@ class CatalogObjectCategory implements \JsonSerializable
     {
         $this->ordinal = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -83,12 +74,12 @@ class CatalogObjectCategory implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']      = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->ordinal)) {
             $json['ordinal'] = $this->ordinal['value'];
@@ -96,7 +87,6 @@ class CatalogObjectCategory implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

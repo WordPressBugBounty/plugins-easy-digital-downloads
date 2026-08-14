@@ -28,6 +28,12 @@ class Loader extends MiniManager {
 		return array(
 			new Subscribers\Widget(),
 			new Subscribers\Checkout(),
+			new Subscribers\CheckoutFormLayer(),
+			new Subscribers\CheckoutBox(),
+			new Subscribers\CheckoutAssets(),
+			new Subscribers\EditorAssets(),
+			new Subscribers\CheckoutTemplates(),
+			new Subscribers\CheckoutEditorPreview(),
 		);
 	}
 }

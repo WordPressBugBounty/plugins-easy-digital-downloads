@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\TestHelpers\Terminal;
 
 /**
@@ -14,10 +13,7 @@ class TerminalServiceFactory extends \EDD\Vendor\Stripe\Service\AbstractServiceF
     /**
      * @var array<string, string>
      */
-    private static $classMap = [
-        'readers' => ReaderService::class,
-    ];
-
+    private static $classMap = ['readers' => ReaderService::class];
     protected function getServiceClass($name)
     {
         return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;

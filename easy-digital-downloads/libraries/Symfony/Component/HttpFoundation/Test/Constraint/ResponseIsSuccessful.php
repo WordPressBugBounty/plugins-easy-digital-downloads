@@ -8,12 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Response;
-
 final class ResponseIsSuccessful extends Constraint
 {
     /**
@@ -23,7 +21,6 @@ final class ResponseIsSuccessful extends Constraint
     {
         return 'is successful';
     }
-
     /**
      * @param Response $response
      *
@@ -33,7 +30,6 @@ final class ResponseIsSuccessful extends Constraint
     {
         return $response->isSuccessful();
     }
-
     /**
      * @param Response $response
      *
@@ -41,9 +37,8 @@ final class ResponseIsSuccessful extends Constraint
      */
     protected function failureDescription($response): string
     {
-        return 'the Response '.$this->toString();
+        return 'the Response ' . $this->toString();
     }
-
     /**
      * @param Response $response
      *

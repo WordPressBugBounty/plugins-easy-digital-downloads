@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -24,7 +23,6 @@ class PaymentMethodDomainService extends \EDD\Vendor\Stripe\Service\AbstractServ
     {
         return $this->requestCollection('get', '/v1/payment_method_domains', $params, $opts);
     }
-
     /**
      * Creates a payment method domain.
      *
@@ -39,7 +37,6 @@ class PaymentMethodDomainService extends \EDD\Vendor\Stripe\Service\AbstractServ
     {
         return $this->request('post', '/v1/payment_method_domains', $params, $opts);
     }
-
     /**
      * Retrieves the details of an existing payment method domain.
      *
@@ -55,7 +52,6 @@ class PaymentMethodDomainService extends \EDD\Vendor\Stripe\Service\AbstractServ
     {
         return $this->request('get', $this->buildPath('/v1/payment_method_domains/%s', $id), $params, $opts);
     }
-
     /**
      * Updates an existing payment method domain.
      *
@@ -71,7 +67,6 @@ class PaymentMethodDomainService extends \EDD\Vendor\Stripe\Service\AbstractServ
     {
         return $this->request('post', $this->buildPath('/v1/payment_method_domains/%s', $id), $params, $opts);
     }
-
     /**
      * Some payment methods such as Apple Pay require additional steps to verify a
      * domain. If the requirements weren’t satisfied when the domain was created, the

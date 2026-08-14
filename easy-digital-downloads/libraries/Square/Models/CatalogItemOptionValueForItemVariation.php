@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * A `CatalogItemOptionValue` links an item variation to an item option as
  * an item option value. For example, a t-shirt item may offer a color option and
@@ -18,12 +16,10 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
      * @var array
      */
     private $itemOptionId = [];
-
     /**
      * @var array
      */
     private $itemOptionValueId = [];
-
     /**
      * Returns Item Option Id.
      * The unique id of an item option.
@@ -35,7 +31,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
         }
         return $this->itemOptionId['value'];
     }
-
     /**
      * Sets Item Option Id.
      * The unique id of an item option.
@@ -46,7 +41,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
     {
         $this->itemOptionId['value'] = $itemOptionId;
     }
-
     /**
      * Unsets Item Option Id.
      * The unique id of an item option.
@@ -55,7 +49,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
     {
         $this->itemOptionId = [];
     }
-
     /**
      * Returns Item Option Value Id.
      * The unique id of the selected value for the item option.
@@ -67,7 +60,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
         }
         return $this->itemOptionValueId['value'];
     }
-
     /**
      * Sets Item Option Value Id.
      * The unique id of the selected value for the item option.
@@ -78,7 +70,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
     {
         $this->itemOptionValueId['value'] = $itemOptionValueId;
     }
-
     /**
      * Unsets Item Option Value Id.
      * The unique id of the selected value for the item option.
@@ -87,7 +78,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
     {
         $this->itemOptionValueId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -96,12 +86,12 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->itemOptionId)) {
-            $json['item_option_id']       = $this->itemOptionId['value'];
+            $json['item_option_id'] = $this->itemOptionId['value'];
         }
         if (!empty($this->itemOptionValueId)) {
             $json['item_option_value_id'] = $this->itemOptionValueId['value'];
@@ -109,7 +99,6 @@ class CatalogItemOptionValueForItemVariation implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

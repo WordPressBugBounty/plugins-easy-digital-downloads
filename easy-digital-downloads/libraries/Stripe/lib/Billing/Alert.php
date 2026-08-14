@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Billing;
 
 /**
@@ -19,11 +18,9 @@ namespace EDD\Vendor\Stripe\Billing;
 class Alert extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'billing.alert';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_ARCHIVED = 'archived';
     const STATUS_INACTIVE = 'inactive';
-
     /**
      * Creates a billing alert.
      *
@@ -38,14 +35,11 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Lists billing active and inactive alerts.
      *
@@ -59,10 +53,8 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a billing alert given an ID.
      *
@@ -78,10 +70,8 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -95,10 +85,8 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/activate';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -112,10 +100,8 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/archive';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -129,7 +115,6 @@ class Alert extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/deactivate';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

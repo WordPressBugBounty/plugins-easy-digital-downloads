@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Climate;
 
 /**
@@ -34,22 +33,18 @@ namespace EDD\Vendor\Stripe\Climate;
 class Order extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'climate.order';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const CANCELLATION_REASON_EXPIRED = 'expired';
     const CANCELLATION_REASON_PRODUCT_UNAVAILABLE = 'product_unavailable';
     const CANCELLATION_REASON_REQUESTED = 'requested';
-
     const STATUS_AWAITING_FUNDS = 'awaiting_funds';
     const STATUS_CANCELED = 'canceled';
     const STATUS_CONFIRMED = 'confirmed';
     const STATUS_DELIVERED = 'delivered';
     const STATUS_OPEN = 'open';
-
     /**
      * Creates a Climate order object for a given Climate product. The order will be
-     * processed immediately after creation and payment will be deducted your EDD\Vendor\Stripe
+     * processed immediately after creation and payment will be deducted your Stripe
      * balance.
      *
      * @param null|array $params
@@ -63,14 +58,11 @@ class Order extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Lists all Climate order objects. The orders are returned sorted by creation
      * date, with the most recently created orders appearing first.
@@ -85,10 +77,8 @@ class Order extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the details of a Climate order object with the given ID.
      *
@@ -104,10 +94,8 @@ class Order extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified order by setting the values of the parameters passed.
      *
@@ -123,14 +111,11 @@ class Order extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -144,7 +129,6 @@ class Order extends \EDD\Vendor\Stripe\ApiResource
         $url = $this->instanceUrl() . '/cancel';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

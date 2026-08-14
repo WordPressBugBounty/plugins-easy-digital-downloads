@@ -141,7 +141,7 @@ class Handler {
 	 */
 	public function auto_updater() {
 
-		if ( ! current_user_can( 'manage_options' ) && ! edd_doing_cron() ) {
+		if ( ! current_user_can( 'manage_options' ) && ! \EDD\Utils\Request::is_request( array( 'cron', 'cli' ) ) ) {
 			return;
 		}
 

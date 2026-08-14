@@ -165,7 +165,7 @@ class EmailSummaries extends Component {
 	 */
 	public function run_cron() {
 		// This is not cron, abort!
-		if ( ! wp_doing_cron() ) {
+		if ( ! edd_doing_cron() ) {
 			return;
 		}
 

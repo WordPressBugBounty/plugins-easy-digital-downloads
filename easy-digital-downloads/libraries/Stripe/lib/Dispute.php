@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -14,13 +13,13 @@ namespace EDD\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property int $amount Disputed amount. Usually the amount of the charge, but it can differ (usually because of currency fluctuation or because only part of the order is disputed).
- * @property \EDD\Vendor\Stripe\BalanceTransaction[] $balance_transactions List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your EDD\Vendor\Stripe account as a result of this dispute.
+ * @property \EDD\Vendor\Stripe\BalanceTransaction[] $balance_transactions List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
  * @property string|\EDD\Vendor\Stripe\Charge $charge ID of the charge that's disputed.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property \EDD\Vendor\Stripe\StripeObject $evidence
  * @property \EDD\Vendor\Stripe\StripeObject $evidence_details
- * @property bool $is_charge_refundable If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your EDD\Vendor\Stripe account as a result of this dispute.
+ * @property bool $is_charge_refundable If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \EDD\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $network_reason_code Network-dependent reason code for the dispute.
@@ -32,9 +31,7 @@ namespace EDD\Vendor\Stripe;
 class Dispute extends ApiResource
 {
     const OBJECT_NAME = 'dispute';
-
     use ApiOperations\Update;
-
     const REASON_BANK_CANNOT_PROCESS = 'bank_cannot_process';
     const REASON_CHECK_RETURNED = 'check_returned';
     const REASON_CREDIT_NOT_PROCESSED = 'credit_not_processed';
@@ -49,7 +46,6 @@ class Dispute extends ApiResource
     const REASON_PRODUCT_UNACCEPTABLE = 'product_unacceptable';
     const REASON_SUBSCRIPTION_CANCELED = 'subscription_canceled';
     const REASON_UNRECOGNIZED = 'unrecognized';
-
     const STATUS_LOST = 'lost';
     const STATUS_NEEDS_RESPONSE = 'needs_response';
     const STATUS_UNDER_REVIEW = 'under_review';
@@ -57,7 +53,6 @@ class Dispute extends ApiResource
     const STATUS_WARNING_NEEDS_RESPONSE = 'warning_needs_response';
     const STATUS_WARNING_UNDER_REVIEW = 'warning_under_review';
     const STATUS_WON = 'won';
-
     /**
      * Returns a list of your disputes.
      *
@@ -71,10 +66,8 @@ class Dispute extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the dispute with the given ID.
      *
@@ -90,10 +83,8 @@ class Dispute extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * When you get a dispute, contacting your customer is always the best first step.
      * If that doesn’t work, you can submit evidence to help us resolve the dispute in
@@ -117,14 +108,11 @@ class Dispute extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -138,7 +126,6 @@ class Dispute extends ApiResource
         $url = $this->instanceUrl() . '/close';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
 }

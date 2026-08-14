@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents the unit used to measure a `CatalogItemVariation` and
  * specifies the precision for decimal quantities.
@@ -16,12 +14,10 @@ class CatalogMeasurementUnit implements \JsonSerializable
      * @var MeasurementUnit|null
      */
     private $measurementUnit;
-
     /**
      * @var array
      */
     private $precision = [];
-
     /**
      * Returns Measurement Unit.
      * Represents a unit of measurement to use with a quantity, such as ounces
@@ -32,7 +28,6 @@ class CatalogMeasurementUnit implements \JsonSerializable
     {
         return $this->measurementUnit;
     }
-
     /**
      * Sets Measurement Unit.
      * Represents a unit of measurement to use with a quantity, such as ounces
@@ -45,7 +40,6 @@ class CatalogMeasurementUnit implements \JsonSerializable
     {
         $this->measurementUnit = $measurementUnit;
     }
-
     /**
      * Returns Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -65,7 +59,6 @@ class CatalogMeasurementUnit implements \JsonSerializable
         }
         return $this->precision['value'];
     }
-
     /**
      * Sets Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -84,7 +77,6 @@ class CatalogMeasurementUnit implements \JsonSerializable
     {
         $this->precision['value'] = $precision;
     }
-
     /**
      * Unsets Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -101,7 +93,6 @@ class CatalogMeasurementUnit implements \JsonSerializable
     {
         $this->precision = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -110,7 +101,7 @@ class CatalogMeasurementUnit implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -118,12 +109,11 @@ class CatalogMeasurementUnit implements \JsonSerializable
             $json['measurement_unit'] = $this->measurementUnit;
         }
         if (!empty($this->precision)) {
-            $json['precision']        = $this->precision['value'];
+            $json['precision'] = $this->precision['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

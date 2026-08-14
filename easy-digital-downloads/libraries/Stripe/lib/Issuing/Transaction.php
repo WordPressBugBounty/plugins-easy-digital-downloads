@@ -1,12 +1,11 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Issuing;
 
 /**
  * Any use of an <a href="https://stripe.com/docs/issuing">issued card</a> that results in funds entering or leaving
- * your EDD\Vendor\Stripe account, such as a completed purchase or refund, is represented by an Issuing
+ * your Stripe account, such as a completed purchase or refund, is represented by an Issuing
  * <code>Transaction</code> object.
  *
  * Related guide: <a href="https://stripe.com/docs/issuing/purchases/transactions">Issued card transactions</a>
@@ -37,16 +36,12 @@ namespace EDD\Vendor\Stripe\Issuing;
 class Transaction extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.transaction';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     const TYPE_CAPTURE = 'capture';
     const TYPE_REFUND = 'refund';
-
     const WALLET_APPLE_PAY = 'apple_pay';
     const WALLET_GOOGLE_PAY = 'google_pay';
     const WALLET_SAMSUNG_PAY = 'samsung_pay';
-
     /**
      * Returns a list of Issuing <code>Transaction</code> objects. The objects are
      * sorted in descending order by creation date, with the most recently created
@@ -62,10 +57,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Transaction</code> object.
      *
@@ -81,10 +74,8 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates the specified Issuing <code>Transaction</code> object by setting the
      * values of the parameters passed. Any parameters not provided will be left
@@ -102,11 +93,9 @@ class Transaction extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

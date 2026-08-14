@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a request to update a payment using
  * [UpdatePayment]($e/Payments/UpdatePayment).
@@ -16,12 +14,10 @@ class UpdatePaymentRequest implements \JsonSerializable
      * @var Payment|null
      */
     private $payment;
-
     /**
      * @var string
      */
     private $idempotencyKey;
-
     /**
      * @param string $idempotencyKey
      */
@@ -29,19 +25,17 @@ class UpdatePaymentRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Payment.
-     * Represents a payment processed by the EDD\Vendor\Square API.
+     * Represents a payment processed by the Square API.
      */
     public function getPayment(): ?Payment
     {
         return $this->payment;
     }
-
     /**
      * Sets Payment.
-     * Represents a payment processed by the EDD\Vendor\Square API.
+     * Represents a payment processed by the Square API.
      *
      * @maps payment
      */
@@ -49,7 +43,6 @@ class UpdatePaymentRequest implements \JsonSerializable
     {
         $this->payment = $payment;
     }
-
     /**
      * Returns Idempotency Key.
      * A unique string that identifies this `UpdatePayment` request. Keys can be any valid string
@@ -62,7 +55,6 @@ class UpdatePaymentRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * A unique string that identifies this `UpdatePayment` request. Keys can be any valid string
@@ -78,7 +70,6 @@ class UpdatePaymentRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -87,18 +78,17 @@ class UpdatePaymentRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->payment)) {
-            $json['payment']     = $this->payment;
+            $json['payment'] = $this->payment;
         }
         $json['idempotency_key'] = $this->idempotencyKey;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

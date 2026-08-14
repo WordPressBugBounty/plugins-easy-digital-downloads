@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Creates a [Subscription]($m/WebhookSubscription).
  */
@@ -15,12 +13,10 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
      * @var string|null
      */
     private $idempotencyKey;
-
     /**
      * @var WebhookSubscription
      */
     private $subscription;
-
     /**
      * @param WebhookSubscription $subscription
      */
@@ -28,7 +24,6 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->subscription = $subscription;
     }
-
     /**
      * Returns Idempotency Key.
      * A unique string that identifies the [CreateWebhookSubscription](api-endpoint:WebhookSubscriptions-
@@ -38,7 +33,6 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
     {
         return $this->idempotencyKey;
     }
-
     /**
      * Sets Idempotency Key.
      * A unique string that identifies the [CreateWebhookSubscription](api-endpoint:WebhookSubscriptions-
@@ -50,7 +44,6 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->idempotencyKey = $idempotencyKey;
     }
-
     /**
      * Returns Subscription.
      * Represents the details of a webhook subscription, including notification URL,
@@ -60,7 +53,6 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
     {
         return $this->subscription;
     }
-
     /**
      * Sets Subscription.
      * Represents the details of a webhook subscription, including notification URL,
@@ -73,7 +65,6 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
     {
         $this->subscription = $subscription;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -82,18 +73,17 @@ class CreateWebhookSubscriptionRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->idempotencyKey)) {
             $json['idempotency_key'] = $this->idempotencyKey;
         }
-        $json['subscription']        = $this->subscription;
+        $json['subscription'] = $this->subscription;
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

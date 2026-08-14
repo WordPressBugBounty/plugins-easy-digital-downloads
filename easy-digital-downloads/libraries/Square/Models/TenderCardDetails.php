@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
  */
@@ -15,17 +13,14 @@ class TenderCardDetails implements \JsonSerializable
      * @var string|null
      */
     private $status;
-
     /**
      * @var Card|null
      */
     private $card;
-
     /**
      * @var string|null
      */
     private $entryMethod;
-
     /**
      * Returns Status.
      * Indicates the card transaction's current status.
@@ -34,7 +29,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Indicates the card transaction's current status.
@@ -45,7 +39,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Card.
      * Represents the payment details of a card to be used for payments. These
@@ -55,7 +48,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         return $this->card;
     }
-
     /**
      * Sets Card.
      * Represents the payment details of a card to be used for payments. These
@@ -67,7 +59,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         $this->card = $card;
     }
-
     /**
      * Returns Entry Method.
      * Indicates the method used to enter the card's details.
@@ -76,7 +67,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         return $this->entryMethod;
     }
-
     /**
      * Sets Entry Method.
      * Indicates the method used to enter the card's details.
@@ -87,7 +77,6 @@ class TenderCardDetails implements \JsonSerializable
     {
         $this->entryMethod = $entryMethod;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -96,15 +85,15 @@ class TenderCardDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->status)) {
-            $json['status']       = $this->status;
+            $json['status'] = $this->status;
         }
         if (isset($this->card)) {
-            $json['card']         = $this->card;
+            $json['card'] = $this->card;
         }
         if (isset($this->entryMethod)) {
             $json['entry_method'] = $this->entryMethod;
@@ -112,7 +101,6 @@ class TenderCardDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

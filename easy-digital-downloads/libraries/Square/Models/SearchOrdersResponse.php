@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Either the `order_entries` or `orders` field is set, depending on whether
  * `return_entries` is set on the [SearchOrdersRequest]($e/Orders/SearchOrders).
@@ -16,22 +14,18 @@ class SearchOrdersResponse implements \JsonSerializable
      * @var OrderEntry[]|null
      */
     private $orderEntries;
-
     /**
      * @var Order[]|null
      */
     private $orders;
-
     /**
      * @var string|null
      */
     private $cursor;
-
     /**
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * Returns Order Entries.
      * A list of [OrderEntries](entity:OrderEntry) that fit the query
@@ -43,7 +37,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         return $this->orderEntries;
     }
-
     /**
      * Sets Order Entries.
      * A list of [OrderEntries](entity:OrderEntry) that fit the query
@@ -57,7 +50,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         $this->orderEntries = $orderEntries;
     }
-
     /**
      * Returns Orders.
      * A list of
@@ -70,7 +62,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         return $this->orders;
     }
-
     /**
      * Sets Orders.
      * A list of
@@ -85,7 +76,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         $this->orders = $orders;
     }
-
     /**
      * Returns Cursor.
      * The pagination cursor to be used in a subsequent request. If unset,
@@ -97,7 +87,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * The pagination cursor to be used in a subsequent request. If unset,
@@ -111,7 +100,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Returns Errors.
      * [Errors](entity:Error) encountered during the search.
@@ -122,7 +110,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * [Errors](entity:Error) encountered during the search.
@@ -135,7 +122,6 @@ class SearchOrdersResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -144,7 +130,7 @@ class SearchOrdersResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -152,18 +138,17 @@ class SearchOrdersResponse implements \JsonSerializable
             $json['order_entries'] = $this->orderEntries;
         }
         if (isset($this->orders)) {
-            $json['orders']        = $this->orders;
+            $json['orders'] = $this->orders;
         }
         if (isset($this->cursor)) {
-            $json['cursor']        = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         if (isset($this->errors)) {
-            $json['errors']        = $this->errors;
+            $json['errors'] = $this->errors;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

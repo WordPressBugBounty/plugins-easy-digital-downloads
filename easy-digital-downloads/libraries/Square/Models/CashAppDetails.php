@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Additional details about `WALLET` type payments with the `brand` of `CASH_APP`.
  */
@@ -15,17 +13,14 @@ class CashAppDetails implements \JsonSerializable
      * @var array
      */
     private $buyerFullName = [];
-
     /**
      * @var array
      */
     private $buyerCountryCode = [];
-
     /**
      * @var string|null
      */
     private $buyerCashtag;
-
     /**
      * Returns Buyer Full Name.
      * The name of the Cash App account holder.
@@ -37,7 +32,6 @@ class CashAppDetails implements \JsonSerializable
         }
         return $this->buyerFullName['value'];
     }
-
     /**
      * Sets Buyer Full Name.
      * The name of the Cash App account holder.
@@ -48,7 +42,6 @@ class CashAppDetails implements \JsonSerializable
     {
         $this->buyerFullName['value'] = $buyerFullName;
     }
-
     /**
      * Unsets Buyer Full Name.
      * The name of the Cash App account holder.
@@ -57,7 +50,6 @@ class CashAppDetails implements \JsonSerializable
     {
         $this->buyerFullName = [];
     }
-
     /**
      * Returns Buyer Country Code.
      * The country of the Cash App account holder, in ISO 3166-1-alpha-2 format.
@@ -71,7 +63,6 @@ class CashAppDetails implements \JsonSerializable
         }
         return $this->buyerCountryCode['value'];
     }
-
     /**
      * Sets Buyer Country Code.
      * The country of the Cash App account holder, in ISO 3166-1-alpha-2 format.
@@ -84,7 +75,6 @@ class CashAppDetails implements \JsonSerializable
     {
         $this->buyerCountryCode['value'] = $buyerCountryCode;
     }
-
     /**
      * Unsets Buyer Country Code.
      * The country of the Cash App account holder, in ISO 3166-1-alpha-2 format.
@@ -95,7 +85,6 @@ class CashAppDetails implements \JsonSerializable
     {
         $this->buyerCountryCode = [];
     }
-
     /**
      * Returns Buyer Cashtag.
      * $Cashtag of the Cash App account holder.
@@ -104,7 +93,6 @@ class CashAppDetails implements \JsonSerializable
     {
         return $this->buyerCashtag;
     }
-
     /**
      * Sets Buyer Cashtag.
      * $Cashtag of the Cash App account holder.
@@ -115,7 +103,6 @@ class CashAppDetails implements \JsonSerializable
     {
         $this->buyerCashtag = $buyerCashtag;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -124,23 +111,22 @@ class CashAppDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->buyerFullName)) {
-            $json['buyer_full_name']    = $this->buyerFullName['value'];
+            $json['buyer_full_name'] = $this->buyerFullName['value'];
         }
         if (!empty($this->buyerCountryCode)) {
             $json['buyer_country_code'] = $this->buyerCountryCode['value'];
         }
         if (isset($this->buyerCashtag)) {
-            $json['buyer_cashtag']      = $this->buyerCashtag;
+            $json['buyer_cashtag'] = $this->buyerCashtag;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

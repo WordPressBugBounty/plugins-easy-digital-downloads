@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Represents a tender (i.e., a method of payment) used in a EDD\Vendor\Square transaction.
+ * Represents a tender (i.e., a method of payment) used in a Square transaction.
  */
 class Tender implements \JsonSerializable
 {
@@ -15,87 +13,70 @@ class Tender implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var array
      */
     private $locationId = [];
-
     /**
      * @var array
      */
     private $transactionId = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var array
      */
     private $note = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * @var Money|null
      */
     private $tipMoney;
-
     /**
      * @var Money|null
      */
     private $processingFeeMoney;
-
     /**
      * @var array
      */
     private $customerId = [];
-
     /**
      * @var string
      */
     private $type;
-
     /**
      * @var TenderCardDetails|null
      */
     private $cardDetails;
-
     /**
      * @var TenderCashDetails|null
      */
     private $cashDetails;
-
     /**
      * @var TenderBankAccountDetails|null
      */
     private $bankAccountDetails;
-
     /**
      * @var TenderBuyNowPayLaterDetails|null
      */
     private $buyNowPayLaterDetails;
-
     /**
      * @var TenderSquareAccountDetails|null
      */
     private $squareAccountDetails;
-
     /**
      * @var array
      */
     private $additionalRecipients = [];
-
     /**
      * @var array
      */
     private $paymentId = [];
-
     /**
      * @param string $type
      */
@@ -103,7 +84,6 @@ class Tender implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Id.
      * The tender's unique ID. It is the associated payment ID.
@@ -112,7 +92,6 @@ class Tender implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The tender's unique ID. It is the associated payment ID.
@@ -123,7 +102,6 @@ class Tender implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Location Id.
      * The ID of the transaction's associated location.
@@ -135,7 +113,6 @@ class Tender implements \JsonSerializable
         }
         return $this->locationId['value'];
     }
-
     /**
      * Sets Location Id.
      * The ID of the transaction's associated location.
@@ -146,7 +123,6 @@ class Tender implements \JsonSerializable
     {
         $this->locationId['value'] = $locationId;
     }
-
     /**
      * Unsets Location Id.
      * The ID of the transaction's associated location.
@@ -155,7 +131,6 @@ class Tender implements \JsonSerializable
     {
         $this->locationId = [];
     }
-
     /**
      * Returns Transaction Id.
      * The ID of the tender's associated transaction.
@@ -167,7 +142,6 @@ class Tender implements \JsonSerializable
         }
         return $this->transactionId['value'];
     }
-
     /**
      * Sets Transaction Id.
      * The ID of the tender's associated transaction.
@@ -178,7 +152,6 @@ class Tender implements \JsonSerializable
     {
         $this->transactionId['value'] = $transactionId;
     }
-
     /**
      * Unsets Transaction Id.
      * The ID of the tender's associated transaction.
@@ -187,7 +160,6 @@ class Tender implements \JsonSerializable
     {
         $this->transactionId = [];
     }
-
     /**
      * Returns Created At.
      * The timestamp for when the tender was created, in RFC 3339 format.
@@ -196,7 +168,6 @@ class Tender implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp for when the tender was created, in RFC 3339 format.
@@ -207,7 +178,6 @@ class Tender implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Note.
      * An optional note associated with the tender at the time of payment.
@@ -219,7 +189,6 @@ class Tender implements \JsonSerializable
         }
         return $this->note['value'];
     }
-
     /**
      * Sets Note.
      * An optional note associated with the tender at the time of payment.
@@ -230,7 +199,6 @@ class Tender implements \JsonSerializable
     {
         $this->note['value'] = $note;
     }
-
     /**
      * Unsets Note.
      * An optional note associated with the tender at the time of payment.
@@ -239,7 +207,6 @@ class Tender implements \JsonSerializable
     {
         $this->note = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -254,7 +221,6 @@ class Tender implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -271,7 +237,6 @@ class Tender implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Returns Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -286,7 +251,6 @@ class Tender implements \JsonSerializable
     {
         return $this->tipMoney;
     }
-
     /**
      * Sets Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -303,7 +267,6 @@ class Tender implements \JsonSerializable
     {
         $this->tipMoney = $tipMoney;
     }
-
     /**
      * Returns Processing Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -318,7 +281,6 @@ class Tender implements \JsonSerializable
     {
         return $this->processingFeeMoney;
     }
-
     /**
      * Sets Processing Fee Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -335,7 +297,6 @@ class Tender implements \JsonSerializable
     {
         $this->processingFeeMoney = $processingFeeMoney;
     }
-
     /**
      * Returns Customer Id.
      * If the tender is associated with a customer or represents a customer's card on file,
@@ -348,7 +309,6 @@ class Tender implements \JsonSerializable
         }
         return $this->customerId['value'];
     }
-
     /**
      * Sets Customer Id.
      * If the tender is associated with a customer or represents a customer's card on file,
@@ -360,7 +320,6 @@ class Tender implements \JsonSerializable
     {
         $this->customerId['value'] = $customerId;
     }
-
     /**
      * Unsets Customer Id.
      * If the tender is associated with a customer or represents a customer's card on file,
@@ -370,7 +329,6 @@ class Tender implements \JsonSerializable
     {
         $this->customerId = [];
     }
-
     /**
      * Returns Type.
      * Indicates a tender's type.
@@ -379,7 +337,6 @@ class Tender implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Indicates a tender's type.
@@ -391,7 +348,6 @@ class Tender implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Card Details.
      * Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
@@ -400,7 +356,6 @@ class Tender implements \JsonSerializable
     {
         return $this->cardDetails;
     }
-
     /**
      * Sets Card Details.
      * Represents additional details of a tender with `type` `CARD` or `SQUARE_GIFT_CARD`
@@ -411,7 +366,6 @@ class Tender implements \JsonSerializable
     {
         $this->cardDetails = $cardDetails;
     }
-
     /**
      * Returns Cash Details.
      * Represents the details of a tender with `type` `CASH`.
@@ -420,7 +374,6 @@ class Tender implements \JsonSerializable
     {
         return $this->cashDetails;
     }
-
     /**
      * Sets Cash Details.
      * Represents the details of a tender with `type` `CASH`.
@@ -431,7 +384,6 @@ class Tender implements \JsonSerializable
     {
         $this->cashDetails = $cashDetails;
     }
-
     /**
      * Returns Bank Account Details.
      * Represents the details of a tender with `type` `BANK_ACCOUNT`.
@@ -443,7 +395,6 @@ class Tender implements \JsonSerializable
     {
         return $this->bankAccountDetails;
     }
-
     /**
      * Sets Bank Account Details.
      * Represents the details of a tender with `type` `BANK_ACCOUNT`.
@@ -457,7 +408,6 @@ class Tender implements \JsonSerializable
     {
         $this->bankAccountDetails = $bankAccountDetails;
     }
-
     /**
      * Returns Buy Now Pay Later Details.
      * Represents the details of a tender with `type` `BUY_NOW_PAY_LATER`.
@@ -466,7 +416,6 @@ class Tender implements \JsonSerializable
     {
         return $this->buyNowPayLaterDetails;
     }
-
     /**
      * Sets Buy Now Pay Later Details.
      * Represents the details of a tender with `type` `BUY_NOW_PAY_LATER`.
@@ -477,18 +426,16 @@ class Tender implements \JsonSerializable
     {
         $this->buyNowPayLaterDetails = $buyNowPayLaterDetails;
     }
-
     /**
-     * Returns EDD\Vendor\Square Account Details.
+     * Returns Square Account Details.
      * Represents the details of a tender with `type` `SQUARE_ACCOUNT`.
      */
     public function getSquareAccountDetails(): ?TenderSquareAccountDetails
     {
         return $this->squareAccountDetails;
     }
-
     /**
-     * Sets EDD\Vendor\Square Account Details.
+     * Sets Square Account Details.
      * Represents the details of a tender with `type` `SQUARE_ACCOUNT`.
      *
      * @maps square_account_details
@@ -497,7 +444,6 @@ class Tender implements \JsonSerializable
     {
         $this->squareAccountDetails = $squareAccountDetails;
     }
-
     /**
      * Returns Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this tender.
@@ -512,7 +458,6 @@ class Tender implements \JsonSerializable
         }
         return $this->additionalRecipients['value'];
     }
-
     /**
      * Sets Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this tender.
@@ -526,7 +471,6 @@ class Tender implements \JsonSerializable
     {
         $this->additionalRecipients['value'] = $additionalRecipients;
     }
-
     /**
      * Unsets Additional Recipients.
      * Additional recipients (other than the merchant) receiving a portion of this tender.
@@ -536,7 +480,6 @@ class Tender implements \JsonSerializable
     {
         $this->additionalRecipients = [];
     }
-
     /**
      * Returns Payment Id.
      * The ID of the [Payment](entity:Payment) that corresponds to this tender.
@@ -549,7 +492,6 @@ class Tender implements \JsonSerializable
         }
         return $this->paymentId['value'];
     }
-
     /**
      * Sets Payment Id.
      * The ID of the [Payment](entity:Payment) that corresponds to this tender.
@@ -561,7 +503,6 @@ class Tender implements \JsonSerializable
     {
         $this->paymentId['value'] = $paymentId;
     }
-
     /**
      * Unsets Payment Id.
      * The ID of the [Payment](entity:Payment) that corresponds to this tender.
@@ -571,7 +512,6 @@ class Tender implements \JsonSerializable
     {
         $this->paymentId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -580,63 +520,62 @@ class Tender implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                        = $this->id;
+            $json['id'] = $this->id;
         }
         if (!empty($this->locationId)) {
-            $json['location_id']               = $this->locationId['value'];
+            $json['location_id'] = $this->locationId['value'];
         }
         if (!empty($this->transactionId)) {
-            $json['transaction_id']            = $this->transactionId['value'];
+            $json['transaction_id'] = $this->transactionId['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (!empty($this->note)) {
-            $json['note']                      = $this->note['value'];
+            $json['note'] = $this->note['value'];
         }
         if (isset($this->amountMoney)) {
-            $json['amount_money']              = $this->amountMoney;
+            $json['amount_money'] = $this->amountMoney;
         }
         if (isset($this->tipMoney)) {
-            $json['tip_money']                 = $this->tipMoney;
+            $json['tip_money'] = $this->tipMoney;
         }
         if (isset($this->processingFeeMoney)) {
-            $json['processing_fee_money']      = $this->processingFeeMoney;
+            $json['processing_fee_money'] = $this->processingFeeMoney;
         }
         if (!empty($this->customerId)) {
-            $json['customer_id']               = $this->customerId['value'];
+            $json['customer_id'] = $this->customerId['value'];
         }
-        $json['type']                          = $this->type;
+        $json['type'] = $this->type;
         if (isset($this->cardDetails)) {
-            $json['card_details']              = $this->cardDetails;
+            $json['card_details'] = $this->cardDetails;
         }
         if (isset($this->cashDetails)) {
-            $json['cash_details']              = $this->cashDetails;
+            $json['cash_details'] = $this->cashDetails;
         }
         if (isset($this->bankAccountDetails)) {
-            $json['bank_account_details']      = $this->bankAccountDetails;
+            $json['bank_account_details'] = $this->bankAccountDetails;
         }
         if (isset($this->buyNowPayLaterDetails)) {
             $json['buy_now_pay_later_details'] = $this->buyNowPayLaterDetails;
         }
         if (isset($this->squareAccountDetails)) {
-            $json['square_account_details']    = $this->squareAccountDetails;
+            $json['square_account_details'] = $this->squareAccountDetails;
         }
         if (!empty($this->additionalRecipients)) {
-            $json['additional_recipients']     = $this->additionalRecipients['value'];
+            $json['additional_recipients'] = $this->additionalRecipients['value'];
         }
         if (!empty($this->paymentId)) {
-            $json['payment_id']                = $this->paymentId['value'];
+            $json['payment_id'] = $this->paymentId['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

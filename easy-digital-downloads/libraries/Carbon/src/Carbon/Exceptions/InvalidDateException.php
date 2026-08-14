@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the EDD\Vendor\Carbon package.
+ * This file is part of the Carbon package.
  *
  * (c) Brian Nesbitt <brian@nesbot.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Carbon\Exceptions;
 
 use InvalidArgumentException as BaseInvalidArgumentException;
 use Throwable;
-
 class InvalidDateException extends BaseInvalidArgumentException implements InvalidArgumentException
 {
     /**
@@ -22,14 +20,12 @@ class InvalidDateException extends BaseInvalidArgumentException implements Inval
      * @var string
      */
     private $field;
-
     /**
      * The invalid value.
      *
      * @var mixed
      */
     private $value;
-
     /**
      * Constructor.
      *
@@ -42,9 +38,8 @@ class InvalidDateException extends BaseInvalidArgumentException implements Inval
     {
         $this->field = $field;
         $this->value = $value;
-        parent::__construct($field.' : '.$value.' is not a valid value.', $code, $previous);
+        parent::__construct($field . ' : ' . $value . ' is not a valid value.', $code, $previous);
     }
-
     /**
      * Get the invalid field.
      *
@@ -54,7 +49,6 @@ class InvalidDateException extends BaseInvalidArgumentException implements Inval
     {
         return $this->field;
     }
-
     /**
      * Get the invalid value.
      *

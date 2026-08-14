@@ -4,6 +4,8 @@
 import './components/agree-to-terms';
 import './components/email';
 import { getCreditCardIcon, recalculateTaxes } from './utils.js';
+import { initCartEventsBridge } from '../utilities/cart-events.js';
+import { initCartLoading, beginLoading, endLoading } from '@easy-digital-downloads/cart-loading';
 
 // Backwards compatibility. Assign function to global namespace.
 window.recalculate_taxes = recalculateTaxes;
@@ -23,6 +25,12 @@ window.EDD_Checkout = ( function( $ ) {
 		$edd_cart_amount = $( '.edd_cart_amount' );
 		before_discount = $edd_cart_amount.text();
 		$checkout_form_wrap = $( '#edd_checkout_form_wrap' );
+
+		// Re-broadcast EDD's legacy cart events as the native edd:cart-updated event.
+		initCartEventsBridge();
+
+		// Single checkout loading overlay.
+		initCartLoading();
 
 		$body.on( 'edd_gateway_loaded', function( e ) {
 			edd_format_card_number( $form );
@@ -142,7 +150,6 @@ window.EDD_Checkout = ( function( $ ) {
 		event.preventDefault();
 
 		const discount_code = $( '#edd-discount' ).val(),
-			edd_discount_loader = $( '#edd-discount-loader' ),
 			required_inputs = $( '#edd_cc_address .edd-input, #edd_cc_address .edd-select' ).filter( '[required]' );
 
 		if ( discount_code == '' || discount_code == edd_global_vars.enter_discount ) {
@@ -157,7 +164,7 @@ window.EDD_Checkout = ( function( $ ) {
 		};
 
 		$( '#edd-discount-error-wrap' ).html( '' ).hide();
-		edd_discount_loader.show();
+		const loadingToken = beginLoading( 'discount-apply' );
 
 		$.ajax( {
 			type: 'POST',
@@ -208,9 +215,10 @@ window.EDD_Checkout = ( function( $ ) {
 					}
 					$body.trigger( 'edd_discount_failed', [ discount_response ] );
 				}
-				edd_discount_loader.hide();
+				endLoading( loadingToken );
 			},
 		} ).fail( function( data ) {
+			endLoading( loadingToken );
 			if ( window.console && window.console.log ) {
 				console.log( data );
 			}
@@ -226,6 +234,8 @@ window.EDD_Checkout = ( function( $ ) {
 				code: $this.data( 'code' ),
 				current_page: edd_global_vars.current_page,
 			};
+
+		const loadingToken = beginLoading( 'discount-remove' );
 
 		$.ajax( {
 			type: 'POST',
@@ -264,8 +274,10 @@ window.EDD_Checkout = ( function( $ ) {
 				$( '#edd-purchase-button' ).val( discount_response.complete_purchase );
 
 				$body.trigger( 'edd_discount_removed', [ discount_response ] );
+				endLoading( loadingToken );
 			},
 		} ).fail( function( data ) {
+			endLoading( loadingToken );
 			if ( window.console && window.console.log ) {
 				console.log( data );
 			}
@@ -295,7 +307,7 @@ window.EDD_Checkout = ( function( $ ) {
 			current_page: edd_global_vars.current_page,
 		};
 
-		//edd_discount_loader.show();
+		const loadingToken = beginLoading( 'quantity-update' );
 
 		$.ajax( {
 			type: 'POST',
@@ -324,11 +336,13 @@ window.EDD_Checkout = ( function( $ ) {
 						.attr( 'data-subtotal', response.subtotal_raw )
 						.data( 'total', response.total_raw )
 						.attr( 'data-total', response.total_raw );
-					$body.trigger( 'edd_quantity_updated', [ response ] );
 				} );
+				$body.trigger( 'edd_quantity_updated', [ response ] );
 				$( '#edd-purchase-button' ).val( response.complete_purchase );
+				endLoading( loadingToken );
 			},
 		} ).fail( function( data ) {
+			endLoading( loadingToken );
 			if ( window.console && window.console.log ) {
 				console.log( data );
 			}

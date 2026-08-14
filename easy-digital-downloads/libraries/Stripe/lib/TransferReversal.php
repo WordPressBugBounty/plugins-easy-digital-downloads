@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
- * <a href="https://stripe.com/docs/connect">EDD\Vendor\Stripe Connect</a> platforms can reverse transfers made to a
+ * <a href="https://stripe.com/docs/connect">Stripe Connect</a> platforms can reverse transfers made to a
  * connected account, either entirely or partially, and can also specify whether
  * to refund any related application fees. Transfer reversals add to the
  * platform's balance and subtract from the destination account's balance.
@@ -33,35 +32,26 @@ namespace EDD\Vendor\Stripe;
 class TransferReversal extends ApiResource
 {
     const OBJECT_NAME = 'transfer_reversal';
-
     use ApiOperations\Update {
         save as protected _save;
     }
-
     /**
-     * @return string the API URL for this EDD\Vendor\Stripe transfer reversal
+     * @return string the API URL for this Stripe transfer reversal
      */
     public function instanceUrl()
     {
         $id = $this['id'];
         $transfer = $this['transfer'];
         if (!$id) {
-            throw new Exception\UnexpectedValueException(
-                'Could not determine which URL to request: ' .
-                "class instance has invalid ID: {$id}",
-                null
-            );
+            throw new Exception\UnexpectedValueException('Could not determine which URL to request: ' . "class instance has invalid ID: {$id}", null);
         }
         $id = Util\Util::utf8($id);
         $transfer = Util\Util::utf8($transfer);
-
         $base = Transfer::classUrl();
         $transferExtn = \urlencode($transfer);
         $extn = \urlencode($id);
-
         return "{$base}/{$transferExtn}/reversals/{$extn}";
     }
-
     /**
      * @param null|array|string $opts
      *

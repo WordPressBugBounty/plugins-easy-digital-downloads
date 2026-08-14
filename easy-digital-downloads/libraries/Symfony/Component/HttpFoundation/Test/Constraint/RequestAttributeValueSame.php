@@ -8,23 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use EDD\Vendor\Symfony\Component\HttpFoundation\Request;
-
 final class RequestAttributeValueSame extends Constraint
 {
     private $name;
     private $value;
-
     public function __construct(string $name, string $value)
     {
         $this->name = $name;
         $this->value = $value;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -32,7 +28,6 @@ final class RequestAttributeValueSame extends Constraint
     {
         return sprintf('has attribute "%s" with value "%s"', $this->name, $this->value);
     }
-
     /**
      * @param Request $request
      *
@@ -42,7 +37,6 @@ final class RequestAttributeValueSame extends Constraint
     {
         return $this->value === $request->attributes->get($this->name);
     }
-
     /**
      * @param Request $request
      *
@@ -50,6 +44,6 @@ final class RequestAttributeValueSame extends Constraint
      */
     protected function failureDescription($request): string
     {
-        return 'the Request '.$this->toString();
+        return 'the Request ' . $this->toString();
     }
 }

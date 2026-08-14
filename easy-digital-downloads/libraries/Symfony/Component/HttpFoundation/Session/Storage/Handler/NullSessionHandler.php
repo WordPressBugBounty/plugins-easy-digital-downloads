@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session\Storage\Handler;
 
 /**
@@ -26,7 +25,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return true;
     }
-
     /**
      * @return bool
      */
@@ -35,7 +33,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -43,7 +40,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return '';
     }
-
     /**
      * @return bool
      */
@@ -52,7 +48,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -60,7 +55,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return true;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -68,7 +62,6 @@ class NullSessionHandler extends AbstractSessionHandler
     {
         return true;
     }
-
     /**
      * @return int|false
      */

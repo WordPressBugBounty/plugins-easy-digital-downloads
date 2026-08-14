@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Http;
 
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestMethod;
-
 /**
  * HTTP Methods Enumeration
  */

@@ -47,10 +47,12 @@ add_action( 'init', __NAMESPACE__ . '\register' );
  * Renders the cart.
  *
  * @since 2.0
- * @param array $block_attributes The block attributes.
+ * @param array          $block_attributes The block attributes.
+ * @param string         $content          The block content.
+ * @param \WP_Block|null $block            The block object.
  * @return string Cart HTML.
  */
-function cart( $block_attributes = array() ) {
+function cart( $block_attributes = array(), $content = '', $block = null ) {
 
 	$block_attributes = wp_parse_args(
 		$block_attributes,
@@ -87,7 +89,7 @@ function cart( $block_attributes = array() ) {
 	?>
 	<div class="<?php echo esc_attr( implode( ' ', array_filter( $classes ) ) ); ?>">
 		<?php
-		do_cart_form( $block_attributes );
+		do_cart_form( $block_attributes, $block );
 		?>
 	</div>
 	<?php
@@ -99,11 +101,12 @@ function cart( $block_attributes = array() ) {
  * Generates the cart form depending on contents and options.
  *
  * @since 2.0
- * @param array $block_attributes The block attributes.
+ * @param array          $block_attributes The block attributes.
+ * @param \WP_Block|null $block            The block object.
  * @return void
  */
-function do_cart_form( $block_attributes ) {
-	$cart_items        = get_cart_contents();
+function do_cart_form( $block_attributes, $block = null ) {
+	$cart_items        = get_cart_contents( $block );
 	$cart_has_contents = $cart_items || edd_cart_has_fees();
 	if ( ! $cart_has_contents && ! empty( $block_attributes['hide_empty'] ) ) {
 		return;
@@ -142,33 +145,21 @@ function do_cart_form( $block_attributes ) {
  * Renders the entire EDD checkout block.
  *
  * @since 2.0
- * @param array $block_attributes The block attributes.
+ * @param array     $block_attributes The block attributes.
+ * @param string    $content          The block inner content.
+ * @param \WP_Block $block            The block object.
  * @return string Checkout HTML.
  */
-function checkout( $block_attributes = array() ) {
+function checkout( $block_attributes = array(), $content = '', $block = null ) {
 	$block_attributes = wp_parse_args(
 		$block_attributes,
 		array(
-			'show_register_form' => edd_get_option( 'show_register_form' ),
-			'layout'             => '',
+			'logged_in'          => is_user_logged_in() && ! \EDD\Blocks\Utility::doing_guest_preview( $block ),
 			'show_discount_form' => true,
-			'thumbnail_width'    => 25,
-			'logged_in'          => is_user_logged_in() && ! \EDD\Blocks\Utility::doing_guest_preview(),
 		)
 	);
 
-	$layout  = $block_attributes['layout'] ? sanitize_text_field( $block_attributes['layout'] ) : 'full';
-	$classes = array(
-		'wp-block-edd-checkout',
-		'edd-blocks__checkout',
-		"edd-checkout__layout--{$layout}",
-	);
-	if ( $block_attributes['logged_in'] ) {
-		$classes[] = 'edd-blocks__checkout--logged-in';
-	}
-	$classes = Helpers\get_block_classes( $block_attributes, $classes );
-
-	$cart_items = get_cart_contents();
+	$cart_items = get_cart_contents( $block );
 
 	if ( ! $cart_items && ! edd_cart_has_fees() ) {
 		ob_start();
@@ -185,26 +176,82 @@ function checkout( $block_attributes = array() ) {
 		add_action( 'edd_cart_footer_buttons', 'edd_save_cart_button' );
 	}
 
+	$classes = array(
+		'wp-block-edd-checkout',
+		'edd-blocks__checkout',
+	);
+	if ( $block_attributes['logged_in'] ) {
+		$classes[] = 'edd-blocks__checkout--logged-in';
+	}
+	if ( $content ) {
+		$classes[] = 'edd-checkout__inner-blocks';
+	} else {
+		$layout    = empty( $block_attributes['layout'] ) ? 'full' : $block_attributes['layout'];
+		$classes[] = "edd-checkout__layout--{$layout}";
+	}
+	$classes = Helpers\get_block_classes( $block_attributes, $classes );
+
 	ob_start();
 	?>
 	<div id="edd_checkout_form_wrap" class="<?php echo esc_attr( implode( ' ', array_filter( $classes ) ) ); ?>">
 		<?php
-		if ( $block_attributes['logged_in'] ) {
-			$customer = get_customer();
-			include EDD_BLOCKS_DIR . 'views/checkout/logged-in.php';
+		if ( $content ) {
+			\EDD\Integrations\SoftwareLicensing::remove_renewal_form();
+			/**
+			 * Signal that inner blocks are handling individual section rendering.
+			 * This prevents duplicate output from hook-based subscribers (e.g., UserDetails).
+			 *
+			 * @since 3.7.0
+			 */
+			do_action( 'edd_blocks_checkout_inner_blocks' );
+			$payment_mode = edd_get_chosen_gateway();
+			$form_action  = edd_get_checkout_uri( 'payment-mode=' . $payment_mode );
+			do_action( 'edd_before_purchase_form' );
+			?>
+			<form id="edd_purchase_form" class="edd_form edd-blocks-form edd-blocks-form__purchase" action="<?php echo esc_url( $form_action ); ?>" method="POST">
+				<?php
+				AccountLine::render( $block_attributes );
+
+				\EDD\Blocks\Utility::do_checkout_form_top( $block_attributes );
+
+				echo $content;
+
+				/**
+				 * Hooks in at the end of the blocks purchase form.
+				 *
+				 * @since 3.6.0
+				 * @param array $block_attributes The block attributes.
+				 */
+				do_action( 'edd_checkout_form_bottom', $block_attributes );
+
+				if ( \EDD\Captcha\Utility::can_do_captcha() ) {
+					require_once EDD_BLOCKS_DIR . 'includes/forms/recaptcha.php';
+					\EDD\Blocks\Recaptcha\initialize();
+				}
+				?>
+			</form>
+			<?php
+			/**
+			 * Hooks in immediately after the blocks purchase form closes.
+			 *
+			 * @since 1.0
+			 * @since 3.7.0 Fired in the block checkout, after the purchase form closes.
+			 */
+			do_action( 'edd_after_purchase_form' );
+		} else {
+			AccountLine::render( $block_attributes );
+			\EDD\Blocks\Checkout\Elements\Cart::render(
+				array(
+					'block_attributes' => $block_attributes,
+					'cart_items'       => $cart_items,
+					'doing_ajax'       => false,
+				)
+			);
+			\EDD\Blocks\Checkout\Elements\PurchaseForm::render( $block_attributes, $block );
 		}
-		\EDD\Blocks\Checkout\Elements\Cart::render(
-			array(
-				'block_attributes' => $block_attributes,
-				'cart_items'       => $cart_items,
-				'doing_ajax'       => false,
-			)
-		);
-		\EDD\Blocks\Checkout\Elements\PurchaseForm::render( $block_attributes );
 		?>
 	</div>
 	<?php
-
 	return ob_get_clean();
 }
 
@@ -213,10 +260,11 @@ function checkout( $block_attributes = array() ) {
  * In the block editor, generates a sample cart.
  *
  * @since 2.0
+ * @param \WP_Block|null $block The block object.
  * @return false|array
  */
-function get_cart_contents() {
-	if ( ! \EDD\Blocks\Utility::is_block_editor() ) {
+function get_cart_contents( $block = null ) {
+	if ( ! \EDD\Blocks\Utility::is_block_editor( 'edit_shop_payments', $block ) ) {
 		return edd_get_cart_contents();
 	}
 
@@ -286,6 +334,7 @@ function remove_default_purchase_fields() {
 	remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
 	remove_action( 'edd_register_fields_before', 'edd_user_info_fields' );
 	remove_action( 'edd_purchase_form_before_submit', 'edd_checkout_final_total', 999 );
+	remove_action( 'edd_checkout_form_top', 'edd_show_payment_icons' );
 	add_filter(
 		'edd_get_option_show_register_form',
 		function () {

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Entitlements;
 
 /**
@@ -24,7 +23,6 @@ class FeatureService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/entitlements/features', $params, $opts);
     }
-
     /**
      * Creates a feature.
      *
@@ -39,7 +37,6 @@ class FeatureService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', '/v1/entitlements/features', $params, $opts);
     }
-
     /**
      * Retrieves a feature.
      *
@@ -55,7 +52,6 @@ class FeatureService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/entitlements/features/%s', $id), $params, $opts);
     }
-
     /**
      * Update a feature’s metadata or permanently deactivate it.
      *

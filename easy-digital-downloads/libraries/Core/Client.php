@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core;
 
 use EDD\Vendor\Core\Authentication\Auth;
@@ -17,7 +16,6 @@ use EDD\Vendor\CoreInterfaces\Core\Logger\ApiLoggerInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\ParamInterface;
 use EDD\Vendor\CoreInterfaces\Http\HttpClientInterface;
 use EDD\Vendor\CoreInterfaces\Sdk\ConverterInterface;
-
 class Client
 {
     private static $converter;
@@ -36,7 +34,6 @@ class Client
         }
         return self::$jsonHelper;
     }
-
     private $httpClient;
     private $localConverter;
     private $localJsonHelper;
@@ -48,7 +45,6 @@ class Client
     private $globalErrors;
     private $apiCallback;
     private $apiLogger;
-
     /**
      * @param HttpClientInterface $httpClient
      * @param ConverterInterface $converter
@@ -62,19 +58,8 @@ class Client
      * @param CoreCallback|null $apiCallback
      * @param ApiLoggerInterface $apiLogger
      */
-    public function __construct(
-        HttpClientInterface $httpClient,
-        ConverterInterface $converter,
-        JsonHelper $jsonHelper,
-        array $authManagers,
-        array $serverUrls,
-        string $defaultServer,
-        array $globalConfig,
-        array $globalRuntimeConfig,
-        array $globalErrors,
-        ?CoreCallback $apiCallback,
-        ApiLoggerInterface $apiLogger
-    ) {
+    public function __construct(HttpClientInterface $httpClient, ConverterInterface $converter, JsonHelper $jsonHelper, array $authManagers, array $serverUrls, string $defaultServer, array $globalConfig, array $globalRuntimeConfig, array $globalErrors, ?CoreCallback $apiCallback, ApiLoggerInterface $apiLogger)
+    {
         $this->httpClient = $httpClient;
         self::$converter = $converter;
         $this->localConverter = $converter;
@@ -89,14 +74,12 @@ class Client
         $this->apiCallback = $apiCallback;
         $this->apiLogger = $apiLogger;
     }
-
     public function getGlobalRequest(?string $server = null): Request
     {
         $globalParams = new MultipleParams('Global Parameters');
         $globalParams->parameters($this->globalConfig)->validate(self::getJsonHelper($this));
         return new Request($this->serverUrls[$server ?? $this->defaultServer], $this, $globalParams);
     }
-
     public function getGlobalResponseHandler(): ResponseHandler
     {
         $responseHandler = new ResponseHandler();
@@ -105,23 +88,19 @@ class Client
         });
         return $responseHandler;
     }
-
     public function getHttpClient(): HttpClientInterface
     {
         return $this->httpClient;
     }
-
     public function getApiLogger(): ApiLoggerInterface
     {
         return $this->apiLogger;
     }
-
     public function validateAuth(Auth $auth): Auth
     {
         $auth->withAuthManagers($this->authManagers)->validate(self::getJsonHelper($this));
         return $auth;
     }
-
     /**
      * @param ParamInterface[] $parameters
      */
@@ -132,7 +111,6 @@ class Client
         $paramGroup->parameters($parameters)->validate(self::getJsonHelper($this));
         return $paramGroup;
     }
-
     public function beforeRequest(Request $request)
     {
         if (isset($this->apiCallback)) {
@@ -140,7 +118,6 @@ class Client
         }
         $this->apiLogger->logRequest($request);
     }
-
     public function afterResponse(Context $context)
     {
         if (isset($this->apiCallback)) {

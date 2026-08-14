@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The wrapper object for the catalog entries of a given object type.
  *
@@ -28,147 +26,118 @@ class CatalogObject implements \JsonSerializable
      * @var string
      */
     private $type;
-
     /**
      * @var string
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var array
      */
     private $isDeleted = [];
-
     /**
      * @var array
      */
     private $customAttributeValues = [];
-
     /**
      * @var array
      */
     private $catalogV1Ids = [];
-
     /**
      * @var array
      */
     private $presentAtAllLocations = [];
-
     /**
      * @var array
      */
     private $presentAtLocationIds = [];
-
     /**
      * @var array
      */
     private $absentAtLocationIds = [];
-
     /**
      * @var CatalogItem|null
      */
     private $itemData;
-
     /**
      * @var CatalogCategory|null
      */
     private $categoryData;
-
     /**
      * @var CatalogItemVariation|null
      */
     private $itemVariationData;
-
     /**
      * @var CatalogTax|null
      */
     private $taxData;
-
     /**
      * @var CatalogDiscount|null
      */
     private $discountData;
-
     /**
      * @var CatalogModifierList|null
      */
     private $modifierListData;
-
     /**
      * @var CatalogModifier|null
      */
     private $modifierData;
-
     /**
      * @var CatalogTimePeriod|null
      */
     private $timePeriodData;
-
     /**
      * @var CatalogProductSet|null
      */
     private $productSetData;
-
     /**
      * @var CatalogPricingRule|null
      */
     private $pricingRuleData;
-
     /**
      * @var CatalogImage|null
      */
     private $imageData;
-
     /**
      * @var CatalogMeasurementUnit|null
      */
     private $measurementUnitData;
-
     /**
      * @var CatalogSubscriptionPlan|null
      */
     private $subscriptionPlanData;
-
     /**
      * @var CatalogItemOption|null
      */
     private $itemOptionData;
-
     /**
      * @var CatalogItemOptionValue|null
      */
     private $itemOptionValueData;
-
     /**
      * @var CatalogCustomAttributeDefinition|null
      */
     private $customAttributeDefinitionData;
-
     /**
      * @var CatalogQuickAmountsSettings|null
      */
     private $quickAmountsSettingsData;
-
     /**
      * @var CatalogSubscriptionPlanVariation|null
      */
     private $subscriptionPlanVariationData;
-
     /**
      * @var CatalogAvailabilityPeriod|null
      */
     private $availabilityPeriodData;
-
     /**
      * @param string $type
      * @param string $id
@@ -178,7 +147,6 @@ class CatalogObject implements \JsonSerializable
         $this->type = $type;
         $this->id = $id;
     }
-
     /**
      * Returns Type.
      * Possible types of CatalogObjects returned from the catalog, each
@@ -188,7 +156,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->type;
     }
-
     /**
      * Sets Type.
      * Possible types of CatalogObjects returned from the catalog, each
@@ -201,7 +168,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->type = $type;
     }
-
     /**
      * Returns Id.
      * An identifier to reference this object in the catalog. When a new `CatalogObject`
@@ -216,7 +182,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * An identifier to reference this object in the catalog. When a new `CatalogObject`
@@ -234,7 +199,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Updated At.
      * Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -245,7 +209,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * Last modification [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -258,7 +221,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Version.
      * The version of the object. When updating an object, the version supplied
@@ -268,7 +230,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version of the object. When updating an object, the version supplied
@@ -280,7 +241,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Is Deleted.
      * If `true`, the object has been deleted from the database. Must be `false` for new objects
@@ -293,7 +253,6 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->isDeleted['value'];
     }
-
     /**
      * Sets Is Deleted.
      * If `true`, the object has been deleted from the database. Must be `false` for new objects
@@ -305,7 +264,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->isDeleted['value'] = $isDeleted;
     }
-
     /**
      * Unsets Is Deleted.
      * If `true`, the object has been deleted from the database. Must be `false` for new objects
@@ -315,9 +273,8 @@ class CatalogObject implements \JsonSerializable
     {
         $this->isDeleted = [];
     }
-
     /**
-     * Returns Custom EDD_EDD_Attribute Values.
+     * Returns Custom Attribute Values.
      * A map (key-value pairs) of application-defined custom attribute values. The value of a key-value
      * pair
      * is a [CatalogCustomAttributeValue](entity:CatalogCustomAttributeValue) object. The key is the `key`
@@ -351,9 +308,8 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->customAttributeValues['value'];
     }
-
     /**
-     * Sets Custom EDD_EDD_Attribute Values.
+     * Sets Custom Attribute Values.
      * A map (key-value pairs) of application-defined custom attribute values. The value of a key-value
      * pair
      * is a [CatalogCustomAttributeValue](entity:CatalogCustomAttributeValue) object. The key is the `key`
@@ -386,9 +342,8 @@ class CatalogObject implements \JsonSerializable
     {
         $this->customAttributeValues['value'] = $customAttributeValues;
     }
-
     /**
-     * Unsets Custom EDD_EDD_Attribute Values.
+     * Unsets Custom Attribute Values.
      * A map (key-value pairs) of application-defined custom attribute values. The value of a key-value
      * pair
      * is a [CatalogCustomAttributeValue](entity:CatalogCustomAttributeValue) object. The key is the `key`
@@ -417,7 +372,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->customAttributeValues = [];
     }
-
     /**
      * Returns Catalog V1 Ids.
      * The Connect v1 IDs for this object at each location where it is present, where they
@@ -433,7 +387,6 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->catalogV1Ids['value'];
     }
-
     /**
      * Sets Catalog V1 Ids.
      * The Connect v1 IDs for this object at each location where it is present, where they
@@ -448,7 +401,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->catalogV1Ids['value'] = $catalogV1Ids;
     }
-
     /**
      * Unsets Catalog V1 Ids.
      * The Connect v1 IDs for this object at each location where it is present, where they
@@ -459,7 +411,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->catalogV1Ids = [];
     }
-
     /**
      * Returns Present at All Locations.
      * If `true`, this object is present at all locations (including future locations), except where
@@ -475,7 +426,6 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->presentAtAllLocations['value'];
     }
-
     /**
      * Sets Present at All Locations.
      * If `true`, this object is present at all locations (including future locations), except where
@@ -490,7 +440,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->presentAtAllLocations['value'] = $presentAtAllLocations;
     }
-
     /**
      * Unsets Present at All Locations.
      * If `true`, this object is present at all locations (including future locations), except where
@@ -503,7 +452,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->presentAtAllLocations = [];
     }
-
     /**
      * Returns Present at Location Ids.
      * A list of locations where the object is present, even if `present_at_all_locations` is `false`.
@@ -518,7 +466,6 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->presentAtLocationIds['value'];
     }
-
     /**
      * Sets Present at Location Ids.
      * A list of locations where the object is present, even if `present_at_all_locations` is `false`.
@@ -532,7 +479,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->presentAtLocationIds['value'] = $presentAtLocationIds;
     }
-
     /**
      * Unsets Present at Location Ids.
      * A list of locations where the object is present, even if `present_at_all_locations` is `false`.
@@ -542,7 +488,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->presentAtLocationIds = [];
     }
-
     /**
      * Returns Absent at Location Ids.
      * A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
@@ -557,7 +502,6 @@ class CatalogObject implements \JsonSerializable
         }
         return $this->absentAtLocationIds['value'];
     }
-
     /**
      * Sets Absent at Location Ids.
      * A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
@@ -571,7 +515,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->absentAtLocationIds['value'] = $absentAtLocationIds;
     }
-
     /**
      * Unsets Absent at Location Ids.
      * A list of locations where the object is not present, even if `present_at_all_locations` is `true`.
@@ -581,7 +524,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->absentAtLocationIds = [];
     }
-
     /**
      * Returns Item Data.
      * A [CatalogObject]($m/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the
@@ -591,7 +533,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->itemData;
     }
-
     /**
      * Sets Item Data.
      * A [CatalogObject]($m/CatalogObject) instance of the `ITEM` type, also referred to as an item, in the
@@ -603,7 +544,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->itemData = $itemData;
     }
-
     /**
      * Returns Category Data.
      * A category to which a `CatalogItem` instance belongs.
@@ -612,7 +552,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->categoryData;
     }
-
     /**
      * Sets Category Data.
      * A category to which a `CatalogItem` instance belongs.
@@ -623,7 +562,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->categoryData = $categoryData;
     }
-
     /**
      * Returns Item Variation Data.
      * An item variation, representing a product for sale, in the Catalog object model. Each
@@ -639,7 +577,7 @@ class CatalogObject implements \JsonSerializable
      * variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at
      * any time, the sellable count must be
      * converted to stockable count. Typically, the seller defines this unit conversion. For example, 1
-     * bottle equals 5 glasses. The EDD\Vendor\Square API exposes
+     * bottle equals 5 glasses. The Square API exposes
      * the `stockable_conversion` property on the variation to specify the conversion. Thus, when two
      * glasses of the wine are sold, the sellable count
      * decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the
@@ -649,7 +587,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->itemVariationData;
     }
-
     /**
      * Sets Item Variation Data.
      * An item variation, representing a product for sale, in the Catalog object model. Each
@@ -665,7 +602,7 @@ class CatalogObject implements \JsonSerializable
      * variation is sellable, but not stockable. To accurately keep track of the wine's inventory count at
      * any time, the sellable count must be
      * converted to stockable count. Typically, the seller defines this unit conversion. For example, 1
-     * bottle equals 5 glasses. The EDD\Vendor\Square API exposes
+     * bottle equals 5 glasses. The Square API exposes
      * the `stockable_conversion` property on the variation to specify the conversion. Thus, when two
      * glasses of the wine are sold, the sellable count
      * decreases by 2, and the stockable count automatically decreases by 0.4 bottle according to the
@@ -677,7 +614,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->itemVariationData = $itemVariationData;
     }
-
     /**
      * Returns Tax Data.
      * A tax applicable to an item.
@@ -686,7 +622,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->taxData;
     }
-
     /**
      * Sets Tax Data.
      * A tax applicable to an item.
@@ -697,7 +632,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->taxData = $taxData;
     }
-
     /**
      * Returns Discount Data.
      * A discount applicable to items.
@@ -706,7 +640,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->discountData;
     }
-
     /**
      * Sets Discount Data.
      * A discount applicable to items.
@@ -717,7 +650,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->discountData = $discountData;
     }
-
     /**
      * Returns Modifier List Data.
      * For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.
@@ -741,7 +673,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->modifierListData;
     }
-
     /**
      * Sets Modifier List Data.
      * For a text-based modifier, this encapsulates the modifier's text when its `modifier_type` is `TEXT`.
@@ -767,7 +698,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->modifierListData = $modifierListData;
     }
-
     /**
      * Returns Modifier Data.
      * A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a
@@ -777,7 +707,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->modifierData;
     }
-
     /**
      * Sets Modifier Data.
      * A modifier applicable to items at the time of sale. An example of a modifier is a Cheese add-on to a
@@ -789,7 +718,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->modifierData = $modifierData;
     }
-
     /**
      * Returns Time Period Data.
      * Represents a time period - either a single period or a repeating period.
@@ -798,7 +726,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->timePeriodData;
     }
-
     /**
      * Sets Time Period Data.
      * Represents a time period - either a single period or a repeating period.
@@ -809,7 +736,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->timePeriodData = $timePeriodData;
     }
-
     /**
      * Returns Product Set Data.
      * Represents a collection of catalog objects for the purpose of applying a
@@ -822,7 +748,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->productSetData;
     }
-
     /**
      * Sets Product Set Data.
      * Represents a collection of catalog objects for the purpose of applying a
@@ -837,7 +762,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->productSetData = $productSetData;
     }
-
     /**
      * Returns Pricing Rule Data.
      * Defines how discounts are automatically applied to a set of items that match the pricing rule
@@ -847,7 +771,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->pricingRuleData;
     }
-
     /**
      * Sets Pricing Rule Data.
      * Defines how discounts are automatically applied to a set of items that match the pricing rule
@@ -859,28 +782,26 @@ class CatalogObject implements \JsonSerializable
     {
         $this->pricingRuleData = $pricingRuleData;
     }
-
     /**
      * Returns Image Data.
-     * An image file to use in EDD\Vendor\Square catalogs. It can be associated with
+     * An image file to use in Square catalogs. It can be associated with
      * `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, and `CatalogModifierList` objects.
      * Only the images on items and item variations are exposed in Dashboard.
-     * Only the first image on an item is displayed in EDD\Vendor\Square Point of Sale (SPOS).
-     * Images on items and variations are displayed through EDD\Vendor\Square Online Store.
+     * Only the first image on an item is displayed in Square Point of Sale (SPOS).
+     * Images on items and variations are displayed through Square Online Store.
      * Images on other object types are for use by 3rd party application developers.
      */
     public function getImageData(): ?CatalogImage
     {
         return $this->imageData;
     }
-
     /**
      * Sets Image Data.
-     * An image file to use in EDD\Vendor\Square catalogs. It can be associated with
+     * An image file to use in Square catalogs. It can be associated with
      * `CatalogItem`, `CatalogItemVariation`, `CatalogCategory`, and `CatalogModifierList` objects.
      * Only the images on items and item variations are exposed in Dashboard.
-     * Only the first image on an item is displayed in EDD\Vendor\Square Point of Sale (SPOS).
-     * Images on items and variations are displayed through EDD\Vendor\Square Online Store.
+     * Only the first image on an item is displayed in Square Point of Sale (SPOS).
+     * Images on items and variations are displayed through Square Online Store.
      * Images on other object types are for use by 3rd party application developers.
      *
      * @maps image_data
@@ -889,7 +810,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->imageData = $imageData;
     }
-
     /**
      * Returns Measurement Unit Data.
      * Represents the unit used to measure a `CatalogItemVariation` and
@@ -899,7 +819,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->measurementUnitData;
     }
-
     /**
      * Sets Measurement Unit Data.
      * Represents the unit used to measure a `CatalogItemVariation` and
@@ -911,7 +830,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->measurementUnitData = $measurementUnitData;
     }
-
     /**
      * Returns Subscription Plan Data.
      * Describes a subscription plan. A subscription plan represents what you want to sell in a
@@ -923,7 +841,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->subscriptionPlanData;
     }
-
     /**
      * Sets Subscription Plan Data.
      * Describes a subscription plan. A subscription plan represents what you want to sell in a
@@ -937,7 +854,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->subscriptionPlanData = $subscriptionPlanData;
     }
-
     /**
      * Returns Item Option Data.
      * A group of variations for a `CatalogItem`.
@@ -946,7 +862,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->itemOptionData;
     }
-
     /**
      * Sets Item Option Data.
      * A group of variations for a `CatalogItem`.
@@ -957,7 +872,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->itemOptionData = $itemOptionData;
     }
-
     /**
      * Returns Item Option Value Data.
      * An enumerated value that can link a
@@ -968,7 +882,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->itemOptionValueData;
     }
-
     /**
      * Sets Item Option Value Data.
      * An enumerated value that can link a
@@ -981,9 +894,8 @@ class CatalogObject implements \JsonSerializable
     {
         $this->itemOptionValueData = $itemOptionValueData;
     }
-
     /**
-     * Returns Custom EDD_EDD_Attribute Definition Data.
+     * Returns Custom Attribute Definition Data.
      * Contains information defining a custom attribute. Custom attributes are
      * intended to store additional information about a catalog object or to associate a
      * catalog object with an entity in another system. Do not use custom attributes
@@ -995,9 +907,8 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->customAttributeDefinitionData;
     }
-
     /**
-     * Sets Custom EDD_EDD_Attribute Definition Data.
+     * Sets Custom Attribute Definition Data.
      * Contains information defining a custom attribute. Custom attributes are
      * intended to store additional information about a catalog object or to associate a
      * catalog object with an entity in another system. Do not use custom attributes
@@ -1007,12 +918,10 @@ class CatalogObject implements \JsonSerializable
      *
      * @maps custom_attribute_definition_data
      */
-    public function setCustomAttributeDefinitionData(
-        ?CatalogCustomAttributeDefinition $customAttributeDefinitionData
-    ): void {
+    public function setCustomAttributeDefinitionData(?CatalogCustomAttributeDefinition $customAttributeDefinitionData): void
+    {
         $this->customAttributeDefinitionData = $customAttributeDefinitionData;
     }
-
     /**
      * Returns Quick Amounts Settings Data.
      * A parent Catalog Object model represents a set of Quick Amounts and the settings control the amounts.
@@ -1021,7 +930,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->quickAmountsSettingsData;
     }
-
     /**
      * Sets Quick Amounts Settings Data.
      * A parent Catalog Object model represents a set of Quick Amounts and the settings control the amounts.
@@ -1032,7 +940,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->quickAmountsSettingsData = $quickAmountsSettingsData;
     }
-
     /**
      * Returns Subscription Plan Variation Data.
      * Describes a subscription plan variation. A subscription plan variation represents how the
@@ -1044,7 +951,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->subscriptionPlanVariationData;
     }
-
     /**
      * Sets Subscription Plan Variation Data.
      * Describes a subscription plan variation. A subscription plan variation represents how the
@@ -1054,12 +960,10 @@ class CatalogObject implements \JsonSerializable
      *
      * @maps subscription_plan_variation_data
      */
-    public function setSubscriptionPlanVariationData(
-        ?CatalogSubscriptionPlanVariation $subscriptionPlanVariationData
-    ): void {
+    public function setSubscriptionPlanVariationData(?CatalogSubscriptionPlanVariation $subscriptionPlanVariationData): void
+    {
         $this->subscriptionPlanVariationData = $subscriptionPlanVariationData;
     }
-
     /**
      * Returns Availability Period Data.
      * Represents a time period of availability.
@@ -1068,7 +972,6 @@ class CatalogObject implements \JsonSerializable
     {
         return $this->availabilityPeriodData;
     }
-
     /**
      * Sets Availability Period Data.
      * Represents a time period of availability.
@@ -1079,7 +982,6 @@ class CatalogObject implements \JsonSerializable
     {
         $this->availabilityPeriodData = $availabilityPeriodData;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -1088,97 +990,96 @@ class CatalogObject implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['type']                                 = $this->type;
-        $json['id']                                   = $this->id;
+        $json['type'] = $this->type;
+        $json['id'] = $this->id;
         if (isset($this->updatedAt)) {
-            $json['updated_at']                       = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->version)) {
-            $json['version']                          = $this->version;
+            $json['version'] = $this->version;
         }
         if (!empty($this->isDeleted)) {
-            $json['is_deleted']                       = $this->isDeleted['value'];
+            $json['is_deleted'] = $this->isDeleted['value'];
         }
         if (!empty($this->customAttributeValues)) {
-            $json['custom_attribute_values']          = $this->customAttributeValues['value'];
+            $json['custom_attribute_values'] = $this->customAttributeValues['value'];
         }
         if (!empty($this->catalogV1Ids)) {
-            $json['catalog_v1_ids']                   = $this->catalogV1Ids['value'];
+            $json['catalog_v1_ids'] = $this->catalogV1Ids['value'];
         }
         if (!empty($this->presentAtAllLocations)) {
-            $json['present_at_all_locations']         = $this->presentAtAllLocations['value'];
+            $json['present_at_all_locations'] = $this->presentAtAllLocations['value'];
         }
         if (!empty($this->presentAtLocationIds)) {
-            $json['present_at_location_ids']          = $this->presentAtLocationIds['value'];
+            $json['present_at_location_ids'] = $this->presentAtLocationIds['value'];
         }
         if (!empty($this->absentAtLocationIds)) {
-            $json['absent_at_location_ids']           = $this->absentAtLocationIds['value'];
+            $json['absent_at_location_ids'] = $this->absentAtLocationIds['value'];
         }
         if (isset($this->itemData)) {
-            $json['item_data']                        = $this->itemData;
+            $json['item_data'] = $this->itemData;
         }
         if (isset($this->categoryData)) {
-            $json['category_data']                    = $this->categoryData;
+            $json['category_data'] = $this->categoryData;
         }
         if (isset($this->itemVariationData)) {
-            $json['item_variation_data']              = $this->itemVariationData;
+            $json['item_variation_data'] = $this->itemVariationData;
         }
         if (isset($this->taxData)) {
-            $json['tax_data']                         = $this->taxData;
+            $json['tax_data'] = $this->taxData;
         }
         if (isset($this->discountData)) {
-            $json['discount_data']                    = $this->discountData;
+            $json['discount_data'] = $this->discountData;
         }
         if (isset($this->modifierListData)) {
-            $json['modifier_list_data']               = $this->modifierListData;
+            $json['modifier_list_data'] = $this->modifierListData;
         }
         if (isset($this->modifierData)) {
-            $json['modifier_data']                    = $this->modifierData;
+            $json['modifier_data'] = $this->modifierData;
         }
         if (isset($this->timePeriodData)) {
-            $json['time_period_data']                 = $this->timePeriodData;
+            $json['time_period_data'] = $this->timePeriodData;
         }
         if (isset($this->productSetData)) {
-            $json['product_set_data']                 = $this->productSetData;
+            $json['product_set_data'] = $this->productSetData;
         }
         if (isset($this->pricingRuleData)) {
-            $json['pricing_rule_data']                = $this->pricingRuleData;
+            $json['pricing_rule_data'] = $this->pricingRuleData;
         }
         if (isset($this->imageData)) {
-            $json['image_data']                       = $this->imageData;
+            $json['image_data'] = $this->imageData;
         }
         if (isset($this->measurementUnitData)) {
-            $json['measurement_unit_data']            = $this->measurementUnitData;
+            $json['measurement_unit_data'] = $this->measurementUnitData;
         }
         if (isset($this->subscriptionPlanData)) {
-            $json['subscription_plan_data']           = $this->subscriptionPlanData;
+            $json['subscription_plan_data'] = $this->subscriptionPlanData;
         }
         if (isset($this->itemOptionData)) {
-            $json['item_option_data']                 = $this->itemOptionData;
+            $json['item_option_data'] = $this->itemOptionData;
         }
         if (isset($this->itemOptionValueData)) {
-            $json['item_option_value_data']           = $this->itemOptionValueData;
+            $json['item_option_value_data'] = $this->itemOptionValueData;
         }
         if (isset($this->customAttributeDefinitionData)) {
             $json['custom_attribute_definition_data'] = $this->customAttributeDefinitionData;
         }
         if (isset($this->quickAmountsSettingsData)) {
-            $json['quick_amounts_settings_data']      = $this->quickAmountsSettingsData;
+            $json['quick_amounts_settings_data'] = $this->quickAmountsSettingsData;
         }
         if (isset($this->subscriptionPlanVariationData)) {
             $json['subscription_plan_variation_data'] = $this->subscriptionPlanVariationData;
         }
         if (isset($this->availabilityPeriodData)) {
-            $json['availability_period_data']         = $this->availabilityPeriodData;
+            $json['availability_period_data'] = $this->availabilityPeriodData;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

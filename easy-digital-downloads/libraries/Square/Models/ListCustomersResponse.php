@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of
  * a request to the `ListCustomers` endpoint.
@@ -18,22 +16,18 @@ class ListCustomersResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Customer[]|null
      */
     private $customers;
-
     /**
      * @var string|null
      */
     private $cursor;
-
     /**
      * @var int|null
      */
     private $count;
-
     /**
      * Returns Errors.
      * Any errors that occurred during the request.
@@ -44,7 +38,6 @@ class ListCustomersResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Any errors that occurred during the request.
@@ -57,10 +50,9 @@ class ListCustomersResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Customers.
-     * The customer profiles associated with the EDD\Vendor\Square account or an empty object (`{}`) if none are found.
+     * The customer profiles associated with the Square account or an empty object (`{}`) if none are found.
      * Only customer profiles with public information (`given_name`, `family_name`, `company_name`,
      * `email_address`, or
      * `phone_number`) are included in the response.
@@ -71,10 +63,9 @@ class ListCustomersResponse implements \JsonSerializable
     {
         return $this->customers;
     }
-
     /**
      * Sets Customers.
-     * The customer profiles associated with the EDD\Vendor\Square account or an empty object (`{}`) if none are found.
+     * The customer profiles associated with the Square account or an empty object (`{}`) if none are found.
      * Only customer profiles with public information (`given_name`, `family_name`, `company_name`,
      * `email_address`, or
      * `phone_number`) are included in the response.
@@ -87,7 +78,6 @@ class ListCustomersResponse implements \JsonSerializable
     {
         $this->customers = $customers;
     }
-
     /**
      * Returns Cursor.
      * A pagination cursor to retrieve the next set of results for the
@@ -101,7 +91,6 @@ class ListCustomersResponse implements \JsonSerializable
     {
         return $this->cursor;
     }
-
     /**
      * Sets Cursor.
      * A pagination cursor to retrieve the next set of results for the
@@ -117,10 +106,9 @@ class ListCustomersResponse implements \JsonSerializable
     {
         $this->cursor = $cursor;
     }
-
     /**
      * Returns Count.
-     * The total count of customers associated with the EDD\Vendor\Square account. Only customer profiles with public
+     * The total count of customers associated with the Square account. Only customer profiles with public
      * information
      * (`given_name`, `family_name`, `company_name`, `email_address`, or `phone_number`) are counted. This
      * field is present
@@ -130,10 +118,9 @@ class ListCustomersResponse implements \JsonSerializable
     {
         return $this->count;
     }
-
     /**
      * Sets Count.
-     * The total count of customers associated with the EDD\Vendor\Square account. Only customer profiles with public
+     * The total count of customers associated with the Square account. Only customer profiles with public
      * information
      * (`given_name`, `family_name`, `company_name`, `email_address`, or `phone_number`) are counted. This
      * field is present
@@ -145,7 +132,6 @@ class ListCustomersResponse implements \JsonSerializable
     {
         $this->count = $count;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -154,26 +140,25 @@ class ListCustomersResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']    = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->customers)) {
             $json['customers'] = $this->customers;
         }
         if (isset($this->cursor)) {
-            $json['cursor']    = $this->cursor;
+            $json['cursor'] = $this->cursor;
         }
         if (isset($this->count)) {
-            $json['count']     = $this->count;
+            $json['count'] = $this->count;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

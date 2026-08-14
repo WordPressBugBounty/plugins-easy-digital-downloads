@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\Issuing;
 
 /**
@@ -24,7 +23,6 @@ class TokenService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/issuing/tokens', $params, $opts);
     }
-
     /**
      * Retrieves an Issuing <code>Token</code> object.
      *
@@ -40,7 +38,6 @@ class TokenService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('get', $this->buildPath('/v1/issuing/tokens/%s', $id), $params, $opts);
     }
-
     /**
      * Attempts to update the specified Issuing <code>Token</code> object to the status
      * specified.

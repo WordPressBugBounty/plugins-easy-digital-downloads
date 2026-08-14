@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service\TestHelpers\Issuing;
 
 /**
@@ -26,7 +25,6 @@ class PersonalizationDesignService extends \EDD\Vendor\Stripe\Service\AbstractSe
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/personalization_designs/%s/activate', $id), $params, $opts);
     }
-
     /**
      * Updates the <code>status</code> of the specified testmode personalization design
      * object to <code>inactive</code>.
@@ -43,7 +41,6 @@ class PersonalizationDesignService extends \EDD\Vendor\Stripe\Service\AbstractSe
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/personalization_designs/%s/deactivate', $id), $params, $opts);
     }
-
     /**
      * Updates the <code>status</code> of the specified testmode personalization design
      * object to <code>rejected</code>.

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * The food and beverage-specific details of a `FOOD_AND_BEV` item.
  */
@@ -15,17 +13,14 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
      * @var array
      */
     private $calorieCount = [];
-
     /**
      * @var array
      */
     private $dietaryPreferences = [];
-
     /**
      * @var array
      */
     private $ingredients = [];
-
     /**
      * Returns Calorie Count.
      * The calorie count (in the unit of kcal) for the `FOOD_AND_BEV` type of items.
@@ -37,7 +32,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
         }
         return $this->calorieCount['value'];
     }
-
     /**
      * Sets Calorie Count.
      * The calorie count (in the unit of kcal) for the `FOOD_AND_BEV` type of items.
@@ -48,7 +42,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->calorieCount['value'] = $calorieCount;
     }
-
     /**
      * Unsets Calorie Count.
      * The calorie count (in the unit of kcal) for the `FOOD_AND_BEV` type of items.
@@ -57,7 +50,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->calorieCount = [];
     }
-
     /**
      * Returns Dietary Preferences.
      * The dietary preferences for the `FOOD_AND_BEV` item.
@@ -71,7 +63,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
         }
         return $this->dietaryPreferences['value'];
     }
-
     /**
      * Sets Dietary Preferences.
      * The dietary preferences for the `FOOD_AND_BEV` item.
@@ -84,7 +75,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->dietaryPreferences['value'] = $dietaryPreferences;
     }
-
     /**
      * Unsets Dietary Preferences.
      * The dietary preferences for the `FOOD_AND_BEV` item.
@@ -93,7 +83,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->dietaryPreferences = [];
     }
-
     /**
      * Returns Ingredients.
      * The ingredients for the `FOOD_AND_BEV` type item.
@@ -107,7 +96,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
         }
         return $this->ingredients['value'];
     }
-
     /**
      * Sets Ingredients.
      * The ingredients for the `FOOD_AND_BEV` type item.
@@ -120,7 +108,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->ingredients['value'] = $ingredients;
     }
-
     /**
      * Unsets Ingredients.
      * The ingredients for the `FOOD_AND_BEV` type item.
@@ -129,7 +116,6 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
     {
         $this->ingredients = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -138,23 +124,22 @@ class CatalogItemFoodAndBeverageDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (!empty($this->calorieCount)) {
-            $json['calorie_count']       = $this->calorieCount['value'];
+            $json['calorie_count'] = $this->calorieCount['value'];
         }
         if (!empty($this->dietaryPreferences)) {
             $json['dietary_preferences'] = $this->dietaryPreferences['value'];
         }
         if (!empty($this->ingredients)) {
-            $json['ingredients']         = $this->ingredients['value'];
+            $json['ingredients'] = $this->ingredients['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

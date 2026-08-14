@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -11,7 +10,7 @@ namespace EDD\Vendor\Stripe\Service;
 class AccountLinkService extends \EDD\Vendor\Stripe\Service\AbstractService
 {
     /**
-     * Creates an AccountLink object that includes a single-use EDD\Vendor\Stripe URL that the
+     * Creates an AccountLink object that includes a single-use Stripe URL that the
      * platform can redirect their user to in order to take them through the Connect
      * Onboarding flow.
      *

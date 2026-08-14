@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Logger\Configuration;
 
 use EDD\Vendor\Core\Logger\LoggerConstants;
-
 class BaseHttpLoggingConfiguration
 {
     private $logBody;
@@ -13,7 +11,6 @@ class BaseHttpLoggingConfiguration
     private $headersToInclude;
     private $headersToExclude;
     private $headersToUnmask;
-
     /**
      * Construct an instance of ResponseConfig for logging
      *
@@ -23,23 +20,14 @@ class BaseHttpLoggingConfiguration
      * @param string[] $headersToExclude
      * @param string[] $headersToUnmask
      */
-    public function __construct(
-        bool $logBody,
-        bool $logHeaders,
-        array $headersToInclude,
-        array $headersToExclude,
-        array $headersToUnmask
-    ) {
+    public function __construct(bool $logBody, bool $logHeaders, array $headersToInclude, array $headersToExclude, array $headersToUnmask)
+    {
         $this->logBody = $logBody;
         $this->logHeaders = $logHeaders;
         $this->headersToInclude = array_map('strtolower', $headersToInclude);
         $this->headersToExclude = empty($headersToInclude) ? array_map('strtolower', $headersToExclude) : [];
-        $this->headersToUnmask = array_merge(
-            array_map('strtolower', LoggerConstants::NON_SENSITIVE_HEADERS),
-            array_map('strtolower', $headersToUnmask)
-        );
+        $this->headersToUnmask = array_merge(array_map('strtolower', LoggerConstants::NON_SENSITIVE_HEADERS), array_map('strtolower', $headersToUnmask));
     }
-
     /**
      * Indicates whether to log the body.
      */
@@ -47,7 +35,6 @@ class BaseHttpLoggingConfiguration
     {
         return $this->logBody;
     }
-
     /**
      * Indicates whether to log the headers.
      */
@@ -55,7 +42,6 @@ class BaseHttpLoggingConfiguration
     {
         return $this->logHeaders;
     }
-
     /**
      * Select the headers from the list of provided headers for logging.
      *
@@ -72,19 +58,14 @@ class BaseHttpLoggingConfiguration
             if ($maskSensitiveHeaders && $this->isSensitiveHeader($lowerCaseKey)) {
                 $sensitiveHeaders[$key] = '**Redacted**';
             }
-            if (
-                (empty($this->headersToInclude) || in_array($lowerCaseKey, $this->headersToInclude, true)) &&
-                (empty($this->headersToExclude) || !in_array($lowerCaseKey, $this->headersToExclude, true))
-            ) {
+            if ((empty($this->headersToInclude) || in_array($lowerCaseKey, $this->headersToInclude, true)) && (empty($this->headersToExclude) || !in_array($lowerCaseKey, $this->headersToExclude, true))) {
                 return true;
             }
             unset($sensitiveHeaders[$key]);
             return false;
         }, ARRAY_FILTER_USE_KEY);
-
         return array_merge($filteredHeaders, $sensitiveHeaders);
     }
-
     private function isSensitiveHeader($headerKey): bool
     {
         if (in_array($headerKey, $this->headersToUnmask, true)) {

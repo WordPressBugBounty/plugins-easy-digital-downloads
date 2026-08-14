@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains all information related to a single order to process with Square,
  * including line items that specify the products to purchase. `Order` objects also
@@ -20,157 +18,126 @@ class Order implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string
      */
     private $locationId;
-
     /**
      * @var array
      */
     private $referenceId = [];
-
     /**
      * @var OrderSource|null
      */
     private $source;
-
     /**
      * @var array
      */
     private $customerId = [];
-
     /**
      * @var array
      */
     private $lineItems = [];
-
     /**
      * @var array
      */
     private $taxes = [];
-
     /**
      * @var array
      */
     private $discounts = [];
-
     /**
      * @var array
      */
     private $serviceCharges = [];
-
     /**
      * @var array
      */
     private $fulfillments = [];
-
     /**
      * @var OrderReturn[]|null
      */
     private $returns;
-
     /**
      * @var OrderMoneyAmounts|null
      */
     private $returnAmounts;
-
     /**
      * @var OrderMoneyAmounts|null
      */
     private $netAmounts;
-
     /**
      * @var OrderRoundingAdjustment|null
      */
     private $roundingAdjustment;
-
     /**
      * @var Tender[]|null
      */
     private $tenders;
-
     /**
      * @var Refund[]|null
      */
     private $refunds;
-
     /**
      * @var array
      */
     private $metadata = [];
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var string|null
      */
     private $updatedAt;
-
     /**
      * @var string|null
      */
     private $closedAt;
-
     /**
      * @var string|null
      */
     private $state;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var Money|null
      */
     private $totalMoney;
-
     /**
      * @var Money|null
      */
     private $totalTaxMoney;
-
     /**
      * @var Money|null
      */
     private $totalDiscountMoney;
-
     /**
      * @var Money|null
      */
     private $totalTipMoney;
-
     /**
      * @var Money|null
      */
     private $totalServiceChargeMoney;
-
     /**
      * @var array
      */
     private $ticketName = [];
-
     /**
      * @var OrderPricingOptions|null
      */
     private $pricingOptions;
-
     /**
      * @var OrderReward[]|null
      */
     private $rewards;
-
     /**
      * @var Money|null
      */
     private $netAmountDueMoney;
-
     /**
      * @param string $locationId
      */
@@ -178,7 +145,6 @@ class Order implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Id.
      * The order's unique ID.
@@ -187,7 +153,6 @@ class Order implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The order's unique ID.
@@ -198,7 +163,6 @@ class Order implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Location Id.
      * The ID of the seller location that this order is associated with.
@@ -207,7 +171,6 @@ class Order implements \JsonSerializable
     {
         return $this->locationId;
     }
-
     /**
      * Sets Location Id.
      * The ID of the seller location that this order is associated with.
@@ -219,7 +182,6 @@ class Order implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Reference Id.
      * A client-specified ID to associate an entity in another system
@@ -232,7 +194,6 @@ class Order implements \JsonSerializable
         }
         return $this->referenceId['value'];
     }
-
     /**
      * Sets Reference Id.
      * A client-specified ID to associate an entity in another system
@@ -244,7 +205,6 @@ class Order implements \JsonSerializable
     {
         $this->referenceId['value'] = $referenceId;
     }
-
     /**
      * Unsets Reference Id.
      * A client-specified ID to associate an entity in another system
@@ -254,7 +214,6 @@ class Order implements \JsonSerializable
     {
         $this->referenceId = [];
     }
-
     /**
      * Returns Source.
      * Represents the origination details of an order.
@@ -263,7 +222,6 @@ class Order implements \JsonSerializable
     {
         return $this->source;
     }
-
     /**
      * Sets Source.
      * Represents the origination details of an order.
@@ -274,7 +232,6 @@ class Order implements \JsonSerializable
     {
         $this->source = $source;
     }
-
     /**
      * Returns Customer Id.
      * The ID of the [customer]($m/Customer) associated with the order.
@@ -290,7 +247,6 @@ class Order implements \JsonSerializable
         }
         return $this->customerId['value'];
     }
-
     /**
      * Sets Customer Id.
      * The ID of the [customer]($m/Customer) associated with the order.
@@ -305,7 +261,6 @@ class Order implements \JsonSerializable
     {
         $this->customerId['value'] = $customerId;
     }
-
     /**
      * Unsets Customer Id.
      * The ID of the [customer]($m/Customer) associated with the order.
@@ -318,7 +273,6 @@ class Order implements \JsonSerializable
     {
         $this->customerId = [];
     }
-
     /**
      * Returns Line Items.
      * The line items included in the order.
@@ -332,7 +286,6 @@ class Order implements \JsonSerializable
         }
         return $this->lineItems['value'];
     }
-
     /**
      * Sets Line Items.
      * The line items included in the order.
@@ -345,7 +298,6 @@ class Order implements \JsonSerializable
     {
         $this->lineItems['value'] = $lineItems;
     }
-
     /**
      * Unsets Line Items.
      * The line items included in the order.
@@ -354,7 +306,6 @@ class Order implements \JsonSerializable
     {
         $this->lineItems = [];
     }
-
     /**
      * Returns Taxes.
      * The list of all taxes associated with the order.
@@ -378,7 +329,6 @@ class Order implements \JsonSerializable
         }
         return $this->taxes['value'];
     }
-
     /**
      * Sets Taxes.
      * The list of all taxes associated with the order.
@@ -401,7 +351,6 @@ class Order implements \JsonSerializable
     {
         $this->taxes['value'] = $taxes;
     }
-
     /**
      * Unsets Taxes.
      * The list of all taxes associated with the order.
@@ -420,7 +369,6 @@ class Order implements \JsonSerializable
     {
         $this->taxes = [];
     }
-
     /**
      * Returns Discounts.
      * The list of all discounts associated with the order.
@@ -443,7 +391,6 @@ class Order implements \JsonSerializable
         }
         return $this->discounts['value'];
     }
-
     /**
      * Sets Discounts.
      * The list of all discounts associated with the order.
@@ -465,7 +412,6 @@ class Order implements \JsonSerializable
     {
         $this->discounts['value'] = $discounts;
     }
-
     /**
      * Unsets Discounts.
      * The list of all discounts associated with the order.
@@ -483,7 +429,6 @@ class Order implements \JsonSerializable
     {
         $this->discounts = [];
     }
-
     /**
      * Returns Service Charges.
      * A list of service charges applied to the order.
@@ -497,7 +442,6 @@ class Order implements \JsonSerializable
         }
         return $this->serviceCharges['value'];
     }
-
     /**
      * Sets Service Charges.
      * A list of service charges applied to the order.
@@ -510,7 +454,6 @@ class Order implements \JsonSerializable
     {
         $this->serviceCharges['value'] = $serviceCharges;
     }
-
     /**
      * Unsets Service Charges.
      * A list of service charges applied to the order.
@@ -519,7 +462,6 @@ class Order implements \JsonSerializable
     {
         $this->serviceCharges = [];
     }
-
     /**
      * Returns Fulfillments.
      * Details about order fulfillment.
@@ -536,7 +478,6 @@ class Order implements \JsonSerializable
         }
         return $this->fulfillments['value'];
     }
-
     /**
      * Sets Fulfillments.
      * Details about order fulfillment.
@@ -552,7 +493,6 @@ class Order implements \JsonSerializable
     {
         $this->fulfillments['value'] = $fulfillments;
     }
-
     /**
      * Unsets Fulfillments.
      * Details about order fulfillment.
@@ -564,7 +504,6 @@ class Order implements \JsonSerializable
     {
         $this->fulfillments = [];
     }
-
     /**
      * Returns Returns.
      * A collection of items from sale orders being returned in this one. Normally part of an
@@ -577,7 +516,6 @@ class Order implements \JsonSerializable
     {
         return $this->returns;
     }
-
     /**
      * Sets Returns.
      * A collection of items from sale orders being returned in this one. Normally part of an
@@ -592,7 +530,6 @@ class Order implements \JsonSerializable
     {
         $this->returns = $returns;
     }
-
     /**
      * Returns Return Amounts.
      * A collection of various money amounts.
@@ -601,7 +538,6 @@ class Order implements \JsonSerializable
     {
         return $this->returnAmounts;
     }
-
     /**
      * Sets Return Amounts.
      * A collection of various money amounts.
@@ -612,7 +548,6 @@ class Order implements \JsonSerializable
     {
         $this->returnAmounts = $returnAmounts;
     }
-
     /**
      * Returns Net Amounts.
      * A collection of various money amounts.
@@ -621,7 +556,6 @@ class Order implements \JsonSerializable
     {
         return $this->netAmounts;
     }
-
     /**
      * Sets Net Amounts.
      * A collection of various money amounts.
@@ -632,7 +566,6 @@ class Order implements \JsonSerializable
     {
         $this->netAmounts = $netAmounts;
     }
-
     /**
      * Returns Rounding Adjustment.
      * A rounding adjustment of the money being returned. Commonly used to apply cash rounding
@@ -643,7 +576,6 @@ class Order implements \JsonSerializable
     {
         return $this->roundingAdjustment;
     }
-
     /**
      * Sets Rounding Adjustment.
      * A rounding adjustment of the money being returned. Commonly used to apply cash rounding
@@ -656,7 +588,6 @@ class Order implements \JsonSerializable
     {
         $this->roundingAdjustment = $roundingAdjustment;
     }
-
     /**
      * Returns Tenders.
      * The tenders that were used to pay for the order.
@@ -667,7 +598,6 @@ class Order implements \JsonSerializable
     {
         return $this->tenders;
     }
-
     /**
      * Sets Tenders.
      * The tenders that were used to pay for the order.
@@ -680,7 +610,6 @@ class Order implements \JsonSerializable
     {
         $this->tenders = $tenders;
     }
-
     /**
      * Returns Refunds.
      * The refunds that are part of this order.
@@ -691,7 +620,6 @@ class Order implements \JsonSerializable
     {
         return $this->refunds;
     }
-
     /**
      * Sets Refunds.
      * The refunds that are part of this order.
@@ -704,12 +632,11 @@ class Order implements \JsonSerializable
     {
         $this->refunds = $refunds;
     }
-
     /**
      * Returns Metadata.
      * Application-defined data attached to this order. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -735,12 +662,11 @@ class Order implements \JsonSerializable
         }
         return $this->metadata['value'];
     }
-
     /**
      * Sets Metadata.
      * Application-defined data attached to this order. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -765,12 +691,11 @@ class Order implements \JsonSerializable
     {
         $this->metadata['value'] = $metadata;
     }
-
     /**
      * Unsets Metadata.
      * Application-defined data attached to this order. Metadata fields are intended
      * to store descriptive references or associations with an entity in another system or store brief
-     * information about the object. EDD\Vendor\Square does not process this field; it only stores and returns it
+     * information about the object. Square does not process this field; it only stores and returns it
      * in relevant API calls. Do not use metadata to store any sensitive information (such as personally
      * identifiable information or card details).
      *
@@ -791,7 +716,6 @@ class Order implements \JsonSerializable
     {
         $this->metadata = [];
     }
-
     /**
      * Returns Created At.
      * The timestamp for when the order was created, at server side, in RFC 3339 format (for example, "2016-
@@ -801,7 +725,6 @@ class Order implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp for when the order was created, at server side, in RFC 3339 format (for example, "2016-
@@ -813,7 +736,6 @@ class Order implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Updated At.
      * The timestamp for when the order was last updated, at server side, in RFC 3339 format (for example,
@@ -823,7 +745,6 @@ class Order implements \JsonSerializable
     {
         return $this->updatedAt;
     }
-
     /**
      * Sets Updated At.
      * The timestamp for when the order was last updated, at server side, in RFC 3339 format (for example,
@@ -835,7 +756,6 @@ class Order implements \JsonSerializable
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * Returns Closed At.
      * The timestamp for when the order reached a terminal [state](entity:OrderState), in RFC 3339 format
@@ -845,7 +765,6 @@ class Order implements \JsonSerializable
     {
         return $this->closedAt;
     }
-
     /**
      * Sets Closed At.
      * The timestamp for when the order reached a terminal [state](entity:OrderState), in RFC 3339 format
@@ -857,7 +776,6 @@ class Order implements \JsonSerializable
     {
         $this->closedAt = $closedAt;
     }
-
     /**
      * Returns State.
      * The state of the order.
@@ -866,7 +784,6 @@ class Order implements \JsonSerializable
     {
         return $this->state;
     }
-
     /**
      * Sets State.
      * The state of the order.
@@ -877,7 +794,6 @@ class Order implements \JsonSerializable
     {
         $this->state = $state;
     }
-
     /**
      * Returns Version.
      * The version number, which is incremented each time an update is committed to the order.
@@ -891,7 +807,6 @@ class Order implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version number, which is incremented each time an update is committed to the order.
@@ -907,7 +822,6 @@ class Order implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -922,7 +836,6 @@ class Order implements \JsonSerializable
     {
         return $this->totalMoney;
     }
-
     /**
      * Sets Total Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -939,7 +852,6 @@ class Order implements \JsonSerializable
     {
         $this->totalMoney = $totalMoney;
     }
-
     /**
      * Returns Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -954,7 +866,6 @@ class Order implements \JsonSerializable
     {
         return $this->totalTaxMoney;
     }
-
     /**
      * Sets Total Tax Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -971,7 +882,6 @@ class Order implements \JsonSerializable
     {
         $this->totalTaxMoney = $totalTaxMoney;
     }
-
     /**
      * Returns Total Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -986,7 +896,6 @@ class Order implements \JsonSerializable
     {
         return $this->totalDiscountMoney;
     }
-
     /**
      * Sets Total Discount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1003,7 +912,6 @@ class Order implements \JsonSerializable
     {
         $this->totalDiscountMoney = $totalDiscountMoney;
     }
-
     /**
      * Returns Total Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1018,7 +926,6 @@ class Order implements \JsonSerializable
     {
         return $this->totalTipMoney;
     }
-
     /**
      * Sets Total Tip Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1035,7 +942,6 @@ class Order implements \JsonSerializable
     {
         $this->totalTipMoney = $totalTipMoney;
     }
-
     /**
      * Returns Total Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1050,7 +956,6 @@ class Order implements \JsonSerializable
     {
         return $this->totalServiceChargeMoney;
     }
-
     /**
      * Sets Total Service Charge Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1067,7 +972,6 @@ class Order implements \JsonSerializable
     {
         $this->totalServiceChargeMoney = $totalServiceChargeMoney;
     }
-
     /**
      * Returns Ticket Name.
      * A short-term identifier for the order (such as a customer first name,
@@ -1080,7 +984,6 @@ class Order implements \JsonSerializable
         }
         return $this->ticketName['value'];
     }
-
     /**
      * Sets Ticket Name.
      * A short-term identifier for the order (such as a customer first name,
@@ -1092,7 +995,6 @@ class Order implements \JsonSerializable
     {
         $this->ticketName['value'] = $ticketName;
     }
-
     /**
      * Unsets Ticket Name.
      * A short-term identifier for the order (such as a customer first name,
@@ -1102,7 +1004,6 @@ class Order implements \JsonSerializable
     {
         $this->ticketName = [];
     }
-
     /**
      * Returns Pricing Options.
      * Pricing options for an order. The options affect how the order's price is calculated.
@@ -1113,7 +1014,6 @@ class Order implements \JsonSerializable
     {
         return $this->pricingOptions;
     }
-
     /**
      * Sets Pricing Options.
      * Pricing options for an order. The options affect how the order's price is calculated.
@@ -1126,7 +1026,6 @@ class Order implements \JsonSerializable
     {
         $this->pricingOptions = $pricingOptions;
     }
-
     /**
      * Returns Rewards.
      * A set-like list of Rewards that have been added to the Order.
@@ -1137,7 +1036,6 @@ class Order implements \JsonSerializable
     {
         return $this->rewards;
     }
-
     /**
      * Sets Rewards.
      * A set-like list of Rewards that have been added to the Order.
@@ -1150,7 +1048,6 @@ class Order implements \JsonSerializable
     {
         $this->rewards = $rewards;
     }
-
     /**
      * Returns Net Amount Due Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1165,7 +1062,6 @@ class Order implements \JsonSerializable
     {
         return $this->netAmountDueMoney;
     }
-
     /**
      * Sets Net Amount Due Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -1182,7 +1078,6 @@ class Order implements \JsonSerializable
     {
         $this->netAmountDueMoney = $netAmountDueMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -1191,105 +1086,104 @@ class Order implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                         = $this->id;
+            $json['id'] = $this->id;
         }
-        $json['location_id']                    = $this->locationId;
+        $json['location_id'] = $this->locationId;
         if (!empty($this->referenceId)) {
-            $json['reference_id']               = $this->referenceId['value'];
+            $json['reference_id'] = $this->referenceId['value'];
         }
         if (isset($this->source)) {
-            $json['source']                     = $this->source;
+            $json['source'] = $this->source;
         }
         if (!empty($this->customerId)) {
-            $json['customer_id']                = $this->customerId['value'];
+            $json['customer_id'] = $this->customerId['value'];
         }
         if (!empty($this->lineItems)) {
-            $json['line_items']                 = $this->lineItems['value'];
+            $json['line_items'] = $this->lineItems['value'];
         }
         if (!empty($this->taxes)) {
-            $json['taxes']                      = $this->taxes['value'];
+            $json['taxes'] = $this->taxes['value'];
         }
         if (!empty($this->discounts)) {
-            $json['discounts']                  = $this->discounts['value'];
+            $json['discounts'] = $this->discounts['value'];
         }
         if (!empty($this->serviceCharges)) {
-            $json['service_charges']            = $this->serviceCharges['value'];
+            $json['service_charges'] = $this->serviceCharges['value'];
         }
         if (!empty($this->fulfillments)) {
-            $json['fulfillments']               = $this->fulfillments['value'];
+            $json['fulfillments'] = $this->fulfillments['value'];
         }
         if (isset($this->returns)) {
-            $json['returns']                    = $this->returns;
+            $json['returns'] = $this->returns;
         }
         if (isset($this->returnAmounts)) {
-            $json['return_amounts']             = $this->returnAmounts;
+            $json['return_amounts'] = $this->returnAmounts;
         }
         if (isset($this->netAmounts)) {
-            $json['net_amounts']                = $this->netAmounts;
+            $json['net_amounts'] = $this->netAmounts;
         }
         if (isset($this->roundingAdjustment)) {
-            $json['rounding_adjustment']        = $this->roundingAdjustment;
+            $json['rounding_adjustment'] = $this->roundingAdjustment;
         }
         if (isset($this->tenders)) {
-            $json['tenders']                    = $this->tenders;
+            $json['tenders'] = $this->tenders;
         }
         if (isset($this->refunds)) {
-            $json['refunds']                    = $this->refunds;
+            $json['refunds'] = $this->refunds;
         }
         if (!empty($this->metadata)) {
-            $json['metadata']                   = $this->metadata['value'];
+            $json['metadata'] = $this->metadata['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                 = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                 = $this->updatedAt;
+            $json['updated_at'] = $this->updatedAt;
         }
         if (isset($this->closedAt)) {
-            $json['closed_at']                  = $this->closedAt;
+            $json['closed_at'] = $this->closedAt;
         }
         if (isset($this->state)) {
-            $json['state']                      = $this->state;
+            $json['state'] = $this->state;
         }
         if (isset($this->version)) {
-            $json['version']                    = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->totalMoney)) {
-            $json['total_money']                = $this->totalMoney;
+            $json['total_money'] = $this->totalMoney;
         }
         if (isset($this->totalTaxMoney)) {
-            $json['total_tax_money']            = $this->totalTaxMoney;
+            $json['total_tax_money'] = $this->totalTaxMoney;
         }
         if (isset($this->totalDiscountMoney)) {
-            $json['total_discount_money']       = $this->totalDiscountMoney;
+            $json['total_discount_money'] = $this->totalDiscountMoney;
         }
         if (isset($this->totalTipMoney)) {
-            $json['total_tip_money']            = $this->totalTipMoney;
+            $json['total_tip_money'] = $this->totalTipMoney;
         }
         if (isset($this->totalServiceChargeMoney)) {
             $json['total_service_charge_money'] = $this->totalServiceChargeMoney;
         }
         if (!empty($this->ticketName)) {
-            $json['ticket_name']                = $this->ticketName['value'];
+            $json['ticket_name'] = $this->ticketName['value'];
         }
         if (isset($this->pricingOptions)) {
-            $json['pricing_options']            = $this->pricingOptions;
+            $json['pricing_options'] = $this->pricingOptions;
         }
         if (isset($this->rewards)) {
-            $json['rewards']                    = $this->rewards;
+            $json['rewards'] = $this->rewards;
         }
         if (isset($this->netAmountDueMoney)) {
-            $json['net_amount_due_money']       = $this->netAmountDueMoney;
+            $json['net_amount_due_money'] = $this->netAmountDueMoney;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

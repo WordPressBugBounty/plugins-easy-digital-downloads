@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Util;
 
 /**
@@ -36,23 +35,17 @@ class ArrayConverter
     public static function expandToTree(array $messages)
     {
         $tree = [];
-
         foreach ($messages as $id => $value) {
-            $referenceToElement = &self::getElementByPath($tree, self::getKeyParts($id));
-
+            $referenceToElement =& self::getElementByPath($tree, self::getKeyParts($id));
             $referenceToElement = $value;
-
             unset($referenceToElement);
         }
-
         return $tree;
     }
-
     private static function &getElementByPath(array &$tree, array $parts)
     {
-        $elem = &$tree;
+        $elem =& $tree;
         $parentOfElem = null;
-
         foreach ($parts as $i => $part) {
             if (isset($elem[$part]) && \is_string($elem[$part])) {
                 /* Process next case:
@@ -62,14 +55,12 @@ class ArrayConverter
                  * $tree['foo'] was string before we found array {bar: test2}.
                  *  Treat new element as string too, e.g. add $tree['foo.bar'] = 'test2';
                  */
-                $elem = &$elem[implode('.', \array_slice($parts, $i))];
+                $elem =& $elem[implode('.', \array_slice($parts, $i))];
                 break;
             }
-
-            $parentOfElem = &$elem;
-            $elem = &$elem[$part];
+            $parentOfElem =& $elem;
+            $elem =& $elem[$part];
         }
-
         if ($elem && \is_array($elem) && $parentOfElem) {
             /* Process next case:
              *    'foo.bar': 'test1'
@@ -81,23 +72,19 @@ class ArrayConverter
              */
             self::cancelExpand($parentOfElem, $part, $elem);
         }
-
         return $elem;
     }
-
     private static function cancelExpand(array &$tree, string $prefix, array $node)
     {
         $prefix .= '.';
-
         foreach ($node as $id => $value) {
             if (\is_string($value)) {
-                $tree[$prefix.$id] = $value;
+                $tree[$prefix . $id] = $value;
             } else {
-                self::cancelExpand($tree, $prefix.$id, $value);
+                self::cancelExpand($tree, $prefix . $id, $value);
             }
         }
     }
-
     /**
      * @return string[]
      */
@@ -105,40 +92,29 @@ class ArrayConverter
     {
         $parts = explode('.', $key);
         $partsCount = \count($parts);
-
         $result = [];
         $buffer = '';
-
         foreach ($parts as $index => $part) {
             if (0 === $index && '' === $part) {
                 $buffer = '.';
-
                 continue;
             }
-
             if ($index === $partsCount - 1 && '' === $part) {
                 $buffer .= '.';
                 $result[] = $buffer;
-
                 continue;
             }
-
             if (isset($parts[$index + 1]) && '' === $parts[$index + 1]) {
                 $buffer .= $part;
-
                 continue;
             }
-
             if ($buffer) {
-                $result[] = $buffer.$part;
+                $result[] = $buffer . $part;
                 $buffer = '';
-
                 continue;
             }
-
             $result[] = $part;
         }
-
         return $result;
     }
 }

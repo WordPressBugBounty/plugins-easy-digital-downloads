@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
- * Represents the EDD\Vendor\Square processing fee.
+ * Represents the Square processing fee.
  */
 class ProcessingFee implements \JsonSerializable
 {
@@ -15,17 +13,14 @@ class ProcessingFee implements \JsonSerializable
      * @var array
      */
     private $effectiveAt = [];
-
     /**
      * @var array
      */
     private $type = [];
-
     /**
      * @var Money|null
      */
     private $amountMoney;
-
     /**
      * Returns Effective At.
      * The timestamp of when the fee takes effect, in RFC 3339 format.
@@ -37,7 +32,6 @@ class ProcessingFee implements \JsonSerializable
         }
         return $this->effectiveAt['value'];
     }
-
     /**
      * Sets Effective At.
      * The timestamp of when the fee takes effect, in RFC 3339 format.
@@ -48,7 +42,6 @@ class ProcessingFee implements \JsonSerializable
     {
         $this->effectiveAt['value'] = $effectiveAt;
     }
-
     /**
      * Unsets Effective At.
      * The timestamp of when the fee takes effect, in RFC 3339 format.
@@ -57,7 +50,6 @@ class ProcessingFee implements \JsonSerializable
     {
         $this->effectiveAt = [];
     }
-
     /**
      * Returns Type.
      * The type of fee assessed or adjusted. The fee type can be `INITIAL` or `ADJUSTMENT`.
@@ -69,7 +61,6 @@ class ProcessingFee implements \JsonSerializable
         }
         return $this->type['value'];
     }
-
     /**
      * Sets Type.
      * The type of fee assessed or adjusted. The fee type can be `INITIAL` or `ADJUSTMENT`.
@@ -80,7 +71,6 @@ class ProcessingFee implements \JsonSerializable
     {
         $this->type['value'] = $type;
     }
-
     /**
      * Unsets Type.
      * The type of fee assessed or adjusted. The fee type can be `INITIAL` or `ADJUSTMENT`.
@@ -89,7 +79,6 @@ class ProcessingFee implements \JsonSerializable
     {
         $this->type = [];
     }
-
     /**
      * Returns Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -104,7 +93,6 @@ class ProcessingFee implements \JsonSerializable
     {
         return $this->amountMoney;
     }
-
     /**
      * Sets Amount Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -121,7 +109,6 @@ class ProcessingFee implements \JsonSerializable
     {
         $this->amountMoney = $amountMoney;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -130,7 +117,7 @@ class ProcessingFee implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -138,7 +125,7 @@ class ProcessingFee implements \JsonSerializable
             $json['effective_at'] = $this->effectiveAt['value'];
         }
         if (!empty($this->type)) {
-            $json['type']         = $this->type['value'];
+            $json['type'] = $this->type['value'];
         }
         if (isset($this->amountMoney)) {
             $json['amount_money'] = $this->amountMoney;
@@ -146,7 +133,6 @@ class ProcessingFee implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

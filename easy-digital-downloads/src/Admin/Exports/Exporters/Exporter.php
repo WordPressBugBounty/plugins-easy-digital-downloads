@@ -486,7 +486,7 @@ abstract class Exporter {
 		}
 
 		$this->file_system->put_contents( $this->file, '' );
-		$this->file_system->chmod( $this->file, 0664 );
+		$this->file_system->chmod( $this->file, FileSystem::get_chmod_file() );
 
 		return '';
 	}

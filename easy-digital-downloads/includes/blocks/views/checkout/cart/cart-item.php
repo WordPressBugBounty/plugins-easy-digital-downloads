@@ -1,3 +1,17 @@
+<?php
+/**
+ * Cart item row.
+ *
+ * @package     EDD\Blocks\Checkout
+ * @copyright   Copyright (c) Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
+ *
+ * @var array $item              Cart item data.
+ * @var int   $key               The cart item's position in the cart.
+ * @var bool  $is_checkout_block Whether this is in context of the checkout block.
+ */
+
+?>
 <div class="edd-blocks-cart__row edd-blocks-cart__row-item edd_cart_item" id="edd_cart_item_<?php echo esc_attr( $key ) . '_' . esc_attr( $item['id'] ); ?>" data-download-id="<?php echo esc_attr( $item['id'] ); ?>">
 	<div class="edd_cart_item_name">
 		<div class="edd_checkout_cart_item_title">
@@ -23,7 +37,7 @@
 		 * @param int $key Cart key
 		 */
 		do_action( 'edd_checkout_cart_item_title_after', $item, $key );
-		if ( $is_checkout_block && edd_item_quantities_enabled() && ! edd_download_quantities_disabled( $item['id'] ) ) :
+		if ( $is_checkout_block && ! empty( $block_attributes['show_quantity_controls'] ) && edd_item_quantities_enabled() && ! edd_download_quantities_disabled( $item['id'] ) ) :
 			?>
 			<div class="edd_cart_actions">
 				<label for="edd-cart-download-<?php echo esc_attr( $key ); ?>-quantity"><?php esc_html_e( 'Quantity:', 'easy-digital-downloads' ); ?></label>

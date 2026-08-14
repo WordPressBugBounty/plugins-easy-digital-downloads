@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents filtering and sorting criteria for a [SearchCustomers]($e/Customers/SearchCustomers)
  * request.
@@ -16,12 +14,10 @@ class CustomerQuery implements \JsonSerializable
      * @var CustomerFilter|null
      */
     private $filter;
-
     /**
      * @var CustomerSort|null
      */
     private $sort;
-
     /**
      * Returns Filter.
      * Represents the filtering criteria in a [search query]($m/CustomerQuery) that defines how to filter
@@ -31,7 +27,6 @@ class CustomerQuery implements \JsonSerializable
     {
         return $this->filter;
     }
-
     /**
      * Sets Filter.
      * Represents the filtering criteria in a [search query]($m/CustomerQuery) that defines how to filter
@@ -43,7 +38,6 @@ class CustomerQuery implements \JsonSerializable
     {
         $this->filter = $filter;
     }
-
     /**
      * Returns Sort.
      * Represents the sorting criteria in a [search query]($m/CustomerQuery) that defines how to sort
@@ -53,7 +47,6 @@ class CustomerQuery implements \JsonSerializable
     {
         return $this->sort;
     }
-
     /**
      * Sets Sort.
      * Represents the sorting criteria in a [search query]($m/CustomerQuery) that defines how to sort
@@ -65,7 +58,6 @@ class CustomerQuery implements \JsonSerializable
     {
         $this->sort = $sort;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -74,7 +66,7 @@ class CustomerQuery implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -82,12 +74,11 @@ class CustomerQuery implements \JsonSerializable
             $json['filter'] = $this->filter;
         }
         if (isset($this->sort)) {
-            $json['sort']   = $this->sort;
+            $json['sort'] = $this->sort;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

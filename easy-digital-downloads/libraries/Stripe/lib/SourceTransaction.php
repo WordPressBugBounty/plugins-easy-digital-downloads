@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -28,7 +27,6 @@ namespace EDD\Vendor\Stripe;
 class SourceTransaction extends ApiResource
 {
     const OBJECT_NAME = 'source_transaction';
-
     const TYPE_ACH_CREDIT_TRANSFER = 'ach_credit_transfer';
     const TYPE_ACH_DEBIT = 'ach_debit';
     const TYPE_ALIPAY = 'alipay';

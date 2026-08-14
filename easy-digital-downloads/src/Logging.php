@@ -216,13 +216,7 @@ class Logging {
 		} elseif ( 'file_download' === $args['log_type'] ) {
 			$insert_method = 'edd_add_file_download_log';
 
-			if ( ! class_exists( '\\Browser' ) ) {
-				require_once EDD_PLUGIN_DIR . 'includes/libraries/browser.php';
-			}
-
-			$browser = new \Browser();
-
-			$user_agent = $browser->getBrowser() . ' ' . $browser->getVersion() . '/' . $browser->getPlatform();
+			$user_agent = Utils\Browser::get_user_agent( 200 );
 
 			$data = array(
 				'product_id'  => $args['post_parent'],
@@ -700,7 +694,7 @@ class Logging {
 			$file = FileSystem::get_fs()->get_contents( $this->file );
 		} else {
 			FileSystem::get_fs()->put_contents( $this->file, '' );
-			FileSystem::get_fs()->chmod( $this->file, 0664 );
+			FileSystem::get_fs()->chmod( $this->file, FileSystem::get_chmod_file() );
 		}
 
 		return $file;
@@ -733,7 +727,7 @@ class Logging {
 		if ( FileSystem::get_fs()->exists( $this->file ) ) {
 
 			// It's still there, so maybe server doesn't have delete rights.
-			FileSystem::get_fs()->chmod( $this->file, 0664 );
+			FileSystem::get_fs()->chmod( $this->file, FileSystem::get_chmod_file() );
 			FileSystem::get_fs()->delete( $this->file );
 
 			// See if it's still there...

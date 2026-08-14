@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Service;
 
 /**
@@ -26,7 +25,6 @@ class ReviewService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->requestCollection('get', '/v1/reviews', $params, $opts);
     }
-
     /**
      * Approves a <code>Review</code> object, closing it and removing it from the list
      * of reviews.
@@ -43,7 +41,6 @@ class ReviewService extends \EDD\Vendor\Stripe\Service\AbstractService
     {
         return $this->request('post', $this->buildPath('/v1/reviews/%s/approve', $id), $params, $opts);
     }
-
     /**
      * Retrieves a <code>Review</code> object.
      *

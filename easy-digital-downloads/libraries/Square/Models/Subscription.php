@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a subscription purchased by a customer.
  *
@@ -18,97 +16,78 @@ class Subscription implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $locationId;
-
     /**
      * @var string|null
      */
     private $planVariationId;
-
     /**
      * @var string|null
      */
     private $customerId;
-
     /**
      * @var string|null
      */
     private $startDate;
-
     /**
      * @var array
      */
     private $canceledDate = [];
-
     /**
      * @var string|null
      */
     private $chargedThroughDate;
-
     /**
      * @var string|null
      */
     private $status;
-
     /**
      * @var array
      */
     private $taxPercentage = [];
-
     /**
      * @var string[]|null
      */
     private $invoiceIds;
-
     /**
      * @var Money|null
      */
     private $priceOverrideMoney;
-
     /**
      * @var int|null
      */
     private $version;
-
     /**
      * @var string|null
      */
     private $createdAt;
-
     /**
      * @var array
      */
     private $cardId = [];
-
     /**
      * @var string|null
      */
     private $timezone;
-
     /**
      * @var SubscriptionSource|null
      */
     private $source;
-
     /**
      * @var array
      */
     private $actions = [];
-
     /**
      * @var int|null
      */
     private $monthlyBillingAnchorDate;
-
     /**
      * @var Phase[]|null
      */
     private $phases;
-
     /**
      * Returns Id.
      * The Square-assigned ID of the subscription.
@@ -117,7 +96,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The Square-assigned ID of the subscription.
@@ -128,7 +106,6 @@ class Subscription implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Location Id.
      * The ID of the location associated with the subscription.
@@ -137,7 +114,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->locationId;
     }
-
     /**
      * Sets Location Id.
      * The ID of the location associated with the subscription.
@@ -148,7 +124,6 @@ class Subscription implements \JsonSerializable
     {
         $this->locationId = $locationId;
     }
-
     /**
      * Returns Plan Variation Id.
      * The ID of the subscribed-to [subscription plan variation](entity:CatalogSubscriptionPlanVariation).
@@ -157,7 +132,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->planVariationId;
     }
-
     /**
      * Sets Plan Variation Id.
      * The ID of the subscribed-to [subscription plan variation](entity:CatalogSubscriptionPlanVariation).
@@ -168,7 +142,6 @@ class Subscription implements \JsonSerializable
     {
         $this->planVariationId = $planVariationId;
     }
-
     /**
      * Returns Customer Id.
      * The ID of the subscribing [customer](entity:Customer) profile.
@@ -177,7 +150,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->customerId;
     }
-
     /**
      * Sets Customer Id.
      * The ID of the subscribing [customer](entity:Customer) profile.
@@ -188,7 +160,6 @@ class Subscription implements \JsonSerializable
     {
         $this->customerId = $customerId;
     }
-
     /**
      * Returns Start Date.
      * The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to start the subscription.
@@ -197,7 +168,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->startDate;
     }
-
     /**
      * Sets Start Date.
      * The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to start the subscription.
@@ -208,7 +178,6 @@ class Subscription implements \JsonSerializable
     {
         $this->startDate = $startDate;
     }
-
     /**
      * Returns Canceled Date.
      * The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,
@@ -225,7 +194,6 @@ class Subscription implements \JsonSerializable
         }
         return $this->canceledDate['value'];
     }
-
     /**
      * Sets Canceled Date.
      * The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,
@@ -241,7 +209,6 @@ class Subscription implements \JsonSerializable
     {
         $this->canceledDate['value'] = $canceledDate;
     }
-
     /**
      * Unsets Canceled Date.
      * The `YYYY-MM-DD`-formatted date (for example, 2013-01-15) to cancel the subscription,
@@ -255,7 +222,6 @@ class Subscription implements \JsonSerializable
     {
         $this->canceledDate = [];
     }
-
     /**
      * Returns Charged Through Date.
      * The `YYYY-MM-DD`-formatted date up to when the subscriber is invoiced for the
@@ -272,7 +238,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->chargedThroughDate;
     }
-
     /**
      * Sets Charged Through Date.
      * The `YYYY-MM-DD`-formatted date up to when the subscriber is invoiced for the
@@ -291,7 +256,6 @@ class Subscription implements \JsonSerializable
     {
         $this->chargedThroughDate = $chargedThroughDate;
     }
-
     /**
      * Returns Status.
      * Supported subscription statuses.
@@ -300,7 +264,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->status;
     }
-
     /**
      * Sets Status.
      * Supported subscription statuses.
@@ -311,7 +274,6 @@ class Subscription implements \JsonSerializable
     {
         $this->status = $status;
     }
-
     /**
      * Returns Tax Percentage.
      * The tax amount applied when billing the subscription. The
@@ -326,7 +288,6 @@ class Subscription implements \JsonSerializable
         }
         return $this->taxPercentage['value'];
     }
-
     /**
      * Sets Tax Percentage.
      * The tax amount applied when billing the subscription. The
@@ -340,7 +301,6 @@ class Subscription implements \JsonSerializable
     {
         $this->taxPercentage['value'] = $taxPercentage;
     }
-
     /**
      * Unsets Tax Percentage.
      * The tax amount applied when billing the subscription. The
@@ -352,7 +312,6 @@ class Subscription implements \JsonSerializable
     {
         $this->taxPercentage = [];
     }
-
     /**
      * Returns Invoice Ids.
      * The IDs of the [invoices](entity:Invoice) created for the
@@ -365,7 +324,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->invoiceIds;
     }
-
     /**
      * Sets Invoice Ids.
      * The IDs of the [invoices](entity:Invoice) created for the
@@ -380,7 +338,6 @@ class Subscription implements \JsonSerializable
     {
         $this->invoiceIds = $invoiceIds;
     }
-
     /**
      * Returns Price Override Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -395,7 +352,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->priceOverrideMoney;
     }
-
     /**
      * Sets Price Override Money.
      * Represents an amount of money. `Money` fields can be signed or unsigned.
@@ -412,7 +368,6 @@ class Subscription implements \JsonSerializable
     {
         $this->priceOverrideMoney = $priceOverrideMoney;
     }
-
     /**
      * Returns Version.
      * The version of the object. When updating an object, the version
@@ -423,7 +378,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->version;
     }
-
     /**
      * Sets Version.
      * The version of the object. When updating an object, the version
@@ -436,7 +390,6 @@ class Subscription implements \JsonSerializable
     {
         $this->version = $version;
     }
-
     /**
      * Returns Created At.
      * The timestamp when the subscription was created, in RFC 3339 format.
@@ -445,7 +398,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->createdAt;
     }
-
     /**
      * Sets Created At.
      * The timestamp when the subscription was created, in RFC 3339 format.
@@ -456,7 +408,6 @@ class Subscription implements \JsonSerializable
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * Returns Card Id.
      * The ID of the [subscriber's](entity:Customer) [card](entity:Card)
@@ -469,7 +420,6 @@ class Subscription implements \JsonSerializable
         }
         return $this->cardId['value'];
     }
-
     /**
      * Sets Card Id.
      * The ID of the [subscriber's](entity:Customer) [card](entity:Card)
@@ -481,7 +431,6 @@ class Subscription implements \JsonSerializable
     {
         $this->cardId['value'] = $cardId;
     }
-
     /**
      * Unsets Card Id.
      * The ID of the [subscriber's](entity:Customer) [card](entity:Card)
@@ -491,7 +440,6 @@ class Subscription implements \JsonSerializable
     {
         $this->cardId = [];
     }
-
     /**
      * Returns Timezone.
      * Timezone that will be used in date calculations for the subscription.
@@ -503,7 +451,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->timezone;
     }
-
     /**
      * Sets Timezone.
      * Timezone that will be used in date calculations for the subscription.
@@ -517,7 +464,6 @@ class Subscription implements \JsonSerializable
     {
         $this->timezone = $timezone;
     }
-
     /**
      * Returns Source.
      * The origination details of the subscription.
@@ -526,7 +472,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->source;
     }
-
     /**
      * Sets Source.
      * The origination details of the subscription.
@@ -537,7 +482,6 @@ class Subscription implements \JsonSerializable
     {
         $this->source = $source;
     }
-
     /**
      * Returns Actions.
      * The list of scheduled actions on this subscription. It is set only in the response from
@@ -555,7 +499,6 @@ class Subscription implements \JsonSerializable
         }
         return $this->actions['value'];
     }
-
     /**
      * Sets Actions.
      * The list of scheduled actions on this subscription. It is set only in the response from
@@ -572,7 +515,6 @@ class Subscription implements \JsonSerializable
     {
         $this->actions['value'] = $actions;
     }
-
     /**
      * Unsets Actions.
      * The list of scheduled actions on this subscription. It is set only in the response from
@@ -585,7 +527,6 @@ class Subscription implements \JsonSerializable
     {
         $this->actions = [];
     }
-
     /**
      * Returns Monthly Billing Anchor Date.
      * The day of the month on which the subscription will issue invoices and publish orders.
@@ -594,7 +535,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->monthlyBillingAnchorDate;
     }
-
     /**
      * Sets Monthly Billing Anchor Date.
      * The day of the month on which the subscription will issue invoices and publish orders.
@@ -605,7 +545,6 @@ class Subscription implements \JsonSerializable
     {
         $this->monthlyBillingAnchorDate = $monthlyBillingAnchorDate;
     }
-
     /**
      * Returns Phases.
      * array of phases for this subscription
@@ -616,7 +555,6 @@ class Subscription implements \JsonSerializable
     {
         return $this->phases;
     }
-
     /**
      * Sets Phases.
      * array of phases for this subscription
@@ -629,7 +567,6 @@ class Subscription implements \JsonSerializable
     {
         $this->phases = $phases;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -638,71 +575,70 @@ class Subscription implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                          = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->locationId)) {
-            $json['location_id']                 = $this->locationId;
+            $json['location_id'] = $this->locationId;
         }
         if (isset($this->planVariationId)) {
-            $json['plan_variation_id']           = $this->planVariationId;
+            $json['plan_variation_id'] = $this->planVariationId;
         }
         if (isset($this->customerId)) {
-            $json['customer_id']                 = $this->customerId;
+            $json['customer_id'] = $this->customerId;
         }
         if (isset($this->startDate)) {
-            $json['start_date']                  = $this->startDate;
+            $json['start_date'] = $this->startDate;
         }
         if (!empty($this->canceledDate)) {
-            $json['canceled_date']               = $this->canceledDate['value'];
+            $json['canceled_date'] = $this->canceledDate['value'];
         }
         if (isset($this->chargedThroughDate)) {
-            $json['charged_through_date']        = $this->chargedThroughDate;
+            $json['charged_through_date'] = $this->chargedThroughDate;
         }
         if (isset($this->status)) {
-            $json['status']                      = $this->status;
+            $json['status'] = $this->status;
         }
         if (!empty($this->taxPercentage)) {
-            $json['tax_percentage']              = $this->taxPercentage['value'];
+            $json['tax_percentage'] = $this->taxPercentage['value'];
         }
         if (isset($this->invoiceIds)) {
-            $json['invoice_ids']                 = $this->invoiceIds;
+            $json['invoice_ids'] = $this->invoiceIds;
         }
         if (isset($this->priceOverrideMoney)) {
-            $json['price_override_money']        = $this->priceOverrideMoney;
+            $json['price_override_money'] = $this->priceOverrideMoney;
         }
         if (isset($this->version)) {
-            $json['version']                     = $this->version;
+            $json['version'] = $this->version;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                  = $this->createdAt;
+            $json['created_at'] = $this->createdAt;
         }
         if (!empty($this->cardId)) {
-            $json['card_id']                     = $this->cardId['value'];
+            $json['card_id'] = $this->cardId['value'];
         }
         if (isset($this->timezone)) {
-            $json['timezone']                    = $this->timezone;
+            $json['timezone'] = $this->timezone;
         }
         if (isset($this->source)) {
-            $json['source']                      = $this->source;
+            $json['source'] = $this->source;
         }
         if (!empty($this->actions)) {
-            $json['actions']                     = $this->actions['value'];
+            $json['actions'] = $this->actions['value'];
         }
         if (isset($this->monthlyBillingAnchorDate)) {
             $json['monthly_billing_anchor_date'] = $this->monthlyBillingAnchorDate;
         }
         if (isset($this->phases)) {
-            $json['phases']                      = $this->phases;
+            $json['phases'] = $this->phases;
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

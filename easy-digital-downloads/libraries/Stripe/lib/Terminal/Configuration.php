@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Terminal;
 
 /**
@@ -22,9 +21,7 @@ namespace EDD\Vendor\Stripe\Terminal;
 class Configuration extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'terminal.configuration';
-
     use \EDD\Vendor\Stripe\ApiOperations\Update;
-
     /**
      * Creates a new <code>Configuration</code> object.
      *
@@ -39,14 +36,11 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes a <code>Configuration</code> object.
      *
@@ -60,14 +54,11 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of <code>Configuration</code> objects.
      *
@@ -81,10 +72,8 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a <code>Configuration</code> object.
      *
@@ -100,10 +89,8 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Updates a new <code>Configuration</code> object.
      *
@@ -119,11 +106,9 @@ class Configuration extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -12,21 +11,21 @@ namespace EDD\Vendor\Stripe;
  * that may be caused by subscription upgrades/downgrades (if necessary).
  *
  * If your invoice is configured to be billed through automatic charges,
- * EDD\Vendor\Stripe automatically finalizes your invoice and attempts payment. Note
+ * Stripe automatically finalizes your invoice and attempts payment. Note
  * that finalizing the invoice,
  * <a href="https://stripe.com/docs/invoicing/integration/automatic-advancement-collection">when automatic</a>, does
- * not happen immediately as the invoice is created. EDD\Vendor\Stripe waits
+ * not happen immediately as the invoice is created. Stripe waits
  * until one hour after the last webhook was successfully sent (or the last
  * webhook timed out after failing). If you (and the platforms you may have
- * connected to) have no webhooks configured, EDD\Vendor\Stripe waits one hour after
+ * connected to) have no webhooks configured, Stripe waits one hour after
  * creation to finalize the invoice.
  *
  * If your invoice is configured to be billed by sending an email, then based on your
  * <a href="https://dashboard.stripe.com/account/billing/automatic">email settings</a>,
- * EDD\Vendor\Stripe will email the invoice to your customer and await payment. These
+ * Stripe will email the invoice to your customer and await payment. These
  * emails can contain a link to a hosted page to pay the invoice.
  *
- * EDD\Vendor\Stripe applies any customer credit on the account before determining the
+ * Stripe applies any customer credit on the account before determining the
  * amount due for the invoice (i.e., the amount that will be actually
  * charged). If the amount due for the invoice is less than Stripe's <a href="/docs/currencies#minimum-and-maximum-charge-amounts">minimum allowed charge
  * per currency</a>, the
@@ -48,15 +47,15 @@ namespace EDD\Vendor\Stripe;
  * @property int $amount_remaining The difference between amount_due and amount_paid, in cents (or local equivalent).
  * @property int $amount_shipping This is the sum of all the shipping amounts.
  * @property null|string|\EDD\Vendor\Stripe\Application $application ID of the Connect Application that created the invoice.
- * @property null|int $application_fee_amount The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's EDD\Vendor\Stripe account when the invoice is paid.
+ * @property null|int $application_fee_amount The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
  * @property int $attempt_count Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
  * @property bool $attempted Whether an attempt has been made to pay the invoice. An invoice is not attempted until 1 hour after the <code>invoice.created</code> webhook, for example, so you might not want to display that invoice as unpaid to your users.
- * @property null|bool $auto_advance Controls whether EDD\Vendor\Stripe performs <a href="https://stripe.com/docs/invoicing/integration/automatic-advancement-collection">automatic collection</a> of the invoice. If <code>false</code>, the invoice's state doesn't automatically advance without an explicit action.
+ * @property null|bool $auto_advance Controls whether Stripe performs <a href="https://stripe.com/docs/invoicing/integration/automatic-advancement-collection">automatic collection</a> of the invoice. If <code>false</code>, the invoice's state doesn't automatically advance without an explicit action.
  * @property \EDD\Vendor\Stripe\StripeObject $automatic_tax
  * @property null|int $automatically_finalizes_at The time when this invoice is currently scheduled to be automatically finalized. The field will be <code>null</code> if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft state, this field will always be <code>null</code> - see <code>finalized_at</code> for the time when an already-finalized invoice was finalized.
  * @property null|string $billing_reason <p>Indicates the reason why the invoice was created.</p><p>* <code>manual</code>: Unrelated to a subscription, for example, created via the invoice editor. * <code>subscription</code>: No longer in use. Applies to subscriptions from before May 2018 where no distinction was made between updates, cycles, and thresholds. * <code>subscription_create</code>: A new subscription was created. * <code>subscription_cycle</code>: A subscription advanced into a new period. * <code>subscription_threshold</code>: A subscription reached a billing threshold. * <code>subscription_update</code>: A subscription was updated. * <code>upcoming</code>: Reserved for simulated invoices, per the upcoming invoice endpoint.</p>
  * @property null|string|\EDD\Vendor\Stripe\Charge $charge ID of the latest charge generated for this invoice, if any.
- * @property string $collection_method Either <code>charge_automatically</code>, or <code>send_invoice</code>. When charging automatically, EDD\Vendor\Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, EDD\Vendor\Stripe will email this invoice to the customer with payment instructions.
+ * @property string $collection_method Either <code>charge_automatically</code>, or <code>send_invoice</code>. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property null|\EDD\Vendor\Stripe\StripeObject[] $custom_fields Custom fields displayed on the invoice.
@@ -125,10 +124,8 @@ namespace EDD\Vendor\Stripe;
 class Invoice extends ApiResource
 {
     const OBJECT_NAME = 'invoice';
-
     use ApiOperations\NestedResource;
     use ApiOperations\Update;
-
     const BILLING_REASON_AUTOMATIC_PENDING_INVOICE_ITEM_INVOICE = 'automatic_pending_invoice_item_invoice';
     const BILLING_REASON_MANUAL = 'manual';
     const BILLING_REASON_QUOTE_ACCEPT = 'quote_accept';
@@ -138,20 +135,16 @@ class Invoice extends ApiResource
     const BILLING_REASON_SUBSCRIPTION_THRESHOLD = 'subscription_threshold';
     const BILLING_REASON_SUBSCRIPTION_UPDATE = 'subscription_update';
     const BILLING_REASON_UPCOMING = 'upcoming';
-
     const COLLECTION_METHOD_CHARGE_AUTOMATICALLY = 'charge_automatically';
     const COLLECTION_METHOD_SEND_INVOICE = 'send_invoice';
-
     const CUSTOMER_TAX_EXEMPT_EXEMPT = 'exempt';
     const CUSTOMER_TAX_EXEMPT_NONE = 'none';
     const CUSTOMER_TAX_EXEMPT_REVERSE = 'reverse';
-
     const STATUS_DRAFT = 'draft';
     const STATUS_OPEN = 'open';
     const STATUS_PAID = 'paid';
     const STATUS_UNCOLLECTIBLE = 'uncollectible';
     const STATUS_VOID = 'void';
-
     /**
      * This endpoint creates a draft invoice for a given customer. The invoice remains
      * a draft until you <a href="#finalize_invoice">finalize</a> the invoice, which
@@ -169,14 +162,11 @@ class Invoice extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to
      * delete invoices that are no longer in a draft state will fail; once an invoice
@@ -193,14 +183,11 @@ class Invoice extends ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * You can list all invoices, or list the invoices for a specific customer. The
      * invoices are returned sorted by creation date, with the most recently created
@@ -216,10 +203,8 @@ class Invoice extends ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves the invoice with the given ID.
      *
@@ -235,16 +220,14 @@ class Invoice extends ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * Draft invoices are fully editable. Once an invoice is <a
      * href="/docs/billing/invoices/workflow#finalized">finalized</a>, monetary values,
      * as well as <code>collection_method</code>, become uneditable.
      *
-     * If you would like to stop the EDD\Vendor\Stripe Billing engine from automatically
+     * If you would like to stop the Stripe Billing engine from automatically
      * finalizing, reattempting payments on, sending reminders for, or <a
      * href="/docs/billing/invoices/reconciliation">automatically reconciling</a>
      * invoices, pass <code>auto_advance=false</code>.
@@ -261,17 +244,13 @@ class Invoice extends ApiResource
     {
         self::_validateParams($params);
         $url = static::resourceUrl($id);
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     const BILLING_CHARGE_AUTOMATICALLY = 'charge_automatically';
     const BILLING_SEND_INVOICE = 'send_invoice';
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -285,10 +264,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/add_lines';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -303,10 +280,8 @@ class Invoice extends ApiResource
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -320,10 +295,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/finalize';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -337,10 +310,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/mark_uncollectible';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -354,10 +325,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/pay';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -371,10 +340,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/remove_lines';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -388,10 +355,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/send';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -406,10 +371,8 @@ class Invoice extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -424,10 +387,8 @@ class Invoice extends ApiResource
         list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -441,10 +402,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/update_lines';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -458,10 +417,8 @@ class Invoice extends ApiResource
         $url = $this->instanceUrl() . '/void';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -473,12 +430,9 @@ class Invoice extends ApiResource
     public static function search($params = null, $opts = null)
     {
         $url = '/v1/invoices/search';
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\SearchResult::class, $params, $opts);
     }
-
     const PATH_LINES = '/lines';
-
     /**
      * @param string $id the ID of the invoice on which to retrieve the invoice line items
      * @param null|array $params

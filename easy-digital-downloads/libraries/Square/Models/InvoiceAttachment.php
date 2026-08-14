@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Represents a file attached to an [invoice]($m/Invoice).
  */
@@ -15,37 +13,30 @@ class InvoiceAttachment implements \JsonSerializable
      * @var string|null
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $filename;
-
     /**
      * @var string|null
      */
     private $description;
-
     /**
      * @var int|null
      */
     private $filesize;
-
     /**
      * @var string|null
      */
     private $hash;
-
     /**
      * @var string|null
      */
     private $mimeType;
-
     /**
      * @var string|null
      */
     private $uploadedAt;
-
     /**
      * Returns Id.
      * The Square-assigned ID of the attachment.
@@ -54,7 +45,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * Sets Id.
      * The Square-assigned ID of the attachment.
@@ -65,7 +55,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->id = $id;
     }
-
     /**
      * Returns Filename.
      * The file name of the attachment, which is displayed on the invoice.
@@ -74,7 +63,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->filename;
     }
-
     /**
      * Sets Filename.
      * The file name of the attachment, which is displayed on the invoice.
@@ -85,7 +73,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->filename = $filename;
     }
-
     /**
      * Returns Description.
      * The description of the attachment, which is displayed on the invoice.
@@ -95,7 +82,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->description;
     }
-
     /**
      * Sets Description.
      * The description of the attachment, which is displayed on the invoice.
@@ -107,7 +93,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->description = $description;
     }
-
     /**
      * Returns Filesize.
      * The file size of the attachment in bytes.
@@ -116,7 +101,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->filesize;
     }
-
     /**
      * Sets Filesize.
      * The file size of the attachment in bytes.
@@ -127,7 +111,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->filesize = $filesize;
     }
-
     /**
      * Returns Hash.
      * The MD5 hash that was generated from the file contents.
@@ -136,7 +119,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->hash;
     }
-
     /**
      * Sets Hash.
      * The MD5 hash that was generated from the file contents.
@@ -147,7 +129,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->hash = $hash;
     }
-
     /**
      * Returns Mime Type.
      * The mime type of the attachment.
@@ -158,7 +139,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->mimeType;
     }
-
     /**
      * Sets Mime Type.
      * The mime type of the attachment.
@@ -171,7 +151,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->mimeType = $mimeType;
     }
-
     /**
      * Returns Uploaded At.
      * The timestamp when the attachment was uploaded, in RFC 3339 format.
@@ -180,7 +159,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         return $this->uploadedAt;
     }
-
     /**
      * Sets Uploaded At.
      * The timestamp when the attachment was uploaded, in RFC 3339 format.
@@ -191,7 +169,6 @@ class InvoiceAttachment implements \JsonSerializable
     {
         $this->uploadedAt = $uploadedAt;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -200,27 +177,27 @@ class InvoiceAttachment implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']          = $this->id;
+            $json['id'] = $this->id;
         }
         if (isset($this->filename)) {
-            $json['filename']    = $this->filename;
+            $json['filename'] = $this->filename;
         }
         if (isset($this->description)) {
             $json['description'] = $this->description;
         }
         if (isset($this->filesize)) {
-            $json['filesize']    = $this->filesize;
+            $json['filesize'] = $this->filesize;
         }
         if (isset($this->hash)) {
-            $json['hash']        = $this->hash;
+            $json['hash'] = $this->hash;
         }
         if (isset($this->mimeType)) {
-            $json['mime_type']   = $this->mimeType;
+            $json['mime_type'] = $this->mimeType;
         }
         if (isset($this->uploadedAt)) {
             $json['uploaded_at'] = $this->uploadedAt;
@@ -228,7 +205,6 @@ class InvoiceAttachment implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

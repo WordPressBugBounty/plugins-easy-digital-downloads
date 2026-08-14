@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\TestCase\BodyMatchers;
 
 use PHPUnit\Framework\TestCase;
-
 class BodyMatcher
 {
     protected $expectedBody;
@@ -17,7 +15,6 @@ class BodyMatcher
     public $testCase;
     public $result;
     public $shouldAssert = true;
-
     /**
      * Initializes a new BodyMatcher with the parameters provided.
      */
@@ -26,7 +23,6 @@ class BodyMatcher
         $this->bodyComparator = $bodyComparator;
         $this->expectedBody = $expectedBody;
     }
-
     /**
      * Returns already set default message.
      */
@@ -34,7 +30,6 @@ class BodyMatcher
     {
         return $this->defaultMessage;
     }
-
     /**
      * Sets testCase and result to the ones provided.
      */
@@ -43,7 +38,6 @@ class BodyMatcher
         $this->testCase = $testCase;
         $this->result = $result;
     }
-
     /**
      * Asserts if the testCase results to true or not.
      */

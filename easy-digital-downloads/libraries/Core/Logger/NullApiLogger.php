@@ -5,7 +5,6 @@ namespace EDD\Vendor\Core\Logger;
 use EDD\Vendor\CoreInterfaces\Core\Logger\ApiLoggerInterface;
 use EDD\Vendor\CoreInterfaces\Core\Request\RequestInterface;
 use EDD\Vendor\CoreInterfaces\Core\Response\ResponseInterface;
-
 class NullApiLogger implements ApiLoggerInterface
 {
     /**
@@ -15,7 +14,6 @@ class NullApiLogger implements ApiLoggerInterface
     {
         // noop
     }
-
     /**
      * @inheritDoc
      */

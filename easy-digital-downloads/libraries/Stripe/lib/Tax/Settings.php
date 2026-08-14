@@ -1,11 +1,10 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Tax;
 
 /**
- * You can use Tax <code>Settings</code> to manage configurations used by EDD\Vendor\Stripe Tax calculations.
+ * You can use Tax <code>Settings</code> to manage configurations used by Stripe Tax calculations.
  *
  * Related guide: <a href="https://stripe.com/docs/tax/settings-api">Using the Settings API</a>
  *
@@ -19,10 +18,8 @@ namespace EDD\Vendor\Stripe\Tax;
 class Settings extends \EDD\Vendor\Stripe\SingletonApiResource
 {
     const OBJECT_NAME = 'tax.settings';
-
     const STATUS_ACTIVE = 'active';
     const STATUS_PENDING = 'pending';
-
     /**
      * Retrieves Tax <code>Settings</code> for a merchant.
      *
@@ -37,10 +34,8 @@ class Settings extends \EDD\Vendor\Stripe\SingletonApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static(null, $opts);
         $instance->refresh();
-
         return $instance;
     }
-
     /**
      * @param null|array $params
      * @param null|array|string $opts
@@ -53,14 +48,11 @@ class Settings extends \EDD\Vendor\Stripe\SingletonApiResource
     {
         self::_validateParams($params);
         $url = '/v1/tax/settings';
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * @param null|array|string $opts
      *
@@ -80,7 +72,6 @@ class Settings extends \EDD\Vendor\Stripe\SingletonApiResource
             list($response, $opts) = $this->_request('post', $url, $params, $opts, ['save']);
             $this->refreshFrom($response, $opts);
         }
-
         return $this;
     }
 }

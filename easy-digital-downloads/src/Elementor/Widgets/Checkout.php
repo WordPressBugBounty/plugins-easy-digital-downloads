@@ -13,13 +13,15 @@ namespace EDD\Elementor\Widgets;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
+use EDD\Elementor\MarkerBuilder;
 use EDD\Elementor\Utils\Page;
 use EDD\Elementor\Widgets\Config\Checkout as Config;
 
 /**
  * EDD Checkout Widget for Elementor
  *
- * @since 3.6.0
+ * @since      3.6.0
+ * @deprecated 3.7.0 Superseded by the edd-checkout-box container and section widgets.
  */
 class Checkout extends Base {
 
@@ -60,7 +62,23 @@ class Checkout extends Base {
 	 * @return string Widget title
 	 */
 	public function get_title(): string {
-		return __( 'EDD Checkout', 'easy-digital-downloads' );
+		return __( 'EDD Checkout (Legacy)', 'easy-digital-downloads' );
+	}
+
+	/**
+	 * Control whether the deprecated widget appears in the Add-widget panel.
+	 *
+	 * When Elementor's Container experiment is active the composable
+	 * edd-checkout-box supersedes this widget, so it is hidden from the panel
+	 * (existing saved instances still register, render, and edit). When the
+	 * Container experiment is off the composable path is unavailable, so this
+	 * legacy monolith is exposed again as the checkout fallback.
+	 *
+	 * @since 3.7.0
+	 * @return bool
+	 */
+	public function show_in_panel(): bool {
+		return ! Page::is_container_active();
 	}
 
 	/**
@@ -160,7 +178,17 @@ class Checkout extends Base {
 	 * @since 3.6.0
 	 */
 	public function render_plain_content() {
-		echo '<!-- wp:edd/checkout ' . wp_json_encode( $this->get_attributes() ) . ' /-->';
+		// A single all-in-one section: the shared outer marker only, no inner
+		// block. Marker literals and the thumbnail-width clamp come from the one
+		// MarkerBuilder so this output cannot drift from the composable path.
+		echo MarkerBuilder::build( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- MarkerBuilder self-escapes: constrained enum/int attrs via wp_json_encode.
+			array(
+				array(
+					'block' => '',
+					'attrs' => $this->get_attributes(),
+				),
+			)
+		);
 	}
 
 	/**
@@ -236,23 +264,9 @@ class Checkout extends Base {
 		return array(
 			'layout'             => sanitize_text_field( $this->get_settings( 'layout' ) ),
 			'show_discount_form' => filter_var( $this->get_settings( 'show_discount_form' ), FILTER_VALIDATE_BOOLEAN ),
-			'thumbnail_width'    => $this->get_thumbnail_width(),
+			// Raw thumbnail width setting; MarkerBuilder normalizes and clamps it.
+			'thumbnail_width'    => $this->get_settings( 'thumbnail_width' ),
 		);
-	}
-
-	/**
-	 * Get the thumbnail width.
-	 *
-	 * @since 3.6.0
-	 * @return int The thumbnail width.
-	 */
-	private function get_thumbnail_width() {
-		$thumbnail_width = $this->get_settings( 'thumbnail_width' );
-		if ( ! empty( $thumbnail_width['size'] ) ) {
-			return (int) max( 10, min( 100, $thumbnail_width['size'] ) );
-		}
-
-		return 25;
 	}
 
 	/**

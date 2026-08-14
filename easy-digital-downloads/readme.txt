@@ -3,10 +3,10 @@ Author URI: https://easydigitaldownloads.com
 Plugin URI: https://easydigitaldownloads.com
 Contributors: easydigitaldownloads, am, cklosows, littlerchicken, alhoseany, misulicus, smub, chriscct7, sumobi, johnjamesjacoby
 Tags: ecommerce, payments, sell digital products, digital store, stripe
-Requires at least: 6.2
+Requires at least: 6.7
 Tested up to: 7.0
-Requires PHP: 7.4
-Stable Tag: 3.6.9.1
+Requires PHP: 8.0
+Stable Tag: 3.7.0
 License: GPLv2 or later
 
 The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
@@ -53,7 +53,7 @@ Accept payments globally in your digital store with these payment methods availa
 * Bancontact
 * EPS
 * giropay
-* iDEAL
+* iDEAL | Wero
 * Klarna
 * Przelewy24
 * PayPal
@@ -293,6 +293,45 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.7.0 =
+* NEW: Checkout - The block editor checkout now supports customization with inner blocks.
+* NEW: Checkout - New composable checkout widgets for finer control of the Elementor checkout.
+* NEW: Stripe - Added support for UPI payments.
+* Admin: Fixed compatibility with WordPress 7.1 for admin list tables and bulk invoice generation.
+* Admin: Prevented EDD's admin styles from overriding other plugins' meta box styling in the block editor.
+* Admin: Added a spam-protection recommendation to the Misc settings.
+* Admin: Changed the telemetry opt-in to a toggle.
+* Checkout: Updated the checkout loading indicator.
+* Checkout: Updated the shortcode checkout to use the same address fields as the block checkout.
+* CLI: Fixed detection of available EDD and extension updates via WP-CLI.
+* Discounts: Fixed preset discount links losing the coupon when a cart hook removed items during add-to-cart.
+* Downloads: Hardened redirect handling during file downloads.
+* PayPal: Improved compatibility with staging and cloned sites.
+* PayPal: Improved PayPal Connect reliability.
+* PayPal: Improved the Apple Pay domain registration process.
+* PayPal: Improved compatibility with PayPal's brand name attribute.
+* PayPal: Skipped fetching the Fastlane token on non-checkout pages.
+* PayPal: Improved the PayPal Connect buttons.
+* PayPal Standard: Improved legacy IPN handling.
+* Square: Fixed the checkout button staying disabled for cards from countries where Square hides the postal code field.
+* Stripe: Improved error message handling for failed payments.
+* Stripe: Updated the "Connect with Stripe" button to match Stripe's current branding.
+* Stripe: Added an admin notice for stores still using the legacy card elements.
+* Stripe: Rebranded the iDEAL gateway.
+* Dev: Replaced the legacy browser-detection library with modern user-agent parsing.
+* Dev: Improved filesystem handling to better match WordPress core conventions.
+* Dev: Fixed exception handling when registering service providers.
+* Dev: Declared edd-tom-select as an explicit dependency of the admin scripts.
+* Dev: Centralized request-context detection (cron, AJAX, REST).
+* Dev: Updated blocks script handling and asset building.
+* Dev: Migrated cart events to native CustomEvents.
+* Dev: Switched Mozart to a global install for build stability.
+* Dev: Updated the minimum requirements to PHP 8.0 and WordPress 6.7.
+* Dev: Registered EDD blocks as a metadata collection.
+* Dev: Addressed a WordPress 6.6 deprecation (PluginPostStatusInfo).
+
+View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
+
 = 3.6.9.1 =
 * Admin: Hardened the display of payment gateway error and API request log messages.
 * Imports: Improved hardening and validation of uploaded import files.
@@ -307,8 +346,6 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 * Emails: The email for the one-time login link could be stuck in a disabled state.
 * Imports: Improved parsing of import files.
 * Stripe: Card Elements was incorrectly adding the new Company field to the legacy Card Elements.
-
-View the full changelog at [https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/](https://easydigitaldownloads.com/changelogs/plugin/easy-digital-downloads/?utm_medium=readme&utm_source=wporg&utm_campaign=edd-plugin&utm_term=description)
 
 = 3.6.8 =
 * NEW: Stripe - Added support for BLIK payments.

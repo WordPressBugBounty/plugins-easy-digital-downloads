@@ -9,6 +9,8 @@ import {
 
 import { getGlobal } from 'utils/globals.js';
 
+import { beginLoading, endLoading, isLoading } from '@easy-digital-downloads/cart-loading'; // eslint-disable-line @wordpress/dependency-group
+
 import { isStripeSelectedGateway, disableForm, updateForm, enableForm } from './contexts/checkout/form.js';
 
 
@@ -84,8 +86,19 @@ export function createAndMountElement () {
 	let paymentElement = elements.create( 'payment', createOptions );
 	window.eddStripe.paymentElement = paymentElement;
 
+	// If the shared checkout overlay is already up, a gateway switch is handing
+	// off to us: keep it up until the Payment Element has actually rendered so
+	// the gateway-load spinner doesn't hide and let Stripe's own iframe loader
+	// flash as a second spinner. On a standalone initial load there is no
+	// overlay to bridge, so we leave Stripe's loader to do its thing.
+	const mountToken = isLoading() ? beginLoading( 'stripe-pe-mount' ) : null;
+
 	// Mount the element to it's target.
 	paymentElement.mount( getGlobal( 'elementsTarget' ) );
+
+	if ( mountToken ) {
+		paymentElement.on( 'ready', () => endLoading( mountToken ) );
+	}
 
 	// Bind our event listeners
 	bindEvents();
@@ -216,11 +229,17 @@ function generateElementStyles () {
 	 * We try and match the tabbed interface to the gateway selector.
 	 *
 	 * If Stripe is the only gateway active, we can't do this, so we have to conditionally add the rules.
+	 *
+	 * A store may not want its designed tiles carried into Stripe's payment methods, so the selector
+	 * can opt out by declaring `--edd-stripe-match-tiles: off`.
 	 */
 	const gatewaySelectorEl = document.querySelector( '.edd-gateway-option:not(.edd-gateway-option-selected)' );
 	let defaultTabRules;
 
-	if ( null !== gatewaySelectorEl && false === getGlobal( 'singleGateway' ) ) {
+	const matchesGatewaySelector = gatewaySelectorEl && 'off' !== window.getComputedStyle( gatewaySelectorEl )
+		.getPropertyValue( '--edd-stripe-match-tiles' ).trim();
+
+	if ( matchesGatewaySelector && false === getGlobal( 'singleGateway' ) ) {
 		const gatewaySelectorSelectedEl = document.querySelector( '.edd-gateway-option-selected' );
 
 		const selectorStyles = window.getComputedStyle( gatewaySelectorEl );
@@ -290,23 +309,11 @@ function generateElementStyles () {
 }
 
 function bindEvents () {
-	/**
-	 * Since EDD core still uses the jQuery event system, we need to use jQuery for these events.
-	 *
-	 * A jQuery .trigger() does not get caught by addEventListener, so we need to use the jQuery .on() method.
-	 */
-	let $window = jQuery( window );
-	let $document = jQuery( document );
-
-	// Cart quantities have changed.
-	$window.on( 'edd_quantity_updated', () => onAmountChange( 'quantity updated' ) );
-
-	// Discounts have changed.
-	$document.on( 'edd_discount_applied', () => onAmountChange( 'discount applied' ) );
-	$document.on( 'edd_discount_removed', () => onAmountChange( 'discount removed' ) );
-
-	// When taxes are applied/changed.
-	$window.on( 'edd_taxes_recalculated', () => onAmountChange( 'taxes recalcluated' ) );
+	// Refresh the Payment Element amount whenever the cart changes. The native
+	// edd:cart-updated event consolidates every cart mutation (quantity,
+	// discount, tax recalculation), so we listen for it alone rather than the
+	// individual legacy jQuery events.
+	document.addEventListener( 'edd:cart-updated', () => onAmountChange( 'cart updated' ) );
 
 	/**
 	 * The rest of these can use vanilla JS and addEventListener.

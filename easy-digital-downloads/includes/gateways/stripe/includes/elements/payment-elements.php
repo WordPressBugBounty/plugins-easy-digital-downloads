@@ -393,21 +393,19 @@ function edd_stripe_require_card_address( $fields ) {
 }
 
 /**
- * Require the billing address when Affirm is enabled.
+ * Require the billing address when a payment method that needs it is available.
  *
  * @since 3.3.5
  * @param bool $is_required Whether the billing address is required.
  * @return bool $is_required Whether the billing address is required.
  */
 function edds_require_address( $is_required ) {
-	if ( $is_required ) {
+	if ( ! EDD\Gateways\Stripe\PaymentMethods::requires_billing_address() ) {
 		return $is_required;
 	}
 
-	if ( ! EDD\Gateways\Stripe\PaymentMethods::affirm_requires_support() ) {
-		return $is_required;
-	}
-
+	// A payment method needs the full billing address, including address line 1,
+	// which is not part of the default required fields.
 	add_filter( 'edd_purchase_form_required_fields', 'edd_stripe_require_card_address' );
 
 	return true;

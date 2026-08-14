@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that are included in the response body of
  * a request to the
@@ -21,12 +19,10 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var string|null
      */
     private $signatureKey;
-
     /**
      * Returns Errors.
      * Information on errors encountered during the request.
@@ -37,7 +33,6 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information on errors encountered during the request.
@@ -50,7 +45,6 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Signature Key.
      * The new Square-generated signature key used to validate the origin of the webhook event.
@@ -59,7 +53,6 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
     {
         return $this->signatureKey;
     }
-
     /**
      * Sets Signature Key.
      * The new Square-generated signature key used to validate the origin of the webhook event.
@@ -70,7 +63,6 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
     {
         $this->signatureKey = $signatureKey;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -79,12 +71,12 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']        = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->signatureKey)) {
             $json['signature_key'] = $this->signatureKey;
@@ -92,7 +84,6 @@ class UpdateWebhookSubscriptionSignatureKeyResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

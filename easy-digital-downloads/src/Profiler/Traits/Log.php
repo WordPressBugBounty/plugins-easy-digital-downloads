@@ -179,7 +179,7 @@ trait Log {
 			$file = FileSystem::get_fs()->get_contents( self::$file );
 		} else {
 			FileSystem::get_fs()->put_contents( self::$file, '' );
-			FileSystem::get_fs()->chmod( self::$file, 0664 );
+			FileSystem::get_fs()->chmod( self::$file, FileSystem::get_chmod_file() );
 		}
 
 		return $file;
@@ -295,7 +295,7 @@ trait Log {
 		// Rotate current file to -1 and create a new file.
 		rename( $file, $file . '-1' );
 		$fs->put_contents( $file, '' );
-		$fs->chmod( $file, 0664 );
+		$fs->chmod( $file, FileSystem::get_chmod_file() );
 	}
 
 	/**

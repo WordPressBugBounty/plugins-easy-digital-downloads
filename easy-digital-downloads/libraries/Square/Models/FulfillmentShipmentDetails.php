@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Contains the details necessary to fulfill a shipment order.
  */
@@ -15,77 +13,62 @@ class FulfillmentShipmentDetails implements \JsonSerializable
      * @var FulfillmentRecipient|null
      */
     private $recipient;
-
     /**
      * @var array
      */
     private $carrier = [];
-
     /**
      * @var array
      */
     private $shippingNote = [];
-
     /**
      * @var array
      */
     private $shippingType = [];
-
     /**
      * @var array
      */
     private $trackingNumber = [];
-
     /**
      * @var array
      */
     private $trackingUrl = [];
-
     /**
      * @var string|null
      */
     private $placedAt;
-
     /**
      * @var string|null
      */
     private $inProgressAt;
-
     /**
      * @var string|null
      */
     private $packagedAt;
-
     /**
      * @var array
      */
     private $expectedShippedAt = [];
-
     /**
      * @var string|null
      */
     private $shippedAt;
-
     /**
      * @var array
      */
     private $canceledAt = [];
-
     /**
      * @var array
      */
     private $cancelReason = [];
-
     /**
      * @var string|null
      */
     private $failedAt;
-
     /**
      * @var array
      */
     private $failureReason = [];
-
     /**
      * Returns Recipient.
      * Information about the fulfillment recipient.
@@ -94,7 +77,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->recipient;
     }
-
     /**
      * Sets Recipient.
      * Information about the fulfillment recipient.
@@ -105,7 +87,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->recipient = $recipient;
     }
-
     /**
      * Returns Carrier.
      * The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
@@ -117,7 +98,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->carrier['value'];
     }
-
     /**
      * Sets Carrier.
      * The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
@@ -128,7 +108,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->carrier['value'] = $carrier;
     }
-
     /**
      * Unsets Carrier.
      * The shipping carrier being used to ship this fulfillment (such as UPS, FedEx, or USPS).
@@ -137,7 +116,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->carrier = [];
     }
-
     /**
      * Returns Shipping Note.
      * A note with additional information for the shipping carrier.
@@ -149,7 +127,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->shippingNote['value'];
     }
-
     /**
      * Sets Shipping Note.
      * A note with additional information for the shipping carrier.
@@ -160,7 +137,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->shippingNote['value'] = $shippingNote;
     }
-
     /**
      * Unsets Shipping Note.
      * A note with additional information for the shipping carrier.
@@ -169,7 +145,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->shippingNote = [];
     }
-
     /**
      * Returns Shipping Type.
      * A description of the type of shipping product purchased from the carrier
@@ -182,7 +157,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->shippingType['value'];
     }
-
     /**
      * Sets Shipping Type.
      * A description of the type of shipping product purchased from the carrier
@@ -194,7 +168,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->shippingType['value'] = $shippingType;
     }
-
     /**
      * Unsets Shipping Type.
      * A description of the type of shipping product purchased from the carrier
@@ -204,7 +177,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->shippingType = [];
     }
-
     /**
      * Returns Tracking Number.
      * The reference number provided by the carrier to track the shipment's progress.
@@ -216,7 +188,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->trackingNumber['value'];
     }
-
     /**
      * Sets Tracking Number.
      * The reference number provided by the carrier to track the shipment's progress.
@@ -227,7 +198,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->trackingNumber['value'] = $trackingNumber;
     }
-
     /**
      * Unsets Tracking Number.
      * The reference number provided by the carrier to track the shipment's progress.
@@ -236,7 +206,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->trackingNumber = [];
     }
-
     /**
      * Returns Tracking Url.
      * A link to the tracking webpage on the carrier's website.
@@ -248,7 +217,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->trackingUrl['value'];
     }
-
     /**
      * Sets Tracking Url.
      * A link to the tracking webpage on the carrier's website.
@@ -259,7 +227,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->trackingUrl['value'] = $trackingUrl;
     }
-
     /**
      * Unsets Tracking Url.
      * A link to the tracking webpage on the carrier's website.
@@ -268,7 +235,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->trackingUrl = [];
     }
-
     /**
      * Returns Placed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -279,7 +245,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->placedAt;
     }
-
     /**
      * Sets Placed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -292,7 +257,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->placedAt = $placedAt;
     }
-
     /**
      * Returns In Progress At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -305,7 +269,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->inProgressAt;
     }
-
     /**
      * Sets In Progress At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -320,7 +283,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->inProgressAt = $inProgressAt;
     }
-
     /**
      * Returns Packaged At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -332,7 +294,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->packagedAt;
     }
-
     /**
      * Sets Packaged At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -346,7 +307,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->packagedAt = $packagedAt;
     }
-
     /**
      * Returns Expected Shipped At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -360,7 +320,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->expectedShippedAt['value'];
     }
-
     /**
      * Sets Expected Shipped At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -373,7 +332,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->expectedShippedAt['value'] = $expectedShippedAt;
     }
-
     /**
      * Unsets Expected Shipped At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -384,7 +342,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->expectedShippedAt = [];
     }
-
     /**
      * Returns Shipped At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -396,7 +353,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->shippedAt;
     }
-
     /**
      * Sets Shipped At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -410,7 +366,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->shippedAt = $shippedAt;
     }
-
     /**
      * Returns Canceled At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -424,7 +379,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->canceledAt['value'];
     }
-
     /**
      * Sets Canceled At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -437,7 +391,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->canceledAt['value'] = $canceledAt;
     }
-
     /**
      * Unsets Canceled At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -448,7 +401,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->canceledAt = [];
     }
-
     /**
      * Returns Cancel Reason.
      * A description of why the shipment was canceled.
@@ -460,7 +412,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->cancelReason['value'];
     }
-
     /**
      * Sets Cancel Reason.
      * A description of why the shipment was canceled.
@@ -471,7 +422,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->cancelReason['value'] = $cancelReason;
     }
-
     /**
      * Unsets Cancel Reason.
      * A description of why the shipment was canceled.
@@ -480,7 +430,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->cancelReason = [];
     }
-
     /**
      * Returns Failed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -491,7 +440,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         return $this->failedAt;
     }
-
     /**
      * Sets Failed At.
      * The [timestamp](https://developer.squareup.com/docs/build-basics/working-with-dates)
@@ -504,7 +452,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->failedAt = $failedAt;
     }
-
     /**
      * Returns Failure Reason.
      * A description of why the shipment failed to be completed.
@@ -516,7 +463,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
         }
         return $this->failureReason['value'];
     }
-
     /**
      * Sets Failure Reason.
      * A description of why the shipment failed to be completed.
@@ -527,7 +473,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->failureReason['value'] = $failureReason;
     }
-
     /**
      * Unsets Failure Reason.
      * A description of why the shipment failed to be completed.
@@ -536,7 +481,6 @@ class FulfillmentShipmentDetails implements \JsonSerializable
     {
         $this->failureReason = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -545,59 +489,58 @@ class FulfillmentShipmentDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->recipient)) {
-            $json['recipient']           = $this->recipient;
+            $json['recipient'] = $this->recipient;
         }
         if (!empty($this->carrier)) {
-            $json['carrier']             = $this->carrier['value'];
+            $json['carrier'] = $this->carrier['value'];
         }
         if (!empty($this->shippingNote)) {
-            $json['shipping_note']       = $this->shippingNote['value'];
+            $json['shipping_note'] = $this->shippingNote['value'];
         }
         if (!empty($this->shippingType)) {
-            $json['shipping_type']       = $this->shippingType['value'];
+            $json['shipping_type'] = $this->shippingType['value'];
         }
         if (!empty($this->trackingNumber)) {
-            $json['tracking_number']     = $this->trackingNumber['value'];
+            $json['tracking_number'] = $this->trackingNumber['value'];
         }
         if (!empty($this->trackingUrl)) {
-            $json['tracking_url']        = $this->trackingUrl['value'];
+            $json['tracking_url'] = $this->trackingUrl['value'];
         }
         if (isset($this->placedAt)) {
-            $json['placed_at']           = $this->placedAt;
+            $json['placed_at'] = $this->placedAt;
         }
         if (isset($this->inProgressAt)) {
-            $json['in_progress_at']      = $this->inProgressAt;
+            $json['in_progress_at'] = $this->inProgressAt;
         }
         if (isset($this->packagedAt)) {
-            $json['packaged_at']         = $this->packagedAt;
+            $json['packaged_at'] = $this->packagedAt;
         }
         if (!empty($this->expectedShippedAt)) {
             $json['expected_shipped_at'] = $this->expectedShippedAt['value'];
         }
         if (isset($this->shippedAt)) {
-            $json['shipped_at']          = $this->shippedAt;
+            $json['shipped_at'] = $this->shippedAt;
         }
         if (!empty($this->canceledAt)) {
-            $json['canceled_at']         = $this->canceledAt['value'];
+            $json['canceled_at'] = $this->canceledAt['value'];
         }
         if (!empty($this->cancelReason)) {
-            $json['cancel_reason']       = $this->cancelReason['value'];
+            $json['cancel_reason'] = $this->cancelReason['value'];
         }
         if (isset($this->failedAt)) {
-            $json['failed_at']           = $this->failedAt;
+            $json['failed_at'] = $this->failedAt;
         }
         if (!empty($this->failureReason)) {
-            $json['failure_reason']      = $this->failureReason['value'];
+            $json['failure_reason'] = $this->failureReason['value'];
         }
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

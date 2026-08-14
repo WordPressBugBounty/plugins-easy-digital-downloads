@@ -56,6 +56,9 @@ class General extends Base {
 						'options'     => self::get_alignment_options(),
 						'default'     => 'left',
 						'responsive'  => true,
+						'condition'   => array(
+							'preview_as_guest' => '',
+						),
 						'selectors'   => array(
 							'.edd-blocks__logged-in' => 'text-align: {{VALUE}};',
 						),

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Additional details about Afterpay payments.
  */
@@ -15,7 +13,6 @@ class AfterpayDetails implements \JsonSerializable
      * @var array
      */
     private $emailAddress = [];
-
     /**
      * Returns Email Address.
      * Email address on the buyer's Afterpay account.
@@ -27,7 +24,6 @@ class AfterpayDetails implements \JsonSerializable
         }
         return $this->emailAddress['value'];
     }
-
     /**
      * Sets Email Address.
      * Email address on the buyer's Afterpay account.
@@ -38,7 +34,6 @@ class AfterpayDetails implements \JsonSerializable
     {
         $this->emailAddress['value'] = $emailAddress;
     }
-
     /**
      * Unsets Email Address.
      * Email address on the buyer's Afterpay account.
@@ -47,7 +42,6 @@ class AfterpayDetails implements \JsonSerializable
     {
         $this->emailAddress = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -56,7 +50,7 @@ class AfterpayDetails implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -66,7 +60,6 @@ class AfterpayDetails implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

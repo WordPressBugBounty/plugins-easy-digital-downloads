@@ -85,6 +85,8 @@ class DomainSubscriber implements SubscriberInterface {
 	 * PayPal. Runs on every admin page load (cheap when already valid).
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.0 Skips when the account is terminally ineligible
+	 *                       and backs off after transient failures.
 	 *
 	 * @return void
 	 */
@@ -94,6 +96,20 @@ class DomainSubscriber implements SubscriberInterface {
 		}
 
 		if ( DomainAssociation::is_valid() ) {
+			return;
+		}
+
+		// The account is terminally ineligible (no PAYMENT_METHODS
+		// subscription). Stop retrying until the merchant reconnects or
+		// re-verifies — both clear this flag.
+		if ( get_option( DomainAssociation::INELIGIBLE_OPTION, '' ) ) {
+			return;
+		}
+
+		// Back off after a transient failure so we don't hammer the Connect API on
+		// every admin page load.
+		$next_retry = (int) get_option( DomainAssociation::RETRY_OPTION, 0 );
+		if ( $next_retry > time() ) {
 			return;
 		}
 
@@ -202,7 +218,7 @@ class DomainSubscriber implements SubscriberInterface {
 	 * @return bool
 	 */
 	private static function should_verify(): bool {
-		if ( wp_doing_ajax() || wp_doing_cron() ) {
+		if ( \EDD\Utils\Request::is_request( array( 'ajax', 'cron' ) ) ) {
 			return false;
 		}
 

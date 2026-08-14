@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\HttpFoundation\Session;
 
 /**
@@ -37,7 +36,6 @@ final class SessionUtils
             }
             if (11 === strpos($h, $sessionCookiePrefix, 11)) {
                 $sessionCookie = $h;
-
                 if (11 !== strpos($h, $sessionCookieWithId, 11)) {
                     $otherCookies[] = $h;
                 }
@@ -48,12 +46,10 @@ final class SessionUtils
         if (null === $sessionCookie) {
             return null;
         }
-
         header_remove('Set-Cookie');
         foreach ($otherCookies as $h) {
             header($h, false);
         }
-
         return $sessionCookie;
     }
 }

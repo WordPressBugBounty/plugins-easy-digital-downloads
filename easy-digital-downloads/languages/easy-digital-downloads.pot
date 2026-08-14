@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Easy Digital Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads 3.6.9.1\n"
+"Project-Id-Version: Easy Digital Downloads 3.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-digital-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-27T17:11:16+00:00\n"
+"POT-Creation-Date: 2026-08-13T22:41:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 
@@ -5916,7 +5916,7 @@ msgid "Enter emails and/or domains (starting with \"@\") and/or TLDs (starting w
 msgstr ""
 
 #: includes/admin/admin-deprecated-functions.php:54
-#: includes/admin/admin-deprecated-functions.php:2000
+#: includes/admin/admin-deprecated-functions.php:1994
 #: includes/admin/views/email-editor/header.php:51
 msgid "Save"
 msgstr ""
@@ -5932,7 +5932,7 @@ msgstr ""
 
 #. translators: %s: refund link
 #: includes/admin/admin-deprecated-functions.php:79
-#: includes/admin/admin-deprecated-functions.php:835
+#: includes/admin/admin-deprecated-functions.php:829
 #: includes/admin/customers/customer-actions.php:243
 #: includes/admin/customers/customer-actions.php:303
 #: includes/admin/customers/customer-actions.php:506
@@ -5990,31 +5990,31 @@ msgstr ""
 #: includes/blocks/includes/forms/recaptcha.php:178
 #: includes/cart/class-edd-cart.php:1558
 #: includes/cart/class-edd-cart.php:1572
-#: includes/class-edd-license-handler.php:479
+#: includes/class-edd-license-handler.php:478
 #: includes/deprecated-functions.php:489
 #: includes/deprecated-functions.php:506
 #: includes/deprecated-functions.php:514
 #: includes/deprecated-functions.php:916
-#: includes/download-functions.php:1533
+#: includes/download-functions.php:1525
 #: includes/EDD_SL_Plugin_Updater.php:561
 #: includes/emails/template.php:109
 #: includes/gateways/functions.php:257
 #: includes/gateways/manual.php:33
 #: includes/gateways/paypal-standard.php:172
-#: includes/gateways/paypal/admin/connect.php:801
-#: includes/gateways/paypal/admin/connect.php:805
-#: includes/gateways/paypal/admin/connect.php:844
-#: includes/gateways/paypal/admin/connect.php:848
-#: includes/gateways/paypal/admin/connect.php:1049
-#: includes/gateways/paypal/admin/connect.php:1061
+#: includes/gateways/paypal/admin/connect.php:803
+#: includes/gateways/paypal/admin/connect.php:807
+#: includes/gateways/paypal/admin/connect.php:846
+#: includes/gateways/paypal/admin/connect.php:850
+#: includes/gateways/paypal/admin/connect.php:1051
+#: includes/gateways/paypal/admin/connect.php:1063
 #: includes/gateways/paypal/checkout-actions.php:181
 #: includes/gateways/stripe/includes/admin/upgrade-functions.php:87
 #: includes/process-download.php:311
 #: includes/process-download.php:946
 #: includes/query-filters.php:50
-#: includes/user-functions.php:849
-#: includes/user-functions.php:873
-#: includes/user-functions.php:922
+#: includes/user-functions.php:848
+#: includes/user-functions.php:872
+#: includes/user-functions.php:921
 #: includes/users/lost-password.php:251
 #: src/Admin/Discounts/Manager.php:46
 #: src/Admin/Discounts/Manager.php:91
@@ -6034,7 +6034,7 @@ msgstr ""
 #: src/Admin/Upgrades/v3/Base.php:117
 #: src/Emails/Triggers.php:63
 #: src/Extensions/Updater.php:514
-#: src/Gateways/PayPal/V3/Onboarding.php:336
+#: src/Gateways/PayPal/V3/Onboarding.php:374
 #: src/Gateways/Square/Connection.php:64
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:293
 #: src/Pro/CartRecovery/Admin/Carts/Actions.php:302
@@ -6106,7 +6106,7 @@ msgstr ""
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:835
+#: includes/admin/admin-deprecated-functions.php:829
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:239
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:310
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:407
@@ -6117,62 +6117,62 @@ msgstr ""
 msgid "You do not have permission to do shop upgrades"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:947
+#: includes/admin/admin-deprecated-functions.php:941
 msgid "Preview Purchase Receipt"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:962
+#: includes/admin/admin-deprecated-functions.php:956
 #: src/Admin/Settings/Tabs/Emails.php:199
 msgid "Send Test Email"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1420
+#: includes/admin/admin-deprecated-functions.php:1414
 #: src/Admin/Downloads/Metaboxes/Stats.php:88
 msgid "Net Sales:"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1425
+#: includes/admin/admin-deprecated-functions.php:1419
 #: src/Admin/Downloads/Metaboxes/Stats.php:93
 msgid "Net Revenue:"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1448
+#: includes/admin/admin-deprecated-functions.php:1442
 #: src/Admin/Downloads/Metaboxes/Stats.php:116
 msgid "View File Download Log"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1478
+#: includes/admin/admin-deprecated-functions.php:1472
 #: src/Admin/Downloads/Editor/Details.php:77
 msgid "Product Type Options:"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1498
+#: includes/admin/admin-deprecated-functions.php:1492
 #: src/Admin/Downloads/Editor/Details.php:83
 msgid "Sell this item as a single product with download files, or select a custom product type with different options, which may not necessarily include download files."
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1540
+#: includes/admin/admin-deprecated-functions.php:1534
 msgid "Click and drag to re-order price options"
 msgstr ""
 
 #. translators: %s: price ID.
-#: includes/admin/admin-deprecated-functions.php:1544
+#: includes/admin/admin-deprecated-functions.php:1538
 #, php-format
 msgid "Price ID: %s"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1555
+#: includes/admin/admin-deprecated-functions.php:1549
 #: src/Admin/Assets/Localization.php:96
 msgid "Show advanced settings"
 msgstr ""
 
 #. translators: %s: The bundle product index number.
-#: includes/admin/admin-deprecated-functions.php:1562
+#: includes/admin/admin-deprecated-functions.php:1556
 #: includes/admin/downloads/metabox.php:372
 #: includes/admin/downloads/views/metabox-bundled-products.php:140
 #: includes/admin/views/tmpl-tax-rates-table-row.php:50
 #: includes/blocks/views/checkout/cart/cart-fees.php:15
-#: includes/blocks/views/checkout/cart/cart-item.php:61
+#: includes/blocks/views/checkout/cart/cart-item.php:75
 #: includes/blocks/views/forms/profile-editor.php:71
 #: src/Admin/Assets/Localization.php:91
 #: src/Admin/Downloads/Editor/VariablePrices.php:350
@@ -6184,17 +6184,17 @@ msgid "Remove"
 msgstr ""
 
 #. translators: %s: price ID.
-#: includes/admin/admin-deprecated-functions.php:1565
+#: includes/admin/admin-deprecated-functions.php:1559
 #, php-format
 msgid "Remove price option %s"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1579
-#: includes/admin/admin-deprecated-functions.php:1588
+#: includes/admin/admin-deprecated-functions.php:1573
+#: includes/admin/admin-deprecated-functions.php:1582
 msgid "Option Name"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1598
+#: includes/admin/admin-deprecated-functions.php:1592
 #: includes/admin/downloads/dashboard-columns.php:35
 #: includes/admin/downloads/dashboard-columns.php:345
 #: src/Admin/Downloads/Editor/Details.php:112
@@ -6209,9 +6209,11 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1630
+#: includes/admin/admin-deprecated-functions.php:1624
 #: includes/gateways/stripe/includes/template-functions.php:470
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:291
+#: src/Checkout/Templates/Traits/TemplateBrowserTrait.php:81
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:324
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:102
 #: src/Pro/Admin/Settings/Invoices.php:203
 #: src/Pro/CartRecovery/Admin/Screens/Settings.php:112
 #: includes/blocks/build/downloads/index.js:1
@@ -6220,63 +6222,63 @@ msgid "Default"
 msgstr ""
 
 #. translators: %s: price ID.
-#: includes/admin/admin-deprecated-functions.php:1643
+#: includes/admin/admin-deprecated-functions.php:1637
 #, php-format
 msgid "Set ID %s as default price"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1711
+#: includes/admin/admin-deprecated-functions.php:1705
 #: includes/admin/customers/customers.php:208
 msgctxt "Customer Details tab title"
 msgid "Profile"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1715
+#: includes/admin/admin-deprecated-functions.php:1709
 #: includes/admin/customers/customers.php:212
 msgctxt "Customer Emails tab title"
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1719
+#: includes/admin/admin-deprecated-functions.php:1713
 #: includes/admin/customers/customers.php:216
 msgctxt "Customer Addresses tab title"
 msgid "Addresses"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1723
+#: includes/admin/admin-deprecated-functions.php:1717
 #: includes/admin/customers/customers.php:220
 msgctxt "Customer Notes tab title"
 msgid "Notes"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1727
+#: includes/admin/admin-deprecated-functions.php:1721
 #: includes/admin/customers/customers.php:224
 msgctxt "Customer Tools tab title"
 msgid "Tools"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1744
+#: includes/admin/admin-deprecated-functions.php:1738
 #: includes/admin/customers/customers.php:233
 msgctxt "Delete Customer tab title"
 msgid "Delete"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1972
+#: includes/admin/admin-deprecated-functions.php:1966
 msgid "Enable Beta Versions"
 msgstr ""
 
-#: includes/admin/admin-deprecated-functions.php:1974
+#: includes/admin/admin-deprecated-functions.php:1968
 msgid "Checking any of the below checkboxes will opt you in to receive pre-release update notifications. You can opt-out at any time. Pre-release updates do not install automatically, you will still have the opportunity to ignore update notifications."
 msgstr ""
 
 #. translators: %s: Product name
-#: includes/admin/admin-deprecated-functions.php:1990
+#: includes/admin/admin-deprecated-functions.php:1984
 #, php-format
 msgid "Get updates for pre-release versions of %s"
 msgstr ""
 
 #: includes/admin/class-api-keys-table.php:126
-#: includes/user-functions.php:1079
+#: includes/user-functions.php:1078
 msgid "Never Used"
 msgstr ""
 
@@ -6284,7 +6286,7 @@ msgstr ""
 #. translators: %s: time ago
 #. translators: %s: human time difference
 #: includes/admin/class-api-keys-table.php:138
-#: includes/user-functions.php:1090
+#: includes/user-functions.php:1089
 #: src/Models/Notification.php:199
 #: src/Pro/CartRecovery/Admin/Carts/Timeline.php:105
 #: src/Pro/CartRecovery/Admin/SiteHealth.php:124
@@ -6305,10 +6307,8 @@ msgid "Revoke"
 msgstr ""
 
 #: includes/admin/class-api-keys-table.php:218
-#: includes/blocks/views/checkout/purchase-form/register.php:7
-#: includes/checkout/template.php:363
-#: includes/checkout/template.php:372
 #: src/Emails/Tags/Registry.php:91
+#: src/Forms/Register/Username.php:132
 #: templates/shortcode-register.php:20
 #: includes/blocks/build/register/index.js:1
 #: includes/blocks/src/register/edit.js:24
@@ -6336,358 +6336,366 @@ msgid "Generate New API Keys"
 msgstr ""
 
 #. translators: %s: URL to the settings page
-#: includes/admin/class-edd-notices.php:337
+#: includes/admin/class-edd-notices.php:331
 #, php-format
 msgid "No checkout page is configured. Set one in <a href=\"%s\">Settings</a>."
 msgstr ""
 
 #. translators: %s: Uploads directory
-#: includes/admin/class-edd-notices.php:409
+#: includes/admin/class-edd-notices.php:403
 #, php-format
 msgid "The files in %s are not currently protected."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:410
+#: includes/admin/class-edd-notices.php:404
 msgid "To protect them, you must add this <a href=\"https://easydigitaldownloads.com/docs/download-files-not-protected-on-nginx/\">NGINX redirect rule</a>."
 msgstr ""
 
 #. translators: %s: Dismiss notice URL
-#: includes/admin/class-edd-notices.php:414
+#: includes/admin/class-edd-notices.php:408
 #, php-format
 msgid "If you have already done this, or it does not apply to your site, you may permanently <a href=\"%s\">dismiss this notice</a>."
 msgstr ""
 
 #. translators: %s: Uploads directory
-#: includes/admin/class-edd-notices.php:447
+#: includes/admin/class-edd-notices.php:441
 #: src/Admin/SiteHealth/Direct.php:217
 #, php-format
 msgid "The .htaccess file is missing from: %s"
 msgstr ""
 
 #. translators: %s: Uploads directory
-#: includes/admin/class-edd-notices.php:449
+#: includes/admin/class-edd-notices.php:443
 #: src/Admin/SiteHealth/Direct.php:222
 #, php-format
 msgid "First, please re-save the Misc settings tab a few times. If this warning continues to appear, create a file called \".htaccess\" in the %s directory, and copy the following into it:"
 msgstr ""
 
 #. translators: %s: Notice Dismissal URL
-#: includes/admin/class-edd-notices.php:451
+#: includes/admin/class-edd-notices.php:445
 #, php-format
 msgid "If you have already done this, or it does not apply to your site, you may permanently %s."
 msgstr ""
 
 #. translators: %s: Notice Dismissal URL
-#: includes/admin/class-edd-notices.php:451
+#: includes/admin/class-edd-notices.php:445
 msgid "dismiss this notice"
 msgstr ""
 
 #. translators: 1: link to the recount tool, 2: link to the plugins screen.
-#: includes/admin/class-edd-notices.php:475
+#: includes/admin/class-edd-notices.php:469
 #, php-format
 msgid "Easy Digital Downloads 2.5 contains a <a href=\"%1$s\">built in recount tool</a>. Please <a href=\"%2$s\">deactivate the Easy Digital Downloads - Recount Earnings plugin</a>"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:519
+#: includes/admin/class-edd-notices.php:513
 #: src/Admin/Notifications/GBLegacy.php:123
 msgid "Review Tax Rates"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:526
+#: includes/admin/class-edd-notices.php:520
 msgid "A default tax rate was detected."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:526
+#: includes/admin/class-edd-notices.php:520
 msgid "This setting is no longer used in this version of Easy Digital Downloads. Please confirm your regional tax rates are properly configured and update tax settings to remove this notice."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:550
+#: includes/admin/class-edd-notices.php:544
 msgid "Settings updated."
 msgstr ""
 
 #. translators: %s: Next order number
-#: includes/admin/class-edd-notices.php:563
+#: includes/admin/class-edd-notices.php:557
 #, php-format
 msgid "The sequential starting number could not be updated because it could conflict with existing orders. The next assigned order number is %s."
 msgstr ""
 
 #. translators: %s: Sandbox doc link
-#: includes/admin/class-edd-notices.php:583
+#: includes/admin/class-edd-notices.php:577
 #, php-format
 msgid "Connecting to PayPal in Test Mode requires a PayPal Sandbox account. If you need help, you can <a href=\"%s\" target=\"_blank\">view our documentation</a> on using PayPal Sandbox."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:599
+#: includes/admin/class-edd-notices.php:593
 msgid "Stripe payment methods synced successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:607
+#: includes/admin/class-edd-notices.php:601
 msgid "Stripe payment methods could not be synced."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:618
+#: includes/admin/class-edd-notices.php:612
 msgid "The cart preview feature requires the REST API to be enabled."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:649
+#: includes/admin/class-edd-notices.php:643
 msgid "Easy Digital Downloads is migrating orders. Sales and earnings data for your store will be updated when all orders have been migrated."
 msgstr ""
 
-#. translators: 1: opening link tag, 2: opening link tag, 3: closing link tag.
-#: includes/admin/class-edd-notices.php:672
+#: includes/admin/class-edd-notices.php:675
+msgid "Upgrade to Payment Elements — a better Stripe checkout for you and your customers."
+msgstr ""
+
+#: includes/admin/class-edd-notices.php:676
+msgid "Stripe's Payment Elements gives you one secure, modern checkout that supports Apple Pay, Google Pay, Link, Klarna, and dozens of international payment methods — with the latest fraud protection and bank authentication (SCA) handled automatically. Your store is still on the legacy Card Elements checkout, which Stripe no longer recommends and EDD will remove in a future release."
+msgstr ""
+
+#. translators: 1: opening anchor tag to the Stripe settings, do not translate; 2: closing anchor tag, do not translate; 3: opening anchor tag to the documentation, do not translate
+#: includes/admin/class-edd-notices.php:679
 #, php-format
-msgid "You are running an outdated version of the Easy Digital Downloads &mdash; Stripe Pro Payment Gateway. You may need to log into %1$syour account%3$s to download the latest version and %2$smanually upgrade%3$s it."
+msgid "Ready to switch? Go to %1$sSettings → Gateways → Stripe%2$s and change Elements Mode to Payment Elements. %3$sLearn what changes →%2$s"
 msgstr ""
 
 #. translators: 1: Opening anchor tag; %2$s: Closing anchor tag.
-#: includes/admin/class-edd-notices.php:719
+#: includes/admin/class-edd-notices.php:727
 #, php-format
 msgid "New webhooks have been registered for PayPal Commerce, but we were unable to update them automatically. Please %1$ssync your webhooks manually%2$s."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:752
+#: includes/admin/class-edd-notices.php:760
 msgid "Discount code added."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:760
+#: includes/admin/class-edd-notices.php:768
 msgid "There was a problem adding that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:769
+#: includes/admin/class-edd-notices.php:777
 msgid "A discount with that code already exists, please use a different code."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:778
+#: includes/admin/class-edd-notices.php:786
 msgid "Discount code updated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:786
+#: includes/admin/class-edd-notices.php:794
 msgid "No changes were made to that discount code."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:794
+#: includes/admin/class-edd-notices.php:802
 msgid "There was a problem updating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:803
+#: includes/admin/class-edd-notices.php:811
 msgid "The discount code could not be added because one or more of the required fields was empty, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:812
+#: includes/admin/class-edd-notices.php:820
 msgid "The discount code entered is invalid; only alphanumeric characters are allowed, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:821
+#: includes/admin/class-edd-notices.php:829
 msgid "The discount amount must be a valid percentage or numeric flat amount. Please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:830
+#: includes/admin/class-edd-notices.php:838
 msgid "Discount code deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:838
+#: includes/admin/class-edd-notices.php:846
 msgid "There was a problem deleting that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:847
+#: includes/admin/class-edd-notices.php:855
 msgid "Discount code activated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:855
+#: includes/admin/class-edd-notices.php:863
 msgid "There was a problem activating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:864
+#: includes/admin/class-edd-notices.php:872
 msgid "Discount code deactivated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:872
+#: includes/admin/class-edd-notices.php:880
 msgid "There was a problem deactivating that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:881
+#: includes/admin/class-edd-notices.php:889
 msgid "Discount code archived."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:889
+#: includes/admin/class-edd-notices.php:897
 msgid "There was a problem archiving that discount code, please try again."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:904
+#: includes/admin/class-edd-notices.php:912
 msgid "The reports have been refreshed."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:918
+#: includes/admin/class-edd-notices.php:926
 msgid "The settings have been imported."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:926
+#: includes/admin/class-edd-notices.php:934
 msgid "API keys successfully generated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:934
+#: includes/admin/class-edd-notices.php:942
 msgid "The specified user already has API keys."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:943
+#: includes/admin/class-edd-notices.php:951
 msgid "API keys successfully regenerated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:951
+#: includes/admin/class-edd-notices.php:959
 msgid "API keys successfully revoked."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:959
+#: includes/admin/class-edd-notices.php:967
 msgid "The test email summary was sent successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:968
+#: includes/admin/class-edd-notices.php:976
 msgid "Your extensions could not be refreshed because you have not verified your license key."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:978
+#: includes/admin/class-edd-notices.php:986
 msgid "Webhooks have been created for the Stripe gateway."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:987
+#: includes/admin/class-edd-notices.php:995
 msgid "There was an error creating webhooks for the Stripe gateway."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:997
+#: includes/admin/class-edd-notices.php:1005
 msgid "Stripe webhooks could not be created because your site is not using HTTPS."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1012
+#: includes/admin/class-edd-notices.php:1020
 msgid "The note has been added successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1020
+#: includes/admin/class-edd-notices.php:1028
 msgid "The order has been updated successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1028
+#: includes/admin/class-edd-notices.php:1036
 msgid "Order successfully created."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1036
+#: includes/admin/class-edd-notices.php:1044
 msgid "The order has been moved to the trash."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1044
+#: includes/admin/class-edd-notices.php:1052
 msgid "The order has been restored."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1052
+#: includes/admin/class-edd-notices.php:1060
 msgid "The order has been deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1060
+#: includes/admin/class-edd-notices.php:1068
 msgid "The purchase receipt has been resent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1068
+#: includes/admin/class-edd-notices.php:1076
 msgid "The purchase receipt could not be resent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1077
+#: includes/admin/class-edd-notices.php:1085
 msgid "The purchase receipt may not have been sent."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1086
+#: includes/admin/class-edd-notices.php:1094
 msgid "The order note has been deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1094
+#: includes/admin/class-edd-notices.php:1102
 msgid "The order values have been recalculated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1102
+#: includes/admin/class-edd-notices.php:1110
 msgid "The order values could not be recalculated."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1117
+#: includes/admin/class-edd-notices.php:1125
 msgid "Customer successfully deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1125
+#: includes/admin/class-edd-notices.php:1133
 msgid "User successfully verified."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1133
+#: includes/admin/class-edd-notices.php:1141
 msgid "This user is already verified."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1142
+#: includes/admin/class-edd-notices.php:1150
 msgid "Verification email sent successfully."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1150
+#: includes/admin/class-edd-notices.php:1158
 msgid "Customer email added."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1158
+#: includes/admin/class-edd-notices.php:1166
 msgid "Customer email deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1166
+#: includes/admin/class-edd-notices.php:1174
 msgid "Failed to delete customer email."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1175
+#: includes/admin/class-edd-notices.php:1183
 msgid "Primary email updated for customer."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1183
+#: includes/admin/class-edd-notices.php:1191
 msgid "Failed to set primary email."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1192
+#: includes/admin/class-edd-notices.php:1200
 msgid "Customer address deleted."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1200
+#: includes/admin/class-edd-notices.php:1208
 msgid "Failed to delete customer address."
 msgstr ""
 
 #. translators: 1: opening strong tag, do not translate, 2: closing strong tag, do not translate
-#: includes/admin/class-edd-notices.php:1214
+#: includes/admin/class-edd-notices.php:1222
 #, php-format
 msgid "Congratulations! You are now running %1$sEasy Digital Downloads%2$s."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1226
+#: includes/admin/class-edd-notices.php:1234
 msgid "The user capabilities for Easy Digital Downloads have been reset."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1268
+#: includes/admin/class-edd-notices.php:1276
 msgid "Easy Digital Downloads debug logging is enabled. Please only leave it enabled for as long as it is needed for troubleshooting."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1271
+#: includes/admin/class-edd-notices.php:1279
 msgid "View Debug Log"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1272
+#: includes/admin/class-edd-notices.php:1280
 msgid "Delete Log File and Disable Logging"
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1288
+#: includes/admin/class-edd-notices.php:1296
 #: includes/admin/customers/customer-actions.php:560
 #: includes/admin/emails/email-summary/class-edd-email-summary-admin.php:55
 #: includes/admin/tools/class-edd-tools-recount-all-stats.php:78
 #: includes/admin/tools/class-edd-tools-recount-download-stats.php:125
-#: includes/gateways/paypal/admin/connect.php:272
-#: includes/gateways/paypal/admin/connect.php:382
-#: includes/gateways/paypal/admin/connect.php:436
-#: includes/gateways/paypal/admin/connect.php:566
-#: includes/gateways/paypal/admin/connect.php:801
-#: includes/gateways/paypal/admin/connect.php:805
-#: includes/gateways/paypal/admin/connect.php:844
-#: includes/gateways/paypal/admin/connect.php:848
-#: includes/gateways/paypal/admin/connect.php:944
-#: includes/gateways/paypal/admin/connect.php:977
-#: includes/gateways/paypal/admin/connect.php:999
-#: includes/gateways/paypal/admin/connect.php:1060
+#: includes/gateways/paypal/admin/connect.php:274
+#: includes/gateways/paypal/admin/connect.php:384
+#: includes/gateways/paypal/admin/connect.php:438
+#: includes/gateways/paypal/admin/connect.php:568
+#: includes/gateways/paypal/admin/connect.php:803
+#: includes/gateways/paypal/admin/connect.php:807
+#: includes/gateways/paypal/admin/connect.php:846
+#: includes/gateways/paypal/admin/connect.php:850
+#: includes/gateways/paypal/admin/connect.php:946
+#: includes/gateways/paypal/admin/connect.php:979
+#: includes/gateways/paypal/admin/connect.php:1001
+#: includes/gateways/paypal/admin/connect.php:1062
 #: src/Admin/Emails/Manager.php:51
 #: src/Admin/Emails/Manager.php:99
 #: src/Admin/Emails/Manager.php:197
@@ -6696,19 +6704,19 @@ msgstr ""
 #: src/Admin/Promos/PromoHandler.php:174
 #: src/Admin/Promos/PromoHandler.php:198
 #: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:66
-#: src/Gateways/PayPal/V3/Onboarding.php:80
-#: src/Gateways/PayPal/V3/Onboarding.php:177
-#: src/Gateways/PayPal/V3/Onboarding.php:294
-#: src/Gateways/PayPal/V3/Onboarding.php:386
-#: src/Gateways/PayPal/V3/Onboarding.php:403
-#: src/Gateways/PayPal/V3/Onboarding.php:436
+#: src/Gateways/PayPal/V3/Onboarding.php:85
+#: src/Gateways/PayPal/V3/Onboarding.php:211
+#: src/Gateways/PayPal/V3/Onboarding.php:332
+#: src/Gateways/PayPal/V3/Onboarding.php:424
+#: src/Gateways/PayPal/V3/Onboarding.php:441
+#: src/Gateways/PayPal/V3/Onboarding.php:474
 #: src/Gateways/Square/Admin/Settings/Register.php:147
 #: src/REST/Routes/LogPruning.php:104
 #: src/REST/Routes/Notifications.php:181
 msgid "You do not have permission to perform this action."
 msgstr ""
 
-#: includes/admin/class-edd-notices.php:1293
+#: includes/admin/class-edd-notices.php:1301
 msgid "The debug log has been cleared and logging has been disabled."
 msgstr ""
 
@@ -6723,7 +6731,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-email-addresses-table.php:135
 #: includes/admin/customers/class-customer-table.php:129
 #: includes/admin/payments/orders.php:1135
-#: includes/misc-functions.php:1561
+#: includes/misc-functions.php:1537
 #: includes/payments/functions.php:542
 #: src/Admin/Tools/ScheduledActions.php:412
 #: src/Pro/CartRecovery/Traits/Status.php:41
@@ -6735,7 +6743,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-table.php:140
 #: includes/admin/views/customer/edit.php:82
 #: includes/class-edd-discount.php:706
-#: includes/misc-functions.php:1556
+#: includes/misc-functions.php:1532
 #: src/Admin/Discounts/Editor/Status.php:56
 #: src/Admin/Promos/About.php:834
 msgid "Active"
@@ -6820,7 +6828,7 @@ msgstr ""
 #: src/Forms/Checkout/Registry.php:40
 #: src/Forms/User/Country.php:42
 #: src/Pro/Admin/Exports/Exporters/EUVAT.php:114
-#: src/Pro/Admin/Settings/VAT.php:172
+#: src/Pro/Admin/Settings/VAT.php:179
 #: templates/shortcode-profile-editor.php:177
 #: includes/blocks/build/profile-editor/index.js:1
 #: includes/blocks/src/profile-editor/edit.js:10
@@ -6948,7 +6956,7 @@ msgstr ""
 #: includes/admin/customers/class-customer-table.php:135
 #: includes/admin/views/customer/edit.php:83
 #: includes/class-edd-discount.php:700
-#: includes/misc-functions.php:1557
+#: includes/misc-functions.php:1533
 #: src/Admin/Discounts/Editor/Status.php:57
 #: src/Admin/Promos/About.php:840
 msgid "Inactive"
@@ -7043,8 +7051,8 @@ msgstr ""
 #: includes/admin/import/import-functions.php:150
 #: includes/admin/reporting/export/export-actions.php:25
 #: includes/api/class-edd-api.php:1973
-#: includes/class-edd-license-handler.php:479
-#: includes/user-functions.php:873
+#: includes/class-edd-license-handler.php:478
+#: includes/user-functions.php:872
 #: src/Admin/Customers/Emails.php:80
 #: src/Admin/Emails/Manager.php:47
 #: src/Admin/Emails/Manager.php:201
@@ -7285,7 +7293,7 @@ msgstr ""
 #: includes/admin/tools.php:497
 #: includes/admin/views/tmpl-order-refund.php:39
 #: includes/admin/views/tmpl-order-total.php:16
-#: includes/blocks/views/checkout/cart/cart-total.php:8
+#: includes/blocks/views/checkout/cart/cart-total.php:22
 #: includes/blocks/views/orders/totals.php:64
 #: includes/gateways/stripe/includes/payment-methods/payment-request/functions.php:149
 #: includes/gateways/stripe/includes/payment-methods/payment-request/functions.php:196
@@ -8067,7 +8075,7 @@ msgid "Special instructions for this %s. These will be added to the purchase rec
 msgstr ""
 
 #: includes/admin/downloads/views/metabox-bundled-products.php:56
-#: src/Elementor/Widgets/Config/Checkout/General.php:112
+#: src/Elementor/Widgets/Config/Checkout/General.php:115
 msgid "Select a product"
 msgstr ""
 
@@ -9158,7 +9166,6 @@ msgstr ""
 #: src/Pro/CartRecovery/Admin/Screen.php:44
 #: includes/blocks/build/buy-button/index.js:6
 #: includes/blocks/build/cart/index.js:1
-#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/build/confirmation/index.js:1
 #: includes/blocks/build/login/index.js:1
 #: includes/blocks/build/pro/currency-selector/index.js:1
@@ -9166,7 +9173,6 @@ msgstr ""
 #: includes/blocks/build/register/index.js:1
 #: includes/blocks/src/buy-button/edit.js:50
 #: includes/blocks/src/cart/edit.js:27
-#: includes/blocks/src/checkout/edit.js:46
 #: includes/blocks/src/confirmation/edit.js:26
 #: includes/blocks/src/login/edit.js:23
 #: includes/blocks/src/pro/currency-selector/edit.js:23
@@ -9383,7 +9389,7 @@ msgstr ""
 #: src/Admin/Exports/Exporters/TaxedOrders.php:72
 #: src/Forms/Checkout/PostalCode.php:51
 #: src/Forms/User/PostalCode.php:42
-#: src/Pro/Admin/Settings/VAT.php:166
+#: src/Pro/Admin/Settings/VAT.php:173
 #: templates/shortcode-profile-editor.php:172
 msgid "Postal / ZIP Code"
 msgstr ""
@@ -9446,11 +9452,11 @@ msgstr ""
 
 #: includes/admin/reporting/class-export-payments.php:73
 #: includes/admin/tools.php:420
-#: includes/blocks/views/checkout/purchase-form/gateways.php:9
+#: includes/blocks/views/checkout/purchase-form/gateways.php:5
 #: includes/blocks/views/orders/totals.php:33
 #: src/Admin/Exports/Exporters/Orders.php:69
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:62
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:68
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:129
+#: src/Elementor/Widgets/Config/Checkout/Titles.php:57
 #: src/Emails/Tags/Registry.php:168
 #: src/Pro/Emails/ConditionalTags/Conditions/PaymentMethod.php:65
 #: src/Reports/Data/Gateways/PayPalPaymentMethods.php:81
@@ -9722,8 +9728,8 @@ msgid "File Downloads"
 msgstr ""
 
 #: includes/admin/reporting/reports.php:909
-#: includes/user-functions.php:877
-#: includes/user-functions.php:881
+#: includes/user-functions.php:876
+#: includes/user-functions.php:880
 msgid "Notice"
 msgstr ""
 
@@ -10025,9 +10031,9 @@ msgid "API"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:473
-#: includes/blocks/includes/checkout/checkout.php:136
+#: includes/blocks/includes/checkout/checkout.php:139
 #: includes/gateways/stripe/includes/payment-methods/payment-request/admin/settings.php:89
-#: includes/install.php:285
+#: includes/install.php:286
 #: src/Cart/Preview/templates/dialog.php:119
 #: templates/widget-cart-checkout.php:6
 #: templates/widget-cart-empty.php:7
@@ -10035,8 +10041,9 @@ msgid "Checkout"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:474
+#: src/Elementor/Elements/CheckoutBox.php:257
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:34
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:34
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:51
 msgid "Cart"
 msgstr ""
 
@@ -10049,6 +10056,7 @@ msgid "Summaries"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:496
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:140
 #: includes/blocks/build/pro/currency-selector/index.js:1
 #: includes/blocks/src/pro/currency-selector/edit.js:31
 msgid "Buttons"
@@ -10081,7 +10089,7 @@ msgid "Purchase Buttons"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:527
-msgid "CAPTCHA"
+msgid "Spam Protection"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:552
@@ -10142,8 +10150,8 @@ msgid "Duplicate tax rates are not allowed. Please deactivate the existing %s ta
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:1521
-#: src/Pro/Taxes/VAT/Checkout.php:435
-#: src/Pro/Taxes/VAT/Result.php:141
+#: src/Pro/Taxes/VAT/Checkout.php:483
+#: src/Pro/Taxes/VAT/Result.php:227
 msgid "Please select a country."
 msgstr ""
 
@@ -10184,7 +10192,7 @@ msgstr ""
 
 #: includes/admin/thickbox.php:79
 #: includes/blocks/includes/downloads/downloads.php:145
-#: includes/checkout/template.php:859
+#: includes/checkout/template.php:833
 #: includes/gateways/stripe/includes/payment-methods/buy-now/template.php:191
 #: includes/shortcodes.php:52
 #: includes/template-functions.php:95
@@ -10221,9 +10229,10 @@ msgid "Choose between a Button or a Link"
 msgstr ""
 
 #: includes/admin/thickbox.php:155
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:85
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:109
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:131
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:141
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:91
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:116
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:201
 msgid "Color"
 msgstr ""
 
@@ -10507,14 +10516,14 @@ msgstr ""
 #: includes/admin/tools.php:527
 #: includes/admin/views/customer/edit.php:106
 #: includes/gateways/stripe/includes/template-functions.php:524
-#: src/Pro/Admin/Settings/VAT.php:148
+#: src/Pro/Admin/Settings/VAT.php:155
 msgid "Address Line 1"
 msgstr ""
 
 #: includes/admin/tools.php:537
 #: includes/admin/views/customer/edit.php:113
 #: includes/gateways/stripe/includes/template-functions.php:540
-#: src/Pro/Admin/Settings/VAT.php:154
+#: src/Pro/Admin/Settings/VAT.php:161
 msgid "Address Line 2"
 msgstr ""
 
@@ -10736,7 +10745,7 @@ msgid "File download logs updated successfully."
 msgstr ""
 
 #: includes/admin/upgrades/deprecated-upgrade-functions.php:98
-#: includes/install.php:294
+#: includes/install.php:295
 msgid "Transaction Failed"
 msgstr ""
 
@@ -11150,7 +11159,7 @@ msgstr ""
 #: includes/ajax-functions.php:1051
 #: includes/blocks/views/checkout/discount.php:28
 #: includes/blocks/views/orders/discounts.php:7
-#: includes/checkout/template.php:608
+#: includes/checkout/template.php:581
 #: includes/discount-functions.php:1330
 #: pro/invoices/functions.php:290
 #: templates/shortcode-receipt.php:87
@@ -11356,9 +11365,9 @@ msgstr ""
 
 #: includes/admin/views/tmpl-tax-rates-table-dialog.php:30
 #: src/Admin/Settings/Tabs/General.php:101
-#: src/Pro/Admin/Settings/VAT.php:132
-#: src/Pro/Admin/Settings/VAT.php:177
-#: src/Pro/Admin/Settings/VAT.php:249
+#: src/Pro/Admin/Settings/VAT.php:139
+#: src/Pro/Admin/Settings/VAT.php:184
+#: src/Pro/Admin/Settings/VAT.php:256
 msgid "Select a country"
 msgstr ""
 
@@ -11393,7 +11402,7 @@ msgid "No rates found."
 msgstr ""
 
 #: includes/ajax-functions.php:138
-#: includes/cart/actions.php:109
+#: includes/cart/actions.php:112
 msgid "Missing nonce when removing an item from the cart. Please read the following for more information: https://easydigitaldownloads.com/development/2018/07/05/important-update-to-ajax-requests-in-easy-digital-downloads-2-9-4"
 msgstr ""
 
@@ -11539,7 +11548,7 @@ msgid "Confirmation"
 msgstr ""
 
 #: includes/blocks/edd-blocks.php:78
-#: includes/install.php:291
+#: includes/install.php:292
 msgid "Thank you for your purchase!"
 msgstr ""
 
@@ -11663,19 +11672,6 @@ msgstr ""
 msgid "Do not allow users to redownload items from their order history."
 msgstr ""
 
-#: includes/blocks/includes/checkout/ajax.php:41
-#: includes/cart/template.php:139
-#: includes/gateways/stripe/includes/compat.php:126
-#: includes/process-purchase.php:30
-#: src/Admin/Settings/EmptyCartBehavior.php:135
-#: src/Admin/Settings/Tabs/Gateways.php:243
-#: src/Cart/Preview/templates/dialog.php:46
-#: src/Gateways/Square/Checkout/Form.php:138
-#: src/REST/Controllers/Fastlane.php:94
-#: src/REST/Controllers/UnbrandedCard.php:90
-msgid "Your cart is empty."
-msgstr ""
-
 #: includes/blocks/includes/checkout/forms.php:72
 #: includes/blocks/includes/checkout/forms.php:86
 msgid "Unable to load form."
@@ -11683,19 +11679,19 @@ msgstr ""
 
 #: includes/blocks/includes/checkout/forms.php:98
 #: includes/blocks/views/checkout/purchase-form/login.php:15
-#: includes/checkout/template.php:352
-#: includes/checkout/template.php:469
-#: src/Blocks/Checkout/Elements/PersonalInfo.php:139
+#: includes/checkout/template.php:348
+#: includes/checkout/template.php:440
+#: src/Blocks/Checkout/Elements/PersonalInfo.php:173
 msgid "Log in"
 msgstr ""
 
 #: includes/blocks/includes/checkout/forms.php:102
-#: src/Blocks/Checkout/Elements/PersonalInfo.php:143
+#: src/Blocks/Checkout/Elements/PersonalInfo.php:177
 msgid "Register for a new account"
 msgstr ""
 
 #: includes/blocks/includes/checkout/forms.php:106
-#: src/Blocks/Checkout/Elements/PersonalInfo.php:147
+#: src/Blocks/Checkout/Elements/PersonalInfo.php:181
 msgid "Checkout as a guest"
 msgstr ""
 
@@ -11714,7 +11710,7 @@ msgstr ""
 
 #. translators: 1: The current user's email address, 2: opening anchor tag, do not translate, 3: closing anchor tag, do not translate.
 #: includes/blocks/includes/forms/forms.php:73
-#: includes/blocks/views/checkout/logged-in.php:7
+#: src/Blocks/Checkout/AccountLine.php:50
 #, php-format
 msgid "You are currently logged in as %1$s. (%2$slog out%3$s)"
 msgstr ""
@@ -11834,17 +11830,17 @@ msgstr ""
 msgid "downloads found"
 msgstr ""
 
-#: includes/blocks/views/checkout/cart/cart-item.php:29
+#: includes/blocks/views/checkout/cart/cart-item.php:43
 #: includes/blocks/views/orders/receipt-item.php:31
 msgid "Quantity:"
 msgstr ""
 
-#: includes/blocks/views/checkout/cart/cart.php:15
+#: includes/blocks/views/checkout/cart/cart.php:38
 #: templates/checkout_cart.php:11
 msgid "Item Name"
 msgstr ""
 
-#: includes/blocks/views/checkout/cart/cart.php:16
+#: includes/blocks/views/checkout/cart/cart.php:39
 #: templates/checkout_cart.php:12
 msgid "Item Price"
 msgstr ""
@@ -11858,13 +11854,9 @@ msgid "Enter discount code"
 msgstr ""
 
 #: includes/blocks/views/checkout/discount.php:32
-#: includes/checkout/template.php:613
+#: includes/checkout/template.php:586
 msgctxt "Apply discount at checkout"
 msgid "Apply"
-msgstr ""
-
-#: includes/blocks/views/checkout/logged-in.php:2
-msgid "Account Information"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:2
@@ -11874,7 +11866,7 @@ msgid "Payment Info"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:11
-#: includes/checkout/template.php:235
+#: includes/checkout/template.php:223
 msgid "Secure SSL encrypted payment"
 msgstr ""
 
@@ -11891,7 +11883,7 @@ msgid "Name on the Card"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:26
-#: includes/checkout/template.php:266
+#: includes/checkout/template.php:254
 #: includes/gateways/stripe/includes/template-functions.php:151
 #: includes/gateways/stripe/includes/template-functions.php:174
 msgid "Card name"
@@ -11902,30 +11894,30 @@ msgid "Card Number"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:36
-#: includes/checkout/template.php:245
-#: includes/checkout/template.php:250
+#: includes/checkout/template.php:233
+#: includes/checkout/template.php:238
 msgid "Card number"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:42
-#: includes/checkout/template.php:254
+#: includes/checkout/template.php:242
 #: includes/gateways/stripe/includes/template-functions.php:216
 msgid "CVC"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:46
-#: includes/checkout/template.php:258
+#: includes/checkout/template.php:246
 msgid "Security code"
 msgstr ""
 
 #: includes/blocks/views/checkout/purchase-form/credit-card.php:52
-#: includes/checkout/template.php:271
+#: includes/checkout/template.php:259
 #: includes/gateways/stripe/includes/template-functions.php:635
 msgid "Expiration (MM/YY)"
 msgstr ""
 
-#: includes/blocks/views/checkout/purchase-form/gateways.php:52
-#: includes/checkout/template.php:814
+#: includes/blocks/views/checkout/purchase-form/gateways.php:49
+#: includes/checkout/template.php:788
 #: includes/gateways/stripe/includes/scripts.php:88
 #: src/Admin/Pointers.php:41
 msgid "Next"
@@ -11953,36 +11945,14 @@ msgstr ""
 msgid "Register For a New Account"
 msgstr ""
 
-#: includes/blocks/views/checkout/purchase-form/register.php:18
-#: includes/blocks/views/forms/profile-editor.php:131
-#: includes/checkout/template.php:377
-#: includes/checkout/template.php:384
-#: includes/checkout/template.php:457
-#: src/Forms/Login/Password.php:41
-#: src/Forms/Register/Password.php:41
-#: templates/shortcode-login.php:19
-#: templates/shortcode-register.php:30
-#: includes/blocks/build/login/index.js:1
-#: includes/blocks/build/profile-editor/index.js:1
-#: includes/blocks/build/register/index.js:1
-#: includes/blocks/src/login/edit.js:48
-#: includes/blocks/src/profile-editor/edit.js:206
-#: includes/blocks/src/register/edit.js:68
-msgid "Password"
-msgstr ""
-
-#: includes/blocks/views/checkout/purchase-form/register.php:29
-#: src/Forms/Register/PasswordConfirm.php:41
-#: templates/shortcode-register.php:35
-msgid "Confirm Password"
-msgstr ""
-
 #: includes/blocks/views/downloads/content.php:18
 #: includes/template-functions.php:156
 msgid "Free"
 msgstr ""
 
 #: includes/blocks/views/forms/login.php:25
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:121
+#: src/Elementor/Widgets/Config/Checkout/Titles.php:45
 #: templates/shortcode-login.php:29
 #: includes/blocks/build/login/index.js:1
 #: includes/blocks/build/register/index.js:1
@@ -12006,8 +11976,11 @@ msgid "Get New Password"
 msgstr ""
 
 #: includes/blocks/views/forms/profile-editor.php:25
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:54
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:103
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:107
+#: includes/blocks/build/checkout/index.js:3
 #: includes/blocks/build/profile-editor/index.js:1
+#: includes/blocks/src/checkout/edit.js:122
 #: includes/blocks/src/profile-editor/edit.js:167
 msgid "Personal Information"
 msgstr ""
@@ -12015,6 +11988,21 @@ msgstr ""
 #: includes/blocks/views/forms/profile-editor.php:49
 #: templates/shortcode-profile-editor.php:115
 msgid "Additional Email Addresses"
+msgstr ""
+
+#: includes/blocks/views/forms/profile-editor.php:131
+#: src/Forms/Login/Password.php:55
+#: src/Forms/Register/Password.php:55
+#: src/Forms/Register/Password.php:162
+#: templates/shortcode-login.php:19
+#: templates/shortcode-register.php:30
+#: includes/blocks/build/login/index.js:1
+#: includes/blocks/build/profile-editor/index.js:1
+#: includes/blocks/build/register/index.js:1
+#: includes/blocks/src/login/edit.js:48
+#: includes/blocks/src/profile-editor/edit.js:206
+#: includes/blocks/src/register/edit.js:68
+msgid "Password"
 msgstr ""
 
 #: includes/blocks/views/forms/profile-editor.php:147
@@ -12032,7 +12020,9 @@ msgid "Save Changes"
 msgstr ""
 
 #: includes/blocks/views/forms/registration.php:38
-#: includes/checkout/template.php:436
+#: includes/checkout/template.php:416
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:125
+#: src/Elementor/Widgets/Config/Checkout/Titles.php:49
 #: templates/shortcode-register.php:46
 msgid "Register"
 msgstr ""
@@ -12046,13 +12036,13 @@ msgid "New password"
 msgstr ""
 
 #: includes/blocks/views/forms/reset-password.php:17
-#: src/Forms/Register/Password.php:70
+#: src/Forms/Register/Password.php:86
 #: src/Forms/User/Password.php:91
 msgid "Hide password"
 msgstr ""
 
 #: includes/blocks/views/forms/reset-password.php:20
-#: src/Forms/Register/Password.php:74
+#: src/Forms/Register/Password.php:92
 #: src/Forms/User/Password.php:95
 msgid "Strength indicator"
 msgstr ""
@@ -12162,6 +12152,18 @@ msgstr ""
 msgid "Cart restored successfully."
 msgstr ""
 
+#: includes/cart/template.php:139
+#: includes/gateways/stripe/includes/compat.php:126
+#: includes/process-purchase.php:30
+#: src/Admin/Settings/EmptyCartBehavior.php:135
+#: src/Admin/Settings/Tabs/Gateways.php:243
+#: src/Cart/Preview/templates/dialog.php:46
+#: src/Gateways/Square/Checkout/Form.php:138
+#: src/REST/Controllers/Fastlane.php:94
+#: src/REST/Controllers/UnbrandedCard.php:90
+msgid "Your cart is empty."
+msgstr ""
+
 #: includes/cart/template.php:215
 msgid "Restore Previous Cart"
 msgstr ""
@@ -12188,74 +12190,44 @@ msgstr ""
 msgid "Checkout."
 msgstr ""
 
-#: includes/checkout/template.php:165
+#: includes/checkout/template.php:172
 msgid "Personal info"
 msgstr ""
 
-#: includes/checkout/template.php:169
-#: includes/checkout/template.php:175
-msgid "Email address"
-msgstr ""
-
-#: includes/checkout/template.php:174
-#: src/Forms/Checkout/PersonalInfo/Email.php:86
-msgid "We will send the purchase receipt to this address."
-msgstr ""
-
-#: includes/checkout/template.php:180
-#: includes/checkout/template.php:186
-msgid "First name"
-msgstr ""
-
-#: includes/checkout/template.php:185
-#: src/Forms/Checkout/PersonalInfo/FirstName.php:68
-msgid "We will use this to personalize your account experience."
-msgstr ""
-
-#: includes/checkout/template.php:190
-#: includes/checkout/template.php:196
-msgid "Last name"
-msgstr ""
-
-#: includes/checkout/template.php:195
-#: src/Forms/Checkout/PersonalInfo/LastName.php:68
-msgid "We will use this as well to personalize your account experience."
-msgstr ""
-
-#: includes/checkout/template.php:226
+#: includes/checkout/template.php:214
 msgid "Credit card info"
 msgstr ""
 
-#: includes/checkout/template.php:240
+#: includes/checkout/template.php:228
 msgid "This is a secure SSL encrypted payment"
 msgstr ""
 
-#: includes/checkout/template.php:249
+#: includes/checkout/template.php:237
 msgid "The (typically) 16 digits on the front of your credit card."
 msgstr ""
 
-#: includes/checkout/template.php:257
+#: includes/checkout/template.php:245
 msgid "The 3 digit (back) or 4 digit (front) value on your card."
 msgstr ""
 
-#: includes/checkout/template.php:262
+#: includes/checkout/template.php:250
 msgid "Name on the card"
 msgstr ""
 
-#: includes/checkout/template.php:265
+#: includes/checkout/template.php:253
 #: includes/gateways/stripe/includes/template-functions.php:173
 msgid "The name printed on the front of your credit card."
 msgstr ""
 
-#: includes/checkout/template.php:274
+#: includes/checkout/template.php:262
 msgid "The date your credit card expires, typically on the front of the card."
 msgstr ""
 
-#: includes/checkout/template.php:352
+#: includes/checkout/template.php:348
 msgid "Already have an account?"
 msgstr ""
 
-#: includes/checkout/template.php:359
+#: includes/checkout/template.php:357
 msgid "Create an account"
 msgstr ""
 
@@ -12263,102 +12235,70 @@ msgstr ""
 msgid "(optional)"
 msgstr ""
 
-#: includes/checkout/template.php:371
-msgid "The username you will use to log into your account."
-msgstr ""
-
-#: includes/checkout/template.php:383
-msgid "The password used to access your account."
-msgstr ""
-
-#: includes/checkout/template.php:389
-msgid "Password again"
-msgstr ""
-
-#: includes/checkout/template.php:395
-msgid "Confirm your password."
-msgstr ""
-
-#: includes/checkout/template.php:396
-msgid "Confirm password"
-msgstr ""
-
-#: includes/checkout/template.php:434
+#: includes/checkout/template.php:413
 msgid "Need to create an account?"
 msgstr ""
 
-#: includes/checkout/template.php:436
+#: includes/checkout/template.php:418
 msgid "or checkout as a guest"
 msgstr ""
 
-#: includes/checkout/template.php:446
-msgid "Username or email"
-msgstr ""
-
-#: includes/checkout/template.php:452
-msgid "Your username or email address"
-msgstr ""
-
-#: includes/checkout/template.php:463
-msgid "Your password"
-msgstr ""
-
-#: includes/checkout/template.php:501
+#: includes/checkout/template.php:472
 msgid "Select payment method"
 msgstr ""
 
-#: includes/checkout/template.php:604
+#: includes/checkout/template.php:577
 msgid "Have a discount code?"
 msgstr ""
 
-#: includes/checkout/template.php:604
+#: includes/checkout/template.php:577
 msgctxt "Entering a discount code"
 msgid "Click to enter it"
 msgstr ""
 
-#: includes/checkout/template.php:610
+#: includes/checkout/template.php:583
 msgid "Enter a discount code if you have one."
 msgstr ""
 
-#: includes/checkout/template.php:612
+#: includes/checkout/template.php:585
 #: includes/process-purchase.php:314
 #: src/Assets/Localization.php:99
 msgid "Enter discount"
 msgstr ""
 
-#: includes/checkout/template.php:640
+#: includes/checkout/template.php:613
 msgid "Agree to Terms?"
 msgstr ""
 
-#: includes/checkout/template.php:661
+#: includes/checkout/template.php:634
 msgid "Show Terms"
 msgstr ""
 
-#: includes/checkout/template.php:662
+#: includes/checkout/template.php:635
 msgid "Hide Terms"
 msgstr ""
 
-#: includes/checkout/template.php:711
+#: includes/checkout/template.php:684
 msgid "Agree to Privacy Policy?"
 msgstr ""
 
-#: includes/checkout/template.php:733
+#: includes/checkout/template.php:706
 msgid "Show Privacy Policy"
 msgstr ""
 
-#: includes/checkout/template.php:735
+#: includes/checkout/template.php:708
 msgid "Hide Privacy Policy"
 msgstr ""
 
-#: includes/checkout/template.php:769
+#: includes/checkout/template.php:742
 msgid "Purchase Total:"
 msgstr ""
 
-#: includes/checkout/template.php:793
+#: includes/checkout/template.php:766
 msgid "Go back"
 msgstr ""
 
-#: includes/checkout/template.php:864
+#: includes/checkout/template.php:838
 #: src/Admin/Settings/Tabs/Misc.php:131
 msgid "Free Download"
 msgstr ""
@@ -13162,7 +13102,7 @@ msgstr ""
 
 #: includes/class-edd-discount.php:697
 #: includes/gateways/stripe/includes/template-functions.php:391
-#: includes/misc-functions.php:1558
+#: includes/misc-functions.php:1534
 #: src/Pro/CartRecovery/Traits/Status.php:26
 msgid "Expired"
 msgstr ""
@@ -13220,13 +13160,13 @@ msgid "New Download Product"
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: includes/class-edd-license-handler.php:302
+#: includes/class-edd-license-handler.php:301
 #: src/Extensions/Handler.php:256
 #, php-format
 msgid "You have invalid or expired license keys for Easy Digital Downloads. %1$sActivate License(s)%2$s"
 msgstr ""
 
-#: includes/class-edd-license-handler.php:324
+#: includes/class-edd-license-handler.php:323
 #: src/Extensions/Handler.php:275
 msgid "Enter valid license key for automatic updates."
 msgstr ""
@@ -13584,7 +13524,7 @@ msgid "Sorry but you have hit your download limit for this file."
 msgstr ""
 
 #: includes/deprecated-functions.php:506
-#: includes/download-functions.php:1533
+#: includes/download-functions.php:1525
 msgid "Sorry but your download link has expired."
 msgstr ""
 
@@ -13628,6 +13568,7 @@ msgstr ""
 #: includes/deprecated-functions.php:1338
 #: includes/deprecated-functions.php:1417
 #: includes/deprecated-functions.php:1446
+#: src/Pro/Admin/Orders/ValidateVAT.php:91
 msgid "You do not have permission to do this."
 msgstr ""
 
@@ -14355,186 +14296,188 @@ msgstr ""
 msgid "PayPal refund failed: %s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:37
-#: includes/gateways/paypal/admin/connect.php:601
-#: src/Gateways/PayPal/V3/Admin/Account.php:134
+#: includes/gateways/paypal/admin/connect.php:42
+#: includes/gateways/paypal/admin/connect.php:603
+#: src/Gateways/PayPal/Admin/ConnectButton.php:53
+#: src/Gateways/PayPal/V3/Admin/Account.php:135
 msgid "sandbox"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:37
-#: includes/gateways/paypal/admin/connect.php:601
-#: src/Gateways/PayPal/V3/Admin/Account.php:134
+#: includes/gateways/paypal/admin/connect.php:42
+#: includes/gateways/paypal/admin/connect.php:603
+#: src/Gateways/PayPal/Admin/ConnectButton.php:53
+#: src/Gateways/PayPal/V3/Admin/Account.php:135
 msgid "live"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:64
+#: includes/gateways/paypal/admin/connect.php:69
 msgid "Update Recurring Payments to access PayPal's improved checkout experience. Until then, your existing PayPal integration will continue to work as is."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:80
+#: includes/gateways/paypal/admin/connect.php:86
 msgid "PayPal connection needs re-establishing."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:81
+#: includes/gateways/paypal/admin/connect.php:87
 msgid "Your site's security keys changed, so the stored PayPal credentials can no longer be read and could not be recovered automatically. Disconnect and reconnect to restore the connection."
 msgstr ""
 
 #. translators: 1. opening <strong> tag, 2. closing </strong> tag
-#: includes/gateways/paypal/admin/connect.php:163
+#: includes/gateways/paypal/admin/connect.php:169
 #, php-format
 msgid "%1$sPayPal Communication Error:%2$s We are having trouble communicating with PayPal at the moment. Please try again later, and if the issue persists, reach out to our support team."
 msgstr ""
 
 #. translators: %s: the store mode, either `sandbox` or `live`
-#: includes/gateways/paypal/admin/connect.php:178
-#: includes/gateways/paypal/admin/connect.php:253
+#: includes/gateways/paypal/admin/connect.php:184
+#: src/Gateways/PayPal/Admin/ConnectButton.php:59
 #, php-format
 msgid "Connect with PayPal in %s mode"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:201
+#: includes/gateways/paypal/admin/connect.php:209
 msgid "Set unique WordPress security keys to connect PayPal."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:204
+#: includes/gateways/paypal/admin/connect.php:212
 msgid "To connect securely with PayPal, your site needs unique WordPress security keys (salts). This install is currently using default, empty, or missing keys, which are not safe for processing payments. Generate a fresh set of keys, add them to your wp-config.php file, and reload this page."
 msgstr ""
 
 #. translators: 1: opening link tag to the WordPress.org key generator, 2: closing link tag, 3: opening link tag to a guide on WordPress security keys, 4: closing link tag.
-#: includes/gateways/paypal/admin/connect.php:210
+#: includes/gateways/paypal/admin/connect.php:218
 #, php-format
 msgid "%1$sGenerate new keys%2$s, then %3$sread how to add them to wp-config.php%4$s."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:235
+#: includes/gateways/paypal/admin/connect.php:243
 msgid "PayPal onboarding could not be completed. Please try again or check the debug log for details."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:240
+#: includes/gateways/paypal/admin/connect.php:248
 msgid "PayPal connection could not be completed:"
 msgstr ""
 
 #. translators: 1: HTTP response code, 2: error message
-#: includes/gateways/paypal/admin/connect.php:357
+#: includes/gateways/paypal/admin/connect.php:359
 #, php-format
 msgid "Unexpected response code: %1$d. Error: %2$s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:365
+#: includes/gateways/paypal/admin/connect.php:367
 msgid "An unexpected error occurred."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:397
+#: includes/gateways/paypal/admin/connect.php:399
 msgid "Failure reconnecting to PayPal. Please try again"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:403
+#: includes/gateways/paypal/admin/connect.php:405
 msgid "Your account has been successfully reconnected, but an error occurred while creating a webhook."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:440
+#: includes/gateways/paypal/admin/connect.php:442
 msgid "Missing PayPal authentication information. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:454
+#: includes/gateways/paypal/admin/connect.php:456
 msgid "Missing nonce. Please refresh the page and try again."
 msgstr ""
 
 #. translators: %d: HTTP response code
-#: includes/gateways/paypal/admin/connect.php:492
+#: includes/gateways/paypal/admin/connect.php:494
 #, php-format
 msgid "Unexpected response from PayPal while generating token. Response code: %d. Please try again."
 msgstr ""
 
 #. translators: %d: HTTP response code
-#: includes/gateways/paypal/admin/connect.php:525
+#: includes/gateways/paypal/admin/connect.php:527
 #, php-format
 msgid "Unexpected response from PayPal. Response code: %d. Please try again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:534
+#: includes/gateways/paypal/admin/connect.php:536
 msgid "Successfully connected."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:539
+#: includes/gateways/paypal/admin/connect.php:541
 msgid "Your account has been successfully connected, but an error occurred while creating a webhook."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:579
+#: includes/gateways/paypal/admin/connect.php:581
 msgid "Re-Check Payment Status"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:580
+#: includes/gateways/paypal/admin/connect.php:582
 msgid "Sync Webhook"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:584
+#: includes/gateways/paypal/admin/connect.php:586
 msgid "Disconnect webhooks from PayPal"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:585
-#: includes/gateways/paypal/admin/connect.php:733
+#: includes/gateways/paypal/admin/connect.php:587
+#: includes/gateways/paypal/admin/connect.php:735
 msgid "Disconnect from PayPal"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:594
+#: includes/gateways/paypal/admin/connect.php:596
 msgid "API:"
 msgstr ""
 
 #. translators: %s: the connected mode, either `sandbox` or `live`
-#: includes/gateways/paypal/admin/connect.php:604
+#: includes/gateways/paypal/admin/connect.php:606
 #, php-format
 msgid "Your PayPal account is successfully connected in %s mode."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:619
+#: includes/gateways/paypal/admin/connect.php:621
 #: pro/templates/invoice/invoice-table.php:118
 msgid "Payment Status:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:623
+#: includes/gateways/paypal/admin/connect.php:625
 msgid "You need to address the following issues before you can start receiving payments:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:631
+#: includes/gateways/paypal/admin/connect.php:633
 msgid "Ready to accept payments."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:653
-#: src/Gateways/PayPal/V3/Admin/Account.php:594
-#: src/Gateways/PayPal/V3/Admin/Account.php:603
+#: includes/gateways/paypal/admin/connect.php:655
+#: src/Gateways/PayPal/V3/Admin/Account.php:595
+#: src/Gateways/PayPal/V3/Admin/Account.php:604
 msgid "Webhook:"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:661
+#: includes/gateways/paypal/admin/connect.php:663
 msgid "Create Webhooks"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:666
+#: includes/gateways/paypal/admin/connect.php:668
 msgid "Webhook successfully configured for the following events:"
 msgstr ""
 
 #. translators: %1$s opening anchor tag; %2$s closing anchor tag; %3$s: opening line item/status/strong tags; %4$s closing strong tag; %5$s: closing list item tag
-#: includes/gateways/paypal/admin/connect.php:691
+#: includes/gateways/paypal/admin/connect.php:693
 #, php-format
 msgid "%3$sGateway Status: %4$s PayPal is not currently active. %1$sEnable PayPal%2$s in the general gateway settings to start using it.%5$s"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:741
+#: includes/gateways/paypal/admin/connect.php:743
 msgid "Refresh Merchant Status"
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:951
+#: includes/gateways/paypal/admin/connect.php:953
 msgid "No merchant ID saved. Please reconnect to PayPal."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:1048
-#: src/Gateways/PayPal/V3/Onboarding.php:335
+#: includes/gateways/paypal/admin/connect.php:1050
+#: src/Gateways/PayPal/V3/Onboarding.php:373
 msgid "There was an error processing the connection to PayPal. Please attempt to connect again."
 msgstr ""
 
-#: includes/gateways/paypal/admin/connect.php:1052
-#: src/Gateways/PayPal/V3/Onboarding.php:339
+#: includes/gateways/paypal/admin/connect.php:1054
+#: src/Gateways/PayPal/V3/Onboarding.php:377
 #: src/Gateways/Square/Connection.php:67
 msgid "Return to settings"
 msgstr ""
@@ -14587,7 +14530,7 @@ msgstr ""
 #: src/Gateways/PayPal/Gateway.php:67
 #: src/Gateways/PayPal/PaymentMethods/PayPal.php:42
 #: src/Gateways/PayPal/Payments.php:182
-#: src/Gateways/PayPal/V3/Vault.php:563
+#: src/Gateways/PayPal/V3/Vault.php:560
 #: src/Gateways/PayPalStandard/Gateway.php:67
 msgid "PayPal"
 msgstr ""
@@ -14697,7 +14640,7 @@ msgstr ""
 #: includes/gateways/paypal/checkout-actions.php:220
 #: includes/gateways/paypal/checkout-actions.php:319
 #: includes/gateways/paypal/checkout-actions.php:464
-#: includes/gateways/paypal/scripts.php:341
+#: includes/gateways/paypal/scripts.php:311
 #: src/REST/Controllers/Fastlane.php:158
 #: src/REST/Controllers/Fastlane.php:170
 #: src/REST/Controllers/Fastlane.php:248
@@ -14838,17 +14781,8 @@ msgstr ""
 msgid "Successfully refunded in PayPal. Refund transaction ID: %s"
 msgstr ""
 
-#: includes/gateways/paypal/scripts.php:161
-msgid "PayPal Fastlane SDK token request rejected"
-msgstr ""
-
-#. translators: 1: HTTP response code, 2: domain sent, 3: JSON-encoded Connect response
-#: includes/gateways/paypal/scripts.php:164
-#, php-format
-msgid "Proxy returned %1$d. Domain sent: %2$s. Response: %3$s"
-msgstr ""
-
-#: includes/gateways/paypal/scripts.php:346
+#: includes/gateways/paypal/scripts.php:316
+#: src/Gateways/Square/Gateway.php:245
 msgid "Please check your card details and try again."
 msgstr ""
 
@@ -14909,6 +14843,10 @@ msgstr ""
 #: includes/gateways/stripe/includes/admin/admin-actions.php:46
 #: src/Admin/Promos/Notices/Five_Star_Review_Dashboard.php:89
 #: src/Elementor/Widgets/Config/Checkout/General.php:40
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:104
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:149
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:154
+#: src/Elementor/Widgets/Config/CheckoutInner/Controls.php:137
 #: src/Pro/CartRecovery/Admin/SiteHealth.php:82
 msgid "Yes"
 msgstr ""
@@ -14942,9 +14880,9 @@ msgid "Debit not authorized"
 msgstr ""
 
 #: includes/gateways/stripe/includes/admin/admin-filters.php:72
-#: src/Pro/Admin/Duplicator/Controls.php:48
-#: src/Pro/Admin/Duplicator/Controls.php:71
-#: src/Pro/Admin/Duplicator/Controls.php:92
+#: src/Pro/Admin/Duplicator/Controls.php:49
+#: src/Pro/Admin/Duplicator/Controls.php:72
+#: src/Pro/Admin/Duplicator/Controls.php:94
 msgid "Duplicate"
 msgstr ""
 
@@ -14981,7 +14919,7 @@ msgid "A message must be specified for each notice."
 msgstr ""
 
 #: includes/gateways/stripe/includes/admin/notices.php:39
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:605
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:607
 #: includes/gateways/stripe/includes/payment-methods/apple-pay.php:20
 msgid "Unable to locate registry"
 msgstr ""
@@ -15030,102 +14968,95 @@ msgid "Many web hosts can give you instructions on how/where to upgrade your ver
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:126
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:130
 #, php-format
 msgid "There was an error getting your Stripe credentials. Please %1$stry again%2$s. If you continue to have this problem, please contact support."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:342
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:348
 msgid "Unable to retrieve account information."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:360
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:366
 msgctxt "Stripe Connect mode"
 msgid "test"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:361
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:367
 msgctxt "Stripe Connect mode"
 msgid "live"
 msgstr ""
 
 #. translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:367
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:373
 #, php-format
 msgid "Your Stripe account is connected in %1$s mode. %2$sReconnect in %1$s mode%4$s, or %3$sdisconnect this account%4$s."
 msgstr ""
 
 #. translators: %1$s Opening bold tag, do not translate. %2$s Closing bold tag, do not translate.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:390
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:396
 #, php-format
 msgid "You are currently connected to a %1$stemporary%2$s Stripe test account, which can only be used for testing purposes. You cannot manage this account in Stripe."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:396
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:402
 msgid "Webhooks cannot be configured for recurring purchases with this account."
 msgstr ""
 
 #. translators: %1$s Opening link tag, do not translate. %2$s Closing link tag, do not translate.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:404
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:410
 #, php-format
 msgid "%1$sRegister a Stripe account%2$s for full access."
 msgstr ""
 
 #. translators: 1: Opening anchor tag for disconnecting Stripe, do not translate. 2: Closing anchor tag, do not translate.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:411
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:536
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:417
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:542
 #, php-format
 msgid "%1$sDisconnect this account%2$s."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:483
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:489
 msgid "Administrator (Owner)"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:517
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:523
 msgid "The API keys provided do not match the Stripe Connect account associated with this installation. If you have manually modified these values after connecting your account, please reconnect below or update your API keys."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:549
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:611
-#: includes/gateways/stripe/includes/admin/site-health.php:94
-#: src/Gateways/Stripe/Admin/Connect.php:138
-msgid "Connect with Stripe"
-msgstr ""
-
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:552
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:554
 msgid "It is highly recommended to Connect with Stripe for easier setup and improved security."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:565
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:567
 #, php-format
 msgid "Your manually managed %1$s mode API keys are valid."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:581
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:583
 #, php-format
 msgid "Your manually managed %1$s mode API keys are invalid."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:621
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:628
 #: src/Admin/Onboarding/Steps/PaymentMethods.php:49
 msgid "Start accepting payments with Stripe by connecting your account. Stripe Connect helps ensure easier setup and improved security."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:632
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:642
 msgctxt "gateway test mode status"
 msgid "enabled"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:633
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:643
 msgctxt "gateway test mode status"
 msgid "disabled"
 msgstr ""
 
 #. translators: %s Test mode status. Enabled or disabled.
-#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:642
+#: includes/gateways/stripe/includes/admin/settings/stripe-connect.php:648
 #, php-format
 msgid "\"Test Mode\" has been %s. Please verify your Stripe connection status."
 msgstr ""
@@ -15166,7 +15097,7 @@ msgstr ""
 msgid "By securely connecting your Easy Digital Downloads store with Stripe Connect, you'll get access to more reliable payments and use managed API keys which are more secure."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/site-health.php:115
+#: includes/gateways/stripe/includes/admin/site-health.php:109
 msgid "Easy Digital Downloads &mdash; Stripe"
 msgstr ""
 
@@ -15261,11 +15192,9 @@ msgid "Missing nonce when processing checkout. Please read the following for mor
 msgstr ""
 
 #: includes/gateways/stripe/includes/compat.php:135
-#: includes/gateways/stripe/includes/compat.php:140
 #: includes/gateways/stripe/includes/compat.php:149
 #: includes/process-purchase.php:39
 #: src/Gateways/Square/Checkout/Form.php:149
-#: src/Gateways/Square/Checkout/Form.php:155
 #: src/Gateways/Square/Checkout/Form.php:165
 msgid "Error processing purchase. Please reload the page and try again."
 msgstr ""
@@ -15668,7 +15597,7 @@ msgstr ""
 
 #: includes/gateways/stripe/includes/template-functions.php:515
 #: src/Checkout/Address.php:94
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:58
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:115
 #: src/Elementor/Widgets/Config/Checkout/Titles.php:53
 msgid "Billing Details"
 msgstr ""
@@ -15706,15 +15635,15 @@ msgstr ""
 msgid "Based on your store's base country of %s, it is recommended to set your Billing Address Display to use the \"Full Address\" option to ensure payments are completed successfully."
 msgstr ""
 
-#: includes/install.php:290
+#: includes/install.php:291
 msgid "Purchase Confirmation"
 msgstr ""
 
-#: includes/install.php:295
+#: includes/install.php:296
 msgid "Your transaction failed; please try again or contact site support."
 msgstr ""
 
-#: includes/install.php:298
+#: includes/install.php:299
 msgid "Purchase History"
 msgstr ""
 
@@ -15782,31 +15711,31 @@ msgstr ""
 msgid "The %1$s hook is <strong>deprecated</strong> since Easy Digital Downloads version %2$s with no alternative available."
 msgstr ""
 
-#: includes/misc-functions.php:1322
+#: includes/misc-functions.php:1298
 msgid "Store Bot"
 msgstr ""
 
-#: includes/misc-functions.php:1562
+#: includes/misc-functions.php:1538
 msgid "Verified"
 msgstr ""
 
-#: includes/misc-functions.php:1563
+#: includes/misc-functions.php:1539
 msgid "Spam"
 msgstr ""
 
-#: includes/misc-functions.php:1564
+#: includes/misc-functions.php:1540
 msgid "Deleted"
 msgstr ""
 
-#: includes/misc-functions.php:1565
+#: includes/misc-functions.php:1541
 msgid "Cancelled"
 msgstr ""
 
-#: includes/misc-functions.php:1682
+#: includes/misc-functions.php:1658
 msgid "Please define default parameters in the form of an array."
 msgstr ""
 
-#: includes/misc-functions.php:1687
+#: includes/misc-functions.php:1663
 msgid "Please define an SVG icon filename."
 msgstr ""
 
@@ -15815,6 +15744,7 @@ msgid "Payment recovery processed"
 msgstr ""
 
 #: includes/orders/functions/refunds.php:202
+#: src/Pro/Taxes/VAT/PendingValidation.php:157
 msgid "Invalid order."
 msgstr ""
 
@@ -16707,6 +16637,7 @@ msgid "Order Statuses"
 msgstr ""
 
 #: includes/reports/reports-functions.php:536
+#: src/Checkout/Templates/Traits/TemplateBrowserTrait.php:94
 #: src/Pro/CartRecovery/Admin/Screens/Settings.php:113
 msgid "Custom"
 msgstr ""
@@ -16921,58 +16852,58 @@ msgid "Order Notes"
 msgstr ""
 
 #. translators: %s: URL to request a new verification link
-#: includes/user-functions.php:845
+#: includes/user-functions.php:844
 #, php-format
 msgid "Sorry but your account verification link has expired. <a href=\"%s\">Click here</a> to request a new verification URL."
 msgstr ""
 
-#: includes/user-functions.php:877
+#: includes/user-functions.php:876
 msgid "You must be logged in to verify your account."
 msgstr ""
 
-#: includes/user-functions.php:881
+#: includes/user-functions.php:880
 msgid "Your account has already been verified."
 msgstr ""
 
-#: includes/user-functions.php:922
+#: includes/user-functions.php:921
 msgid "Invalid verification token provided."
 msgstr ""
 
-#: includes/user-functions.php:1048
+#: includes/user-functions.php:1047
 msgid "EDD API Keys"
 msgstr ""
 
-#: includes/user-functions.php:1055
+#: includes/user-functions.php:1054
 msgid "Generate API Key"
 msgstr ""
 
-#: includes/user-functions.php:1060
+#: includes/user-functions.php:1059
 msgid "Public Key:"
 msgstr ""
 
-#: includes/user-functions.php:1063
+#: includes/user-functions.php:1062
 msgid "Secret Key:"
 msgstr ""
 
-#: includes/user-functions.php:1066
+#: includes/user-functions.php:1065
 msgid "Token:"
 msgstr ""
 
-#: includes/user-functions.php:1072
+#: includes/user-functions.php:1071
 msgid "Revoke API Keys"
 msgstr ""
 
-#: includes/user-functions.php:1093
+#: includes/user-functions.php:1092
 msgid "Last Used:"
 msgstr ""
 
 #. translators: %s: iOS App URL
-#: includes/user-functions.php:1112
+#: includes/user-functions.php:1111
 #, php-format
 msgid "Easy Digital Downloads <a href=\"%s\">iOS App</a>"
 msgstr ""
 
-#: includes/user-functions.php:1120
+#: includes/user-functions.php:1119
 msgid "Add to iOS App"
 msgstr ""
 
@@ -18235,6 +18166,9 @@ msgstr ""
 
 #: src/Admin/Emails/Manager.php:94
 #: src/Gateways/Square/Admin/Settings/Register.php:152
+#: src/Pro/REST/Routes/CheckoutTemplates.php:111
+#: src/Pro/REST/Routes/CheckoutTemplates.php:164
+#: src/REST/Routes/CheckoutTemplates.php:102
 #: src/REST/Security.php:42
 msgid "Invalid nonce."
 msgstr ""
@@ -18547,7 +18481,9 @@ msgid "Upgrade Today to Access %s!"
 msgstr ""
 
 #. translators: The extension name.
+#. translators: the plugin name
 #: src/Admin/Extensions/Extension.php:334
+#: src/Admin/Settings/ProductEducation/Setting.php:111
 #, php-format
 msgid "Activate %s"
 msgstr ""
@@ -18559,7 +18495,9 @@ msgid "Deactivate %s"
 msgstr ""
 
 #. translators: The extension name.
+#. translators: the plugin name
 #: src/Admin/Extensions/Extension.php:386
+#: src/Admin/Settings/ProductEducation/Setting.php:128
 #, php-format
 msgid "Configure %s"
 msgstr ""
@@ -18846,7 +18784,7 @@ msgstr ""
 msgid "NEW!"
 msgstr ""
 
-#: src/Admin/Menu/Pages.php:198
+#: src/Admin/Menu/Pages.php:202
 msgid "PRO"
 msgstr ""
 
@@ -20190,6 +20128,20 @@ msgstr ""
 
 #: src/Admin/Settings/Pointers.php:52
 msgid "Your store does not have the Business Country set. Easy Digital Downloads uses this setting to properly configure settings for your store. Please update your country to get the best experience."
+msgstr ""
+
+#: src/Admin/Settings/ProductEducation/ActiveLayer.php:69
+msgid "Smart Spam Protection"
+msgstr ""
+
+#: src/Admin/Settings/ProductEducation/ActiveLayer.php:84
+msgid "AI-powered spam protection. No CAPTCHAs, no friction for real visitors, higher conversions. Free tier available, no credit card required."
+msgstr ""
+
+#. translators: the plugin name
+#: src/Admin/Settings/ProductEducation/Setting.php:106
+#, php-format
+msgid "Install & Activate %s"
 msgstr ""
 
 #: src/Admin/Settings/Recurring.php:77
@@ -22247,8 +22199,35 @@ msgstr ""
 msgid "Please Wait..."
 msgstr ""
 
-#: src/Blocks/Checkout/Elements/PaymentDetails.php:55
+#: src/Blocks/Checkout/AccountLine.php:45
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:141
+msgid "Account Information"
+msgstr ""
+
+#: src/Blocks/Checkout/Elements/PaymentDetails.php:57
 msgid "This is a sample credit card form."
+msgstr ""
+
+#: src/Blocks/Checkout/Patterns.php:75
+#: src/Elementor/Widgets/Config/Checkout/General.php:87
+msgid "Single Column"
+msgstr ""
+
+#: src/Blocks/Checkout/Patterns.php:80
+msgid "Two Columns: 50/50"
+msgstr ""
+
+#: src/Blocks/Checkout/Patterns.php:85
+msgid "Two Columns: 70/30"
+msgstr ""
+
+#: src/Blocks/Checkout/Patterns.php:90
+msgid "Two Columns: 80/20"
+msgstr ""
+
+#: src/Blocks/Checkout/Patterns.php:95
+msgid "Cart Top, Two-Column Form"
 msgstr ""
 
 #. translators: 1. The query stem to ignore, 2. The link to the W3 Total Cache settings, 3. The closing link tag
@@ -22428,6 +22407,40 @@ msgstr ""
 msgid "Email already used. Log in or use a different email to complete your purchase."
 msgstr ""
 
+#: src/Checkout/Templates/Config/EditorRegistry.php:74
+msgid "Block Editor"
+msgstr ""
+
+#: src/Checkout/Templates/Config/EditorRegistry.php:78
+msgid "Elementor"
+msgstr ""
+
+#: src/Checkout/Templates/Config/EditorRegistry.php:134
+msgid "Block editor templates are currently unavailable."
+msgstr ""
+
+#. translators: %s: minimum required Elementor version
+#: src/Checkout/Templates/Config/EditorRegistry.php:139
+#, php-format
+msgid "Requires Elementor %s or higher."
+msgstr ""
+
+#: src/Checkout/Templates/Config/EditorRegistry.php:156
+msgid "Requires Elementor's Flexbox Container feature — enable it in Elementor > Settings > Features."
+msgstr ""
+
+#: src/Checkout/Templates/RemoteAPI.php:199
+msgid "Template server is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: src/Checkout/Templates/RemoteAPI.php:212
+msgid "Failed to fetch templates from server. Please contact support if the issue persists."
+msgstr ""
+
+#: src/Checkout/Templates/RemoteAPI.php:229
+msgid "Invalid response from template server. Please try again or contact support."
+msgstr ""
+
 #: src/CLI/Migration/CustomerEmails.php:35
 msgid "No customers with missing emails were found."
 msgstr ""
@@ -22579,35 +22592,80 @@ msgstr ""
 msgid "Select categories"
 msgstr ""
 
-#: src/Elementor/Widgets/Checkout.php:63
+#: src/Elementor/Elements/CheckoutBox.php:107
 msgid "EDD Checkout"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Cart.php:38
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:97
-msgid "Cart Header"
+#: src/Elementor/Elements/CheckoutBox.php:229
+msgid "Checkout Layout"
 msgstr ""
 
+#: src/Elementor/Elements/CheckoutBox.php:259
+#: src/Elementor/Elements/CheckoutBox.php:271
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:40
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:55
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:87
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:112
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:40
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:55
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:70
 #: src/Elementor/Widgets/Config/Checkout/Titles.php:85
 msgid "Show"
 msgstr ""
 
+#: src/Elementor/Elements/CheckoutBox.php:260
+#: src/Elementor/Elements/CheckoutBox.php:272
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:41
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:56
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:88
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:113
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:41
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:56
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:71
 #: src/Elementor/Widgets/Config/Checkout/Titles.php:86
 msgid "Hide"
+msgstr ""
+
+#: src/Elementor/Elements/CheckoutBox.php:269
+#: src/Elementor/Widgets/Config/Checkout/Cart.php:85
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:73
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:78
+msgid "Discount Form"
+msgstr ""
+
+#: src/Elementor/Elements/CheckoutBox.php:287
+msgid "Custom CSS"
+msgstr ""
+
+#: src/Elementor/Elements/CheckoutBox.php:291
+msgid "CSS entered here is output in a style tag when the checkout renders. Selectors are global (not scoped to this element); a surrounding style tag is optional."
+msgstr ""
+
+#: src/Elementor/Subscribers/CheckoutTemplates.php:115
+msgid "Browse Checkout Templates"
+msgstr ""
+
+#: src/Elementor/Subscribers/CheckoutTemplates.php:116
+msgid "EDD Checkout Templates"
+msgstr ""
+
+#: src/Elementor/Widgets/Checkout.php:65
+msgid "EDD Checkout (Legacy)"
+msgstr ""
+
+#: src/Elementor/Widgets/CheckoutInner/Cart.php:79
+msgid "EDD Checkout Cart"
+msgstr ""
+
+#: src/Elementor/Widgets/CheckoutInner/DiscountForm.php:101
+msgid "EDD Checkout Discount Form"
+msgstr ""
+
+#: src/Elementor/Widgets/CheckoutInner/PaymentInfo.php:81
+msgid "EDD Checkout Payment Info"
+msgstr ""
+
+#: src/Elementor/Widgets/CheckoutInner/PersonalInfo.php:79
+msgid "EDD Checkout Personal Info"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Cart.php:38
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:114
+msgid "Cart Header"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:53
@@ -22618,22 +22676,22 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Cart.php:85
-msgid "Discount Form"
-msgstr ""
-
 #: src/Elementor/Widgets/Config/Checkout/Cart.php:110
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:207
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:228
 msgid "Cart Quantity"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:38
 #: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:36
+#: includes/blocks/src/checkout/edit.js:100
 msgid "Preview as Guest"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:41
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:105
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:150
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:155
+#: src/Elementor/Widgets/Config/CheckoutInner/Controls.php:138
 #: src/Pro/CartRecovery/Admin/SiteHealth.php:82
 msgid "No"
 msgstr ""
@@ -22648,7 +22706,7 @@ msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/General.php:51
 #: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:43
+#: includes/blocks/src/checkout/edit.js:108
 msgid "Select a product to preview the checkout form with a specific item in the cart."
 msgstr ""
 
@@ -22656,49 +22714,36 @@ msgstr ""
 msgid "Account Alignment"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:62
+#: src/Elementor/Widgets/Config/Checkout/General.php:65
 msgid "Align the account information text for logged in users."
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:65
+#: src/Elementor/Widgets/Config/Checkout/General.php:68
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:209
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:74
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:82
 #: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:48
+#: includes/blocks/src/checkout/edit.js:88
 msgid "Layout"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:84
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:22
-msgid "Single Column"
-msgstr ""
-
-#: src/Elementor/Widgets/Config/Checkout/General.php:85
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:23
+#: src/Elementor/Widgets/Config/Checkout/General.php:88
 msgid "50/50 Split"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:86
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:24
+#: src/Elementor/Widgets/Config/Checkout/General.php:89
 msgid "70/30 Split"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:87
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:25
+#: src/Elementor/Widgets/Config/Checkout/General.php:90
 msgid "80/20 Split"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:88
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:26
+#: src/Elementor/Widgets/Config/Checkout/General.php:91
 msgid "Bottom 50/50 Split"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/General.php:89
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:27
+#: src/Elementor/Widgets/Config/Checkout/General.php:92
 msgid "Bottom 70/30 Split"
 msgstr ""
 
@@ -22711,58 +22756,79 @@ msgid "Width"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:56
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:102
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:159
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:261
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:119
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:176
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:282
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:98
 msgid "Alignment"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:72
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:110
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:168
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:212
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:42
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:81
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:105
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:127
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:185
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:233
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:291
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:136
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:268
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:318
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:48
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:87
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:112
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:78
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:145
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:164
 #: src/Elementor/Widgets/Config/Checkout/Styles/General.php:37
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:127
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:197
 msgid "Typography"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:78
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:57
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:118
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:216
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:46
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:74
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:135
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:237
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:166
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:233
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:276
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:326
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:52
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:42
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:88
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:153
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:109
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:172
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:224
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:158
 msgid "Background Color"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:83
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:114
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:221
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:51
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:131
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:242
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:295
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:272
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:322
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:57
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:82
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:149
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:168
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:220
 #: src/Elementor/Widgets/Config/Checkout/Styles/General.php:41
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:93
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:163
 msgid "Text Color"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:87
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:89
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:113
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:95
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:120
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:86
 msgid "Text Shadow"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:91
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:72
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:236
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:65
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:89
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:257
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:71
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:57
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:107
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:177
 msgid "Box Shadow"
 msgstr ""
 
@@ -22783,55 +22849,82 @@ msgid "Hover Box Shadow"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:116
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:62
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:123
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:172
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:226
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:55
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:79
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:140
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:189
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:247
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:299
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:172
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:238
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:281
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:340
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:61
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:47
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:97
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:158
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:114
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:177
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:229
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:167
 msgid "Border"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:121
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:66
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:127
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:176
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:230
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:59
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:83
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:144
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:197
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:251
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:177
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:285
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:344
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:65
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:51
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:101
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:162
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:118
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:181
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:171
 msgid "Border Radius"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:127
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:76
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:133
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:182
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:240
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:270
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:69
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:93
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:150
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:203
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:261
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:303
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:186
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:247
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:291
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:350
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:75
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:61
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:111
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:135
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:168
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:124
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:187
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:181
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:205
 msgid "Padding"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:132
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:81
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:138
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:187
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:275
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:93
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:117
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:98
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:155
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:208
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:308
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:192
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:242
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:99
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:124
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:66
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:116
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:140
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:124
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:129
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:186
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:210
 msgid "Margin"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:150
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:333
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:366
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:103
 #: src/Elementor/Widgets/Config/Traits/Options.php:32
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/build/terms/index.js:1
@@ -22841,8 +22934,9 @@ msgid "Left"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:154
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:295
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:314
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:328
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:347
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:104
 #: src/Elementor/Widgets/Config/Traits/Options.php:36
 #: src/Elementor/Widgets/Config/Traits/Options.php:59
 #: includes/blocks/build/downloads/index.js:1
@@ -22853,7 +22947,8 @@ msgid "Center"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/Buttons.php:158
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:341
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:374
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:105
 #: src/Elementor/Widgets/Config/Traits/Options.php:40
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/build/terms/index.js:1
@@ -22862,43 +22957,97 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:154
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:37
+msgid "Row Divider"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:171
 #: src/Pro/CartRecovery/Admin/Carts/Modal.php:147
 #: src/Pro/CartRecovery/Admin/Carts/Modal.php:494
 #: src/Pro/CartRecovery/Emails/Tags.php:51
 msgid "Cart Items"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:256
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:193
+msgid "Container Border"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:277
 msgid "Footer Rows"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:310
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:343
 msgid "Top"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:318
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:351
 msgid "Bottom"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:337
+#: src/Elementor/Widgets/Config/Checkout/Styles/Cart.php:370
 #: src/Elementor/Widgets/Config/Traits/Options.php:67
 msgid "Space Between"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:34
-msgid "Form Elements"
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:102
+msgid "Show Discount Field"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:116
+msgid "Show the discount code field on load instead of behind the \"Enter a discount code\" link."
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:130
+msgid "Toggle Link"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:147
+msgid "Underline"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:213
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:118
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:86
+msgid "Gap"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:263
+msgid "Field"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:296
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:355
+msgid "Height"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:313
+msgid "Apply Button"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:331
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:173
+msgid "Text Color (Hover)"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/DiscountForm.php:335
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:177
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:233
+msgid "Background Color (Hover)"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:38
+msgid "Form Elements"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:42
 msgid "Fields"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:76
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:82
 msgid "Labels"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:100
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormElements.php:107
 msgid "Descriptions"
 msgstr ""
 
@@ -22907,12 +23056,12 @@ msgid "Form Sections"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:39
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:84
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:154
 msgid "Section"
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Checkout/Styles/FormSections.php:74
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:123
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:193
 #: includes/blocks/build/cart/index.js:1
 #: includes/blocks/build/downloads/index.js:1
 #: includes/blocks/src/cart/edit.js:36
@@ -22920,7 +23069,71 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:66
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:55
+msgid "Log In / Register Buttons"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:81
+msgid "Button Placement"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:85
+msgid "Top corner"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:86
+msgid "Above the fields"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/FormSwitcher.php:95
+msgid "The top corner placement expects a section title beside it. Choose \"Above the fields\" when the Personal Info title is hidden."
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:62
+msgid "Gateway Selector"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:92
+msgid "Tile Width"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:96
+msgid "Fill the row"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:97
+msgid "Fit the label"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:106
+msgid "Gateway count varies by store, so filling the row keeps the tiles even."
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:145
+msgid "Tiles"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:152
+msgid "Leave Stripe's Methods Unstyled"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:161
+msgid "Stripe styles its own payment method tabs to match these tiles. Turn this on to leave them alone."
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:192
+msgid "Minimum Height"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:198
+msgid "Icon Height"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/GatewayTiles.php:215
+msgid "Selected Tile"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/Checkout/Styles/Sections.php:133
 msgid "Card Details"
 msgstr ""
 
@@ -22928,8 +23141,18 @@ msgstr ""
 msgid "Section Titles"
 msgstr ""
 
-#: src/Elementor/Widgets/Config/Checkout/Titles.php:83
+#: src/Elementor/Widgets/Config/Checkout/Titles.php:61
 msgid "Card Info"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/CheckoutInner/Controls.php:134
+#: includes/blocks/build/checkout-personal-info/index.js:1
+#: includes/blocks/src/checkout-personal-info/edit.js:23
+msgid "Single Line Name"
+msgstr ""
+
+#: src/Elementor/Widgets/Config/CheckoutInner/Controls.php:141
+msgid "Show First Name and Last Name side by side."
 msgstr ""
 
 #: src/Elementor/Widgets/Config/Traits/Options.php:55
@@ -23195,6 +23418,7 @@ msgstr ""
 #. translators: %s: The plural label for the Download post type.
 #: src/Emails/Templates/AdminOrderNotice.php:122
 #: src/Emails/Templates/StripeEarlyFraudWarning.php:162
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:142
 msgid "Hello"
 msgstr ""
 
@@ -23233,6 +23457,7 @@ msgid "Payment Method: %s"
 msgstr ""
 
 #: src/Emails/Templates/AdminOrderNotice.php:143
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:160
 msgid "Thank you"
 msgstr ""
 
@@ -23507,7 +23732,7 @@ msgstr ""
 
 #: src/Emails/Templates/Traits/Actions.php:57
 #: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:34
+#: includes/blocks/src/checkout/edit.js:98
 msgid "Preview"
 msgstr ""
 
@@ -23592,6 +23817,18 @@ msgstr ""
 msgid "The country for your billing address."
 msgstr ""
 
+#: src/Forms/Checkout/PersonalInfo/Email.php:86
+msgid "We will send the purchase receipt to this address."
+msgstr ""
+
+#: src/Forms/Checkout/PersonalInfo/FirstName.php:68
+msgid "We will use this to personalize your account experience."
+msgstr ""
+
+#: src/Forms/Checkout/PersonalInfo/LastName.php:68
+msgid "We will use this as well to personalize your account experience."
+msgstr ""
+
 #: src/Forms/Checkout/Phone.php:39
 #: src/Forms/User/Phone.php:42
 #: includes/blocks/build/profile-editor/index.js:1
@@ -23645,6 +23882,10 @@ msgstr ""
 msgid "The state or province for your billing address."
 msgstr ""
 
+#: src/Forms/Login/Password.php:115
+msgid "Your password"
+msgstr ""
+
 #: src/Forms/Login/Remember.php:41
 #: templates/shortcode-login.php:23
 #: includes/blocks/build/login/index.js:1
@@ -23652,14 +23893,39 @@ msgstr ""
 msgid "Remember Me"
 msgstr ""
 
-#: src/Forms/Login/Username.php:41
-#: src/Forms/Register/Username.php:41
+#: src/Forms/Login/Username.php:55
+#: src/Forms/Register/Username.php:55
 #: templates/shortcode-login.php:15
 #: includes/blocks/build/login/index.js:1
 #: includes/blocks/build/register/index.js:1
 #: includes/blocks/src/login/edit.js:42
 #: includes/blocks/src/register/edit.js:49
 msgid "Username or Email"
+msgstr ""
+
+#: src/Forms/Login/Username.php:115
+msgid "Your username or email address"
+msgstr ""
+
+#: src/Forms/Register/Password.php:105
+msgid "The password used to access your account."
+msgstr ""
+
+#: src/Forms/Register/PasswordConfirm.php:55
+#: templates/shortcode-register.php:35
+msgid "Confirm Password"
+msgstr ""
+
+#: src/Forms/Register/PasswordConfirm.php:89
+msgid "Confirm your password."
+msgstr ""
+
+#: src/Forms/Register/PasswordConfirm.php:146
+msgid "Confirm password"
+msgstr ""
+
+#: src/Forms/Register/Username.php:89
+msgid "The username you will use to log into your account."
 msgstr ""
 
 #: src/Forms/User/DisplayName.php:42
@@ -23985,6 +24251,16 @@ msgstr ""
 msgid "Refund for order #%d"
 msgstr ""
 
+#: src/Gateways/PayPal/SdkToken.php:103
+msgid "PayPal Fastlane SDK token request rejected"
+msgstr ""
+
+#. translators: 1: HTTP response code, 2: domain sent, 3: JSON-encoded Connect response
+#: src/Gateways/PayPal/SdkToken.php:106
+#, php-format
+msgid "Connect API returned %1$d. Domain sent: %2$s. Response: %3$s"
+msgstr ""
+
 #: src/Gateways/PayPal/Token.php:35
 #: src/REST/Security.php:73
 #: src/REST/Security.php:121
@@ -24014,46 +24290,46 @@ msgid "IPN amount mismatch detected. Expected: %1$s, Received: %2$s. Transaction
 msgstr ""
 
 #. translators: 1: mode label (sandbox or live), 2: seller PayPal email or merchant ID
-#: src/Gateways/PayPal/V3/Admin/Account.php:373
+#: src/Gateways/PayPal/V3/Admin/Account.php:374
 #, php-format
 msgid "<strong>Connected Account:</strong> Your PayPal account is connected in %1$s mode as %2$s"
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:392
+#: src/Gateways/PayPal/V3/Admin/Account.php:393
 msgid "<strong>Connected Account:</strong> Your PayPal account is not connected. Please reconnect your PayPal account."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:412
+#: src/Gateways/PayPal/V3/Admin/Account.php:413
 msgid "Your PayPal primary email address is not yet confirmed. Please confirm it in your PayPal account before accepting payments."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:415
+#: src/Gateways/PayPal/V3/Admin/Account.php:416
 msgid "Your PayPal account is currently unable to receive payments. Please sign in to PayPal to resolve any holds or restrictions."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:418
+#: src/Gateways/PayPal/V3/Admin/Account.php:419
 msgid "Required permissions were not granted to Easy Digital Downloads during onboarding. Please disconnect and reconnect your PayPal account, accepting all requested permissions."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:424
+#: src/Gateways/PayPal/V3/Admin/Account.php:425
 msgid "<strong>Payment Status:</strong> Ready to accept payments."
 msgstr ""
 
 #. translators: %s: One or more reasons the PayPal account cannot currently accept payments.
-#: src/Gateways/PayPal/V3/Admin/Account.php:435
+#: src/Gateways/PayPal/V3/Admin/Account.php:436
 #, php-format
 msgid "<strong>Payment Status:</strong> %s"
 msgstr ""
 
 #. translators: 1: opening strong tag, 2: closing strong tag, 3: fee percentage.
-#: src/Gateways/PayPal/V3/Admin/Account.php:462
+#: src/Gateways/PayPal/V3/Admin/Account.php:463
 #, php-format
 msgid "%1$sPay as you go pricing:%2$s %3$d%% per-transaction fee + PayPal fees."
 msgstr ""
 
 #. translators: 1: opening link tag, 2: closing link tag.
 #. translators: Replacements are for the html wrappers for the phrase Upgrade to Pro and should not be translated.
-#: src/Gateways/PayPal/V3/Admin/Account.php:472
+#: src/Gateways/PayPal/V3/Admin/Account.php:473
 #: src/Gateways/Square/ApplicationFee.php:166
 #: src/Gateways/Stripe/ApplicationFee.php:114
 #, php-format
@@ -24061,78 +24337,78 @@ msgid "%1$sUpgrade to Pro%2$s to remove transaction fees."
 msgstr ""
 
 #. translators: 1: opening link tag, 2: closing link tag.
-#: src/Gateways/PayPal/V3/Admin/Account.php:487
+#: src/Gateways/PayPal/V3/Admin/Account.php:488
 #, php-format
 msgid "%1$sActivate or upgrade your license%2$s to remove transaction fees."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:527
+#: src/Gateways/PayPal/V3/Admin/Account.php:528
 msgid "Advanced Card Payments:"
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:538
+#: src/Gateways/PayPal/V3/Admin/Account.php:539
 msgid "Vaulting:"
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:594
+#: src/Gateways/PayPal/V3/Admin/Account.php:595
 msgid "Managed by EDD Connect. No additional configuration needed."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:605
+#: src/Gateways/PayPal/V3/Admin/Account.php:606
 msgid "Managed by EDD Connect. Receiving events."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:606
+#: src/Gateways/PayPal/V3/Admin/Account.php:607
 msgid "Managed by EDD Connect. Webhook is not currently active."
 msgstr ""
 
 #. translators: %s: Apple Pay domain registration error message returned from PayPal.
-#: src/Gateways/PayPal/V3/Admin/Account.php:647
+#: src/Gateways/PayPal/V3/Admin/Account.php:648
 #, php-format
 msgid "<strong>Apple Pay:</strong> Domain registration failed — %s"
 msgstr ""
 
 #. translators: %s: registered domain (e.g. example.com).
-#: src/Gateways/PayPal/V3/Admin/Account.php:654
+#: src/Gateways/PayPal/V3/Admin/Account.php:655
 #, php-format
 msgid "<strong>Apple Pay:</strong> Domain %s registered with PayPal."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:660
+#: src/Gateways/PayPal/V3/Admin/Account.php:661
 msgid "<strong>Apple Pay:</strong> Domain not yet registered with PayPal."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Admin/Account.php:666
+#: src/Gateways/PayPal/V3/Admin/Account.php:667
 msgid "Re-verify Domain"
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag.
-#: src/Gateways/PayPal/V3/Admin/Account.php:701
+#: src/Gateways/PayPal/V3/Admin/Account.php:702
 #, php-format
 msgid "<strong>Gateway Status:</strong> PayPal is not currently active. %1$sEnable PayPal%2$s in the general gateway settings to start using it."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:126
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:148
 msgid "Empty Apple Pay domain-association file returned from proxy."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:327
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:368
 msgid "Document root could not be determined for Apple Pay domain association."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:333
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:374
 msgid "Unable to create .well-known directory in the server root."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:340
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:381
 msgid "Unable to write Apple Pay domain-association file to the server root."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:357
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:398
 msgid "No domain available for Apple Pay registration."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:388
+#: src/Gateways/PayPal/V3/ApplePay/DomainAssociation.php:435
 msgid "No domain available for Apple Pay deregistration."
 msgstr ""
 
@@ -24140,33 +24416,33 @@ msgstr ""
 msgid "Apple Pay domain re-verified successfully."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:171
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:187
 msgid "PayPal Apple Pay:"
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:172
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:188
 msgid "Apple Pay domain registration was unsuccessful, so the Apple Pay button will not render at checkout until this is resolved."
 msgstr ""
 
 #. translators: 1: opening anchor tag, 2: closing anchor tag
-#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:182
+#: src/Gateways/PayPal/V3/ApplePay/DomainSubscriber.php:198
 #, php-format
 msgid "You can retry from the %1$sPayPal settings%2$s, or contact your host if the server root is not writable."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ConnectAPI.php:241
+#: src/Gateways/PayPal/V3/ConnectAPI.php:249
 msgid "Invalid JSON response from proxy."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/ConnectAPI.php:285
+#: src/Gateways/PayPal/V3/ConnectAPI.php:293
 msgid "Invalid response from PayPal proxy during store registration."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/KeyRotation.php:115
+#: src/Gateways/PayPal/V3/KeyRotation.php:135
 msgid "The PayPal connection credentials are unavailable, so they cannot be rotated. Please re-establish the connection instead."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/KeyRotation.php:131
+#: src/Gateways/PayPal/V3/KeyRotation.php:151
 msgid "The PayPal proxy did not return a new key during rotation."
 msgstr ""
 
@@ -24195,27 +24471,31 @@ msgstr ""
 msgid "Approval is pending. Please check your PayPal account."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:87
+#: src/Gateways/PayPal/V3/Onboarding.php:92
 msgid "Your site is using default or missing WordPress security keys (salts). For your security, set unique salts in wp-config.php before connecting to PayPal."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:111
+#: src/Gateways/PayPal/V3/Onboarding.php:115
+msgid "This site looks like a staging or local copy of a store already connected to PayPal in live mode. To protect that connection, registering PayPal from here has been blocked. Complete this from your live production site instead."
+msgstr ""
+
+#: src/Gateways/PayPal/V3/Onboarding.php:140
 msgid "Invalid response from proxy during store registration."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:138
+#: src/Gateways/PayPal/V3/Onboarding.php:172
 msgid "No signup link returned from proxy."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:391
+#: src/Gateways/PayPal/V3/Onboarding.php:429
 msgid "Credentials cleared. You can now reconnect to PayPal."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:410
+#: src/Gateways/PayPal/V3/Onboarding.php:448
 msgid "No merchant ID found. Please complete onboarding first."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Onboarding.php:445
+#: src/Gateways/PayPal/V3/Onboarding.php:483
 msgid "PayPal credentials rotated successfully."
 msgstr ""
 
@@ -24227,11 +24507,11 @@ msgstr ""
 msgid "An error occurred with your account. Please try again."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Vault.php:494
+#: src/Gateways/PayPal/V3/Vault.php:491
 msgid "A vault ID and amount are required to charge a vaulted payment method."
 msgstr ""
 
-#: src/Gateways/PayPal/V3/Vault.php:559
+#: src/Gateways/PayPal/V3/Vault.php:556
 msgid "Card"
 msgstr ""
 
@@ -24596,10 +24876,6 @@ msgstr ""
 msgid "Payment failed. Please try again."
 msgstr ""
 
-#: src/Gateways/Square/Gateway.php:245
-msgid "Please enter valid card information."
-msgstr ""
-
 #: src/Gateways/Square/Gateway.php:246
 msgid "Network error. Please check your connection and try again."
 msgstr ""
@@ -24830,21 +25106,25 @@ msgstr ""
 msgid "Webhooks are configured correctly."
 msgstr ""
 
+#: src/Gateways/Stripe/Admin/Connect.php:144
+msgid "Connect with Stripe"
+msgstr ""
+
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/Gateways/Stripe/Admin/Connect.php:147
+#: src/Gateways/Stripe/Admin/Connect.php:233
 #, php-format
 msgid "Have questions about connecting with Stripe? See the %1$sdocumentation%2$s."
 msgstr ""
 
-#: src/Gateways/Stripe/Admin/Connect.php:189
+#: src/Gateways/Stripe/Admin/Connect.php:275
 msgid "Manage API keys manually"
 msgstr ""
 
-#: src/Gateways/Stripe/Admin/Connect.php:199
+#: src/Gateways/Stripe/Admin/Connect.php:285
 msgid "Hide API keys"
 msgstr ""
 
-#: src/Gateways/Stripe/Admin/Connect.php:205
+#: src/Gateways/Stripe/Admin/Connect.php:291
 msgid "Although you can add your API keys manually, we recommend using Stripe Connect: an easier and more secure way of connecting your Stripe account to your website. Stripe Connect prevents issues that can arise when copying and pasting account details from Stripe into your Easy Digital Downloads payment gateway settings. With Stripe Connect you'll be ready to go with just a few clicks."
 msgstr ""
 
@@ -25325,7 +25605,7 @@ msgstr ""
 msgid "Canadian Debit"
 msgstr ""
 
-#: src/Gateways/Stripe/PaymentMethods/Affirm.php:50
+#: src/Gateways/Stripe/PaymentMethods/Affirm.php:58
 msgid "Affirm"
 msgstr ""
 
@@ -25374,7 +25654,7 @@ msgid "GrabPay"
 msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/Ideal.php:99
-msgid "iDEAL"
+msgid "iDEAL | Wero"
 msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/Klarna.php:99
@@ -25395,6 +25675,10 @@ msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/Twint.php:52
 msgid "TWINT"
+msgstr ""
+
+#: src/Gateways/Stripe/PaymentMethods/Upi.php:102
+msgid "UPI"
 msgstr ""
 
 #: src/Gateways/Stripe/PaymentMethods/UsBankAccount.php:42
@@ -26079,16 +26363,60 @@ msgstr ""
 msgid "Company address:"
 msgstr ""
 
-#: src/Pro/Admin/Orders/Taxes.php:126
+#: src/Pro/Admin/Orders/Taxes.php:127
 msgid "Location Evidence"
 msgstr ""
 
-#: src/Pro/Admin/Orders/Taxes.php:128
+#: src/Pro/Admin/Orders/Taxes.php:129
 msgid "Billing country:"
 msgstr ""
 
-#: src/Pro/Admin/Orders/Taxes.php:132
+#: src/Pro/Admin/Orders/Taxes.php:133
 msgid "IP address:"
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:177
+msgid "Validate & Apply Reverse Charge"
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:180
+msgid "Re-checks the VAT number with the validation service. If it is valid and the reverse charge applies, the tax is refunded through the payment gateway."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:197
+msgid "VAT validation is pending — the validation service was unavailable at checkout and is being retried automatically."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:200
+msgid "VAT validation failed after automatic retries. Manual review is required."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:204
+msgid "VAT number validated, but the automatic tax refund failed. Please reconcile the refund manually."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:208
+msgid "VAT number validated after a delayed check. Reverse charge applied and the tax was refunded."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:211
+msgid "VAT number validated successfully after a delayed check."
+msgstr ""
+
+#: src/Pro/Admin/Orders/Taxes.php:214
+msgid "The VAT number was confirmed invalid on a delayed check. Tax remains charged."
+msgstr ""
+
+#: src/Pro/Admin/Orders/ValidateVAT.php:65
+msgid "Validating…"
+msgstr ""
+
+#: src/Pro/Admin/Orders/ValidateVAT.php:66
+msgid "The request could not be completed. Please try again."
+msgstr ""
+
+#: src/Pro/Admin/Orders/ValidateVAT.php:83
+msgid "Security check failed. Please reload the page and try again."
 msgstr ""
 
 #: src/Pro/Admin/PassHandler/Ajax.php:79
@@ -26261,7 +26589,7 @@ msgid "Invoice Style"
 msgstr ""
 
 #: src/Pro/Admin/Settings/Invoices.php:133
-#: src/Pro/Admin/Settings/VAT.php:115
+#: src/Pro/Admin/Settings/VAT.php:122
 msgid "Company Name"
 msgstr ""
 
@@ -26310,6 +26638,7 @@ msgid "Any text entered here will appear at the bottom of each invoice."
 msgstr ""
 
 #: src/Pro/Admin/Settings/Invoices.php:204
+#: src/REST/Controllers/CheckoutTemplates.php:77
 msgid "Minimal"
 msgstr ""
 
@@ -26329,12 +26658,16 @@ msgstr ""
 msgid "Activate your EDD Pro license to enable EU VAT functionality."
 msgstr ""
 
+#: src/Pro/Admin/Settings/Taxes.php:59
+msgid "Current rates will be retrieved and added to your site automatically."
+msgstr ""
+
 #: src/Pro/Admin/Settings/VAT.php:73
 msgid "Easy Digital Downloads is checking for the latest VAT Rates in the background. These rates will be imported to your tax rates when complete."
 msgstr ""
 
 #: src/Pro/Admin/Settings/VAT.php:89
-#: src/Pro/Admin/Settings/VAT.php:267
+#: src/Pro/Admin/Settings/VAT.php:274
 msgid "Automatic Rates"
 msgstr ""
 
@@ -26355,103 +26688,115 @@ msgid "Allow VAT reverse charge for customers with a valid VAT number who are ba
 msgstr ""
 
 #: src/Pro/Admin/Settings/VAT.php:109
-msgid "Company Information"
+msgid "Auto-Refund Tax on Delayed Validation"
 msgstr ""
 
 #: src/Pro/Admin/Settings/VAT.php:110
-msgid "The following information about your company will be displayed on the order details page and purchase receipt email."
+msgid "Automatically refund the tax when a delayed VAT validation succeeds and the reverse charge applies."
+msgstr ""
+
+#: src/Pro/Admin/Settings/VAT.php:112
+msgid "If the EU VIES service is unavailable at checkout, tax is charged and the VAT number is verified afterwards. When verification succeeds and the reverse charge applies, the tax is refunded through the payment gateway. When this setting is disabled, the VAT Validation Review email is sent to the store admin as each affected order completes, since the tax will need to be refunded manually; when enabled, that email is only sent if every automatic verification attempt fails."
 msgstr ""
 
 #: src/Pro/Admin/Settings/VAT.php:116
+msgid "Company Information"
+msgstr ""
+
+#: src/Pro/Admin/Settings/VAT.php:117
+msgid "The following information about your company will be displayed on the order details page and purchase receipt email."
+msgstr ""
+
+#: src/Pro/Admin/Settings/VAT.php:123
 msgid "Enter your company name."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:121
+#: src/Pro/Admin/Settings/VAT.php:128
 msgid "EU VAT Number"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:122
+#: src/Pro/Admin/Settings/VAT.php:129
 msgid "Enter the registered EU VAT number of your company."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:127
+#: src/Pro/Admin/Settings/VAT.php:134
 msgid "Country of VAT registration"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:128
+#: src/Pro/Admin/Settings/VAT.php:135
 msgid "Select the country of your company's registered VAT address."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:133
+#: src/Pro/Admin/Settings/VAT.php:140
 msgid "Country setup"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:134
+#: src/Pro/Admin/Settings/VAT.php:141
 msgid "Select the country that issued your company's VAT number. If you are based in Northern Ireland and have a VAT number beginning with XI then you should select \"Northern Ireland\". If your VAT number begins with EU then you should select \"EU MOSS Number\""
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:142
+#: src/Pro/Admin/Settings/VAT.php:149
 msgid "UK VAT Number"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:143
+#: src/Pro/Admin/Settings/VAT.php:150
 msgid "Enter the registered UK VAT number of your company."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:149
+#: src/Pro/Admin/Settings/VAT.php:156
 msgid "Enter line 1 of your company's registered VAT address."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:155
+#: src/Pro/Admin/Settings/VAT.php:162
 msgid "Enter line 2 of your company's registered VAT address if required."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:160
+#: src/Pro/Admin/Settings/VAT.php:167
 msgid "City / State"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:161
+#: src/Pro/Admin/Settings/VAT.php:168
 msgid "Enter the city / state of your company's registered VAT address."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:167
+#: src/Pro/Admin/Settings/VAT.php:174
 msgid "Enter the postal code of your company's registered VAT address."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:173
+#: src/Pro/Admin/Settings/VAT.php:180
 msgid "Select the country where your business is based. This will be used on invoices."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:202
+#: src/Pro/Admin/Settings/VAT.php:209
 msgid "Show Website Address"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:203
+#: src/Pro/Admin/Settings/VAT.php:210
 msgid "Show your website address on the invoice."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:210
+#: src/Pro/Admin/Settings/VAT.php:217
 msgid "Company Email"
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:211
+#: src/Pro/Admin/Settings/VAT.php:218
 msgid "Enter the email address that will appear on the invoice."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:271
+#: src/Pro/Admin/Settings/VAT.php:278
 msgid "This will automatically set tax rates for EU countries based on the current VAT rates."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:272
+#: src/Pro/Admin/Settings/VAT.php:279
 msgid "This will not override any existing tax rates you have manually set for these countries."
 msgstr ""
 
-#: src/Pro/Admin/Settings/VAT.php:273
+#: src/Pro/Admin/Settings/VAT.php:280
 msgid "This feature connects to our VAT Rate API to update rates weekly."
 msgstr ""
 
 #. translators: %1$s: date, %2$s: time.
-#: src/Pro/Admin/Settings/VAT.php:299
+#: src/Pro/Admin/Settings/VAT.php:306
 #, php-format
 msgid "The next tax rates update will be on %1$s at %2$s."
 msgstr ""
@@ -28003,6 +28348,72 @@ msgstr ""
 msgid "Opened"
 msgstr ""
 
+#: src/Pro/Checkout/Templates/Importer/AbstractImporter.php:80
+msgid "Template content is empty. Please contact support if this issue persists."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/AbstractImporter.php:376
+msgid "Template imported successfully."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/BlockImporter.php:55
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:105
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:61
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:178
+msgid "You do not have permission to edit this page."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/BlockImporter.php:64
+msgid "Block Editor template import will be available in a future update."
+msgstr ""
+
+#. translators: %s: minimum Elementor version
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:127
+#, php-format
+msgid "Elementor %s or higher is required to import this template. Please update Elementor and try again."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:147
+msgid "The checkout page could not be found. Please check your EDD settings."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:163
+msgid "This template cannot be imported because post revisions are disabled for the checkout page. Enable revisions so your current content can be backed up before it is overwritten."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:184
+msgid "Your current checkout content could not be backed up, so the import was cancelled to avoid overwriting it. Please try again."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:313
+msgid "This template requires Elementor's Flexbox Container feature, which is not enabled. Please enable it in Elementor > Settings > Features and try again."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:430
+msgid "Template content is invalid. Please contact support if this issue persists."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:445
+msgid "Template content format is not supported. Please contact support."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:687
+msgid "Failed to initialize Elementor for this page. Please try again or contact support."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:763
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:774
+msgid "Failed to save template via Elementor. Please try again or contact support."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:845
+msgid "Failed to process template content. Please contact support."
+msgstr ""
+
+#: src/Pro/Checkout/Templates/Importer/ElementorImporter.php:881
+msgid "Failed to update checkout page. Please try again or contact support."
+msgstr ""
+
 #: src/Pro/Emails/ConditionalTags/Conditions/Category.php:81
 #: src/Pro/Emails/ConditionalTags/Conditions/Download.php:84
 #: src/Pro/Emails/ConditionalTags/Conditions/OrderDiscount.php:83
@@ -28275,31 +28686,171 @@ msgstr ""
 msgid "Product data removed from the recommendations service for %d products."
 msgstr ""
 
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:108
+msgid "This template is not available for import. If you believe this is an error, please contact our support team."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:149
+msgid "The specified revision does not exist."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:159
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:254
+msgid "No checkout page is configured. Please set a checkout page in Downloads > Settings > General > Pages."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:168
+msgid "This revision does not belong to the checkout page."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:194
+msgid "Failed to restore the checkout page. Please try again or restore manually from the revision history."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:231
+msgid "Checkout page restored successfully."
+msgstr ""
+
+#. translators: %s: minimum version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:319
+#, php-format
+msgid "Elementor %s or higher is required to import this template. Please install or update Elementor to continue."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:325
+msgid "Install Elementor"
+msgstr ""
+
+#. translators: %s: minimum version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:331
+#, php-format
+msgid "This template requires WordPress %s or higher. Please update WordPress to continue."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:361
+msgid "Unknown editor type. Please contact support if this error persists."
+msgstr ""
+
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:402
+msgid "Failed to encode template data."
+msgstr ""
+
+#. translators: %1$s: required version, %2$s: current version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:460
+#, php-format
+msgid "EDD %1$s required (current: %2$s)"
+msgstr ""
+
+#. translators: %1$s: required version, %2$s: current version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:470
+#, php-format
+msgid "PHP %1$s required (current: %2$s)"
+msgstr ""
+
+#. translators: %1$s: required version, %2$s: current version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:480
+#, php-format
+msgid "Elementor %1$s required (current: %2$s)"
+msgstr ""
+
+#. translators: %1$s: required version, %2$s: current version
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:492
+#, php-format
+msgid "WordPress %1$s required (current: %2$s)"
+msgstr ""
+
+#. translators: %s: list of unmet requirements
+#: src/Pro/REST/Controllers/CheckoutTemplates.php:505
+#, php-format
+msgid "This template cannot be imported because your site does not meet the requirements: %s"
+msgstr ""
+
+#: src/Pro/REST/Routes/CheckoutTemplates.php:91
+msgid "The revision ID to restore from."
+msgstr ""
+
+#: src/Pro/REST/Routes/CheckoutTemplates.php:137
+msgid "An active Pro license is required to import templates."
+msgstr ""
+
+#: src/Pro/REST/Routes/CheckoutTemplates.php:170
+msgid "You do not have permission to restore checkout templates."
+msgstr ""
+
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:76
+msgid "VAT Validation Review"
+msgstr ""
+
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:86
+msgid "Sent to the store admin when an order with an EU VAT number needs review: the number could not be verified at checkout because the validation service was unavailable, and either automatic tax refunds are disabled, the automatic re-checks have been exhausted, or an automatic tax refund failed at the payment gateway."
+msgstr ""
+
+#. translators: %s: The email tag that will be replaced with the order ID.
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:98
+#, php-format
+msgid "EU VAT validation needs review - Order #%s"
+msgstr ""
+
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:145
+msgid "This order includes an EU VAT number that could not be verified automatically because the validation service was unavailable, so tax was charged."
+msgstr ""
+
+#. translators: %s: The email tag that will be replaced by the order ID.
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:149
+#, php-format
+msgid "Order: #%s"
+msgstr ""
+
+#. translators: %s: The email tag that will be replaced by the customer's full name.
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:152
+#, php-format
+msgid "Customer: %s"
+msgstr ""
+
+#. translators: %s: The email tag that will be replaced by the order total.
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:155
+#, php-format
+msgctxt "Context: A tag (placeholder) for email content that will be replaced when sending."
+msgid "Amount: %s"
+msgstr ""
+
+#: src/Pro/Taxes/Emails/Templates/VATValidationReview.php:157
+msgid "Check the order's payment notes for the current validation status and any action needed — for example refunding the tax manually if the number validates while automatic refunds are disabled, reviewing the number yourself if the automatic checks were exhausted, or completing a tax refund that could not be processed at the payment gateway. You can validate the number and apply the reverse charge from the order's VAT section."
+msgstr ""
+
 #. translators: %s is the formatted tax amount
-#: src/Pro/Taxes/VAT/Checkout.php:200
+#: src/Pro/Taxes/VAT/Checkout.php:201
 #, php-format
 msgid "[VAT reverse charged] %s"
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Checkout.php:302
+#: src/Pro/Taxes/VAT/Checkout.php:310
+msgid "VAT number verification is temporarily unavailable, so tax has been applied to your order for now. Please review and confirm the updated total. We'll verify your VAT number automatically and refund the tax once confirmed."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Checkout.php:315
+msgid "We're temporarily unable to verify your VAT number, so tax has been applied to your order. We'll verify the number automatically and refund the tax once it is confirmed. Please re-submit to complete your purchase."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Checkout.php:324
 msgid "The VAT reverse charge status has changed. Please revalidate your VAT number and confirm the checkout totals."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Checkout.php:434
-#: src/Pro/Taxes/VAT/Result.php:137
+#: src/Pro/Taxes/VAT/Checkout.php:482
+#: src/Pro/Taxes/VAT/Result.php:223
 msgid "Please enter a VAT number."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Checkout.php:436
+#: src/Pro/Taxes/VAT/Checkout.php:484
 msgid "There was an error trying to validate your VAT number. Please try reloading the page."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Checkout.php:451
+#: src/Pro/Taxes/VAT/Checkout.php:499
 msgid "VAT number valid - reverse charge applied."
 msgstr ""
 
 #. translators: %s: Country name
-#: src/Pro/Taxes/VAT/Checkout.php:454
+#: src/Pro/Taxes/VAT/Checkout.php:502
 #, php-format
 msgid "Your VAT number is valid, but we cannot apply the reverse charge in %s."
 msgstr ""
@@ -28336,6 +28887,70 @@ msgstr ""
 msgid "VAT charged at %s%%"
 msgstr ""
 
+#: src/Pro/Taxes/VAT/PayPalCommerce.php:91
+msgid "VAT number validated after checkout (delayed) and the reverse charge was applied. The stored renewal amounts were updated to remove VAT; future renewals will be billed without VAT."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:106
+msgid "EU VAT was disabled before the pending validation completed; no further action was taken."
+msgstr ""
+
+#. translators: %s: the VAT number.
+#: src/Pro/Taxes/VAT/PendingValidation.php:136
+#, php-format
+msgid "VAT number %s was confirmed invalid on delayed validation. Tax remains charged."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:162
+msgid "This order is not in a paid status, so the tax cannot be refunded."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:167
+msgid "No VAT number is stored on this order."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:171
+msgid "The VAT validation service is currently unavailable. Please try again later."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:176
+msgid "The VAT number could not be validated and appears to be invalid."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:186
+msgid "A tax refund was already attempted for this order. Please verify in your payment gateway whether the tax was already refunded. Select OK to attempt the refund again, or Cancel to stop."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:196
+msgid "The VAT number is valid, but the reverse charge does not apply for this order. Tax remains charged."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:200
+msgid "VAT number validated. Reverse charge applied and the tax was refunded."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/PendingValidation.php:203
+msgid "VAT number validated and reverse charge applied. The tax refund could not be completed automatically — please review the order notes."
+msgstr ""
+
+#. translators: %s: the VAT number.
+#: src/Pro/Taxes/VAT/PendingValidation.php:254
+#, php-format
+msgid "VAT number %s validated successfully (delayed). The reverse charge does not apply; tax remains charged."
+msgstr ""
+
+#. translators: %s: the VAT number.
+#: src/Pro/Taxes/VAT/PendingValidation.php:275
+#, php-format
+msgid "VAT number %s validated successfully (delayed). Reverse charge applied. Automatic tax refunds are disabled — review and refund the tax manually, or use \"Validate & Apply Reverse Charge\"."
+msgstr ""
+
+#. translators: 1: VAT number, 2: number of attempts.
+#: src/Pro/Taxes/VAT/PendingValidation.php:327
+#, php-format
+msgid "VAT validation for %1$s failed after %2$d attempts (the validation service remained unavailable). Manual review required."
+msgstr ""
+
 #: src/Pro/Taxes/VAT/Receipt.php:64
 msgid "Billed To"
 msgstr ""
@@ -28356,35 +28971,97 @@ msgstr ""
 msgid "UK VAT number: %s"
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:145
+#: src/Pro/Taxes/VAT/Recurring.php:180
+msgid "VAT number validated after checkout (delayed) and the reverse charge was applied. The subscription amounts were not updated: the payment gateway will continue billing the original tax-inclusive amount until the subscription is adjusted at the gateway. Future renewal orders will record no tax."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:155
+msgid "a previous refund attempt was interrupted and could not be confirmed at the gateway"
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:168
+msgid "the order is not in a paid status"
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:173
+msgid "the order is not refundable"
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:182
+msgid "no gateway transaction was found for the order"
+msgstr ""
+
+#. translators: %s: the payment gateway.
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:194
+#, php-format
+msgid "Automatic VAT tax refund is not supported for the %s gateway. No local refund was created. Please review this order and refund the tax through the gateway manually."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:234
+msgid "unknown error"
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:244
+msgid "the refund record could not be loaded"
+msgstr ""
+
+#. translators: 1: VAT number, 2: refunded tax amount.
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:297
+#, php-format
+msgid "VAT number %1$s validated successfully (delayed — the validation service was unavailable at checkout). Reverse charge applied. Tax refund of %2$s issued automatically."
+msgstr ""
+
+#. translators: 1: refund order number, 2: payment gateway.
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:438
+#, php-format
+msgid "A local tax refund (#%1$d) was created, but the %2$s gateway refund could not be confirmed automatically. Please issue the gateway refund manually."
+msgstr ""
+
+#. translators: 1: payment gateway, 2: error message, 3: local refund order number.
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:460
+#, php-format
+msgid "The automatic VAT tax refund failed at the %1$s gateway: %2$s. A local refund (#%3$d) was created — please reconcile manually."
+msgstr ""
+
+#. translators: %s: the failure reason.
+#: src/Pro/Taxes/VAT/Refunds/TaxRefund.php:468
+#, php-format
+msgid "The automatic VAT tax refund could not be issued: %s. Please review this order and refund the tax manually if appropriate."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Result.php:231
 msgid "The VAT number is invalid."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:149
+#: src/Pro/Taxes/VAT/Result.php:235
 msgid "The VAT number applies to EU countries only."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:153
+#: src/Pro/Taxes/VAT/Result.php:239
 msgid "Your billing country must match the country for the VAT number."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:157
+#: src/Pro/Taxes/VAT/Result.php:243
 msgid "The country or VAT number is invalid."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:161
+#: src/Pro/Taxes/VAT/Result.php:247
 msgid "We're having trouble checking your VAT number. Please try again or contact our support team."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Result.php:165
+#: src/Pro/Taxes/VAT/Result.php:251
 msgid "We're having trouble checking your VAT number. The VIES service is unreachable."
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Utility.php:113
+#: src/Pro/Taxes/VAT/Result.php:276
+msgid "We're temporarily unable to verify your VAT number due to a service disruption. Your purchase will include tax for now. We'll verify your VAT number automatically and refund the tax once confirmed."
+msgstr ""
+
+#: src/Pro/Taxes/VAT/Utility.php:132
 msgid "EU MOSS Number"
 msgstr ""
 
-#: src/Pro/Taxes/VAT/Utility.php:116
+#: src/Pro/Taxes/VAT/Utility.php:135
 msgid "Northern Ireland"
 msgstr ""
 
@@ -28731,6 +29408,70 @@ msgstr ""
 msgid "Quantity must be a positive number."
 msgstr ""
 
+#: src/REST/Controllers/CheckoutTemplates.php:76
+msgid "Modern"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:78
+msgid "Clean"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:79
+msgid "Bold"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:80
+msgid "Compact"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:81
+msgid "Elegant"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:82
+msgid "Vibrant"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:83
+msgid "Premium"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:84
+msgid "Split Layout"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:85
+msgid "Single Page"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:86
+msgid "Dark Sidebar"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:87
+msgid "Serif"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:88
+msgid "Editorial"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:89
+msgid "Gradient"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:90
+msgid "Fintech"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:91
+msgid "SaaS"
+msgstr ""
+
+#: src/REST/Controllers/CheckoutTemplates.php:114
+msgid "All Templates"
+msgstr ""
+
 #: src/REST/Controllers/Fastlane.php:85
 msgid "Payment token is required."
 msgstr ""
@@ -28812,6 +29553,18 @@ msgstr ""
 
 #: src/REST/Controllers/UnbrandedCard.php:282
 msgid "We could not verify your card with your bank. Please try a different card or payment method."
+msgstr ""
+
+#: src/REST/Routes/CheckoutTemplates.php:108
+msgid "You do not have permission to manage checkout templates."
+msgstr ""
+
+#: src/REST/Routes/CheckoutTemplates.php:125
+msgid "Importing checkout templates requires EDD Pro. Please upgrade to unlock this feature."
+msgstr ""
+
+#: src/REST/Routes/CheckoutTemplates.php:148
+msgid "Restoring checkout pages requires EDD Pro. Please upgrade to unlock this feature."
 msgstr ""
 
 #: src/REST/Routes/LogPruning.php:66
@@ -28896,7 +29649,7 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
-#: src/Telemetry/Tracking.php:145
+#: src/Telemetry/Tracking.php:146
 msgid "Yes, I want to help!"
 msgstr ""
 
@@ -28912,7 +29665,7 @@ msgstr ""
 msgid "Help us provide a better experience and faster fixes by sharing some anonymous data about how you use Easy Digital Downloads."
 msgstr ""
 
-#. translators: %1$s Link to tracking information, do not translate. %2$s clsoing link tag, do not translate
+#. translators: 1: Opening link tag to tracking information, do not translate. 2: Closing link tag, do not translate.
 #: src/Telemetry/Tracking.php:295
 #, php-format
 msgid "%1$sHere is what we track.%2$s"
@@ -29335,19 +30088,93 @@ msgstr ""
 msgid "Show Cart Total"
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:32
-msgid "This is an example of a cart with a product in it."
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:22
+msgid "Cart Settings"
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:54
-msgid "Cart Thumbnail Size"
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:24
+msgid "Show Header Row"
 msgstr ""
 
-#: includes/blocks/build/checkout/index.js:3
-#: includes/blocks/src/checkout/edit.js:62
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/build/terms/index.js:5
+#: includes/blocks/src/checkout-cart/edit.js:29
+#: includes/blocks/src/terms/edit.js:90
+msgid "Show Thumbnails"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:35
+msgid "Thumbnail Width (px)"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:45
+msgid "Show Quantity Controls"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:51
 msgid "Show Discount Form"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/index.js:1
+#: includes/blocks/src/checkout-cart/edit.js:54
+msgid "Show the discount code form within the cart. Uncheck to hide it or use a separate Discount Form block."
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/index.js:1
+#: includes/blocks/src/checkout-personal-info/edit.js:21
+msgid "Personal Info Settings"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/index.js:1
+#: includes/blocks/src/checkout-personal-info/edit.js:26
+msgid "Show First Name and Last Name side by side instead of stacked."
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:73
+msgid "Choose a checkout layout"
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:90
+msgid "Switching layouts replaces all inner blocks."
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:103
+msgid "Preview how the checkout appears to guest users."
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:117
+msgid "Required checkout components are missing:"
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:123
+msgid "Payment Information"
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:128
+msgid "Add these blocks for the checkout to function properly."
+msgstr ""
+
+#: includes/blocks/build/checkout/index.js:3
+#: includes/blocks/src/checkout/edit.js:134
+msgid "Drag and drop checkout components and any other blocks to customize your layout."
+msgstr ""
+
+#. translators: %s: The current user's email address.
+#: includes/blocks/build/checkout/index.js:4
+#: includes/blocks/src/checkout/edit.js:147
+#, js-format
+msgid "You are currently logged in as %s. (<a>log out</a>)"
 msgstr ""
 
 #: includes/blocks/build/confirmation/index.js:1
@@ -29802,11 +30629,6 @@ msgid "Individual Term Settings"
 msgstr ""
 
 #: includes/blocks/build/terms/index.js:5
-#: includes/blocks/src/terms/edit.js:90
-msgid "Show Thumbnails"
-msgstr ""
-
-#: includes/blocks/build/terms/index.js:5
 #: includes/blocks/src/terms/edit.js:96
 msgid "Image Size"
 msgstr ""
@@ -29886,6 +30708,10 @@ msgstr ""
 
 #: includes/blocks/build/buy-button/block.json
 #: includes/blocks/build/cart/block.json
+#: includes/blocks/build/checkout-cart/block.json
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/build/checkout-personal-info/block.json
 #: includes/blocks/build/checkout/block.json
 #: includes/blocks/build/confirmation/block.json
 #: includes/blocks/build/downloads/block.json
@@ -29899,6 +30725,10 @@ msgstr ""
 #: includes/blocks/build/user-downloads/block.json
 #: includes/blocks/src/buy-button/block.json
 #: includes/blocks/src/cart/block.json
+#: includes/blocks/src/checkout-cart/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
 #: includes/blocks/src/checkout/block.json
 #: includes/blocks/src/confirmation/block.json
 #: includes/blocks/src/downloads/block.json
@@ -29916,6 +30746,10 @@ msgstr ""
 
 #: includes/blocks/build/buy-button/block.json
 #: includes/blocks/build/cart/block.json
+#: includes/blocks/build/checkout-cart/block.json
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/build/checkout-personal-info/block.json
 #: includes/blocks/build/checkout/block.json
 #: includes/blocks/build/confirmation/block.json
 #: includes/blocks/build/downloads/block.json
@@ -29929,6 +30763,10 @@ msgstr ""
 #: includes/blocks/build/user-downloads/block.json
 #: includes/blocks/src/buy-button/block.json
 #: includes/blocks/src/cart/block.json
+#: includes/blocks/src/checkout-cart/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
 #: includes/blocks/src/checkout/block.json
 #: includes/blocks/src/confirmation/block.json
 #: includes/blocks/src/downloads/block.json
@@ -29963,9 +30801,129 @@ msgid "Display a mini or full shopping cart outside of checkout for Easy Digital
 msgstr ""
 
 #: includes/blocks/build/cart/block.json
+#: includes/blocks/build/checkout-cart/block.json
 #: includes/blocks/src/cart/block.json
+#: includes/blocks/src/checkout-cart/block.json
 msgctxt "block keyword"
 msgid "cart"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/block.json
+#: includes/blocks/src/checkout-cart/block.json
+msgctxt "block title"
+msgid "EDD Checkout Cart"
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/block.json
+#: includes/blocks/src/checkout-cart/block.json
+msgctxt "block description"
+msgid "Shopping cart for checkout with items, totals, and fees."
+msgstr ""
+
+#: includes/blocks/build/checkout-cart/block.json
+#: includes/blocks/build/checkout/block.json
+#: includes/blocks/src/checkout-cart/block.json
+#: includes/blocks/src/checkout/block.json
+msgctxt "block keyword"
+msgid "checkout"
+msgstr ""
+
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+msgctxt "block title"
+msgid "EDD Discount Form"
+msgstr ""
+
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+msgctxt "block description"
+msgid "Discount code form for checkout."
+msgstr ""
+
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+msgctxt "block keyword"
+msgid "discount"
+msgstr ""
+
+#: includes/blocks/build/checkout-discount-form/block.json
+#: includes/blocks/src/checkout-discount-form/block.json
+msgctxt "block keyword"
+msgid "coupon"
+msgstr ""
+
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+msgctxt "block title"
+msgid "EDD Payment Info"
+msgstr ""
+
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+msgctxt "block description"
+msgid "Payment gateway selection and credit card form for checkout."
+msgstr ""
+
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+msgctxt "block keyword"
+msgid "payment"
+msgstr ""
+
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+msgctxt "block keyword"
+msgid "gateway"
+msgstr ""
+
+#: includes/blocks/build/checkout-payment-info/block.json
+#: includes/blocks/src/checkout-payment-info/block.json
+msgctxt "block keyword"
+msgid "credit card"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block title"
+msgid "EDD Personal Info & Billing"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block description"
+msgid "Personal information, login forms, and billing address for checkout."
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/build/login/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+#: includes/blocks/src/login/block.json
+msgctxt "block keyword"
+msgid "login"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block keyword"
+msgid "register"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block keyword"
+msgid "personal"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block keyword"
+msgid "billing"
+msgstr ""
+
+#: includes/blocks/build/checkout-personal-info/block.json
+#: includes/blocks/src/checkout-personal-info/block.json
+msgctxt "block keyword"
+msgid "address"
 msgstr ""
 
 #: includes/blocks/build/checkout/block.json
@@ -29978,12 +30936,6 @@ msgstr ""
 #: includes/blocks/src/checkout/block.json
 msgctxt "block description"
 msgid "Full checkout block for Easy Digital Downloads."
-msgstr ""
-
-#: includes/blocks/build/checkout/block.json
-#: includes/blocks/src/checkout/block.json
-msgctxt "block keyword"
-msgid "checkout"
 msgstr ""
 
 #: includes/blocks/build/confirmation/block.json
@@ -30052,12 +31004,6 @@ msgstr ""
 #: includes/blocks/src/login/block.json
 msgctxt "block description"
 msgid "Login form for Easy Digital Downloads."
-msgstr ""
-
-#: includes/blocks/build/login/block.json
-#: includes/blocks/src/login/block.json
-msgctxt "block keyword"
-msgid "login"
 msgstr ""
 
 #: includes/blocks/build/order-history/block.json

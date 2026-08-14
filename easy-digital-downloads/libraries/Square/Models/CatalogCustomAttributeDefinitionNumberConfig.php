@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
 {
     /**
      * @var array
      */
     private $precision = [];
-
     /**
      * Returns Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -32,7 +29,6 @@ class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
         }
         return $this->precision['value'];
     }
-
     /**
      * Sets Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -51,7 +47,6 @@ class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
     {
         $this->precision['value'] = $precision;
     }
-
     /**
      * Unsets Precision.
      * An integer between 0 and 5 that represents the maximum number of
@@ -68,7 +63,6 @@ class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
     {
         $this->precision = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -77,7 +71,7 @@ class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -87,7 +81,6 @@ class CatalogCustomAttributeDefinitionNumberConfig implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

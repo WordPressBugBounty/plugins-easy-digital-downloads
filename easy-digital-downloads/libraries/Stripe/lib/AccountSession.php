@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe;
 
 /**
@@ -23,7 +22,6 @@ namespace EDD\Vendor\Stripe;
 class AccountSession extends ApiResource
 {
     const OBJECT_NAME = 'account_session';
-
     /**
      * Creates a AccountSession object that includes a single-use token that the
      * platform can use on their front-end to grant client-side API access.
@@ -39,11 +37,9 @@ class AccountSession extends ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
 }

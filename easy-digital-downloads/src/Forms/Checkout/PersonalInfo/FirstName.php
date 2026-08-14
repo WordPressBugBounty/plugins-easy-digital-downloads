@@ -77,4 +77,14 @@ class FirstName extends Field {
 	protected function get_key(): string {
 		return 'edd_first';
 	}
+
+	/**
+	 * Get the wrapper element ID for the shortcode context.
+	 *
+	 * @since 3.7.0
+	 * @return string
+	 */
+	protected function get_wrapper_id(): string {
+		return 'first-name';
+	}
 }

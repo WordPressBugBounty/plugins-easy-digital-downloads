@@ -13,7 +13,8 @@
     "checkout"
   ],
   "supports": {
-    "html": false
+    "html": false,
+    "innerBlocks": true
   },
   "textdomain": "easy-digital-downloads",
   "editorScript": "file:./index.js",
@@ -21,19 +22,5 @@
   "style": "file:./style-index.css",
   "example": {
     "attributes": {}
-  },
-  "attributes": {
-    "layout": {
-      "type": "string",
-      "default": ""
-    },
-    "show_discount_form": {
-      "type": "boolean",
-      "default": true
-    },
-    "thumbnail_width": {
-      "type": "number",
-      "default": 25
-    }
   }
 }

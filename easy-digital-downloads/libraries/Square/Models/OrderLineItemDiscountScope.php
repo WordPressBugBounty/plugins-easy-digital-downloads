@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 /**
@@ -14,13 +13,11 @@ class OrderLineItemDiscountScope
      * The original transaction discount scope is currently not supported by the API.
      */
     public const OTHER_DISCOUNT_SCOPE = 'OTHER_DISCOUNT_SCOPE';
-
     /**
      * The discount should be applied to only line items specified by
      * `OrderLineItemAppliedDiscount` reference records.
      */
     public const LINE_ITEM = 'LINE_ITEM';
-
     /**
      * The discount should be applied to the entire order.
      */

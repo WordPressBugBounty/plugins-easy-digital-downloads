@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a request to complete (capture) a payment using
  * [CompletePayment]($e/Payments/CompletePayment).
@@ -19,7 +17,6 @@ class CompletePaymentRequest implements \JsonSerializable
      * @var array
      */
     private $versionToken = [];
-
     /**
      * Returns Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -33,7 +30,6 @@ class CompletePaymentRequest implements \JsonSerializable
         }
         return $this->versionToken['value'];
     }
-
     /**
      * Sets Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -46,7 +42,6 @@ class CompletePaymentRequest implements \JsonSerializable
     {
         $this->versionToken['value'] = $versionToken;
     }
-
     /**
      * Unsets Version Token.
      * Used for optimistic concurrency. This opaque token identifies the current `Payment`
@@ -57,7 +52,6 @@ class CompletePaymentRequest implements \JsonSerializable
     {
         $this->versionToken = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -66,7 +60,7 @@ class CompletePaymentRequest implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
@@ -76,7 +70,6 @@ class CompletePaymentRequest implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

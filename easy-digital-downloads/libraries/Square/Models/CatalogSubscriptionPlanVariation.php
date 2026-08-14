@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Describes a subscription plan variation. A subscription plan variation represents how the
  * subscription for a product or service is sold.
@@ -18,32 +16,26 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
      * @var string
      */
     private $name;
-
     /**
      * @var SubscriptionPhase[]
      */
     private $phases;
-
     /**
      * @var array
      */
     private $subscriptionPlanId = [];
-
     /**
      * @var array
      */
     private $monthlyBillingAnchorDate = [];
-
     /**
      * @var array
      */
     private $canProrate = [];
-
     /**
      * @var array
      */
     private $successorPlanVariationId = [];
-
     /**
      * @param string $name
      * @param SubscriptionPhase[] $phases
@@ -53,7 +45,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         $this->name = $name;
         $this->phases = $phases;
     }
-
     /**
      * Returns Name.
      * The name of the plan variation.
@@ -62,7 +53,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         return $this->name;
     }
-
     /**
      * Sets Name.
      * The name of the plan variation.
@@ -74,7 +64,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->name = $name;
     }
-
     /**
      * Returns Phases.
      * A list containing each [SubscriptionPhase](entity:SubscriptionPhase) for this plan variation.
@@ -85,7 +74,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         return $this->phases;
     }
-
     /**
      * Sets Phases.
      * A list containing each [SubscriptionPhase](entity:SubscriptionPhase) for this plan variation.
@@ -99,7 +87,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->phases = $phases;
     }
-
     /**
      * Returns Subscription Plan Id.
      * The id of the subscription plan, if there is one.
@@ -111,7 +98,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         }
         return $this->subscriptionPlanId['value'];
     }
-
     /**
      * Sets Subscription Plan Id.
      * The id of the subscription plan, if there is one.
@@ -122,7 +108,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->subscriptionPlanId['value'] = $subscriptionPlanId;
     }
-
     /**
      * Unsets Subscription Plan Id.
      * The id of the subscription plan, if there is one.
@@ -131,7 +116,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->subscriptionPlanId = [];
     }
-
     /**
      * Returns Monthly Billing Anchor Date.
      * The day of the month the billing period starts.
@@ -143,7 +127,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         }
         return $this->monthlyBillingAnchorDate['value'];
     }
-
     /**
      * Sets Monthly Billing Anchor Date.
      * The day of the month the billing period starts.
@@ -154,7 +137,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->monthlyBillingAnchorDate['value'] = $monthlyBillingAnchorDate;
     }
-
     /**
      * Unsets Monthly Billing Anchor Date.
      * The day of the month the billing period starts.
@@ -163,7 +145,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->monthlyBillingAnchorDate = [];
     }
-
     /**
      * Returns Can Prorate.
      * Whether bills for this plan variation can be split for proration.
@@ -175,7 +156,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         }
         return $this->canProrate['value'];
     }
-
     /**
      * Sets Can Prorate.
      * Whether bills for this plan variation can be split for proration.
@@ -186,7 +166,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->canProrate['value'] = $canProrate;
     }
-
     /**
      * Unsets Can Prorate.
      * Whether bills for this plan variation can be split for proration.
@@ -195,7 +174,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->canProrate = [];
     }
-
     /**
      * Returns Successor Plan Variation Id.
      * The ID of a "successor" plan variation to this one. If the field is set, and this object is disabled
@@ -211,7 +189,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         }
         return $this->successorPlanVariationId['value'];
     }
-
     /**
      * Sets Successor Plan Variation Id.
      * The ID of a "successor" plan variation to this one. If the field is set, and this object is disabled
@@ -226,7 +203,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->successorPlanVariationId['value'] = $successorPlanVariationId;
     }
-
     /**
      * Unsets Successor Plan Variation Id.
      * The ID of a "successor" plan variation to this one. If the field is set, and this object is disabled
@@ -239,7 +215,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
     {
         $this->successorPlanVariationId = [];
     }
-
     /**
      * Encode this object to JSON
      *
@@ -248,20 +223,20 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                            = $this->name;
-        $json['phases']                          = $this->phases;
+        $json['name'] = $this->name;
+        $json['phases'] = $this->phases;
         if (!empty($this->subscriptionPlanId)) {
-            $json['subscription_plan_id']        = $this->subscriptionPlanId['value'];
+            $json['subscription_plan_id'] = $this->subscriptionPlanId['value'];
         }
         if (!empty($this->monthlyBillingAnchorDate)) {
             $json['monthly_billing_anchor_date'] = $this->monthlyBillingAnchorDate['value'];
         }
         if (!empty($this->canProrate)) {
-            $json['can_prorate']                 = $this->canProrate['value'];
+            $json['can_prorate'] = $this->canProrate['value'];
         }
         if (!empty($this->successorPlanVariationId)) {
             $json['successor_plan_variation_id'] = $this->successorPlanVariationId['value'];
@@ -269,7 +244,6 @@ class CatalogSubscriptionPlanVariation implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }

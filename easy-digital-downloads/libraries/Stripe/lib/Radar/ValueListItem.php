@@ -1,7 +1,6 @@
 <?php
 
 // File generated from our OpenAPI spec
-
 namespace EDD\Vendor\Stripe\Radar;
 
 /**
@@ -20,7 +19,6 @@ namespace EDD\Vendor\Stripe\Radar;
 class ValueListItem extends \EDD\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'radar.value_list_item';
-
     /**
      * Creates a new <code>ValueListItem</code> object, which is added to the specified
      * parent value list.
@@ -36,14 +34,11 @@ class ValueListItem extends \EDD\Vendor\Stripe\ApiResource
     {
         self::_validateParams($params);
         $url = static::classUrl();
-
         list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
         $obj = \EDD\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
         $obj->setLastResponse($response);
-
         return $obj;
     }
-
     /**
      * Deletes a <code>ValueListItem</code> object, removing it from its parent value
      * list.
@@ -58,14 +53,11 @@ class ValueListItem extends \EDD\Vendor\Stripe\ApiResource
     public function delete($params = null, $opts = null)
     {
         self::_validateParams($params);
-
         $url = $this->instanceUrl();
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
-
         return $this;
     }
-
     /**
      * Returns a list of <code>ValueListItem</code> objects. The objects are sorted in
      * descending order by creation date, with the most recently created object
@@ -81,10 +73,8 @@ class ValueListItem extends \EDD\Vendor\Stripe\ApiResource
     public static function all($params = null, $opts = null)
     {
         $url = static::classUrl();
-
         return static::_requestPage($url, \EDD\Vendor\Stripe\Collection::class, $params, $opts);
     }
-
     /**
      * Retrieves a <code>ValueListItem</code> object.
      *
@@ -100,7 +90,6 @@ class ValueListItem extends \EDD\Vendor\Stripe\ApiResource
         $opts = \EDD\Vendor\Stripe\Util\RequestOptions::parse($opts);
         $instance = new static($id, $opts);
         $instance->refresh();
-
         return $instance;
     }
 }

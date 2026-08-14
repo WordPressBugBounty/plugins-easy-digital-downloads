@@ -8,11 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace EDD\Vendor\Symfony\Component\Translation\Provider;
 
 use EDD\Vendor\Symfony\Component\Translation\Exception\UnsupportedSchemeException;
-
 /**
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
  */
@@ -20,7 +18,6 @@ class TranslationProviderCollectionFactory
 {
     private $factories;
     private $enabledLocales;
-
     /**
      * @param iterable<mixed, ProviderFactoryInterface> $factories
      */
@@ -29,21 +26,14 @@ class TranslationProviderCollectionFactory
         $this->factories = $factories;
         $this->enabledLocales = $enabledLocales;
     }
-
     public function fromConfig(array $config): TranslationProviderCollection
     {
         $providers = [];
         foreach ($config as $name => $currentConfig) {
-            $providers[$name] = $this->fromDsnObject(
-                new Dsn($currentConfig['dsn']),
-                !$currentConfig['locales'] ? $this->enabledLocales : $currentConfig['locales'],
-                !$currentConfig['domains'] ? [] : $currentConfig['domains']
-            );
+            $providers[$name] = $this->fromDsnObject(new Dsn($currentConfig['dsn']), !$currentConfig['locales'] ? $this->enabledLocales : $currentConfig['locales'], !$currentConfig['domains'] ? [] : $currentConfig['domains']);
         }
-
         return new TranslationProviderCollection($providers);
     }
-
     public function fromDsnObject(Dsn $dsn, array $locales, array $domains = []): ProviderInterface
     {
         foreach ($this->factories as $factory) {
@@ -51,7 +41,6 @@ class TranslationProviderCollectionFactory
                 return new FilteringProvider($factory->create($dsn), $locales, $domains);
             }
         }
-
         throw new UnsupportedSchemeException($dsn);
     }
 }

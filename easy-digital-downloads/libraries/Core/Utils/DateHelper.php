@@ -1,31 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Core\Utils;
 
 use DateTime;
 use DateTimeZone;
 use InvalidArgumentException;
 use stdClass;
-
 class DateHelper
 {
     /**
      * Match the pattern for a datetime string in simple date format
      */
     public const SIMPLE_DATE = 'Y-m-d';
-
     /**
      * Match the pattern for a datetime string in Rfc1123 format
      */
     public const RFC1123 = 'D, d M Y H:i:s T';
-
     /**
      * Match the pattern for a datetime string in RFC3339 format
      */
     public const RFC3339 = 'Y-m-d\TH:i:sP';
-
     /**
      * Convert a DateTime object to a string in simple date format
      *
@@ -41,7 +36,6 @@ class DateHelper
         }
         return $date->format(static::SIMPLE_DATE);
     }
-
     /**
      * Convert an array of DateTime objects to an array of strings in simple date format
      *
@@ -56,7 +50,6 @@ class DateHelper
         }
         return array_map([self::class, 'toSimpleDate'], $dates);
     }
-
     /**
      * Convert a 2D array of DateTime objects to a 2D array of strings in simple date format
      *
@@ -71,7 +64,6 @@ class DateHelper
         }
         return array_map([self::class, 'toSimpleDateArray'], $dates);
     }
-
     /**
      * Parse a datetime string in simple date format to a DateTime object
      *
@@ -91,7 +83,6 @@ class DateHelper
         }
         throw new InvalidArgumentException('Incorrect format.');
     }
-
     /**
      * Parse a datetime string in simple date format to a DateTime object
      *
@@ -103,14 +94,11 @@ class DateHelper
     public static function fromSimpleDateRequired(?string $date): DateTime
     {
         $result = DateHelper::fromSimpleDate($date);
-
         if (isset($result)) {
             return $result;
         }
-
         throw new \InvalidArgumentException('Date is null, empty or not in required format.');
     }
-
     /**
      * Parse an array of datetime strings in simple date format to an array of DateTime objects
      *
@@ -125,7 +113,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromSimpleDate'], $dates);
     }
-
     /**
      * Parse an array of map of datetime strings in simple date format to a 2D array of DateTime objects
      *
@@ -140,7 +127,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromSimpleDateMap'], $dates);
     }
-
     /**
      * Parse a class of datetime strings in simple date format to an array of DateTime objects
      *
@@ -156,7 +142,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromSimpleDate'], $array);
     }
-
     /**
      * Parse a map of array of datetime strings in simple date format to a 2D array of DateTime objects
      *
@@ -172,7 +157,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromSimpleDateArray'], $array);
     }
-
     /**
      * Convert a DateTime object to a string in Rfc1123 format
      *
@@ -188,7 +172,6 @@ class DateHelper
         }
         return $date->setTimeZone(new DateTimeZone('GMT'))->format(static::RFC1123);
     }
-
     /**
      * Convert an array of DateTime objects to an array of strings in Rfc1123 format
      *
@@ -203,7 +186,6 @@ class DateHelper
         }
         return array_map([self::class, 'toRfc1123DateTime'], $dates);
     }
-
     /**
      * Convert a 2D array of DateTime objects to a 2D array of strings in Rfc1123 format
      *
@@ -218,7 +200,6 @@ class DateHelper
         }
         return array_map([self::class, 'toRfc1123DateTimeArray'], $dates);
     }
-
     /**
      * Parse a datetime string in Rfc1123 format to a DateTime object
      *
@@ -238,7 +219,6 @@ class DateHelper
         }
         throw new InvalidArgumentException('Incorrect format.');
     }
-
     /**
      * Parse a datetime string in Rfc1123 format to a DateTime object
      *
@@ -250,14 +230,11 @@ class DateHelper
     public static function fromRfc1123DateTimeRequired(?string $datetime): DateTime
     {
         $result = DateHelper::fromRfc1123DateTime($datetime);
-
         if (isset($result)) {
             return $result;
         }
-
         throw new \InvalidArgumentException('DateTime is null, empty or not in required format.');
     }
-
     /**
      * Parse an array of datetime strings in Rfc1123 format to an array of DateTime objects
      *
@@ -272,7 +249,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromRfc1123DateTime'], $dates);
     }
-
     /**
      * Parse an array of map of datetime strings in Rfc1123 format to a 2D array of DateTime objects
      *
@@ -287,7 +263,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromRfc1123DateTimeMap'], $dates);
     }
-
     /**
      * Parse a class of datetime strings in Rfc1123 format to an array of DateTime objects
      *
@@ -303,7 +278,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromRfc1123DateTime'], $array);
     }
-
     /**
      * Parse a map of array of datetime strings in Rfc1123 format to a 2D array of DateTime objects
      *
@@ -319,7 +293,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromRfc1123DateTimeArray'], $array);
     }
-
     /**
      * Convert a DateTime object to a string in Rfc3339 format
      *
@@ -335,7 +308,6 @@ class DateHelper
         }
         return $date->setTimeZone(new DateTimeZone('UTC'))->format(static::RFC3339);
     }
-
     /**
      * Convert an array of DateTime objects to an array of strings in Rfc3339 format
      *
@@ -350,7 +322,6 @@ class DateHelper
         }
         return array_map([self::class, 'toRfc3339DateTime'], $dates);
     }
-
     /**
      * Convert a 2D array of DateTime objects to a 2D array of strings in Rfc3339 format
      *
@@ -365,7 +336,6 @@ class DateHelper
         }
         return array_map([self::class, 'toRfc3339DateTimeArray'], $dates);
     }
-
     /**
      * Parse a datetime string in Rfc3339 format to a DateTime object
      *
@@ -379,27 +349,26 @@ class DateHelper
         if (is_null($date)) {
             return null;
         }
-
         // Check for timezone information and append it if missing
         if (empty(preg_match("/T.*[+-]|T.*Z/", $date))) {
             $date .= 'Z';
         }
-
         $x = DateTime::createFromFormat(static::RFC3339, $date);
         if ($x instanceof DateTime) {
             return $x->setTimeZone(new DateTimeZone('UTC'));
         }
-        $x = DateTime::createFromFormat("Y-m-d\TH:i:s.uP", $date); // parse with up to 6 microseconds
+        $x = DateTime::createFromFormat("Y-m-d\\TH:i:s.uP", $date);
+        // parse with up to 6 microseconds
         if ($x instanceof DateTime) {
             return $x->setTimeZone(new DateTimeZone('UTC'));
         }
-        $x = DateTime::createFromFormat("Y-m-d\TH:i:s.uuP", $date); // parse with up to 12 microseconds
+        $x = DateTime::createFromFormat("Y-m-d\\TH:i:s.uuP", $date);
+        // parse with up to 12 microseconds
         if ($x instanceof DateTime) {
             return $x->setTimeZone(new DateTimeZone('UTC'));
         }
         throw new InvalidArgumentException('Incorrect format.');
     }
-
     /**
      * Parse a datetime string in Rfc3339 format to a DateTime object
      *
@@ -411,14 +380,11 @@ class DateHelper
     public static function fromRfc3339DateTimeRequired(?string $datetime): DateTime
     {
         $result = DateHelper::fromRfc3339DateTime($datetime);
-
         if (isset($result)) {
             return $result;
         }
-
         throw new \InvalidArgumentException('DateTime is null, empty or not in required format.');
     }
-
     /**
      * Parse an array of datetime strings in Rfc3339 format to an array of DateTime objects
      *
@@ -433,7 +399,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromRfc3339DateTime'], $dates);
     }
-
     /**
      * Parse an array of map of datetime strings in Rfc3339 format to a 2D array DateTime objects
      *
@@ -448,7 +413,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromRfc3339DateTimeMap'], $dates);
     }
-
     /**
      * Parse a class of datetime strings in Rfc3339 format to an array of DateTime objects
      *
@@ -464,7 +428,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromRfc3339DateTime'], $array);
     }
-
     /**
      * Parse a map of array of datetime strings in Rfc3339 format to a 2D array of DateTime objects
      *
@@ -480,7 +443,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromRfc3339DateTimeArray'], $array);
     }
-
     /**
      * Convert a DateTime object to a Unix Timestamp
      *
@@ -496,7 +458,6 @@ class DateHelper
         }
         return $date->getTimestamp();
     }
-
     /**
      * Convert an array of DateTime objects to an array of Unix timestamps
      *
@@ -511,7 +472,6 @@ class DateHelper
         }
         return array_map([self::class, 'toUnixTimestamp'], $dates);
     }
-
     /**
      * Convert a 2D array of DateTime objects to a 2D array of Unix timestamps
      *
@@ -526,7 +486,6 @@ class DateHelper
         }
         return array_map([self::class, 'toUnixTimestampArray'], $dates);
     }
-
     /**
      * Parse a Unix Timestamp to a DateTime object
      *
@@ -546,7 +505,6 @@ class DateHelper
         }
         throw new InvalidArgumentException('Incorrect format.');
     }
-
     /**
      * Parse a Unix Timestamp to a DateTime object
      *
@@ -558,14 +516,11 @@ class DateHelper
     public static function fromUnixTimestampRequired(?string $datetime): DateTime
     {
         $result = DateHelper::fromUnixTimestamp($datetime);
-
         if (isset($result)) {
             return $result;
         }
-
         throw new \InvalidArgumentException('DateTime is null, empty or not in required format.');
     }
-
     /**
      * Parse an array of Unix Timestamps to an array of DateTime objects
      *
@@ -580,7 +535,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromUnixTimestamp'], array_map('strval', $dates));
     }
-
     /**
      * Parse an array of map of Unix Timestamps to a 2D array of DateTime objects
      *
@@ -595,7 +549,6 @@ class DateHelper
         }
         return array_map([self::class, 'fromUnixTimestampMap'], $dates);
     }
-
     /**
      * Parse a class of Unix Timestamps to an array of DateTime objects
      *
@@ -611,7 +564,6 @@ class DateHelper
         $array = json_decode(json_encode($dates), true);
         return array_map([self::class, 'fromUnixTimestamp'], array_map('strval', $array));
     }
-
     /**
      * Parse a map of array of Unix Timestamps to a 2D array of DateTime objects
      *

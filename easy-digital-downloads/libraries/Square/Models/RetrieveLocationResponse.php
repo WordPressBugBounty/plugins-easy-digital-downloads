@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace EDD\Vendor\Square\Models;
 
 use stdClass;
-
 /**
  * Defines the fields that the [RetrieveLocation]($e/Locations/RetrieveLocation)
  * endpoint returns in a response.
@@ -16,12 +14,10 @@ class RetrieveLocationResponse implements \JsonSerializable
      * @var Error[]|null
      */
     private $errors;
-
     /**
      * @var Location|null
      */
     private $location;
-
     /**
      * Returns Errors.
      * Information about errors encountered during the request.
@@ -32,7 +28,6 @@ class RetrieveLocationResponse implements \JsonSerializable
     {
         return $this->errors;
     }
-
     /**
      * Sets Errors.
      * Information about errors encountered during the request.
@@ -45,7 +40,6 @@ class RetrieveLocationResponse implements \JsonSerializable
     {
         $this->errors = $errors;
     }
-
     /**
      * Returns Location.
      * Represents one of a business' [locations](https://developer.squareup.com/docs/locations-api).
@@ -54,7 +48,6 @@ class RetrieveLocationResponse implements \JsonSerializable
     {
         return $this->location;
     }
-
     /**
      * Sets Location.
      * Represents one of a business' [locations](https://developer.squareup.com/docs/locations-api).
@@ -65,7 +58,6 @@ class RetrieveLocationResponse implements \JsonSerializable
     {
         $this->location = $location;
     }
-
     /**
      * Encode this object to JSON
      *
@@ -74,12 +66,12 @@ class RetrieveLocationResponse implements \JsonSerializable
      *
      * @return array|stdClass
      */
-    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->errors)) {
-            $json['errors']   = $this->errors;
+            $json['errors'] = $this->errors;
         }
         if (isset($this->location)) {
             $json['location'] = $this->location;
@@ -87,7 +79,6 @@ class RetrieveLocationResponse implements \JsonSerializable
         $json = array_filter($json, function ($val) {
             return $val !== null;
         });
-
-        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+        return !$asArrayWhenEmpty && empty($json) ? new stdClass() : $json;
     }
 }
