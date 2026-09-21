@@ -22,9 +22,9 @@ class Text extends Type {
 	 *
 	 * @since 3.3.3
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param string|int|float|bool $value The value to sanitize.
 	 *
-	 * @return string
+	 * @return string|int|float|bool
 	 */
 	protected static function _sanitize( $value ) {
 		/**

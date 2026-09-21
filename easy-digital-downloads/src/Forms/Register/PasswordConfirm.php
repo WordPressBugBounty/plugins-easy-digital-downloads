@@ -46,6 +46,19 @@ class PasswordConfirm extends Field {
 		return $this->is_block() ? 'pass2' : 'edd_user_pass_confirm';
 	}
 
+	/**
+	 * Get the name attribute for the field input.
+	 *
+	 * The checkout and the registration form are processed by different functions,
+	 * which read different keys for the confirmation.
+	 *
+	 * @since 3.7.1
+	 * @return string
+	 */
+	public function get_name(): string {
+		return $this->is_checkout() ? 'edd_user_pass_confirm' : 'edd_user_pass2';
+	}
+
 	/** Get the field label.
 	 *
 	 * @since 3.3.9
@@ -67,7 +80,7 @@ class PasswordConfirm extends Field {
 			$password_confirm = new \EDD\HTML\Text(
 				array(
 					'type'         => 'password',
-					'name'         => 'edd_user_pass2',
+					'name'         => $this->get_name(),
 					'id'           => $this->get_id(),
 					'class'        => $this->get_field_classes(),
 					'include_span' => false,
@@ -140,8 +153,8 @@ class PasswordConfirm extends Field {
 			$password_confirm = new \EDD\HTML\Text(
 				array(
 					'type'         => 'password',
-					'name'         => 'edd_user_pass_confirm',
-					'id'           => 'edd_user_pass_confirm',
+					'name'         => $this->get_name(),
+					'id'           => $this->get_id(),
 					'class'        => $this->get_field_classes(),
 					'placeholder'  => esc_html__( 'Confirm password', 'easy-digital-downloads' ),
 					'required'     => $required,
@@ -152,5 +165,17 @@ class PasswordConfirm extends Field {
 			?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Checks if the field is being rendered on the checkout.
+	 *
+	 * Set by both checkout templates, and independent of block vs. shortcode styling.
+	 *
+	 * @since 3.7.1
+	 * @return bool
+	 */
+	private function is_checkout(): bool {
+		return ! empty( $this->data['is_checkout'] );
 	}
 }

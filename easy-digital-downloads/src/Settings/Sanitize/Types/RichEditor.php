@@ -18,11 +18,11 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  */
 class RichEditor extends Type {
 	/**
-	 * Sanitize the text setting type.
+	 * Sanitize the rich editor setting type.
 	 *
 	 * @since 3.3.3
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param string|int|float|bool $value The value to sanitize.
 	 *
 	 * @return string
 	 */
@@ -34,7 +34,8 @@ class RichEditor extends Type {
 	 * Get the allowed tags for the rich editor.
 	 *
 	 * @since 3.3.3
-	 * return array
+	 *
+	 * @return array
 	 */
 	private static function get_allowed_tags() {
 		$base_allowed_tags = edd_get_allowed_tags();

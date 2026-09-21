@@ -1197,21 +1197,29 @@ function edd_can_view_receipt( $order_or_key = '' ) {
 		return true;
 	}
 
+	$session          = edd_get_purchase_session();
+	$session_is_order = ! empty( $session['purchase_key'] ) && $session['purchase_key'] === $order->payment_key;
+
 	if ( is_user_logged_in() ) {
+		$can_view_sensitive_data = current_user_can( 'view_shop_sensitive_data' );
+
 		if ( (int) get_current_user_id() === (int) $order->user_id ) {
 			$user_can_view = true;
 		} elseif ( wp_get_current_user()->user_email === $order->email ) {
 			$user_can_view = true;
-		} elseif ( current_user_can( 'view_shop_sensitive_data' ) ) {
+		} elseif ( $can_view_sensitive_data ) {
 			$user_can_view = true;
 		}
-	} else {
-		$session = edd_get_purchase_session();
-		if ( ! empty( $session ) ) {
-			if ( $session['purchase_key'] === $order->payment_key ) {
-				$user_can_view = true;
-			}
+
+		// An account has not proven it owns the address it claims until verification
+		// clears, so identity and email alone cannot grant it access here. A session
+		// bound to this exact order at checkout is a different kind of proof, and
+		// still counts.
+		if ( $user_can_view && ! $can_view_sensitive_data && ! $session_is_order && edd_user_pending_verification() ) {
+			$user_can_view = false;
 		}
+	} elseif ( $session_is_order ) {
+		$user_can_view = true;
 	}
 
 	return (bool) apply_filters( 'edd_can_view_receipt', $user_can_view, $key, $order );

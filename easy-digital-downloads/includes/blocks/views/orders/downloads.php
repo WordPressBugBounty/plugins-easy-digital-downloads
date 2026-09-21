@@ -1,5 +1,16 @@
 <?php
-$download_files = edd_get_download_files( $item->product_id, $item->price_id );
+/**
+ * User downloads template.
+ *
+ * @package     EDD\Blocks\Orders
+ * @copyright   Copyright (c) Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
+ *
+ * @var \EDD\Orders\Order_Item $item             The order item being listed.
+ * @var array                  $block_attributes The block attributes.
+ */
+
+$download_files = $item->get_download_files();
 if ( $block_attributes['hide_empty'] && empty( $download_files ) ) {
 	return;
 }

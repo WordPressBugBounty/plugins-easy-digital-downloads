@@ -227,12 +227,15 @@ class FileSystem {
 	 * Create a symbolic link to a file.
 	 *
 	 * @since 3.3.4
-	 * @param string $target The target of the link.
-	 * @param string $link The link to create.
+	 * @since 3.7.1 Added $resolve, for a caller that has already resolved $target
+	 *                       and wants it used as-is.
+	 * @param string $target  The target of the link.
+	 * @param string $link    The link to create.
+	 * @param bool   $resolve Whether to resolve $target before creating the link.
 	 * @return bool True on success, false on failure.
 	 */
-	public static function symlink( $target, $link ) {
-		$target = self::sanitize_file_path( realpath( $target ) );
+	public static function symlink( $target, $link, $resolve = true ) {
+		$target = self::sanitize_file_path( $resolve ? realpath( $target ) : $target );
 		$link   = self::sanitize_file_path( $link );
 
 		return @symlink( $target, $link );

@@ -10,7 +10,7 @@
 
 // Active state (dropdown open).
 .ts-wrapper.single.dropdown-active .ts-control {
-	border-radius: 3px 3px 0 0;
+	--edd-ts-control-radius: 3px 3px 0 0;
 }
 
 // Placeholder text — match WP placeholder color.
@@ -22,7 +22,7 @@
 body[class*="branch-7"] {
 
 	.ts-wrapper.single.dropdown-active .ts-control {
-		border-radius: 2px 2px 0 0;
+		--edd-ts-control-radius: 2px 2px 0 0;
 	}
 
 	.ts-wrapper.single .ts-control > input::placeholder {

@@ -16,6 +16,7 @@ namespace EDD\Cron\Components;
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Admin\Tools\Logs\LogStorageCalculator;
+use EDD\Cron\EventManager;
 
 /**
  * LogPruning Component Class
@@ -48,12 +49,28 @@ class LogPruning extends Component {
 	}
 
 	/**
+	 * The `init` hook has to run on an ordinary request.
+	 *
+	 * Registration is not the work: it adds the per-log-type listeners, which are themselves
+	 * guarded below. Under Action Scheduler `init` fires before `action_scheduler_before_execute`,
+	 * so guarding it would leave the listeners unregistered when a job ran.
+	 *
+	 * @since 3.7.1
+	 * @return array
+	 */
+	public static function get_request_time_events(): array {
+		return array( 'init' );
+	}
+
+	/**
 	 * Register pruning hooks for enabled log types.
 	 *
 	 * Called on `init` to ensure text domains are loaded and settings are available.
 	 * Only registers hooks for log types that have pruning enabled.
 	 *
 	 * @since 3.6.4
+	 * @since 3.7.1 The registered listeners are wrapped in a cron context check.
+	 *
 	 * @return void
 	 */
 	public function register_pruning_hooks() {
@@ -75,7 +92,7 @@ class LogPruning extends Component {
 
 			// Only register if enabled for this specific type.
 			if ( ! empty( $settings['log_types'][ $type_id ]['enabled'] ) ) {
-				add_action( "edd_prune_logs_{$type_id}", array( $this, 'prune_single_log_type' ) );
+				add_action( "edd_prune_logs_{$type_id}", EventManager::cron_only( array( $this, 'prune_single_log_type' ) ) );
 			}
 		}
 
@@ -89,7 +106,7 @@ class LogPruning extends Component {
 
 				// Only register if enabled.
 				if ( ! empty( $type_settings['enabled'] ) ) {
-					add_action( "edd_prune_logs_{$type_id}", array( $this, 'prune_single_log_type' ) );
+					add_action( "edd_prune_logs_{$type_id}", EventManager::cron_only( array( $this, 'prune_single_log_type' ) ) );
 				}
 			}
 		}

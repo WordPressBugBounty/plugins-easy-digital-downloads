@@ -40,6 +40,9 @@ class Elements {
 	/**
 	 * Get EDD products for the product dropdown.
 	 *
+	 * @since 3.7.1 Results are held to the same per-caller readability as the AJAX
+	 *                       search that refines this same dropdown.
+	 *
 	 * @param array $args     Parameters for the get_posts function.
 	 * @return array WP_Post[] Array of download objects.
 	 */
@@ -49,13 +52,47 @@ class Elements {
 			'bundles' => true,
 		);
 
-		$args = wp_parse_args( $args, $defaults );
+		$args           = wp_parse_args( $args, $defaults );
+		$args['number'] = (int) $args['number'];
 
+		// get_posts()'s own convention: only -1 means "every matching product".
+		if ( -1 !== $args['number'] && $args['number'] < 0 ) {
+			$args['number'] = abs( $args['number'] );
+		}
+
+		$product_args = $this->get_product_args( $args );
+
+		// One query answers the request when it is unlimited, when a callback changed the count
+		// from what the caller asked for, or when the caller can read every product and bundles
+		// are included, because then nothing can be removed after the query.
+		if (
+			-1 === $args['number']
+			|| (int) ( $product_args['posts_per_page'] ?? 0 ) !== $args['number']
+			|| ( \EDD\Downloads\Search::can_read_all_products() && ! empty( $args['bundles'] ) )
+		) {
+			return $this->filter_products( get_posts( $product_args ), $args );
+		}
+
+		return $this->get_paged_products( $product_args, $args );
+	}
+
+	/**
+	 * Builds the query arguments for the product dropdown.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param array $args The get_products() arguments.
+	 * @return array
+	 */
+	private function get_product_args( $args ) {
 		$product_args = array(
 			'post_type'      => 'download',
-			'orderby'        => 'title',
+			// A string keeps a later 'order' override effective; title alone also isn't
+			// unique, so ID is a second column rather than a second array key.
+			'orderby'        => 'title ID',
 			'order'          => 'ASC',
 			'posts_per_page' => $args['number'],
+			'offset'         => 0,
 		);
 
 		if ( ! current_user_can( 'edit_products' ) ) {
@@ -82,14 +119,94 @@ class Elements {
 			$product_args['post_status'] = array( 'publish' );
 		}
 
-		// If bundles are not allowed, get a few more products to account for the ones that will be removed.
-		if ( ! $args['bundles'] && 30 === $args['number'] ) {
-			$product_args['posts_per_page'] = 40;
+		// Applied once, before pagination begins.
+		return apply_filters( 'edd_product_dropdown_args', $product_args );
+	}
+
+	/**
+	 * Queries products a page at a time until the requested number survives filtering.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param array $product_args The query arguments.
+	 * @param array $args         The get_products() arguments.
+	 * @return \WP_Post[]
+	 */
+	private function get_paged_products( $product_args, $args ) {
+
+		// Batched in a size the filter never saw: readability (and bundle exclusion) apply after
+		// the query, and could otherwise leave a single page short of what was asked for.
+		$batch_size = max( $args['number'] * 2, 30 );
+		$offset     = absint( $product_args['offset'] );
+		$products   = array();
+		$batches    = 0;
+
+		/**
+		 * How many batches the dropdown will read before it answers with what it has.
+		 *
+		 * A batch which filters down to nothing is indistinguishable from one crowded with
+		 * products this caller may not see, so paging cannot stop on an empty result: it stops
+		 * on a bound instead. Without one, a callback which changes the row shape enough that
+		 * nothing survives filtering walks the whole catalog on every render.
+		 *
+		 * @since 3.7.1
+		 *
+		 * @param int   $limit The maximum number of batches to read.
+		 * @param array $args  The get_products() arguments.
+		 */
+		$batch_limit = (int) apply_filters( 'edd/product_dropdown/batch_limit', 5, $args );
+		$batch_limit = max( 1, $batch_limit );
+
+		do {
+			$batch = get_posts(
+				array_merge(
+					$product_args,
+					array(
+						'posts_per_page'         => $batch_size,
+						'offset'                 => $offset,
+						// Nothing here reads pagination totals or terms.
+						'no_found_rows'          => true,
+						'update_post_term_cache' => false,
+					)
+				)
+			);
+
+			$products = array_merge( $products, $this->filter_products( $batch, $args ) );
+			$offset  += $batch_size;
+			++$batches;
+		} while (
+			count( $products ) < $args['number']
+			&& count( $batch ) === $batch_size
+			&& $batches < $batch_limit
+		);
+
+		return array_slice( $products, 0, $args['number'] );
+	}
+
+	/**
+	 * Applies readability and bundle exclusion to a batch of products.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param \WP_Post[] $products The products to filter.
+	 * @param array      $args     The get_products() arguments.
+	 * @return \WP_Post[]
+	 */
+	private function filter_products( $products, $args ) {
+		$products = \EDD\Downloads\Search::filter_by_readability( $products );
+
+		if ( empty( $args['bundles'] ) ) {
+			$products = array_values(
+				array_filter(
+					$products,
+					function ( $product ) {
+						return 'bundle' !== edd_get_download_type( $product->ID );
+					}
+				)
+			);
 		}
 
-		$product_args = apply_filters( 'edd_product_dropdown_args', $product_args );
-
-		return get_posts( $product_args );
+		return $products;
 	}
 
 	/**

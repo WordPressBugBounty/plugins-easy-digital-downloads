@@ -121,7 +121,7 @@ class EDD_File_Downloads_Log_Table extends EDD_Base_Log_List_Table {
 	 * @return array $columns Array of all the list table columns
 	 */
 	public function get_columns() {
-		return array(
+		$columns = array(
 			'ID'         => __( 'Log ID', 'easy-digital-downloads' ),
 			'download'   => edd_get_label_singular(),
 			'customer'   => __( 'Customer', 'easy-digital-downloads' ),
@@ -131,6 +131,19 @@ class EDD_File_Downloads_Log_Table extends EDD_Base_Log_List_Table {
 			'user_agent' => __( 'User Agent', 'easy-digital-downloads' ),
 			'date'       => __( 'Date', 'easy-digital-downloads' ),
 		);
+
+		/**
+		 * Filters the columns of the file download logs list table.
+		 *
+		 * An added column is rendered by column_default(), which reads the matching key
+		 * from the row and echoes it unescaped, so supply that key through
+		 * `edd/logs/file_downloads/row` already escaped.
+		 *
+		 * @since 3.7.1
+		 *
+		 * @param array $columns Column ID to column label, in display order.
+		 */
+		return apply_filters( 'edd/logs/file_downloads/columns', $columns );
 	}
 
 	/**
@@ -174,17 +187,34 @@ class EDD_File_Downloads_Log_Table extends EDD_Base_Log_List_Table {
 				}
 
 				if ( empty( $this->file_search ) || ( ! empty( $this->file_search ) && strpos( strtolower( $file_name ), strtolower( $this->get_search() ) ) !== false ) ) {
-					$logs_data[] = array(
+					$row = array(
 						'ID'         => $log->id,
 						'download'   => $log->product_id,
 						'customer'   => new EDD_Customer( $customer_id ),
 						'payment_id' => $log->order_id,
 						'price_id'   => $log->price_id,
-						'file'       => $file_name,
+						'file'       => esc_html( $file_name ),
 						'ip'         => $log->ip,
 						'user_agent' => $log->user_agent,
 						'date'       => $log->date_created,
 					);
+
+					/**
+					 * Filters a single row of the file download logs list table.
+					 *
+					 * Supplies the value for a column added through
+					 * `edd/logs/file_downloads/columns`. Because column_customer() renders
+					 * whatever object the row carries, naming a different customer here shows
+					 * the real downloader where access is shared, but only in this table: the
+					 * log keeps its stored customer_id, which is what the download history
+					 * export and the customer filter read.
+					 *
+					 * @since 3.7.1
+					 *
+					 * @param array             $row The row data, keyed by column ID. A callback must return an array.
+					 * @param File_Download_Log $log The log the row was built from.
+					 */
+					$logs_data[] = apply_filters( 'edd/logs/file_downloads/row', $row, $log );
 				}
 			}
 		}

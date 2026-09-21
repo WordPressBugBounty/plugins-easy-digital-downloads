@@ -60,10 +60,9 @@ const withSeedingFlag = ( callback ) => {
 /**
  * Set a container's native flex direction via a settings command.
  *
- * Used by the seed/switch to give the box the pattern's own flex direction (`row`
- * for the two-column patterns so the columns sit side by side; `column` for
- * single-column and cart-top so the nodes stack). Runs as its own
- * `document/elements/settings` command — not a create/delete/move — so the box
+ * Used by the seed/switch to give the box the pattern's own flex direction, and each
+ * seeded `row` node the `row` direction its columns sit side by side in. Runs as its
+ * own `document/elements/settings` command — not a create/delete/move — so the box
  * locks never see it.
  *
  * @since 3.7.0

@@ -222,6 +222,12 @@ class DomainSubscriber implements SubscriberInterface {
 			return false;
 		}
 
+		// Registering a domain configures the gateway, so it needs the capability that
+		// administers the store.
+		if ( ! current_user_can( 'manage_shop_settings' ) ) {
+			return false;
+		}
+
 		// Skip during local/dev environments — Apple cannot verify a
 		// non-public host and registration would fail noisily on every load.
 		if ( edd_is_dev_environment() ) {

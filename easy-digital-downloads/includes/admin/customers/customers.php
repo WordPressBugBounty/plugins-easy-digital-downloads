@@ -1207,6 +1207,7 @@ function edd_customers_delete_view( $customer ) {
 						<label for="edd-customer-delete-confirm"><?php esc_html_e( 'Are you sure you want to delete this customer?', 'easy-digital-downloads' ); ?></label>
 					</p>
 
+					<?php if ( current_user_can( 'delete_shop_payments' ) ) : ?>
 					<p>
 						<?php
 						echo EDD()->html->checkbox(
@@ -1218,6 +1219,11 @@ function edd_customers_delete_view( $customer ) {
 						?>
 						<label for="edd-customer-delete-records"><?php esc_html_e( 'Delete all associated payments and records?', 'easy-digital-downloads' ); ?></label>
 					</p>
+					<?php else : ?>
+					<p class="description">
+						<?php esc_html_e( 'Associated payments and records will be retained and assigned to no customer.', 'easy-digital-downloads' ); ?>
+					</p>
+					<?php endif; ?>
 
 					<?php do_action( 'edd_customer_delete_inputs', $customer ); ?>
 				</span>

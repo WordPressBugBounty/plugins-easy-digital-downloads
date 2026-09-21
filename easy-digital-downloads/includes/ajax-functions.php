@@ -760,18 +760,25 @@ add_action( 'wp_ajax_edd_download_category_search', 'edd_ajax_download_category_
  *
  * @author Sunny Ratilal
  * @since 1.5
+ * @since 3.7.1 A refusal now matches the shape of "no variable prices" and uses the
+ *                       same read check the search results do.
  * @return void
  */
 function edd_check_for_download_price_variations() {
 	if ( ! current_user_can( 'edit_products' ) ) {
-		die( '-1' );
+		edd_die( '', '', 403 );
 	}
 
-	$download_id = intval( $_POST['download_id'] );
+	$download_id = isset( $_POST['download_id'] ) ? absint( $_POST['download_id'] ) : 0;
 	$download    = get_post( $download_id );
 
-	if ( 'download' !== $download->post_type ) {
-		die( '-2' );
+	if ( empty( $download ) || 'download' !== $download->post_type ) {
+		edd_die();
+	}
+
+	// Reading a product's pricing before it is publicly viewable takes rights over that product.
+	if ( ! is_post_publicly_viewable( $download ) && ! current_user_can( 'read_post', $download_id ) ) {
+		edd_die();
 	}
 
 	if ( edd_has_variable_prices( $download_id ) ) {

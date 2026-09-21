@@ -14,6 +14,7 @@ namespace EDD\Upgrades\Adjustments;
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
+use EDD\Cron\EventManager as CronEventManager;
 use EDD\Upgrades\Utilities\MigrationCheck;
 use EDD\Utils\Date;
 use EDD\Cron\Events\SingleEvent;
@@ -139,7 +140,7 @@ class DiscountsStartEnd implements SubscriberInterface {
 	 */
 	public function process_step() {
 		// Only let this run in the background.
-		if ( ! edd_doing_cron() ) {
+		if ( ! CronEventManager::is_cron_context() ) {
 			return;
 		}
 

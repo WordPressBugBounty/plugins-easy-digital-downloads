@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  * Add a note.
  *
  * @since 3.0
+ * @since 3.7.1 Note content is sanitized by edd_sanitize_note_content().
  *
  * @param array $data {
  *     Array of note data. Default empty.
@@ -54,6 +55,38 @@ function edd_add_note( $data = array() ) {
 	$notes = new EDD\Database\Queries\Note();
 
 	return $notes->add_item( $data );
+}
+
+/**
+ * Sanitize note content.
+ *
+ * Notes support limited markup: edd_get_allowed_tags() without `img`. This is the `validate`
+ * callback on the notes table's `content` column, so it runs on every write.
+ *
+ * @since 3.7.1
+ *
+ * @param string $content Note content.
+ * @return string The note content, with any tag outside the allowed list removed.
+ */
+function edd_sanitize_note_content( $content = '' ) {
+	$content = (string) $content;
+
+	// Escape a "<" that cannot begin a tag, so the text after it is kept rather than dropped.
+	$content = preg_replace( '#<(?!/?[a-zA-Z])#', '&lt;', $content );
+
+	$allowed_tags = edd_get_allowed_tags();
+	unset( $allowed_tags['img'] );
+
+	/**
+	 * Filters the HTML tags allowed in note content.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param array $allowed_tags Allowed tags and their allowed attributes, in wp_kses() format.
+	 */
+	$allowed_tags = (array) apply_filters( 'edd/notes/allowed_html_tags', $allowed_tags );
+
+	return trim( wp_kses( $content, $allowed_tags ) );
 }
 
 /**

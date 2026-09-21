@@ -580,55 +580,66 @@ class EDD_Payment_History_Table extends List_Table {
 		// Resend Receipt.
 		if ( 'sale' === $this->type && 'complete' === $order->status && ! empty( $order->email ) && $this->order_receipts_enabled() ) {
 			$url                        = esc_url(
-				add_query_arg(
-					array(
-						'edd-action'  => 'email_links',
-						'purchase_id' => absint( $order->id ),
+				wp_nonce_url(
+					add_query_arg(
+						array(
+							'edd-action'  => 'email_links',
+							'purchase_id' => absint( $order->id ),
+						),
+						$this->base_url
 					),
-					$this->base_url
+					'edd-resend-receipt'
 				)
 			);
 			$row_actions['email_links'] = '<a href="' . $url . '">' . __( 'Resend Receipt', 'easy-digital-downloads' ) . '</a>';
 		}
 
+		// The handlers behind all three of these require the delete capability.
+		$can_delete = current_user_can( 'delete_shop_payments', $order->id );
+
 		// Keep Delete at the end.
 		if ( edd_is_order_trashable( $order->id ) ) {
-			$trash_url            = wp_nonce_url(
-				add_query_arg(
-					array(
-						'edd-action'  => 'trash_order',
-						'purchase_id' => absint( $order->id ),
+			if ( $can_delete ) {
+				$trash_url            = wp_nonce_url(
+					add_query_arg(
+						array(
+							'edd-action'  => 'trash_order',
+							'purchase_id' => absint( $order->id ),
+						),
+						$this->base_url
 					),
-					$this->base_url
-				),
-				'edd_payment_nonce'
-			);
-			$row_actions['trash'] = '<a href="' . esc_url( $trash_url ) . '">' . esc_html__( 'Trash', 'easy-digital-downloads' ) . '</a>';
+					'edd_payment_nonce'
+				);
+				$row_actions['trash'] = '<a href="' . esc_url( $trash_url ) . '">' . esc_html__( 'Trash', 'easy-digital-downloads' ) . '</a>';
+			}
 		} elseif ( edd_is_order_restorable( $order->id ) ) {
-			$restore_url            = wp_nonce_url(
-				add_query_arg(
-					array(
-						'edd-action'  => 'restore_order',
-						'purchase_id' => absint( $order->id ),
+			if ( $can_delete ) {
+				$restore_url            = wp_nonce_url(
+					add_query_arg(
+						array(
+							'edd-action'  => 'restore_order',
+							'purchase_id' => absint( $order->id ),
+						),
+						$this->base_url
 					),
-					$this->base_url
-				),
-				'edd_payment_nonce'
-			);
-			$row_actions['restore'] = '<a href="' . esc_url( $restore_url ) . '">' . esc_html__( 'Restore', 'easy-digital-downloads' ) . '</a>';
+					'edd_payment_nonce'
+				);
+				$row_actions['restore'] = '<a href="' . esc_url( $restore_url ) . '">' . esc_html__( 'Restore', 'easy-digital-downloads' ) . '</a>';
 
-			$delete_url            = wp_nonce_url(
-				add_query_arg(
-					array(
-						'edd-action'  => 'delete_order',
-						'purchase_id' => absint( $order->id ),
+				$delete_url            = wp_nonce_url(
+					add_query_arg(
+						array(
+							'edd-action'  => 'delete_order',
+							'purchase_id' => absint( $order->id ),
+						),
+						$this->base_url
 					),
-					$this->base_url
-				),
-				'edd_payment_nonce'
-			);
-			$row_actions['delete'] = '<a href="' . esc_url( $delete_url ) . '">' . esc_html__( 'Delete Permanently', 'easy-digital-downloads' ) . '</a>';
+					'edd_payment_nonce'
+				);
+				$row_actions['delete'] = '<a href="' . esc_url( $delete_url ) . '">' . esc_html__( 'Delete Permanently', 'easy-digital-downloads' ) . '</a>';
+			}
 
+			// A trashed order has no edit screen, whoever is looking at it.
 			unset( $row_actions['view'] );
 		}
 
@@ -742,15 +753,17 @@ class EDD_Payment_History_Table extends List_Table {
 			$action = array();
 		}
 
-		if ( 'trash' === $this->get_status() ) {
-			$action = array(
-				'restore' => __( 'Restore', 'easy-digital-downloads' ),
-			);
+		// Trash, restore and delete are all handled behind the delete capability.
+		$can_delete = current_user_can( 'delete_shop_payments' );
 
-			if ( current_user_can( 'delete_shop_payments' ) ) {
-				$action['delete'] = __( 'Delete permanently', 'easy-digital-downloads' );
+		if ( 'trash' === $this->get_status() ) {
+			$action = array();
+
+			if ( $can_delete ) {
+				$action['restore'] = __( 'Restore', 'easy-digital-downloads' );
+				$action['delete']  = __( 'Delete permanently', 'easy-digital-downloads' );
 			}
-		} else {
+		} elseif ( $can_delete ) {
 			$action['trash'] = __( 'Move to Trash', 'easy-digital-downloads' );
 		}
 

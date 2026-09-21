@@ -90,6 +90,14 @@ class Form {
 				);
 			}
 
+			// Updating or reconfirming a paid intent always fails.
+			$paid_intent = $this->get_intent();
+			if ( $paid_intent && Validation::is_intent_paid( $paid_intent ) ) {
+				$this->send_intent_paid_response( $paid_intent );
+
+				return;
+			}
+
 			/**
 			 * Allows processing before an Intent is created.
 			 *
@@ -323,12 +331,46 @@ class Form {
 		}
 
 		if ( ! empty( $_REQUEST['intent_id'] ) && ! empty( $_REQUEST['intent_fingerprint'] ) ) {
-			$this->intent = edds_api_request( $_REQUEST['intent_type'], 'retrieve', $_REQUEST['intent_id'] );
+			$this->intent = edds_api_request(
+				$this->get_intent_type(),
+				'retrieve',
+				sanitize_text_field( $_REQUEST['intent_id'] )
+			);
 		}
 
 		return $this->intent;
 	}
 
+	/**
+	 * Retrieves the requested intent type.
+	 *
+	 * @since 3.7.1
+	 * @return string Either SetupIntent or PaymentIntent.
+	 */
+	private function get_intent_type() {
+		return ! empty( $_REQUEST['intent_type'] ) && 'SetupIntent' === $_REQUEST['intent_type'] ? 'SetupIntent' : 'PaymentIntent';
+	}
+
+	/**
+	 * Sends the response for an intent which has already been paid.
+	 *
+	 * @since 3.7.1
+	 * @param \Stripe\PaymentIntent|\Stripe\SetupIntent $intent The paid intent.
+	 * @return void
+	 */
+	private function send_intent_paid_response( $intent ) {
+		wp_send_json_success(
+			array(
+				'intent_id'          => $intent->id,
+				'client_secret'      => $intent->client_secret,
+				'intent_type'        => isset( $intent->object ) && 'setup_intent' === $intent->object ? 'SetupIntent' : 'PaymentIntent',
+				'token'              => wp_create_nonce( 'edd-process-checkout' ),
+				'intent_fingerprint' => sanitize_text_field( $_REQUEST['intent_fingerprint'] ),
+				'intent_changed'     => 0,
+				'intent_paid'        => 1,
+			)
+		);
+	}
 
 	/**
 	 * Maybe creates an order for the Stripe checkout form.

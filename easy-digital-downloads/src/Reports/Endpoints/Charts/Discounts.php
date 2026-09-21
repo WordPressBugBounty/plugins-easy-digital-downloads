@@ -79,6 +79,8 @@ class Discounts extends Graph {
 	 * @return string
 	 */
 	private function get_discount_sql(): string {
+		global $wpdb;
+
 		$discount = \EDD\Reports\get_filter_value( 'discounts' );
 		if ( empty( $discount ) || 'all' === $discount ) {
 			return '';
@@ -89,6 +91,6 @@ class Discounts extends Graph {
 			return '';
 		}
 
-		return "AND description = '{$discount_object->code}'";
+		return $wpdb->prepare( 'AND description = %s', $discount_object->code );
 	}
 }

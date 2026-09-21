@@ -141,7 +141,18 @@ function edd_download_meta_box_fields_save( $post_id, $post ) {
 
 		$new = false;
 		if ( ! empty( $_POST[ $field ] ) ) {
-			$new = apply_filters( 'edd_metabox_save_' . $field, $_POST[ $field ] );
+			/**
+			 * Filters a metabox field's submitted value before it is saved.
+			 *
+			 * The dynamic portion of the hook name, `$field`, is the meta key being saved.
+			 *
+			 * @since 1.2.2
+			 * @since 3.7.1 Added the `$post_id` parameter.
+			 *
+			 * @param mixed $value   The submitted value.
+			 * @param int   $post_id The download being saved.
+			 */
+			$new = apply_filters( 'edd_metabox_save_' . $field, $_POST[ $field ], $post_id );
 		}
 
 		if ( ! empty( $new ) ) {
@@ -166,6 +177,7 @@ function edd_download_meta_box_fields_save( $post_id, $post ) {
  * Ensures a user doesn't try and include a product's ID in the products bundled with that product
  *
  * @since       1.6
+ * @since       3.7.1 Reject children the current user has no rights to edit.
  *
  * @param array $products Array of product IDs.
  * @return array
@@ -188,6 +200,12 @@ function edd_sanitize_bundled_products_save( $products = array() ) {
 		}
 
 		if ( in_array( intval( $product_id ), array( 0, get_the_ID() ), true ) ) {
+			unset( $products[ $key ] );
+			continue;
+		}
+
+		// A bundle may only contain products its editor is entitled to distribute.
+		if ( ! current_user_can( 'edit_others_products' ) && ! current_user_can( 'edit_post', (int) $product_id ) ) {
 			unset( $products[ $key ] );
 		}
 	}

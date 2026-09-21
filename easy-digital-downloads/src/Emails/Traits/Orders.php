@@ -25,6 +25,7 @@ trait Orders {
 	 * Send the order receipt and admin order notice.
 	 *
 	 * @since 3.2.0
+	 * @since 3.7.1 Requires the order ID to be a number.
 	 *
 	 * @param int           $order_id The order ID.
 	 * @param Order         $order    The Order object.
@@ -40,6 +41,10 @@ trait Orders {
 
 		// Order ID present, but no Order object, let's get the Order object.
 		if ( ! empty( $order_id ) && ! $order instanceof Order ) {
+			if ( ! is_numeric( $order_id ) ) {
+				return;
+			}
+
 			$order = edd_get_order( $order_id );
 		}
 

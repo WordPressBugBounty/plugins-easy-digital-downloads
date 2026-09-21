@@ -34,34 +34,26 @@ const SECTION_DISCOUNT_FORM = 'edd-checkout-discount-form';
 /**
  * The five block-parity checkout layout patterns.
  *
- * Mirrors the Gutenberg checkout block's server pattern set
- * (src/Blocks/Checkout/Patterns.php::get_layout_patterns()) — same slugs (bare,
- * the block side prefixes them `edd-checkout/`), same section set + order, same
- * per-column widths, same cart-top nesting. Each pattern is expressed as an
- * Elementor seed tree the picker/seed hook instantiates:
+ * Mirrors the checkout block's pattern set
+ * (src/Blocks/Checkout/Patterns.php::get_layout_patterns()) — same slugs (bare; the
+ * block prefixes them `edd-checkout/`), section order, column widths and nesting.
+ * Every multi-column pattern wraps its columns in a `row` container, the way the
+ * block wraps its columns in `wp:columns`. That nesting is load-bearing: a column
+ * left as a direct child of the box is a flex sibling of the box's hook-output slot,
+ * which spans the whole row and squeezes whatever it sits beside.
  *
- *   - `boxDirection`: the box's own flex direction for this pattern (`row` places
- *     the two columns side by side; `column` stacks the nodes).
- *   - `nodes`: ordered children to create directly in the box. A node is either a
- *     `widget` (a section widget), a `column` (a native container holding widgets,
- *     with an optional flex-basis `width`), or a `row` (a native container with
- *     `row` flex holding N `columns`, each a nested container of widgets).
+ * Each pattern is an Elementor seed tree:
  *
- * single-column: cart, discount-form, personal-info, payment-info stacked (no
- * wrapper) — matches Patterns.php::single_column(). two-column-*: two columns
- * (LEFT: personal-info + payment-info; RIGHT: cart then discount-form), widths
- * matching the block's wp:column flex-basis (50/50 has none). cart-top-two-column:
- * cart then discount-form full-width on top, then a two-column row (LEFT:
- * personal-info; RIGHT: payment-info) — matches cart_top_two_column(). The discount
- * form is always seeded immediately after the cart.
+ *   - `boxDirection`: the box's own flex direction, re-applied on every layout switch.
+ *   - `nodes`: ordered children created directly in the box — a `widget`, a `column`
+ *     (a container of widgets with an optional flex-basis `width`), or a `row` (a
+ *     row-flex container holding `columns`).
  *
- * The seed markup is single-sourced against Patterns.php by the drift-guard test
- * (tests/elementor/tests-checkout-box-patterns.php), which parses the block
- * markup and asserts this section-set/order/width/nesting per slug. The discount
- * form is the one section the picker seeds that the block has no pattern node for —
- * the block renders the discount via the cart's inline `show_discount_form`
- * attribute, not a standalone node — so the drift-guard strips the discount slug
- * from both sides before comparing.
+ * The discount form is always seeded immediately after the cart. It is the one
+ * section the block has no pattern node for — the cart renders it inline via its
+ * `show_discount_form` attribute — so the drift-guard test
+ * (tests/elementor/tests-checkout-box-patterns.php) strips that slug from both sides
+ * before comparing.
  *
  * @since 3.7.0
  * @type {Object[]}
@@ -79,26 +71,41 @@ const PATTERNS = [
 	},
 	{
 		slug: 'two-column-50-50',
-		boxDirection: 'row',
+		boxDirection: 'column',
 		nodes: [
-			{ type: 'column', width: '', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
-			{ type: 'column', width: '', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+			{
+				type: 'row',
+				columns: [
+					{ width: '', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
+					{ width: '', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+				],
+			},
 		],
 	},
 	{
 		slug: 'two-column-70-30',
-		boxDirection: 'row',
+		boxDirection: 'column',
 		nodes: [
-			{ type: 'column', width: '70%', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
-			{ type: 'column', width: '30%', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+			{
+				type: 'row',
+				columns: [
+					{ width: '70%', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
+					{ width: '30%', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+				],
+			},
 		],
 	},
 	{
 		slug: 'two-column-80-20',
-		boxDirection: 'row',
+		boxDirection: 'column',
 		nodes: [
-			{ type: 'column', width: '80%', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
-			{ type: 'column', width: '20%', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+			{
+				type: 'row',
+				columns: [
+					{ width: '80%', widgets: [ SECTION_PERSONAL_INFO, SECTION_PAYMENT_INFO ] },
+					{ width: '20%', widgets: [ SECTION_CART, SECTION_DISCOUNT_FORM ] },
+				],
+			},
 		],
 	},
 	{

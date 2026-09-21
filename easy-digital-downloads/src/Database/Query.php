@@ -2781,6 +2781,28 @@ class Query extends Base {
 	}
 
 	/**
+	 * Reprime an item's caches from the database.
+	 *
+	 * Custom for EDD. For callers which change a row with their own statement rather than
+	 * through update_item(), which is what normally reprimes these caches.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int $item_id The item ID.
+	 * @return void
+	 */
+	public function refresh_item_cache( $item_id = 0 ) {
+
+		$item_id = $this->shape_item_id( $item_id );
+
+		if ( empty( $item_id ) ) {
+			return;
+		}
+
+		$this->update_item_cache( $item_id );
+	}
+
+	/**
 	 * Update the cache for an item. Does not update item-meta cache.
 	 *
 	 * Accepts a single object, or an array of objects.

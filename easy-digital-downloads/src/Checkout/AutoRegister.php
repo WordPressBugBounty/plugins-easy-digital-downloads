@@ -30,7 +30,7 @@ class AutoRegister extends Subscriber {
 	 */
 	public static function get_subscribed_events() {
 		return array(
-			'edd_built_order'                          => 'create_user_and_add_to_order',
+			'edd_built_order'                          => array( 'create_user_after_order_built', 10, 2 ),
 			'edd_free_downloads_post_complete_payment' => 'create_user_and_add_to_order',
 			'edd_post_add_manual_order'                => array( 'insert_user_during_manual_order', 10, 3 ),
 			'edd_get_option_show_register_form'        => 'remove_register_form',
@@ -76,10 +76,32 @@ class AutoRegister extends Subscriber {
 	}
 
 	/**
+	 * Registers the buyer once an order has been built.
+	 *
+	 * Order building returns early when it is given no order data, so a dispatch that reaches its
+	 * edd_built_order call always carries that data. Requiring it here means this handler runs for
+	 * an order the platform built, rather than for any order named in a hook argument.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int   $order_id   The order ID.
+	 * @param array $order_data The order data the order was built from.
+	 * @return void
+	 */
+	public function create_user_after_order_built( $order_id, $order_data = array() ) {
+		if ( empty( $order_data ) || ! is_array( $order_data ) ) {
+			return;
+		}
+
+		$this->create_user_and_add_to_order( $order_id );
+	}
+
+	/**
 	 * Maybe registers the user.
 	 * Legacy method from the original Auto Register plugin.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 $order_id must be numeric; an object or array is refused.
 	 * @param int $order_id The order ID.
 	 * @return void
 	 */
@@ -88,6 +110,9 @@ class AutoRegister extends Subscriber {
 			return;
 		}
 		if ( is_user_logged_in() ) {
+			return;
+		}
+		if ( ! self::is_id_numeric( $order_id ) ) {
 			return;
 		}
 
@@ -135,16 +160,20 @@ class AutoRegister extends Subscriber {
 	 * This is a legacy method from the original Auto Register plugin.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 $order_id must be numeric, and the arguments have defaults.
 	 * @param int   $order_id   The order ID.
 	 * @param array $order_data The array of order data.
 	 * @param array $args       The original form data.
 	 * @return void
 	 */
-	public function insert_user_during_manual_order( $order_id, $order_data, $args ) {
+	public function insert_user_during_manual_order( $order_id, $order_data = array(), $args = array() ) {
 		if ( empty( $args['edd-new-customer'] ) ) {
 			return;
 		}
 		if ( ! self::is_enabled() ) {
+			return;
+		}
+		if ( ! self::is_id_numeric( $order_id ) ) {
 			return;
 		}
 
@@ -159,11 +188,15 @@ class AutoRegister extends Subscriber {
 	 * This is a legacy method from the original Auto Register plugin.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 $order_id must be numeric; an object or array is refused.
 	 * @param int $order_id   The order ID.
 	 * @return void
 	 */
 	public function create_user_during_import( $order_id ) {
 		if ( ! self::is_enabled() ) {
+			return;
+		}
+		if ( ! self::is_id_numeric( $order_id ) ) {
 			return;
 		}
 
@@ -229,11 +262,61 @@ class AutoRegister extends Subscriber {
 		}
 
 		$customer = edd_get_customer_by( 'email', $order_data['email'] );
-		if ( $customer ) {
+		if ( $customer && $this->can_claim_customer( $customer, $order_data ) ) {
 			$customer->update( array( 'user_id' => $user_id ) );
 		}
 
 		return $user_id;
+	}
+
+	/**
+	 * Whether the customer record for this address belongs to this checkout.
+	 *
+	 * A record carrying an earlier order belongs to whoever placed it, and the verification path
+	 * claims it instead. `maybe_remove_user_registration_actions()` reads the same orders so that
+	 * path is always still hooked for a record this refuses.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param \EDD_Customer $customer   The customer matching the address.
+	 * @param array         $order_data The order being placed.
+	 * @return bool
+	 */
+	private function can_claim_customer( $customer, $order_data ) {
+		if ( ! empty( $customer->user_id ) ) {
+			return false;
+		}
+
+		$order_id = ! empty( $order_data['order']->id ) ? (int) $order_data['order']->id : 0;
+
+		$existing = edd_get_orders(
+			array(
+				'customer_id' => $customer->id,
+				'type'        => 'sale',
+				'id__not_in'  => array( $order_id ),
+				'number'      => 1,
+				'fields'      => 'ids',
+			)
+		);
+
+		return empty( $existing );
+	}
+
+	/**
+	 * Whether a value is the shape an ID has to be.
+	 *
+	 * This answers for the shape only, not for whether an order exists. The hooks this class
+	 * subscribes to do not guarantee a scalar first argument, and Berlin resolves an array to a
+	 * record by reading the primary column out of it, so the shape is checked before the value
+	 * is used as an ID.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param mixed $order_id The value passed to the handler.
+	 * @return bool
+	 */
+	private static function is_id_numeric( $order_id ) {
+		return ! empty( $order_id ) && is_numeric( $order_id );
 	}
 
 	/**
@@ -342,6 +425,7 @@ class AutoRegister extends Subscriber {
 	 * Removes EDD core's user registration actions for the user's initial purchase.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 Counts orders in any status, matching `can_claim_customer()`.
 	 * @param string $email    The customer's email address.
 	 * @param int    $order_id The current order ID.
 	 * @return void
@@ -357,13 +441,11 @@ class AutoRegister extends Subscriber {
 				'customer_id' => $customer->id,
 				'type'        => 'sale',
 				'id__not_in'  => array( $order_id ),
-				'status__in'  => edd_get_complete_order_statuses(),
 			)
 		);
 
-		// If the new order is the only order, remove the actions that would otherwise create a new user.
+		// If the new order is the only order, there is no earlier history for the account to verify.
 		if ( empty( $orders ) ) {
-			remove_action( 'user_register', 'edd_connect_existing_customer_to_new_user' );
 			remove_action( 'user_register', 'edd_add_past_purchases_to_new_user' );
 		}
 	}

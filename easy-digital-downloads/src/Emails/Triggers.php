@@ -53,22 +53,42 @@ class Triggers implements SubscriberInterface {
 	 * @return void
 	 */
 	public function resend_order_receipt( $data ) {
-		$order_id = absint( $data['purchase_id'] );
+		$order_id = ! empty( $data['purchase_id'] ) ? absint( $data['purchase_id'] ) : 0;
 
 		if ( empty( $order_id ) ) {
 			return;
+		}
+
+		if ( empty( $data['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( $data['_wpnonce'] ), 'edd-resend-receipt' ) ) {
+			wp_die( __( 'Nonce verification failed.', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
 		}
 
 		if ( ! current_user_can( 'edit_shop_payments' ) ) {
 			wp_die( __( 'You do not have permission to edit this payment record', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
 		}
 
-		$email = ! empty( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
 		$order = edd_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		// The store owner may resend to another address belonging to this customer, so the
+		// requested recipient is validated against the order's own list rather than trusted.
+		$allowed_emails = $order->get_receipt_emails();
+		if ( empty( $allowed_emails ) ) {
+			return;
+		}
+
+		$email = ! empty( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
 
 		if ( empty( $email ) ) {
-			$customer = edd_get_customer( $order->customer_id );
-			$email    = $customer->email;
+			$email = reset( $allowed_emails );
+		} elseif ( ! in_array( $email, $allowed_emails, true ) ) {
+			wp_die(
+				__( 'That email address is not associated with this order.', 'easy-digital-downloads' ),
+				__( 'Error', 'easy-digital-downloads' ),
+				array( 'response' => 403 )
+			);
 		}
 
 		$order_receipt          = Registry::get( 'order_receipt', array( $order ) );
@@ -188,11 +208,16 @@ class Triggers implements SubscriberInterface {
 	 * Send the Stripe Early Fraud Warning email.
 	 *
 	 * @since 3.3.0
-	 * @param EDD\Orders\Order $order The order object.
+	 *
+	 * @param \EDD\Orders\Order $order The order object.
 	 *
 	 * @return void
 	 */
 	public function send_stripe_early_fraud_warning( $order ) {
+		if ( ! $order instanceof Order ) {
+			return;
+		}
+
 		$early_fraud_warning = Registry::get( 'stripe_early_fraud_warning', array( $order ) );
 		$early_fraud_warning->send();
 	}

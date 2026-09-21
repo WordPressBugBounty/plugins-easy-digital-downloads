@@ -95,7 +95,6 @@ function edd_process_download() {
 		 * If we have an attachment ID stored, use get_attached_file() to retrieve absolute URL
 		 * If this fails or returns a relative path, we fail back to our own absolute URL detection
 		 */
-		$from_attachment_id = false;
 		if ( edd_is_local_file( $requested_file ) && $attachment_id && 'attachment' == get_post_type( $attachment_id ) ) {
 			if ( 'pdf' === strtolower( edd_get_file_extension( $requested_file ) ) ) {
 				// Do not ever grab the thumbnail for PDFs. See https://github.com/easydigitaldownloads/easy-digital-downloads/issues/5491
@@ -130,8 +129,7 @@ function edd_process_download() {
 			}
 
 			if ( $attached_file ) {
-				$from_attachment_id = true;
-				$requested_file     = $attached_file;
+				$requested_file = $attached_file;
 			}
 		}
 
@@ -156,7 +154,7 @@ function edd_process_download() {
 		}
 
 		$file_details = parse_url( $requested_file );
-		$schemes      = array( 'http', 'https' ); // Direct URL schemes
+		$schemes      = EDD\Downloads\Process::DIRECT_URL_SCHEMES;
 
 		$supported_streams = stream_get_wrappers();
 		if ( strtoupper( substr( PHP_OS, 0, 3 ) ) !== 'WIN' && isset( $file_details['scheme'] ) && ! in_array( $file_details['scheme'], $supported_streams ) ) {
@@ -164,7 +162,7 @@ function edd_process_download() {
 		}
 
 		if (
-			( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes ) ) &&
+			( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes, true ) ) &&
 			isset( $file_details['path'] ) &&
 			file_exists( EDD\Utils\FileSystem::sanitize_file_path( $requested_file ) )
 		) {
@@ -183,19 +181,41 @@ function edd_process_download() {
 		 */
 		do_action( 'edd_process_download_pre_record_log', $requested_file, $args, $method );
 
-		edd_record_download_in_log( $args['download'], $args['file_key'], array(), edd_get_ip(), $args['payment'], $args['price_id'] );
+		$log_id = edd_record_download_in_log( $args['download'], $args['file_key'], array(), edd_get_ip(), $args['payment'], $args['price_id'] );
+
+		// The log entry claims a download slot, so release it and stop if the slot was already taken.
+		if ( edd_file_download_log_exceeds_limit( $log_id ) ) {
+			edd_delete_file_download_log( $log_id );
+			edd_die_file_download_limit_reached();
+		}
 
 		$file_extension = edd_get_file_extension( $requested_file );
 		$ctype          = edd_get_file_ctype( $file_extension );
 
 		edd_set_time_limit( false );
 
-		// If we're using an attachment ID to get the file, even by path, we can ignore this check.
-		if ( false === $from_attachment_id ) {
-			$file_is_in_allowed_location = edd_local_file_location_is_allowed( $file_details, $schemes, $requested_file );
-			if ( false === $file_is_in_allowed_location ) {
-				wp_die( __( 'Sorry, this file could not be downloaded.', 'easy-digital-downloads' ), __( 'Error Downloading File', 'easy-digital-downloads' ), 403 );
-			}
+		$is_remote_file  = filter_var( $requested_file, FILTER_VALIDATE_URL ) && ! edd_is_local_file( $requested_file );
+		$file_path       = $requested_file;
+		$reads_from_disk = false;
+
+		if ( ! $is_remote_file && 'redirect' !== $method ) {
+			$resolved        = EDD\Downloads\Process::resolve_path( $requested_file, $file_details );
+			$file_path       = $resolved['path'];
+			$reads_from_disk = $resolved['reads_from_disk'];
+		}
+
+		// A URL that translates to nothing on disk cannot be read, so it is delivered by redirect.
+		if ( $reads_from_disk && false === $file_path ) {
+			$file_path       = $requested_file;
+			$reads_from_disk = false;
+		}
+
+		if ( ! EDD\Downloads\Process::is_delivery_allowed( $requested_file, $file_details, $reads_from_disk ? $file_path : null ) ) {
+			wp_die(
+				__( 'Sorry, this file could not be downloaded.', 'easy-digital-downloads' ),
+				__( 'Error Downloading File', 'easy-digital-downloads' ),
+				403
+			);
 		}
 
 		@session_write_close();
@@ -214,7 +234,7 @@ function edd_process_download() {
 		header( 'Content-Transfer-Encoding: binary' );
 
 		// If the file isn't locally hosted, process the redirect
-		if ( filter_var( $requested_file, FILTER_VALIDATE_URL ) && ! edd_is_local_file( $requested_file ) ) {
+		if ( $is_remote_file ) {
 			edd_deliver_download( $requested_file, true );
 			exit;
 		}
@@ -227,55 +247,19 @@ function edd_process_download() {
 				break;
 			case 'direct':
 			default:
-				$direct    = false;
-				$file_path = $requested_file;
-
-				if (
-					( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes ) ) &&
-					isset( $file_details['path'] ) &&
-					file_exists( EDD\Utils\FileSystem::sanitize_file_path( $requested_file ) )
-				) {
-
-					/** This is an absolute path */
-					$direct    = true;
-					$file_path = $requested_file;
-				} else if ( defined( 'UPLOADS' ) && strpos( $requested_file, UPLOADS ) !== false ) {
-
-					/**
-					 * This is a local file given by URL so we need to figure out the path
-					 * UPLOADS is always relative to ABSPATH
-					 * site_url() is the URL to where WordPress is installed
-					 */
-					$file_path = str_replace( site_url(), '', $requested_file );
-					$file_path = realpath( ABSPATH . $file_path );
-					$direct    = true;
-				} else if ( strpos( $requested_file, content_url() ) !== false ) {
-
-					/** This is a local file given by URL so we need to figure out the path */
-					$file_path = str_replace( content_url(), WP_CONTENT_DIR, $requested_file );
-					$file_path = realpath( $file_path );
-					$direct    = true;
-				} else if ( strpos( $requested_file, set_url_scheme( content_url(), 'https' ) ) !== false ) {
-
-					/** This is a local file given by an HTTPS URL so we need to figure out the path */
-					$file_path = str_replace( set_url_scheme( content_url(), 'https' ), WP_CONTENT_DIR, $requested_file );
-					$file_path = realpath( $file_path );
-					$direct    = true;
-				}
-
 				// Check the filesize so we can either switch the download method or set the header.
-				$file_size = filesize( EDD\Utils\FileSystem::sanitize_file_path( $file_path ) );
+				$file_size = ( $reads_from_disk && ! empty( $file_path ) ) ? filesize( EDD\Utils\FileSystem::sanitize_file_path( $file_path ) ) : false;
 				if ( ! empty( $file_size ) ) {
 					header( "Content-Length: " . $file_size );
 				} else {
-					$direct = false;
+					$reads_from_disk = false;
 				}
 
 				// Now deliver the file based on the kind of software the server is running / has enabled
 				if ( stristr( getenv( 'SERVER_SOFTWARE' ), 'lighttpd' ) ) {
 					header( "X-LIGHTTPD-send-file: $file_path" );
 
-				} elseif ( $direct && ( stristr( getenv( 'SERVER_SOFTWARE' ), 'nginx' ) || stristr( getenv( 'SERVER_SOFTWARE' ), 'cherokee' ) ) ) {
+				} elseif ( $reads_from_disk && ( stristr( getenv( 'SERVER_SOFTWARE' ), 'nginx' ) || stristr( getenv( 'SERVER_SOFTWARE' ), 'cherokee' ) ) ) {
 					$ignore_x_accel_redirect_header = apply_filters( 'edd_ignore_x_accel_redirect', false );
 
 					if ( ! $ignore_x_accel_redirect_header ) {
@@ -285,7 +269,7 @@ function edd_process_download() {
 					}
 				}
 
-				if ( $direct ) {
+				if ( $reads_from_disk ) {
 					edd_deliver_download( $file_path );
 				} else {
 
@@ -320,20 +304,42 @@ add_action( 'init', 'edd_process_download', 100 );
  *
  * If enabled, the file is symlinked to better support large file downloads
  *
+ * @since    2.5.10
+ * @since    3.7.1 The path a symlink points to is held to the same directory
+ *                          boundary as every other delivery method, and a URL with nothing
+ *                          on disk behind it is delivered without a symlink.
  * @param    string    $file
  * @param    bool      $redirect True if we should perform a header redirect instead of calling edd_readfile_chunked()
  * @return   void
  */
 function edd_deliver_download( $file = '', $redirect = false ) {
 
+	$requested_url = $file;
+	$use_symlink   = edd_symlink_file_downloads() && edd_is_local_file( $file );
+	$resolved_path = false;
+
+	if ( $use_symlink ) {
+		$file          = edd_get_local_path_from_url( $file );
+		$resolved_path = realpath( $file );
+
+		// A URL that translates to nothing on disk has no symlink target, so it is delivered without one.
+		if ( ! $resolved_path && $file !== $requested_url && filter_var( $requested_url, FILTER_VALIDATE_URL ) ) {
+			$use_symlink = false;
+			$file        = $requested_url;
+		}
+	}
+
 	/*
 	 * If symlinks are enabled, a link to the file will be created
 	 * This symlink is used to hide the true location of the file, even when the file URL is revealed
 	 * The symlink is deleted after it is used
 	 */
-	if( edd_symlink_file_downloads() && edd_is_local_file( $file ) ) {
+	if ( $use_symlink ) {
 
-		$file = edd_get_local_path_from_url( $file );
+		// Only a translated path which resolves is a value the caller has not already checked.
+		if ( $resolved_path && $file !== $requested_url && ! edd_local_file_location_is_allowed( parse_url( $resolved_path ), EDD\Downloads\Process::DIRECT_URL_SCHEMES, $resolved_path ) ) {
+			wp_die( __( 'Sorry, this file could not be downloaded.', 'easy-digital-downloads' ), __( 'Error Downloading File', 'easy-digital-downloads' ), 403 );
+		}
 
 		// Generate a symbolic link
 		$ext       = edd_get_file_extension( $file );
@@ -355,7 +361,7 @@ function edd_deliver_download( $file = '', $redirect = false ) {
 
 		// Make sure the symlink doesn't already exist before we create it
 		if ( ! file_exists( EDD\Utils\FileSystem::sanitize_file_path( $path ) ) ) {
-			$link = EDD\Utils\FileSystem::symlink( realpath( $file ), $path );
+			$link = EDD\Utils\FileSystem::symlink( $resolved_path, $path, false );
 		} else {
 			$link = true;
 		}
@@ -364,7 +370,8 @@ function edd_deliver_download( $file = '', $redirect = false ) {
 			// Send the browser to the file
 			header( 'Location: ' . $url );
 		} else {
-			edd_readfile_chunked( $file );
+			// The resolved path is the one the boundary check cleared, and an untranslated request has none.
+			edd_readfile_chunked( $resolved_path ? $resolved_path : $file );
 		}
 
 	} elseif( $redirect ) {
@@ -433,25 +440,38 @@ function edd_is_local_file( $requested_file ) {
  *
  * Used during the symlink process to determine where to make the symlink point to
  *
+ * EDD\Downloads\Process::resolve_path() resolves overlapping URL shapes for the direct delivery
+ * methods; the content_url() and UPLOADS branches change in both.
+ *
  * @since  2.5.10
- * @param  string $url The URL of the file requested
+ * @since  3.7.1 The UPLOADS branch returns an absolute path, matching every other
+ *                         branch here, so a caller resolving it with realpath() gets a real
+ *                         result instead of one measured from the filesystem root.
+ * @since  3.7.1 Added the $uploads parameter.
+ * @param  string            $url     The URL of the file requested
+ * @param  string|false|null $uploads The UPLOADS constant to read, false for none; null reads the constant.
  * @return string      If found to be locally hosted, the path to the file
  */
-function edd_get_local_path_from_url( $url ) {
+function edd_get_local_path_from_url( $url, $uploads = null ) {
 
 	$file       = $url;
 	$upload_dir = wp_upload_dir();
 	$edd_dir    = edd_get_uploads_base_dir();
 	$upload_url = $upload_dir['baseurl'] . '/' . $edd_dir;
 
-	if( defined( 'UPLOADS' ) && strpos( $file, UPLOADS ) !== false ) {
+	if ( null === $uploads ) {
+		$uploads = defined( 'UPLOADS' ) ? UPLOADS : false;
+	}
+
+	// The translation strips site_url() from the URL, so a URL that does not carry it cannot be translated here.
+	if ( false !== $uploads && false !== strpos( $file, $uploads ) && false !== strpos( $file, site_url() ) ) {
 
 		/**
 		 * This is a local file given by URL so we need to figure out the path
 		 * UPLOADS is always relative to ABSPATH
 		 * site_url() is the URL to where WordPress is installed
 		 */
-		$file = str_replace( site_url(), '', $file );
+		$file = wp_normalize_path( ABSPATH . str_replace( site_url(), '', $file ) );
 
 	} else if( strpos( $file, $upload_url ) !== false ) {
 
@@ -943,7 +963,7 @@ function edd_process_signed_download_url( $args ) {
 
 	// Check to make sure not at download limit
 	if ( edd_is_file_at_download_limit( $order_parts[1], $order_parts[0], $order_parts[2], $price_id ) ) {
-		wp_die( apply_filters( 'edd_download_limit_reached_text', __( 'Sorry but you have hit your download limit for this file.', 'easy-digital-downloads' ) ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
+		edd_die_file_download_limit_reached();
 	}
 
 	$order            = edd_get_order( $order_parts[0] );
@@ -958,12 +978,14 @@ function edd_process_signed_download_url( $args ) {
 	if ( 'refund' === $order->type ) {
 		$args['has_access'] = false;
 	} else {
-		// Access is granted if there's at least one `complete` order item that matches the order + download + price ID.
+		// Access is granted if a deliverable order item matches the order + download + price ID,
+		// and that price option is entitled to the requested file.
 		$args['has_access'] = edd_order_grants_access_to_download_files(
 			array(
 				'order_id'   => $order->id,
 				'product_id' => $args['download'],
 				'price_id'   => $args['price_id'],
+				'file_key'   => $args['file_key'],
 			)
 		);
 	}
@@ -979,6 +1001,10 @@ function edd_process_signed_download_url( $args ) {
  * @param array $args
  *
  * @since 3.0
+ * @since 3.7.1 A null price ID in the request only matches an order item whose own
+ *                       price ID is null, rather than any order item for the product. Also,
+ *                       $args now accepts a `file_key`. When one is passed, a directly purchased
+ *                       item grants access only to the files its price option is entitled to.
  * @return bool
  */
 function edd_order_grants_access_to_download_files( $args ) {
@@ -986,6 +1012,7 @@ function edd_order_grants_access_to_download_files( $args ) {
 		'order_id'          => 0,
 		'product_id'        => 0,
 		'price_id'          => null,
+		'file_key'          => null,
 		'quantity__compare' => array(
 			'value'   => 0,
 			'compare' => '>',
@@ -997,16 +1024,45 @@ function edd_order_grants_access_to_download_files( $args ) {
 		return false;
 	}
 
+	// The file key is not a query variable, so it cannot be left in the args passed to a query.
+	$file_key = $args['file_key'];
+	unset( $args['file_key'] );
+
 	$args['status'] = edd_get_deliverable_order_item_statuses();
+
+	/*
+	 * A link minted before the price option was enforced stays valid for its whole TTL, so the
+	 * file is matched to the price option here rather than only on the surfaces which list it.
+	 */
+	$file_is_withheld = ! is_null( $file_key ) &&
+		( new EDD\Downloads\Entitlement( $args['product_id'], $args['price_id'] ) )->withholds_file( $file_key );
+
 	if ( is_null( $args['price_id'] ) ) {
-		unset( $args['price_id'] );
-	}
+		// Berlin has no way to express `price_id IS NULL` through a literal column
+		// comparison, so this order's items for the product are checked directly instead of
+		// filtering by price_id in the query.
+		$product_order_items = edd_get_order_items(
+			array(
+				'number'            => 0,
+				'order_id'          => $args['order_id'],
+				'product_id'        => $args['product_id'],
+				'status'            => $args['status'],
+				'quantity__compare' => $args['quantity__compare'],
+			)
+		);
 
-	// Check if the download was purchased directly.
-	$order_items = edd_count_order_items( $args );
+		foreach ( $product_order_items as $order_item ) {
+			if ( is_null( $order_item->price_id ) && ! $file_is_withheld ) {
+				return true;
+			}
+		}
+	} elseif ( ! $file_is_withheld ) {
+		// Check if the download was purchased directly.
+		$order_items = edd_count_order_items( $args );
 
-	if ( $order_items > 0 ) {
-		return true;
+		if ( $order_items > 0 ) {
+			return true;
+		}
 	}
 
 	$order_items = edd_get_order_items(
@@ -1127,32 +1183,29 @@ function edd_check_file_url_head( $requested_file, $args, $method ) {
 }
 
 /**
- * Determines if a file should be allowed to be downloaded by making sure it's within the wp-content directory.
+ * Determines if a file should be allowed to be downloaded by making sure it's within a directory the store serves files from.
  *
  * @since 2.9.13
+ * @since 3.7.1 The comparison is anchored, the scheme comparison is strict, and the uploads
+ *                      directory is allowed on its own.
  *
- * @param $file_details
- * @param $schemas
- * @param $requested_file
+ * @param array|false  $file_details   The parsed file, as returned by parse_url().
+ * @param array        $schemas        Schemes which are served by URL rather than from disk.
+ * @param string|false $requested_file The file being requested.
  *
  * @return boolean
  */
 function edd_local_file_location_is_allowed( $file_details, $schemas, $requested_file ) {
 	$should_allow = true;
 
-	// If the file is an absolute path, make sure it's in the wp-content directory, to prevent store owners from accidentally allowing privileged files from being downloaded.
-	if ( ( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemas ) ) && isset( $file_details['path'] ) ) {
+	$must_be_on_disk = ! is_array( $file_details ) || (
+		( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemas, true ) ) && isset( $file_details['path'] )
+	);
 
-		/** This is an absolute path */
-		$requested_file         = wp_normalize_path( realpath( $requested_file ) );
-		$normalized_abspath     = wp_normalize_path( ABSPATH );
-		$normalized_content_dir = wp_normalize_path( WP_CONTENT_DIR );
-
-		if ( 0 !== strpos( $requested_file, $normalized_abspath ) || false === strpos( $requested_file, $normalized_content_dir ) ) {
-			// If the file is not within the WP_CONTENT_DIR, it should not be able to be downloaded.
-			$should_allow = false;
-		}
-
+	// If the file is read from disk, make sure it's in a directory the store serves files from.
+	if ( $must_be_on_disk ) {
+		$should_allow = ! empty( $requested_file )
+			&& EDD\Downloads\Process::is_in_allowed_directory( $requested_file );
 	}
 
 	return apply_filters( 'edd_local_file_location_is_allowed', $should_allow, $file_details, $schemas, $requested_file );

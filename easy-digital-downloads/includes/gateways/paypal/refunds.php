@@ -2,8 +2,7 @@
 /**
  * PayPal Commerce Refunds
  *
- * @package    easy-digital-downloads
- * @subpackage Gateways\PayPal
+ * @package    EDD\Gateways\PayPal
  * @copyright  Copyright (c) 2021, Sandhills Development, LLC
  * @license    GPL2+
  * @since      2.11
@@ -11,8 +10,10 @@
 
 namespace EDD\Gateways\PayPal;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
+
 use EDD\Gateways\PayPal\Exceptions\API_Exception;
-use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
 use EDD\Gateways\PayPal\V3\ConnectAPI;
 use EDD\Orders\Order;
 
@@ -49,6 +50,12 @@ function preflight_refund_submission() {
 	}
 	parse_str( $_POST['data'], $form_data );
 
+	// This callback runs ahead of the one that owns authorization for this request, so it
+	// establishes intent itself. Returning lets EDD's handler produce the user-facing error.
+	if ( ! \EDD\Orders\Refunds\FormParser::verify_nonce( $form_data ) ) {
+		return;
+	}
+
 	// Only pre-flight when the admin actually asked for the PayPal-side refund.
 	if ( empty( $form_data['edd-paypal-commerce-refund'] ) ) {
 		return;
@@ -61,12 +68,9 @@ function preflight_refund_submission() {
 		return;
 	}
 
-	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
-	$is_v3_order     = ! empty( $paypal_order_id );
-	$is_v3_store     = V3\Onboarding::is_v3_onboarded( $mode );
-
-	// v2 order on a v2 store — skip preflight, legacy API handles refunds directly.
-	if ( ! $is_v3_order && ! $is_v3_store ) {
+	// Only a Connect-onboarded store can authenticate with the proxy; anything else
+	// refunds through the direct API, which needs no pre-flight.
+	if ( ! V3\Onboarding::is_v3_onboarded( $mode ) ) {
 		return;
 	}
 
@@ -97,15 +101,9 @@ function preflight_refund_submission() {
 		);
 	}
 
-	$proxy = new ConnectAPI( $mode );
-
-	if ( $is_v3_order ) {
-		// v3 order — refund via the orders endpoint (capture ID resolved proxy-side).
-		$proxy_response = $proxy->post( '/v3/paypal/orders/' . rawurlencode( $paypal_order_id ) . '/refund', $refund_args );
-	} else {
-		// v2 order on a v3 store — refund directly by capture/transaction ID.
-		$proxy_response = $proxy->post( '/v3/paypal/captures/' . rawurlencode( $transaction_id ) . '/refund', $refund_args );
-	}
+	// Refund by capture ID, which identifies the payment whichever checkout created it.
+	$proxy          = new ConnectAPI( $mode );
+	$proxy_response = $proxy->post( '/v3/paypal/captures/' . rawurlencode( $transaction_id ) . '/refund', $refund_args );
 
 	if ( is_wp_error( $proxy_response ) || ConnectAPI::is_error( $proxy_response ) ) {
 		wp_send_json_error( resolve_refund_error_message( $proxy_response ), 422 );
@@ -175,23 +173,20 @@ add_action( 'edd_after_submit_refund_table', function( Order $order ) {
 		return;
 	}
 
-	$mode            = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
-	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
-	$transaction_id  = $order->get_transaction_id();
+	$mode           = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
+	$transaction_id = $order->get_transaction_id();
 
-	if ( ! empty( $paypal_order_id ) ) {
-		// v3 order — always show.
-	} elseif ( ! empty( $transaction_id ) && V3\Onboarding::is_v3_onboarded( $mode ) ) {
-		// v2 order on a v3 store — show; proxy captures endpoint handles the refund.
-	} elseif ( ! empty( $transaction_id ) ) {
+	if ( empty( $transaction_id ) ) {
+		return;
+	}
+
+	if ( ! V3\Onboarding::is_v3_onboarded( $mode ) ) {
 		try {
 			new API( $mode );
 		} catch ( Exceptions\Authentication_Exception $e ) {
-			// v2 order on a v2 store with no credentials — can't refund.
+			// Neither Connect nor direct API credentials — nothing can process the refund.
 			return;
 		}
-	} else {
-		return;
 	}
 	?>
 	<div class="edd-form-group edd-paypal-refund-transaction">
@@ -312,16 +307,12 @@ function refund_transaction( $payment_or_order, ?Order $refund_object = null ) {
 		throw new \Exception( __( 'Missing transaction ID.', 'easy-digital-downloads' ) );
 	}
 
-	$mode            = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
-	$paypal_order_id = edd_get_order_meta( $order->id, 'paypal_order_id', true );
+	$mode = ( 'live' === $order->mode ) ? API::MODE_LIVE : API::MODE_SANDBOX;
 
-	if ( ! empty( $paypal_order_id ) || V3\Onboarding::is_v3_onboarded( $mode ) ) {
-		// v3 order, or v2 order on a store now running v3 — route through the Connect proxy.
+	if ( V3\Onboarding::is_v3_onboarded( $mode ) ) {
+		// Connect-onboarded store — route through the proxy.
 		$proxy       = new ConnectAPI( $mode );
-		$refund_args = array();
-		if ( ! empty( $transaction_id ) ) {
-			$refund_args['capture_id'] = $transaction_id;
-		}
+		$refund_args = array( 'capture_id' => $transaction_id );
 		if ( $refund_object instanceof Order ) {
 			$refund_args['invoice_id'] = (string) $refund_object->id;
 		}
@@ -336,17 +327,14 @@ function refund_transaction( $payment_or_order, ?Order $refund_object = null ) {
 		// The pre-flight handler has already validated the gateway-side refund
 		// succeeded; the cached payload still drives the downstream side effects
 		// (negative transaction, notes, _edd_paypal_refunded meta).
-		$preflight_key  = preflight_cache_key( $transaction_id );
-		$preflighted    = get_transient( $preflight_key );
+		$preflight_key = preflight_cache_key( $transaction_id );
+		$preflighted   = get_transient( $preflight_key );
 
 		if ( false !== $preflighted ) {
 			$proxy_response = $preflighted;
 			delete_transient( $preflight_key );
-		} elseif ( ! empty( $paypal_order_id ) ) {
-			// v3 order — refund via orders endpoint (proxy resolves capture ID).
-			$proxy_response = $proxy->post( '/v3/paypal/orders/' . rawurlencode( $paypal_order_id ) . '/refund', $refund_args );
 		} else {
-			// v2 order on a v3 store — refund directly by capture/transaction ID.
+			// Refund by capture ID, which identifies the payment whichever checkout created it.
 			$proxy_response = $proxy->post( '/v3/paypal/captures/' . rawurlencode( $transaction_id ) . '/refund', $refund_args );
 		}
 

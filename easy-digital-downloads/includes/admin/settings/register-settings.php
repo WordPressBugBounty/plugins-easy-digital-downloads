@@ -154,20 +154,18 @@ function edd_get_registered_settings() {
  *
  * @param array $input The value inputted in the field.
  *
- * @global array $edd_options Array of all the EDD Options.
- *
  * @return array $input Sanitized value.
  */
 function edd_settings_sanitize( $input = array() ) {
-	global $edd_options;
-
 	// Default values.
 	$referrer      = '';
-	$setting_types = edd_get_registered_settings_types();
+	$section_class = '';
 	$doing_section = ! empty( $_POST['_wp_http_referer'] );
 	$input         = ! empty( $input )
 		? $input
 		: array();
+
+	$non_setting_types = edd_get_non_setting_types();
 
 	if ( true === $doing_section ) {
 
@@ -186,15 +184,13 @@ function edd_settings_sanitize( $input = array() ) {
 		}
 
 		// Get setting types for this section.
-		$setting_types = edd_get_registered_settings_types( $tab, $section );
+		$setting_types = array_diff( edd_get_registered_settings_types( $tab, $section ), $non_setting_types );
 
 		// Run a general sanitization for the tab for special fields (like taxes).
 		$input = apply_filters( 'edd_settings_' . $tab . '_sanitize', $input );
 
 		// If we have a class for this tab, use it to sanitize the input.
-		// Normalize the tab name to be a class name.
-		$tab_class = EDD\Utils\Convert::snake_to_camel( $tab );
-		$tab_class = 'EDD\\Admin\\Settings\\Sanitize\\Tabs\\' . $tab_class;
+		$tab_class = EDD\Settings\Sanitize\Registry::get_section_class( $tab );
 		if ( class_exists( $tab_class ) ) {
 			$input = $tab_class::sanitize( $input );
 		}
@@ -203,17 +199,19 @@ function edd_settings_sanitize( $input = array() ) {
 		$input = apply_filters( 'edd_settings_' . $tab . '-' . $section . '_sanitize', $input ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		// If we have a class for this section, use it to sanitize the input.
-		// Normalize the section name to be a class name.
-		$section_class = $tab_class . '\\' . EDD\Utils\Convert::snake_to_camel( $section );
+		$section_class = EDD\Settings\Sanitize\Registry::get_section_class( $tab, $section );
 		if ( class_exists( $section_class ) ) {
 			$input = $section_class::sanitize( $input );
+		} else {
+			// Posted::sanitize() names the section the save has already been through, and this save has been through none.
+			$section_class = '';
 		}
+	} else {
+		$setting_types = array_diff( edd_get_registered_settings_types(), $non_setting_types );
 	}
 
-	// Remove non setting types and merge settings together.
-	$non_setting_types = edd_get_non_setting_types();
-	$setting_types     = array_diff( $setting_types, $non_setting_types );
-	$output            = array_merge( $edd_options, $input );
+	// Every posted key is sanitized by the type it is declared with, wherever it is declared.
+	$output = EDD\Settings\Sanitize\Posted::sanitize( $input, $section_class );
 
 	// Loop through settings, and apply any filters.
 	foreach ( $setting_types as $key => $type ) {
@@ -224,14 +222,29 @@ function edd_settings_sanitize( $input = array() ) {
 		}
 
 		if ( array_key_exists( $key, $output ) ) {
+			/**
+			 * Filters a setting of one declared type on its way to the store.
+			 *
+			 * The dynamic portion of the hook name, `$type`, refers to the declared setting type.
+			 *
+			 * @since 1.8
+			 * @since 3.7.1 The value arrives sanitized by its type class and by the section that owns the key.
+			 *
+			 * @param mixed  $value The sanitized value.
+			 * @param string $key   The setting id.
+			 */
 			$output[ $key ] = apply_filters( 'edd_settings_sanitize_' . $type, $output[ $key ], $key );
-			$output[ $key ] = apply_filters( 'edd_settings_sanitize', $output[ $key ], $key );
 
-			// See if we have a setting specific sanitization class for this type.
-			$type_class = 'EDD\\Settings\\Sanitize\\Types\\' . EDD\Utils\Convert::snake_to_camel( $type );
-			if ( class_exists( $type_class ) ) {
-				$output[ $key ] = $type_class::sanitize( $output[ $key ], $key );
-			}
+			/**
+			 * Filters any setting on its way to the store.
+			 *
+			 * @since 1.8
+			 * @since 3.7.1 The value arrives sanitized by its type class and by the section that owns the key.
+			 *
+			 * @param mixed  $value The sanitized value.
+			 * @param string $key   The setting id.
+			 */
+			$output[ $key ] = apply_filters( 'edd_settings_sanitize', $output[ $key ], $key );
 		}
 
 		if ( true === $doing_section ) {
@@ -736,7 +749,7 @@ function edd_payment_icons_callback( $args = array() ) {
 	$class      = edd_sanitize_html_class( $args['field_class'] ); ?>
 
 	<input type="hidden" name="edd_settings[<?php echo edd_sanitize_key( $args['id'] ); ?>]" value="" />
-	<input type="hidden" name="edd_settings[payment_icons_order]" class="edd-order" value="<?php echo edd_get_option( 'payment_icons_order' ); ?>" />
+	<input type="hidden" name="edd_settings[payment_icons_order]" class="edd-order" value="<?php echo esc_attr( edd_get_option( 'payment_icons_order' ) ); ?>" />
 
 	<?php
 
@@ -900,7 +913,7 @@ function edd_gateways_callback( $args ) {
 	$edd_option = edd_get_option( $args['id'] );
 
 	$html  = '<input type="hidden" name="edd_settings[' . edd_sanitize_key( $args['id'] ) . ']" value="-1" />';
-	$html .= '<input type="hidden" name="edd_settings[gateways_order]" class="edd-order" value="' . edd_get_option( 'gateways_order' ) . '" />';
+	$html .= '<input type="hidden" name="edd_settings[gateways_order]" class="edd-order" value="' . esc_attr( edd_get_option( 'gateways_order' ) ) . '" />';
 
 	if ( ! empty( $args['options'] ) ) {
 		$class = edd_sanitize_html_class( $args['field_class'] );
@@ -1455,7 +1468,7 @@ function edd_shop_states_callback( $args ) {
 
 	if ( empty( edd_get_shop_states() ) ) {
 		$placeholder = __( 'Enter a region', 'easy-digital-downloads' );
-		$html        = '<input type="text" class="' . esc_attr( trim( $class ) ) . ' regular-text" name="edd_settings[' . esc_attr( $args['id'] ) . ']" id="edd_settings[' . edd_sanitize_key( $args['id'] ) . ']" value="' . $edd_option . '"  placeholder="' . esc_html( $placeholder ) . '"/>';
+		$html        = '<input type="text" class="' . esc_attr( trim( $class ) ) . ' regular-text" name="edd_settings[' . esc_attr( $args['id'] ) . ']" id="edd_settings[' . edd_sanitize_key( $args['id'] ) . ']" value="' . esc_attr( $edd_option ) . '"  placeholder="' . esc_html( $placeholder ) . '"/>';
 	} else {
 		$placeholder = isset( $args['placeholder'] )
 			? $args['placeholder']

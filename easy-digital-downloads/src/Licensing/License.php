@@ -203,7 +203,7 @@ class License {
 		 * @param License $license      The license object.
 		 * @param object  $license_data The license data.
 		 */
-		do_action( 'edd/license/saved', $this, $license_data ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+		do_action( 'edd/license/saved', $this, $license_data );
 
 		return $updated;
 	}
@@ -234,7 +234,7 @@ class License {
 		 * @param string  $product_shortname The product shortname.
 		 * @param License $license           The license object.
 		 */
-		do_action( 'edd/license/deleted', $this->product_shortname, $this ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+		do_action( 'edd/license/deleted', $this->product_shortname, $this );
 	}
 
 	/**

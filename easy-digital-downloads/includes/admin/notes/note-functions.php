@@ -55,6 +55,7 @@ function edd_admin_get_notes_html( $notes = array() ) {
  * Get the HTML used to output a single note, from an array of notes
  *
  * @since 3.0
+ * @since 3.7.1 Note content is filtered before it is displayed.
  * @param int $note_id Note ID.
  *
  * @return string
@@ -145,7 +146,7 @@ function edd_admin_get_note_html( $note_id = 0 ) {
 			</a>
 		</div>
 
-		<?php echo wpautop( make_clickable( $note->content ) ); ?>
+		<?php echo wpautop( make_clickable( edd_sanitize_note_content( $note->content ) ) ); ?>
 	</div>
 
 	<?php

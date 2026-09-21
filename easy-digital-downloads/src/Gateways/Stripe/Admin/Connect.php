@@ -10,12 +10,25 @@ namespace EDD\Gateways\Stripe\Admin;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
+use EDD\Utils\Tokenizer;
+
 /**
  * Connect class.
  *
  * @since 3.3.4
  */
 class Connect {
+
+	/**
+	 * How long a connect state stays valid, in seconds.
+	 *
+	 * The state is minted when the settings page renders rather than when Connect is clicked, so
+	 * this has to cover a first-time Stripe onboarding running long.
+	 *
+	 * @since 3.7.1
+	 * @var int
+	 */
+	const STATE_LIFETIME = HOUR_IN_SECONDS;
 
 	/**
 	 * Check webhooks.
@@ -196,6 +209,58 @@ class Connect {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Builds the state value for a new Stripe Connect flow.
+	 *
+	 * The value carries its own proof of origin so the completion handler can confirm the flow
+	 * began on this store. Nothing is persisted: the broker builds the return URL, so state is
+	 * the only field that survives the round trip.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	public static function create_state(): string {
+		$payload = implode(
+			'.',
+			array(
+				bin2hex( random_bytes( 16 ) ),
+				time(),
+				get_current_user_id(),
+			)
+		);
+
+		return $payload . '.' . Tokenizer::tokenize( self::state_token_data( $payload ) );
+	}
+
+	/**
+	 * Whether a returned state was built by this store, for the current user, recently enough.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $state State value as returned by the broker.
+	 * @return bool
+	 */
+	public static function is_state_valid( string $state ): bool {
+		$parts = explode( '.', $state );
+		if ( 4 !== count( $parts ) ) {
+			return false;
+		}
+
+		$token = array_pop( $parts );
+		if ( ! Tokenizer::is_token_valid( $token, self::state_token_data( implode( '.', $parts ) ) ) ) {
+			return false;
+		}
+
+		list( , $issued, $user_id ) = $parts;
+
+		if ( get_current_user_id() !== (int) $user_id ) {
+			return false;
+		}
+
+		return ( time() - (int) $issued ) < self::STATE_LIFETIME;
 	}
 
 	/**
@@ -579,6 +644,18 @@ class Connect {
 				);
 			}
 		}
+	}
+
+	/**
+	 * The value a state's signature covers.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $payload The state's random, issued and user segments.
+	 * @return string
+	 */
+	private static function state_token_data( string $payload ): string {
+		return 'edd-stripe-connect-' . $payload;
 	}
 
 	/**

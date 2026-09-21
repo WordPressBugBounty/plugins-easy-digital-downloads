@@ -228,36 +228,42 @@ add_action( 'edd_update_payment_status', 'edd_complete_purchase', 100, 3 );
  * Process an attempt to complete a recoverable payment.
  *
  * @since  2.7
+ * @since 3.7.1 Requires the token from the order's recovery URL.
+ *
+ * @param array $data Optional. The request data, passed by the edd_action dispatcher.
  * @return void
  */
-function edd_recover_payment() {
-	if ( empty( $_GET['payment_id'] ) ) {
+function edd_recover_payment( $data = array() ) {
+	$order_id = ! empty( $data['payment_id'] ) ? absint( $data['payment_id'] ) : 0;
+	if ( empty( $order_id ) ) {
 		return;
 	}
 
-	$payment = new EDD_Payment( $_GET['payment_id'] );
-	if ( $payment->ID !== (int) $_GET['payment_id'] ) {
+	$order = edd_get_order( $order_id );
+	if ( ! $order || ! $order->is_recoverable() ) {
 		return;
 	}
 
-	if ( ! $payment->is_recoverable() ) {
+	// An order which belongs to a user account can only be resumed by that user.
+	$user_can_resume = is_user_logged_in()
+		? (int) $order->user_id === get_current_user_id()
+		: empty( $order->user_id );
+
+	// The token is what establishes that the caller is the person this order belongs to.
+	$token = ! empty( $data['token'] ) ? sanitize_text_field( $data['token'] ) : '';
+
+	if ( ! $user_can_resume || ! $order->is_recovery_token_valid( $token ) ) {
+		edd_set_error( 'edd-payment-recovery-failed', __( 'Error resuming payment.', 'easy-digital-downloads' ) );
+
+		// Redirect to checkout, which prints EDD's errors; the purchase history page does not.
+		edd_redirect( edd_get_checkout_uri() );
+
 		return;
 	}
 
-	if (
-		// Logged in, but wrong user ID
-		( is_user_logged_in() && $payment->user_id != get_current_user_id() )
-
-		// ...OR...
-		||
-
-		// Logged out, but payment is for a user
-		( ! is_user_logged_in() && ! empty( $payment->user_id ) )
-	) {
-		$redirect = get_permalink( edd_get_option( 'purchase_history_page' ) );
-		edd_set_error( 'edd-payment-recovery-user-mismatch', __( 'Error resuming payment.', 'easy-digital-downloads' ) );
-		edd_redirect( $redirect );
-	}
+	// The cart recovery below reads the order through EDD_Payment, whose cart_details, fees
+	// and discounts helpers carry item options this loop depends on.
+	$payment = edd_get_payment( $order_id );
 
 	$payment->add_note( __( 'Payment recovery triggered URL', 'easy-digital-downloads' ) );
 

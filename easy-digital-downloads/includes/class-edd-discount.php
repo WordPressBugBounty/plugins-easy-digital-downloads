@@ -1806,25 +1806,55 @@ class EDD_Discount extends Adjustment {
 	 * Increment the usage of the discount.
 	 *
 	 * @since 2.7
+	 * @since 3.7.1 Returns false when the discount had no use left to claim.
 	 *
-	 * @return int New discount usage.
+	 * @return int|false New usage, or false if the code is used up.
 	 */
 	public function increase_usage() {
-		if ( $this->get_uses() ) {
-			$this->use_count++;
-		} else {
-			$this->use_count = 1;
+		global $wpdb;
+
+		// Claimed in one statement so two redemptions cannot both pass a cap with room for one.
+		// nosemgrep: awesomemotive.wp-sql-injection-audit
+		$claimed = $wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$wpdb->edd_adjustments} SET use_count = use_count + 1 WHERE id = %d AND ( max_uses = 0 OR use_count < max_uses )",
+				$this->id
+			)
+		);
+
+		// A statement error and a cap with no room left are both refusals, but not the same one.
+		if ( false === $claimed ) {
+			return false;
 		}
 
-		$args = array( 'use_count' => $this->use_count );
+		if ( 0 === $claimed ) {
+			return false;
+		}
 
-		$this->max_uses = absint( $this->max_uses );
+		// nosemgrep: awesomemotive.wp-sql-injection-audit
+		$claim = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT use_count, max_uses FROM {$wpdb->edd_adjustments} WHERE id = %d",
+				$this->id
+			)
+		);
 
+		if ( empty( $claim ) ) {
+			return false;
+		}
+
+		$this->use_count = (int) $claim->use_count;
+		$this->max_uses  = absint( $claim->max_uses );
+
+		// Reaching the cap deactivates the code, which is what refuses a later attempt.
 		if ( 0 !== $this->max_uses && $this->max_uses <= $this->use_count ) {
-			$args['status'] = 'inactive';
+			edd_update_discount( $this->id, array( 'status' => 'inactive' ) );
+			$this->status = 'inactive';
+		} else {
+			// The claim was written with a statement; edd_update_discount() above would have
+			// reprimed the caches itself, so only do it here on the branch that skips it.
+			( new EDD\Database\Queries\Adjustment() )->refresh_item_cache( $this->id );
 		}
-
-		$this->update( $args );
 
 		/**
 		 * Fires after the usage count has been increased.

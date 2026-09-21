@@ -23,6 +23,7 @@ class PurchaseData {
 	 * Starts the purchase data for a user.
 	 *
 	 * @since 3.3.5
+	 * @since 3.7.1 Returns when validation has raised an error, before any data is written.
 	 * @param bool|null $doing_ajax Whether the request is being made via AJAX.
 	 * @return null|array The purchase data.
 	 */
@@ -39,7 +40,13 @@ class PurchaseData {
 
 		do_action( 'edd_checkout_user_error_checks', $user, $valid_data, $_POST );
 
-		if ( empty( $user ) ) {
+		/*
+		 * Both validation hooks have run, so an error here means the checkout was refused
+		 * and set() must not reach the customer record. The gate belongs after the second
+		 * hook: returning earlier would skip send_ajax_errors(), which is what returns a
+		 * validation message to the form-based PayPal Commerce buttons.
+		 */
+		if ( empty( $user ) || edd_get_errors() ) {
 			return null;
 		}
 
@@ -196,6 +203,7 @@ class PurchaseData {
 	 * Updates the customer record if the user has added or updated information.
 	 *
 	 * @since 3.3.5
+	 * @since 3.7.1 Only updates an existing record for the logged in user it belongs to.
 	 * @param array $user_info The user information.
 	 */
 	private static function maybe_update_customer( $user_info ) {
@@ -203,6 +211,18 @@ class PurchaseData {
 		if ( ! $customer ) {
 			return;
 		}
+
+		/*
+		 * A record is matched on the submitted email address alone, which does not
+		 * establish ownership of it. Only the logged in user a record belongs to may
+		 * change its name and addresses; an order still attaches to the record either
+		 * way, and edd_build_order() adds the order's address once a purchase completes.
+		 */
+		$user_id = (int) $customer->user_id;
+		if ( ! $user_id || get_current_user_id() !== $user_id ) {
+			return;
+		}
+
 		$name = trim( $user_info['first_name'] . ' ' . $user_info['last_name'] );
 		if ( empty( $customer->name ) || $name !== $customer->name ) {
 			$customer->update(

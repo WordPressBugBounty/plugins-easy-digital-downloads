@@ -15,6 +15,14 @@ use EDD\Admin\Menu\SecondaryNavigation;
 class Screen {
 
 	/**
+	 * The tab shown when no tab is requested.
+	 *
+	 * @since 3.7.1
+	 * @var string
+	 */
+	const DEFAULT_TAB = 'general';
+
+	/**
 	 * The tabs.
 	 *
 	 * @since 3.3.0
@@ -73,8 +81,14 @@ class Screen {
 				'system_info'       => __( 'System Info', 'easy-digital-downloads' ),
 				'debug_log'         => __( 'Debug Log', 'easy-digital-downloads' ),
 				'import_export'     => __( 'Import/Export', 'easy-digital-downloads' ),
-				'labs'              => __( 'Labs', 'easy-digital-downloads' ),
 			);
+
+			// The AI tab has nothing to configure until the Abilities API exists.
+			if ( function_exists( 'wp_register_ability' ) ) {
+				$tabs['ai'] = __( 'AI', 'easy-digital-downloads' );
+			}
+
+			$tabs['labs'] = __( 'Labs', 'easy-digital-downloads' );
 
 			self::$tabs = apply_filters( 'edd_tools_tabs', $tabs );
 
@@ -82,6 +96,13 @@ class Screen {
 				'name' => self::$tabs['system_info'],
 				'url'  => self::get_system_info_link(),
 			);
+
+			// Labs is the last tab, including after an add-on has registered its own.
+			if ( isset( self::$tabs['labs'] ) ) {
+				$labs = self::$tabs['labs'];
+				unset( self::$tabs['labs'] );
+				self::$tabs['labs'] = $labs;
+			}
 		}
 
 		return self::$tabs;
@@ -96,7 +117,7 @@ class Screen {
 	private static function get_active_tab() {
 		$active_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_SPECIAL_CHARS );
 
-		return $active_tab ?? 'general';
+		return $active_tab ?? self::DEFAULT_TAB;
 	}
 
 	/**

@@ -173,6 +173,20 @@ class RateLimiter {
 	}
 
 	/**
+	 * Clears the current window for an identifier.
+	 *
+	 * The key format is an internal detail, so callers that need to start an identifier over,
+	 * tests included, go through this rather than rebuilding it.
+	 *
+	 * @since 3.7.1
+	 * @param string $identifier Same identifier used for increment/check.
+	 * @return void
+	 */
+	public function reset( string $identifier ): void {
+		delete_transient( $this->get_transient_key( $identifier ) );
+	}
+
+	/**
 	 * Builds the transient key for an identifier.
 	 *
 	 * @since 3.6.5

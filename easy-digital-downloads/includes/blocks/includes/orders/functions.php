@@ -154,7 +154,7 @@ function get_payment_key() {
 			return false;
 		}
 
-		if ( ! hash_equals( $order_hash, md5( $order->id . $order->payment_key . $order->email ) ) ) {
+		if ( ! $order->is_receipt_hash_valid( $order_hash ) ) {
 			return false;
 		}
 

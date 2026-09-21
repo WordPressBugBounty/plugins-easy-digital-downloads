@@ -217,6 +217,8 @@ function receipt( $block_attributes = array(), $block_content = '' ) {
  * Shows the message if the current viewer doesn't have access to any order information.
  *
  * @since 2.0
+ * @since 3.7.1 A request with no receipt hash gets the expired-session message
+ *                       instead of a confirmation form that can never succeed.
  * @param EDD\Orders\Order $order
  * @return void
  */
@@ -232,6 +234,23 @@ function show_no_access_message( $order ) {
 
 	// User is not logged in and can view a guest order.
 	if ( empty( $order->user_id ) ) {
+		$order_hash = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
+
+		// Fallback to $_GET if filter_input returns null (for test environments).
+		if ( ! $order_hash && isset( $_GET['order'] ) ) {
+			$order_hash = sanitize_text_field( $_GET['order'] );
+		}
+
+		// Nothing we send reaches this page without the hash, so a request with none of it
+		// cannot confirm, and the form should not offer to try.
+		if ( empty( $order_hash ) ) {
+			printf(
+				'<p class="edd-alert edd-alert-error">%s</p>',
+				esc_html( apply_filters( 'edd_receipt_guest_error_message', __( 'Receipt could not be retrieved, your purchase session has expired.', 'easy-digital-downloads' ) ) )
+			);
+			return;
+		}
+
 		printf(
 			'<p>%s</p>',
 			esc_html__( 'Please confirm your email address to access your downloads.', 'easy-digital-downloads' )
@@ -296,7 +315,14 @@ function verify_guest_email( $data ) {
 		return;
 	}
 	$order = edd_get_order( $data['order_id'] );
-	if ( $order instanceof \EDD\Orders\Order && $data['edd_guest_email'] === $order->email ) {
+	$hash  = ! empty( $data['order'] ) && is_string( $data['order'] ) ? sanitize_text_field( urldecode( $data['order'] ) ) : '';
+
+	if (
+		$order instanceof \EDD\Orders\Order
+		&& ! empty( $hash )
+		&& $order->is_receipt_hash_valid( $hash )
+		&& $data['edd_guest_email'] === $order->email
+	) {
 		edd_set_purchase_session(
 			array(
 				'purchase_key' => $order->payment_key,
@@ -391,6 +417,7 @@ function downloads( $block_attributes = array() ) {
  * Gets an array of products the user has purchased.
  *
  * @since 2.0.5
+ * @since 3.7.1 The block-editor preview now requires `edit_shop_payments`.
  * @param  array The block attributes
  * @return false|array
  */
@@ -402,7 +429,7 @@ function get_purchased_products( $block_attributes ) {
 		'number'     => 9999,
 		'type'       => 'sale',
 	);
-	if ( \EDD\Blocks\Utility::is_block_editor() ) {
+	if ( \EDD\Blocks\Utility::is_block_editor( 'edit_shop_payments' ) ) {
 		$args['number'] = 50;
 		unset( $args['user_id'] );
 	}

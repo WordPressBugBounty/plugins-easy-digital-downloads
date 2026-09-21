@@ -80,6 +80,8 @@ function edd_get_confirmation_page_uri() {
  * Gets the receipt page URI.
  *
  * @since 3.1
+ * @since 3.7.1 The hash comes from Order::get_receipt_hash(), the single definition
+ *                       every reader of this value now validates against.
  * @param int $order_id
  * @return string
  */
@@ -92,7 +94,7 @@ function edd_get_receipt_page_uri( $order_id ) {
 
 	$query_args = array(
 		'id'    => $order_id,
-		'order' => urlencode( md5( $order_id . $order->payment_key . $order->email ) ),
+		'order' => urlencode( $order->get_receipt_hash() ),
 	);
 
 	return add_query_arg( $query_args, get_permalink( $page_id ) );

@@ -6,7 +6,7 @@ Tags: ecommerce, payments, sell digital products, digital store, stripe
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable Tag: 3.7.0
+Stable Tag: 3.7.1
 License: GPLv2 or later
 
 The #1 eCommerce plugin to sell digital products & subscriptions. Accept payments with Stripe & PayPal. Sell ebooks, software & more.
@@ -293,6 +293,83 @@ Yes, with an Extended Pass you get access to [Recurring Payments](https://easydi
 8. Checkout Form Block - Default Theme
 
 == Changelog ==
+= 3.7.1 =
+* NEW: Abilities - Store data is now registered with WordPress's Abilities API, so AI assistants can discover and work with orders, customers, products and discounts.
+* NEW: Admin - Introducing Command Palette support, so orders, customers, discounts and downloads can be found and jumped to with Cmd+K / Ctrl+K on WordPress 6.9 and later.
+* Admin: Improved the styling of enhanced select fields so they render correctly alongside plugins that load their own Chosen styles.
+* Admin: Hardened the validation and output of store settings when they are saved.
+* API: Improved the visibility checks on the products API endpoint.
+* API: Improved the permission checks on the file download logs API mode, and the conditions under which API keys are issued.
+* Blocks: Improved the ownership checks in the User Downloads block.
+* Blocks: Hardened how styling attributes are written into the Downloads block's inline CSS.
+* Cart: Fixed cart item removal links breaking after the cart was refreshed with AJAX.
+* Cart: Improved the checks applied to a restored guest cart, including its pricing and access.
+* Checkout: Restored the "Reset Password" link in the checkout login error message.
+* Checkout: Fixed a "Confirm your password" error that prevented customers from registering a new account on block checkout.
+* Checkout: Fixed the PayPal button not responding for guests when the checkout login form is hidden.
+* Checkout: Increased the verification required before an order automatically registers a new account.
+* Checkout: Added abuse controls to front-end account creation, and improved how checkout applies the store's registration setting.
+* Compatibility - Elementor: Fixed cart item thumbnails rendering at full size, and a PHP warning, in the legacy checkout widget.
+* Compatibility - Elementor: Fixed the two column checkout layout rendering incorrectly.
+* Compatibility - Elementor: Improved front-end performance by no longer decoding the full Elementor element tree on every pageview.
+* Compatibility - WP All Export: Fixed EDD's enhanced select scripts breaking the Drag & Drop builder.
+* Cron: Session cleanup now reschedules itself until the full backlog of expired sessions is cleared.
+* Cron: Improved the context checks on cron maintenance routines.
+* Customers: Fixed undefined key warnings when a customer's session data was only partially populated.
+* Customers: Improved the capability checks required to delete a customer and its records.
+* Customers: Increased the verification required before registration attaches an existing customer record.
+* Customers: Improved how customer name and address details are stored when a checkout does not complete.
+* Database: Improved the sanitization of serialized meta values.
+* Discounts: Strengthened the enforcement of discount usage limits.
+* Downloads: Fixed a PHP warning when delivering files hosted at a URL with no local file path.
+* Downloads: Tightened the directory boundary applied when serving locally hosted files.
+* Downloads: Improved the ownership and location checks on files referenced by attachment ID.
+* Downloads: Improved the visibility checks applied to product search results.
+* Downloads: Improved how product search results are cached.
+* Downloads: Improved the permission check when saving bundled products, and how access to bundled files is determined.
+* Downloads: Strengthened the enforcement of per-file download limits.
+* Downloads: Improved how files with no price option assigned are matched to a purchase.
+* Downloads: Improved the access checks applied to a purchased price option.
+* Downloads: Improved the location checks applied to a product's file path.
+* Downloads: Improved the validation performed when generating file download links.
+* Emails: Improved how product details are rendered in the {download_list} email tag.
+* Emails: Improved the checks performed before purchase receipt and new sale emails are sent.
+* Emails: Fixed a fatal error in the name email tag when an order has no first name.
+* Gateways: Improved the validation and permission checks on Apple Pay domain registration.
+* Logs: Improved the capability checks required to view store logs.
+* Migration: Improved the context checks on background upgrade routines.
+* Orders: Improved the validation required to recover an abandoned order.
+* Orders: Added additional validation to the resend receipt action.
+* Orders: Corrected the rendering of product titles in the order editor.
+* Orders: Increased the verification required for a guest to view an order receipt.
+* Orders: Tightened the markup allowed in product notes on the order receipt.
+* Orders: Improved the sanitization and display of order addresses in the admin.
+* Orders: Tightened the requirements for running a deferred order action.
+* Orders: Improved the authorization required to create an order.
+* Orders: Improved the capability checks on bulk trashing and restoring orders.
+* Orders: Improved the capability and input checks on manual order creation.
+* Orders: Improved how the order receipt handles pending email verification.
+* Orders: Tightened how the receipt shortcode resolves which order to display.
+* PayPal: Site Health now correctly reports the connection status for stores still on PayPal Commerce v2.
+* PayPal: Added additional verification before a refund is sent to PayPal.
+* PayPal: Fixed refunds failing for stores still connected with PayPal Commerce v2.
+* PayPal: Strengthened the checks on the PayPal return URL before a purchase session is created.
+* PayPal: Added additional verification to the PayPal webhook sync action.
+* PayPal Standard: Improved the verification of incoming IPN messages.
+* PayPal Standard: Improved how gateway messages are stored in order notes from PayPal disputes.
+* Reports: Improved the performance of the reports screens.
+* Reports: Improved how the discount usage chart matches a discount code.
+* Stripe: Fixed free trial subscription checkouts failing the amount check on Card Elements.
+* Stripe: Prevented duplicate charges when paying with Stripe Payment Elements.
+* Stripe: Added additional verification to the Stripe Connect completion step.
+* Stripe: The Elements Mode setting is now visible to stores still using Card Elements.
+* Dev: Email tags are now defined in a registry of individual tag classes. edd_add_email_tag() and the edd_email_tags filter are unchanged, and edd_email_tag_billing_address() is deprecated.
+* Dev: Updated Action Scheduler to 4.1.0.
+* Dev: New internal hooks use a slash delimited namespace (edd/domain/event). No existing hook names changed.
+* Dev: Consolidated the dynamic action routers into a single class, and added the edd/actions/router/blocked_hooks filter for controlling which hook names the routers will dispatch.
+* Dev: Added the edd/logs/file_downloads/columns and edd/logs/file_downloads/row filters to the file download logs table.
+* Dev: Download history export rows now carry the log ID.
+
 = 3.7.0 =
 * NEW: Checkout - The block editor checkout now supports customization with inner blocks.
 * NEW: Checkout - New composable checkout widgets for finer control of the Elementor checkout.

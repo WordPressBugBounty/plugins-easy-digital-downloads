@@ -84,6 +84,9 @@ export const CopyDownloadLink = Dialog.extend( {
 	 */
 	fetchLink() {
 		const { orderId, productId, priceId } = this.options;
+		const {
+			nonces: { edd_get_file_download_link: nonce },
+		} = window.eddAdminOrderOverview;
 
 		// Retrieve and set link.
 		//
@@ -94,6 +97,7 @@ export const CopyDownloadLink = Dialog.extend( {
 			url: ajaxurl,
 			data: {
 				action: 'edd_get_file_download_link',
+				nonce,
 				payment_id: orderId,
 				download_id: productId,
 				price_id: priceId,

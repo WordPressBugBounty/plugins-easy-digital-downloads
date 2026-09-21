@@ -84,6 +84,14 @@ class EDD_Cart {
 	private $tax_rate = null;
 
 	/**
+	 * Saves and restores this cart. `null` until first needed.
+	 *
+	 * @var \EDD\Cart\SavedCart|null
+	 * @since 3.7.1
+	 */
+	private $saved_cart_handler = null;
+
+	/**
 	 * Purchase Session
 	 *
 	 * @var array
@@ -259,6 +267,12 @@ class EDD_Cart {
 			// If the item is not a download or it's status has changed since it was added to the cart.
 			if ( empty( $download->ID ) || ! $download->can_purchase() ) {
 				unset( $cart[ $key ] );
+				continue;
+			}
+
+			$options = isset( $item['options'] ) ? $item['options'] : array();
+			if ( ! $this->is_item_sellable( $item['id'], $options ) ) {
+				unset( $cart[ $key ] );
 			}
 		}
 
@@ -298,7 +312,7 @@ class EDD_Cart {
 			return $this->calculation_cache['details'];
 		}
 
-		global $edd_is_last_cart_item, $edd_flat_discount_total;
+		global $edd_is_last_cart_item;
 
 		if ( empty( $this->contents ) ) {
 			// If the contents haven't been fetched yet, fetch them.
@@ -326,6 +340,12 @@ class EDD_Cart {
 			$price_id = isset( $options['price_id'] ) ? $options['price_id'] : null;
 
 			$item_price = $this->get_item_price( $item['id'], $options );
+
+			if ( ! $this->is_item_sellable( $item['id'], $options, $item_price ) ) {
+				$this->reset_flat_discount_state();
+
+				continue;
+			}
 
 			$discount_details  = $this->get_item_discount_amount( $item, false, true );
 			$discount          = $discount_details['amount'];
@@ -382,10 +402,7 @@ class EDD_Cart {
 				'price'             => $this->format_amount( $total ),
 			);
 
-			if ( $edd_is_last_cart_item ) {
-				$edd_is_last_cart_item   = false;
-				$edd_flat_discount_total = 0.00;
-			}
+			$this->reset_flat_discount_state();
 		}
 
 		$this->details = $details;
@@ -1016,6 +1033,10 @@ class EDD_Cart {
 	 * Use edd_get_cart_item_final_price()
 	 *
 	 * @since 2.7
+	 * @since 3.7.1 A cart item whose price option does not resolve — reachable only for
+	 *                       an item that did not go through `add()`'s own price ID sanitizing —
+	 *                       returns false instead of falling back to the product's `edd_price`
+	 *                       meta.
 	 *
 	 * @param  int   $download_id               Download ID for the cart item
 	 * @param  array $options                   Optional parameters, used for defining variable prices
@@ -1024,20 +1045,41 @@ class EDD_Cart {
 	 */
 	public function get_item_price( $download_id = 0, $options = array(), $remove_tax_from_inclusive = false ) {
 		$price           = 0;
+		$prices          = array();
 		$variable_prices = edd_has_variable_prices( $download_id );
 
 		if ( $variable_prices ) {
 			$prices = edd_get_variable_prices( $download_id );
 
 			if ( $prices ) {
-				$price = false;
-				if ( ! empty( $options ) && isset( $options['price_id'] ) ) {
-					$price = $prices[ $options['price_id'] ]['amount'];
+				/*
+				 * A variable priced product whose price option cannot be resolved has no price.
+				 * The product's `edd_price` meta is not a substitute: it is the lowest price
+				 * option, or `0.00` when it was never written.
+				 */
+				$price_id = isset( $options['price_id'] ) ? $options['price_id'] : null;
+
+				if ( is_null( $price_id ) || ! isset( $prices[ $price_id ] ) ) {
+					/*
+					 * The filter still prices the item, because an extension can carry the
+					 * amount in the item's own options. Only a price above zero counts: `false`
+					 * is zero in arithmetic, so a callback which adjusts rather than replaces
+					 * the price hands back `0.0` for an item it did not price.
+					 */
+					$filtered = apply_filters( 'edd_cart_item_price', false, $download_id, $options );
+
+					return is_numeric( $filtered ) && (float) $filtered > 0 ? $filtered : false;
 				}
+
+				$price = $prices[ $price_id ]['amount'];
 			}
 		}
 
-		if ( ! $variable_prices || false === $price ) {
+		/*
+		 * A product flagged as variable priced but carrying no price options has nothing to
+		 * resolve against, so its price is the product's own meta.
+		 */
+		if ( ! $variable_prices || empty( $prices ) ) {
 			// Get the standard Download price if not using variable prices
 			$price = edd_get_download_price( $download_id );
 		}
@@ -1477,117 +1519,30 @@ class EDD_Cart {
 	 * Save Cart
 	 *
 	 * @since 2.7
+	 * @since 3.7.1 A guest's cart token is signed with the store's own key. The work of
+	 *                       saving and restoring a cart now lives in `EDD\Cart\SavedCart`; this
+	 *                       stays the public entry point.
+	 *
 	 * @return bool
 	 */
 	public function save() {
-
-		// Bail if carts cannot be saved
-		if ( ! $this->is_saving_enabled() ) {
-			return false;
-		}
-
-		// Get cart & cart token
-		$cart  = EDD()->session->get( 'edd_cart' );
-		$token = edd_generate_cart_token();
-
-		if ( is_user_logged_in() ) {
-			$user_id = get_current_user_id();
-			update_user_meta( $user_id, 'edd_saved_cart', $cart, false );
-			update_user_meta( $user_id, 'edd_cart_token', $token, false );
-		} else {
-			$expiration = time() + WEEK_IN_SECONDS;
-			$cart       = json_encode( $cart );
-			EDD\Utils\Cookies::set( 'edd_saved_cart', $cart, $expiration );
-			EDD\Utils\Cookies::set( 'edd_cart_token', $token, $expiration );
-		}
-
-		// Get all cart messages
-		$messages = EDD()->session->get( 'edd_cart_messages' );
-
-		// Make sure it's an array, if empty
-		if ( empty( $messages ) ) {
-			$messages = array();
-		}
-
-		$checkout_url = add_query_arg(
-			array(
-				'edd_action'     => 'restore_cart',
-				'edd_cart_token' => sanitize_key( $token ),
-			),
-			edd_get_checkout_uri()
-		);
-
-		// Add the success message
-		$messages['edd_cart_save_successful'] = sprintf(
-			'<strong>%1$s</strong>: %2$s <a href="%3$s">%3$s</a>',
-			__( 'Success', 'easy-digital-downloads' ),
-			__( 'Cart saved successfully. You can restore your cart using this URL:', 'easy-digital-downloads' ),
-			esc_url( edd_get_checkout_uri() . '?edd_action=restore_cart&edd_cart_token=' . urlencode( $token ) )
-		);
-
-		// Set these messages in the session
-		EDD()->session->set( 'edd_cart_messages', $messages );
-
-		// Return if cart saved
-		return ! empty( $cart );
+		return $this->saved_cart()->save();
 	}
 
 	/**
 	 * Restore Cart
 	 *
 	 * @since 2.7
-	 * @return bool
+	 * @since 3.7.1 A guest's cart restores through a store-signed token, rebuilt via
+	 *                       `EDD_Cart::add()`. A request with nothing saved for it is refused,
+	 *                       and `edd_get_cart_token` does not apply on the guest path — a
+	 *                       guest's token is checked against the store's signature, a logged in
+	 *                       customer's against their own user meta.
+	 *
+	 * @return bool|WP_Error
 	 */
 	public function restore() {
-		if ( ! $this->is_saving_enabled() ) {
-			return false;
-		}
-
-		$user_id    = get_current_user_id();
-		$saved_cart = get_user_meta( $user_id, 'edd_saved_cart', true );
-		$token      = $this->get_token();
-
-		if ( is_user_logged_in() && $saved_cart ) {
-			$messages = EDD()->session->get( 'edd_cart_messages' );
-
-			if ( ! $messages ) {
-				$messages = array();
-			}
-
-			if ( isset( $_GET['edd_cart_token'] ) && ! hash_equals( $_GET['edd_cart_token'], $token ) ) {
-				$messages['edd_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'easy-digital-downloads' ), __( 'Cart restoration failed. Invalid token.', 'easy-digital-downloads' ) );
-				EDD()->session->set( 'edd_cart_messages', $messages );
-			}
-
-			delete_user_meta( $user_id, 'edd_saved_cart' );
-			delete_user_meta( $user_id, 'edd_cart_token' );
-
-			if ( isset( $_GET['edd_cart_token'] ) && $_GET['edd_cart_token'] != $token ) {
-				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'easy-digital-downloads' ) );
-			}
-		} elseif ( ! is_user_logged_in() && isset( $_COOKIE['edd_saved_cart'] ) && $token ) {
-			$saved_cart = $_COOKIE['edd_saved_cart'];
-
-			if ( ! hash_equals( $_GET['edd_cart_token'], $token ) ) {
-				$messages['edd_cart_restoration_failed'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Error', 'easy-digital-downloads' ), __( 'Cart restoration failed. Invalid token.', 'easy-digital-downloads' ) );
-				EDD()->session->set( 'edd_cart_messages', $messages );
-
-				return new WP_Error( 'invalid_cart_token', __( 'The cart cannot be restored. Invalid token.', 'easy-digital-downloads' ) );
-			}
-
-			$saved_cart = json_decode( stripslashes( $saved_cart ), true );
-			EDD\Utils\Cookies::set( 'edd_saved_cart' );
-			EDD\Utils\Cookies::set( 'edd_cart_token' );
-		}
-
-		$messages['edd_cart_restoration_successful'] = sprintf( '<strong>%1$s</strong>: %2$s', __( 'Success', 'easy-digital-downloads' ), __( 'Cart restored successfully.', 'easy-digital-downloads' ) );
-		EDD()->session->set( 'edd_cart', $saved_cart );
-		EDD()->session->set( 'edd_cart_messages', $messages );
-
-		// @e also have to set this instance to what the session is.
-		$this->contents = $saved_cart;
-
-		return true;
+		return $this->saved_cart()->restore();
 	}
 
 	/**
@@ -1597,15 +1552,7 @@ class EDD_Cart {
 	 * @return int
 	 */
 	public function get_token() {
-		$user_id = get_current_user_id();
-
-		if ( is_user_logged_in() ) {
-			$token = get_user_meta( $user_id, 'edd_cart_token', true );
-		} else {
-			$token = isset( $_COOKIE['edd_cart_token'] ) ? $_COOKIE['edd_cart_token'] : false;
-		}
-
-		return apply_filters( 'edd_get_cart_token', $token, $user_id );
+		return $this->saved_cart()->get_token();
 	}
 
 	/**
@@ -1615,7 +1562,22 @@ class EDD_Cart {
 	 * @return int
 	 */
 	public function generate_token() {
-		return apply_filters( 'edd_generate_cart_token', md5( mt_rand() . time() ) );
+		return $this->saved_cart()->generate_token();
+	}
+
+	/**
+	 * Gets the object which saves and restores this cart.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return \EDD\Cart\SavedCart
+	 */
+	private function saved_cart() {
+		if ( null === $this->saved_cart_handler ) {
+			$this->saved_cart_handler = new \EDD\Cart\SavedCart( $this );
+		}
+
+		return $this->saved_cart_handler;
 	}
 
 	/**
@@ -1712,5 +1674,79 @@ class EDD_Cart {
 	 */
 	public function remove_all_discounts() {
 		$this->cart_session->remove_all_discounts();
+	}
+
+	/**
+	 * Whether a cart item's price can be resolved from the product's own price options.
+	 *
+	 * A product with no price options at all still resolves, because its price comes from the
+	 * product's `edd_price` meta rather than from a price option.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int   $download_id Download ID for the cart item.
+	 * @param array $options     The cart item's options, which may name a price option.
+	 * @return bool
+	 */
+	private function is_item_priceable( $download_id, $options = array() ) {
+		if ( ! edd_has_variable_prices( $download_id ) ) {
+			return true;
+		}
+
+		$prices = edd_get_variable_prices( $download_id );
+		if ( empty( $prices ) ) {
+			return true;
+		}
+
+		$price_id = isset( $options['price_id'] ) ? $options['price_id'] : null;
+
+		return ! is_null( $price_id ) && isset( $prices[ $price_id ] );
+	}
+
+	/**
+	 * Whether a cart item can be sold.
+	 *
+	 * An item core cannot price has no price at all, and `false` is zero in the checkout
+	 * arithmetic, so it cannot be carried through. An item core can price is sellable whatever
+	 * the `edd_cart_item_price` filter returned, which is what keeps get_contents() and
+	 * get_contents_details() in step.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int        $download_id Download ID for the cart item.
+	 * @param array      $options     The cart item's options, which may name a price option.
+	 * @param float|bool $item_price  Optional. The item's resolved price, when the caller has it
+	 *                                already. Resolved here when it does not.
+	 * @return bool
+	 */
+	private function is_item_sellable( $download_id, $options = array(), $item_price = null ) {
+		if ( $this->is_item_priceable( $download_id, $options ) ) {
+			return true;
+		}
+
+		if ( null === $item_price ) {
+			$item_price = $this->get_item_price( $download_id, $options );
+		}
+
+		return false !== $item_price;
+	}
+
+	/**
+	 * Clears the flat rate discount bookkeeping after a cart item has been handled.
+	 *
+	 * A flat rate discount's remainder is applied to the last cart item, so the marker and the
+	 * running total are consumed once that item has been through the loop.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return void
+	 */
+	private function reset_flat_discount_state() {
+		global $edd_is_last_cart_item, $edd_flat_discount_total;
+
+		if ( $edd_is_last_cart_item ) {
+			$edd_is_last_cart_item   = false;
+			$edd_flat_discount_total = 0.00;
+		}
 	}
 }

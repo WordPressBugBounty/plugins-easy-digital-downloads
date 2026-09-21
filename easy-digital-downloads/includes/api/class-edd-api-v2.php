@@ -25,6 +25,9 @@ class EDD_API_V2 extends EDD_API_V1 {
 	 * Process Get Products API Request
 	 *
 	 * @since 2.6
+	 * @since 3.7.1 The single-product branch now refuses a post whose status the
+	 *                        caller cannot read, and the collection branch pins `post_status`
+	 *                        to `publish` explicitly.
 	 * @param array $args Query arguments
 	 * @return array $customers Multidimensional array of the products
 	 */
@@ -39,6 +42,7 @@ class EDD_API_V2 extends EDD_API_V1 {
 
 			$query_args = array(
 				'post_type'        => 'download',
+				'post_status'      => 'publish',
 				'posts_per_page'   => $this->per_page(),
 				'suppress_filters' => true,
 				'paged'            => $this->get_paged(),
@@ -166,10 +170,15 @@ class EDD_API_V2 extends EDD_API_V1 {
 			if ( get_post_type( $args['product'] ) == 'download' ) {
 				$product_info = get_post( $args['product'] );
 
+				if ( ! is_post_publicly_viewable( $product_info ) && ! $this->can_read_product( $product_info->ID ) ) {
+					$error['error'] = $this->product_not_found( $args['product'] );
+					return $error;
+				}
+
 				$products['products'][0] = $this->get_product_data( $product_info );
 
 			} else {
-				$error['error'] = sprintf( __( 'Product %s not found!', 'easy-digital-downloads' ), $args['product'] );
+				$error['error'] = $this->product_not_found( $args['product'] );
 				return $error;
 			}
 		}

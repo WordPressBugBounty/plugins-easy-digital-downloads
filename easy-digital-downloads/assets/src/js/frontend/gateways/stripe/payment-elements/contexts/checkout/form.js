@@ -84,6 +84,7 @@ async function triggerPurchaseButton ( event ) {
 			intent_type: intentType,
 			intent_fingerprint: intentFingerprint,
 			intent_id: intentId,
+			intent_paid: intentPaid,
 		} = await processForm( paymentMethod );
 
 		// Store these so we can use them later to not create different payment intents.
@@ -93,6 +94,12 @@ async function triggerPurchaseButton ( event ) {
 
 		const nonceField = document.getElementById( 'edd-process-checkout-nonce' );
 		nonceField.value = refreshedNonce;
+
+		// This intent was paid on an earlier attempt, so recover it into an order instead of charging again.
+		if ( intentPaid ) {
+			await completeOrder();
+			return;
+		}
 
 		/**
 		 * Our last action of processing the form returned us a Payment Intent, which
@@ -115,12 +122,18 @@ async function triggerPurchaseButton ( event ) {
 		const { error } = await window.eddStripe[ confirmFunc ]( confirmArgs );
 
 		if ( error ) {
+			// Stripe reports errors for payments it has already taken, so complete those instead of surfacing an error.
+			if ( isIntentPaid( error.payment_intent || error.setup_intent ) ) {
+				await completeOrder();
+				return;
+			}
+
 			handleException( error );
 			enableForm();
 			return false;
 		}
 
-		completeOrder();
+		await completeOrder();
 	} catch ( error ) {
 		handleException( error );
 		enableForm();
@@ -340,6 +353,16 @@ async function handleException( error ) {
 	if ( window.console && error.responseText ) {
 		window.console.error( error.responseText );
 	}
+}
+
+/**
+ * Determines whether a Stripe intent has already been paid.
+ *
+ * @param {Object} intent PaymentIntent or SetupIntent from a Stripe response.
+ * @return {boolean} Whether the intent has been paid.
+ */
+function isIntentPaid( intent ) {
+	return !! intent && [ 'succeeded', 'requires_capture' ].includes( intent.status );
 }
 
 export function purchaseformValid() {

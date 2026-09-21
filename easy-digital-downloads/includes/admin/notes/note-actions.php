@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  * Add a note via AJAX.
  *
  * @since 3.0
+ * @since 3.7.1 Note content is sanitized by edd_sanitize_note_content().
  */
 function edd_admin_ajax_add_note() {
 
@@ -44,7 +45,7 @@ function edd_admin_ajax_add_note() {
 
 	// Get note contents (maybe sanitize)
 	$note = ! empty( $_POST['note'] )
-		? trim( wp_kses( stripslashes_deep( $_POST['note'] ), edd_get_allowed_tags() ) )
+		? edd_sanitize_note_content( stripslashes_deep( $_POST['note'] ) )
 		: '';
 
 	// Bail if no note

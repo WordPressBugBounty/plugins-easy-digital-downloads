@@ -108,12 +108,12 @@ class EDD_Customer_Addresses_Table extends List_Table {
 
 		// Address2.
 		if ( ! empty( $address2 ) ) {
-			$extra .= '<br>' . $address2;
+			$extra .= '<br>' . esc_html( $address2 );
 		}
 
 		// City & Zip.
 		if ( ! empty( $city ) || ! empty( $code ) ) {
-			$extra .= '<br>' . implode( ' ', array( $city, $code ) );
+			$extra .= '<br>' . esc_html( implode( ' ', array_filter( array( $city, $code ) ) ) );
 		}
 
 		// Get the item status.

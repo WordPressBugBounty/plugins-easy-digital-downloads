@@ -11,6 +11,7 @@
 
 namespace EDD\Gateways\PayPal\Webhooks;
 
+use EDD\Cron\EventManager;
 use EDD\Gateways\PayPal\API;
 use EDD\Gateways\PayPal\Exceptions\API_Exception;
 use EDD\Gateways\PayPal\Exceptions\Authentication_Exception;
@@ -221,7 +222,7 @@ function sync_webhook_on_cron() {
 		add_option( 'edd_paypal_webhook_sync_failed', time(), '', false );
 	}
 }
-add_action( 'edd_paypal_commerce_sync_webhooks', __NAMESPACE__ . '\\sync_webhook_on_cron' );
+add_action( 'edd/paypal/webhooks/sync', EventManager::cron_only( __NAMESPACE__ . '\\sync_webhook_on_cron' ) );
 
 /**
  * Retrieves information about the webhook EDD created.

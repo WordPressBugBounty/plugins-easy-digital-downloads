@@ -2,14 +2,18 @@
 /**
  * Reports API - Functions
  *
- * @package     EDD
- * @subpackage  Reports
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package     EDD\Reports
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
+ * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       3.0
  */
 
 namespace EDD\Reports;
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
+
+use EDD\Reports\Filters\RequestCache;
 
 //
 // Endpoint and report helpers.
@@ -324,48 +328,52 @@ function parse_endpoint_views( $views ) {
  * @return array List of supported endpoint filters.
  */
 function get_filters() {
-	$filters = array(
-		'dates'              => array(
-			'label'            => __( 'Date', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_dates_filter'
-		),
-		'products'           => array(
-			'label'            => __( 'Products', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_products_filter'
-		),
-		'product_categories' => array(
-			'label'            => __( 'Product Categories', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_product_categories_filter'
-		),
-		'taxes'              => array(
-			'label'            => __( 'Exclude Taxes', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_taxes_filter'
-		),
-		'gateways'           => array(
-			'label'            => __( 'Gateways', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_gateways_filter'
-		),
-		'discounts'          => array(
-			'label'            => __( 'Discounts', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_discounts_filter'
-		),
-		'regions'            => array(
-			'label'            => __( 'Regions', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_region_filter'
-		),
-		'countries'          => array(
-			'label'            => __( 'Countries', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_country_filter'
-		),
-		'currencies'          => array(
-			'label'            => __( 'Currencies', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_currency_filter'
-		),
-		'order_statuses'      => array(
-			'label'            => __( 'Order Statuses', 'easy-digital-downloads' ),
-			'display_callback' => __NAMESPACE__ . '\\display_order_status_filter'
-		),
-	);
+	static $filters = null;
+
+	if ( is_null( $filters ) ) {
+		$filters = array(
+			'dates'              => array(
+				'label'            => __( 'Date', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_dates_filter',
+			),
+			'products'           => array(
+				'label'            => __( 'Products', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_products_filter',
+			),
+			'product_categories' => array(
+				'label'            => __( 'Product Categories', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_product_categories_filter',
+			),
+			'taxes'              => array(
+				'label'            => __( 'Exclude Taxes', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_taxes_filter',
+			),
+			'gateways'           => array(
+				'label'            => __( 'Gateways', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_gateways_filter',
+			),
+			'discounts'          => array(
+				'label'            => __( 'Discounts', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_discounts_filter',
+			),
+			'regions'            => array(
+				'label'            => __( 'Regions', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_region_filter',
+			),
+			'countries'          => array(
+				'label'            => __( 'Countries', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_country_filter',
+			),
+			'currencies'         => array(
+				'label'            => __( 'Currencies', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_currency_filter',
+			),
+			'order_statuses'     => array(
+				'label'            => __( 'Order Statuses', 'easy-digital-downloads' ),
+				'display_callback' => __NAMESPACE__ . '\\display_order_status_filter',
+			),
+		);
+	}
 
 	/**
 	 * Filters the list of available report filters.
@@ -405,6 +413,12 @@ function get_filter_value( $filter ) {
 		return $value;
 	}
 
+	$cache_key = RequestCache::key( 'get_filter_value', array( $filter ) );
+	$cached    = RequestCache::get( $cache_key );
+	if ( ! is_null( $cached ) ) {
+		return $cached;
+	}
+
 	switch ( $filter ) {
 		// Handle dates.
 		case 'dates':
@@ -437,8 +451,8 @@ function get_filter_value( $filter ) {
 			}
 
 			if ( ! isset( $_GET['range'] ) ) {
-				$dates   = parse_dates_for_range( $default_range );
-				$value   = array(
+				$dates = parse_dates_for_range( $default_range );
+				$value = array(
 					'range'          => $default_range,
 					'relative_range' => $default_relative_range,
 					'from'           => $dates['start']->format( 'Y-m-d' ),
@@ -446,18 +460,18 @@ function get_filter_value( $filter ) {
 				);
 			} else {
 				$value = array(
-					'range' => isset( $_GET['range'] )
+					'range'          => isset( $_GET['range'] )
 						? sanitize_text_field( $_GET['range'] )
 						: $default_range,
 					'relative_range' => isset( $_GET['relative_range'] )
 						? sanitize_text_field( $_GET['relative_range'] )
 						: $default_relative_range,
-					'from' => isset( $_GET['filter_from'] )
+					'from'           => isset( $_GET['filter_from'] )
 						? sanitize_text_field( $_GET['filter_from'] )
 						: '',
-					'to'   => isset( $_GET['filter_to'] )
+					'to'             => isset( $_GET['filter_to'] )
 						? sanitize_text_field( $_GET['filter_to'] )
-						: ''
+						: '',
 				);
 			}
 
@@ -489,6 +503,8 @@ function get_filter_value( $filter ) {
 			 */
 			$value = apply_filters( 'edd_reports_get_filter_value', $value, $filter );
 	}
+
+	RequestCache::set( $cache_key, $value );
 
 	return $value;
 }
@@ -635,16 +651,25 @@ function get_relative_dates_filter_options() {
  * }
  */
 function get_dates_filter( $values = 'strings', $timezone = null ) {
-	$dates = parse_dates_for_range();
+	$cache_key = RequestCache::key( 'get_dates_filter', array( $values, $timezone ) );
+	$dates     = RequestCache::get( $cache_key );
 
-	if ( 'strings' === $values ) {
-		if ( ! empty( $dates['start'] ) ) {
-			$dates['start'] = $dates['start']->toDateTimeString();
+	if ( is_null( $dates ) ) {
+		$dates = parse_dates_for_range();
+
+		if ( 'strings' === $values ) {
+			if ( ! empty( $dates['start'] ) ) {
+				$dates['start'] = $dates['start']->toDateTimeString();
+			}
+			if ( ! empty( $dates['end'] ) ) {
+				$dates['end'] = $dates['end']->toDateTimeString();
+			}
 		}
-		if ( ! empty( $dates['end'] ) ) {
-			$dates['end'] = $dates['end']->toDateTimeString();
-		}
+
+		RequestCache::set( $cache_key, $dates );
 	}
+
+	$dates = RequestCache::clone_dates( $dates );
 
 	/**
 	 * Filters the start and end date filters for use with the Graphs API.
@@ -669,13 +694,20 @@ function get_dates_filter( $values = 'strings', $timezone = null ) {
  *
  * @since 3.0
  *
- * @param string          $range          Optional. Range value to generate start and end dates for against `$date`.
- *                                        Default is the current range as derived from the session.
- * @param string          $date           Date string converted to `\EDD\Utils\Date` to anchor calculations to.
- * @param bool            $convert_to_utc Optional. If we should convert the results to UTC for Database Queries
+ * @param string $range          Optional. Range value to generate start and end dates for against `$date`.
+ *                               Default is the current range as derived from the session.
+ * @param string $date           Date string converted to `\EDD\Utils\Date` to anchor calculations to.
+ * @param bool   $convert_to_utc Optional. If we should convert the results to UTC for Database Queries
  * @return \EDD\Utils\Date[] Array of start and end date objects.
  */
 function parse_dates_for_range( $range = null, $date = 'now', $convert_to_utc = true ) {
+
+	// A relative $date such as 'now' is safe to key on: every branch below snaps to a day, month, quarter or year boundary.
+	$cache_key = RequestCache::key( 'parse_dates_for_range', array( $range, $date, $convert_to_utc ) );
+	$cached    = RequestCache::get( $cache_key );
+	if ( ! is_null( $cached ) ) {
+		return RequestCache::clone_dates( $cached );
+	}
 
 	// Set the time ranges in the user's timezone, so they ultimately see them in their own timezone.
 	$date = EDD()->utils->date( $date, null, true );
@@ -789,7 +821,9 @@ function parse_dates_for_range( $range = null, $date = 'now', $convert_to_utc = 
 
 	$dates['range'] = $range;
 
-	return $dates;
+	RequestCache::set( $cache_key, $dates );
+
+	return RequestCache::clone_dates( $dates );
 }
 
 /**
@@ -797,15 +831,20 @@ function parse_dates_for_range( $range = null, $date = 'now', $convert_to_utc = 
  *
  * @since 3.1
  *
- * @param string          $range          Optional. Range value to generate start and end dates for against `$date`.
- * @param string          $relative_range Optional. Range value to generate relative start and end dates for against `$date`.
- *                                        Default is the current range as derived from the session.
- * @param string          $date           Date string converted to `\EDD\Utils\Date` to anchor calculations to.
- * @param bool            $convert_to_utc Optional. If we should convert the results to UTC for Database Queries
+ * @param string $range          Optional. Range value to generate start and end dates for against `$date`.
+ * @param string $relative_range Optional. Range value to generate relative start and end dates for against `$date`.
+ *                               Default is the current range as derived from the session.
+ * @param string $date           Date string converted to `\EDD\Utils\Date` to anchor calculations to.
+ * @param bool   $convert_to_utc Optional. If we should convert the results to UTC for Database Queries.
  * @return \EDD\Utils\Date[] Array of start and end date objects.
  */
 function parse_relative_dates_for_range( $range = null, $relative_range = null, $date = 'now', $convert_to_utc = true ) {
 
+	$cache_key = RequestCache::key( 'parse_relative_dates_for_range', array( $range, $relative_range, $date, $convert_to_utc ) );
+	$cached    = RequestCache::get( $cache_key );
+	if ( ! is_null( $cached ) ) {
+		return RequestCache::clone_dates( $cached );
+	}
 
 	if ( null === $range || ! array_key_exists( $range, get_dates_filter_options() ) ) {
 		$range = get_dates_filter_range();
@@ -853,7 +892,9 @@ function parse_relative_dates_for_range( $range = null, $relative_range = null, 
 
 	$dates['range'] = $range;
 
-	return $dates;
+	RequestCache::set( $cache_key, $dates );
+
+	return RequestCache::clone_dates( $dates );
 }
 
 /**
@@ -940,6 +981,12 @@ function get_relative_dates_filter_range() {
  * @return bool True if results should use hour by hour, otherwise false.
  */
 function get_dates_filter_hour_by_hour() {
+	$cache_key = RequestCache::key( 'get_dates_filter_hour_by_hour' );
+	$cached    = RequestCache::get( $cache_key );
+	if ( ! is_null( $cached ) ) {
+		return $cached;
+	}
+
 	// Retrieve the queried dates.
 	$dates = get_dates_filter( 'objects' );
 
@@ -967,6 +1014,8 @@ function get_dates_filter_hour_by_hour() {
 			break;
 	}
 
+	RequestCache::set( $cache_key, $hour_by_hour );
+
 	return $hour_by_hour;
 }
 
@@ -978,6 +1027,12 @@ function get_dates_filter_hour_by_hour() {
  * @return bool True if results should use day by day, otherwise false.
  */
 function get_dates_filter_day_by_day() {
+	$cache_key = RequestCache::key( 'get_dates_filter_day_by_day' );
+	$cached    = RequestCache::get( $cache_key );
+	if ( ! is_null( $cached ) ) {
+		return $cached;
+	}
+
 	// Retrieve the queried dates
 	$dates = get_dates_filter( 'objects' );
 
@@ -1002,6 +1057,8 @@ function get_dates_filter_day_by_day() {
 			$day_by_day = true;
 			break;
 	}
+
+	RequestCache::set( $cache_key, $day_by_day );
 
 	return $day_by_day;
 }
@@ -1112,13 +1169,13 @@ function get_taxes_excluded_filter() {
  */
 function default_display_report( $report ) {
 
-	// Bail if erroneous report
+	// Bail if erroneous report.
 	if ( empty( $report ) || is_wp_error( $report ) ) {
 		return;
 	}
 
-	// Try to output: tiles, tables, and charts
-	$report->display_endpoint_group( 'tiles'  );
+	// Try to output: tiles, tables, and charts.
+	$report->display_endpoint_group( 'tiles' );
 	$report->display_endpoint_group( 'tables' );
 	$report->display_endpoint_group( 'charts' );
 }
@@ -1167,14 +1224,16 @@ function default_display_tile( $endpoint, $data, $args ) {
 				break;
 
 			case 'split-number':
-				printf( '<div class="tile-amount tile-value">%1$d / %2$d</div>',
+				printf(
+					'<div class="tile-amount tile-value">%1$d / %2$d</div>',
 					edd_format_amount( $data['first_value'] ),
 					edd_format_amount( $data['second_value'] )
 				);
 				break;
 
 			case 'split-amount':
-				printf( '<div class="tile-amount tile-value">%1$d / %2$d</div>',
+				printf(
+					'<div class="tile-amount tile-value">%1$d / %2$d</div>',
 					edd_currency_filter( edd_format_amount( $data['first_value'] ) ),
 					edd_currency_filter( edd_format_amount( $data['second_value'] ) )
 				);
@@ -1220,7 +1279,7 @@ function default_display_tiles_group( $report ) {
 	}
 
 	$tiles = $report->get_endpoints( 'tiles' );
-?>
+	?>
 
 	<div id="edd-reports-tiles-wrap" class="edd-report-wrap">
 		<?php
@@ -1245,22 +1304,30 @@ function default_display_tables_group( $report ) {
 		return;
 	}
 
-	$tables = $report->get_endpoints( 'tables' ); ?>
+	$tables = $report->get_endpoints( 'tables' );
+	?>
 
-	<div id="edd-reports-tables-wrap" class="edd-report-wrap"><?php
+	<div id="edd-reports-tables-wrap" class="edd-report-wrap">
+	<?php
 
-		foreach ( $tables as $endpoint_id => $table ) :
+	foreach ( $tables as $endpoint_id => $table ) :
 
-			?><div class="edd-reports-table" id="edd-reports-table-<?php echo esc_attr( $endpoint_id ); ?>">
-				<h3><?php echo esc_html( $table->get_label() ); ?></h3><?php
+		?>
+			<div class="edd-reports-table" id="edd-reports-table-<?php echo esc_attr( $endpoint_id ); ?>">
+				<h3><?php echo esc_html( $table->get_label() ); ?></h3>
+								<?php
 
-				$table->display();
+								$table->display();
 
-			?></div><?php
+								?>
+			</div>
+			<?php
 
 		endforeach;
 
-	?><div class="clear"></div></div><?php
+	?>
+	<div class="clear"></div></div>
+	<?php
 }
 
 /**
@@ -1453,17 +1520,23 @@ function display_relative_dates_dropdown_options( $range, $selected_relative_ran
 function display_products_filter() {
 	$products = get_filter_value( 'products' );
 
-	$select   = EDD()->html->product_dropdown( array(
-		'chosen'           => true,
-		'variations'       => true,
-		'selected'         => empty( $products ) ? 0 : $products,
-		'show_option_none' => false,
-		'show_option_all'  => sprintf( __( 'All %s', 'easy-digital-downloads' ), edd_get_label_plural() ),
-	) ); ?>
+	$select = EDD()->html->product_dropdown(
+		array(
+			'chosen'           => true,
+			'variations'       => true,
+			'selected'         => empty( $products ) ? 0 : $products,
+			'show_option_none' => false,
+			'show_option_all'  => sprintf( __( 'All %s', 'easy-digital-downloads' ), edd_get_label_plural() ),
+		)
+	);
+	?>
 
-	<span class="edd-graph-filter-options graph-option-section"><?php
+	<span class="edd-graph-filter-options graph-option-section">
+	<?php
 		echo $select;
-	?></span><?php
+	?>
+	</span>
+	<?php
 }
 
 /**
@@ -1491,14 +1564,14 @@ function display_taxes_filter() {
 
 	$taxes         = get_filter_value( 'taxes' );
 	$exclude_taxes = isset( $taxes['exclude_taxes'] ) && true == $taxes['exclude_taxes'];
-?>
+	?>
 	<span class="edd-graph-filter-options graph-option-section">
 		<label for="exclude_taxes">
 			<input type="checkbox" id="exclude_taxes" <?php checked( true, $exclude_taxes, true ); ?> value="1" name="exclude_taxes"/>
 			<?php esc_html_e( 'Exclude Taxes', 'easy-digital-downloads' ); ?>
 		</label>
 	</span>
-<?php
+	<?php
 }
 
 /**
@@ -1509,11 +1582,13 @@ function display_taxes_filter() {
 function display_discounts_filter() {
 	$discount = get_filter_value( 'discounts' );
 
-	$d = edd_get_discounts( array(
-		'fields' => array( 'code', 'name' ),
-		'number' => 100,
-		'status' => array( 'active', 'inactive', 'expired', 'archived' ),
-	) );
+	$d = edd_get_discounts(
+		array(
+			'fields' => array( 'code', 'name' ),
+			'number' => 100,
+			'status' => array( 'active', 'inactive', 'expired', 'archived' ),
+		)
+	);
 
 	$discounts = array();
 
@@ -1522,15 +1597,21 @@ function display_discounts_filter() {
 	}
 
 	// Get the select
-	$select = EDD()->html->discount_dropdown( array(
-		'name'     => 'discounts',
-		'chosen'   => true,
-		'selected' => empty( $discount ) ? 0 : $discount,
-	) ); ?>
+	$select = EDD()->html->discount_dropdown(
+		array(
+			'name'     => 'discounts',
+			'chosen'   => true,
+			'selected' => empty( $discount ) ? 0 : $discount,
+		)
+	);
+	?>
 
-    <span class="edd-graph-filter-options graph-option-section"><?php
+	<span class="edd-graph-filter-options graph-option-section">
+	<?php
 		echo $select;
-	?></span><?php
+	?>
+	</span>
+	<?php
 }
 
 /**
@@ -1599,9 +1680,12 @@ function display_region_filter() {
 	);
 	?>
 
-	<span class="edd-graph-filter-options graph-option-section"><?php
+	<span class="edd-graph-filter-options graph-option-section">
+	<?php
 	echo $select;
-	?></span><?php
+	?>
+	</span>
+	<?php
 }
 
 /**
@@ -1631,9 +1715,12 @@ function display_country_filter() {
 	);
 	?>
 
-	<span class="edd-graph-filter-options graph-option-section"><?php
+	<span class="edd-graph-filter-options graph-option-section">
+	<?php
 	echo $select;
-	?></span><?php
+	?>
+	</span>
+	<?php
 }
 
 /**
@@ -1679,14 +1766,16 @@ function display_currency_filter() {
 	?>
 	<span class="edd-graph-filter-options graph-option-section">
 		<?php
-		echo EDD()->html->select( array(
-			'name'             => 'currencies',
-			'id'               => 'edd_reports_filter_currencies',
-			'options'          => $all_currencies,
-			'selected'         => $currency,
-			'show_option_all'  => false,
-			'show_option_none' => false
-		) );
+		echo EDD()->html->select(
+			array(
+				'name'             => 'currencies',
+				'id'               => 'edd_reports_filter_currencies',
+				'options'          => $all_currencies,
+				'selected'         => $currency,
+				'show_option_all'  => false,
+				'show_option_none' => false,
+			)
+		);
 		?>
 	</span>
 	<?php
@@ -1705,9 +1794,9 @@ function display_order_status_filter() {
 		<?php
 		echo EDD()->html->select(
 			array(
-				'name'             => 'order_statuses',
-				'id'               => 'edd_reports_filter_order_statuses',
-				'options'          => array_combine(
+				'name'              => 'order_statuses',
+				'id'                => 'edd_reports_filter_order_statuses',
+				'options'           => array_combine(
 					$statuses,
 					array_map(
 						function ( $status ) {
@@ -1734,9 +1823,11 @@ function display_order_status_filter() {
  * @param Data\Report $report Report object.
  */
 function display_filters( $report ) {
-	$action = edd_get_admin_url( array(
-		'page' => 'edd-reports',
-	) );
+	$action = edd_get_admin_url(
+		array(
+			'page' => 'edd-reports',
+		)
+	);
 	?>
 
 	<form action="<?php echo esc_url( $action ); ?>" method="GET">
@@ -1763,13 +1854,15 @@ function filter_items( $report = false ) {
 		return;
 	}
 
-	$redirect_url = edd_get_admin_url( array(
-		'page' => 'edd-reports',
-		'view' => sanitize_key( $report_id ),
-	) );
+	$redirect_url = edd_get_admin_url(
+		array(
+			'page' => 'edd-reports',
+			'view' => sanitize_key( $report_id ),
+		)
+	);
 
 	// Bail if no filters
-	$filters  = $report->get_filters();
+	$filters = $report->get_filters();
 	if ( empty( $filters ) ) {
 		return;
 	}
@@ -1812,7 +1905,8 @@ function filter_items( $report = false ) {
 	// Call the callables in the buffer
 	foreach ( $callables as $to_call ) {
 		call_user_func( $to_call, $report );
-	} ?>
+	}
+	?>
 
 	<span class="edd-graph-filter-submit graph-option-section">
 		<input type="submit" class="button button-secondary" value="<?php esc_html_e( 'Filter', 'easy-digital-downloads' ); ?>"/>

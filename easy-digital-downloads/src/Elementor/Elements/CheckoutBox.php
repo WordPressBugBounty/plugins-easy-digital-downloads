@@ -204,9 +204,10 @@ if ( class_exists( '\Elementor\Includes\Elements\Container' ) && ! class_exists(
 		 * same slider toggle the monolith legacy checkout widget uses for section show/hide;
 		 * the editor JS listens on the box's settings change for these control ids and
 		 * re-seeds (ON) or removes (OFF) the section's child widget, keeping each switcher in
-		 * sync with the section's actual presence. The two-column patterns still drive
-		 * the box's own `flex_direction` to `row`
-		 * through the now-visible native Direction control. A fresh box auto-seeds the
+		 * sync with the section's actual presence. Every pattern drives the box's own
+		 * `flex_direction` to `column` through the now-visible native Direction control;
+		 * the two-column patterns get their side-by-side layout from an inner `row`
+		 * container instead. A fresh box auto-seeds the
 		 * `single-column` pattern; per-pattern column widths are seeded onto the inner
 		 * containers by the picker.
 		 *

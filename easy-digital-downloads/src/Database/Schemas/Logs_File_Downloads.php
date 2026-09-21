@@ -40,6 +40,7 @@ class Logs_File_Downloads extends Schema {
 			'extra'    => 'auto_increment',
 			'primary'  => true,
 			'sortable' => true,
+			'compare'  => true,
 		),
 
 		// product_id

@@ -960,6 +960,7 @@ class EDD_Customer extends \EDD\Database\Rows\Customer {
 	 *
 	 * @since 2.3
 	 * @since 3.0 Use the new Notes component & API
+	 * @since 3.7.1 Note content is sanitized by edd_sanitize_note_content().
 	 *
 	 * @param string $note The note to add
 	 * @return string|boolean The new note if added successfully, false otherwise
@@ -991,7 +992,12 @@ class EDD_Customer extends \EDD\Database\Rows\Customer {
 		do_action( 'edd_customer_pre_add_note', $note, $this->id, $this );
 
 		// Sanitize note
-		$note = trim( wp_kses( stripslashes( $note ), edd_get_allowed_tags() ) );
+		$note = edd_sanitize_note_content( stripslashes( $note ) );
+
+		// Bail if there is nothing left to store.
+		if ( empty( $note ) ) {
+			return false;
+		}
 
 		// Try to add the note
 		edd_add_note(

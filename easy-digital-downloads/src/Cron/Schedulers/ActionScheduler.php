@@ -152,6 +152,33 @@ class ActionScheduler implements Scheduler {
 	}
 
 	/**
+	 * Enqueue an action to run as soon as possible.
+	 *
+	 * Action Scheduler's as_enqueue_async_action() defaults $unique to false, so it
+	 * does not skip an existing match; the currently in-progress action can enqueue
+	 * its own successor for batch continuation. Because there is no idempotent
+	 * pre-check, callers that need to avoid pile-up should gate on has_pending() first.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook name to execute.
+	 * @param array  $args  Optional arguments to pass to the hook.
+	 * @param string $group Optional group identifier. Default 'edd'.
+	 * @return bool True if the action was enqueued, false otherwise.
+	 */
+	public function enqueue_async( string $hook, array $args = array(), string $group = '' ): bool {
+		if ( ! self::is_available() ) {
+			return false;
+		}
+
+		$group = ! empty( $group ) ? $group : self::GROUP;
+
+		$action_id = as_enqueue_async_action( $hook, $args, $group );
+
+		return 0 !== $action_id;
+	}
+
+	/**
 	 * Get the next scheduled time for an event.
 	 *
 	 * @since 3.6.5
@@ -255,6 +282,41 @@ class ActionScheduler implements Scheduler {
 		$group = ! empty( $group ) ? $group : self::GROUP;
 
 		return as_has_scheduled_action( $hook, $args, $group );
+	}
+
+	/**
+	 * Check if a matching action is pending (not in-progress).
+	 *
+	 * Only counts actions with the PENDING status, so an action that is currently
+	 * running does not match itself. This lets an in-progress batch gate its own
+	 * successor without counting the run that is enqueuing it.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook of the action.
+	 * @param array  $args  Optional. Args that have been passed to the action. Default empty array.
+	 * @param string $group Optional. The group the action is assigned to. Default 'edd'.
+	 * @return bool True if a matching action is pending, false otherwise.
+	 */
+	public function has_pending( string $hook, array $args = array(), string $group = '' ): bool {
+		if ( ! self::is_available() ) {
+			return false;
+		}
+
+		$group = ! empty( $group ) ? $group : self::GROUP;
+
+		$pending = $this->search(
+			array(
+				'hook'     => $hook,
+				'args'     => $args,
+				'group'    => $group,
+				'status'   => \ActionScheduler_Store::STATUS_PENDING,
+				'per_page' => 1,
+			),
+			'ids'
+		);
+
+		return ! empty( $pending );
 	}
 
 	/**

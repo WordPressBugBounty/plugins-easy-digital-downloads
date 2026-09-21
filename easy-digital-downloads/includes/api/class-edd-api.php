@@ -1078,6 +1078,9 @@ class EDD_API {
 	 * Process Get Products API Request
 	 *
 	 * @since  1.5
+	 * @since  3.7.1 The single-product branch now refuses a post whose status the
+	 *                         caller cannot read, and the collection branch pins `post_status`
+	 *                         to `publish` explicitly.
 	 *
 	 * @param array $args Arguments provided by API Request.
 	 *
@@ -1092,6 +1095,7 @@ class EDD_API {
 
 			$parameters = array(
 				'post_type'        => 'download',
+				'post_status'      => 'publish',
 				'posts_per_page'   => $this->per_page(),
 				'suppress_filters' => true,
 				'paged'            => $this->get_paged(),
@@ -1113,15 +1117,52 @@ class EDD_API {
 		} elseif ( 'download' === get_post_type( $args['product'] ) ) {
 				$product_info = get_post( $args['product'] );
 
+			if ( ! is_post_publicly_viewable( $product_info ) && ! $this->can_read_product( $product_info->ID ) ) {
+				$error['error'] = $this->product_not_found( $args['product'] );
+
+				return $error;
+			}
+
 				$products['products'][0] = $this->get_product_data( $product_info );
 		} else {
-			/* translators: %s: product ID. */
-			$error['error'] = sprintf( __( 'Product %s not found!', 'easy-digital-downloads' ), $args['product'] );
+			$error['error'] = $this->product_not_found( $args['product'] );
 
 			return $error;
 		}
 
 		return apply_filters( 'edd_api_products', $products, $this );
+	}
+
+	/**
+	 * Whether the caller is allowed to read a product with a non-public status.
+	 *
+	 * Mirrors the authorization pattern used elsewhere in this class: the user who owns the
+	 * API key, the logged in user, or an internal caller that never validated a request.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int $product_id The download ID being requested.
+	 * @return bool True if the caller may read the product.
+	 */
+	protected function can_read_product( $product_id ) {
+		return user_can( $this->user_id, 'read_post', $product_id ) || current_user_can( 'read_post', $product_id ) || $this->override;
+	}
+
+	/**
+	 * The error returned when a product is not the caller's to read.
+	 *
+	 * A product which exists but is not available to this caller answers the same way as one
+	 * which does not exist, so the message lives here rather than being written out at each
+	 * of the places that returns it.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int|string $product The product identifier from the request.
+	 * @return string
+	 */
+	protected function product_not_found( $product ) {
+		/* translators: %s: product ID. */
+		return sprintf( __( 'Product %s not found!', 'easy-digital-downloads' ), $product );
 	}
 
 	/**
@@ -1326,7 +1367,7 @@ class EDD_API {
 						$product_info->post_name => $order_item_count,
 					);
 			} else {
-				$error['error'] = sprintf( __( 'Product %s not found!', 'easy-digital-downloads' ), $args['product'] );
+				$error['error'] = $this->product_not_found( $args['product'] );
 			}
 
 			if ( ! empty( $error ) ) {
@@ -1448,7 +1489,7 @@ class EDD_API {
 						$product_info->post_name => $order_item_earnings,
 					);
 			} else {
-				$error['error'] = sprintf( __( 'Product %s not found!', 'easy-digital-downloads' ), $args['product'] );
+				$error['error'] = $this->product_not_found( $args['product'] );
 			}
 
 			if ( ! empty( $error ) ) {
@@ -1682,7 +1723,14 @@ class EDD_API {
 	 */
 	public function get_download_logs( $customer_id = 0 ) {
 
-		$downloads      = array();
+		$downloads = array();
+
+		// The log names which customer took which file, from which order and which IP, so it is
+		// gated as the customers endpoint is rather than as a report.
+		if ( ! user_can( $this->user_id, 'view_shop_sensitive_data' ) && ! $this->override ) {
+			return $downloads;
+		}
+
 		$paged          = $this->get_paged();
 		$per_page       = $this->per_page();
 		$offset         = $per_page * ( $paged - 1 );

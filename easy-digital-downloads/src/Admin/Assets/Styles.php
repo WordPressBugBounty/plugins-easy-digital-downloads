@@ -29,10 +29,6 @@ class Styles {
 		$version    = edd_admin_get_script_version();
 		$deps       = array( 'edd-admin' );
 
-		// jquery-chosen: registered as a no-op for backward compatibility with extensions that enqueue it.
-		// Tom Select styles are handled entirely by edd-admin-chosen.
-		wp_register_style( 'jquery-chosen', false, array(), $version );
-
 		// Register compiled styles from assets/build/css.
 		wp_register_style( 'edd-admin', $css_dir . 'admin' . $css_suffix, array( 'forms' ), $version );
 		wp_register_style( 'edd-admin-menu', $css_dir . 'menu' . $css_suffix, array(), $version );
@@ -42,6 +38,8 @@ class Styles {
 		wp_register_style( 'edd-admin-tax-rates', $css_dir . 'tax-rates' . $css_suffix, $deps, $version );
 		wp_register_style( 'edd-admin-onboarding', $css_dir . 'onboarding' . $css_suffix, $deps, $version );
 		wp_register_style( 'edd-admin-emails', $css_dir . 'emails' . $css_suffix, $deps, $version );
+		// Dashicons is the card icon set; WordPress registers `forms` without it, so it is declared here.
+		wp_register_style( 'edd-admin-tools-ai-mcp', $css_dir . 'tools-ai-mcp' . $css_suffix, array_merge( $deps, array( 'dashicons' ) ), $version );
 	}
 
 	/**
@@ -60,10 +58,27 @@ class Styles {
 			return;
 		}
 
+		self::register_chosen_compat();
+
 		// Loop through and enqueue the scripts.
 		foreach ( self::get_styles() as $style ) {
 			wp_enqueue_style( $style );
 		}
+	}
+
+	/**
+	 * Register the generic `jquery-chosen` handle as a back-compat alias for `edd-admin-chosen`.
+	 *
+	 * The handle is claimed on EDD screens only, so extensions that enqueue it there get EDD's Tom
+	 * Select styles and other plugins keep their own Chosen CSS everywhere else. EDD enqueues
+	 * `edd-admin-chosen` directly and never the alias.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	private static function register_chosen_compat() {
+		wp_deregister_style( 'jquery-chosen' );
+		wp_register_style( 'jquery-chosen', false, array( 'edd-admin-chosen' ), edd_admin_get_script_version() );
 	}
 
 	/**
@@ -74,7 +89,6 @@ class Styles {
 	 */
 	private static function get_styles() {
 		return array(
-			'jquery-chosen',
 			'wp-jquery-ui-dialog',
 			'wp-color-picker',
 			'edd-admin',

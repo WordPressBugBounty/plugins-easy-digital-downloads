@@ -1,12 +1,9 @@
-/* global TomSelect, ajaxurl, edd_vars */
+/* global TomSelect, ajaxurl, globalThis */
 
-export const chosenVars = {
+const chosenVars = {
 	disable_search_threshold: 13,
 	search_contains: true,
 	inherit_select_classes: true,
-	placeholder_text_single: edd_vars.one_option,
-	placeholder_text_multiple: edd_vars.one_or_more_option,
-	no_results_text: edd_vars.no_results_text,
 };
 
 /**
@@ -20,7 +17,15 @@ export const chosenVars = {
  * @return {Object} Options object.
  */
 export const getChosenVars = ( el ) => {
-	let inputVars = { ...chosenVars };
+	// edd_vars is localized onto edd-admin-scripts, which this bundle does not
+	// depend on, so read it when a select is initialized.
+	const eddVars = globalThis.edd_vars ?? {};
+	const inputVars = {
+		...chosenVars,
+		placeholder_text_single: eddVars.one_option,
+		placeholder_text_multiple: eddVars.one_or_more_option,
+		no_results_text: eddVars.no_results_text,
+	};
 
 	const searchType = el?.dataset?.searchType;
 

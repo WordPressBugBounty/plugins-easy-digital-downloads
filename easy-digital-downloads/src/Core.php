@@ -37,6 +37,7 @@ class Core extends EventManagement\Subscribers {
 			new Checkout\Loader(),
 
 			// Users.
+			new Users\RegistrationGuard(),
 			new Users\Verification(),
 			new Users\Search(),
 			new Users\LoginLink\Loader(),
@@ -79,6 +80,12 @@ class Core extends EventManagement\Subscribers {
 
 			new Cart\Preview\Component(),
 			new Cart\AddToCartRedirectCleanup(),
+
+			// Command Palette.
+			new CommandPalette\Loader(),
+
+			// Abilities API.
+			new Abilities\Loader(),
 		);
 	}
 

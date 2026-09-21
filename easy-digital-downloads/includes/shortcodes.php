@@ -500,7 +500,11 @@ function edd_receipt_shortcode( $atts, $content = null ) {
 	if ( isset( $_GET['payment_key'] ) ) {
 		$payment_key = urldecode( $_GET['payment_key'] );
 	} elseif ( ! empty( $_GET['order'] ) && ! empty( $_GET['id'] ) ) {
-		$payment_key = edd_get_payment_key( absint( $_GET['id'] ) );
+		$requested_order = edd_get_order( absint( $_GET['id'] ) );
+		$requested_hash  = is_string( $_GET['order'] ) ? sanitize_text_field( urldecode( $_GET['order'] ) ) : '';
+		if ( $requested_order instanceof \EDD\Orders\Order && $requested_order->is_receipt_hash_valid( $requested_hash ) ) {
+			$payment_key = $requested_order->payment_key;
+		}
 	} elseif ( $session ) {
 		$payment_key = $session['purchase_key'];
 	} elseif ( $edd_receipt_args['payment_key'] ) {

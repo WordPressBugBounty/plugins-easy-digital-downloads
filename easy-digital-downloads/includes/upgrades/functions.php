@@ -215,10 +215,13 @@ function edd_do_automatic_upgrades() {
 	 * @since 3.2.0
 	 */
 	if ( EDD\Gateways\PayPal\has_rest_api_connection() && EDD\Gateways\PayPal\Webhooks\get_webhook_id() ) {
+		// The event was renamed in 3.7.1, so drop the row left under the old name.
+		\EDD\Cron\Events\SingleEvent::remove( 'edd_paypal_commerce_sync_webhooks' );
+
 		// Schedule a one time cron event to sync the webhooks.
 		\EDD\Cron\Events\SingleEvent::add(
 			time() + ( 5 * MINUTE_IN_SECONDS ),
-			'edd_paypal_commerce_sync_webhooks'
+			'edd/paypal/webhooks/sync'
 		);
 	}
 

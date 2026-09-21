@@ -48,15 +48,7 @@ function localize() {
 		)
 	);
 
-	// Get button colors with fallbacks.
-	$button_colors = edd_get_option( 'button_colors', array() );
-	$button_colors = wp_parse_args(
-		$button_colors,
-		array(
-			'background' => '#428bca',
-			'text'       => '#ffffff',
-		)
-	);
+	$button_colors = \EDD\Utils\Colors::get_block_button_colors();
 
 	wp_localize_script(
 		'wp-block-editor',

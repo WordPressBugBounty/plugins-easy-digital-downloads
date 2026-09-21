@@ -414,11 +414,11 @@ function edd_validate_username( $username ) {
  * Attach the customer to an existing user account when completing guest purchase.
  *
  * This only runs when a user account already exists and a guest purchase is made
- * with the account's email address.
- *
- * After attaching the customer to the user ID, the account is set to pending.
+ * with the account's email address. An account still pending verification is left to
+ * `edd_connect_existing_customer_to_new_user()`, which runs when it verifies.
  *
  * @since  2.8
+ * @since  3.7.1 Defers the claim when the matched account is pending verification.
  * @param  bool   $success     True if payment was added successfully, false otherwise.
  * @param  int    $payment_id  The ID of the EDD_Payment that was added.
  * @param  int    $customer_id The ID of the EDD_Customer object.
@@ -442,6 +442,11 @@ function edd_connect_guest_customer_to_existing_user( $success, $payment_id, $cu
 		return;
 	}
 
+	// A pending account claims the customer when it verifies, not from this purchase.
+	if ( edd_user_pending_verification( $user->ID ) ) {
+		return;
+	}
+
 	$customer->update( array( 'user_id' => $user->ID ) );
 
 	// Set a flag to force the account to be verified before purchase history can be accessed.
@@ -451,10 +456,11 @@ function edd_connect_guest_customer_to_existing_user( $success, $payment_id, $cu
 add_action( 'edd_customer_post_attach_payment', 'edd_connect_guest_customer_to_existing_user', 10, 4 );
 
 /**
- * Attach the newly created user_id to a customer, if one exists
+ * Attach the user_id to a customer for the address the account has verified, if one exists.
  *
  * @since  2.4.6
- * @param  int $user_id The User ID that was created.
+ * @since  3.7.1 Runs when an account verifies its address, not when it is created.
+ * @param  int $user_id The ID of the user which verified the address.
  * @return void
  */
 function edd_connect_existing_customer_to_new_user( $user_id ) {
@@ -484,16 +490,17 @@ function edd_connect_existing_customer_to_new_user( $user_id ) {
 		);
 	}
 }
-add_action( 'user_register', 'edd_connect_existing_customer_to_new_user', 10, 1 );
+add_action( 'edd_post_set_user_to_active', 'edd_connect_existing_customer_to_new_user', 10, 1 );
 
 /**
- * Looks up purchases by email that match the registering user
+ * Requires verification when a new account registers with an address that has orders.
  *
- * This is for users that purchased as a guest and then came
- * back and created an account.
+ * The orders are attached by `edd_claim_past_purchases_for_verified_user()`, once the
+ * account verifies the address.
  *
  * @since       1.6
- * @param       int $user_id - the new user's ID.
+ * @since       3.7.1 Only starts verification; the orders are attached on verification.
+ * @param       int $user_id The new user's ID.
  * @return      void
  */
 function edd_add_past_purchases_to_new_user( $user_id ) {
@@ -504,33 +511,63 @@ function edd_add_past_purchases_to_new_user( $user_id ) {
 		return;
 	}
 
-	$payments = edd_get_payments(
+	$orders = edd_get_orders(
 		array(
-			's'      => $email,
-			'output' => 'payments',
+			'email'  => $email,
+			'type'   => 'sale',
+			'number' => 1,
+			'fields' => 'ids',
 		)
 	);
 
-	if ( $payments ) {
-
-		// Set a flag to force the account to be verified before purchase history can be accessed.
-		edd_set_user_to_pending( $user_id );
-
-		edd_send_user_verification_email( $user_id );
-
-		foreach ( $payments as $payment ) {
-			if ( is_object( $payment ) && $payment instanceof EDD_Payment ) {
-				if ( intval( $payment->user_id ) > 0 ) {
-					continue; // This payment already associated with an account.
-				}
-
-				$payment->user_id = $user_id;
-				$payment->save();
-			}
-		}
+	if ( empty( $orders ) ) {
+		return;
 	}
+
+	// Set a flag to force the account to be verified before purchase history can be accessed.
+	edd_set_user_to_pending( $user_id );
+
+	edd_send_user_verification_email( $user_id );
 }
 add_action( 'user_register', 'edd_add_past_purchases_to_new_user', 10, 1 );
+
+/**
+ * Attaches orders made against an address to the account which has verified it.
+ *
+ * @since 3.7.1
+ *
+ * @param int $user_id The ID of the user which verified the address.
+ * @return void
+ */
+function edd_claim_past_purchases_for_verified_user( $user_id ) {
+
+	$email = get_the_author_meta( 'user_email', $user_id );
+
+	if ( empty( $email ) ) {
+		return;
+	}
+
+	// Verification happens once, so every unattached order is claimed rather than a first page.
+	$order_ids = edd_get_orders(
+		array(
+			'email'   => $email,
+			'user_id' => 0,
+			'type'    => 'sale',
+			'number'  => 0,
+			'fields'  => 'ids',
+		)
+	);
+
+	foreach ( $order_ids as $order_id ) {
+		edd_update_order(
+			$order_id,
+			array(
+				'user_id' => $user_id,
+			)
+		);
+	}
+}
+add_action( 'edd_post_set_user_to_active', 'edd_claim_past_purchases_for_verified_user', 10, 1 );
 
 
 /**
@@ -1139,21 +1176,32 @@ add_action( 'edit_user_profile', 'edd_show_user_api_key_field' );
  * @return void
  */
 function edd_update_user_api_key( $user_id ) {
-	if ( current_user_can( 'edit_user', $user_id ) && isset( $_POST['edd_set_api_key'] ) ) {
-
-		$user       = get_userdata( $user_id );
-		$public_key = EDD()->api->get_user_public_key( $user_id );
-
-		if ( empty( $public_key ) ) {
-			$new_public_key = EDD()->api->generate_public_key( $user->user_email );
-			$new_secret_key = EDD()->api->generate_private_key( $user->ID );
-
-			update_user_meta( $user_id, $new_public_key, 'edd_user_public_key' );
-			update_user_meta( $user_id, $new_secret_key, 'edd_user_secret_key' );
-		} else {
-			EDD()->api->revoke_api_key( $user_id );
-		}
+	if ( ! current_user_can( 'edit_user', $user_id ) || ! isset( $_POST['edd_set_api_key'] ) ) {
+		return;
 	}
+
+	$public_key = EDD()->api->get_user_public_key( $user_id );
+
+	// Clearing a key a user already holds stays with whoever may edit the profile, so turning the
+	// store setting off cannot leave a live key its owner has no way to remove.
+	if ( ! empty( $public_key ) ) {
+		EDD()->api->revoke_api_key( $user_id );
+
+		return;
+	}
+
+	// Issuing one follows the same condition that decides whether the control is rendered; see
+	// edd_show_user_api_key_field().
+	if ( ! edd_get_option( 'api_allow_user_keys', false ) && ! current_user_can( 'manage_shop_settings' ) ) {
+		return;
+	}
+
+	$user           = get_userdata( $user_id );
+	$new_public_key = EDD()->api->generate_public_key( $user->user_email );
+	$new_secret_key = EDD()->api->generate_private_key( $user->ID );
+
+	update_user_meta( $user_id, $new_public_key, 'edd_user_public_key' );
+	update_user_meta( $user_id, $new_secret_key, 'edd_user_secret_key' );
 }
 add_action( 'personal_options_update', 'edd_update_user_api_key' );
 add_action( 'edit_user_profile_update', 'edd_update_user_api_key' );

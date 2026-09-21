@@ -65,6 +65,7 @@ class Manager implements SubscriberInterface {
 			new Routes\BounceWebhook(),
 			new Routes\Notifications(),
 			new Routes\CheckoutTemplates(),
+			new Routes\CommandPalette(),
 		);
 	}
 }

@@ -348,9 +348,13 @@ add_action( 'edd_restore_order', 'edd_trigger_restore_order' );
  */
 function edd_ajax_generate_file_download_link() {
 
+	if ( ! check_ajax_referer( 'edd_get_file_download_link', 'nonce', false ) ) {
+		wp_die( '-1' );
+	}
+
 	$customer_view_role = apply_filters( 'edd_view_customers_role', 'view_shop_reports' );
 	if ( ! current_user_can( $customer_view_role ) ) {
-		die( '-1' );
+		wp_die( '-1' );
 	}
 
 	$payment_id  = absint( $_POST['payment_id'] );
@@ -358,11 +362,29 @@ function edd_ajax_generate_file_download_link() {
 	$price_id    = isset( $_POST['price_id'] ) && is_numeric( $_POST['price_id'] ) ? absint( $_POST['price_id'] ) : null;
 
 	if ( empty( $payment_id ) ) {
-		die( '-2' );
+		wp_die( '-2' );
 	}
 
 	if ( empty( $download_id ) ) {
-		die( '-3' );
+		wp_die( '-3' );
+	}
+
+	$order = edd_get_order( $payment_id );
+	if ( ! $order ) {
+		wp_die( '-2' );
+	}
+
+	// The link is only ever for a product the order actually bought.
+	$order_items = edd_get_order_items(
+		array(
+			'order_id'   => $order->id,
+			'product_id' => $download_id,
+			'number'     => 1,
+		)
+	);
+
+	if ( empty( $order_items ) ) {
+		wp_die( '-3' );
 	}
 
 	$limit = edd_get_file_download_limit( $download_id );
@@ -373,17 +395,16 @@ function edd_ajax_generate_file_download_link() {
 
 	$files = edd_get_download_files( $download_id, $price_id );
 	if ( ! $files ) {
-		die( '-4' );
+		wp_die( '-4' );
 	}
 
-	$order     = edd_get_order( $payment_id );
 	$file_urls = '';
 	foreach ( $files as $file_key => $file ) {
 		$file_urls .= edd_get_download_file_url( $order, $order->email, $file_key, $download_id, $price_id );
 		$file_urls .= "\n\n";
 	}
 
-	die( $file_urls );
+	wp_die( $file_urls );
 }
 add_action( 'wp_ajax_edd_get_file_download_link', 'edd_ajax_generate_file_download_link' );
 
@@ -507,8 +528,7 @@ function edd_ajax_process_refund_form() {
 	parse_str( $_POST['data'], $form_data );
 
 	// Verify the nonce.
-	$nonce = ! empty( $form_data['edd_process_refund'] ) ? sanitize_text_field( $form_data['edd_process_refund'] ) : false;
-	if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'edd_process_refund' ) ) {
+	if ( ! \EDD\Orders\Refunds\FormParser::verify_nonce( $form_data ) ) {
 		wp_send_json_error( __( 'Nonce validation failed when submitting refund.', 'easy-digital-downloads' ), 401 );
 	}
 
@@ -558,16 +578,26 @@ function edd_orders_list_table_process_bulk_actions() {
 		? sanitize_text_field( $_REQUEST['action'] )
 		: '';
 
-	// If this is a 'delete' action, the capability changes from edit to delete.
-	$cap = 'delete' === $action ? 'delete_shop_payments' : 'edit_shop_payments';
-
-	// Check the current user's capability.
-	if ( ! current_user_can( $cap ) ) {
+	// Bail if we aren't processing bulk actions.
+	if ( empty( $action ) || '-1' === $action ) {
 		return;
 	}
 
-	// Bail if we aren't processing bulk actions.
-	if ( '-1' === $action ) {
+	// Verify the request before any of its values are trusted.
+	check_admin_referer( 'bulk-orders' );
+
+	/*
+	 * Trashing, restoring and deleting an order are all destructive, so they take the
+	 * delete capability, matching the single-order handlers for the same operations.
+	 * Everything else on this screen only changes an order, so it takes edit.
+	 */
+	$destructive_actions = array( 'delete', 'trash', 'restore' );
+	$cap                 = in_array( $action, $destructive_actions, true )
+		? 'delete_shop_payments'
+		: 'edit_shop_payments';
+
+	// Check the current user's capability.
+	if ( ! current_user_can( $cap ) ) {
 		return;
 	}
 
@@ -578,12 +608,6 @@ function edd_orders_list_table_process_bulk_actions() {
 	if ( ! is_array( $ids ) ) {
 		$ids = array( $ids );
 	}
-
-	if ( empty( $action ) ) {
-		return;
-	}
-
-	check_admin_referer( 'bulk-orders' );
 
 	$ids = wp_parse_id_list( $ids );
 

@@ -47,6 +47,22 @@ class Validation {
 	}
 
 	/**
+	 * Determine whether an intent has already been paid.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param \Stripe\PaymentIntent|\Stripe\SetupIntent $intent The Stripe Intent object.
+	 * @return bool
+	 */
+	public static function is_intent_paid( $intent ): bool {
+		if ( empty( $intent->status ) ) {
+			return false;
+		}
+
+		return in_array( $intent->status, array( 'succeeded', 'requires_capture' ), true );
+	}
+
+	/**
 	 * Validate that the intent amount matches the expected price.
 	 *
 	 * Skips validation for SetupIntents which have no amount.
@@ -78,6 +94,38 @@ class Validation {
 	 */
 	public static function charge_amount( $charge, $expected_price ) {
 		self::verify_amount( (int) $charge->amount, $expected_price, $charge->id );
+	}
+
+	/**
+	 * Get the expected price for validation.
+	 *
+	 * Prefers the live order total. Falls back to the creation-time intent metadata
+	 * total when the order total is zero, such as when Recurring zeroes a free-trial
+	 * order after the intent has already been created.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param \Stripe\PaymentIntent|\Stripe\SetupIntent $intent The Stripe Intent object.
+	 * @return float The expected price.
+	 */
+	public static function get_expected_price( $intent ): float {
+		if ( ! empty( $intent->metadata->edd_payment_id ) ) {
+			$order = edd_get_order( $intent->metadata->edd_payment_id );
+			if ( $order && $order->total > 0 ) {
+				return (float) $order->total;
+			}
+		}
+
+		if ( ! empty( $intent->metadata->edd_payment_total ) ) {
+			return (float) $intent->metadata->edd_payment_total;
+		}
+
+		$purchase_data = \EDD\Sessions\PurchaseData::get( false );
+		if ( ! empty( $purchase_data['price'] ) ) {
+			return (float) $purchase_data['price'];
+		}
+
+		return 0.0;
 	}
 
 	/**

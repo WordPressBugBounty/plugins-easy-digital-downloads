@@ -14,6 +14,7 @@ namespace EDD\Upgrades\Background;
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
+use EDD\Cron\EventManager as CronEventManager;
 use EDD\Upgrades\Utilities\MigrationCheck;
 use EDD\Utils\Date;
 use EDD\Cron\Events\SingleEvent;
@@ -286,11 +287,7 @@ abstract class Upgrade implements SubscriberInterface, UpgradeInterface {
 	 * @return bool
 	 */
 	protected function can_process_step() {
-		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			return true;
-		}
-
-		return edd_doing_cron();
+		return CronEventManager::is_cron_context();
 	}
 
 	/**

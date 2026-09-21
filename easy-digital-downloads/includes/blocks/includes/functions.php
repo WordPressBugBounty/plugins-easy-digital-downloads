@@ -115,11 +115,12 @@ function get_input_classes( $field, $classes = array() ) {
  * Checks whether we are viewing content in the block editor.
  *
  * @since 2.0
+ * @since 3.7.1 Default capability changed to `edit_posts`.
  * @deprecated 3.6.0 in favor of \EDD\Blocks\Utility::is_block_editor()
  * @param string $current_user_can Whether the current user needs to have a specific capability.
- * @return false|string
+ * @return bool
  */
-function is_block_editor( $current_user_can = '' ) {
+function is_block_editor( $current_user_can = 'edit_posts' ) {
 	return \EDD\Blocks\Utility::is_block_editor( $current_user_can );
 }
 

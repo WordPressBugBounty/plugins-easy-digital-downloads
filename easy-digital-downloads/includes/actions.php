@@ -2,15 +2,16 @@
 /**
  * Front-end Actions
  *
- * @package     EDD
- * @subpackage  Functions
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
+ * @package     EDD\Functions
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.8.1
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
+
+use EDD\Actions\Router;
 
 /**
  * Hooks EDD actions, when present in the $_GET superglobal. Every edd_action
@@ -19,19 +20,9 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  *
  * @since 1.0
  * @return void
-*/
+ */
 function edd_get_actions() {
-	$key = ! empty( $_GET['edd_action'] ) ? sanitize_key( $_GET['edd_action'] ) : false;
-
-	$is_delayed_action = edd_is_delayed_action( $key );
-
-	if ( $is_delayed_action ) {
-		return;
-	}
-
-	if ( ! empty( $key ) ) {
-		do_action( "edd_{$key}" , $_GET );
-	}
+	Router::frontend( $_GET );
 }
 add_action( 'init', 'edd_get_actions' );
 
@@ -42,19 +33,9 @@ add_action( 'init', 'edd_get_actions' );
  *
  * @since 1.0
  * @return void
-*/
+ */
 function edd_post_actions() {
-	$key = ! empty( $_POST['edd_action'] ) ? sanitize_key( $_POST['edd_action'] ) : false;
-
-	$is_delayed_action = edd_is_delayed_action( $key );
-
-	if ( $is_delayed_action ) {
-		return;
-	}
-
-	if ( ! empty( $key ) ) {
-		do_action( "edd_{$key}", $_POST );
-	}
+	Router::frontend( $_POST );
 }
 add_action( 'init', 'edd_post_actions' );
 
@@ -70,16 +51,7 @@ add_action( 'init', 'edd_post_actions' );
  * @return void
  */
 function edd_delayed_get_actions() {
-	$key = ! empty( $_GET['edd_action'] ) ? sanitize_key( $_GET['edd_action'] ) : false;
-	$is_delayed_action = edd_is_delayed_action( $key );
-
-	if ( ! $is_delayed_action ) {
-		return;
-	}
-
-	if ( ! empty( $key ) ) {
-		do_action( "edd_{$key}", $_GET );
-	}
+	Router::frontend( $_GET, true );
 }
 add_action( 'template_redirect', 'edd_delayed_get_actions' );
 
@@ -95,16 +67,7 @@ add_action( 'template_redirect', 'edd_delayed_get_actions' );
  * @return void
  */
 function edd_delayed_post_actions() {
-	$key = ! empty( $_POST['edd_action'] ) ? sanitize_key( $_POST['edd_action'] ) : false;
-	$is_delayed_action = edd_is_delayed_action( $key );
-
-	if ( ! $is_delayed_action ) {
-		return;
-	}
-
-	if ( ! empty( $key ) ) {
-		do_action( "edd_{$key}", $_POST );
-	}
+	Router::frontend( $_POST, true );
 }
 add_action( 'template_redirect', 'edd_delayed_post_actions' );
 
@@ -116,9 +79,12 @@ add_action( 'template_redirect', 'edd_delayed_post_actions' );
  * @return array
  */
 function edd_delayed_actions_list() {
-	return (array) apply_filters( 'edd_delayed_actions', array(
-		'add_to_cart'
-	) );
+	return (array) apply_filters(
+		'edd_delayed_actions',
+		array(
+			'add_to_cart',
+		)
+	);
 }
 
 /**
@@ -126,10 +92,10 @@ function edd_delayed_actions_list() {
  *
  * @since 2.9.4
  *
- * @param string $action
+ * @param string $action The action to check.
  *
  * @return bool
  */
 function edd_is_delayed_action( $action = '' ) {
-	return in_array( $action, edd_delayed_actions_list() );
+	return in_array( $action, edd_delayed_actions_list(), true );
 }

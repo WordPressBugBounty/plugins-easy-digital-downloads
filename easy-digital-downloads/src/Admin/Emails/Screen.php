@@ -17,6 +17,14 @@ use EDD\Admin\Menu\SecondaryNavigation;
 class Screen {
 
 	/**
+	 * The tab shown when no tab is requested.
+	 *
+	 * @since 3.7.1
+	 * @var string
+	 */
+	const DEFAULT_TAB = 'general';
+
+	/**
 	 * Renders the emails screen.
 	 *
 	 * @since 3.3.0
@@ -28,12 +36,7 @@ class Screen {
 		}
 
 		$navigation = new SecondaryNavigation(
-			array(
-				'general'         => __( 'Emails', 'easy-digital-downloads' ),
-				'settings'        => __( 'Settings', 'easy-digital-downloads' ),
-				'email_summaries' => __( 'Email Reports', 'easy-digital-downloads' ),
-				'logs'            => __( 'Logs', 'easy-digital-downloads' ),
-			),
+			self::get_tabs(),
 			'edd-emails'
 		);
 		$navigation->render();
@@ -57,6 +60,22 @@ class Screen {
 			?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Retrieves the emails screen tabs.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return array Tab slug/label pairs for the 'Emails' page.
+	 */
+	public static function get_tabs() {
+		return array(
+			self::DEFAULT_TAB => __( 'Emails', 'easy-digital-downloads' ),
+			'settings'        => __( 'Settings', 'easy-digital-downloads' ),
+			'email_summaries' => __( 'Email Reports', 'easy-digital-downloads' ),
+			'logs'            => __( 'Logs', 'easy-digital-downloads' ),
+		);
 	}
 
 	/**

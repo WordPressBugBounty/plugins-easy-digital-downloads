@@ -256,7 +256,7 @@ function edd_update_cart_button() {
 
 	$color = edd_get_button_color_class();
 	?>
-	<input type="submit" name="edd_update_cart_submit" class="edd-submit edd-no-js button<?php echo ' ' . $color; ?>" value="<?php _e( 'Update Cart', 'easy-digital-downloads' ); ?>"/>
+	<input type="submit" name="edd_update_cart_submit" class="edd-submit edd-no-js button<?php echo ' ' . esc_attr( $color ); ?>" value="<?php esc_html_e( 'Update Cart', 'easy-digital-downloads' ); ?>"/>
 	<input type="hidden" name="edd_action" value="update_cart"/>
 	<?php
 }

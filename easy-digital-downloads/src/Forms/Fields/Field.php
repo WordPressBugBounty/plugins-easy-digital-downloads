@@ -61,6 +61,18 @@ abstract class Field implements FieldInterface {
 	}
 
 	/**
+	 * Get the name attribute for the field input.
+	 *
+	 * Fields whose submitted key differs from their DOM ID override this.
+	 *
+	 * @since 3.7.1
+	 * @return string
+	 */
+	public function get_name(): string {
+		return $this->get_id();
+	}
+
+	/**
 	 * Get the field key.
 	 *
 	 * @since 3.3.8

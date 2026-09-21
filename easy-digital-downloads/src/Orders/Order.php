@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Database\Rows;
 use EDD\Database\Rows\Adjustment;
+use EDD\Utils\Tokenizer;
 
 /**
  * Order Class.
@@ -714,6 +715,7 @@ class Order extends Rows\Order {
 			array(
 				'edd_action' => 'recover_payment',
 				'payment_id' => urlencode( $this->id ),
+				'token'      => urlencode( $this->get_recovery_token() ),
 			),
 			edd_get_checkout_uri()
 		);
@@ -735,6 +737,132 @@ class Order extends Rows\Order {
 		 * @param \EDD\Orders\Order $this         The order object.
 		 */
 		return apply_filters( 'edd_order_recovery_url', $recovery_url, $this );
+	}
+
+	/**
+	 * Gets the token which authorizes resuming this order.
+	 *
+	 * The order's payment key is deliberately not used for this: it also grants access to the
+	 * receipt and its download links, so it does not belong in a URL which is emailed. The
+	 * token is signed with the store's own key and covers both the order and its payment key,
+	 * so rotating the key invalidates any recovery URL already issued.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	public function get_recovery_token(): string {
+		return Tokenizer::tokenize( $this->get_recovery_token_data() );
+	}
+
+	/**
+	 * Whether the supplied token authorizes resuming this order.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $token The token from the request.
+	 * @return bool
+	 */
+	public function is_recovery_token_valid( $token ): bool {
+		if ( empty( $token ) ) {
+			return false;
+		}
+
+		return Tokenizer::is_token_valid( $token, $this->get_recovery_token_data() );
+	}
+
+	/**
+	 * The data the recovery token is generated from.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	private function get_recovery_token_data(): string {
+		return 'edd-recover-payment-' . $this->id . '-' . $this->payment_key;
+	}
+
+	/**
+	 * Gets the value a receipt link carries to identify this order.
+	 *
+	 * Signed with the store's own key, the same as the recovery token above.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	public function get_receipt_hash(): string {
+		if ( empty( $this->id ) ) {
+			return '';
+		}
+
+		return Tokenizer::tokenize( $this->get_receipt_hash_data() );
+	}
+
+	/**
+	 * Whether the supplied value is the one this order's receipt link carries.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hash The value from the request.
+	 * @return bool
+	 */
+	public function is_receipt_hash_valid( $hash ): bool {
+		if ( empty( $this->id ) || empty( $hash ) ) {
+			return false;
+		}
+
+		return Tokenizer::is_token_valid( $hash, $this->get_receipt_hash_data() );
+	}
+
+	/**
+	 * The data the receipt hash is generated from.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	private function get_receipt_hash_data(): string {
+		return $this->id . $this->payment_key . $this->email;
+	}
+
+	/**
+	 * The email addresses a receipt for this order may be sent to.
+	 *
+	 * The store owner has always been able to resend a receipt to another address belonging to
+	 * the customer, so this is both the list the admin UI offers and the allow list the resend
+	 * handler validates against: one definition, so the two cannot drift apart.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return array Email addresses keyed by origin: 'primary', 'order', then customer email IDs.
+	 */
+	public function get_receipt_emails() {
+		$emails   = array();
+		$customer = edd_get_customer( $this->customer_id );
+
+		if ( $customer && ! empty( $customer->email ) ) {
+			$emails['primary'] = $customer->email;
+		}
+
+		if ( ! empty( $this->email ) && ! in_array( $this->email, $emails, true ) ) {
+			$emails['order'] = $this->email;
+		}
+
+		if ( $customer ) {
+			foreach ( (array) $customer->emails as $key => $email ) {
+				if ( in_array( $email, $emails, true ) ) {
+					continue;
+				}
+
+				$emails[ $key ] = $email;
+			}
+		}
+
+		// Deliberately not filterable: this is the allow list the resend handler validates
+		// against, and a filter on it would be a way to widen where receipts can be sent.
+		// Additional addresses belong on the customer record, which this already reads.
+		return $emails;
 	}
 
 	/**

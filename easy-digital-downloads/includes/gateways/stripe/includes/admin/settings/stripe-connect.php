@@ -58,7 +58,7 @@ function edds_stripe_connect_url( $redirect_screen = '' ) {
 	$stripe_connect_url = add_query_arg(
 		array(
 			'live_mode'         => (int) ! edd_is_test_mode(),
-			'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
+			'state'             => \EDD\Gateways\Stripe\Admin\Connect::create_state(),
 			'customer_site_url' => $customer_site_url,
 		),
 		'https://easydigitaldownloads.com/?edd_gateway_connect_init=stripe_connect'
@@ -104,7 +104,8 @@ function edds_process_gateway_connect_completion() {
 		return;
 	}
 
-	if ( headers_sent() ) {
+	// The credentials this writes are only ever fetched for a flow this store started.
+	if ( ! \EDD\Gateways\Stripe\Admin\Connect::is_state_valid( sanitize_text_field( $_GET['state'] ) ) ) {
 		return;
 	}
 
@@ -175,7 +176,11 @@ function edds_process_gateway_connect_completion() {
 		}
 	}
 
-	edd_redirect( $redirect_url );
+	// Guards the redirect only. Refusing the whole exchange here would discard credentials the
+	// broker has already handed over and marked as used.
+	if ( ! headers_sent() ) {
+		edd_redirect( $redirect_url );
+	}
 }
 add_action( 'admin_init', 'edds_process_gateway_connect_completion' );
 

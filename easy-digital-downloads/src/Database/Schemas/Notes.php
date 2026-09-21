@@ -79,6 +79,7 @@ class Notes extends Schema {
 			'searchable' => true,
 			'in'         => false,
 			'not_in'     => false,
+			'validate'   => 'edd_sanitize_note_content',
 		),
 
 		// date_created

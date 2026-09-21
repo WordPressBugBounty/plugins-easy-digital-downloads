@@ -436,16 +436,7 @@ add_action( 'edd_reports_init', 'edd_register_refunds_report' );
 function edd_register_payment_gateways_report( $reports ) {
 	try {
 
-		// Variables to hold date filter values.
-		$options       = Reports\get_dates_filter_options();
-		$dates         = Reports\get_filter_value( 'dates' );
-		$exclude_taxes = Reports\get_taxes_excluded_filter();
-		$currency      = Reports\get_filter_value( 'currencies' );
-		$gateway       = Reports\get_filter_value( 'gateways' );
-		$order_status  = Reports\get_filter_value( 'order_statuses' );
-
-		$hbh   = Reports\get_dates_filter_hour_by_hour();
-		$label = $options[ $dates['range'] ] . ( $hbh ? ' (' . edd_get_timezone_abbr() . ')' : '' );
+		$gateway = Reports\get_filter_value( 'gateways' );
 
 		$tiles = array(
 			'sales_per_gateway'         => 'EDD\Reports\Endpoints\Tiles\GatewaySales',
@@ -595,16 +586,9 @@ add_action( 'edd_reports_init', 'edd_register_taxes_report' );
 function edd_register_file_downloads_report( $reports ) {
 	try {
 
-		// Variables to hold date filter values.
-		$options = Reports\get_dates_filter_options();
-		$filter  = Reports\get_filter_value( 'dates' );
-
-		$hbh   = Reports\get_dates_filter_hour_by_hour();
-		$label = $options[ $filter['range'] ] . ( $hbh ? ' (' . edd_get_timezone_abbr() . ')' : '' );
-
-		$download_data = Reports\get_filter_value( 'products' );
-		$download_data = ! empty( $download_data ) && 'all' !== Reports\get_filter_value( 'products' )
-			? edd_parse_product_dropdown_value( Reports\get_filter_value( 'products' ) )
+		$products      = Reports\get_filter_value( 'products' );
+		$download_data = ! empty( $products ) && 'all' !== $products
+			? edd_parse_product_dropdown_value( $products )
 			: false;
 
 		$tiles = array_filter(
@@ -676,14 +660,6 @@ add_action( 'edd_reports_init', 'edd_register_file_downloads_report' );
  */
 function edd_register_discounts_report( $reports ) {
 	try {
-
-		// Variables to hold date filter values.
-		$options  = Reports\get_dates_filter_options();
-		$filter   = Reports\get_filter_value( 'dates' );
-		$currency = Reports\get_filter_value( 'currencies' );
-
-		$hbh   = Reports\get_dates_filter_hour_by_hour();
-		$label = $options[ $filter['range'] ] . ( $hbh ? ' (' . edd_get_timezone_abbr() . ')' : '' );
 
 		$discount = Reports\get_filter_value( 'discounts' );
 		$discount = ! empty( $discount ) && 'all' !== $discount

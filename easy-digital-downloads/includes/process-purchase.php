@@ -72,6 +72,7 @@ add_action( 'wp_ajax_nopriv_edd_process_checkout', 'edd_process_purchase_form' )
  * used doesn't belong to a different customer.
  *
  * @since  2.6
+ * @since  3.7.1 The validated-email marker only skips the check for its own address.
  * @param array $valid_data Validated data submitted for the purchase.
  * @param array $post       Additional $_POST data submitted.
  * @return void
@@ -79,11 +80,6 @@ add_action( 'wp_ajax_nopriv_edd_process_checkout', 'edd_process_purchase_form' )
 function edd_checkout_check_existing_email( $valid_data, $post ) {
 
 	if ( ! is_user_logged_in() ) {
-		return;
-	}
-
-	// If the email has already been validated, skip this check.
-	if ( EDD()->session->get( 'email_validated' ) ) {
 		return;
 	}
 
@@ -105,6 +101,11 @@ function edd_checkout_check_existing_email( $valid_data, $post ) {
 		$emails_to_check[] = strtolower( $email );
 	}
 	$emails_to_check = array_unique( $emails_to_check );
+
+	// If the submitted address has already been validated, skip this check.
+	if ( EDD\Checkout\Errors::email_is_validated( $email ) ) {
+		return;
+	}
 
 	$customer = edd_get_customer_by( 'user_id', get_current_user_id() );
 
@@ -472,8 +473,9 @@ function edd_purchase_form_validate_new_user() {
 		: false;
 
 	// Trim front/back whitespace from password (don't alter characters).
-	$pass_confirm = isset( $_POST['edd_user_pass_confirm'] )
-		? trim( $_POST['edd_user_pass_confirm'] )
+	$confirm_key  = ! empty( $_POST['edd_user_pass_confirm'] ) ? 'edd_user_pass_confirm' : 'edd_user_pass2';
+	$pass_confirm = isset( $_POST[ $confirm_key ] )
+		? trim( $_POST[ $confirm_key ] )
 		: false;
 
 	/** Required Fields */
@@ -723,6 +725,18 @@ function edd_get_purchase_form_user( $valid_data = array(), $is_ajax = null ) {
 
 			// Set user.
 			$user = $valid_data['new_user_data'];
+
+			// Checkout creates accounts on the same terms as the registration form, so it counts
+			// against the same window. Field validation has already run by this point, so a
+			// submission that is going to be refused anyway must not spend a slot.
+			if ( ! edd_get_errors() ) {
+				$within_rate_limit = \EDD\Users\RegistrationGuard::check_rate_limit();
+				if ( is_wp_error( $within_rate_limit ) ) {
+					edd_set_error( $within_rate_limit->get_error_code(), $within_rate_limit->get_error_message() );
+
+					return false;
+				}
+			}
 
 			// Register and login new user.
 			$user['user_id'] = edd_register_and_login_new_user( $user );

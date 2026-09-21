@@ -146,9 +146,15 @@ add_filter( 'edd_checkout_button_purchase', __NAMESPACE__ . '\override_purchase_
  * @param array $posted     Raw $_POST data.
  *
  * @since 2.11
+ * @since 3.7.1 Leaves a REST request's response to its own controller.
  * @return void
  */
 function send_ajax_errors( $user, $valid_data, $posted ) {
+	// A REST controller builds its own response, so ending the request here would replace it.
+	if ( \EDD\Utils\Request::is_request( 'rest' ) ) {
+		return;
+	}
+
 	if ( empty( $valid_data['gateway'] ) || 'paypal_commerce' !== $valid_data['gateway'] ) {
 		return;
 	}

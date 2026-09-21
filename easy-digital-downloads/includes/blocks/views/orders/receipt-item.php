@@ -13,7 +13,7 @@
 		$notes = edd_get_product_notes( $item->product_id );
 		if ( ! empty( $notes ) ) :
 			?>
-			<div class="edd_purchase_receipt_product_notes"><?php echo wp_kses_post( wpautop( $notes ) ); ?></div>
+			<div class="edd_purchase_receipt_product_notes"><?php echo wp_kses( wpautop( $notes ), edd_get_allowed_tags() ); ?></div>
 			<?php
 		endif;
 

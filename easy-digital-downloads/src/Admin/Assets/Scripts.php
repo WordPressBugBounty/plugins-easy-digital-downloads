@@ -21,6 +21,7 @@ class Scripts {
 	 * Register the EDD admin scripts.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 Registers the Chosen shim as edd-admin-chosen-compat.
 	 * @return void
 	 */
 	public static function register() {
@@ -31,15 +32,15 @@ class Scripts {
 
 		// Register vendor scripts from assets/vendor/js.
 		wp_register_script( 'edd-tom-select', $vendor_dir . 'tom-select.complete.min.js', array(), $version, true );
-		wp_register_script( 'jquery-chosen', $js_dir . 'chosen-compat.js', array( 'jquery', 'edd-tom-select' ), $version, true );
 		wp_register_script( 'edd-jquery-flot', $vendor_dir . 'jquery.flot.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'edd-moment-js', $vendor_dir . 'moment.min.js', array(), $version, true );
 		wp_register_script( 'edd-moment-timezone-js', $vendor_dir . 'moment-timezone.min.js', array( 'edd-moment-js' ), $version, true );
 		wp_register_script( 'edd-chart-js', $vendor_dir . 'chartjs.min.js', array( 'edd-moment-js', 'edd-moment-timezone-js' ), $version, true );
 
 		// Register compiled scripts from assets/build/js.
+		wp_register_script( 'edd-admin-chosen-compat', $js_dir . 'chosen-compat.js', array( 'jquery', 'edd-tom-select' ), $version, true );
 		wp_register_script( 'edd-admin-scripts', $js_dir . 'admin.js', $admin_deps, $version, true );
-		wp_register_script( 'edd-admin-tax-rates', $js_dir . 'tax-rates.js', array( 'wp-backbone', 'jquery-chosen' ), $version, true );
+		wp_register_script( 'edd-admin-tax-rates', $js_dir . 'tax-rates.js', array( 'wp-backbone', 'edd-admin-chosen-compat' ), $version, true );
 		wp_register_script( 'edd-admin-email-tags', $js_dir . 'email-tags.js', array( 'wp-util' ), $version, true );
 		wp_register_script( 'edd-admin-downloads-editor', $js_dir . 'downloads-editor.js', array( 'wp-dom-ready', 'wp-api-fetch', 'wp-data' ), $version, true );
 
@@ -76,13 +77,15 @@ class Scripts {
 		wp_deregister_script( 'cmadm-utils' );
 		wp_deregister_script( 'cmadm-backend' );
 
+		self::register_chosen_compat();
+
 		// Enqueue media on EDD admin pages.
 		wp_enqueue_media();
 
 		// Scripts to enqueue.
 		$scripts = array(
 			'edd-admin-scripts',
-			'jquery-chosen',
+			'edd-admin-chosen-compat',
 			'jquery-form',
 			'jquery-ui-datepicker',
 			'jquery-ui-dialog',
@@ -112,6 +115,22 @@ class Scripts {
 			wp_enqueue_script( 'edd-admin-tools-export' );
 			wp_enqueue_script( 'edd-admin-upgrades' );
 		}
+	}
+
+	/**
+	 * Register the generic `jquery-chosen` handle as a back-compat alias for the EDD shim.
+	 *
+	 * The handle carries no source of its own and only pulls in `edd-admin-chosen-compat`, so
+	 * extensions that enqueue or depend on it get the shim. Deregistering first also drops anything
+	 * another plugin attached to the handle with `wp_localize_script()` or `wp_add_inline_script()`;
+	 * on an EDD screen the shim stands in for that plugin's Chosen.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	private static function register_chosen_compat() {
+		wp_deregister_script( 'jquery-chosen' );
+		wp_register_script( 'jquery-chosen', false, array( 'edd-admin-chosen-compat' ), edd_admin_get_script_version(), true );
 	}
 
 	/**

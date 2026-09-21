@@ -210,8 +210,8 @@ class IPN {
 			return false;
 		}
 
-		// In certain cases, we will bypass the verification process.
-		if ( edd_is_test_mode() || edd_get_option( 'disable_paypal_verification', false ) ) {
+		// Verification can be turned off explicitly. Test mode is not such a case.
+		if ( edd_get_option( 'disable_paypal_verification', false ) ) {
 			return true;
 		}
 
@@ -236,7 +236,7 @@ class IPN {
 		);
 
 		// Get response.
-		$api_response  = wp_remote_post( edd_get_paypal_redirect(), $remote_post_vars );
+		$api_response  = wp_remote_post( edd_get_paypal_redirect( true, true ), $remote_post_vars );
 		$body          = wp_remote_retrieve_body( $api_response );
 		$response_code = wp_remote_retrieve_response_code( $api_response );
 
@@ -341,10 +341,11 @@ class IPN {
 		 * Filter the fallback strategy to use when PayPal verification is unavailable.
 		 *
 		 * @since 3.6.3
+		 * @since 3.7.1 Defaults to `reject`, and an unrecognized strategy rejects.
 		 * @param string $fallback_strategy The fallback strategy to use.
 		 * @return string The fallback strategy to use.
 		 */
-		$fallback_strategy = apply_filters( 'edd_paypal_verification_fallback', 'process_with_validation' );
+		$fallback_strategy = apply_filters( 'edd_paypal_verification_fallback', 'reject' );
 
 		switch ( $fallback_strategy ) {
 			case 'create_on_hold':
@@ -352,23 +353,9 @@ class IPN {
 				$this->create_on_hold_renewal( $reason, $details );
 				return false;
 
-			case 'reject':
-				// Reject the IPN.
-				edd_record_gateway_error(
-					__( 'IPN Error', 'easy-digital-downloads' ),
-					sprintf(
-						/* translators: %1$s: Details; %2$s: Transaction ID */
-						__( 'IPN rejected due to verification unavailability: %1$s. Transaction ID: %2$s', 'easy-digital-downloads' ),
-						$details,
-						! empty( $this->posted['txn_id'] ) ? $this->posted['txn_id'] : 'unknown'
-					)
-				);
-				status_header( 503 ); // Service Unavailable - PayPal will retry.
-				return false;
-
 			case 'process_with_validation':
-			default:
-				// Proceed with enhanced validation.
+				// Only reachable when a store opts in: the notification is processed on the
+				// strength of validate_ipn_data(), which checks shape and not authenticity.
 				$this->debug_log( 'Proceeding with enhanced validation due to verification unavailability' );
 				edd_record_gateway_error(
 					__( 'IPN Warning', 'easy-digital-downloads' ),
@@ -380,6 +367,20 @@ class IPN {
 					)
 				);
 				return true; // Will rely on validate_ipn_data().
+
+			case 'reject':
+			default:
+				edd_record_gateway_error(
+					__( 'IPN Error', 'easy-digital-downloads' ),
+					sprintf(
+						/* translators: %1$s: Details; %2$s: Transaction ID */
+						__( 'IPN rejected due to verification unavailability: %1$s. Transaction ID: %2$s', 'easy-digital-downloads' ),
+						$details,
+						! empty( $this->posted['txn_id'] ) ? $this->posted['txn_id'] : 'unknown'
+					)
+				);
+				status_header( 503 ); // Service Unavailable - PayPal will retry.
+				return false;
 		}
 	}
 

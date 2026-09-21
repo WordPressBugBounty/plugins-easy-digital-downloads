@@ -16,6 +16,14 @@ use EDD\Admin\Menu\SubNav;
 class Screen {
 
 	/**
+	 * The tab shown when no tab is requested.
+	 *
+	 * @since 3.7.1
+	 * @var string
+	 */
+	const DEFAULT_TAB = 'general';
+
+	/**
 	 * The array of settings.
 	 *
 	 * @since 3.3.0
@@ -287,7 +295,7 @@ class Screen {
 	 */
 	private static function get_active_tab() {
 		if ( is_null( self::$active_tab ) ) {
-			$active_tab = 'general';
+			$active_tab = self::DEFAULT_TAB;
 			if ( isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], self::get_tabs() ) ) {
 				$active_tab = sanitize_text_field( $_GET['tab'] );
 			}

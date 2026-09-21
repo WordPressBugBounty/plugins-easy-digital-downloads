@@ -486,7 +486,7 @@ function edd_verify_download_link( $download_id = 0, $key = '', $email = '', $ex
 
 					// Check to see if the file download limit has been reached
 					if ( edd_is_file_at_download_limit( $cart_item['id'], $payment->ID, $file_key, $price_id ) ) {
-						wp_die( apply_filters( 'edd_download_limit_reached_text', __( 'Sorry but you have hit your download limit for this file.', 'easy-digital-downloads' ) ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
+						edd_die_file_download_limit_reached();
 					}
 
 					// If this download has variable prices, we have to confirm that this file was included in their purchase
@@ -2536,4 +2536,18 @@ function edd_unset_discount_query_arg( $query ) {
 function edd_prevent_canonical_redirect( $redirect_url, $requested_url ) {
 	_edd_deprecated_function( __FUNCTION__, '3.6.9' );
 	return $redirect_url;
+}
+
+/**
+ * Email template tag: billing_address
+ * The buyer's billing address
+ *
+ * @deprecated 3.7.1 Replaced with EDD\Emails\Tags\Definitions\BillingAddress.
+ * @param int $payment_id The order ID.
+ * @return string
+ */
+function edd_email_tag_billing_address( $payment_id ) {
+	_edd_deprecated_function( __FUNCTION__, '3.7.1', 'EDD\Emails\Tags\Definitions\BillingAddress::render' );
+
+	return ( new EDD\Emails\Tags\Definitions\BillingAddress() )->render( $payment_id );
 }

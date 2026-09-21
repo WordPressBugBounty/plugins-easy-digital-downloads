@@ -133,6 +133,7 @@ add_filter( 'edd_settings_misc', __NAMESPACE__ . '\button_color' );
  * Adds the EDD block button color setting to the miscellaneous section.
  *
  * @since 2.0
+ * @since 3.7.1 Registers the field under the key it posts under, and reads a stored color only when it is a hex color.
  * @param array $settings
  * @return array
  */
@@ -144,10 +145,16 @@ function button_color( $settings ) {
 			'type' => 'hook',
 		),
 	);
-	array_splice( $settings['button_text'], 1, 0, $color_settings );
 
-	$new_colors = edd_get_option( 'button_colors' );
-	if ( ! empty( $new_colors['background'] ) ) {
+	// array_splice() would renumber the key, which is the one the field posts its colors under.
+	$settings['button_text'] = array_merge(
+		array_slice( $settings['button_text'], 0, 1, true ),
+		$color_settings,
+		array_slice( $settings['button_text'], 1, null, true )
+	);
+
+	$new_colors = \EDD\Utils\Colors::get_stored_button_colors();
+	if ( '' !== $new_colors['background'] ) {
 		unset( $settings['button_text']['checkout_color'] );
 	}
 
@@ -163,6 +170,7 @@ add_action( 'edd_blocks_button_colors', __NAMESPACE__ . '\button_colors' );
  * @return void
  */
 function button_colors( $args ) {
+	// The field shows the stored value, valid or not, so the owner can see and correct it.
 	$colors   = edd_get_option( 'button_colors' );
 	$settings = array(
 		'background' => __( 'Background', 'easy-digital-downloads' ),
@@ -171,7 +179,7 @@ function button_colors( $args ) {
 
 	echo '<div class="edd-settings-colors">';
 	foreach ( $settings as $setting => $label ) {
-		$color_value = ! empty( $colors[ $setting ] ) ? $colors[ $setting ] : '';
+		$color_value = isset( $colors[ $setting ] ) && is_string( $colors[ $setting ] ) ? $colors[ $setting ] : '';
 		?>
 		<div class="edd-settings-color">
 			<label for="edd_settings[button_colors][<?php echo esc_attr( $setting ); ?>]"><?php echo esc_html( $label ); ?></label>

@@ -21,6 +21,13 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 class EDD_Register_Meta {
 
 	/**
+	 * The maximum number of arrays `contains_object()` queues for inspection before it stops trusting a value.
+	 *
+	 * @since 3.7.1
+	 */
+	private const MAX_SCANNED_ARRAYS = 50000;
+
+	/**
 	 * Holds the instance
 	 *
 	 * Ensures that only one instance of EDD_Register_Meta exists in memory at any one
@@ -149,6 +156,7 @@ class EDD_Register_Meta {
 			array(
 				'object_subtype'    => 'download',
 				'sanitize_callback' => array( $this, 'sanitize_files' ),
+				'auth_callback'     => array( $this, 'can_write_download_files_meta' ),
 				'type'              => 'array',
 				'description'       => __( 'The files associated with the product, available for download.', 'easy-digital-downloads' ),
 			)
@@ -194,6 +202,30 @@ class EDD_Register_Meta {
 				'sanitize_callback' => array( $this, 'intval_wrapper' ),
 				'type'              => 'int',
 				'description'       => __( 'When variable pricing is enabled, this value defines which option should be chosen by default.', 'easy-digital-downloads' ),
+				'show_in_rest'      => true,
+			)
+		);
+
+		register_meta(
+			'post',
+			'edd_sku',
+			array(
+				'object_subtype'    => 'download',
+				'sanitize_callback' => 'sanitize_text_field',
+				'type'              => 'string',
+				'description'       => __( 'The stock keeping unit for this product.', 'easy-digital-downloads' ),
+				'show_in_rest'      => true,
+			)
+		);
+
+		register_meta(
+			'post',
+			'edd_product_notes',
+			array(
+				'object_subtype'    => 'download',
+				'sanitize_callback' => array( $this, 'sanitize_product_notes' ),
+				'type'              => 'string',
+				'description'       => __( 'Notes shown to the customer with their purchase of this product.', 'easy-digital-downloads' ),
 				'show_in_rest'      => true,
 			)
 		);
@@ -335,11 +367,27 @@ class EDD_Register_Meta {
 	}
 
 	/**
+	 * Sanitize the product notes shown to the customer with their purchase.
+	 *
+	 * Held to the same tags the receipt renders, so what a store saves is what its customer
+	 * is shown. This is how customer and order notes are already stored.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $notes The notes passed into the meta.
+	 * @return string The sanitized notes.
+	 */
+	public function sanitize_product_notes( $notes ) {
+		return wp_kses( (string) $notes, edd_get_allowed_tags() );
+	}
+
+	/**
 	 * Sanitize values that come in as arrays
 	 *
 	 * @since  2.5
+	 * @since  3.7.1 A serialized value is deserialized with classes disallowed, and refused when it names one.
 	 * @param  array|string $value The value passed into the meta.
-	 * @return array         The sanitized value.
+	 * @return array|false   The sanitized value, or false when a serialized value is refused.
 	 */
 	public function sanitize_array( $value = array() ) {
 
@@ -350,14 +398,16 @@ class EDD_Register_Meta {
 			}
 
 			if ( is_serialized( $value ) ) {
+				$unserialized = \EDD\Utils\Data\Serializer::unserialize( $value );
 
-				preg_match( '/[oO]\s*:\s*\d+\s*:\s*"\s*(?!(?i)(stdClass))/', $value, $matches );
-				if ( ! empty( $matches ) ) {
+				// A value naming any class is refused outright, rather than stored as a partial object.
+				if ( false === $unserialized || $this->contains_object( $unserialized ) ) {
+					edd_debug_log( 'EDD: refused a serialized meta value that did not deserialize to a plain array.' );
+
 					return false;
 				}
 
-				$value = (array) maybe_unserialize( $value );
-
+				$value = (array) $unserialized;
 			}
 		}
 
@@ -440,16 +490,47 @@ class EDD_Register_Meta {
 		foreach ( $files as $id => $file ) {
 
 			if ( ! empty( $files[ $id ]['file'] ) ) {
-				$files[ $id ]['file'] = trim( $file['file'] );
+				$files[ $id ]['file'] = sanitize_text_field( trim( $file['file'] ) );
 			}
 
 			if ( ! empty( $files[ $id ]['name'] ) ) {
 				$files[ $id ]['name'] = sanitize_text_field( $file['name'] );
 			}
+
+			if ( ! empty( $files[ $id ]['attachment_id'] ) ) {
+				$attachment_id = absint( $files[ $id ]['attachment_id'] );
+
+				// Guard the id before get_post_type(), which reads the global post when given nothing.
+				if ( $attachment_id && 'attachment' === get_post_type( $attachment_id ) ) {
+					$files[ $id ]['attachment_id'] = $attachment_id;
+				} else {
+					unset( $files[ $id ]['attachment_id'] );
+				}
+			}
 		}
 
 		// Make sure all files are rekeyed starting at 0.
 		return $files;
+	}
+
+	/**
+	 * Whether a user may write a download's file list through a capability-checked channel.
+	 *
+	 * Consulted for the edit_post_meta, add_post_meta and delete_post_meta capabilities, so every
+	 * channel that checks them (XML-RPC custom fields, the custom-fields AJAX handlers) requires the
+	 * capability. The metabox save writes through update_post_meta(), which does not consult this
+	 * callback, and keeps its own per-row ownership rule.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param bool   $allowed   Whether the user may write the meta.
+	 * @param string $meta_key  The meta key being written.
+	 * @param int    $object_id The download.
+	 * @param int    $user_id   The user the capability is being checked for.
+	 * @return bool
+	 */
+	public function can_write_download_files_meta( $allowed, $meta_key, $object_id, $user_id ) {
+		return $allowed && user_can( $user_id, 'edit_others_products' );
 	}
 
 	/**
@@ -474,6 +555,49 @@ class EDD_Register_Meta {
 		}
 
 		return $updated_meta;
+	}
+
+	/**
+	 * Whether a value holds an object at any depth.
+	 *
+	 * The walk is bounded, so a value it cannot finish inspecting is treated as holding one.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param mixed $value The value to inspect.
+	 * @return bool
+	 */
+	private function contains_object( $value ) {
+		if ( is_object( $value ) ) {
+			return true;
+		}
+
+		if ( ! is_array( $value ) ) {
+			return false;
+		}
+
+		$pending = array( $value );
+		$queued  = 1;
+
+		while ( $pending ) {
+			foreach ( array_pop( $pending ) as $item ) {
+				if ( is_object( $item ) ) {
+					return true;
+				}
+
+				if ( ! is_array( $item ) ) {
+					continue;
+				}
+
+				$pending[] = $item;
+
+				if ( ++$queued > self::MAX_SCANNED_ARRAYS ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }
 EDD_Register_Meta::instance();

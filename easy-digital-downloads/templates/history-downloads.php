@@ -55,9 +55,10 @@ if ( $orders ) :
 
 				<tr class="edd_download_history_row">
 					<?php
-					$name           = $item->product_name;
-					$price_id       = $item->price_id;
-					$download_files = edd_get_download_files( $item->product_id, $price_id );
+					$name     = $item->product_name;
+					$price_id = $item->price_id;
+
+					$download_files = $item->get_download_files();
 
 					do_action( 'edd_download_history_row_start', $order->id, $item->product_id );
 					?>

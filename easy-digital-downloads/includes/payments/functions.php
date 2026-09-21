@@ -1566,6 +1566,7 @@ function edd_get_payment_notes( $order_id = 0, $search = '' ) {
  *
  * @since 1.4
  * @since 3.0 Updated to use the edd_notes custom table to store notes.
+ * @since 3.7.1 Note content is sanitized by edd_sanitize_note_content().
  *
  * @param int    $order_id The order ID to store a note for.
  * @param string $note     The content of the note.
@@ -1575,7 +1576,7 @@ function edd_insert_payment_note( $order_id = 0, $note = '' ) {
 
 	// Sanitize note contents
 	if ( ! empty( $note ) ) {
-		$note = trim( wp_kses( $note, edd_get_allowed_tags() ) );
+		$note = edd_sanitize_note_content( $note );
 	}
 
 	// Bail if no order ID or note.

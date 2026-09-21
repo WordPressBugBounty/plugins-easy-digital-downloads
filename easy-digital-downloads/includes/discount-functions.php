@@ -1064,16 +1064,21 @@ function edd_get_discounted_amount( $code = '', $base_price = 0 ) {
  * @since 2.7 Updated to use EDD_Discount object.
  * @since 3.0 Updated to call edd_get_discount_by_code()
  *
+ * @since 3.7.1 Returns false when the discount had no use left to claim.
+ *
  * @param string $code Discount code to be incremented.
- * @return int New usage.
+ * @return int|false New usage, or false if the code does not exist or is used up.
  */
 function edd_increase_discount_usage( $code = '' ) {
 	$discount = edd_get_discount_by_code( $code );
 
-	// Increase if discount exists.
-	return ! empty( $discount->id )
-		? (int) $discount->increase_usage()
-		: false;
+	if ( empty( $discount->id ) ) {
+		return false;
+	}
+
+	$use_count = $discount->increase_usage();
+
+	return false === $use_count ? false : (int) $use_count;
 }
 
 /**

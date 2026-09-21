@@ -140,23 +140,23 @@ class Settings {
 			$stripe_settings['stripe_payment_methods'] = $payment_methods;
 		}
 
-		if ( _edds_legacy_elements_enabled() ) {
-			if ( ! edds_stripe_connect_can_manage_keys() ) {
-				$stripe_settings['stripe_elements_mode'] = array(
-					'id'            => 'stripe_elements_mode',
-					'name'          => __( 'Elements Mode', 'easy-digital-downloads' ),
-					'desc'          => __( 'Toggle between using the legacy Card Elements Stripe integration and the new Payment Elements experience.', 'easy-digital-downloads' ),
-					'type'          => 'select',
-					'options'       => array(
-						'card-elements'    => __( 'Card Element', 'easy-digital-downloads' ),
-						'payment-elements' => __( 'Payment Element', 'easy-digital-downloads' ),
-					),
-					'class'         => 'stripe-elements-mode',
-					'tooltip_title' => __( 'Transitioning to Payment Elements', 'easy-digital-downloads' ),
-					'tooltip_desc'  => __( 'You are seeing this option because your store has been using Card Elements prior to the EDD Stripe 2.9.0 update.<br /><br />To ensure that we do not affect your current checkout experience, you can use this setting to toggle between the Card Elements (legacy) and Payment Elements (updated version) to ensure that any customizations or theming you have done still function properly.<br /><br />Please be advised, that in a future version of the Stripe extension, we will deprecate the Card Elements, so take this time to update your store!', 'easy-digital-downloads' ),
-				);
-			}
+		if ( $this->can_toggle_elements_mode() ) {
+			$stripe_settings['stripe_elements_mode'] = array(
+				'id'            => 'stripe_elements_mode',
+				'name'          => __( 'Elements Mode', 'easy-digital-downloads' ),
+				'desc'          => __( 'Toggle between using the legacy Card Elements Stripe integration and the new Payment Elements experience.', 'easy-digital-downloads' ),
+				'type'          => 'select',
+				'options'       => array(
+					'card-elements'    => __( 'Card Element', 'easy-digital-downloads' ),
+					'payment-elements' => __( 'Payment Element', 'easy-digital-downloads' ),
+				),
+				'class'         => 'stripe-elements-mode',
+				'tooltip_title' => __( 'Transitioning to Payment Elements', 'easy-digital-downloads' ),
+				'tooltip_desc'  => __( 'You are seeing this option because your store is using Stripe\'s legacy Card Elements.<br /><br />Use this setting to switch to Payment Elements to ensure that any customizations or theming you have done still function properly.<br /><br />Please be advised, that in a future version of EDD, we will deprecate the Card Elements, so take this time to update your store!', 'easy-digital-downloads' ),
+			);
+		}
 
+		if ( _edds_legacy_elements_enabled() ) {
 			$stripe_settings['stripe_allow_prepaid'] = array(
 				'id'    => 'stripe_allow_prepaid',
 				'name'  => __( 'Prepaid Cards', 'easy-digital-downloads' ),
@@ -440,6 +440,24 @@ class Settings {
 		}
 
 		return $this->is_payment_elements_mode;
+	}
+
+	/**
+	 * Whether the Elements Mode setting should be offered.
+	 *
+	 * Manual API keys force Card Elements, so the toggle would do nothing there. Otherwise
+	 * a store still running Card Elements must be able to reach the setting the upgrade
+	 * notice points at, whether or not the legacy access flag was ever written.
+	 *
+	 * @since 3.7.1
+	 * @return bool
+	 */
+	private function can_toggle_elements_mode(): bool {
+		if ( edds_stripe_connect_can_manage_keys() ) {
+			return false;
+		}
+
+		return _edds_legacy_elements_enabled() || ! $this->is_payment_elements_mode();
 	}
 
 	/**

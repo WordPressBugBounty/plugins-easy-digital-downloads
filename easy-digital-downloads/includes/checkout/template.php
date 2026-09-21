@@ -370,6 +370,7 @@ function edd_get_register_fields() {
 				array(
 					'no_wp_scripts' => true,
 					'is_block'      => false,
+					'is_checkout'   => true,
 				)
 			);
 			do_action( 'edd_register_account_fields_after' );
@@ -429,7 +430,8 @@ function edd_get_login_fields() {
 				'\\EDD\\Forms\\Login\\Password',
 			),
 			array(
-				'is_block' => false,
+				'is_block'     => false,
+				'not_required' => ! $require_login,
 			)
 		);
 		if ( $require_login ) :

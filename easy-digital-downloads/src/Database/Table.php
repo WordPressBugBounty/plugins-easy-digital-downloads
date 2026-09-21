@@ -442,6 +442,39 @@ abstract class Table extends Base {
 	}
 
 	/**
+	 * Empty the database table and restart its auto-increment counter.
+	 *
+	 * Reaches the same observable state as truncate(), and is the variant the
+	 * per-class test teardown uses. It is only cheaper than TRUNCATE on a table
+	 * that is empty or nearly so, as it is there: on a populated table DELETE
+	 * costs more, writing undo log per row and reclaiming no tablespace.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return bool True if the table was emptied and its counter reset.
+	 */
+	public function reset() {
+
+		// Get the database interface.
+		$db = $this->get_db();
+
+		// Bail if no database interface is available.
+		if ( empty( $db ) ) {
+			return false;
+		}
+
+		// Empty the table first: the counter cannot be lowered past a live row.
+		if ( false === $this->delete_all() ) {
+			return false;
+		}
+
+		// Restart the counter, so the next row inserted takes the first ID again.
+		$result = $db->query( "ALTER TABLE {$this->table_name} AUTO_INCREMENT = 1" );
+
+		return $this->is_success( $result );
+	}
+
+	/**
 	 * Clone this database table.
 	 *
 	 * Pair with copy().

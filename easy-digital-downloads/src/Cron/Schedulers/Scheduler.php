@@ -115,6 +115,22 @@ interface Scheduler {
 	public function has_scheduled( string $hook, array $args = array(), string $group = '' ): bool;
 
 	/**
+	 * Check if a matching action is pending (not in-progress).
+	 *
+	 * Unlike has_scheduled(), this only counts actions that are queued and waiting
+	 * to run. An action that is currently executing is not counted, so a running
+	 * batch can gate its own successor without matching itself.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook name to check.
+	 * @param array  $args  Optional arguments to match.
+	 * @param string $group Optional group identifier.
+	 * @return bool True if a matching action is pending, false otherwise.
+	 */
+	public function has_pending( string $hook, array $args = array(), string $group = '' ): bool;
+
+	/**
 	 * Search for scheduled actions.
 	 *
 	 * @since 3.6.5
@@ -124,6 +140,24 @@ interface Scheduler {
 	 * @return array Array of action IDs or objects.
 	 */
 	public function search( array $args = array(), string $return_format = 'objects' ): array;
+
+	/**
+	 * Enqueue an action to run as soon as possible.
+	 *
+	 * Schedules the action for immediate execution. Unlike schedule_single(), this
+	 * does not bail when a matching action already exists, so the currently
+	 * in-progress action can enqueue its own successor for batch continuation.
+	 * De-duplication guarantees vary by backend, so callers that need to avoid
+	 * pile-up should gate on has_pending() before enqueuing.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook name to execute.
+	 * @param array  $args  Optional arguments to pass to the hook.
+	 * @param string $group Optional group identifier.
+	 * @return bool True if the action was enqueued, false otherwise.
+	 */
+	public function enqueue_async( string $hook, array $args = array(), string $group = '' ): bool;
 
 	/**
 	 * Check if this scheduler is available.

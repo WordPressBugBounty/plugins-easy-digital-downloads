@@ -590,14 +590,14 @@ function edd_get_purchase_download_links( $payment_id = 0 ) {
 	foreach ( $order->get_items() as $order_item ) {
 		$links .= '<li>';
 		$links .= '<h3 class="edd_download_link_title">' . esc_html( $order_item->product_name ) . '</h3>';
-		$files  = edd_get_download_files( $order_item->product_id, $order_item->price_id );
+		$files  = $order_item->get_download_files();
 		if ( is_array( $files ) ) {
 			foreach ( $files as $filekey => $file ) {
 				$links .= '<div class="edd_download_link_file">';
 				$links .= sprintf(
 					'<a href="%s">%s</a>',
 					esc_url( edd_get_download_file_url( $order_item, $order->email, $filekey ) ),
-					edd_get_file_name( $file )
+					esc_html( edd_get_file_name( $file ) )
 				);
 				$links .= '</div>';
 			}

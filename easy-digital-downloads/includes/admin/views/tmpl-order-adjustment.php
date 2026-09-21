@@ -27,7 +27,7 @@ $view_url = edd_get_admin_url(
 			<span class="screen-reader-text">
 				<?php
 				/* translators: %s: Adjustment type (discount, fee, etc) */
-				printf( __( 'Remove %s', 'easy-digital-downloads' ), '{{{ data.type }}}' );
+				printf( __( 'Remove %s', 'easy-digital-downloads' ), '{{ data.type }}' );
 				?>
 			</span>
 		</button>

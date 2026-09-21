@@ -10,7 +10,7 @@
 
 namespace EDD\Cron\Components;
 
-use EDD\EventManagement\EventManager;
+use EDD\Cron\EventManager;
 use EDD\EventManagement\SubscriberInterface;
 
 // Exit if accessed directly.
@@ -71,17 +71,33 @@ abstract class Component implements SubscriberInterface {
 	}
 
 	/**
+	 * Hooks this component subscribes to which are not scheduled events.
+	 *
+	 * Everything a component subscribes to is wired behind a cron context check. A component
+	 * which also listens to a hook that has to run on a normal page load names it here.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return array Hook names to wire without the cron context check.
+	 */
+	public static function get_request_time_events(): array {
+		return array();
+	}
+
+	/**
 	 * Get the events that this class is subscribed to.
 	 *
 	 * @note Due to the nature of the EventManager, we have to call this directly as there is a limitation that does not allow
 	 * a class that implements the SubscriberInterface to load another class that implements the SubscriberInterface.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 Callbacks are wired through the Cron EventManager, so a component
+	 *                       method can only be invoked from a cron, Action Scheduler or WP-CLI context.
 	 *
 	 * @return void
 	 */
 	public function subscribe() {
-		$manager = new EventManager();
+		$manager = new EventManager( static::get_request_time_events() );
 		$manager->add_subscriber( $this );
 	}
 }

@@ -205,13 +205,22 @@ function edd_process_paypal_purchase( $purchase_data ) {
 		EDD()->session->set( 'edd_resume_payment', $order_id );
 
 		// Get the success url.
-		$return_url = add_query_arg(
-			array(
-				'payment-confirmation' => 'paypal',
-				'payment-id'           => urlencode( $order_id ),
-			),
-			edd_get_confirmation_page_uri()
+		$pending_order = edd_get_order( $order_id );
+		$return_args   = array(
+			'payment-confirmation' => 'paypal',
+			'payment-id'           => urlencode( $order_id ),
 		);
+
+		if ( $pending_order ) {
+			$receipt_hash = $pending_order->get_receipt_hash();
+
+			// `order` and `id` are the pair get_payment_key() validates the hash from, so a block
+			// confirmation page resolves the order from the URL rather than from the session.
+			$return_args['order'] = $receipt_hash;
+			$return_args['id']    = $order_id;
+		}
+
+		$return_url = add_query_arg( $return_args, edd_get_confirmation_page_uri() );
 
 		// Get the PayPal redirect uri.
 		$paypal_redirect = trailingslashit( edd_get_paypal_redirect() ) . '?';
@@ -937,10 +946,25 @@ function edd_paypal_success_page_content( $content ) {
 
 	$order = edd_get_order( $order_id );
 
-	// If order exists, ensure session is set for receipt retrieval.
 	if ( $order ) {
-		// Restore session if it's empty or doesn't match current order.
-		if ( ! is_array( $session ) || empty( $session['purchase_key'] ) || $session['purchase_key'] !== $order->payment_key ) {
+		$session_matches = is_array( $session )
+			&& ! empty( $session['purchase_key'] )
+			&& hash_equals( (string) $order->payment_key, (string) $session['purchase_key'] );
+
+		$order_hash = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
+
+		// Fallback to $_GET if filter_input returns null (for test environments).
+		if ( ! $order_hash && isset( $_GET['order'] ) ) {
+			$order_hash = sanitize_text_field( $_GET['order'] );
+		}
+
+		$hash_valid = ! empty( $order_hash ) && $order->is_receipt_hash_valid( $order_hash );
+
+		if ( ! $session_matches && ! $hash_valid ) {
+			return $content;
+		}
+
+		if ( ! $session_matches ) {
 			edd_set_purchase_session(
 				array(
 					'purchase_key' => $order->payment_key,
@@ -948,7 +972,6 @@ function edd_paypal_success_page_content( $content ) {
 			);
 		}
 
-		// Clear the cart after session is restored.
 		edd_empty_cart();
 
 		// If order is still pending, show processing indicator.

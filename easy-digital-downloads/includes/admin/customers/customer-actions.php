@@ -364,6 +364,17 @@ function edd_customer_delete( $args = array() ) {
 		wp_die( __( 'Nonce verification failed.', 'easy-digital-downloads' ) );
 	}
 
+	// Destroying the attached orders is the same permanent operation the order screen gates on
+	// delete_shop_payments, so it needs that capability here too, not just the one for editing
+	// customers. Deleting the customer on its own detaches the orders and stays permitted.
+	if ( $remove_data && ! current_user_can( 'delete_shop_payments' ) ) {
+		wp_die(
+			esc_html__( 'You do not have permission to delete this customer\'s orders.', 'easy-digital-downloads' ),
+			esc_html__( 'Error', 'easy-digital-downloads' ),
+			array( 'response' => 403 )
+		);
+	}
+
 	if ( ! $confirm ) {
 		edd_set_error( 'customer-delete-no-confirm', __( 'Please confirm you want to delete this customer', 'easy-digital-downloads' ) );
 	}

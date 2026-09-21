@@ -34,13 +34,7 @@ class Customer {
 			$customer = edd_get_customer_by( 'user_id', get_current_user_id() );
 		}
 
-		$session_data = wp_parse_args( $data, self::get_defaults() );
-
-		// Ensure address array is properly merged with defaults.
-		if ( isset( $data['address'] ) && is_array( $data['address'] ) ) {
-			$defaults                = self::get_defaults();
-			$session_data['address'] = wp_parse_args( $data['address'], $defaults['address'] );
-		}
+		$session_data = self::normalize( $data );
 
 		if ( ! $customer ) {
 			return self::maybe_set_customer_data( $session_data );
@@ -59,26 +53,28 @@ class Customer {
 			$session_data
 		);
 
-		$session_data = wp_parse_args( $customer_data, $session_data );
-
-		// Ensure address array is properly merged with defaults again after customer data merge.
-		if ( isset( $data['address'] ) && is_array( $data['address'] ) ) {
-			$defaults                = self::get_defaults();
-			$session_data['address'] = wp_parse_args( $data['address'], $defaults['address'] );
-		}
-
-		return self::maybe_set_customer_data( $session_data );
+		return self::maybe_set_customer_data( $customer_data );
 	}
 
 	/**
 	 * Gets the customer data from the session.
 	 *
 	 * @since 3.5.0
+	 * @since 3.7.1 Fills in missing keys, and a logged-in customer's own details,
+	 *                       for a session that was written without going through `set()`.
 	 * @return array
 	 */
 	public static function get(): array {
 		$session_data = EDD()->session->get( 'customer' );
 		if ( ! empty( $session_data ) ) {
+			$session_data = self::normalize( $session_data );
+
+			// Backfilling reads the customer record, so it runs once per session rather than
+			// on every read: it sets the current user, which closes this gate.
+			if ( is_user_logged_in() && get_current_user_id() !== (int) $session_data['user_id'] ) {
+				return self::maybe_set_customer_data( $session_data );
+			}
+
 			return $session_data;
 		}
 
@@ -93,6 +89,7 @@ class Customer {
 	 * Sets customer data in the session if it contains meaningful values.
 	 *
 	 * @since 3.5.0
+	 * @since 3.7.1 The user ID is set rather than filled in when empty.
 	 * @param array $session_data The session data to potentially set.
 	 * @return array The session data that was set, or the original data if not set.
 	 */
@@ -100,9 +97,12 @@ class Customer {
 		if ( is_user_logged_in() ) {
 			$user_data = get_userdata( get_current_user_id() );
 
+			// The user ID says whose session this is, so it is set rather than filled in: an ID
+			// left behind by another user is not a gap, and filling would never replace it.
+			$session_data['user_id'] = $user_data->ID;
+
 			// Map session data keys to proper WP_User properties and meta to avoid deprecation warnings.
 			$user_mappings = array(
-				'user_id'    => $user_data->ID,
 				'email'      => $user_data->user_email,
 				'name'       => $user_data->display_name,
 				'first_name' => get_user_meta( $user_data->ID, 'first_name', true ),
@@ -135,6 +135,28 @@ class Customer {
 		}
 
 		return EDD()->session->set( 'customer', $session_data );
+	}
+
+	/**
+	 * Fills in any customer data the session is missing.
+	 *
+	 * A `customer` session written directly, rather than through `set()`, can hold any
+	 * subset of the keys, and consumers read them without guarding.
+	 *
+	 * @since 3.7.1
+	 * @param mixed $data The customer session data.
+	 * @return array
+	 */
+	private static function normalize( $data ): array {
+		$defaults = self::get_defaults();
+		$data     = wp_parse_args( is_array( $data ) ? $data : array(), $defaults );
+
+		// wp_parse_args() treats an existing address as complete and does not recurse into it.
+		$data['address'] = is_array( $data['address'] )
+			? wp_parse_args( $data['address'], $defaults['address'] )
+			: $defaults['address'];
+
+		return $data;
 	}
 
 	/**

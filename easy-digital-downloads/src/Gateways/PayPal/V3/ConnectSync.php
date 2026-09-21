@@ -21,6 +21,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\EventManagement\SubscriberInterface;
 use EDD\Cron\Events\SingleEvent;
+use EDD\Cron\EventManager as CronEventManager;
 use EDD\Utils\Identifier;
 use EDD\Utils\URL;
 
@@ -66,7 +67,7 @@ class ConnectSync implements SubscriberInterface {
 			'edd/license/saved'   => 'sync_license',
 			'edd/license/deleted' => 'sync_license',
 			'update_option_home'  => array( 'on_home_url_changed', 10, 2 ),
-			self::SYNC_HOOK       => 'reconcile',
+			self::SYNC_HOOK       => 'reconcile_on_cron',
 		);
 	}
 
@@ -133,6 +134,25 @@ class ConnectSync implements SubscriberInterface {
 			self::SYNC_HOOK,
 			array( 'src' => 'home' )
 		);
+	}
+
+	/**
+	 * Runs the reconcile job when it arrives as a scheduled event.
+	 *
+	 * ConnectSync is a SubscriberInterface listener rather than a Cron\Components\Component, so
+	 * the guard in Component::subscribe() does not reach it and this entry point carries its own.
+	 * reconcile() stays directly callable, so an admin action or WP-CLI can still run one.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return void
+	 */
+	public function reconcile_on_cron(): void {
+		if ( ! CronEventManager::is_cron_context() ) {
+			return;
+		}
+
+		$this->reconcile();
 	}
 
 	/**

@@ -10,12 +10,11 @@
 import { EDD_TYPE, SUPPORTED_WIDGETS, REQUIRED_WIDGETS } from './patterns';
 
 /**
- * The payment-info section widget type — the re-add resolver's layout anchor.
+ * The payment-info section widget type.
  *
- * Payment-info is delete-locked, so it is present in every box regardless of the
- * active layout; its ancestor chain in the box model identifies that layout and
- * the container a re-added section belongs in. Mirrors the section-type constant
- * in patterns.js (which does not export it).
+ * This and the two below mirror the section-type constants in patterns.js, which
+ * does not export them. Both info sections are delete-locked, so the re-add
+ * resolver can count on finding them in every box.
  *
  * @since 3.7.0
  * @type {string}
@@ -25,21 +24,24 @@ const PAYMENT_INFO_WIDGET = 'edd-checkout-payment-info';
 /**
  * The cart section widget type.
  *
- * The re-add resolver routes the cart differently from the discount form, so it
- * has to recognise the cart widget type. Mirrors the section-type constant in
- * patterns.js (which does not export it).
- *
  * @since 3.7.0
  * @type {string}
  */
 const CART_WIDGET = 'edd-checkout-cart';
 
 /**
+ * The personal-info section widget type.
+ *
+ * @since 3.7.1
+ * @type {string}
+ */
+const PERSONAL_INFO_WIDGET = 'edd-checkout-personal-info';
+
+/**
  * Whether the Elementor editor internals required by this module are present.
  *
- * A single feature-detection check: if Elementor's internal shape ever changes
- * such that the elements manager or the command runner is missing, the
- * integration is a no-op rather than throwing.
+ * Feature detection, so a change to Elementor's internal shape makes the
+ * integration a no-op rather than a throw.
  *
  * @since 3.7.0
  * @return {boolean} True when the required internals are available.
@@ -55,10 +57,6 @@ const hasRequiredInternals = () => {
 
 /**
  * Walk up to the document-root container from any container.
- *
- * Climbs the `parent` chain (the same chain findEnclosingBox uses) until it runs
- * out of ancestors, so the last non-null container is the document root whose
- * model holds every top-level element.
  *
  * @since 3.7.0
  * @param {Object} container The container to start from.
@@ -77,8 +75,7 @@ const rootContainer = ( container ) => {
 /**
  * Count the edd-checkout-box elements in a document element collection.
  *
- * Recurses the collection (a box is never nested in a box, but the walk is
- * defensive) counting every element whose elType is our checkout box.
+ * A box is never nested inside a box; the walk recurses defensively anyway.
  *
  * @since 3.7.0
  * @param {Object} collection A Backbone-style elements collection (has `each`).
@@ -103,10 +100,8 @@ const countCheckoutBoxes = ( collection ) => {
 /**
  * Compute which required section widgets are missing from a checkout box.
  *
- * Walks the box container's descendants recursively (via boxContainsType), so a required
- * section nested inside an inner column still counts as present — matching the
- * PHP detection utility, which also recurses. A required widgetType is reported
- * missing only when absent at every depth of the box subtree.
+ * A section nested inside an inner column counts as present, matching the PHP
+ * detection utility, which also recurses.
  *
  * @since 3.7.0
  * @param {Object} container The box container (has a model with `elements`).
@@ -119,10 +114,8 @@ const getMissingRequired = ( container ) => REQUIRED_WIDGETS.filter(
 /**
  * Resolve the enclosing EDD Checkout box view for a lifecycle event target.
  *
- * Walks up the view tree from the rendered/destroyed element to the nearest
- * ancestor whose model elType is the EDD Checkout box, so a child add/remove
- * refreshes the correct box's overlay. Returns the box view itself when the
- * event target IS the box.
+ * Returns the box view itself when the event target IS the box, so a child
+ * add/remove refreshes the right box's overlay either way.
  *
  * @since 3.7.0
  * @param {Object} view The element view from the lifecycle event.
@@ -156,8 +149,7 @@ const pickerBox = ( view ) => view?.options?.container ?? view?.container ?? nul
 /**
  * Whether a widget type is one of the EDD checkout section widgets we dedupe.
  *
- * The four checkout section types are exactly the deduped set — all four are
- * seeded by every pattern — and a box holds at most one of each.
+ * Every pattern seeds all four, so a box holds at most one of each.
  *
  * @since 3.7.0
  * @param {string} widgetType The widget type to test.
@@ -177,10 +169,8 @@ const containerId = ( container ) => container?.id ?? container?.model?.get?.( '
 /**
  * Walk up the container tree to the enclosing EDD Checkout box.
  *
- * Starts at the given container (so passing the box itself returns it) and climbs
- * the `parent` chain until it finds an EDD Checkout box or runs out of ancestors.
- * Lets the guards work whether a section is a direct child of the box or nested in
- * an inner column/container inside it.
+ * Returns the box itself when passed the box, which is what lets the guards treat a
+ * direct child and a section nested in an inner column alike.
  *
  * @since 3.7.0
  * @param {Object} container The container to start from.
@@ -202,10 +192,8 @@ const findEnclosingBox = ( container ) => {
 /**
  * Whether a checkout box subtree already contains a widget of the given type.
  *
- * Recurses the box's own descendants (not just direct children, so a section
- * nested in an inner column still counts), skipping any element ids in
- * `excludeIds` — used by the move guard to ignore the element(s) being moved so a
- * plain reorder within the same box is not mistaken for a duplicate.
+ * `excludeIds` is what keeps the move guard from reading a plain reorder within the
+ * same box as a duplicate: the elements being moved are skipped.
  *
  * @since 3.7.0
  * @param {Object}   boxContainer The enclosing box container.
@@ -243,11 +231,9 @@ const boxContainsType = ( boxContainer, widgetType, excludeIds = [] ) => {
 /**
  * Build the ancestor chain to the first section of a given type within a box.
  *
- * Walks the box's descendants (the boxContainsType walk style) for the first
- * widget of `widgetType` and returns the ordered model nodes from the box's own
- * top-level child down to and including that widget. The chain length identifies
- * the section's nesting depth (1 = box root, 2 = inside a column, 3 = inside a
- * row-column) and its penultimate node is the container directly holding it.
+ * The chain runs from the box's own top-level child down to the section itself, so
+ * its length is the section's nesting depth and chainParent() reads off the
+ * container holding it.
  *
  * @since 3.7.0
  * @param {Object} box        The checkout box container to walk.
@@ -287,15 +273,45 @@ const sectionChain = ( box, widgetType ) => {
 /**
  * Build the payment-info ancestor chain within a checkout box.
  *
- * The delete-locked payment-info section is present in every box, so its chain
- * depth identifies the active layout (1 = single-column, 2 = two-column, 3 =
- * cart-top) and its penultimate node is the container directly holding it.
+ * Payment-info is delete-locked, so this chain is never empty for a real box.
  *
  * @since 3.7.0
  * @param {Object} box The checkout box container to walk.
  * @return {Object[]} The model nodes from top-level child to payment-info (empty when absent).
  */
 const paymentInfoChain = ( box ) => sectionChain( box, PAYMENT_INFO_WIDGET );
+
+/**
+ * The container model directly holding the section at the end of an ancestor chain.
+ *
+ * @since 3.7.1
+ * @param {Object[]} chain A section ancestor chain from sectionChain().
+ * @return {?Object} The parent container model, or null when the section sits at the box root.
+ */
+const chainParent = ( chain ) => ( chain.length >= 2 ? chain[ chain.length - 2 ] : null );
+
+/**
+ * The first container child of a collection other than the given one.
+ *
+ * @since 3.7.1
+ * @param {Object} collection A Backbone-style elements collection (has `each`).
+ * @param {string} excludeId  The container child id to skip.
+ * @return {?Object} The sibling container model, or null when there is none.
+ */
+const findSiblingContainer = ( collection, excludeId ) => {
+	let sibling = null;
+
+	collection?.each?.( ( child ) => {
+		if ( sibling ) {
+			return;
+		}
+		if ( 'container' === child.get( 'elType' ) && child.get( 'id' ) !== excludeId ) {
+			sibling = child;
+		}
+	} );
+
+	return sibling;
+};
 
 /**
  * Find the index of a child model (by id) within an elements collection.
@@ -326,9 +342,8 @@ const childIndexById = ( collection, id ) => {
  * Whether a container holds a structural child (a nested container or a checkout
  * section) other than the given branch.
  *
- * Lets the re-add resolver climb out of a wrapper that holds nothing but the cart —
- * a "Your Cart" card, say — where a heading or icon beside the cart does not count,
- * so the discount is re-added as a sibling of the card rather than nested inside it.
+ * A heading or icon beside the cart deliberately does not count, so a "Your Cart"
+ * card still reads as cart-only.
  *
  * @since 3.7.0
  * @param {Object} containerModel The container model to inspect.
@@ -354,30 +369,22 @@ const hasOtherStructuralChild = ( containerModel, branchModel ) => {
 /**
  * Resolve the target container and insertion index for a re-added section.
  *
- * A re-added cart or discount form must land in the container the active layout
- * places it in — not always the box root. The active layout is inferred from the
- * payment-info section's ancestor chain (payment-info is delete-locked, so it is
- * present in every box) whose depth identifies the layout:
- *
- *   - chain [box, payment-info]              → single-column
- *   - chain [box, column, payment-info]      → two-column
- *   - chain [box, row, column, payment-info] → cart-top-two-column
+ * A re-added cart or discount form must land where the active layout puts it, which
+ * is not always the box root. The layout is read from the two delete-locked info
+ * sections rather than from nesting depth: a two-column layout keeps both in one
+ * column, cart-top splits them across the row's columns, and both wrap those columns
+ * in a row — so depth alone cannot tell them apart.
  *
  * Placement per section:
- *   - discount form → immediately after the cart, at the level where sections sit as
- *     siblings. Usually that is the cart's own container (box root in single-column
- *     and cart-top; the RIGHT column in two-column). When a template nests the cart in
- *     a wrapper that holds only the cart (a "Your Cart" card), the discount belongs
- *     beside that card, so the resolver climbs out of any cart-only wrapper first and
- *     inserts after the branch it climbed to. If the cart has been deleted, it falls
- *     back to the container directly holding payment-info, appended after it.
- *   - cart → the box root at index 0 (the top) in single-column and cart-top, so
- *     it sits above the stacked sections; in two-column, the box's other top-level
- *     column (the one that does not hold payment-info), appended.
+ *   - cart → the sibling of the column holding the info sections in two-column;
+ *     otherwise the box root at index 0, above the stacked sections.
+ *   - discount form → after the cart, at the level where sections sit as siblings.
+ *     A template that nests the cart in a wrapper holding nothing else (a "Your Cart"
+ *     card) wants the discount beside that card, so the resolver climbs out of any
+ *     cart-only wrapper first. With no cart present it appends after payment-info.
  *
- * Degrades safely: if payment-info cannot be found, or the expected column is
- * missing (e.g. an emptied two-column cart column was collapsed away), it returns
- * the box root with no index so the create falls back to a plain box-root append.
+ * Every unresolvable case returns the box root with no index, so the create degrades
+ * to a plain append.
  *
  * @since 3.7.0
  * @param {Object} box        The checkout box container to add into.
@@ -398,21 +405,17 @@ const resolveSectionTarget = ( box, widgetType ) => {
 	}
 
 	if ( widgetType === CART_WIDGET ) {
-		// Two-column: the cart lives in the box's other top-level column — the
-		// top-level container that is not the one holding payment-info.
-		if ( 2 === chain.length ) {
-			const formColumnId = chain[ 0 ].get( 'id' );
-			let other = null;
-			box.model?.get?.( 'elements' )?.each?.( ( child ) => {
-				if ( other ) {
-					return;
-				}
-				if ( 'container' === child.get( 'elType' ) && child.get( 'id' ) !== formColumnId ) {
-					other = child;
-				}
-			} );
+		const formColumn     = chainParent( chain );
+		const personalColumn = chainParent( sectionChain( box, PERSONAL_INFO_WIDGET ) );
 
+		// Two-column: the info sections share a column, so the cart belongs in its
+		// sibling — inside their row, or at the box root when the columns are flat.
+		if ( formColumn && personalColumn && formColumn.get( 'id' ) === personalColumn.get( 'id' ) ) {
+			const rowModel  = chain.length >= 3 ? chain[ chain.length - 3 ] : null;
+			const siblings  = ( rowModel ?? box.model )?.get?.( 'elements' );
+			const other     = findSiblingContainer( siblings, formColumn.get( 'id' ) );
 			const container = other ? elementor.getContainer( other.get( 'id' ) ) : null;
+
 			return container ? { container, at: null } : fallback;
 		}
 
@@ -420,11 +423,8 @@ const resolveSectionTarget = ( box, widgetType ) => {
 		return { container: box, at: 0 };
 	}
 
-	// Discount form (and any other non-cart section): it belongs immediately after the
-	// cart, at the level where checkout sections sit as siblings. When a template nests
-	// the cart in its own wrapper — a "Your Cart" card that holds only the cart — the
-	// discount is a sibling of that card, not a child of it, so climb out of any wrapper
-	// that holds nothing but the cart's branch before choosing the insertion container.
+	// Climb out of any wrapper holding nothing but the cart's branch, so the discount
+	// lands beside a "Your Cart" card rather than inside it.
 	const cartChain = sectionChain( box, CART_WIDGET );
 	if ( cartChain.length ) {
 		let anchorIndex = cartChain.length - 1; // the cart itself
@@ -446,11 +446,8 @@ const resolveSectionTarget = ( box, widgetType ) => {
 		}
 	}
 
-	// No cart node present (the cart is deletable): fall back to the container
-	// directly holding payment-info, appended after it. The penultimate chain node
-	// is that parent; when the chain is just payment-info itself (single-column) the
-	// parent is the box.
-	const parentModel = chain.length >= 2 ? chain[ chain.length - 2 ] : null;
+	// The cart is deletable, so it may be absent: append after payment-info instead.
+	const parentModel = chainParent( chain );
 	if ( ! parentModel ) {
 		return { container: box, at: null };
 	}

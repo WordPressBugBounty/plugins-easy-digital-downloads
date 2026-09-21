@@ -706,6 +706,7 @@ function edd_get_download_sales_stats( $download_id = 0 ) {
  *
  * @since 1.0
  * @since 3.0 Refactored to use new query methods.
+ * @since 3.7.1 Returns the ID of the log entry it created.
  *
  * @param int    $download_id Download ID.
  * @param int    $file_id     File ID.
@@ -714,7 +715,7 @@ function edd_get_download_sales_stats( $download_id = 0 ) {
  * @param int    $order_id    Order ID.
  * @param int    $price_id    Optional. Price ID,
  * @param string $user_agent  Optional. User agent.
- * @return void
+ * @return int|false ID of the file download log that was created, false on failure.
  */
 function edd_record_download_in_log( $download_id = 0, $file_id = 0, $user_info = array(), $ip = '', $order_id = 0, $price_id = 0, $user_agent = '' ) {
 	$order = edd_get_order( $order_id );
@@ -753,6 +754,8 @@ function edd_record_download_in_log( $download_id = 0, $file_id = 0, $user_info 
 	if ( $log_id && ! empty( $file_name ) ) {
 		edd_add_file_download_log_meta( $log_id, 'file_name', $file_name );
 	}
+
+	return $log_id;
 }
 
 /**
@@ -909,7 +912,7 @@ function edd_get_file_name( $file = array() ) {
 	}
 
 	$name = ! empty( $file['name'] )
-		? esc_html( $file['name'] )
+		? $file['name']
 		: basename( $file['file'] );
 
 	return $name;
@@ -1067,6 +1070,11 @@ function edd_set_file_download_limit_override( $download_id = 0, $order_id = 0 )
 		return false;
 	}
 
+	// The override is keyed by order, so an ID that resolves to nothing has no row to write.
+	if ( ! edd_get_order( $order_id ) ) {
+		return false;
+	}
+
 	$override = edd_get_file_download_limit_override( $download_id, $order_id );
 	$limit    = edd_get_file_download_limit( $download_id );
 
@@ -1090,15 +1098,18 @@ function edd_set_file_download_limit_override( $download_id = 0, $order_id = 0 )
  * @since 3.0 Refactored to use new query methods.
  *            Renamed $payment_id parameter to $order_id.
  *            Set default value of $price_id to 0.
+ * @since 3.7.1 Added the $before_log_id parameter.
  *
- * @param int $download_id Download ID.
- * @param int $order_id    Order ID.
- * @param int $file_id     File ID.
- * @param int $price_id    Price ID.
+ * @param int      $download_id   Download ID.
+ * @param int      $order_id      Order ID.
+ * @param int      $file_id       File ID.
+ * @param int      $price_id      Price ID.
+ * @param int|null $before_log_id Optional. A file download log ID to count the downloads recorded
+ *                                ahead of. Default null, which counts every recorded download.
  *
  * @return bool True if at limit, false otherwise.
  */
-function edd_is_file_at_download_limit( $download_id = 0, $order_id = 0, $file_id = 0, $price_id = 0 ) {
+function edd_is_file_at_download_limit( $download_id = 0, $order_id = 0, $file_id = 0, $price_id = 0, $before_log_id = null ) {
 
 	// Bail if invalid data was passed.
 	if ( empty( $download_id ) || empty( $order_id ) ) {
@@ -1119,13 +1130,23 @@ function edd_is_file_at_download_limit( $download_id = 0, $order_id = 0, $file_i
 		$unlimited_purchase = edd_payment_has_unlimited_downloads( $order_id );
 
 		if ( empty( $unlimited_purchase ) ) {
-			// Retrieve the file download count.
-			$download_count = edd_count_file_download_logs( array(
+			$count_args = array(
 				'product_id' => $download_id,
 				'file_id'    => $file_id,
 				'order_id'   => $order_id,
 				'price_id'   => $price_id,
-			) );
+			);
+
+			// Limit the count to the downloads recorded ahead of a given log entry.
+			if ( ! empty( $before_log_id ) ) {
+				$count_args['id__compare'] = array(
+					'value'   => absint( $before_log_id ),
+					'compare' => '<',
+				);
+			}
+
+			// Retrieve the file download count.
+			$download_count = edd_count_file_download_logs( $count_args );
 
 			if ( $download_count >= $download_limit ) {
 				$ret = true;
@@ -1144,15 +1165,68 @@ function edd_is_file_at_download_limit( $download_id = 0, $order_id = 0, $file_i
 	/**
 	 * Filters whether or not a file is at its download limit.
 	 *
-	 * @param bool $ret
-	 * @param int  $download_id
-	 * @param int  $payment_id
-	 * @param int  $file_id
-	 * @param int  $price_id
+	 * @param bool     $ret
+	 * @param int      $download_id
+	 * @param int      $payment_id
+	 * @param int      $file_id
+	 * @param int      $price_id
+	 * @param int|null $before_log_id The log entry the count was limited to, if any.
 	 *
 	 * @since 2.10 Added `$price_id` parameter.
+	 * @since 3.7.1 Added `$before_log_id` parameter.
 	 */
-	return (bool) apply_filters( 'edd_is_file_at_download_limit', $ret, $download_id, $order_id, $file_id, $price_id );
+	return (bool) apply_filters( 'edd_is_file_at_download_limit', $ret, $download_id, $order_id, $file_id, $price_id, $before_log_id );
+}
+
+/**
+ * Checks if a recorded file download is beyond the download limit for its file.
+ *
+ * The check is not a lock: the entry is counted once its insert has committed, so requests
+ * overlapping inside that window can still both pass.
+ *
+ * @since 3.7.1
+ *
+ * @param int $log_id File download log ID.
+ *
+ * @return bool True if the logged download is beyond the limit, false otherwise.
+ */
+function edd_file_download_log_exceeds_limit( $log_id ) {
+
+	$log_id = absint( $log_id );
+
+	// Bail if nothing was logged, since there is no download to measure or release.
+	if ( empty( $log_id ) ) {
+		return false;
+	}
+
+	$log = edd_get_file_download_log( $log_id );
+
+	if ( ! $log instanceof \EDD\Logs\File_Download_Log ) {
+		return false;
+	}
+
+	return edd_is_file_at_download_limit( $log->product_id, $log->order_id, $log->file_id, $log->price_id, $log_id );
+}
+
+/**
+ * Ends the request with the file download limit error.
+ *
+ * @since 3.7.1
+ *
+ * @return void
+ */
+function edd_die_file_download_limit_reached() {
+
+	/**
+	 * Filters the message shown when a file has been downloaded as many times as its limit allows.
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param string $message The message shown in place of the file.
+	 */
+	$message = apply_filters( 'edd_download_limit_reached_text', __( 'Sorry but you have hit your download limit for this file.', 'easy-digital-downloads' ) );
+
+	edd_die( $message, __( 'Error', 'easy-digital-downloads' ), 403 );
 }
 
 /**

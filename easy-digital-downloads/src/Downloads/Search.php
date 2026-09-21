@@ -43,9 +43,56 @@ class Search {
 		$search = $this->get_results();
 
 		// Update the transient.
-		set_transient( 'edd_download_search', $search, 30 );
+		set_transient( $this->get_transient_key(), $search, 30 );
 
 		return $search['results'];
+	}
+
+	/**
+	 * Removes items which are not the caller's to see.
+	 *
+	 * Publicly viewable products stay visible to everyone. Anything else has to be readable by
+	 * the current user, which for a product's own author includes their drafts.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param array $items The items returned by the query.
+	 * @return array
+	 */
+	public static function filter_by_readability( $items ) {
+		if ( empty( $items ) || self::can_read_all_products() ) {
+			return $items;
+		}
+
+		return array_values(
+			array_filter(
+				$items,
+				function ( $item ) {
+					// Anything else takes WP_Post's own property defaults, which describe a
+					// published post, and an ID of 0 resolves to whatever the global post is.
+					if ( ! $item instanceof \WP_Post || empty( $item->ID ) ) {
+						return false;
+					}
+
+					if ( is_post_publicly_viewable( $item ) ) {
+						return true;
+					}
+
+					return current_user_can( 'read_post', $item->ID );
+				}
+			)
+		);
+	}
+
+	/**
+	 * Whether the current user may read every product, whatever its status or author.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return bool
+	 */
+	public static function can_read_all_products() {
+		return current_user_can( 'edit_others_products' ) && current_user_can( 'read_private_products' );
 	}
 
 	/**
@@ -56,31 +103,43 @@ class Search {
 	 */
 	private function get_results() {
 
+		// An empty search always returns nothing, regardless of anything else about the request.
+		// Checked against '' specifically: empty() would also catch the valid search term '0'.
+		$new_search = $this->get_search();
+		if ( '' === $new_search ) {
+			return array(
+				'text'    => '',
+				'shape'   => null,
+				'results' => array(),
+			);
+		}
+
 		// We store the last search in a transient for 30 seconds. This _might_
 		// result in a race condition if 2 users are looking at the exact same time,
 		// but we'll worry about that later if that situation ever happens.
-		$args = get_transient( 'edd_download_search' );
+		$args = get_transient( $this->get_transient_key() );
 
 		// Parse args.
 		$search = wp_parse_args(
 			(array) $args,
 			array(
 				'text'    => '',
+				'shape'   => null,
 				'results' => array(),
 			)
 		);
 
-		// Get the search string.
-		$new_search = $this->get_search();
+		$new_shape = $this->get_request_shape();
 
-		// Bail early if the search text has not changed.
-		if ( $search['text'] === $new_search ) {
+		// Bail early if neither the search text nor its shape have changed.
+		if ( $search['text'] === $new_search && $search['shape'] === $new_shape ) {
 			return $search;
 		}
 
 		// Set the local static search variable and clear the results.
 		$search = array(
 			'text'    => $new_search,
+			'shape'   => $new_shape,
 			'results' => array(),
 		);
 
@@ -96,25 +155,19 @@ class Search {
 			'suppress_filters' => false,
 		);
 
-		$items = $this->get_items( $args );
+		$items = self::filter_by_readability( $this->get_items( $args ) );
 
 		if ( empty( $items ) ) {
 			return $search;
 		}
 
 		// Are we excluding bundles?
-		$no_bundles = isset( $_GET['no_bundles'] )
-			? filter_var( $_GET['no_bundles'], FILTER_VALIDATE_BOOLEAN )
-			: false;
+		$no_bundles = $this->get_flag( 'no_bundles' );
 
 		// Are we including variations?
-		$variations = isset( $_GET['variations'] )
-			? filter_var( $_GET['variations'], FILTER_VALIDATE_BOOLEAN )
-			: false;
+		$variations = $this->get_flag( 'variations' );
 
-		$variations_only = isset( $_GET['variations_only'] )
-			? filter_var( $_GET['variations_only'], FILTER_VALIDATE_BOOLEAN )
-			: false;
+		$variations_only = $this->get_flag( 'variations_only' );
 
 		$items = wp_list_pluck( $items, 'post_title', 'ID' );
 
@@ -234,6 +287,59 @@ class Search {
 		}
 
 		return apply_filters( 'edd_product_dropdown_status', array( 'publish', 'draft', 'private', 'future' ) );
+	}
+
+	/**
+	 * Gets the transient key for the current caller.
+	 *
+	 * Results depend on who is asking, so the cache cannot be shared between callers. The key
+	 * stays bounded to one entry per caller: this endpoint is open to anonymous requests, and
+	 * folding the request shape in here too would let a caller mint an unbounded number of
+	 * transients just by varying it.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return string
+	 */
+	private function get_transient_key() {
+		return sprintf(
+			'edd_download_search_%d_%s',
+			get_current_user_id(),
+			implode( '_', array_map( 'sanitize_key', $this->get_status() ) )
+		);
+	}
+
+	/**
+	 * Gets the request parameters that shape the cached results, beyond the search text itself.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @return array
+	 */
+	private function get_request_shape() {
+		return array(
+			'exclusions'      => $this->get_exclusions(),
+			'no_bundles'      => $this->get_flag( 'no_bundles' ),
+			'variations'      => $this->get_flag( 'variations' ),
+			'variations_only' => $this->get_flag( 'variations_only' ),
+		);
+	}
+
+	/**
+	 * Gets a boolean request flag.
+	 *
+	 * Read through here rather than from the superglobal directly, so that the value which
+	 * shapes the results is the same one the cache key is built from.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $key The request key to read.
+	 * @return bool
+	 */
+	private function get_flag( $key ) {
+		return isset( $_GET[ $key ] )
+			? filter_var( $_GET[ $key ], FILTER_VALIDATE_BOOLEAN )
+			: false;
 	}
 
 	/**

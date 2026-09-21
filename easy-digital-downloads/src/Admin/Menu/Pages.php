@@ -36,6 +36,19 @@ class Pages {
 	}
 
 	/**
+	 * Hides the upgrades page from the Dashboard menu, leaving it reachable directly.
+	 *
+	 * Runs on admin_enqueue after the page title has rendered, but
+	 * prior to the command palette.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	public static function remove_upgrade_page_from_menu() {
+		remove_submenu_page( 'index.php', 'edd-upgrades' );
+	}
+
+	/**
 	 * Gets the list of EDD admin page slugs.
 	 *
 	 * @since 3.3.0
@@ -63,7 +76,7 @@ class Pages {
 				'edd-customers'       => array(
 					'page_title' => __( 'Customers', 'easy-digital-downloads' ),
 					'menu_title' => __( 'Customers', 'easy-digital-downloads' ),
-					'capability' => apply_filters( 'edd_view_customers_role', 'view_shop_reports' ),
+					'capability' => edd_get_view_customers_role(),
 					'callback'   => 'edd_customers_page',
 				),
 				'edd-discounts'       => array(
@@ -137,12 +150,7 @@ class Pages {
 			'edd-upgrades',
 			'edd_upgrades_screen'
 		);
-		add_action(
-			'admin_head',
-			function () {
-				remove_submenu_page( 'index.php', 'edd-upgrades' );
-			}
-		);
+		add_action( 'admin_enqueue_scripts', array( self::class, 'remove_upgrade_page_from_menu' ), 9 );
 	}
 
 	/**

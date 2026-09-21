@@ -75,6 +75,28 @@ class WPCronScheduler implements Scheduler {
 	}
 
 	/**
+	 * Enqueue an action to run as soon as possible.
+	 *
+	 * WP-Cron has no async queue, so this schedules a single event for the current
+	 * time. WP-Cron de-duplicates on its own: wp_schedule_single_event() returns
+	 * false when an identical event (same hook and args) is already scheduled within
+	 * its ~10-minute window, so a duplicate is effectively skipped rather than queued
+	 * twice. A caller that needs a distinct successor must vary the args.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook name to execute.
+	 * @param array  $args  Optional arguments to pass to the hook.
+	 * @param string $group Optional group identifier (unused in WP-Cron).
+	 * @return bool True if the event was scheduled, false otherwise.
+	 */
+	public function enqueue_async( string $hook, array $args = array(), string $group = '' ): bool {
+		$result = wp_schedule_single_event( time(), $hook, $args );
+
+		return false !== $result;
+	}
+
+	/**
 	 * Get the next scheduled time for an event.
 	 *
 	 * @since 3.6.5
@@ -167,6 +189,23 @@ class WPCronScheduler implements Scheduler {
 	 */
 	public function has_scheduled( string $hook, array $args = array(), string $group = '' ): bool {
 		return false !== wp_next_scheduled( $hook, $args );
+	}
+
+	/**
+	 * Check if a matching action is pending (not in-progress).
+	 *
+	 * WP-Cron has no in-progress state, so a scheduled event with matching hook and
+	 * exact args is always considered pending.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $hook  The hook name to check.
+	 * @param array  $args  Optional arguments to match.
+	 * @param string $group Optional group identifier (unused in WP-Cron).
+	 * @return bool True if a matching action is pending, false otherwise.
+	 */
+	public function has_pending( string $hook, array $args = array(), string $group = '' ): bool {
+		return $this->has_scheduled( $hook, $args, $group );
 	}
 
 	/**

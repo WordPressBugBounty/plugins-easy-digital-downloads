@@ -22,7 +22,7 @@ $view_url = add_query_arg(
 		<# if ( true === data.state.isAdding ) { #>
 		<button class="button-link delete" >
 			<span class="dashicons dashicons-no" id="remove-item"></span>
-			<span class="screen-reader-text"><?php printf( __( 'Remove %s', 'easy-digital-downloads' ), '{{{ data.productName }}}' ); ?></span>
+			<span class="screen-reader-text"><?php printf( __( 'Remove %s', 'easy-digital-downloads' ), '{{ data.productName }}' ); ?></span>
 		</button>
 		<# } #>
 
@@ -31,11 +31,11 @@ $view_url = add_query_arg(
 				href="<?php echo esc_url( $view_url ); ?>&post={{ data.productId }}"
 				class="row-title"
 			>
-				{{{ data.productName }}}
+				{{ data.productName }}
 			</a>
 			<# if ( false === data.state.isRefund ) { #>
 				<# if ( [ 'refunded', 'partially_refunded' ].includes( data.status ) ) { #>
-					&mdash; {{{ data.statusLabel }}}
+					&mdash; {{ data.statusLabel }}
 				<# } #>
 			<# } #>
 

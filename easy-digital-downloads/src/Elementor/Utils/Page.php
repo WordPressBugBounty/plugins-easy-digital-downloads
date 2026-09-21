@@ -23,6 +23,22 @@ use Elementor\Plugin as ElementorPlugin;
 class Page {
 
 	/**
+	 * The post meta key holding Elementor's serialized element tree.
+	 *
+	 * @since 3.7.1
+	 * @var string
+	 */
+	private const DATA_META_KEY = '_elementor_data';
+
+	/**
+	 * Decoded element data for this request, keyed by post ID.
+	 *
+	 * @since 3.7.1
+	 * @var array
+	 */
+	private static $page_data = array();
+
+	/**
 	 * Get the page data.
 	 *
 	 * @since 3.6.0
@@ -36,21 +52,28 @@ class Page {
 			$current_page = self::get_id();
 		}
 
+		// Resolve the post before keying the memo: the editor preview reaches this class with no
+		// id of its own, and get_post( 0 ) answers from the global post.
 		$post = get_post( $current_page );
 		if ( ! $post instanceof \WP_Post ) {
 			return false;
 		}
 
-		if ( is_null( \Elementor\Plugin::$instance ) ) {
-			return false;
+		$post_id = (int) $post->ID;
+		$raw     = self::get_raw_data( $post_id );
+
+		// Reuse the decode only while the tree it came from is byte-identical. PHP compares the
+		// unchanged string by pointer, so this costs nothing on the common path and cannot go stale.
+		if ( isset( self::$page_data[ $post_id ] ) && self::$page_data[ $post_id ]['raw'] === $raw ) {
+			return self::$page_data[ $post_id ]['elements'];
 		}
 
-		$document = \Elementor\Plugin::$instance->documents->get( $post->ID );
-		if ( ! $document || ! $document->is_built_with_elementor() ) {
-			return false;
-		}
+		self::$page_data[ $post_id ] = array(
+			'raw'      => $raw,
+			'elements' => self::read_page_data( $post ),
+		);
 
-		return $document->get_elements_data();
+		return self::$page_data[ $post_id ]['elements'];
 	}
 
 	/**
@@ -78,7 +101,18 @@ class Page {
 	 * @return array
 	 */
 	public static function get_widget_data( string $widget_type, $elements = null, int $occurrence = 1 ): array {
-		$elements = $elements ?? self::get_page_data();
+		if ( is_null( $elements ) ) {
+			$post = get_post( self::get_id() );
+			if ( ! $post instanceof \WP_Post ) {
+				return array();
+			}
+
+			if ( ! self::data_may_contain( (int) $post->ID, $widget_type ) ) {
+				return array();
+			}
+
+			$elements = self::get_page_data( $post->ID );
+		}
 
 		if ( ! is_array( $elements ) ) {
 			return array();
@@ -152,6 +186,79 @@ class Page {
 		}
 
 		return ElementorPlugin::$instance->experiments->is_feature_active( 'container' );
+	}
+
+	/**
+	 * Clear the static cache.
+	 *
+	 * Mirrors EDD\Admin\Utils\Page::clear_cache(), so a test which swaps the document without
+	 * touching _elementor_data does not read the previous test's tree.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	public static function clear_cache() {
+		self::$page_data = array();
+	}
+
+	/**
+	 * Check whether a post's stored element data could contain a given type.
+	 *
+	 * A substring test on the raw meta, so a false positive falls through to the exact
+	 * tree match below while a miss skips the decode and the document lookup entirely.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int    $post_id     A resolved post ID.
+	 * @param string $widget_type Widget type (widgetType) or container element type (elType).
+	 * @return bool
+	 */
+	private static function data_may_contain( int $post_id, string $widget_type ): bool {
+		$data = self::get_raw_data( $post_id );
+
+		// Anything but a string cannot be tested, so defer to the decode rather than guess.
+		if ( ! is_string( $data ) ) {
+			return ! empty( $data );
+		}
+
+		return false !== strpos( $data, $widget_type );
+	}
+
+	/**
+	 * Get a post's raw, still-encoded element data.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param int $post_id Post ID.
+	 * @return mixed The stored meta value, or an empty string for an unresolved post.
+	 */
+	private static function get_raw_data( int $post_id ) {
+		if ( $post_id <= 0 ) {
+			return '';
+		}
+
+		return get_post_meta( $post_id, self::DATA_META_KEY, true );
+	}
+
+	/**
+	 * Read a post's element data from Elementor.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param \WP_Post $post The resolved post.
+	 * @return array|false
+	 */
+	private static function read_page_data( \WP_Post $post ) {
+		if ( is_null( \Elementor\Plugin::$instance ) ) {
+			return false;
+		}
+
+		$document = \Elementor\Plugin::$instance->documents->get( $post->ID );
+		if ( ! $document || ! $document->is_built_with_elementor() ) {
+			return false;
+		}
+
+		return $document->get_elements_data();
 	}
 
 	/**

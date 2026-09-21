@@ -28,6 +28,32 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 class FormParser {
 
 	/**
+	 * The refund form's nonce action, which is also the name of the field carrying it.
+	 *
+	 * @since 3.7.1
+	 */
+	const NONCE_ACTION = 'edd_process_refund';
+
+	/**
+	 * Whether the refund form payload carries a valid nonce.
+	 *
+	 * Both the AJAX handler and the PayPal pre-flight which runs ahead of it need this, so the
+	 * field name and the action live here rather than in each caller.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param array $form_data Parsed form data from the refund submission.
+	 * @return bool
+	 */
+	public static function verify_nonce( array $form_data ): bool {
+		if ( empty( $form_data[ self::NONCE_ACTION ] ) ) {
+			return false;
+		}
+
+		return (bool) wp_verify_nonce( sanitize_text_field( $form_data[ self::NONCE_ACTION ] ), self::NONCE_ACTION );
+	}
+
+	/**
 	 * Parses the order-item rows out of the deserialised refund-form payload.
 	 *
 	 * Discards rows that have no quantity or that have neither subtotal nor

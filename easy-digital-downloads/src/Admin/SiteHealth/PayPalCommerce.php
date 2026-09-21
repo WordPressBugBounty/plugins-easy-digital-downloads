@@ -10,6 +10,11 @@
 
 namespace EDD\Admin\SiteHealth;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
+
+use EDD\Gateways\PayPal\CommerceVersion;
+
 /**
  * Loads PayPal Commerce data into Site Health.
  *
@@ -39,7 +44,13 @@ class PayPalCommerce {
 	 * @return array
 	 */
 	private function get_fields() {
-		$fields = array();
+		$version = CommerceVersion::get_version();
+		$fields  = array(
+			array(
+				'label' => __( 'Version', 'easy-digital-downloads' ),
+				'value' => $version,
+			),
+		);
 
 		foreach ( array( 'live', 'sandbox' ) as $mode ) {
 			$fields[ "connection_{$mode}" ] = array(
@@ -48,14 +59,16 @@ class PayPalCommerce {
 					__( 'Connection (%s)', 'easy-digital-downloads' ),
 					ucfirst( $mode )
 				),
-				'value' => $this->get_connection_value( $mode ),
+				'value' => $this->get_connection_value( $mode, $version ),
 			);
 		}
 
-		$fields['payment_methods'] = array(
-			'label' => __( 'Enabled Payment Methods', 'easy-digital-downloads' ),
-			'value' => $this->get_enabled_payment_methods(),
-		);
+		if ( 'v3' === $version ) {
+			$fields['payment_methods'] = array(
+				'label' => __( 'Enabled Payment Methods', 'easy-digital-downloads' ),
+				'value' => $this->get_enabled_payment_methods(),
+			);
+		}
 
 		return $fields;
 	}
@@ -66,18 +79,15 @@ class PayPalCommerce {
 	 * @since 3.6.9
 	 *
 	 * @param string $mode PayPal mode (live or sandbox).
+	 * @param string $version PayPal Commerce version (v2 or v3).
 	 * @return string
 	 */
-	private function get_connection_value( string $mode ): string {
-		$merchant_id = get_option( "edd_paypal_{$mode}_merchant_id", '' );
+	private function get_connection_value( string $mode, string $version ): string {
+		$connected = 'v3' === $version
+			? ! empty( get_option( "edd_paypal_{$mode}_merchant_id", '' ) )
+			: ! empty( edd_get_option( "paypal_{$mode}_client_id" ) );
 
-		if ( empty( $merchant_id ) ) {
-			return 'Not Connected';
-		}
-
-		$version = get_option( "edd_paypal_{$mode}_commerce_version", 'v3' );
-
-		return sprintf( 'Connected (%s)', strtoupper( $version ) );
+		return $connected ? sprintf( 'Connected (%s)', strtoupper( $version ) ) : 'Not Connected';
 	}
 
 	/**

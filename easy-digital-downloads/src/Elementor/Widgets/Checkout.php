@@ -264,9 +264,22 @@ class Checkout extends Base {
 		return array(
 			'layout'             => sanitize_text_field( $this->get_settings( 'layout' ) ),
 			'show_discount_form' => filter_var( $this->get_settings( 'show_discount_form' ), FILTER_VALIDATE_BOOLEAN ),
-			// Raw thumbnail width setting; MarkerBuilder normalizes and clamps it.
-			'thumbnail_width'    => $this->get_settings( 'thumbnail_width' ),
+			'thumbnail_width'    => $this->get_thumbnail_width(),
 		);
+	}
+
+	/**
+	 * Get the clamped thumbnail width for the frontend render path.
+	 *
+	 * @since 3.6.0
+	 * @return int The thumbnail width, clamped between 10 and 100. Default 25.
+	 */
+	private function get_thumbnail_width() {
+		$thumbnail_width = $this->get_settings( 'thumbnail_width' );
+		if ( ! empty( $thumbnail_width['size'] ) ) {
+			return (int) max( 10, min( 100, $thumbnail_width['size'] ) );
+		}
+		return 25;
 	}
 
 	/**

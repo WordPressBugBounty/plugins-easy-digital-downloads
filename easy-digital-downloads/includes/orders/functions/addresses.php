@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  * Add an order address.
  *
  * @since 3.0
+ * @since 3.7.1 Address values are sanitized before they are compared or stored.
  *
  * @param array $data {
  *     Array of order address data. Default empty.
@@ -47,6 +48,13 @@ function edd_add_order_address( $data ) {
 	// An order ID must be supplied for every address inserted.
 	if ( empty( $data['order_id'] ) ) {
 		return false;
+	}
+
+	// Sanitize before the checks below, so they read the values as they are stored.
+	foreach ( array( 'name', 'address', 'address2', 'city', 'region', 'postal_code', 'country' ) as $address_key ) {
+		if ( isset( $data[ $address_key ] ) ) {
+			$data[ $address_key ] = sanitize_text_field( $data[ $address_key ] );
+		}
 	}
 
 	// Set up an array with empty address keys. If all of these are empty in $data, the address should not be added.

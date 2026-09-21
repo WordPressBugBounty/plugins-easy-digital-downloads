@@ -313,8 +313,10 @@
 // Gate the full-width span on the wrap it needs: forcing a slot to 100% in a non-wrapping container
 // squeezes the columns instead of dropping below them, so only wrap when a slot printed. The slot's
 // flex parent is `.e-con` on a full-width box but `.e-con-inner` on a boxed one, so match either.
+// Set Elementor's own property, not the resolved `flex-wrap`: on a boxed box that longhand ties with
+// `.e-con.e-flex > .e-con-inner` and loses on load order, leaving the slot to squeeze the columns.
 .edd-checkout--elementor :is(.e-con, .e-con-inner):has(> .edd-checkout-box__slot) {
-	flex-wrap: wrap;
+	--flex-wrap: wrap;
 
 	> .edd-checkout-box__slot {
 		flex: 1 1 100%;

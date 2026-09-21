@@ -24,20 +24,25 @@ class Utility {
 	 * Checks whether we are viewing content in the block editor.
 	 *
 	 * @since 3.6.0
+	 * @since 3.7.1 Default capability changed to `edit_posts`.
 	 * @param string    $current_user_can Whether the current user needs to have a specific capability.
 	 * @param \WP_Block $block The block object.
-	 * @return false|string
+	 * @return bool
 	 */
-	public static function is_block_editor( $current_user_can = '', $block = null ) {
+	public static function is_block_editor( $current_user_can = 'edit_posts', $block = null ) {
 		$is_block_editor = ! empty( $_GET['edd_blocks_is_block_editor'] ) ? $_GET['edd_blocks_is_block_editor'] : false;
 
 		if ( empty( $is_block_editor ) && ! empty( $block ) && isset( $block->context['edd/previewMode'] ) ) {
 			$is_block_editor = $block->context['edd/previewMode'];
 		}
 
-		// If not the block editor or custom capabilities are not required, return.
-		if ( ! $is_block_editor || empty( $current_user_can ) || is_bool( $is_block_editor ) ) {
-			return $is_block_editor;
+		if ( ! $is_block_editor ) {
+			return false;
+		}
+
+		// The block-context value is a boolean set by the editor itself, but still requires the capability check.
+		if ( is_bool( $is_block_editor ) ) {
+			return current_user_can( $current_user_can );
 		}
 
 		$user = wp_get_current_user();

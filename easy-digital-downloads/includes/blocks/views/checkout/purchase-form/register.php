@@ -10,6 +10,7 @@
 		),
 		array(
 			'no_wp_scripts' => true,
+			'is_checkout'   => true,
 		)
 	);
 	?>

@@ -61,9 +61,18 @@ class Password extends Field {
 	 * @since 3.3.8
 	 */
 	public function do_input(): void {
+		$classes   = $this->get_field_classes();
+		$classes[] = 'edd-password';
 		?>
 		<div class="edd-blocks-form__control">
-			<input name="edd_user_pass" id="edd_user_pass" class="edd-password edd-required edd-input" type="password" required/>
+			<input
+				name="edd_user_pass"
+				id="edd_user_pass"
+				class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
+				type="password"
+				autocomplete="current-password"
+				<?php echo $this->is_required() ? 'required' : ''; ?>
+			/>
 		</div>
 		<?php
 	}
@@ -85,7 +94,7 @@ class Password extends Field {
 	 * @return bool
 	 */
 	protected function is_required(): bool {
-		return true;
+		return empty( $this->data['not_required'] );
 	}
 
 	/**
@@ -104,16 +113,19 @@ class Password extends Field {
 	 * @since 3.7.0
 	 */
 	private function render_shortcode(): void {
+		$classes   = $this->get_field_classes();
+		$classes[] = 'edd-password';
 		?>
 		<div id="edd-user-pass-wrap" class="edd_login_password">
 			<?php $this->do_label(); ?>
 			<input
 				name="edd_user_pass"
 				id="edd_user_pass"
-				class="edd-password edd-required edd-input"
+				class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
 				type="password"
 				placeholder="<?php esc_attr_e( 'Your password', 'easy-digital-downloads' ); ?>"
-				required
+				autocomplete="current-password"
+				<?php echo $this->is_required() ? 'required' : ''; ?>
 			/>
 		</div>
 		<?php

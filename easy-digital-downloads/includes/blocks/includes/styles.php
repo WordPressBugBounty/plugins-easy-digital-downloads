@@ -18,25 +18,24 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  *
  * @since 2.0
  * @since 2.0.8 Enqueues the edd-blocks stylesheet.
+ * @since 3.7.1 Prints only valid hex colors.
  * @return void
  */
 function add_to_global_styles() {
 	wp_enqueue_style( 'edd-blocks', EDD_BLOCKS_URL . 'assets/css/edd-blocks.css', array(), EDD_VERSION );
 	$styles = array();
 	$rules  = array();
-	$colors = edd_get_option( 'button_colors' );
-	if ( ! empty( $colors ) ) {
-		foreach ( $colors as $setting => $value ) {
-			if ( empty( $value ) ) {
-				continue;
-			}
-			$styles[] = "--edd-blocks-button-{$setting}:{$value };";
-			if ( 'text' === $setting ) {
-				$rules[] = '.edd-submit,.has-edd-button-text-color{color: var(--edd-blocks-button-text) !important;}';
-			} elseif ( 'background' === $setting ) {
-				$rules[] = '.edd-submit,.has-edd-button-background-color{background-color: var(--edd-blocks-button-background) !important;}';
-				$rules[] = '.has-edd-button-background-text-color{color: var(--edd-blocks-button-background) !important;}';
-			}
+	$colors = \EDD\Utils\Colors::get_stored_button_colors();
+	foreach ( $colors as $setting => $value ) {
+		if ( '' === $value ) {
+			continue;
+		}
+		$styles[] = "--edd-blocks-button-{$setting}:{$value};";
+		if ( 'text' === $setting ) {
+			$rules[] = '.edd-submit,.has-edd-button-text-color{color: var(--edd-blocks-button-text) !important;}';
+		} elseif ( 'background' === $setting ) {
+			$rules[] = '.edd-submit,.has-edd-button-background-color{background-color: var(--edd-blocks-button-background) !important;}';
+			$rules[] = '.has-edd-button-background-text-color{color: var(--edd-blocks-button-background) !important;}';
 		}
 	}
 	if ( empty( $styles ) ) {
@@ -55,16 +54,17 @@ add_filter( 'edd_button_color_class', __NAMESPACE__ . '\update_button_color_clas
  * Update the EDD button color class from the new color settings.
  *
  * @since 2.0
+ * @since 3.7.1 Reads a stored color only when it is a hex color.
  * @param string $class
  * @return string
  */
 function update_button_color_class( $class ) {
 	$classes       = array();
-	$color_options = edd_get_option( 'button_colors' );
-	if ( ! empty( $color_options['background'] ) ) {
+	$color_options = \EDD\Utils\Colors::get_stored_button_colors();
+	if ( '' !== $color_options['background'] ) {
 		$classes[] = 'has-edd-button-background-color';
 	}
-	if ( ! empty( $color_options['text'] ) ) {
+	if ( '' !== $color_options['text'] ) {
 		$classes[] = 'has-edd-button-text-color';
 	}
 

@@ -63,6 +63,26 @@ function edd_add_manual_order( $args = array() ) {
 		)
 	);
 
+	/**
+	 * An order item may only name a product the current user can sell: can_purchase()'s rule
+	 * without its availability filter, which governs today's sales rather than past ones. This
+	 * runs before the first write, so a refusal cannot leave a customer or a part-built order.
+	 */
+	if ( ! empty( $order_data['downloads'] ) && is_array( $order_data['downloads'] ) ) {
+		foreach ( $order_data['downloads'] as $download ) {
+			$product = edd_get_download( absint( $download['id'] ?? 0 ) );
+
+			// A product that no longer exists is skipped in the loop below, as it always has been.
+			if ( empty( $product ) ) {
+				continue;
+			}
+
+			if ( 'publish' !== $product->post_status && ! current_user_can( 'edit_post', $product->ID ) ) {
+				return;
+			}
+		}
+	}
+
 	/** Customer data */
 
 	// Defaults.

@@ -54,11 +54,13 @@ class DownloadHistory extends Exporter {
 	 *
 	 * @since 2.4
 	 * @since 3.0 Updated to add 'User Agent' column.
+	 * @since 3.7.1 Updated to add 'Log ID' column.
 	 *
 	 * @return array
 	 */
 	protected function get_data_headers(): array {
 		return array(
+			'ID'         => __( 'Log ID', 'easy-digital-downloads' ),
 			'date'       => __( 'Date', 'easy-digital-downloads' ),
 			'user'       => __( 'Downloaded by', 'easy-digital-downloads' ),
 			'ip'         => __( 'IP Address', 'easy-digital-downloads' ),
@@ -73,6 +75,7 @@ class DownloadHistory extends Exporter {
 	 *
 	 * @since 2.4
 	 * @since 3.0 Refactored to use new query methods.
+	 * @since 3.7.1 Added 'ID', which keys each row to the log it was built from.
 	 *
 	 * @return array $data The data for the CSV file.
 	 */
@@ -117,6 +120,7 @@ class DownloadHistory extends Exporter {
 			}
 
 			$data[] = array(
+				'ID'         => $log->id,
 				'date'       => $log->date_created,
 				'user'       => $customer,
 				'ip'         => $log->ip,

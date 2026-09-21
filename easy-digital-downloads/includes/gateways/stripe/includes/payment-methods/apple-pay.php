@@ -147,7 +147,20 @@ function edds_apple_pay_has_domain_verification_file() {
  * @return bool True if the saved verified domain matches the current site.
  */
 function edds_apple_pay_has_domain_verification() {
-	return edd_get_option( 'stripe_prb_apple_pay_domain' ) === $_SERVER['HTTP_HOST'];
+	return edd_get_option( 'stripe_prb_apple_pay_domain' ) === edds_apple_pay_domain();
+}
+
+/**
+ * The host Apple Pay is registered for.
+ *
+ * Taken from the site's configured address rather than the request, since this is the hostname
+ * the gateway registers and a store has one of those however it was reached.
+ *
+ * @since 3.7.1
+ * @return string
+ */
+function edds_apple_pay_domain() {
+	return strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
 }
 
 /**
@@ -188,6 +201,12 @@ function edds_apple_pay_create_directory_and_move_file() {
  * @since 2.8.0
  */
 function edds_apple_pay_check_domain() {
+	// Registering a domain configures the gateway, so it needs the capability that
+	// administers the store.
+	if ( ! current_user_can( 'manage_shop_settings' ) ) {
+		return;
+	}
+
 	if ( empty( edd_stripe()->connect()->is_connected ) ) {
 		return;
 	}
@@ -202,9 +221,9 @@ function edds_apple_pay_check_domain() {
 		$domains = edds_api_request( 'ApplePayDomain', 'all' );
 
 		foreach ( $domains->autoPagingIterator() as $domain ) {
-			if ( $domain->domain_name === $_SERVER['HTTP_HOST'] ) {
+			if ( edds_apple_pay_domain() === $domain->domain_name ) {
 				edd_delete_option( 'stripe_apple_pay_domain_error' );
-				edd_update_option( 'stripe_prb_apple_pay_domain', $_SERVER['HTTP_HOST'] );
+				edd_update_option( 'stripe_prb_apple_pay_domain', edds_apple_pay_domain() );
 				break;
 			}
 		}
@@ -218,6 +237,12 @@ add_action( 'admin_init', 'edds_apple_pay_check_domain', 10 );
  * @since 2.8.0
  */
 function edds_apple_pay_verify_domain() {
+	// Registering a domain configures the gateway, so it needs the capability that
+	// administers the store.
+	if ( ! current_user_can( 'manage_shop_settings' ) ) {
+		return;
+	}
+
 	// If Stripe isn't connected, just return.
 	if ( empty( edd_stripe()->connect()->is_connected ) ) {
 		return;
@@ -266,11 +291,11 @@ function edds_apple_pay_verify_domain() {
 				'ApplePayDomain',
 				'create',
 				array(
-					'domain_name' => $_SERVER['HTTP_HOST'],
+					'domain_name' => edds_apple_pay_domain(),
 				)
 			);
 
-			edd_update_option( 'stripe_prb_apple_pay_domain', $_SERVER['HTTP_HOST'] );
+			edd_update_option( 'stripe_prb_apple_pay_domain', edds_apple_pay_domain() );
 
 		// Set an error that the domain needs to be manually added.
 		// Using Stripe Connect API keys does not allow this to be done automatically.
@@ -281,7 +306,7 @@ function edds_apple_pay_verify_domain() {
 					( __( 'Please %1$smanually add your domain%2$s %3$s to use Apple Pay.', 'easy-digital-downloads' ) . '<br />' ),
 					'<a href="https://dashboard.stripe.com/settings/payments/apple_pay" target="_blank" rel="noopener noreferrer">',
 					'</a>',
-					'<code>' . $_SERVER['HTTP_HOST'] . '</code>'
+					'<code>' . esc_html( edds_apple_pay_domain() ) . '</code>'
 				)
 			);
 		}

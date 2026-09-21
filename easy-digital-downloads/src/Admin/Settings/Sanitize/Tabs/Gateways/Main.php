@@ -23,6 +23,7 @@ class Main extends Section {
 	 * Sanitize the gateways tab main section.
 	 *
 	 * @since 3.3.3
+	 * @since 3.7.1 A default is kept only alongside a list of enabled gateways.
 	 *
 	 * @param array $input The array of settings for the settings tab.
 	 * @return array
@@ -32,8 +33,8 @@ class Main extends Section {
 			return $input;
 		}
 
-		// Unset the default gateway if there are no `gateways` enabled.
-		if ( empty( $input['gateways'] ) || '-1' === $input['gateways'] ) {
+		// The enabled gateways are a list of keys; anything else, the `-1` the form posts included, is none.
+		if ( empty( $input['gateways'] ) || ! is_array( $input['gateways'] ) ) {
 			unset( $input['default_gateway'] );
 		} elseif ( ! array_key_exists( $input['default_gateway'], $input['gateways'] ) ) {
 			// Current gateway is no longer enabled.

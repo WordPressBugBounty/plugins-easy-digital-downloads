@@ -402,6 +402,25 @@ function edd_get_edit_customers_role() {
 }
 
 /**
+ * Return the role used to view customers.
+ *
+ * @since 3.7.1
+ *
+ * @return string Role used to view customers.
+ */
+function edd_get_view_customers_role() {
+
+	/**
+	 * Filter role used to view customers.
+	 *
+	 * @since 2.3
+	 *
+	 * @param string WordPress role used to view customers. Default `view_shop_reports`.
+	 */
+	return apply_filters( 'edd_view_customers_role', 'view_shop_reports' );
+}
+
+/**
  * Retrieve all of the IP addresses used by a customer.
  *
  * @since 3.0
@@ -705,6 +724,7 @@ function edd_count_customer_addresses( $args = array() ) {
  * class when migrating orders from 2.9.
  *
  * @since 3.0
+ * @since 3.7.1 Address values are sanitized before they are compared or stored.
  *
  * @param int   $customer_id Customer ID.
  * @param array $data {
@@ -735,6 +755,13 @@ function edd_maybe_add_customer_address( $customer_id = 0, $data = array() ) {
 	// Bail if nothing passed.
 	if ( empty( $customer_id ) || empty( $data ) ) {
 		return false;
+	}
+
+	// Sanitize before the duplicate check below, so it compares the values as they are stored.
+	foreach ( array( 'name', 'address', 'address2', 'city', 'region', 'postal_code', 'country' ) as $address_key ) {
+		if ( isset( $data[ $address_key ] ) ) {
+			$data[ $address_key ] = sanitize_text_field( $data[ $address_key ] );
+		}
 	}
 
 	// Set up an array with empty address keys. If all of these are empty in $data, the address should not be added.

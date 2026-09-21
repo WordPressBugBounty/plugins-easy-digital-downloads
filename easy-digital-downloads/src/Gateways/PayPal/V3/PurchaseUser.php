@@ -32,6 +32,7 @@ class PurchaseUser {
 	 * cases: already logged in, new registration, login, and guest checkout.
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.1 Fires edd_checkout_user_error_checks and refuses when it raises an error.
 	 *
 	 * @param array  $form_data  Raw form data from the REST request body.
 	 * @param string $email      Already-sanitized buyer email.
@@ -127,8 +128,24 @@ class PurchaseUser {
 		}
 
 		$user = edd_get_purchase_form_user( $valid_data, false );
-		if ( empty( $user ) ) {
-			$errors  = edd_get_errors();
+
+		/**
+		 * Let extensions validate fields after the user has been resolved.
+		 *
+		 * Fired here so a REST checkout is held to the same user checks a form
+		 * submission is, including the check that refuses a guest submitting a
+		 * registered account's email address.
+		 *
+		 * @since 3.7.1
+		 *
+		 * @param array|bool $user       The resolved user data.
+		 * @param array      $valid_data The valid data.
+		 * @param array      $form_data  The submitted form data.
+		 */
+		do_action( 'edd_checkout_user_error_checks', $user, $valid_data, $form_data );
+
+		$errors = edd_get_errors();
+		if ( empty( $user ) || $errors ) {
 			edd_clear_errors();
 			$message = $errors ? reset( $errors ) : __( 'An error occurred with your account. Please try again.', 'easy-digital-downloads' );
 			return new \WP_Error( 'user_error', $message, array( 'status' => 400 ) );

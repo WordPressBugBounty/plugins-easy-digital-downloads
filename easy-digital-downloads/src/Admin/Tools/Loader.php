@@ -30,6 +30,7 @@ class Loader extends MiniManager {
 	 */
 	protected function get_event_classes(): array {
 		return array(
+			new Ai(),
 			new Labs(),
 			new DebugLog(),
 			new Logs(),

@@ -30,6 +30,7 @@ class Errors extends Subscriber {
 	 * Checks if a user already exists during checkout.
 	 *
 	 * @since 3.3.5
+	 * @since 3.7.1 The validated-email marker only skips the check for its own address.
 	 * @param mixed $user       The user object.
 	 * @param array $valid_data The valid data.
 	 * @param array $posted     The posted data.
@@ -37,11 +38,6 @@ class Errors extends Subscriber {
 	 */
 	public function check_existing_users( $user, $valid_data, $posted ) {
 		if ( is_user_logged_in() || empty( $user ) ) {
-			return;
-		}
-
-		// If the email has already been validated, skip this check.
-		if ( EDD()->session->get( 'email_validated' ) ) {
 			return;
 		}
 
@@ -55,6 +51,11 @@ class Errors extends Subscriber {
 			return;
 		}
 
+		// If this address has already been validated, skip this check.
+		if ( self::email_is_validated( $email ) ) {
+			return;
+		}
+
 		$validate = $this->validate_email( $email );
 		if ( is_wp_error( $validate ) ) {
 			edd_set_error( $validate->get_error_code(), $validate->get_error_message() );
@@ -62,14 +63,47 @@ class Errors extends Subscriber {
 	}
 
 	/**
+	 * Checks whether the AJAX email check has already validated a given address.
+	 *
+	 * The stored value is the address that was validated, not a boolean, so it
+	 * covers that address only.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $email The address this request is submitting.
+	 * @return bool True when the stored address matches the one submitted.
+	 */
+	public static function email_is_validated( $email ) {
+		$validated = EDD()->session->get( 'email_validated' );
+		if ( empty( $validated ) || ! is_string( $validated ) ) {
+			return false;
+		}
+
+		$email = strtolower( sanitize_email( $email ) );
+		if ( empty( $email ) ) {
+			return false;
+		}
+
+		return strtolower( sanitize_email( $validated ) ) === $email;
+	}
+
+	/**
 	 * Checks if the email is valid and not already used.
 	 *
 	 * @since 3.3.5
+	 * @since 3.7.1 Records the submitted address in the session whatever the verdict.
 	 * @return void|bool|\WP_Error
 	 */
 	public function check_email_ajax() {
 		EDD()->session->set( 'email_validated', null );
 		$email = sanitize_email( $_POST['email'] );
+
+		/*
+		 * Record the address the shopper entered whatever the verdict below is. A shopper being
+		 * told to log in still has a cart, and anything that needs their address later has to
+		 * read it from the session rather than from a request.
+		 */
+		EDD()->session->set( 'checkout_email', is_email( $email ) ? $email : null );
 		if ( is_user_logged_in() ) {
 			$validate = $this->validate_logged_in_email( $email );
 		} else {

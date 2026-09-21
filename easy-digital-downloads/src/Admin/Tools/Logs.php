@@ -40,13 +40,20 @@ class Logs implements SubscriberInterface {
 	 * Setup the logs view.
 	 *
 	 * @since 3.6.4
+	 * @since 3.7.1 Requires `manage_shop_settings` and refuses dispatched requests.
 	 *
 	 * @param string $type Log type.
 	 * @return bool True if setup successful, false otherwise.
 	 */
 	public static function setup( $type = '' ): bool {
-		// Bail if cannot view.
-		if ( ! current_user_can( 'view_shop_reports' ) ) {
+		// These views live on the Tools screen, so reading them requires what it requires.
+		if ( ! current_user_can( 'manage_shop_settings' ) ) {
+			return false;
+		}
+
+		// The Tools screen never sets edd-action; a request that does is the dispatcher, not it.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! empty( $_GET['edd-action'] ) || ! empty( $_POST['edd-action'] ) ) {
 			return false;
 		}
 

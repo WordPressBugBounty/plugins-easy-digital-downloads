@@ -14,7 +14,7 @@ namespace EDD\Settings;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
-use EDD\Utils\Convert;
+use EDD\Settings\Sanitize\Registry;
 
 /**
  * Setting class.
@@ -199,12 +199,12 @@ final class Setting {
 			return $value;
 		}
 
-		$type_class = 'EDD\\Settings\\Sanitize\\Types\\' . Convert::snake_to_camel( $setting_types[ $setting ] );
+		$type_class = Registry::get_type_class( $setting_types[ $setting ] );
 		if ( ! class_exists( $type_class ) ) {
 			return $value;
 		}
 
-		return $type_class::sanitize( $value );
+		return $type_class::sanitize( $value, $setting );
 	}
 
 	/**

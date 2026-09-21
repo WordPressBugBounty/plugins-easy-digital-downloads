@@ -61,9 +61,17 @@ class Username extends Field {
 	 * @since 3.3.8
 	 */
 	public function do_input(): void {
+		$classes = $this->get_field_classes();
 		?>
 		<div class="edd-blocks-form__control">
-			<input name="edd_user_login" id="edd_user_login" class="edd-required edd-input" type="text" required/>
+			<input
+				name="edd_user_login"
+				id="edd_user_login"
+				class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
+				type="text"
+				autocomplete="username"
+				<?php echo $this->is_required() ? 'required' : ''; ?>
+			/>
 		</div>
 		<?php
 	}
@@ -85,7 +93,7 @@ class Username extends Field {
 	 * @return bool
 	 */
 	protected function is_required(): bool {
-		return true;
+		return empty( $this->data['not_required'] );
 	}
 
 	/**
@@ -104,16 +112,18 @@ class Username extends Field {
 	 * @since 3.7.0
 	 */
 	private function render_shortcode(): void {
+		$classes = $this->get_field_classes();
 		?>
 		<div id="edd-user-login-wrap">
 			<?php $this->do_label(); ?>
 			<input
 				name="edd_user_login"
 				id="edd_user_login"
-				class="edd-required edd-input"
+				class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
 				type="text"
 				placeholder="<?php esc_attr_e( 'Your username or email address', 'easy-digital-downloads' ); ?>"
-				required
+				autocomplete="username"
+				<?php echo $this->is_required() ? 'required' : ''; ?>
 			/>
 		</div>
 		<?php

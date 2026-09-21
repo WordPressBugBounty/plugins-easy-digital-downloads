@@ -222,7 +222,7 @@ if ( empty( $order_items ) ) {
 
 			<tr>
 				<td>
-					<?php $download_files = edd_get_download_files( $item->product_id, $item->price_id ); ?>
+					<?php $download_files = $item->get_download_files(); ?>
 
 					<div class="edd_purchase_receipt_product_name">
 						<?php
@@ -236,7 +236,7 @@ if ( empty( $order_items ) ) {
 					<?php
 					$notes = edd_get_product_notes( $item->product_id );
 					if ( ! empty( $notes ) ) : ?>
-						<div class="edd_purchase_receipt_product_notes"><?php echo wp_kses_post( wpautop( $notes ) ); ?></div>
+						<div class="edd_purchase_receipt_product_notes"><?php echo wp_kses( wpautop( $notes ), edd_get_allowed_tags() ); ?></div>
 					<?php endif; ?>
 
 					<?php if ( $item->is_deliverable() && edd_receipt_show_download_files( $item->product_id, $edd_receipt_args, $item ) ) : ?>

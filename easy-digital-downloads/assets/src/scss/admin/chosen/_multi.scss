@@ -5,12 +5,12 @@
 	gap: 4px;
 
 	// Hide the dropdown arrow on multi-selects.
-	background-image: none !important;
+	--edd-ts-control-bg-image: none;
 }
 
 // Active state with dropdown open.
 .ts-wrapper.multi.dropdown-active .ts-control {
-	border-bottom-color: transparent;
+	--edd-ts-control-border-bottom-color: transparent;
 }
 
 // Selected items (tags).

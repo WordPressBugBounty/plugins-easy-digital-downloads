@@ -63,13 +63,13 @@ class CheckoutAssets implements SubscriberInterface {
 			return;
 		}
 
-		// Read the page's element data once and reuse it for every lookup below: each bare
-		// has_widget() call re-fetches the document and its elements, so on a page with the box
-		// and its sections that is six tree walks on wp_enqueue_scripts.
-		$elements = Page::get_page_data();
-		if ( ! Page::has_widget( 'edd-checkout-box', $elements ) ) {
+		// Ask for the box before reading the tree: this runs on every front-end pageview, and
+		// on a page without a box the lookup answers from the raw meta without decoding it.
+		if ( ! Page::has_widget( 'edd-checkout-box' ) ) {
 			return;
 		}
+
+		$elements = Page::get_page_data();
 
 		// The box needs this whether or not any section widget is present: it carries the box's own
 		// slot rules, and every section enqueues it too, so a box on its own would otherwise miss it.

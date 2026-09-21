@@ -44,6 +44,16 @@ class Handler {
 	private $tags = array();
 
 	/**
+	 * Container for storing class-based Tag objects.
+	 *
+	 * Keyed by tag name for O(1) lookup.
+	 *
+	 * @since 3.7.1
+	 * @var array<string, Definitions\Tag>
+	 */
+	private $tag_objects = array();
+
+	/**
 	 * The object ID. Originally this was an order ID, but it can be any object ID.
 	 *
 	 * @since 1.9
@@ -107,6 +117,20 @@ class Handler {
 	}
 
 	/**
+	 * Register a class-based Tag object.
+	 *
+	 * Stores the Tag instance directly for O(1) lookup at render time,
+	 * preserving full object access (methods, properties, future features).
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param Definitions\Tag $tag The tag instance to register.
+	 */
+	public function register( Definitions\Tag $tag ) {
+		$this->tag_objects[ $tag->get_tag() ] = $tag;
+	}
+
+	/**
 	 * Remove an email tag
 	 *
 	 * @since 1.9
@@ -120,6 +144,9 @@ class Handler {
 			}
 			return;
 		}
+
+		// Remove from class-based tag objects if present.
+		unset( $this->tag_objects[ $tag ] );
 
 		if ( ! array_key_exists( $tag, $this->tags ) ) {
 			$tag_name = $this->get_tag_by_name( $tag );
@@ -142,6 +169,14 @@ class Handler {
 	 * @return bool
 	 */
 	public function email_tag_exists( $tag, $context = '', $recipient = '' ) {
+		// Check class-based tag objects first (O(1) lookup).
+		if ( isset( $this->tag_objects[ $tag ] ) ) {
+			$tag_object = $this->tag_objects[ $tag ];
+			if ( $this->tag_object_matches( $tag_object, $context, $recipient ) ) {
+				return true;
+			}
+		}
+
 		$tags = $this->get( $context, $recipient );
 		if ( array_key_exists( $tag, $tags ) ) {
 			return true;
@@ -162,7 +197,21 @@ class Handler {
 	 * @return array
 	 */
 	public function get( $context = '', $recipient = '' ) {
-		$tags = (array) $this->tags;
+		edd_load_email_tags();
+		// Convert class-based tag objects to flat arrays for backward compatibility.
+		$tags = array();
+		foreach ( $this->tag_objects as $tag_object ) {
+			$data                                       = $tag_object->to_array();
+			$tags[ $this->get_unique_tag_key( $data ) ] = $data;
+		}
+
+		// Merge in legacy tags (legacy tags do not overwrite class-based tags).
+		foreach ( (array) $this->tags as $key => $data ) {
+			if ( ! array_key_exists( $key, $tags ) ) {
+				$tags[ $key ] = $data;
+			}
+		}
+
 		if ( empty( $tags ) ) {
 			return $tags;
 		}
@@ -254,14 +303,22 @@ class Handler {
 	 * @return string
 	 */
 	public function do_tag( $m ) {
+		$tag_name  = $m[1];
+		$parameter = ! empty( $this->email ) ? $this->email : $this->context;
 
-		// Get tag by name.
-		$tag = $this->get_tag_by_name( $m[1], $this->context );
+		// Check class-based tag objects first (O(1) lookup).
+		if ( isset( $this->tag_objects[ $tag_name ] ) ) {
+			$tag_object = $this->tag_objects[ $tag_name ];
+			if ( $this->can_do_tag_object( $tag_object ) ) {
+				return $tag_object->render( $this->object_id, $this->object, $parameter );
+			}
+		}
+
+		// Fall back to legacy tags.
+		$tag = $this->get_tag_by_name( $tag_name, $this->context );
 		if ( ! $tag ) {
 			return $m[0];
 		}
-
-		$parameter = ! empty( $this->email ) ? $this->email : $this->context;
 
 		return $this->can_do_tag( $tag ) ?
 			call_user_func( $tag['func'], $this->object_id, $this->object, $parameter ) :
@@ -343,6 +400,84 @@ class Handler {
 		}
 
 		return ! empty( $tag['contexts'] ) ? $tag['tag'] . '_' . reset( $tag['contexts'] ) : $tag['tag'];
+	}
+
+	/**
+	 * Get a single class-based Tag object by name.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $name The tag identifier (e.g. 'sitename').
+	 * @return Definitions\Tag|null The Tag instance, or null if not found.
+	 */
+	public function get_tag_object( string $name ): ?Definitions\Tag {
+		return $this->tag_objects[ $name ] ?? null;
+	}
+
+	/**
+	 * Get all class-based Tag objects, optionally filtered by context and recipient.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param string $context   The context to filter by.
+	 * @param string $recipient The recipient to filter by.
+	 * @return array<string, Definitions\Tag>
+	 */
+	public function get_tag_objects( string $context = '', string $recipient = '' ): array {
+		if ( empty( $context ) && empty( $recipient ) ) {
+			return $this->tag_objects;
+		}
+
+		$filtered = array();
+		foreach ( $this->tag_objects as $name => $tag_object ) {
+			if ( $this->tag_object_matches( $tag_object, $context, $recipient ) ) {
+				$filtered[ $name ] = $tag_object;
+			}
+		}
+
+		return $filtered;
+	}
+
+	/**
+	 * Check if a class-based Tag object can be processed in the current context.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param Definitions\Tag $tag_object The tag object.
+	 * @return bool
+	 */
+	private function can_do_tag_object( Definitions\Tag $tag_object ): bool {
+		$contexts = $tag_object->get_contexts();
+		if ( ! empty( $contexts ) && ! in_array( $this->context, $contexts, true ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if a class-based Tag object matches the given context and recipient.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param Definitions\Tag $tag_object   The tag object.
+	 * @param string          $context   The context to match.
+	 * @param string          $recipient The recipient to match.
+	 * @return bool
+	 */
+	private function tag_object_matches( Definitions\Tag $tag_object, string $context = '', string $recipient = '' ): bool {
+		$contexts   = $tag_object->get_contexts();
+		$recipients = $tag_object->get_recipients();
+
+		if ( ! empty( $context ) && ! empty( $contexts ) && ! in_array( $context, $contexts, true ) ) {
+			return false;
+		}
+
+		if ( ! empty( $recipient ) && ! empty( $recipients ) && ! in_array( $recipient, $recipients, true ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

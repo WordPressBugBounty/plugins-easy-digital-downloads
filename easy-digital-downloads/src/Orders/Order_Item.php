@@ -10,6 +10,7 @@
 
 namespace EDD\Orders;
 
+use EDD\Downloads\Entitlement;
 use EDD\Refundable_Item;
 
 // Exit if accessed directly.
@@ -270,6 +271,25 @@ class Order_Item extends \EDD\Database\Rows\Order_Item {
 	 */
 	public function is_deliverable() {
 		return in_array( $this->status, edd_get_deliverable_order_item_statuses(), true ) && $this->quantity > 0;
+	}
+
+	/**
+	 * Retrieves the files this purchased item is entitled to download.
+	 *
+	 * An item stored as a row records the price option it was bought at, so its files are
+	 * resolved against that option. Bundle children are not rows: Order::get_items_with_bundles()
+	 * and the user-downloads block build them from the bundle's own contents, where an entry
+	 * naming no price option means the whole product, so those get the whole file list.
+	 *
+	 * @since 3.7.1
+	 * @return array
+	 */
+	public function get_download_files() {
+		if ( ! $this->exists() ) {
+			return (array) edd_get_download_files( $this->product_id, $this->price_id );
+		}
+
+		return ( new Entitlement( $this->product_id, $this->price_id ) )->get_files();
 	}
 
 

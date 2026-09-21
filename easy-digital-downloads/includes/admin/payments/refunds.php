@@ -99,8 +99,9 @@ function edd_refund_details_items( $refund ) {
 				'objectId'     => esc_html( $adjustment->object_id ),
 				'objectType'   => esc_html( $adjustment->object_type ),
 				'typeId'       => esc_html( $adjustment->type_id ),
-				'type'         => esc_html( $adjustment->type ),
-				'description'  => esc_html( $adjustment->description ),
+				// Escaped by the template.
+				'type'         => $adjustment->type,
+				'description'  => $adjustment->description,
 				'subtotal'     => esc_html( $adjustment->subtotal ),
 				'tax'          => esc_html( $adjustment->tax ),
 				'total'        => esc_html( $adjustment->total ),
@@ -118,7 +119,8 @@ function edd_refund_details_items( $refund ) {
 			'id'           => esc_html( $item->id ),
 			'orderId'      => esc_html( $item->order_id ),
 			'productId'    => esc_html( $item->product_id ),
-			'productName'  => esc_html( $item->get_order_item_name() ),
+			// Escaped by the template.
+			'productName'  => $item->get_order_item_name(),
 			'priceId'      => esc_html( $item->price_id ),
 			'cartIndex'    => esc_html( $item->cart_index ),
 			'type'         => esc_html( $item->type ),
@@ -153,8 +155,9 @@ function edd_refund_details_items( $refund ) {
 			'objectId'     => esc_html( $adjustment->object_id ),
 			'objectType'   => esc_html( $adjustment->object_type ),
 			'typeId'       => esc_html( $adjustment->type_id ),
-			'type'         => esc_html( $adjustment->type ),
-			'description'  => esc_html( $adjustment->description ),
+			// Escaped by the template.
+			'type'         => $adjustment->type,
+			'description'  => $adjustment->description,
 			'subtotal'     => esc_html( $adjustment->subtotal ),
 			'tax'          => esc_html( $adjustment->tax ),
 			'total'        => esc_html( $adjustment->total ),

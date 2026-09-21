@@ -1,4 +1,12 @@
 <?php
+/**
+ * Email tags registry.
+ *
+ * @package   EDD\Emails\Tags
+ * @copyright Copyright (c) 2024, Sandhills Development, LLC
+ * @license   https://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since     3.3.0
+ */
 
 namespace EDD\Emails\Tags;
 
@@ -14,266 +22,219 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 class Registry {
 
 	/**
-	 * Render instance.
+	 * Cache of registered tag instances.
 	 *
-	 * @since 3.3.0
-	 * @var Render
+	 * @since 3.7.1
+	 * @var array|null
 	 */
-	private $render;
-
-	/**
-	 * Tags constructor.
-	 *
-	 * @since 3.3.0
-	 */
-	public function __construct() {
-		$this->render = new Render();
-	}
+	private static $registered_tags = null;
 
 	/**
 	 * Registers the email tags.
 	 *
 	 * @since 3.3.0
+	 * @since 3.7.1 Class-based tags are passed through `edd_email_tags` so that
+	 *                       extensions modifying or removing a core tag continue to work.
 	 * @return void
 	 */
 	public function register() {
-		$email_tags = $this->get_tags();
+		$class_tags = self::get_registered_tags();
+		$registered = array();
 
-		// Add email tags.
-		foreach ( $email_tags as $email_tag ) {
-			$label      = isset( $email_tag['label'] ) ? $email_tag['label'] : '';
-			$contexts   = isset( $email_tag['contexts'] ) ? $email_tag['contexts'] : null;
-			$recipients = isset( $email_tag['recipients'] ) ? $email_tag['recipients'] : null;
-			edd_add_email_tag( $email_tag['tag'], $email_tag['description'], $email_tag['function'], $label, $contexts, $recipients );
+		foreach ( $this->get_filtered_tags( $class_tags ) as $email_tag ) {
+			if ( empty( $email_tag['tag'] ) || in_array( $email_tag['tag'], $registered, true ) ) {
+				continue;
+			}
+
+			$name         = $email_tag['tag'];
+			$registered[] = $name;
+			$callback     = $email_tag['function'] ?? ( $email_tag['func'] ?? '' );
+			$class_tag    = $class_tags[ $name ] ?? null;
+
+			if ( $class_tag && $this->is_own_callback( $class_tag, $callback ) && $this->is_own_metadata( $class_tag, $email_tag ) ) {
+				EDD()->email_tags->register( $class_tag );
+				continue;
+			}
+
+			if ( $class_tag ) {
+				_edd_deprecated_hook(
+					'edd_email_tags',
+					'3.7.1',
+					'edd_registered_email_tags',
+					sprintf(
+						/* translators: %s: the email tag identifier, for example download_list */
+						__( 'The %s tag is now registered as a class and should be replaced by filtering the registered tag classes.', 'easy-digital-downloads' ),
+						$name
+					)
+				);
+			}
+
+			edd_add_email_tag(
+				$name,
+				$email_tag['description'] ?? '',
+				$callback,
+				$email_tag['label'] ?? '',
+				$email_tag['contexts'] ?? null,
+				$email_tag['recipients'] ?? null
+			);
 		}
 	}
 
 	/**
-	 * Retrieves the email tags.
+	 * Get all registered tag instances.
 	 *
-	 * @since 3.3.0
+	 * @since 3.7.1
+	 * @return array<string, Definitions\Tag> Keyed by tag identifier.
+	 */
+	public static function get_registered_tags(): array {
+		if ( null !== self::$registered_tags ) {
+			return self::$registered_tags;
+		}
+
+		self::$registered_tags = array();
+		foreach ( self::get_registered_classes() as $class_name ) {
+			$tag = self::get_tag_class( $class_name );
+			if ( $tag ) {
+				self::$registered_tags[ $tag->get_tag() ] = $tag;
+			}
+		}
+
+		return self::$registered_tags;
+	}
+
+	/**
+	 * Clears the cache of registered tag instances.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	public static function reset() {
+		self::$registered_tags = null;
+	}
+
+	/**
+	 * Get the registered tag classes.
+	 *
+	 * @since 3.7.1
+	 * @return array<string, string> Keyed by tag identifier, values are class names.
+	 */
+	private static function get_registered_classes(): array {
+
+		/**
+		 * Filters the registered email tag classes.
+		 *
+		 * Extensions can add their own class-based email tags by hooking into this filter.
+		 *
+		 * @since 3.7.1
+		 * @param array<string, string> $tags Keyed by tag identifier, values are fully-qualified class names
+		 *                                    that extend \EDD\Emails\Tags\Tag.
+		 */
+		return apply_filters(
+			'edd_registered_email_tags',
+			array(
+				'download_list'      => Definitions\DownloadList::class,
+				'file_urls'          => Definitions\FileUrls::class,
+				'name'               => Definitions\Name::class,
+				'fullname'           => Definitions\FullName::class,
+				'username'           => Definitions\Username::class,
+				'user_email'         => Definitions\UserEmail::class,
+				'billing_address'    => Definitions\BillingAddress::class,
+				'date'               => Definitions\Date::class,
+				'subtotal'           => Definitions\Subtotal::class,
+				'tax'                => Definitions\Tax::class,
+				'fees_total'         => Definitions\FeesTotal::class,
+				'fees_list'          => Definitions\FeesList::class,
+				'price'              => Definitions\Price::class,
+				'payment_id'         => Definitions\PaymentId::class,
+				'receipt_id'         => Definitions\ReceiptId::class,
+				'payment_method'     => Definitions\PaymentMethod::class,
+				'sitename'           => Definitions\SiteName::class,
+				'receipt'            => Definitions\Receipt::class,
+				'receipt_link'       => Definitions\ReceiptLink::class,
+				'discount_codes'     => Definitions\DiscountCodes::class,
+				'ip_address'         => Definitions\IpAddress::class,
+				'login_link'         => Definitions\LoginLink::class,
+				'refund_link'        => Definitions\RefundLink::class,
+				'order_details_link' => Definitions\OrderDetailsLink::class,
+				'transaction_id'     => Definitions\TransactionId::class,
+				'password_link'      => Definitions\PasswordLink::class,
+				'refund_amount'      => Definitions\RefundAmount::class,
+				'refund_id'          => Definitions\RefundId::class,
+				'phone'              => Definitions\Phone::class,
+				'company'            => Definitions\Company::class,
+			)
+		);
+	}
+
+	/**
+	 * Passes the class-based tags through the legacy `edd_email_tags` filter.
+	 *
+	 * The filtered array uses the legacy `function` key rather than `func`, because that is the
+	 * key extensions have always modified.
+	 *
+	 * @since 3.7.1
+	 * @param array<string, Definitions\Tag> $class_tags The class-based tags.
 	 * @return array
 	 */
-	private function get_tags() {
-		$email_tags = array(
-			array(
-				'tag'         => 'download_list',
-				'label'       => __( 'Download List', 'easy-digital-downloads' ),
-				'description' => __( 'A list of download links for each download purchased.', 'easy-digital-downloads' ),
-				'function'    => 'text/html' === EDD()->emails->get_content_type()
-					? 'edd_email_tag_download_list'
-					: 'edd_email_tag_download_list_plain',
-				'contexts'    => array( 'order' ),
-			),
-			array(
-				'tag'         => 'file_urls',
-				'label'       => __( 'File URLs', 'easy-digital-downloads' ),
-				'description' => __( 'A plain-text list of download URLs for each download purchased.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_file_urls',
-				'contexts'    => array( 'order' ),
-			),
-			array(
-				'tag'         => 'name',
-				'label'       => __( 'First Name', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's (or user's) first name.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_first_name',
-				'contexts'    => array( 'user', 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'fullname',
-				'label'       => __( 'Full Name', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's (or user's) full name: first and last.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_fullname',
-				'contexts'    => array( 'user', 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'username',
-				'label'       => __( 'Username', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's (or user's) user name on the site, if they registered an account.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_username',
-				'contexts'    => array( 'user', 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'user_email',
-				'label'       => __( 'Email', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's (or user's) email address.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_user_email',
-				'contexts'    => array( 'user', 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'billing_address',
-				'label'       => __( 'Billing Address', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's billing address.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_billing_address',
-				'contexts'    => array( 'order' ),
-			),
-			array(
-				'tag'         => 'date',
-				'label'       => __( 'Purchase Date', 'easy-digital-downloads' ),
-				'description' => __( 'The date of the purchase.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_date',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'subtotal',
-				'label'       => __( 'Subtotal', 'easy-digital-downloads' ),
-				'description' => __( 'The price of the purchase before taxes.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_subtotal',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'tax',
-				'label'       => __( 'Tax', 'easy-digital-downloads' ),
-				'description' => __( 'The taxed amount of the purchase', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_tax',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'fees_total',
-				'label'       => __( 'Fees Total', 'easy-digital-downloads' ),
-				'description' => __( 'The total fees on the order, formatted with currency.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'fees_total' ),
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'fees_list',
-				'label'       => __( 'Fees List', 'easy-digital-downloads' ),
-				'description' => __( 'A list of all fees on the order, with amounts.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'fees_list' ),
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'price',
-				'label'       => __( 'Price', 'easy-digital-downloads' ),
-				'description' => __( 'The total price of the purchase', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_price',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'payment_id',
-				'label'       => __( 'Payment ID', 'easy-digital-downloads' ),
-				'description' => __( 'The unique identifier for this purchase.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_payment_id',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'receipt_id',
-				'label'       => __( 'Receipt ID', 'easy-digital-downloads' ),
-				'description' => __( 'The unique identifier for the receipt of this purchase.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_receipt_id',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'payment_method',
-				'label'       => __( 'Payment Method', 'easy-digital-downloads' ),
-				'description' => __( 'The method of payment used for this purchase.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_payment_method',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'sitename',
-				'label'       => __( 'Site Name', 'easy-digital-downloads' ),
-				'description' => __( 'Your site name.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_sitename',
-				'contexts'    => array(),
-			),
-			array(
-				'tag'         => 'receipt',
-				'label'       => __( 'Receipt', 'easy-digital-downloads' ),
-				'description' => __( 'Links to the EDD success page with the text "View Receipt".', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_receipt',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'receipt_link',
-				'label'       => __( 'Receipt Link', 'easy-digital-downloads' ),
-				'description' => __( 'Adds a link so users can view their receipt directly on a simplified page on your site if they are unable to view it in the browser correctly.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_receipt_link',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'discount_codes',
-				'label'       => __( 'Discount Codes', 'easy-digital-downloads' ),
-				'description' => __( 'Adds a list of any discount codes applied to this purchase.', 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_discount_codes',
-				'contexts'    => array( 'order', 'refund' ),
-			),
-			array(
-				'tag'         => 'ip_address',
-				'label'       => __( 'IP Address', 'easy-digital-downloads' ),
-				'description' => __( "The buyer's IP Address.", 'easy-digital-downloads' ),
-				'function'    => 'edd_email_tag_ip_address',
-				'contexts'    => array( 'order', 'refund', 'user' ),
-			),
-			array(
-				'tag'         => 'login_link',
-				'label'       => __( 'Login Link', 'easy-digital-downloads' ),
-				'description' => __( 'The link to log into the site.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'login_link' ),
-				'contexts'    => array(),
-			),
-			array(
-				'tag'         => 'refund_link',
-				'label'       => __( 'Refund Link', 'easy-digital-downloads' ),
-				'description' => __( 'The link to refund record in the EDD admin.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'refund_link' ),
-				'contexts'    => array( 'refund' ),
-				'recipients'  => array( 'admin' ),
-			),
-			array(
-				'tag'         => 'order_details_link',
-				'label'       => __( 'Order Details Link', 'easy-digital-downloads' ),
-				'description' => __( 'The link to the order details page in the EDD admin.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'order_details_link' ),
-				'contexts'    => array( 'order' ),
-				'recipients'  => array( 'admin' ),
-			),
-			array(
-				'tag'         => 'transaction_id',
-				'label'       => __( 'Transaction ID', 'easy-digital-downloads' ),
-				'description' => __( 'The merchant transaction ID for this order. This is for admin emails only.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'transaction_id' ),
-				'contexts'    => array( 'order' ),
-				'recipients'  => array( 'admin' ),
-			),
-			array(
-				'tag'         => 'password_link',
-				'label'       => __( 'Password Reset Link', 'easy-digital-downloads' ),
-				'description' => __( "The link to set the user's password. In an order receipt, this will only be included for the user's first purchase.", 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'password_link' ),
-				'contexts'    => array( 'order', 'user' ),
-			),
-			array(
-				'tag'         => 'refund_amount',
-				'label'       => __( 'Refund Amount', 'easy-digital-downloads' ),
-				'description' => __( 'The amount that was refunded to the customer.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'refund_amount' ),
-				'contexts'    => array( 'refund' ),
-			),
-			array(
-				'tag'         => 'refund_id',
-				'label'       => __( 'Refund ID', 'easy-digital-downloads' ),
-				'description' => __( 'The unique identifier for this refund.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'refund_id' ),
-				'contexts'    => array( 'refund' ),
-			),
-			array(
-				'tag'         => 'phone',
-				'label'       => __( 'Phone', 'easy-digital-downloads' ),
-				'description' => __( 'The customer\'s phone number.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'phone' ),
-				'contexts'    => array( 'order' ),
-			),
-			array(
-				'tag'         => 'company',
-				'label'       => __( 'Company', 'easy-digital-downloads' ),
-				'description' => __( 'The company or organization name for your order.', 'easy-digital-downloads' ),
-				'function'    => array( $this->render, 'company' ),
-				'contexts'    => array( 'order' ),
-			),
-		);
+	private function get_filtered_tags( array $class_tags ): array {
+		$tags = array();
+		foreach ( $class_tags as $tag ) {
+			$data             = $tag->to_array();
+			$data['function'] = $data['func'];
+			unset( $data['func'] );
 
-		// Apply edd_email_tags filter.
-		return apply_filters( 'edd_email_tags', $email_tags );
+			$tags[] = $data;
+		}
+
+		return (array) apply_filters( 'edd_email_tags', $tags );
+	}
+
+	/**
+	 * Whether a callback is the tag instance's own render method.
+	 *
+	 * @since 3.7.1
+	 * @param Definitions\Tag $tag      The tag instance.
+	 * @param mixed           $callback The callback from the filtered tag array.
+	 * @return bool
+	 */
+	private function is_own_callback( Definitions\Tag $tag, $callback ): bool {
+		return array( $tag, 'render' ) === $callback;
+	}
+
+	/**
+	 * Whether a filtered tag array still carries the tag instance's own metadata.
+	 *
+	 * A tag whose metadata was changed is registered as a legacy tag instead, so that the
+	 * filtered label, description, contexts and recipients are honored.
+	 *
+	 * @since 3.7.1
+	 * @param Definitions\Tag $tag       The tag instance.
+	 * @param array           $email_tag The tag array from the filtered set.
+	 * @return bool
+	 */
+	private function is_own_metadata( Definitions\Tag $tag, array $email_tag ): bool {
+		return $tag->get_label() === ( $email_tag['label'] ?? '' )
+			&& $tag->get_description() === ( $email_tag['description'] ?? '' )
+			&& $tag->get_contexts() === ( $email_tag['contexts'] ?? array() )
+			&& $tag->get_recipients() === ( $email_tag['recipients'] ?? null );
+	}
+
+	/**
+	 * Validates and instantiates a tag class.
+	 *
+	 * @since 3.7.1
+	 * @param string $class_name The fully-qualified class name.
+	 * @return Definitions\Tag|null
+	 */
+	private static function get_tag_class( $class_name ) {
+		if ( ! is_string( $class_name ) || ! class_exists( $class_name ) ) {
+			return null;
+		}
+
+		if ( ! is_subclass_of( $class_name, Definitions\Tag::class ) ) {
+			return null;
+		}
+
+		return new $class_name();
 	}
 }

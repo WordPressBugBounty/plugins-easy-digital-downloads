@@ -45,8 +45,11 @@ function edd_get_checkout_uri( $args = array() ) {
 	$uri = false;
 
 	if ( edd_is_checkout() ) {
-		global $post;
-		$uri = $post instanceof WP_Post ? get_permalink( $post->ID ) : null;
+		if ( edd_doing_ajax() && ! empty( $_POST['current_page'] ) ) {
+			$uri = get_permalink( absint( $_POST['current_page'] ) );
+		} else {
+			$uri = get_permalink( get_queried_object_id() );
+		}
 	}
 
 	// If we are not on a checkout page, determine the URI from the default.

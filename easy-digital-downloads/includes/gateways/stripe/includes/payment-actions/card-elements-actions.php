@@ -1028,11 +1028,14 @@ function edds_complete_payment() {
 			$intent = edds_api_request( 'PaymentIntent', 'retrieve', $intent['id'] );
 		}
 
-		// Validate intent amount matches the linked payment total.
+		// Validate intent amount against the expected price, preferring the live order total and falling back to the intent metadata total.
 		$payment = edd_get_payment( $intent->metadata->edd_payment_id );
 
 		if ( $payment ) {
-			EDD\Gateways\Stripe\Checkout\Validation::intent_amount( $intent, $payment->total );
+			// Recurring zeroes free-trial order totals after the intent is created.
+			$expected_price = EDD\Gateways\Stripe\Checkout\Validation::get_expected_price( $intent );
+
+			EDD\Gateways\Stripe\Checkout\Validation::intent_amount( $intent, $expected_price );
 		}
 
 		if ( ! $payment ) {

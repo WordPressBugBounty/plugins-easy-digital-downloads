@@ -12,6 +12,7 @@ namespace EDD\Admin\Settings\Sanitize\Tabs\Gateways;
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Admin\Settings\Sanitize\Tabs\Section;
+use EDD\Settings\Sanitize\Refusal;
 use EDD\Settings\Setting;
 
 /**
@@ -135,10 +136,16 @@ class Cart extends Section {
 	 * Sanitize the empty cart preview message.
 	 *
 	 * @since 3.6.2
-	 * @param string $value The value to sanitize.
-	 * @return string The sanitized value.
+	 * @since 3.7.1 A value that is not a single message leaves the stored one in place.
+	 * @param mixed  $value The value to sanitize.
+	 * @param string $key   The setting id.
+	 * @return string|array The sanitized value, or the value the setting keeps.
 	 */
-	protected static function sanitize_empty_cart_preview( $value ) {
+	protected static function sanitize_empty_cart_preview( $value, $key ) {
+		if ( ! is_string( $value ) ) {
+			return Refusal::keep( $key, $value );
+		}
+
 		// Remove any shortcodes from the value.
 		$value = strip_shortcodes( $value );
 

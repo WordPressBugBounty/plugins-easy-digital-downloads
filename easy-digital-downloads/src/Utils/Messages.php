@@ -62,12 +62,35 @@ class Messages {
 	);
 
 	/**
+	 * HTML tags allowed in message text, in wp_kses() format.
+	 *
+	 * Messages may intentionally contain simple inline markup (e.g. a "Reset Password"
+	 * link); anything outside this list is stripped on storage and on output.
+	 *
+	 * @var array<string, array<string, bool>>
+	 */
+	const ALLOWED_TAGS = array(
+		'a'      => array(
+			'href'   => true,
+			'title'  => true,
+			'class'  => true,
+			'target' => true,
+			'rel'    => true,
+		),
+		'strong' => array(),
+		'em'     => array(),
+		'br'     => array(),
+		'code'   => array(),
+	);
+
+	/**
 	 * Add a message for a given type and code.
 	 *
 	 * @since 3.6.5
+	 * @since 3.7.1 Allows the inline HTML defined in ALLOWED_TAGS instead of stripping all tags.
 	 * @param string $type    One of error, success, info, warn.
 	 * @param string $code    Unique code for the message (e.g. error_id).
-	 * @param string $message Message text (will be sanitized for storage).
+	 * @param string $message Message text (sanitized for storage; only ALLOWED_TAGS markup survives).
 	 * @return void
 	 */
 	public static function add( $type, $code, $message ) {
@@ -76,7 +99,7 @@ class Messages {
 		}
 
 		$storage                   = self::get_storage();
-		$storage[ $type ][ $code ] = sanitize_text_field( $message );
+		$storage[ $type ][ $code ] = wp_kses( trim( $message ), self::ALLOWED_TAGS );
 		self::persist( $storage );
 	}
 
@@ -230,6 +253,7 @@ class Messages {
 	 * Build HTML for a single message type block.
 	 *
 	 * @since 3.6.5
+	 * @since 3.7.1 Message text is escaped with wp_kses() so ALLOWED_TAGS markup (e.g. links) renders.
 	 * @param string                $type    One of error, success, info, warn.
 	 * @param array<string, string> $messages Map of code => message.
 	 * @return string
@@ -241,6 +265,7 @@ class Messages {
 			$classes = apply_filters(
 				'edd_error_class',
 				array(
+					'edd_errors', // Required for ajax handling.
 					$wrapper_class,
 					'edd-alert',
 					'edd-alert-error',
@@ -261,7 +286,7 @@ class Messages {
 			$p_class = ( 'error' === $type ? 'edd_error' : '' );
 			$html   .= '<p class="' . $p_class . '" id="' . $id . '">';
 			$html   .= '<strong>' . esc_html( $label ) . '</strong>: ';
-			$html   .= esc_html( $message );
+			$html   .= wp_kses( $message, self::ALLOWED_TAGS );
 			$html   .= '</p>';
 		}
 		$html .= '</div>';

@@ -236,7 +236,12 @@ class DomainAssociation {
 		delete_option( self::INELIGIBLE_OPTION );
 		delete_option( self::RETRY_OPTION );
 
-		self::deregister_with_paypal( self::get_current_host() );
+		// Drop the host that was actually registered, which is what PayPal holds. A store that
+		// registered under a different host before the domain was derived from the site address
+		// would otherwise leave that registration behind.
+		$registered = (string) get_option( self::HOST_OPTION, '' );
+
+		self::deregister_with_paypal( '' !== $registered ? $registered : self::get_current_host() );
 		self::uninstall();
 		self::install();
 	}
@@ -448,14 +453,18 @@ class DomainAssociation {
 	}
 
 	/**
-	 * Returns the current request host, normalized.
+	 * Returns the host Apple Pay is registered for, normalized.
+	 *
+	 * Taken from the site's configured address rather than the request, since this is the
+	 * hostname the gateway registers and a store has one of those however it was reached.
 	 *
 	 * @since 3.6.9
+	 * @since 3.7.1 Derived from home_url() instead of the request host.
 	 *
 	 * @return string
 	 */
 	private static function get_current_host(): string {
-		$host = isset( $_SERVER['HTTP_HOST'] ) ? wp_unslash( $_SERVER['HTTP_HOST'] ) : '';
+		$host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
 		$host = strtolower( trim( $host ) );
 
 		// Strip any port suffix — Apple checks the hostname only.

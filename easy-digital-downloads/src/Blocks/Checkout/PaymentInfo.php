@@ -57,6 +57,7 @@ class PaymentInfo implements SubscriberInterface {
 	 * Renders the checkout cart component.
 	 *
 	 * @since 3.7.0
+	 * @since 3.7.1 Passes `edit_posts` explicitly to `Utility::is_block_editor()`.
 	 * @param array     $block_attributes The block attributes.
 	 * @param string    $content          The block inner content.
 	 * @param \WP_Block $block            The block object.
@@ -67,7 +68,7 @@ class PaymentInfo implements SubscriberInterface {
 
 		// Don't attempt to render the fallback hook in the block editor; it will duplicate fields.
 		// Only fire it here if there's no personal-info block to own it.
-		if ( ! Utility::is_block_editor( '', $block ) && ! \EDD\Checkout\Validator::has_block( null, 'edd/checkout-personal-info' ) ) {
+		if ( ! Utility::is_block_editor( 'edit_posts', $block ) && ! \EDD\Checkout\Validator::has_block( null, 'edd/checkout-personal-info' ) ) {
 			Utility::do_checkout_form_top( $block_attributes );
 		}
 

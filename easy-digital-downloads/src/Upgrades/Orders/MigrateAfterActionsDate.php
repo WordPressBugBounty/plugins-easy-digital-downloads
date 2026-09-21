@@ -13,6 +13,7 @@ namespace EDD\Upgrades\Orders;
 
 use EDD\Utils\Date;
 use EDD\EventManagement\SubscriberInterface;
+use EDD\Cron\EventManager as CronEventManager;
 use EDD\Upgrades\Utilities\MigrationCheck;
 use EDD\Cron\Traits\NextScheduled;
 use EDD\Cron\Events\SingleEvent;
@@ -190,7 +191,7 @@ class MigrateAfterActionsDate implements SubscriberInterface {
 	 */
 	public function process_step() {
 		// Since this hooks on an action, don't let it run if we're not in a cron.
-		if ( ! edd_doing_cron() && ! did_action( 'action_scheduler_before_execute' ) ) {
+		if ( ! CronEventManager::is_cron_context() ) {
 			return;
 		}
 

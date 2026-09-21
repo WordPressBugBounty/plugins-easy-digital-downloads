@@ -2,23 +2,24 @@
 /**
  * Download Object
  *
- * @package     EDD
- * @subpackage  Classes/Download
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
+ * @package     EDD\Downloads
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.2
 */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
 use EDD\Models\Download;
+
 /**
  * EDD_Download Class
  *
  * @since 2.2
  */
 class EDD_Download {
+	use EDD\Downloads\Traits\Files;
 
 	/**
 	 * The download ID
@@ -43,14 +44,6 @@ class EDD_Download {
 	 * @var array
 	 */
 	private $prices;
-
-	/**
-	 * The download files
-	 *
-	 * @since 2.2
-	 * @var array
-	 */
-	private $files;
 
 	/**
 	 * The file download limit
@@ -579,44 +572,6 @@ class EDD_Download {
 	}
 
 	/**
-	 * Retrieve the file downloads
-	 *
-	 * @since 2.2
-	 * @param integer $variable_price_id
-	 * @return array List of download files
-	 */
-	public function get_files( $variable_price_id = null ) {
-		if ( ! isset( $this->files ) ) {
-
-			$this->files = array();
-
-			// Bundled products are not allowed to have files
-			if ( $this->is_bundled_download() ) {
-				return $this->files;
-			}
-
-			$download_files = get_post_meta( $this->ID, 'edd_download_files', true );
-
-			if ( ! empty( $download_files ) ) {
-				if ( ! is_null( $variable_price_id ) && $this->has_variable_prices() ) {
-					foreach ( $download_files as $key => $file_info ) {
-						if ( isset( $file_info['condition'] ) ) {
-							if ( $file_info['condition'] == $variable_price_id || 'all' === $file_info['condition'] ) {
-								$this->files[ $key ] = $file_info;
-							}
-						}
-					}
-
-				} else {
-					$this->files = $download_files;
-				}
-			}
-		}
-
-		return apply_filters( 'edd_download_files', $this->files, $this->ID, $variable_price_id );
-	}
-
-	/**
 	 * Retrieve the file download limit
 	 *
 	 * @since 2.2
@@ -701,21 +656,6 @@ class EDD_Download {
 
 		// This is not filtered.
 		return $this->refundability;
-	}
-
-	/**
-	 * Retrieve the price option that has access to the specified file
-	 *
-	 * @since 2.2
-	 * @return int|string
-	 */
-	public function get_file_price_condition( $file_key = 0 ) {
-		$files     = $this->get_files();
-		$condition = isset( $files[ $file_key ]['condition'] )
-			? $files[ $file_key ]['condition']
-			: 'all';
-
-		return apply_filters( 'edd_get_file_price_condition', $condition, $this->ID, $files );
 	}
 
 	/**

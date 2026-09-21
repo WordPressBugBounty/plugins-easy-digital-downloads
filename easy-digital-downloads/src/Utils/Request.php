@@ -22,7 +22,7 @@ class Request {
 	 * What type of request is this?
 	 *
 	 * @since 3.3.0
-	 * @param  string|array $type admin, ajax, cron, cli, frontend, json, API, rest.
+	 * @param  string|array $type admin, ajax, cron, cli, frontend, json, API, rest, action_scheduler.
 	 * @return bool
 	 */
 	public static function is_request( $type ) {
@@ -45,7 +45,7 @@ class Request {
 	 * Check if the request is of a certain type.
 	 *
 	 * @since 3.3.0
-	 * @param  string $type admin, ajax, cron, cli, frontend, json, API, rest.
+	 * @param  string $type admin, ajax, cron, cli, frontend, json, API, rest, action_scheduler.
 	 * @return bool
 	 */
 	private static function is_type( string $type ) {
@@ -58,6 +58,8 @@ class Request {
 				return self::is_cron_request();
 			case 'cli':
 				return self::is_cli_request();
+			case 'action_scheduler':
+				return self::is_action_scheduler_executing();
 			case 'rest':
 				return self::is_rest_api_request();
 			case 'frontend':
@@ -108,19 +110,20 @@ class Request {
 	 * @return bool
 	 */
 	private static function is_cron_request() {
-		// Bail if doing WordPress cron.
-		if ( wp_doing_cron() ) {
-			return true;
-		}
+		return wp_doing_cron() || self::is_action_scheduler_executing();
+	}
 
-		// Action Scheduler fires action_scheduler_before_execute before a job and
-		// action_scheduler_after_execute after. More befores than afters means we
-		// are currently inside an AS job.
-		if ( did_action( 'action_scheduler_before_execute' ) > did_action( 'action_scheduler_after_execute' ) ) {
-			return true;
-		}
-
-		return false;
+	/**
+	 * Whether an Action Scheduler job is currently executing.
+	 *
+	 * `action_scheduler_before_execute` fires before a job and `action_scheduler_after_execute`
+	 * after. More befores than afters means we are currently inside one.
+	 *
+	 * @since 3.7.1
+	 * @return bool
+	 */
+	private static function is_action_scheduler_executing() {
+		return did_action( 'action_scheduler_before_execute' ) > did_action( 'action_scheduler_after_execute' );
 	}
 
 	/**

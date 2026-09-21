@@ -313,20 +313,8 @@ function edd_order_details_customer( $order ) {
  * @param object $order
  */
 function edd_order_details_email( $order ) {
-	$customer   = edd_get_customer( $order->customer_id );
-	$all_emails = array( 'primary' => $customer->email );
-
-	if ( $customer->email !== $order->email ) {
-		$all_emails['order'] = $order->email;
-	}
-
-	foreach ( $customer->emails as $key => $email ) {
-		if ( $customer->email === $email ) {
-			continue;
-		}
-
-		$all_emails[ $key ] = $email;
-	}
+	// The same list the resend handler validates against, so the two cannot drift apart.
+	$all_emails = $order->get_receipt_emails();
 
 	$help = sprintf(
 		/* translators: email type */
@@ -388,11 +376,14 @@ function edd_order_details_email( $order ) {
 			<a
 				<?php if ( $order_receipt && $order_receipt->status ) : ?>
 					<?php
-					$url = add_query_arg(
-						array(
-							'edd-action'  => 'email_links',
-							'purchase_id' => absint( $order->id ),
-						)
+					$url = wp_nonce_url(
+						add_query_arg(
+							array(
+								'edd-action'  => 'email_links',
+								'purchase_id' => absint( $order->id ),
+							)
+						),
+						'edd-resend-receipt'
 					);
 					?>
 					href="<?php echo esc_url( $url ); ?>"
@@ -680,8 +671,9 @@ function edd_order_details_overview( $order ) {
 					'objectId'     => esc_html( $adjustment->object_id ),
 					'objectType'   => esc_html( $adjustment->object_type ),
 					'typeId'       => esc_html( $adjustment->type_id ),
-					'type'         => esc_html( $adjustment->type ),
-					'description'  => esc_html( $adjustment->description ),
+					// Escaped by the template.
+					'type'         => $adjustment->type,
+					'description'  => $adjustment->description,
 					'subtotal'     => esc_html( $adjustment->subtotal ),
 					'tax'          => esc_html( $adjustment->tax ),
 					'total'        => esc_html( $adjustment->total ),
@@ -699,12 +691,14 @@ function edd_order_details_overview( $order ) {
 				'id'           => esc_html( $item->id ),
 				'orderId'      => esc_html( $item->order_id ),
 				'productId'    => esc_html( $item->product_id ),
-				'productName'  => esc_html( $item->get_order_item_name() ),
+				// Escaped by the template.
+				'productName'  => $item->get_order_item_name(),
 				'priceId'      => esc_html( $item->price_id ),
 				'cartIndex'    => esc_html( $item->cart_index ),
 				'type'         => esc_html( $item->type ),
 				'status'       => esc_html( $item->status ),
-				'statusLabel'  => esc_html( edd_get_status_label( $item->status ) ),
+				// Escaped by the template.
+				'statusLabel'  => edd_get_status_label( $item->status ),
 				'quantity'     => esc_html( $item->quantity ),
 				'amount'       => esc_html( $item->amount ),
 				'subtotal'     => esc_html( $item->subtotal ),
@@ -739,8 +733,9 @@ function edd_order_details_overview( $order ) {
 				'objectId'     => esc_html( $adjustment->object_id ),
 				'objectType'   => esc_html( $adjustment->object_type ),
 				'typeId'       => esc_html( $adjustment->type_id ),
-				'type'         => esc_html( $adjustment->type ),
-				'description'  => esc_html( $adjustment->description ),
+				// Escaped by the template.
+				'type'         => $adjustment->type,
+				'description'  => $adjustment->description,
 				'subtotal'     => esc_html( $adjustment->subtotal ),
 				'tax'          => esc_html( $adjustment->tax ),
 				'total'        => esc_html( $adjustment->total ),
@@ -826,6 +821,7 @@ function edd_order_details_overview( $order ) {
 			),
 			'nonces'       => array(
 				'edd_admin_order_get_item_amounts' => wp_create_nonce( 'edd_admin_order_get_item_amounts' ),
+				'edd_get_file_download_link'       => wp_create_nonce( 'edd_get_file_download_link' ),
 			),
 			'i18n'         => array(
 				'closeText' => esc_html__( 'Close', 'easy-digital-downloads' ),
@@ -1212,24 +1208,29 @@ function edd_order_details_attributes( $order ) {
 							<?php
 						}
 
-						$trash_url = wp_nonce_url(
-							edd_get_admin_url(
-								array(
-									'page'        => 'edd-payment-history',
-									'order_type'  => 'sale',
-									'edd-action'  => 'trash_order',
-									'purchase_id' => absint( $order->id ),
-								)
-							),
-							'edd_payment_nonce'
-						);
-						?>
-					<div style="margin-top: 8px;">
-						<a href="<?php echo esc_url( $trash_url ); ?>" class="edd-delete-payment edd-delete">
-							<?php esc_html_e( 'Move to Trash', 'easy-digital-downloads' ); ?>
-						</a>
-					</div>
-					<?php endif; ?>
+						// The handler for this link requires the delete capability.
+						if ( current_user_can( 'delete_shop_payments', $order->id ) ) :
+							$trash_url = wp_nonce_url(
+								edd_get_admin_url(
+									array(
+										'page'        => 'edd-payment-history',
+										'order_type'  => 'sale',
+										'edd-action'  => 'trash_order',
+										'purchase_id' => absint( $order->id ),
+									)
+								),
+								'edd_payment_nonce'
+							);
+							?>
+						<div style="margin-top: 8px;">
+							<a href="<?php echo esc_url( $trash_url ); ?>" class="edd-delete-payment edd-delete">
+								<?php esc_html_e( 'Move to Trash', 'easy-digital-downloads' ); ?>
+							</a>
+						</div>
+							<?php
+						endif;
+					endif;
+					?>
 				</div>
 
 				<?php if ( ! edd_is_add_order_page() && edd_is_order_recoverable( $order->id ) && ! empty( $recovery_url ) ) : ?>

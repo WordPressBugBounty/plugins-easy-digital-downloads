@@ -2,9 +2,8 @@
 /**
  * Admin Actions
  *
- * @package     EDD
- * @subpackage  Admin/Actions
- * @copyright   Copyright (c) 2018, Easy Digital Downloads, LLC
+ * @package     EDD\Admin\Actions
+ * @copyright   Copyright (c) 2018, Sandhills Development, LLC
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
@@ -17,16 +16,12 @@ defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
  * request and running do_action() to call the function
  *
  * @since 1.0
+ * @since 3.7.1 The action is sanitized with sanitize_key() and blocked hooks are refused.
  * @return void
  */
 function edd_process_actions() {
-	if ( isset( $_POST['edd-action'] ) ) {
-		do_action( 'edd_' . $_POST['edd-action'], $_POST );
-	}
-
-	if ( isset( $_GET['edd-action'] ) ) {
-		do_action( 'edd_' . $_GET['edd-action'], $_GET );
-	}
+	\EDD\Actions\Router::admin( $_POST );
+	\EDD\Actions\Router::admin( $_GET );
 }
 add_action( 'admin_init', 'edd_process_actions' );
 

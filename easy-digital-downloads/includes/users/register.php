@@ -52,6 +52,12 @@ function edd_process_register_form( $data ) {
 		return;
 	}
 
+	if ( ! \EDD\Users\RegistrationGuard::has_valid_token( $data ) ) {
+		edd_set_error( 'registration_token', __( 'We could not verify your registration. Please reload the page and try again.', 'easy-digital-downloads' ) );
+
+		return;
+	}
+
 	do_action( 'edd_pre_process_register_form' );
 
 	$login = isset( $data['edd_user_login'] ) ? $data['edd_user_login'] : '';
@@ -113,6 +119,13 @@ function edd_process_register_form( $data ) {
 	$errors = edd_get_errors();
 
 	if ( empty( $errors ) ) {
+
+		$within_rate_limit = \EDD\Users\RegistrationGuard::check_rate_limit();
+		if ( is_wp_error( $within_rate_limit ) ) {
+			edd_set_error( $within_rate_limit->get_error_code(), $within_rate_limit->get_error_message() );
+
+			return;
+		}
 
 		edd_register_and_login_new_user(
 			array(

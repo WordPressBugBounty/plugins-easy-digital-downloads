@@ -44,6 +44,20 @@ function edd_add_email_tag( $tag = '', $description = '', $func = '', $label = '
 }
 
 /**
+ * Register a class-based email tag.
+ *
+ * This gives extensions a clean public API for registering class-based tags
+ * without reaching into Handler directly.
+ *
+ * @since 3.7.1
+ *
+ * @param \EDD\Emails\Tags\Definitions\Tag $tag The tag instance to register.
+ */
+function edd_register_email_tag( \EDD\Emails\Tags\Definitions\Tag $tag ) {
+	EDD()->email_tags->register( $tag );
+}
+
+/**
  * Remove an email tag
  *
  * @since 1.9
@@ -199,14 +213,14 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 
 			if ( $show_names ) {
 
-				$title = '<strong>' . $item->product_name . '</strong>';
+				$title = '<strong>' . esc_html( $item->product_name ) . '</strong>';
 
 				if ( ! empty( $quantity ) && $quantity > 1 ) {
 					$title .= '&nbsp;&ndash;&nbsp;' . __( 'Quantity', 'easy-digital-downloads' ) . ': ' . $quantity;
 				}
 
 				if ( ! empty( $sku ) ) {
-					$title .= '&nbsp;&ndash;&nbsp;' . __( 'SKU', 'easy-digital-downloads' ) . ': ' . $sku;
+					$title .= '&nbsp;&ndash;&nbsp;' . __( 'SKU', 'easy-digital-downloads' ) . ': ' . esc_html( $sku );
 				}
 
 				if ( has_filter( 'edd_email_receipt_download_title' ) ) {
@@ -223,7 +237,7 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 				$download_list .= '<li>' . $title . '<br/>';
 			}
 
-			$files = edd_get_download_files( $item->product_id, $item->price_id );
+			$files = $item->get_download_files();
 
 			if ( ! empty( $files ) ) {
 
@@ -232,11 +246,11 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 					if ( $show_links ) {
 						$download_list .= '<div>';
 						$file_url       = edd_get_download_file_url( $item, $order->email, $filekey );
-						$download_list .= '<a href="' . esc_url_raw( $file_url ) . '">' . edd_get_file_name( $file ) . '</a>';
+						$download_list .= '<a href="' . esc_url_raw( $file_url ) . '">' . esc_html( edd_get_file_name( $file ) ) . '</a>';
 						$download_list .= '</div>';
 					} else {
 						$download_list .= '<div>';
-						$download_list .= edd_get_file_name( $file );
+						$download_list .= esc_html( edd_get_file_name( $file ) );
 						$download_list .= '</div>';
 					}
 				}
@@ -246,7 +260,7 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 
 				foreach ( $bundled_products as $bundle_item ) {
 
-					$download_list .= '<div class="edd_bundled_product"><strong>' . get_the_title( $bundle_item ) . '</strong></div>';
+					$download_list .= '<div class="edd_bundled_product"><strong>' . esc_html( get_the_title( $bundle_item ) ) . '</strong></div>';
 
 					$bundle_item_id       = edd_get_bundle_item_id( $bundle_item );
 					$bundle_item_price_id = edd_get_bundle_item_price_id( $bundle_item );
@@ -256,11 +270,11 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 						if ( $show_links ) {
 							$download_list .= '<div>';
 							$file_url       = edd_get_download_file_url( $order, $order->email, $filekey, $bundle_item_id, $bundle_item_price_id, $item );
-							$download_list .= '<a href="' . esc_url( $file_url ) . '">' . edd_get_file_name( $file ) . '</a>';
+							$download_list .= '<a href="' . esc_url( $file_url ) . '">' . esc_html( edd_get_file_name( $file ) ) . '</a>';
 							$download_list .= '</div>';
 						} else {
 							$download_list .= '<div>';
-							$download_list .= edd_get_file_name( $file );
+							$download_list .= esc_html( edd_get_file_name( $file ) );
 							$download_list .= '</div>';
 						}
 					}
@@ -301,7 +315,9 @@ function edd_email_tag_download_list( $payment_id, $order = null ) {
 
 		$download_list .= '<ul>';
 		foreach ( $needs_notes as $note ) {
-			$download_list .= '<li>' . $note['item_name'] . "\n" . '<small>' . $note['item_notes'] . '</small></li>';
+			// Notes carry the formatting a store wrote, so they are held to the tags the
+			// receipt renders rather than escaped outright.
+			$download_list .= '<li>' . esc_html( $note['item_name'] ) . "\n" . '<small>' . wp_kses( $note['item_notes'], edd_get_allowed_tags() ) . '</small></li>';
 		}
 		$download_list .= '</ul>';
 	}
@@ -357,7 +373,7 @@ function edd_email_tag_download_list_plain( $payment_id ) {
 				$download_list .= apply_filters( 'edd_email_receipt_download_title', $title, $cart_items[ $item->cart_index ], $item->price_id, $payment_id ) . "\n";
 			}
 
-			$files = edd_get_download_files( $item->product_id, $item->price_id );
+			$files = $item->get_download_files();
 
 			if ( ! empty( $files ) ) {
 
@@ -422,7 +438,9 @@ function edd_email_tag_file_urls( $payment_id ) {
 	foreach ( $cart_items as $item ) {
 
 		$price_id = edd_get_cart_item_price_id( $item );
-		$files    = edd_get_download_files( $item['id'], $price_id );
+
+		// `cart_details` holds array-shaped items, so there is no Order_Item here to ask.
+		$files = ( new EDD\Downloads\Entitlement( $item['id'], $price_id ) )->get_files();
 
 		if ( $files ) {
 			foreach ( $files as $filekey => $file ) {
@@ -564,36 +582,6 @@ function edd_email_tag_user_email( $object_id, $email_object = null, $context = 
 }
 
 /**
- * Email template tag: billing_address
- * The buyer's billing address
- *
- * @param int $payment_id
- *
- * @return string billing_address
- */
-function edd_email_tag_billing_address( $payment_id ) {
-
-	$user_info    = edd_get_payment_meta_user_info( $payment_id );
-	$user_address = ! empty( $user_info['address'] ) ? $user_info['address'] : array(
-		'line1'   => '',
-		'line2'   => '',
-		'city'    => '',
-		'country' => '',
-		'state'   => '',
-		'zip'     => '',
-	);
-
-	$return = $user_address['line1'] . "\n";
-	if ( ! empty( $user_address['line2'] ) ) {
-		$return .= $user_address['line2'] . "\n";
-	}
-	$return .= $user_address['city'] . ' ' . $user_address['zip'] . ' ' . $user_address['state'] . "\n";
-	$return .= $user_address['country'];
-
-	return $return;
-}
-
-/**
  * Email template tag: date
  * Date of purchase
  *
@@ -682,8 +670,8 @@ function edd_email_tag_payment_id( $payment_id, $email_object = null ) {
  * Email template tag: receipt_id
  * The unique ID number for this purchase receipt
  *
- * @param int $payment_id
- *
+ * @param int        $payment_id   The ID of the payment for which to retrieve the receipt ID.
+ * @param null|mixed $email_object The object of the email.
  * @return string receipt_id
  */
 function edd_email_tag_receipt_id( $payment_id, $email_object = null ) {
@@ -691,7 +679,7 @@ function edd_email_tag_receipt_id( $payment_id, $email_object = null ) {
 		$email_object = edd_get_order( $payment_id );
 	}
 
-	return $email_object->payment_key;
+	return $email_object ? $email_object->payment_key : '';
 }
 
 /**
@@ -790,7 +778,9 @@ function edd_email_tag_discount_codes( $payment_id ) {
  * IP address of the customer
  *
  * @since  2.3
- * @param int $email_object_id
+ * @param int        $email_object_id The ID of the object of the email (order ID or user ID).
+ * @param null|mixed $email_object    The object of the email (order or user).
+ * @param string     $context         The context of the email (order or user).
  * @return string IP address
  */
 function edd_email_tag_ip_address( $email_object_id, $email_object = null, $context = 'order' ) {
@@ -800,10 +790,10 @@ function edd_email_tag_ip_address( $email_object_id, $email_object = null, $cont
 	}
 
 	if ( ! $email_object instanceof EDD\Orders\Order ) {
-		$email_object = edd_get_order( $payment_id );
+		$email_object = edd_get_order( $email_object_id );
 	}
 
-	return $email_object->ip;
+	return $email_object ? $email_object->ip : '';
 }
 
 /**

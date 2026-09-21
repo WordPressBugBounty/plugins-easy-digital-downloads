@@ -674,16 +674,43 @@ class EDD_Notices {
 				'message'        => array(
 					__( 'Upgrade to Payment Elements — a better Stripe checkout for you and your customers.', 'easy-digital-downloads' ),
 					__( 'Stripe\'s Payment Elements gives you one secure, modern checkout that supports Apple Pay, Google Pay, Link, Klarna, and dozens of international payment methods — with the latest fraud protection and bank authentication (SCA) handled automatically. Your store is still on the legacy Card Elements checkout, which Stripe no longer recommends and EDD will remove in a future release.', 'easy-digital-downloads' ),
-					sprintf(
-						/* translators: 1: opening anchor tag to the Stripe settings, do not translate; 2: closing anchor tag, do not translate; 3: opening anchor tag to the documentation, do not translate */
-						__( 'Ready to switch? Go to %1$sSettings → Gateways → Stripe%2$s and change Elements Mode to Payment Elements. %3$sLearn what changes →%2$s', 'easy-digital-downloads' ),
-						'<a href="' . $settings_url . '">',
-						'</a>',
-						'<a href="https://easydigitaldownloads.com/docs/stripe/#migrating" target="_blank">',
-					),
+					$this->get_stripe_notice_action( $settings_url ),
 				),
 				'is_dismissible' => false,
 			)
+		);
+	}
+
+	/**
+	 * Gets the call to action for the Card Elements upgrade notice.
+	 *
+	 * Payment Elements requires a Stripe Connect account, so stores on manual API keys
+	 * are pointed at connecting instead of at the Elements Mode setting.
+	 *
+	 * @since 3.7.1
+	 * @param string $settings_url The Stripe settings screen URL.
+	 * @return string
+	 */
+	private function get_stripe_notice_action( $settings_url ) {
+		$settings_link = '<a href="' . $settings_url . '">';
+		$docs_link     = '<a href="https://easydigitaldownloads.com/docs/stripe/#migrating" target="_blank">';
+
+		if ( edds_stripe_connect_can_manage_keys() ) {
+			return sprintf(
+				/* translators: 1: opening anchor tag to the Stripe settings, do not translate; 2: closing anchor tag, do not translate; 3: opening anchor tag to the documentation, do not translate */
+				__( 'Ready to switch? %1$sConnect with Stripe%2$s from Settings → Gateways → Stripe to unlock Payment Elements. %3$sLearn what changes →%2$s', 'easy-digital-downloads' ),
+				$settings_link,
+				'</a>',
+				$docs_link
+			);
+		}
+
+		return sprintf(
+			/* translators: 1: opening anchor tag to the Stripe settings, do not translate; 2: closing anchor tag, do not translate; 3: opening anchor tag to the documentation, do not translate */
+			__( 'Ready to switch? Go to %1$sSettings → Gateways → Stripe%2$s and change Elements Mode to Payment Elements. %3$sLearn what changes →%2$s', 'easy-digital-downloads' ),
+			$settings_link,
+			'</a>',
+			$docs_link
 		);
 	}
 

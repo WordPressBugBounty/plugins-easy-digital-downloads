@@ -58,6 +58,19 @@ class EmailSummaries extends Component {
 	}
 
 	/**
+	 * The `updated_option` hook has to run on an ordinary request.
+	 *
+	 * It is how a settings save in the admin reschedules the summary. It only schedules the
+	 * event, it never sends the email, so it is not one of the jobs the guard exists to protect.
+	 *
+	 * @since 3.7.1
+	 * @return array
+	 */
+	public static function get_request_time_events(): array {
+		return array( 'updated_option' );
+	}
+
+	/**
 	 * Get the current status of email summary.
 	 *
 	 * @since 3.1

@@ -124,6 +124,7 @@ class Wizard implements \EDD\EventManagement\SubscriberInterface {
 	public function add_menu_item() {
 		add_submenu_page( 'edit.php?post_type=download', __( 'Setup', 'easy-digital-downloads' ), __( 'Setup', 'easy-digital-downloads' ), 'manage_shop_settings', 'edd-onboarding-wizard', array( $this, 'onboarding_wizard_sub_page' ) );
 		add_action( 'admin_head', array( $this, 'adjust_menu_item_class' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_remove_menu_item' ), 9 );
 	}
 
 	/**
@@ -134,6 +135,18 @@ class Wizard implements \EDD\EventManagement\SubscriberInterface {
 	 */
 	public function adjust_menu_item_class() {
 		new \EDD\Admin\Menu\LinkClass( 'edd-onboarding-wizard', 'edd-onboarding__menu-item' );
+	}
+
+	/**
+	 * Removes the Setup menu item once onboarding has been completed.
+	 *
+	 * Runs on admin_enqueue after the page title has rendered, but
+	 * prior to the command palette.
+	 *
+	 * @since 3.7.1
+	 * @return void
+	 */
+	public function maybe_remove_menu_item() {
 		if ( $this->has_onboarding_been_completed() ) {
 			remove_submenu_page( 'edit.php?post_type=download', 'edd-onboarding-wizard' );
 		}
@@ -212,7 +225,7 @@ class Wizard implements \EDD\EventManagement\SubscriberInterface {
 		return add_query_arg(
 			array(
 				'live_mode'         => (int) ! edd_is_test_mode(),
-				'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
+				'state'             => \EDD\Gateways\Stripe\Admin\Connect::create_state(),
 				'customer_site_url' => urlencode( esc_url_raw( $return_url ) ),
 			),
 			'https://easydigitaldownloads.com/?edd_gateway_connect_init=stripe_connect'

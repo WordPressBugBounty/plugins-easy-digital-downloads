@@ -88,6 +88,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// address.
@@ -96,6 +97,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// address2.
@@ -104,6 +106,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// city.
@@ -112,6 +115,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// region.
@@ -120,6 +124,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// postal_code.
@@ -130,6 +135,7 @@ class Customer_Addresses extends Schema {
 			'default'    => '',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// country.
@@ -138,6 +144,7 @@ class Customer_Addresses extends Schema {
 			'type'       => 'mediumtext',
 			'searchable' => true,
 			'sortable'   => true,
+			'validate'   => 'sanitize_text_field',
 		),
 
 		// date_created.

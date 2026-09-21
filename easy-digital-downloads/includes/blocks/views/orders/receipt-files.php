@@ -2,7 +2,7 @@
 if ( ! $item->is_deliverable() || ! edd_receipt_show_download_files( $item->product_id, $edd_receipt_args, $item ) ) {
 	return;
 }
-$download_files = edd_get_download_files( $item->product_id, $item->price_id );
+$download_files = $item->get_download_files();
 ?>
 <ul class="edd_purchase_receipt_files">
 	<?php
